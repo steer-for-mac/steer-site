@@ -71,12 +71,11 @@
   }
   .brand .logo {
     width: 26px; height: 26px;
-    background: var(--accent);
-    color: #fff;
     border-radius: 7px;
+    overflow: hidden;
     display: grid; place-items: center;
   }
-  .brand .logo svg { width: 16px; height: 16px; }
+  .brand .logo img { width: 26px; height: 26px; display: block; }
   nav.top ul {
     list-style: none; margin: 0; padding: 0;
     display: flex; gap: 22px;
@@ -631,7 +630,7 @@
   <div class="wrap">
     <a href="/" class="brand">
       <span class="logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13c0-3 2-5 4.5-5h9c2.5 0 4.5 2 4.5 5v2c0 1.1-.9 2-2 2h-1l-1.5-3h-9L6 17H5c-1.1 0-2-.9-2-2v-2z"/></svg>
+        <img src="icon.png" alt="Steer" />
       </span>
       Steer
     </a>
@@ -674,7 +673,7 @@
       </a>
     </div>
     <p class="price-line">
-      <span class="em">€8.99</span> one-time at launch · 7-day free trial · same app, same updates on both channels
+      <span class="em">€8.99</span> one-time at launch · 7-day free trial
     </p>
 
     <!-- visual: frame from a controller demo -->
@@ -755,7 +754,7 @@
       </span>
       <span>
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>
-        Auto-updates via Sparkle
+        Auto-updates via the App Store
       </span>
       <span>
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>
@@ -892,7 +891,7 @@
           <h3>Steer</h3>
           <span class="tag">This app</span>
         </div>
-        <p class="compare-price">€8.99 one-time · 7-day trial · MAS + direct</p>
+        <p class="compare-price">€8.99 one-time · 7-day trial · Mac App Store</p>
         <ul class="compare-list">
           <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>DualSense adaptive triggers — 5 presets + raw editor</li>
           <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Switch Pro HD Rumble</li>
@@ -908,7 +907,7 @@
         <div class="compare-head">
           <h3>ControllerKeys</h3>
         </div>
-        <p class="compare-price">$12.99 · MAS only</p>
+        <p class="compare-price">$12.99 · Gumroad, direct only</p>
         <ul class="compare-list">
           <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Xbox Elite firmware variants — every paddle profile</li>
           <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Mac-to-Mac controller relay over Wi-Fi</li>
@@ -917,7 +916,7 @@
           <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>On-screen keyboard</li>
           <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>HD Rumble on Switch Pro</li>
           <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>Snapshot history</li>
-          <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>Direct distribution channel</li>
+          <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>On the Mac App Store</li>
         </ul>
       </div>
     </div>
@@ -981,7 +980,7 @@
       </div>
       <div class="faq-item">
         <h4>Will it break on the next macOS?</h4>
-        <p>I run Steer on the developer betas every cycle. Updates ship on the same day macOS does — both via Sparkle and the App Store. If something does break, email me; turnaround is hours, not weeks.</p>
+        <p>I run Steer on the developer betas every cycle and ship fixes through the App Store. If something does break, email me; turnaround is hours, not weeks.</p>
       </div>
       <div class="faq-item">
         <h4>What controllers are supported?</h4>
@@ -992,8 +991,8 @@
         <p>Only if you have a DualSense Edge and want to bind its two rear paddles. Every other controller works with Accessibility alone.</p>
       </div>
       <div class="faq-item">
-        <h4>App Store or direct — which?</h4>
-        <p>Same binary, same updates. <code>MAS</code> is convenient and handles family sharing; <code>direct</code> gets you the trial, ships an hour sooner on update day, and supports the project more directly.</p>
+        <h4>Will there be a direct download?</h4>
+        <p>Steer launches on the Mac App Store. A direct version may follow later.</p>
       </div>
       <div class="faq-item">
         <h4>What does it not do?</h4>
@@ -1009,7 +1008,7 @@
     <div class="col-left">
       <a href="/" class="brand">
         <span class="logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13c0-3 2-5 4.5-5h9c2.5 0 4.5 2 4.5 5v2c0 1.1-.9 2-2 2h-1l-1.5-3h-9L6 17H5c-1.1 0-2-.9-2-2v-2z"/></svg>
+          <img src="icon.png" alt="Steer" />
         </span>
         Steer
       </a>
