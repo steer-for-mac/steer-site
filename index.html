@@ -1,155 +1,1047 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Steer — Game controller for your Mac</title>
-  <meta name="description" content="Turn any game controller into a full Mac input device. Cursor, scroll, shortcuts, gyro mouse, haptics. One-time purchase, 7-day free trial.">
-  <link rel="icon" href="icon.png">
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Steer — Game controllers as full Mac input devices</title>
+<meta name="description" content="Turn any game controller into a full Mac input device — cursor, scroll, shortcuts, gyro mouse, haptics, adaptive triggers. One-time purchase, 7-day free trial." />
+<link rel="icon" href="icon.png" />
+<style>
+  :root {
+    --bg: #FBFAF8;
+    --bg-alt: #F2F0EC;
+    --surface: #FFFFFF;
+    --ink: #1C1C1E;
+    --ink-2: #4A4A4F;
+    --ink-3: #8E8E93;
+    --hairline: rgba(0,0,0,0.10);
+    --hairline-soft: rgba(0,0,0,0.06);
+    --accent: #0A84FF;
+    --accent-soft: rgba(10,132,255,0.10);
+    --success: #28C941;
+    --warning: #FF9500;
+    --ps-cross: #4FA8E0;
+    --ps-circle: #E84A4A;
+    --ps-triangle: #5DC97A;
+    --ps-square: #F25BA8;
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    --font-mono: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ===================== nav ===================== */
+  nav.top {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    border-bottom: 0.5px solid var(--hairline-soft);
+    position: sticky; top: 0;
+    background: rgba(251,250,248,0.85);
+    backdrop-filter: blur(20px);
+    z-index: 50;
+  }
+  nav.top .wrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 28px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 9px;
+    font-weight: 600; font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .brand .logo {
+    width: 26px; height: 26px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 7px;
+    display: grid; place-items: center;
+  }
+  .brand .logo svg { width: 16px; height: 16px; }
+  nav.top ul {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; gap: 22px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  nav.top .spacer { flex: 1; }
+  nav.top .nav-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 6px;
+    font-size: 13px; font-weight: 500;
+  }
+  nav.top .nav-cta:hover { background: #006FE6; color: #fff; }
+
+  /* ===================== hero ===================== */
+  section.hero {
+    padding: 88px 0 56px;
+    border-bottom: 0.5px solid var(--hairline-soft);
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: var(--accent-soft);
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  h1.headline {
+    font-size: 56px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    max-width: 760px;
+    margin: 0 0 18px;
+  }
+  .hero-sub {
+    font-size: 19px;
+    color: var(--ink-2);
+    max-width: 600px;
+    margin: 0 0 32px;
+    line-height: 1.45;
+  }
+  .cta-row {
+    display: flex; gap: 12px; align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px;
+    font-size: 14px; font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 0.5px solid transparent;
+    font-family: var(--font-sans);
+    transition: background 0.12s;
+  }
+  .btn.primary {
+    background: var(--accent); color: #fff;
+  }
+  .btn.primary:hover { background: #006FE6; color: #fff; }
+  .btn.secondary {
+    background: #1C1C1E; color: #fff;
+  }
+  .btn.secondary:hover { background: #000; color: #fff; }
+  .btn .mas {
+    display: flex; flex-direction: column; align-items: flex-start;
+    line-height: 1.1;
+  }
+  .btn .mas small { font-size: 9px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+  .btn .mas strong { font-size: 14px; font-weight: 500; }
+  .price-line {
+    font-size: 13px;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+  }
+  .price-line .em { color: var(--ink-2); }
+
+  /* hero visual — frame from a demo video, mocked as a real macOS desktop */
+  .hero-visual {
+    margin-top: 56px;
+    border-radius: 14px;
+    background:
+      radial-gradient(120% 80% at 20% 0%, #4A5A6E 0%, #2E3744 45%, #1A2230 100%);
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+    border: 0.5px solid rgba(0,0,0,0.30);
+    box-shadow:
+      0 30px 70px rgba(0,0,0,0.20),
+      0 0 0 1px rgba(255,255,255,0.04) inset;
+  }
+  /* desktop menu bar */
+  .hv-menubar {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 26px;
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center;
+    padding: 0 14px;
+    gap: 18px;
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 5;
+  }
+  .hv-menubar .apple {
+    width: 13px; height: 13px;
+    display: grid; place-items: center;
+  }
+  .hv-menubar .apple svg { width: 13px; height: 13px; }
+  .hv-menubar .app-name { font-weight: 600; }
+  .hv-menubar .menus { display: flex; gap: 16px; font-weight: 400; color: rgba(255,255,255,0.78); }
+  .hv-menubar .right {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+  }
+  .hv-menubar .steer-icon {
+    width: 14px; height: 14px;
+    display: grid; place-items: center;
+    color: rgba(255,255,255,0.85);
+  }
+  .hv-menubar .steer-icon svg { width: 14px; height: 14px; }
+  .hv-menubar .battery {
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .hv-menubar .clock { font-variant-numeric: tabular-nums; }
+  /* the app window */
+  .hv-window {
+    position: absolute;
+    top: 64px; left: 50%;
+    transform: translateX(-50%);
+    width: 76%;
+    max-width: 760px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      0 24px 60px rgba(0,0,0,0.45),
+      0 0 0 0.5px rgba(0,0,0,0.5);
+  }
+  .hv-window img { width: 100%; height: auto; display: block; }
+  /* cursor + trail laid on top of the window */
+  .hv-cursor {
+    position: absolute;
+    top: 56%; left: 60%;
+    width: 18px; height: 18px;
+    z-index: 6;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+  }
+  .hv-cursor svg { width: 100%; height: 100%; }
+  .hv-trail {
+    position: absolute;
+    top: 50%; left: 12%;
+    width: 50%; height: 18%;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .hv-trail svg { width: 100%; height: 100%; }
+  /* bottom strip — controller tag + play chrome */
+  .hv-strip {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 56px;
+    background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 18px 12px;
+    z-index: 6;
+  }
+  .hv-controller {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(20,20,22,0.55);
+    border: 0.5px solid rgba(255,255,255,0.10);
+    border-radius: 8px;
+    padding: 7px 11px;
+    color: rgba(255,255,255,0.92);
+    font-size: 11.5px;
+    backdrop-filter: blur(20px);
+    letter-spacing: -0.005em;
+  }
+  .hv-controller .ctrl-svg { width: 18px; height: 14px; color: rgba(255,255,255,0.9); }
+  .hv-controller .arrow { color: rgba(255,255,255,0.5); }
+  .hv-controller .target { font-family: var(--font-mono); color: rgba(255,255,255,0.7); }
+  .hv-controller .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+  .hv-player {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(20,20,22,0.55);
+    border: 0.5px solid rgba(255,255,255,0.10);
+    border-radius: 8px;
+    padding: 7px 11px 7px 9px;
+    color: rgba(255,255,255,0.85);
+    font-size: 11px;
+    backdrop-filter: blur(20px);
+    font-family: var(--font-mono);
+  }
+  .hv-player .play {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    color: #1A1A1C;
+    display: grid; place-items: center;
+  }
+  .hv-player .play svg { width: 7px; height: 7px; }
+  .hv-player .progress {
+    width: 60px; height: 2px; border-radius: 1px;
+    background: rgba(255,255,255,0.18);
+    position: relative;
+    overflow: hidden;
+  }
+  .hv-player .progress::after {
+    content: ""; position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 32%;
+    background: #fff;
+    border-radius: 1px;
+  }
+
+  .hero-after {
+    display: flex; gap: 28px; flex-wrap: wrap;
+    margin-top: 32px;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .hero-after span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-after svg { width: 13px; height: 13px; color: var(--success); }
+
+  /* ===================== section header ===================== */
+  section { padding: 80px 0; }
+  .sec-eyebrow {
+    font-size: 12px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0 0 16px;
+    max-width: 720px;
+  }
+  .sec-lede {
+    font-size: 17px;
+    color: var(--ink-2);
+    max-width: 620px;
+    margin: 0 0 40px;
+  }
+
+  /* ===================== features grid ===================== */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .feature {
+    background: var(--surface);
+    border: 0.5px solid var(--hairline);
+    border-radius: 12px;
+    padding: 22px;
+    display: flex; flex-direction: column;
+    min-height: 200px;
+  }
+  .feature .ficon {
+    width: 28px; height: 28px;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .feature h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .feature p {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .feature.media {
+    padding: 0;
+    overflow: hidden;
+  }
+  .feature.media .media-shot {
+    height: 180px;
+    background: #F2F0EC;
+    overflow: hidden;
+    display: grid; place-items: center;
+    border-bottom: 0.5px solid var(--hairline-soft);
+  }
+  .feature.media .media-shot img {
+    max-width: 80%; max-height: 80%;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,0.10));
+  }
+  .feature.media .media-text {
+    padding: 18px 22px 22px;
+  }
+
+  /* ===================== trust ===================== */
+  section.trust {
+    background: var(--bg-alt);
+    border-top: 0.5px solid var(--hairline-soft);
+    border-bottom: 0.5px solid var(--hairline-soft);
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .trust-grid h2 { max-width: 460px; }
+  .trust-grid .sec-lede { font-size: 17px; max-width: 480px; }
+  .trust-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 18px;
+  }
+  .trust-pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface);
+    border: 0.5px solid var(--hairline);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .trust-pill svg { width: 14px; height: 14px; color: var(--accent); }
+  .trust-shot {
+    background: var(--surface);
+    border-radius: 14px;
+    border: 0.5px solid var(--hairline);
+    padding: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+  }
+  .trust-shot img {
+    width: 100%; height: auto; display: block;
+    border-radius: 8px;
+  }
+  .trust-caption {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+  }
+
+  /* ===================== comparison ===================== */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .compare-card {
+    background: var(--surface);
+    border-radius: 12px;
+    border: 0.5px solid var(--hairline);
+    padding: 26px;
+  }
+  .compare-card.us { border: 1px solid var(--accent); background: #fff; }
+  .compare-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 4px;
+  }
+  .compare-head h3 {
+    margin: 0; font-size: 16px; font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .compare-head .tag {
+    font-size: 11px; padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .compare-price {
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    margin: 0 0 18px;
+  }
+  .compare-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column;
+  }
+  .compare-list li {
+    padding: 9px 0;
+    border-top: 0.5px solid var(--hairline-soft);
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+  }
+  .compare-list li:first-child { border-top: none; }
+  .compare-list .check {
+    flex: 0 0 16px; color: var(--success);
+    margin-top: 2px;
+  }
+  .compare-list .miss {
+    flex: 0 0 16px; color: var(--ink-3);
+    margin-top: 2px;
+  }
+  .compare-list li.miss-row { color: var(--ink-3); }
+  .compare-footnote {
+    font-size: 12px; color: var(--ink-3);
+    margin-top: 24px;
+    font-family: var(--font-mono);
+  }
+
+  /* ===================== workflows ===================== */
+  section.workflows { background: var(--bg-alt); border-top: 0.5px solid var(--hairline-soft); }
+  .workflow {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 40px;
+    align-items: center;
+    padding: 36px 0;
+    border-top: 0.5px solid var(--hairline-soft);
+  }
+  .workflow:first-of-type { border-top: none; }
+  .workflow.reverse { grid-template-columns: 1.1fr 0.9fr; }
+  .workflow.reverse .wf-shot { order: -1; }
+  .workflow h3 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 0 0 10px;
+  }
+  .workflow p {
+    margin: 0 0 12px;
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .wf-shot {
+    background: var(--surface);
+    border: 0.5px solid var(--hairline);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+  }
+  .wf-shot img { width: 100%; height: auto; display: block; border-radius: 6px; }
+  .wf-meta {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    display: flex; gap: 10px;
+  }
+  .wf-meta .sep { color: var(--hairline); }
+
+  /* ===================== faq ===================== */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 32px;
+  }
+  .faq-item {
+    background: var(--surface);
+    border: 0.5px solid var(--hairline);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .faq-item h4 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .faq-item p {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+  .faq-item code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: rgba(0,0,0,0.04);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* ===================== footer ===================== */
+  footer {
+    padding: 36px 0 44px;
+    border-top: 0.5px solid var(--hairline-soft);
+    background: var(--bg-alt);
+  }
+  footer .wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  footer .col-left { flex: 1; min-width: 220px; }
+  footer .col-links { display: flex; gap: 36px; }
+  footer .col-links h5 {
+    margin: 0 0 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-3);
+  }
+  footer .col-links a {
+    display: block;
+    font-size: 13px;
+    color: var(--ink-2);
+    padding: 3px 0;
+  }
+  footer .fineprint {
+    margin-top: 26px;
+    font-size: 12px;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    display: flex; flex-wrap: wrap; gap: 12px;
+    width: 100%;
+  }
+
+  /* ===================== responsive ===================== */
+  @media (max-width: 920px) {
+    h1.headline { font-size: 38px; }
+    .features { grid-template-columns: 1fr 1fr; }
+    .compare, .trust-grid, .workflow, .workflow.reverse, .faq-grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+    .workflow.reverse .wf-shot { order: 0; }
+  }
+  @media (max-width: 560px) {
+    h1.headline { font-size: 32px; }
+    .features { grid-template-columns: 1fr; }
+    nav.top ul { display: none; }
+    section { padding: 56px 0; }
+  }
+</style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-brand">
-      <img src="icon.png" alt="" class="nav-icon">
+<!-- ==================================================== nav -->
+<nav class="top">
+  <div class="wrap">
+    <a href="/" class="brand">
+      <span class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13c0-3 2-5 4.5-5h9c2.5 0 4.5 2 4.5 5v2c0 1.1-.9 2-2 2h-1l-1.5-3h-9L6 17H5c-1.1 0-2-.9-2-2v-2z"/></svg>
+      </span>
       Steer
     </a>
-    <div class="nav-links">
-      <a href="support.html">Support</a>
-      <a href="privacy.html">Privacy</a>
-    </div>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#compare">Compare</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#">Docs</a></li>
+    </ul>
+    <span class="spacer"></span>
+    <a href="#download" class="nav-cta">
+      Join the beta
+    </a>
   </div>
 </nav>
 
-<main>
-  <section class="hero">
-    <div class="hero-icon-wrap">
-      <img src="icon.png" alt="Steer" class="hero-icon">
+<!-- ==================================================== hero -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--success);"></span>
+      v1.0 beta · macOS 14+ · Apple Silicon &amp; Intel
     </div>
-    <h1>Your controller,<br>not just for games.</h1>
-    <p>Steer turns any game controller into a full Mac input device — cursor, scroll, shortcuts, media, haptics, gyro mouse. Built for daily use.</p>
-    <div class="cta-group">
-      <a href="https://apps.apple.com/app/id-TODO" class="btn btn-primary">
-        Download on the Mac App Store
+    <h1 class="headline">
+      Your game controller is now a Mac input device.
+    </h1>
+    <p class="hero-sub">
+      Press a controller button, it presses a key. Tilt the stick, the cursor moves. That's it. Steer runs in the menu bar; pair any supported pad and the rest is configuration.
+    </p>
+
+    <!-- Beta: CTAs join an email waitlist. Swap the mailto for the TestFlight public link once the build is live. -->
+    <div class="cta-row" id="download">
+      <a href="mailto:steer@seanfloyd.dev?subject=Steer%20beta%20access" class="btn primary">
+        Join the beta
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>
       </a>
-      <p class="trial-note">7-day free trial <span>·</span> €8.99 one-time <span>·</span> macOS 15 Sequoia+</p>
+      <a href="mailto:steer@seanfloyd.dev?subject=Steer%20beta%20access" class="btn secondary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12.4c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.1-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2-.1 1.6-.7 3-.7 1.4 0 1.8.7 3 .7 1.2 0 2-1.1 2.8-2.3.6-.9 1.1-1.8 1.4-2.8-2.5-.9-2.3-2.7-2.3-2.7zM13.8 5.2c.6-.8 1.1-1.9 1-3.1-.9 0-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1 0 2.1-.5 2.8-1.2z"/></svg>
+        <span class="mas"><small>Coming soon to the</small><strong>Mac App Store</strong></span>
+      </a>
     </div>
-  </section>
+    <p class="price-line">
+      <span class="em">€8.99</span> one-time at launch · 7-day free trial · same app, same updates on both channels
+    </p>
 
-  <a href="#shot-1" class="hero-shot-link" aria-label="Open larger view">
-    <figure class="hero-shot">
-      <img src="screenshots/slot-01-controller.jpg" alt="Steer menu bar showing connected controller, battery, and connection info" loading="lazy">
-    </figure>
-  </a>
+    <!-- visual: frame from a controller demo -->
+    <div class="hero-visual" aria-label="Demo of a controller driving the macOS cursor">
 
-  <div class="features">
-    <div class="feature">
-      <h3>Cursor &amp; Scroll</h3>
-      <p>125Hz polling, configurable acceleration curves, sub-pixel precision. Works like a trackpad, not a d-pad.</p>
+      <!-- desktop menu bar -->
+      <div class="hv-menubar">
+        <span class="apple">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 8.7c0-1.6 1.3-2.4 1.4-2.5-.8-1.1-1.9-1.3-2.3-1.3-1-.1-1.9.6-2.4.6-.5 0-1.2-.6-2-.6-1 0-2 .6-2.5 1.5-1.1 1.8-.3 4.5.8 6 .5.7 1.1 1.5 1.9 1.5.8 0 1-.5 1.9-.5s1.1.5 1.9.5c.8 0 1.3-.7 1.8-1.5.4-.6.7-1.2.9-1.8-1.6-.6-1.4-1.8-1.4-1.9zM9.7 4.2c.4-.5.7-1.2.6-1.9-.6 0-1.3.4-1.7.9-.4.4-.7 1.1-.6 1.8.6 0 1.3-.3 1.7-.8z"/></svg>
+        </span>
+        <span class="app-name">Steer</span>
+        <span class="menus">
+          <span>File</span>
+          <span>Edit</span>
+          <span>View</span>
+          <span>Window</span>
+          <span>Help</span>
+        </span>
+        <span class="right">
+          <span class="steer-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 13c0-3 2-5 4.5-5h9c2.5 0 4.5 2 4.5 5v2c0 1.1-.9 2-2 2h-1l-1.5-3h-9L6 17H5c-1.1 0-2-.9-2-2v-2z"/></svg>
+          </span>
+          <span class="battery">DualSense · 70%</span>
+          <span class="clock">14:32</span>
+        </span>
+      </div>
+
+      <!-- the bindings window inside the desktop -->
+      <div class="hv-window">
+        <img src="assets/settings-buttons.png" alt="Steer bindings window" />
+      </div>
+
+      <!-- cursor trail rendered over the window -->
+      <svg class="hv-trail" viewBox="0 0 400 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="tg" x1="0" x2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0.8"/>
+          </linearGradient>
+        </defs>
+        <path d="M0 80 Q80 10 200 50 T400 30" fill="none" stroke="url(#tg)" stroke-width="1.5" stroke-dasharray="2 3"/>
+      </svg>
+
+      <!-- cursor -->
+      <div class="hv-cursor">
+        <svg viewBox="0 0 16 16" fill="#fff"><path d="M1.5 1.2l4.6 12.3 2.4-5.4 5.4-2.4z" stroke="#000" stroke-width="0.6" stroke-linejoin="round"/></svg>
+      </div>
+
+      <!-- bottom strip -->
+      <div class="hv-strip">
+        <span class="hv-controller">
+          <svg class="ctrl-svg" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 8c0-3 2-5 4-5h12c2 0 4 2 4 5v2c0 1-1 2-2 2h-1l-1.5-3h-11L5 12H4c-1 0-2-1-2-2V8z"/><circle cx="7" cy="8" r="1" fill="currentColor"/><circle cx="17" cy="8" r="1" fill="currentColor"/></svg>
+          <span>Left stick</span>
+          <span class="arrow">→</span>
+          <span class="target">cursor</span>
+          <span class="dot"></span>
+          <span class="target">12 ms</span>
+        </span>
+        <span class="hv-player">
+          <span class="play">
+            <svg viewBox="0 0 8 8" fill="currentColor"><path d="M1.5 0.5v7l6-3.5z"/></svg>
+          </span>
+          <span>0:08</span>
+          <span class="progress"></span>
+          <span>0:24</span>
+        </span>
+      </div>
     </div>
-    <div class="feature">
-      <h3>Layers &amp; Shortcuts</h3>
-      <p>Four modifier layers per profile. Map any button to keyboard shortcuts, media controls, or system actions.</p>
-    </div>
-    <div class="feature">
-      <h3>Per-App Profiles</h3>
-      <p>Automatically switch profiles when your active app changes. One config for browsers, another for video.</p>
-    </div>
-    <div class="feature">
-      <h3>Gyro Mouse</h3>
-      <p>Use the DualSense or DualShock 4 gyroscope for precision cursor control — hold a button to activate.</p>
-    </div>
-    <div class="feature">
-      <h3>Haptics &amp; Triggers</h3>
-      <p>Haptic feedback on events like scroll boundaries and focus changes. Adaptive trigger effects on DualSense.</p>
-    </div>
-    <div class="feature">
-      <h3>Radial Menu</h3>
-      <p>Stick-controlled quick-launch menu. Flick to an app, release to open. Configurable layout and items.</p>
+
+    <div class="hero-after">
+      <span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>
+        Notarized &amp; sandboxed
+      </span>
+      <span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>
+        Universal binary
+      </span>
+      <span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>
+        Auto-updates via Sparkle
+      </span>
+      <span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>
+        No account · no telemetry
+      </span>
     </div>
   </div>
+</section>
 
-  <div class="shot-row">
-    <a href="#shot-2" class="shot-link" aria-label="Open larger view of the help overlay">
-      <figure class="shot">
-        <img src="screenshots/slot-02-help-overlay.jpg" alt="Help overlay showing live button mappings" loading="lazy">
-        <figcaption class="shot-caption">Every binding visible. Press a button to learn it.</figcaption>
-      </figure>
-    </a>
-    <a href="#shot-5" class="shot-link" aria-label="Open larger view of the gyro settings">
-      <figure class="shot">
-        <img src="screenshots/slot-05-gyro.jpg" alt="Gyro mouse settings" loading="lazy">
-        <figcaption class="shot-caption">Tilt the controller to aim the cursor.</figcaption>
-      </figure>
-    </a>
-    <a href="#shot-10" class="shot-link" aria-label="Open larger view of the radial launcher">
-      <figure class="shot">
-        <img src="screenshots/slot-10-radial.jpg" alt="Radial app launcher driven by the right stick" loading="lazy">
-        <figcaption class="shot-caption">Flick the stick, launch anything.</figcaption>
-      </figure>
-    </a>
+<!-- ==================================================== features -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-eyebrow">What it does</div>
+    <h2>One menu-bar app, every controller surface.</h2>
+    <p class="sec-lede">Every button, stick, touchpad and gyro the hardware exposes — wired up to anything macOS understands.</p>
+
+    <div class="features">
+      <!-- media tiles using real screenshots -->
+      <div class="feature media">
+        <div class="media-shot">
+          <img src="assets/radial-menu.png" alt="Radial app launcher" />
+        </div>
+        <div class="media-text">
+          <h3>Radial app launcher</h3>
+          <p>L3 opens an 8-app ring. Aim with the left stick, click a face button to launch.</p>
+        </div>
+      </div>
+
+      <div class="feature media">
+        <div class="media-shot">
+          <img src="assets/daisy-wheel.png" alt="On-screen daisy-wheel keyboard" />
+        </div>
+        <div class="media-text">
+          <h3>On-screen keyboard</h3>
+          <p>Daisy-wheel layout reachable from any controller. Type without a keyboard nearby.</p>
+        </div>
+      </div>
+
+      <div class="feature media">
+        <div class="media-shot">
+          <img src="assets/menubar-dropdown.png" alt="Menu bar dropdown" />
+        </div>
+        <div class="media-text">
+          <h3>Menu-bar resident</h3>
+          <p>No dock icon, no main window. Battery, profile and setup wizard one click away.</p>
+        </div>
+      </div>
+
+      <!-- icon tiles -->
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 4v4M4 12h4M20 12h-4M12 20v-4"/></svg>
+        <h3>Cursor &amp; scroll</h3>
+        <p>Left stick aims; right stick scrolls. Curve, dead zone and acceleration are user-shaped.</p>
+      </div>
+
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M11 10h.01M15 10h.01M19 10h.01M7 14h10"/></svg>
+        <h3>Keyboard &amp; shortcuts</h3>
+        <p>Any controller button to any keystroke, including ⌘⇧⌥⌃ chords. Six modifier layers per profile.</p>
+      </div>
+
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 12c0-4 4-6 8-6s8 2 8 6-4 6-8 6-8-2-8-6z"/><path d="M9 12h6"/></svg>
+        <h3>Adaptive triggers</h3>
+        <p>Five DualSense presets — gun click, bow tension, brake — or hand-tune the 0–255 sliders.</p>
+      </div>
+
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.5 2.5 2.5 13.5 0 16M12 4c-2.5 2.5-2.5 13.5 0 16"/></svg>
+        <h3>Gyro mouse</h3>
+        <p>Tilt the controller to aim. Hold R3 to engage; release to suspend bias drift.</p>
+      </div>
+
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/><path d="M16 17l3 3 4-4"/></svg>
+        <h3>Per-app profiles</h3>
+        <p>Steer loads the right binding set when you switch apps. Safari to Xcode is one ⌘-tab away.</p>
+      </div>
+
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9"/></svg>
+        <h3>Haptics &amp; LED</h3>
+        <p>Custom feedback for scroll ticks, layer toggles, volume boundaries. Per-layer LED colors.</p>
+      </div>
+    </div>
   </div>
+</section>
 
-  <p class="section-label">Supported controllers</p>
-  <div class="tag-list">
-    <span class="tag">DualSense</span>
-    <span class="tag">DualSense Edge</span>
-    <span class="tag">DualShock 4</span>
-    <span class="tag">Xbox Series / One / Elite</span>
-    <span class="tag">Switch Pro</span>
-    <span class="tag">MFi</span>
+<!-- ==================================================== trust -->
+<section class="trust">
+  <div class="wrap">
+    <div class="trust-grid">
+      <div>
+        <div class="sec-eyebrow">Trust</div>
+        <h2>Nothing happens without you seeing it first.</h2>
+        <p class="sec-lede">
+          Steer shows you exactly what a community preset does before you accept it, and keeps a full restore history so every change is reversible. Imported macros and presets land in a review popover, not directly in your bindings.
+        </p>
+        <div class="trust-pills">
+          <span class="trust-pill">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>
+            Diff before apply
+          </span>
+          <span class="trust-pill">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8a5 5 0 0 1 5-5 5 5 0 0 1 5 5"/><path d="M3 8v-3M3 8h3"/></svg>
+            Full restore history
+          </span>
+          <span class="trust-pill">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="10" height="8" rx="1.5"/><path d="M5 6V4a3 3 0 0 1 6 0v2"/></svg>
+            Local-only profiles
+          </span>
+        </div>
+      </div>
+      <div>
+        <div class="trust-shot">
+          <img src="assets/popover-macro-row.png" alt="Macro import popover with row-by-row diff" />
+          <div class="trust-caption">Macro import — review every step before binding</div>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div class="meta-strip">
-    <div class="meta-item">
-      <div class="meta-label">Platform</div>
-      <div class="meta-value">macOS 15 Sequoia+</div>
+<!-- ==================================================== compare -->
+<section id="compare">
+  <div class="wrap">
+    <div class="sec-eyebrow">Compare</div>
+    <h2>Honest table vs ControllerKeys.</h2>
+    <p class="sec-lede">The only other actively-maintained paid macOS option. Both apps cover the basics; the gaps are where you choose.</p>
+
+    <div class="compare">
+      <div class="compare-card us">
+        <div class="compare-head">
+          <h3>Steer</h3>
+          <span class="tag">This app</span>
+        </div>
+        <p class="compare-price">€8.99 one-time · 7-day trial · MAS + direct</p>
+        <ul class="compare-list">
+          <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>DualSense adaptive triggers — 5 presets + raw editor</li>
+          <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Switch Pro HD Rumble</li>
+          <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>On-screen daisy-wheel keyboard</li>
+          <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Snapshots + full change audit</li>
+          <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Mac App Store distribution</li>
+          <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Apple Shortcuts templates included</li>
+          <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>Xbox Elite firmware-specific paddle remap</li>
+          <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>Mac-to-Mac controller relay</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <div class="compare-head">
+          <h3>ControllerKeys</h3>
+        </div>
+        <p class="compare-price">$12.99 · MAS only</p>
+        <ul class="compare-list">
+          <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Xbox Elite firmware variants — every paddle profile</li>
+          <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Mac-to-Mac controller relay over Wi-Fi</li>
+          <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Cursor, scroll, keyboard mapping</li>
+          <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>Adaptive trigger presets</li>
+          <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>On-screen keyboard</li>
+          <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>HD Rumble on Switch Pro</li>
+          <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>Snapshot history</li>
+          <li class="miss-row"><svg class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>Direct distribution channel</li>
+        </ul>
+      </div>
     </div>
-    <div class="meta-item">
-      <div class="meta-label">Price</div>
-      <div class="meta-value">€8.99 one-time</div>
+    <p class="compare-footnote">Pick ControllerKeys if you own an Xbox Elite or need Mac-to-Mac relay. Otherwise Steer covers more surfaces and lets you trial it free for 7 days.</p>
+  </div>
+</section>
+
+<!-- ==================================================== workflows -->
+<section class="workflows">
+  <div class="wrap">
+    <div class="sec-eyebrow">Inside the app</div>
+    <h2>Built like a System Settings pane.</h2>
+    <p class="sec-lede">No marketing chrome — the same controls and rhythm as the rest of macOS. Snapshots: actual app, not renders.</p>
+
+    <div class="workflow">
+      <div>
+        <h3>Map every button across six layers</h3>
+        <p>Tap, long-press, double-tap, while-held, release — and a modifier layer for each of L1, R1, L1+R1, L2, R2. The diagram tracks which layer you're editing.</p>
+        <p>Conflicts get their own page; if two bindings collide, you'll see it before you exit.</p>
+      </div>
+      <div class="wf-shot">
+        <img src="assets/settings-buttons.png" alt="Bindings settings pane" />
+        <div class="wf-meta"><span>Settings → Bindings</span><span class="sep">·</span><span>46 bindings · 4 active layers</span></div>
+      </div>
     </div>
-    <div class="meta-item">
-      <div class="meta-label">Trial</div>
-      <div class="meta-value">7 days, full access</div>
+
+    <div class="workflow reverse">
+      <div class="wf-shot">
+        <img src="assets/settings-sticks.png" alt="Sticks settings pane" />
+        <div class="wf-meta"><span>Settings → Sticks</span><span class="sep">·</span><span>shaped curves · per-axis</span></div>
+      </div>
+      <div>
+        <h3>Shape your own response curves</h3>
+        <p>Cursor speed, acceleration, dead zone, scroll axis inversion. Set once per profile or per app; tune live with the controller in hand.</p>
+      </div>
     </div>
-    <div class="meta-item">
-      <div class="meta-label">Connection</div>
-      <div class="meta-value">USB &amp; Bluetooth</div>
+
+    <div class="workflow">
+      <div>
+        <h3>Profiles that follow your focus</h3>
+        <p>Steer auto-switches profiles when you change frontmost app. Add a per-app override or leave Default in charge.</p>
+      </div>
+      <div class="wf-shot">
+        <img src="assets/settings-profiles.png" alt="Profiles settings pane" />
+        <div class="wf-meta"><span>Settings → Profiles</span><span class="sep">·</span><span>Default + per-app overrides</span></div>
+      </div>
     </div>
   </div>
-</main>
+</section>
 
-<div class="lightbox" id="shot-1" aria-hidden="true">
-  <a href="#close" class="lightbox-backdrop" aria-label="Close"></a>
-  <img src="screenshots/slot-01-controller.jpg" alt="">
-  <a href="#close" class="lightbox-close" aria-label="Close">Close</a>
-</div>
-<div class="lightbox" id="shot-2" aria-hidden="true">
-  <a href="#close" class="lightbox-backdrop" aria-label="Close"></a>
-  <img src="screenshots/slot-02-help-overlay.jpg" alt="">
-  <a href="#close" class="lightbox-close" aria-label="Close">Close</a>
-</div>
-<div class="lightbox" id="shot-5" aria-hidden="true">
-  <a href="#close" class="lightbox-backdrop" aria-label="Close"></a>
-  <img src="screenshots/slot-05-gyro.jpg" alt="">
-  <a href="#close" class="lightbox-close" aria-label="Close">Close</a>
-</div>
-<div class="lightbox" id="shot-10" aria-hidden="true">
-  <a href="#close" class="lightbox-backdrop" aria-label="Close"></a>
-  <img src="screenshots/slot-10-radial.jpg" alt="">
-  <a href="#close" class="lightbox-close" aria-label="Close">Close</a>
-</div>
+<!-- ==================================================== faq -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-eyebrow">FAQ</div>
+    <h2>Boring details, answered.</h2>
 
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h4>Why does it need Accessibility?</h4>
+        <p>To post mouse and keyboard events to other apps. macOS gates synthetic input behind Accessibility for everything from TextExpander to BetterTouchTool. Steer asks once; nothing leaves your machine.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Will it break on the next macOS?</h4>
+        <p>I run Steer on the developer betas every cycle. Updates ship on the same day macOS does — both via Sparkle and the App Store. If something does break, email me; turnaround is hours, not weeks.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What controllers are supported?</h4>
+        <p>DualSense, DualSense Edge, DualShock 4, Xbox Series, Xbox One, Xbox Elite, Switch Pro, and any Made-for-iPhone controller. Wired or Bluetooth, both work.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Input Monitoring — do I need it?</h4>
+        <p>Only if you have a DualSense Edge and want to bind its two rear paddles. Every other controller works with Accessibility alone.</p>
+      </div>
+      <div class="faq-item">
+        <h4>App Store or direct — which?</h4>
+        <p>Same binary, same updates. <code>MAS</code> is convenient and handles family sharing; <code>direct</code> gets you the trial, ships an hour sooner on update day, and supports the project more directly.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What does it not do?</h4>
+        <p>Mac-to-Mac relay, Xbox Elite firmware paddle modes, controller-as-MIDI. If those are deal-breakers, ControllerKeys is the right pick.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================== footer -->
 <footer>
-  <span class="footer-copy">© 2026 Sean Floyd</span>
-  <div class="footer-links">
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
-    <a href="refund.html">Refunds</a>
-    <a href="support.html">Support</a>
+  <div class="wrap">
+    <div class="col-left">
+      <a href="/" class="brand">
+        <span class="logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13c0-3 2-5 4.5-5h9c2.5 0 4.5 2 4.5 5v2c0 1.1-.9 2-2 2h-1l-1.5-3h-9L6 17H5c-1.1 0-2-.9-2-2v-2z"/></svg>
+        </span>
+        Steer
+      </a>
+      <p style="font-size:13px; color: var(--ink-3); margin: 12px 0 0; max-width: 280px;">Built for myself. I use it daily. It's feature-complete for my needs — and I'll update it for each macOS.</p>
+    </div>
+    <div class="col-links">
+      <div>
+        <h5>Product</h5>
+        <a href="#features">Features</a>
+        <a href="#compare">Compare</a>
+        <a href="#">Changelog</a>
+        <a href="#">Roadmap</a>
+      </div>
+      <div>
+        <h5>Support</h5>
+        <a href="mailto:steer@seanfloyd.dev?subject=Steer%20support&body=%0A%0A%E2%80%94%0ASteer%20version%3A%20%0AmacOS%3A%20%0AController%3A%20">steer@seanfloyd.dev</a>
+        <a href="support.html">Support</a>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <a href="privacy.html">Privacy</a>
+        <a href="refund.html">Refund policy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+    <div class="fineprint">
+      <span>v1.0.0 · build 240</span>
+      <span>·</span>
+      <span>© 2026 · made with care</span>
+      <span>·</span>
+      <span>PlayStation &amp; DualSense are trademarks of Sony Interactive Entertainment</span>
+    </div>
   </div>
 </footer>
 
