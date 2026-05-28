@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Steer — Open Graph card source</title>
+<!--
+  Reproducible Open Graph share card source for steer.seanfloyd.dev.
+  Renders at exactly 1200x630. Three layout variants selected via URL hash:
+    #v1  dark gradient, icon left + wordmark right (default — wired into pages)
+    #v2  dark gradient, centre-stacked icon over wordmark
+    #v3  light gradient, icon left + wordmark right
+
+  Render (2x for crispness, then downscale to 1200x630):
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless --disable-gpu --force-device-scale-factor=2 \
+      --window-size=1200,630 --hide-scrollbars \
+      --screenshot=/tmp/og-1-2x.png "file://ABSOLUTE/PATH/og.html#v1"
+    sips -z 630 1200 /tmp/og-1-2x.png --out assets/og-1.png
+
+  Tokens mirror style.css: dark gradient, light gradient, ink/ink-2/ink-3,
+  accent #0A84FF, SF Pro stack, -0.025em headline tracking.
+-->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  /* ---- backgrounds ---- */
+  /* dark: the hero's own radial gradient, recentred for a poster crop */
+  .bg-dark {
+    background: radial-gradient(120% 90% at 18% 0%, #4A5A6E 0%, #2E3744 46%, #1A2230 100%);
+  }
+  /* a faint accent bloom + a hairline frame, matching the site's restraint */
+  .bg-dark::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(60% 70% at 82% 90%, rgba(10,132,255,0.16) 0%, rgba(10,132,255,0) 60%);
+  }
+  .bg-light {
+    background: radial-gradient(140% 130% at 50% -10%, #FFFFFF 0%, #F4F2EE 58%, #EBE8E2 100%);
+  }
+
+  /* thin inset hairline like the site's cards */
+  .frame {
+    position: absolute; inset: 0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  }
+  .bg-light .frame { box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05); }
+
+  /* ---- shared content ---- */
+  .stage {
+    position: absolute; inset: 0;
+    display: flex;
+    z-index: 2;
+  }
+
+  .icon {
+    border-radius: 26%;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06) inset;
+    display: block;
+  }
+  .bg-light .icon {
+    box-shadow: 0 24px 60px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05) inset;
+  }
+
+  .wordmark {
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #FFFFFF;
+  }
+  .bg-light .wordmark { color: #1C1C1E; }
+
+  .tagline {
+    font-size: 30px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.32;
+    color: rgba(255,255,255,0.78);
+  }
+  .bg-light .tagline { color: #4A4A4F; }
+
+  /* the pill: mirrors the hero eyebrow (dot + mono caption) */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+    font-size: 21px;
+    letter-spacing: 0;
+    color: rgba(255,255,255,0.62);
+    padding: 13px 22px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10);
+  }
+  .bg-light .pill {
+    color: #8E8E93;
+    background: rgba(0,0,0,0.035);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+  }
+  .pill .dot {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: #28C941;
+    box-shadow: 0 0 10px rgba(40,201,65,0.55);
+  }
+
+  /* ============ V1 / V3 : icon left, content right ============ */
+  .layout-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 0 96px;
+    gap: 64px;
+  }
+  .layout-row .icon { width: 280px; height: 280px; flex: 0 0 auto; }
+  .layout-row .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 26px;
+  }
+  .layout-row .wordmark { font-size: 132px; }
+  .layout-row .tagline { max-width: 600px; }
+
+  /* ============ V2 : centre-stacked ============ */
+  .layout-center {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0;
+    padding: 0 80px;
+  }
+  .layout-center .icon { width: 200px; height: 200px; margin-bottom: 38px; }
+  .layout-center .wordmark { font-size: 116px; margin-bottom: 26px; }
+  .layout-center .tagline { font-size: 29px; max-width: 760px; margin-bottom: 40px; }
+  .layout-center .pill { margin: 0 auto; }
+</style>
+</head>
+<body class="bg-dark">
+  <div class="frame"></div>
+  <div class="stage layout-row">
+    <img class="icon" src="icon.png" alt="" />
+    <div class="content">
+      <div class="wordmark">Steer</div>
+      <div class="tagline">Your game controller is now a Mac input device.</div>
+      <div class="pill"><span class="dot"></span>macOS 14+ · Apple Silicon</div>
+    </div>
+  </div>
+
+  <script>
+    // Layout + theme selected by URL hash so each variant renders from one source.
+    (function () {
+      var v = (location.hash || "#v1").replace("#", "");
+      var body = document.body;
+      var stage = document.querySelector(".stage");
+      function setRow()    { stage.className = "stage layout-row"; }
+      function setCenter() { stage.className = "stage layout-center"; }
+      function setDark()   { body.className = "bg-dark"; }
+      function setLight()  { body.className = "bg-light"; }
+
+      if (v === "v2") { setDark();  setCenter(); }
+      else if (v === "v3") { setLight(); setRow(); }
+      else { setDark(); setRow(); } // v1 default
+    })();
+  </script>
+</body>
+</html>
