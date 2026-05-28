@@ -1,629 +1,74 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-CA">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Steer — Game controllers as full Mac input devices</title>
-<meta name="description" content="Turn any game controller into a full Mac input device — cursor, scroll, shortcuts, gyro mouse, haptics, adaptive triggers. One-time purchase, 7-day free trial." />
+<meta name="description" content="Steer turns a game controller into a full Mac input device: cursor, scroll, keyboard shortcuts, gyro mouse, haptics and adaptive triggers. A menu-bar app for macOS 14+ on Apple Silicon. EUR 8.99 one-time with a 7-day free trial." />
+<link rel="canonical" href="https://steer.seanfloyd.dev/" />
 <link rel="icon" href="icon.png" />
-<style>
-  :root {
-    --bg: #FBFAF8;
-    --bg-alt: #F2F0EC;
-    --surface: #FFFFFF;
-    --ink: #1C1C1E;
-    --ink-2: #4A4A4F;
-    --ink-3: #8E8E93;
-    --hairline: rgba(0,0,0,0.10);
-    --hairline-soft: rgba(0,0,0,0.06);
-    --accent: #0A84FF;
-    --accent-soft: rgba(10,132,255,0.10);
-    --success: #28C941;
-    --warning: #FF9500;
-    --ps-cross: #4FA8E0;
-    --ps-circle: #E84A4A;
-    --ps-triangle: #5DC97A;
-    --ps-square: #F25BA8;
-    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
-    --font-mono: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
-  }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-size: 16px;
-    line-height: 1.5;
-  }
-  a { color: inherit; text-decoration: none; }
-  a:hover { color: var(--accent); }
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly site summary" />
 
-  .wrap {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 28px;
-  }
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Steer" />
+<meta property="og:title" content="Steer — Game controllers as full Mac input devices" />
+<meta property="og:description" content="Turn a game controller into a full Mac input device: cursor, scroll, shortcuts, gyro mouse, haptics and adaptive triggers. macOS 14+ on Apple Silicon." />
+<meta property="og:url" content="https://steer.seanfloyd.dev/" />
+<!-- TODO(owner): icon.png is a 512x512 square. A dedicated 1200x630 OG image renders far better in link previews; swap og:image when one exists. -->
+<meta property="og:image" content="https://steer.seanfloyd.dev/icon.png" />
+<meta property="og:image:width" content="512" />
+<meta property="og:image:height" content="512" />
+<meta property="og:locale" content="en_CA" />
 
-  /* ===================== nav ===================== */
-  nav.top {
-    height: 64px;
-    display: flex;
-    align-items: center;
-    border-bottom: 0.5px solid var(--hairline-soft);
-    position: sticky; top: 0;
-    background: rgba(251,250,248,0.85);
-    backdrop-filter: blur(20px);
-    z-index: 50;
-  }
-  nav.top .wrap {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 28px;
-  }
-  .brand {
-    display: flex; align-items: center; gap: 9px;
-    font-weight: 600; font-size: 15px;
-    letter-spacing: -0.01em;
-  }
-  .brand .logo {
-    width: 26px; height: 26px;
-    border-radius: 7px;
-    overflow: hidden;
-    display: grid; place-items: center;
-  }
-  .brand .logo img { width: 26px; height: 26px; display: block; }
-  nav.top ul {
-    list-style: none; margin: 0; padding: 0;
-    display: flex; gap: 22px;
-    font-size: 13px;
-    color: var(--ink-2);
-  }
-  nav.top .spacer { flex: 1; }
-  nav.top .nav-cta {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 12px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 6px;
-    font-size: 13px; font-weight: 500;
-  }
-  nav.top .nav-cta:hover { background: #006FE6; color: #fff; }
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Steer — Game controllers as full Mac input devices" />
+<meta name="twitter:description" content="Turn a game controller into a full Mac input device: cursor, scroll, shortcuts, gyro mouse, haptics and adaptive triggers. macOS 14+ on Apple Silicon." />
+<meta name="twitter:image" content="https://steer.seanfloyd.dev/icon.png" />
 
-  /* ===================== hero ===================== */
-  section.hero {
-    padding: 88px 0 56px;
-    border-bottom: 0.5px solid var(--hairline-soft);
-  }
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12px; color: var(--accent);
-    text-transform: uppercase; letter-spacing: 0.08em;
-    font-weight: 600;
-    padding: 4px 10px;
-    background: var(--accent-soft);
-    border-radius: 999px;
-    margin-bottom: 22px;
-  }
-  h1.headline {
-    font-size: 56px;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.05;
-    max-width: 760px;
-    margin: 0 0 18px;
-  }
-  .hero-sub {
-    font-size: 19px;
-    color: var(--ink-2);
-    max-width: 600px;
-    margin: 0 0 32px;
-    line-height: 1.45;
-  }
-  .cta-row {
-    display: flex; gap: 12px; align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 14px;
-  }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 20px;
-    font-size: 14px; font-weight: 500;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 0.5px solid transparent;
-    font-family: var(--font-sans);
-    transition: background 0.12s;
-  }
-  .btn.primary {
-    background: var(--accent); color: #fff;
-  }
-  .btn.primary:hover { background: #006FE6; color: #fff; }
-  .btn.secondary {
-    background: #1C1C1E; color: #fff;
-  }
-  .btn.secondary:hover { background: #000; color: #fff; }
-  .btn .mas {
-    display: flex; flex-direction: column; align-items: flex-start;
-    line-height: 1.1;
-  }
-  .btn .mas small { font-size: 9px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
-  .btn .mas strong { font-size: 14px; font-weight: 500; }
-  .price-line {
-    font-size: 13px;
-    color: var(--ink-3);
-    font-family: var(--font-mono);
-  }
-  .price-line .em { color: var(--ink-2); }
+<link rel="stylesheet" href="style.css" />
 
-  /* hero visual — frame from a demo video, mocked as a real macOS desktop */
-  .hero-visual {
-    margin-top: 56px;
-    border-radius: 14px;
-    background:
-      radial-gradient(120% 80% at 20% 0%, #4A5A6E 0%, #2E3744 45%, #1A2230 100%);
-    aspect-ratio: 16/9;
-    position: relative;
-    overflow: hidden;
-    border: 0.5px solid rgba(0,0,0,0.30);
-    box-shadow:
-      0 30px 70px rgba(0,0,0,0.20),
-      0 0 0 1px rgba(255,255,255,0.04) inset;
+<!-- Structured data (schema.org JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Steer",
+  "operatingSystem": "macOS 14.0+",
+  "applicationCategory": "UtilitiesApplication",
+  "applicationSubCategory": "ProductivityApplication",
+  "description": "Steer turns a game controller into a full Mac input device: cursor, scroll, keyboard shortcuts, gyro mouse, haptics and adaptive triggers. A menu-bar app for macOS on Apple Silicon.",
+  "url": "https://steer.seanfloyd.dev/",
+  "image": "https://steer.seanfloyd.dev/icon.png",
+  "processorRequirements": "Apple Silicon",
+  "offers": {
+    "@type": "Offer",
+    "price": "8.99",
+    "priceCurrency": "EUR"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Sean Floyd",
+    "url": "https://seanfloyd.dev"
   }
-  /* desktop menu bar */
-  .hv-menubar {
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 26px;
-    background: rgba(0,0,0,0.25);
-    backdrop-filter: blur(20px);
-    border-bottom: 0.5px solid rgba(255,255,255,0.06);
-    display: flex; align-items: center;
-    padding: 0 14px;
-    gap: 18px;
-    color: rgba(255,255,255,0.85);
-    font-size: 12px;
-    font-weight: 500;
-    z-index: 5;
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Steer",
+  "url": "https://steer.seanfloyd.dev/",
+  "publisher": {
+    "@type": "Person",
+    "name": "Sean Floyd",
+    "url": "https://seanfloyd.dev"
   }
-  .hv-menubar .apple {
-    width: 13px; height: 13px;
-    display: grid; place-items: center;
-  }
-  .hv-menubar .apple svg { width: 13px; height: 13px; }
-  .hv-menubar .app-name { font-weight: 600; }
-  .hv-menubar .menus { display: flex; gap: 16px; font-weight: 400; color: rgba(255,255,255,0.78); }
-  .hv-menubar .right {
-    margin-left: auto;
-    display: flex; align-items: center; gap: 14px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: rgba(255,255,255,0.7);
-  }
-  .hv-menubar .steer-icon {
-    width: 14px; height: 14px;
-    display: grid; place-items: center;
-    color: rgba(255,255,255,0.85);
-  }
-  .hv-menubar .steer-icon svg { width: 14px; height: 14px; }
-  .hv-menubar .battery {
-    display: inline-flex; align-items: center; gap: 4px;
-  }
-  .hv-menubar .clock { font-variant-numeric: tabular-nums; }
-  /* the app window */
-  .hv-window {
-    position: absolute;
-    top: 64px; left: 50%;
-    transform: translateX(-50%);
-    width: 76%;
-    max-width: 760px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow:
-      0 24px 60px rgba(0,0,0,0.45),
-      0 0 0 0.5px rgba(0,0,0,0.5);
-  }
-  .hv-window img { width: 100%; height: auto; display: block; }
-  /* cursor + trail laid on top of the window */
-  .hv-cursor {
-    position: absolute;
-    top: 56%; left: 60%;
-    width: 18px; height: 18px;
-    z-index: 6;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
-  }
-  .hv-cursor svg { width: 100%; height: 100%; }
-  .hv-trail {
-    position: absolute;
-    top: 50%; left: 12%;
-    width: 50%; height: 18%;
-    pointer-events: none;
-    z-index: 5;
-  }
-  .hv-trail svg { width: 100%; height: 100%; }
-  /* bottom strip — controller tag + play chrome */
-  .hv-strip {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 56px;
-    background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 0 18px 12px;
-    z-index: 6;
-  }
-  .hv-controller {
-    display: inline-flex; align-items: center; gap: 9px;
-    background: rgba(20,20,22,0.55);
-    border: 0.5px solid rgba(255,255,255,0.10);
-    border-radius: 8px;
-    padding: 7px 11px;
-    color: rgba(255,255,255,0.92);
-    font-size: 11.5px;
-    backdrop-filter: blur(20px);
-    letter-spacing: -0.005em;
-  }
-  .hv-controller .ctrl-svg { width: 18px; height: 14px; color: rgba(255,255,255,0.9); }
-  .hv-controller .arrow { color: rgba(255,255,255,0.5); }
-  .hv-controller .target { font-family: var(--font-mono); color: rgba(255,255,255,0.7); }
-  .hv-controller .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
-  .hv-player {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(20,20,22,0.55);
-    border: 0.5px solid rgba(255,255,255,0.10);
-    border-radius: 8px;
-    padding: 7px 11px 7px 9px;
-    color: rgba(255,255,255,0.85);
-    font-size: 11px;
-    backdrop-filter: blur(20px);
-    font-family: var(--font-mono);
-  }
-  .hv-player .play {
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.92);
-    color: #1A1A1C;
-    display: grid; place-items: center;
-  }
-  .hv-player .play svg { width: 7px; height: 7px; }
-  .hv-player .progress {
-    width: 60px; height: 2px; border-radius: 1px;
-    background: rgba(255,255,255,0.18);
-    position: relative;
-    overflow: hidden;
-  }
-  .hv-player .progress::after {
-    content: ""; position: absolute;
-    top: 0; left: 0; bottom: 0;
-    width: 32%;
-    background: #fff;
-    border-radius: 1px;
-  }
-
-  .hero-after {
-    display: flex; gap: 28px; flex-wrap: wrap;
-    margin-top: 32px;
-    font-size: 13px;
-    color: var(--ink-3);
-  }
-  .hero-after span { display: inline-flex; align-items: center; gap: 6px; }
-  .hero-after svg { width: 13px; height: 13px; color: var(--success); }
-
-  /* ===================== section header ===================== */
-  section { padding: 80px 0; }
-  .sec-eyebrow {
-    font-size: 12px;
-    color: var(--ink-3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  h2 {
-    font-size: 36px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    margin: 0 0 16px;
-    max-width: 720px;
-  }
-  .sec-lede {
-    font-size: 17px;
-    color: var(--ink-2);
-    max-width: 620px;
-    margin: 0 0 40px;
-  }
-
-  /* ===================== features grid ===================== */
-  .features {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  .feature {
-    background: var(--surface);
-    border: 0.5px solid var(--hairline);
-    border-radius: 12px;
-    padding: 22px;
-    display: flex; flex-direction: column;
-    min-height: 200px;
-  }
-  .feature .ficon {
-    width: 28px; height: 28px;
-    color: var(--accent);
-    margin-bottom: 16px;
-  }
-  .feature h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0 0 6px;
-    letter-spacing: -0.01em;
-  }
-  .feature p {
-    font-size: 13.5px;
-    color: var(--ink-2);
-    margin: 0;
-    line-height: 1.5;
-  }
-  .feature.media {
-    padding: 0;
-    overflow: hidden;
-  }
-  .feature.media .media-shot {
-    height: 180px;
-    background: #F2F0EC;
-    overflow: hidden;
-    display: grid; place-items: center;
-    border-bottom: 0.5px solid var(--hairline-soft);
-  }
-  .feature.media .media-shot img {
-    max-width: 80%; max-height: 80%;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 18px rgba(0,0,0,0.10));
-  }
-  .feature.media .media-text {
-    padding: 18px 22px 22px;
-  }
-
-  /* ===================== trust ===================== */
-  section.trust {
-    background: var(--bg-alt);
-    border-top: 0.5px solid var(--hairline-soft);
-    border-bottom: 0.5px solid var(--hairline-soft);
-  }
-  .trust-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 48px;
-    align-items: center;
-  }
-  .trust-grid h2 { max-width: 460px; }
-  .trust-grid .sec-lede { font-size: 17px; max-width: 480px; }
-  .trust-pills {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    margin-top: 18px;
-  }
-  .trust-pill {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: var(--surface);
-    border: 0.5px solid var(--hairline);
-    border-radius: 999px;
-    padding: 6px 12px;
-    font-size: 13px;
-    color: var(--ink-2);
-  }
-  .trust-pill svg { width: 14px; height: 14px; color: var(--accent); }
-  .trust-shot {
-    background: var(--surface);
-    border-radius: 14px;
-    border: 0.5px solid var(--hairline);
-    padding: 20px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.06);
-  }
-  .trust-shot img {
-    width: 100%; height: auto; display: block;
-    border-radius: 8px;
-  }
-  .trust-caption {
-    margin-top: 12px;
-    font-size: 12px;
-    color: var(--ink-3);
-    font-family: var(--font-mono);
-  }
-
-  /* ===================== comparison ===================== */
-  .compare {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .compare-card {
-    background: var(--surface);
-    border-radius: 12px;
-    border: 0.5px solid var(--hairline);
-    padding: 26px;
-  }
-  .compare-card.us { border: 1px solid var(--accent); background: #fff; }
-  .compare-head {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 4px;
-  }
-  .compare-head h3 {
-    margin: 0; font-size: 16px; font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-  .compare-head .tag {
-    font-size: 11px; padding: 2px 7px;
-    border-radius: 4px;
-    background: var(--accent-soft);
-    color: var(--accent);
-    font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.06em;
-  }
-  .compare-price {
-    color: var(--ink-3);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    margin: 0 0 18px;
-  }
-  .compare-list {
-    list-style: none; padding: 0; margin: 0;
-    display: flex; flex-direction: column;
-  }
-  .compare-list li {
-    padding: 9px 0;
-    border-top: 0.5px solid var(--hairline-soft);
-    display: flex; align-items: flex-start; gap: 9px;
-    font-size: 13.5px;
-    color: var(--ink-2);
-  }
-  .compare-list li:first-child { border-top: none; }
-  .compare-list .check {
-    flex: 0 0 16px; color: var(--success);
-    margin-top: 2px;
-  }
-  .compare-list .miss {
-    flex: 0 0 16px; color: var(--ink-3);
-    margin-top: 2px;
-  }
-  .compare-list li.miss-row { color: var(--ink-3); }
-  .compare-footnote {
-    font-size: 12px; color: var(--ink-3);
-    margin-top: 24px;
-    font-family: var(--font-mono);
-  }
-
-  /* ===================== workflows ===================== */
-  section.workflows { background: var(--bg-alt); border-top: 0.5px solid var(--hairline-soft); }
-  .workflow {
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 40px;
-    align-items: center;
-    padding: 36px 0;
-    border-top: 0.5px solid var(--hairline-soft);
-  }
-  .workflow:first-of-type { border-top: none; }
-  .workflow.reverse { grid-template-columns: 1.1fr 0.9fr; }
-  .workflow.reverse .wf-shot { order: -1; }
-  .workflow h3 {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    margin: 0 0 10px;
-  }
-  .workflow p {
-    margin: 0 0 12px;
-    color: var(--ink-2);
-    font-size: 15px;
-    line-height: 1.55;
-  }
-  .wf-shot {
-    background: var(--surface);
-    border: 0.5px solid var(--hairline);
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 16px 40px rgba(0,0,0,0.06);
-  }
-  .wf-shot img { width: 100%; height: auto; display: block; border-radius: 6px; }
-  .wf-meta {
-    margin-top: 10px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--ink-3);
-    display: flex; gap: 10px;
-  }
-  .wf-meta .sep { color: var(--hairline); }
-
-  /* ===================== faq ===================== */
-  .faq-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px 32px;
-  }
-  .faq-item {
-    background: var(--surface);
-    border: 0.5px solid var(--hairline);
-    border-radius: 10px;
-    padding: 20px 22px;
-  }
-  .faq-item h4 {
-    margin: 0 0 6px;
-    font-size: 14px;
-    font-weight: 600;
-  }
-  .faq-item p {
-    margin: 0;
-    font-size: 13.5px;
-    color: var(--ink-2);
-    line-height: 1.55;
-  }
-  .faq-item code {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    background: rgba(0,0,0,0.04);
-    padding: 1px 5px;
-    border-radius: 3px;
-  }
-
-  /* ===================== footer ===================== */
-  footer {
-    padding: 36px 0 44px;
-    border-top: 0.5px solid var(--hairline-soft);
-    background: var(--bg-alt);
-  }
-  footer .wrap {
-    display: flex;
-    align-items: flex-start;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
-  footer .col-left { flex: 1; min-width: 220px; }
-  footer .col-links { display: flex; gap: 36px; }
-  footer .col-links h5 {
-    margin: 0 0 8px;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink-3);
-  }
-  footer .col-links a {
-    display: block;
-    font-size: 13px;
-    color: var(--ink-2);
-    padding: 3px 0;
-  }
-  footer .fineprint {
-    margin-top: 26px;
-    font-size: 12px;
-    color: var(--ink-3);
-    font-family: var(--font-mono);
-    display: flex; flex-wrap: wrap; gap: 12px;
-    width: 100%;
-  }
-
-  /* ===================== responsive ===================== */
-  @media (max-width: 920px) {
-    h1.headline { font-size: 38px; }
-    .features { grid-template-columns: 1fr 1fr; }
-    .compare, .trust-grid, .workflow, .workflow.reverse, .faq-grid {
-      grid-template-columns: 1fr;
-      gap: 22px;
-    }
-    .workflow.reverse .wf-shot { order: 0; }
-  }
-  @media (max-width: 560px) {
-    h1.headline { font-size: 32px; }
-    .features { grid-template-columns: 1fr; }
-    nav.top ul { display: none; }
-    section { padding: 56px 0; }
-  }
-</style>
+}
+</script>
 </head>
-<body>
+<body class="landing">
 
 <!-- ==================================================== nav -->
 <nav class="top">
@@ -638,7 +83,7 @@
       <li><a href="#features">Features</a></li>
       <li><a href="#compare">Compare</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="#">Docs</a></li>
+      <!-- "Docs" hidden for the beta — no docs site yet. Restore (with a real href) once docs exist. -->
     </ul>
     <span class="spacer"></span>
     <a href="#download" class="nav-cta">
@@ -661,13 +106,13 @@
       Press a controller button, it presses a key. Tilt the stick, the cursor moves. That's it. Steer runs in the menu bar; pair any supported pad and the rest is configuration.
     </p>
 
-    <!-- Beta: CTAs join an email waitlist. Swap the mailto for the TestFlight public link once the build is live. -->
-    <div class="cta-row" id="download">
-      <a href="mailto:steer@seanfloyd.dev?subject=Steer%20beta%20access" class="btn primary">
+    <!-- Beta: CTAs jump to the waitlist form (#download). Swap for the TestFlight public link once the build is live. -->
+    <div class="cta-row">
+      <a href="#download" class="btn primary">
         Join the beta
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12v8H2z"/><path d="M2 4l6 5 6-5"/></svg>
       </a>
-      <a href="mailto:steer@seanfloyd.dev?subject=Steer%20beta%20access" class="btn secondary">
+      <a href="#download" class="btn secondary">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12.4c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.1-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2-.1 1.6-.7 3-.7 1.4 0 1.8.7 3 .7 1.2 0 2-1.1 2.8-2.3.6-.9 1.1-1.8 1.4-2.8-2.5-.9-2.3-2.7-2.3-2.7zM13.8 5.2c.6-.8 1.1-1.9 1-3.1-.9 0-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1 0 2.1-.5 2.8-1.2z"/></svg>
         <span class="mas"><small>Coming soon to the</small><strong>Mac App Store</strong></span>
       </a>
@@ -732,14 +177,6 @@
           <span class="dot"></span>
           <span class="target">12 ms</span>
         </span>
-        <span class="hv-player">
-          <span class="play">
-            <svg viewBox="0 0 8 8" fill="currentColor"><path d="M1.5 0.5v7l6-3.5z"/></svg>
-          </span>
-          <span>0:08</span>
-          <span class="progress"></span>
-          <span>0:24</span>
-        </span>
       </div>
     </div>
 
@@ -774,12 +211,12 @@
     <div class="features">
       <!-- media tiles using real screenshots -->
       <div class="feature media">
-        <div class="media-shot">
+        <div class="media-shot contain">
           <img src="assets/radial-menu.png" alt="Radial app launcher" />
         </div>
         <div class="media-text">
           <h3>Radial app launcher</h3>
-          <p>R3 opens an app ring (up to 12 slots). Aim with the left stick, click a face button to launch.</p>
+          <p>L3 opens an app ring (up to 12 slots). Aim with the left stick, click a face button to launch.</p>
         </div>
       </div>
 
@@ -794,7 +231,7 @@
       </div>
 
       <div class="feature media">
-        <div class="media-shot">
+        <div class="media-shot contain">
           <img src="assets/menubar-dropdown.png" alt="Menu bar dropdown" />
         </div>
         <div class="media-text">
@@ -907,7 +344,7 @@
         <div class="compare-head">
           <h3>ControllerKeys</h3>
         </div>
-        <p class="compare-price">$9.99 · Gumroad, direct only</p>
+        <p class="compare-price">$9.99 launch, then $19.99 · Gumroad only</p>
         <ul class="compare-list">
           <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Xbox Elite firmware variants — every paddle profile</li>
           <li><svg class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Mac-to-Mac controller relay over Wi-Fi</li>
@@ -999,6 +436,26 @@
   </div>
 </section>
 
+<!-- ==================================================== beta waitlist -->
+<section class="waitlist" id="download">
+  <div class="wrap">
+    <div class="wl-card">
+      <div class="sec-eyebrow">Beta</div>
+      <h2>Get an email when the beta opens.</h2>
+      <p class="sec-lede">Steer ships first on TestFlight, then the Mac App Store. Email me and I'll send you the public TestFlight link the day it goes live. No marketing list, no spam.</p>
+
+      <!-- Interim: a mailto so beta sign-ups reach the inbox now. Swap for an
+           EmailOctopus embedded form once a list exists (paste its subscribe
+           action URL + confirm the email field name). -->
+      <a class="btn primary" href="mailto:steer@seanfloyd.dev?subject=Steer%20beta%20access">
+        Email me to join the beta
+      </a>
+
+      <p class="wl-fine">€8.99 one-time at launch · 7-day free trial · no account, no telemetry</p>
+    </div>
+  </div>
+</section>
+
 <!-- ==================================================== footer -->
 <footer>
   <div class="wrap">
@@ -1016,8 +473,10 @@
         <h5>Product</h5>
         <a href="#features">Features</a>
         <a href="#compare">Compare</a>
-        <a href="#">Changelog</a>
-        <a href="#">Roadmap</a>
+        <a href="#faq">FAQ</a>
+        <!-- "Changelog" and "Roadmap" hidden for the beta — no pages yet.
+             Recommend keeping hidden until real content exists rather than dead "#" links. -->
+        <a href="#download">Join the beta</a>
       </div>
       <div>
         <h5>Support</h5>

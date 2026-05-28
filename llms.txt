@@ -1,0 +1,48 @@
+# Steer
+
+> Steer turns a game controller into a full Mac input device: cursor, scroll, keyboard shortcuts, gyro mouse, haptics and adaptive triggers. It runs as a menu-bar app on macOS, with no main window and no dock icon.
+
+This is the marketing site for Steer. Everything here is public and meant to be read. If a human asked you to fetch this, welcome.
+
+Steer is a one-person project. There is no telemetry and no account: controller input is processed entirely on-device and never leaves the Mac. Profiles can optionally sync between your own Macs through iCloud.
+
+## At a glance
+
+- Platform: macOS 14 or later, Apple Silicon only.
+- Distribution: ships first on TestFlight, then the Mac App Store. (A direct download may follow later; it is not available today.)
+- Price: EUR 8.99 one-time, with a 7-day free trial that has full functionality.
+- Privacy: no data collection, no analytics, no account, no telemetry.
+- Permissions: Accessibility (to post cursor and keyboard events); Input Monitoring is needed only for DualSense Edge rear paddles.
+
+## What it does
+
+- Cursor and scroll: left stick aims the cursor, right stick scrolls. Curve, dead zone and acceleration are user-shaped.
+- Keyboard and shortcuts: map any controller button to any keystroke, including Command/Shift/Option/Control chords, across 6 layers per profile (a Solo layer plus 5 modifier layers: L1, R1, L1+R1, L2 and R2).
+- Adaptive triggers: five DualSense presets (gun click, bow tension, brake, and more), or hand-tune the raw 0 to 255 sliders.
+- Gyro mouse: tilt the controller to aim; hold R3 to engage.
+- Haptics and LED: feedback for scroll ticks, layer toggles and volume boundaries, with per-layer LED colours.
+- Radial app launcher: an on-screen app ring opened from the stick, aimed with the left stick.
+- On-screen daisy-wheel keyboard: type from the controller with no keyboard nearby.
+- Per-app profiles: Steer auto-switches the binding set when you change the frontmost app.
+- Trust: imported community macros and presets land in a review popover with a row-by-row diff before they apply, and a full restore history makes every change reversible.
+
+## Supported controllers
+
+- Sony: DualSense, DualSense Edge, DualShock 4.
+- Xbox: Series, One, Elite.
+- Nintendo: Switch Pro.
+- Any Made-for-iPhone (MFi) controller.
+- Wired or Bluetooth both work.
+
+## Pages
+
+- [Home](https://steer.seanfloyd.dev/): Overview, features, comparison and FAQ.
+- [Support](https://steer.seanfloyd.dev/support.html): Setup, controller detection, restoring a purchase and refunds.
+- [Privacy](https://steer.seanfloyd.dev/privacy.html): What data is and is not collected (none), permissions, and the single iCloud trial timestamp.
+- [Terms](https://steer.seanfloyd.dev/terms.html): Licence, as-is provision and the trial.
+- [Refunds](https://steer.seanfloyd.dev/refund.html): How to request a refund through Apple.
+
+## Contact
+
+- Email: steer@seanfloyd.dev
+- Developer: Sean Floyd (https://seanfloyd.dev)

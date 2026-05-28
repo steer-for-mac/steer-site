@@ -1,0 +1,10 @@
+# Robots.txt for steer.seanfloyd.dev
+#
+# This is the public marketing site for Steer, a macOS menu-bar app.
+# Everything here is meant to be found, so all crawlers are welcome.
+# See also /llms.txt for an LLM-friendly summary.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://steer.seanfloyd.dev/sitemap.xml
