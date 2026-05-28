@@ -852,6 +852,7 @@ h1.headline {
   transition: background 0.12s;
 }
 .wl-form button:hover { background: #006FE6; }
+.waitlist .wl-card .btn { margin-bottom: 28px; }
 .wl-fine {
   font-size: 12px;
   color: var(--ink-3);
