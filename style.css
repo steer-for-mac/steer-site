@@ -53,6 +53,10 @@ body {
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--accent); }
 
+/* <picture> wraps the screenshots for light/dark sources; keep it transparent
+   to layout so the existing img rules (sizing, object-fit) apply unchanged. */
+picture { display: contents; }
+
 /* Keyboard focus — visible ring on every interactive element (mouse users
    keep a clean UI via :focus-visible). */
 a:focus-visible,
@@ -460,23 +464,6 @@ h1.headline {
     0 0 0 0.5px rgba(0,0,0,0.5);
 }
 .hv-window img { width: 100%; height: auto; display: block; }
-/* cursor + trail laid on top of the window */
-.hv-cursor {
-  position: absolute;
-  top: 56%; left: 60%;
-  width: 18px; height: 18px;
-  z-index: 6;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
-}
-.hv-cursor svg { width: 100%; height: 100%; }
-.hv-trail {
-  position: absolute;
-  top: 50%; left: 12%;
-  width: 50%; height: 18%;
-  pointer-events: none;
-  z-index: 5;
-}
-.hv-trail svg { width: 100%; height: 100%; }
 .hero-after {
   display: flex; gap: 28px; flex-wrap: wrap;
   margin-top: 32px;
@@ -635,7 +622,7 @@ h1.headline {
   border: 0.5px solid var(--hairline);
   padding: 26px;
 }
-.compare-card.us { border: 1px solid var(--accent); background: #fff; }
+.compare-card.us { border: 1px solid var(--accent); background: var(--surface); }
 .compare-head {
   display: flex; align-items: center; gap: 10px;
   margin-bottom: 4px;
@@ -835,4 +822,37 @@ h1.headline {
   .features { grid-template-columns: 1fr; }
   nav.top ul { display: none; }
   .landing section { padding: 56px 0; }
+}
+
+/* ===================== dark mode =====================
+   Honours the system appearance. Most of the site adapts via the token
+   overrides below; the handful of rules after them patch colours that were
+   hardcoded outside the token system (nav blur, the black MAS button,
+   screenshot framing). Each screenshot ships a native dark-appearance
+   capture via <picture>; the ring/tile rules below just seat them cleanly
+   on the dark page. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161618;
+    --bg-alt: #1E1E21;
+    --surface: #242428;
+    --ink: #F5F5F7;
+    --ink-2: #C2C2C9;
+    --ink-3: #9A9AA1;
+    --hairline: rgba(255,255,255,0.14);
+    --hairline-soft: rgba(255,255,255,0.07);
+    --accent-soft: rgba(10,132,255,0.18);
+  }
+  /* translucent nav bars were tinted to the light bg colour */
+  nav.top, nav { background: rgba(22,22,24,0.80); }
+  /* black App Store button needs an edge to separate from the dark page */
+  .btn.secondary { background: #0D0D0F; border-color: rgba(255,255,255,0.16); }
+  .btn.secondary:hover { background: #000; }
+  /* a hairline ring so screenshots sit as deliberate windows on dark */
+  .wf-shot img, .feature.media .media-shot { box-shadow: 0 0 0 0.5px rgba(255,255,255,0.10); }
+  /* keep the contained transparent art legible on a darker tile */
+  .feature.media .media-shot {
+    background:
+      radial-gradient(140% 120% at 50% 0%, #2E2E33 0%, #232327 60%, #1C1C20 100%);
+  }
 }
