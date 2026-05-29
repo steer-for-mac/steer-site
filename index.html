@@ -149,24 +149,12 @@
 
       <!-- the bindings window inside the desktop -->
       <div class="hv-window">
-        <img src="assets/settings-buttons.png" alt="Steer bindings window" width="2000" height="1762" />
+        <picture>
+          <source srcset="assets/settings-buttons-dark.png" media="(prefers-color-scheme: dark)" />
+          <img src="assets/settings-buttons.png" alt="Steer bindings window" width="1600" height="1356" />
+        </picture>
       </div>
 
-      <!-- cursor trail rendered over the window -->
-      <svg aria-hidden="true" class="hv-trail" viewBox="0 0 400 100" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="tg" x1="0" x2="1">
-            <stop offset="0" stop-color="#fff" stop-opacity="0"/>
-            <stop offset="1" stop-color="#fff" stop-opacity="0.8"/>
-          </linearGradient>
-        </defs>
-        <path d="M0 80 Q80 10 200 50 T400 30" fill="none" stroke="url(#tg)" stroke-width="1.5" stroke-dasharray="2 3"/>
-      </svg>
-
-      <!-- cursor -->
-      <div class="hv-cursor">
-        <svg aria-hidden="true" viewBox="0 0 16 16" fill="#fff"><path d="M1.5 1.2l4.6 12.3 2.4-5.4 5.4-2.4z" stroke="#000" stroke-width="0.6" stroke-linejoin="round"/></svg>
-      </div>
     </div>
 
     <div class="hero-after">
@@ -201,7 +189,10 @@
       <!-- media tiles using real screenshots -->
       <div class="feature media">
         <div class="media-shot contain">
-          <img src="assets/radial-menu.png" alt="Radial app launcher" width="620" height="780" loading="lazy" />
+          <picture>
+            <source srcset="assets/radial-menu-dark.png" media="(prefers-color-scheme: dark)" />
+            <img src="assets/radial-menu.png" alt="Radial app launcher" width="620" height="780" loading="lazy" />
+          </picture>
         </div>
         <div class="media-text">
           <h3>Radial app launcher</h3>
@@ -211,7 +202,10 @@
 
       <div class="feature media">
         <div class="media-shot contain">
-          <img src="assets/daisy-wheel.png" alt="On-screen daisy-wheel keyboard" width="960" height="1080" loading="lazy" />
+          <picture>
+            <source srcset="assets/daisy-wheel-dark.png" media="(prefers-color-scheme: dark)" />
+            <img src="assets/daisy-wheel.png" alt="On-screen daisy-wheel keyboard" width="900" height="1012" loading="lazy" />
+          </picture>
         </div>
         <div class="media-text">
           <h3>On-screen keyboard</h3>
@@ -221,7 +215,10 @@
 
       <div class="feature media">
         <div class="media-shot contain">
-          <img src="assets/menubar-dropdown.png" alt="Menu bar dropdown" width="728" height="422" loading="lazy" />
+          <picture>
+            <source srcset="assets/menubar-dropdown-dark.png" media="(prefers-color-scheme: dark)" />
+            <img src="assets/menubar-dropdown.png" alt="Menu bar dropdown" width="720" height="530" loading="lazy" />
+          </picture>
         </div>
         <div class="media-text">
           <h3>Menu-bar resident</h3>
@@ -277,7 +274,7 @@
         <div class="sec-eyebrow">Trust</div>
         <h2>Nothing happens without you seeing it first.</h2>
         <p class="sec-lede">
-          Steer shows you exactly what a community preset does before you accept it, and keeps a full restore history so every change is reversible. Imported macros and presets land in a review popover, not directly in your bindings.
+          Add a built-in app preset and you see exactly what it binds before it applies. Import a profile and it lands in a review step first, never straight into your bindings. Every change is a restore point you can roll back.
         </p>
         <div class="trust-pills">
           <span class="trust-pill">
@@ -296,8 +293,11 @@
       </div>
       <div>
         <div class="trust-shot">
-          <img src="assets/popover-macro-row.png" alt="Macro import popover with row-by-row diff" width="2560" height="1854" loading="lazy" />
-          <div class="trust-caption">Macro import — review every step before binding</div>
+          <picture>
+            <source srcset="assets/presets-dark.png" media="(prefers-color-scheme: dark)" />
+            <img src="assets/presets.png" alt="App presets gallery showing what each preset binds before you add it" width="1600" height="1356" loading="lazy" />
+          </picture>
+          <div class="trust-caption">App presets — preview what each one binds before you add it</div>
         </div>
       </div>
     </div>
@@ -361,14 +361,20 @@
         <p>Conflicts get their own page; if two bindings collide, you'll see it before you exit.</p>
       </div>
       <div class="wf-shot">
-        <img src="assets/settings-buttons.png" alt="Bindings settings pane" width="2000" height="1762" loading="lazy" />
+        <picture>
+          <source srcset="assets/settings-buttons-dark.png" media="(prefers-color-scheme: dark)" />
+          <img src="assets/settings-buttons.png" alt="Bindings settings pane" width="1600" height="1356" loading="lazy" />
+        </picture>
         <div class="wf-meta"><span>Settings → Bindings</span><span class="sep">·</span><span>46 bindings · 6 layers</span></div>
       </div>
     </div>
 
     <div class="workflow reverse">
       <div class="wf-shot">
-        <img src="assets/settings-sticks.png" alt="Sticks settings pane" width="2000" height="1762" loading="lazy" />
+        <picture>
+          <source srcset="assets/settings-sticks-dark.png" media="(prefers-color-scheme: dark)" />
+          <img src="assets/settings-sticks.png" alt="Sticks settings pane" width="1600" height="1356" loading="lazy" />
+        </picture>
         <div class="wf-meta"><span>Settings → Sticks</span><span class="sep">·</span><span>shaped curves · per-axis</span></div>
       </div>
       <div>
@@ -383,7 +389,10 @@
         <p>Steer auto-switches profiles when you change frontmost app. Add a per-app override or leave Default in charge.</p>
       </div>
       <div class="wf-shot">
-        <img src="assets/settings-profiles.png" alt="Profiles settings pane" width="2000" height="1762" loading="lazy" />
+        <picture>
+          <source srcset="assets/settings-profiles-dark.png" media="(prefers-color-scheme: dark)" />
+          <img src="assets/settings-profiles.png" alt="Profiles settings pane" width="1600" height="1356" loading="lazy" />
+        </picture>
         <div class="wf-meta"><span>Settings → Profiles</span><span class="sep">·</span><span>Default + per-app overrides</span></div>
       </div>
     </div>
@@ -419,7 +428,7 @@
       </div>
       <div class="faq-item">
         <h3>What does it not do?</h3>
-        <p>Mac-to-Mac relay, Xbox Elite firmware paddle modes, controller-as-MIDI. If those are deal-breakers, ControllerKeys is the right pick.</p>
+        <p>Mac-to-Mac relay and Xbox Elite firmware paddle modes. If those are deal-breakers, ControllerKeys is the right pick.</p>
       </div>
     </div>
   </div>
