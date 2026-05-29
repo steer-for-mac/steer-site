@@ -64,10 +64,10 @@
     <p>The App Store version of Steer writes a single timestamp to your personal iCloud Key-Value Storage — the date your free trial began. This is used only to prevent the trial from restarting on reinstall. No other data is written to iCloud.</p>
 
     <h2>Permissions</h2>
-    <p>Steer requests two macOS permissions:</p>
+    <p>Steer requests one macOS permission, plus an optional second:</p>
     <ul>
       <li><strong>Accessibility</strong> — required to move the cursor and dispatch keyboard events on your behalf.</li>
-      <li><strong>Input Monitoring</strong> — required to read controller input at the system level.</li>
+      <li><strong>Input Monitoring</strong> — only requested if you use a DualSense Edge and want to bind its two rear paddles. Every other controller works with Accessibility alone.</li>
     </ul>
     <p>These permissions are used exclusively to translate controller input into Mac input events. No input data is recorded or transmitted.</p>
 
