@@ -24,7 +24,7 @@ Steer is a one-person project. There is no telemetry and no account: controller 
 - Radial app launcher: an on-screen app ring opened from the stick, aimed with the left stick.
 - On-screen daisy-wheel keyboard: type from the controller with no keyboard nearby.
 - Per-app profiles: Steer auto-switches the binding set when you change the frontmost app.
-- Trust: built-in app presets show exactly what they bind before you add them, imported profiles go through a review step before they apply, and a full restore history makes every change reversible.
+- Trust: presets or profiles whose bindings do more than press keys (open URLs, run scripts) are shown for review before they apply, never dropped straight into your bindings, and a full restore history makes every change reversible.
 
 ## Supported controllers
 
