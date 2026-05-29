@@ -26,6 +26,16 @@ Steer is a one-person project. There is no telemetry and no account: controller 
 - Per-app profiles: Steer auto-switches the binding set when you change the frontmost app.
 - Trust: presets or profiles whose bindings do more than press keys (open URLs, run scripts) are shown for review before they apply, never dropped straight into your bindings, and a full restore history makes every change reversible.
 
+## Use cases
+
+Steer is built for more than gaming:
+- Hands off the keyboard / wrist relief: drive the Mac with the controller in your lap.
+- Code from the couch: fire shortcuts and trigger tools like Claude Code, Cursor or Raycast from across the room.
+- Read and browse leaned back: scroll and navigate without reaching for the trackpad.
+- Present and play media: advance slides, skip tracks and control playback from a distance.
+- Accessible input: a gentler alternative when a mouse and keyboard aren't comfortable.
+- Games and emulators: remap any pad to keys for titles that ignore controllers natively.
+
 ## Supported controllers
 
 - Sony: DualSense, DualSense Edge, DualShock 4.
