@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Steer</title>
+        <item>
+            <title>1.0</title>
+            <pubDate>Fri, 19 Jun 2026 19:06:09 -0400</pubDate>
+            <link>https://steer.seanfloyd.dev/</link>
+            <sparkle:version>1021</sparkle:version>
+            <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://github.com/steer-for-mac/steer-dist/releases/download/v1.0/Steer.dmg" length="12559874" type="application/octet-stream" sparkle:edSignature="IDAoXkv7J7gDQqB4+5GQeljn3/1UmV/CVCg4wN4uuIL2/YlV+JSgwOo6MkFd7Eh8ycFYXTvEM6RD1EkxQ805BQ=="/>
+        </item>
+    </channel>
+</rss>
