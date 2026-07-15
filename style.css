@@ -260,6 +260,7 @@ footer {
   color: var(--ink-3);
   font-family: var(--font-mono);
 }
+.footer-copy a:hover { color: var(--accent); }
 .footer-links {
   margin-left: auto;
   display: flex;
@@ -810,6 +811,7 @@ h1.headline {
   display: flex; flex-wrap: wrap; gap: 12px;
   width: 100%;
 }
+.landing footer .fineprint a:hover { color: var(--accent); }
 .landing footer .legal-note {
   margin-top: 14px;
   font-size: 11px;
