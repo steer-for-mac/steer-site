@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Privacy Policy — Steer</title>
-  <meta name="description" content="Steer's privacy policy: no data collection, no analytics, no account. Controller input is processed on-device and never leaves your Mac.">
+  <meta name="description" content="Steer's privacy policy: no analytics, no telemetry, no account. Controller input never leaves your Mac; licence checks and user-initiated update checks are the only network connections, listed in full.">
   <link rel="canonical" href="https://steer.seanfloyd.dev/privacy.html">
   <link rel="icon" href="icon.png">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly site summary">
@@ -13,7 +13,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Steer">
   <meta property="og:title" content="Privacy Policy — Steer">
-  <meta property="og:description" content="No data collection, no analytics, no account. Controller input is processed on-device and never leaves your Mac.">
+  <meta property="og:description" content="No analytics, no telemetry, no account. Controller input never leaves your Mac; licence checks and user-initiated update checks are the only network connections.">
   <meta property="og:url" content="https://steer.seanfloyd.dev/privacy.html">
   <!-- Share card: 1200x630, rendered from og.html (variant 1). og-2.png / og-3.png are alternates. -->
   <meta property="og:image" content="https://steer.seanfloyd.dev/assets/og.png">
@@ -24,7 +24,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Privacy Policy — Steer">
-  <meta name="twitter:description" content="No data collection, no analytics, no account. Controller input is processed on-device and never leaves your Mac.">
+  <meta name="twitter:description" content="No analytics, no telemetry, no account. Controller input never leaves your Mac; licence checks and user-initiated update checks are the only network connections.">
   <meta name="twitter:image" content="https://steer.seanfloyd.dev/assets/og.png">
 
   <link rel="stylesheet" href="style.css">
@@ -49,16 +49,23 @@
 <main>
   <div class="prose">
     <h1>Privacy Policy</h1>
-    <p class="meta">Effective 10 April 2026</p>
+    <p class="meta">Effective 15 July 2026</p>
 
     <h2>Summary</h2>
-    <p>Steer does not collect, transmit, or store any personal data. Controller input is processed entirely on-device and never leaves your Mac.</p>
+    <p>Steer has no analytics, no telemetry, and no account. Controller input is processed entirely on-device and never leaves your Mac. The app reaches the network in exactly two situations: licence activation and checks, and update checks you start yourself. Both are described in full below.</p>
 
-    <h2>Data collected</h2>
-    <p>None. No usage data, no crash reports, no analytics of any kind.</p>
+    <h2>Controller input</h2>
+    <p>Everything Steer does with your controller (cursor, keystrokes, bindings, profiles, macros) happens locally. No input data is recorded or transmitted, ever.</p>
 
-    <h2>Network connections</h2>
-    <p>Steer makes no network connections during normal use. Controller input never leaves your Mac. Purchase and licensing details are being finalised ahead of launch; this page will be updated to describe exactly what connects, and when, before the app ships.</p>
+    <h2>Purchases and licensing</h2>
+    <p>Steer is sold through <a href="https://www.lemonsqueezy.com">Lemon Squeezy</a>, the merchant of record. Checkout happens on their pages: your name, email address, payment details and billing information go to Lemon Squeezy, which acts as the data controller for that purchase data under <a href="https://www.lemonsqueezy.com/privacy">its privacy policy</a>. I receive the order details needed for support and refunds; I never see your payment details.</p>
+    <p>When you activate a licence, and afterwards when the app confirms a stored licence is still valid, Steer sends your licence key and the instance name "Steer (macOS)" to Lemon Squeezy's licence API at api.lemonsqueezy.com. As with any internet request, the server also sees your IP address. That is the entire exchange. Your licence key is stored in the macOS Keychain, not in a plain-text file, and if the server can't be reached the app leans on an offline grace window rather than locking you out.</p>
+
+    <h2>Updates and downloads</h2>
+    <p>Update checks are user-initiated only. Steer never contacts the update feed on launch or on a schedule; nothing happens until you choose "Check for Updates…". When you do, the app fetches the update feed from steer.seanfloyd.dev and, if you install, downloads the new version from GitHub. This site is served by GitHub Pages and the app itself is hosted on GitHub Releases, so GitHub sees the standard request data any web host does, including your IP address, whenever you download or update Steer.</p>
+
+    <h2>Diagnostics</h2>
+    <p>Steer collects crash and performance diagnostics through Apple's MetricKit and stores them on your Mac only. Nothing is uploaded automatically. A report leaves your machine only when you choose "Report a Problem", which drafts an email in your own mail client with the diagnostics attached; you see exactly what's in it before deciding to send.</p>
 
     <h2>Permissions</h2>
     <p>Steer requests one macOS permission, plus an optional second:</p>
@@ -68,8 +75,8 @@
     </ul>
     <p>These permissions are used exclusively to translate controller input into Mac input events. No input data is recorded or transmitted.</p>
 
-    <h2>Contact</h2>
-    <p>Questions: <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a></p>
+    <h2>Who runs Steer</h2>
+    <p>Steer is built and operated by Sean Floyd in Ottawa, Canada. For anything privacy-related, including a copy or deletion of what little I hold (support emails and order records), write to <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a>.</p>
   </div>
 </main>
 
