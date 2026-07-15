@@ -80,6 +80,7 @@
       Steer
     </a>
     <ul>
+      <li><a href="#demo">Watch</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#compare">Compare</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -87,7 +88,7 @@
     </ul>
     <span class="spacer"></span>
     <a href="#download" class="nav-cta">
-      Join the beta
+      Get notified
     </a>
   </div>
 </nav>
@@ -97,7 +98,7 @@
   <div class="wrap">
     <div class="eyebrow">
       <span style="width:6px;height:6px;border-radius:50%;background:var(--success);"></span>
-      v1.0 beta · macOS 14+ · Apple Silicon
+      Launching soon · macOS 14+ · Apple Silicon
     </div>
     <h1 class="headline">
       Your game controller is now a Mac input device.
@@ -109,7 +110,7 @@
     <!-- Beta: CTA emails to join early access. Swap href for a real download link when the notarized DMG is live. -->
     <div class="cta-row">
       <a href="#download" class="btn primary">
-        Join the beta
+        Notify me at launch
       </a>
     </div>
     <p class="price-line">
@@ -170,6 +171,22 @@
         <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>
         No account · no telemetry
       </span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================== demo video -->
+<section class="demo" id="demo">
+  <div class="wrap">
+    <div class="sec-eyebrow">See it in action</div>
+    <h2>A controller, running a Mac.</h2>
+    <p class="sec-lede">Real app footage — the launcher, the on-screen keyboard, the cursor moving under the stick. Nothing on the keyboard.</p>
+    <div class="demo-frame">
+      <video class="demo-video" autoplay muted loop playsinline preload="metadata"
+             poster="assets/demo-poster.jpg"
+             aria-label="Steer demo: a game controller driving the macOS cursor, app launcher and on-screen keyboard">
+        <source src="assets/demo.mp4" type="video/mp4" />
+      </video>
     </div>
   </div>
 </section>
@@ -482,20 +499,19 @@
 <section class="waitlist" id="download">
   <div class="wrap">
     <div class="wl-card">
-      <div class="sec-eyebrow">Beta</div>
-      <h2>Get an email when the beta opens.</h2>
-      <p class="sec-lede">Email me and I'll send you the beta build the day it's ready. No marketing list, no spam.</p>
+      <div class="sec-eyebrow">Launching soon</div>
+      <h2>Be first when Steer goes on sale.</h2>
+      <p class="sec-lede">Email me and I'll tell you the day it's on sale — one message, nothing else. No marketing list, no spam, no account.</p>
 
-      <!-- Beta collection is intentionally a mailto: sign-ups land in the inbox,
-           the launch announcement goes out as a manual BCC blast (fine for the
-           beta's tens of recipients; graduate to a Resend broadcast if the list
-           outgrows BCC, ~50-100). Swap this mailto for a real download link
-           once the notarized DMG is live. -->
-      <a class="btn primary" href="mailto:steer@seanfloyd.dev?subject=Steer%20beta%20access">
-        Email me to join the beta
+      <!-- Sign-ups land in the inbox; the launch announcement goes out as a manual
+           BCC blast (fine at this scale; graduate to a Resend broadcast past ~50-100).
+           Swap this mailto for the download/purchase link once the notarized DMG ships. -->
+      <a class="btn primary" href="mailto:steer@seanfloyd.dev?subject=Notify%20me%20when%20Steer%20is%20on%20sale">
+        Email me when it's on sale
       </a>
 
-      <p class="wl-fine">€9.99 one-time at launch · 14-day free trial · no account, no telemetry</p>
+      <p class="wl-fine">€9.99 one-time · 14-day free trial · no account, no telemetry</p>
+      <p class="wl-beta">Got a DualSense Edge or Xbox Elite? <a href="mailto:steer@seanfloyd.dev?subject=Steer%20beta%20testing">Help test the beta</a> and shape the launch.</p>
     </div>
   </div>
 </section>
@@ -520,7 +536,8 @@
         <a href="#faq">FAQ</a>
         <!-- "Changelog" and "Roadmap" hidden for the beta — no pages yet.
              Recommend keeping hidden until real content exists rather than dead "#" links. -->
-        <a href="#download">Join the beta</a>
+        <a href="#demo">Watch the demo</a>
+        <a href="#download">Get notified</a>
       </div>
       <div>
         <h5>Support</h5>
