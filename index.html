@@ -381,7 +381,7 @@
           <li><span class="sr-only">Included: </span><svg aria-hidden="true" class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Snapshots + full change audit</li>
           <li><span class="sr-only">Included: </span><svg aria-hidden="true" class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Notarized Developer-ID build</li>
           <li><span class="sr-only">Included: </span><svg aria-hidden="true" class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Apple Shortcuts integration</li>
-          <li><span class="sr-only">Included: </span><svg aria-hidden="true" class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>No private APIs — contained scripts &amp; automation</li>
+          <li><span class="sr-only">Included: </span><svg aria-hidden="true" class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>No automation escape hatches — scripts stay contained</li>
           <li><span class="sr-only">Included: </span><svg aria-hidden="true" class="check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg>Xbox Elite paddles — P1–P4 (beta, seeking testers)</li>
           <li class="miss-row"><span class="sr-only">Not included: </span><svg aria-hidden="true" class="miss" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>Mac-to-Mac controller relay</li>
         </ul>
@@ -486,6 +486,10 @@
       <div class="faq-item">
         <h3>How does it install?</h3>
         <p>Steer ships as a notarized direct download. macOS will prompt once on first open; after that it runs like any other app. No App Store account needed.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is anything reverse-engineered?</h3>
+        <p>Yes, and it's disclosed rather than hidden: adaptive triggers, PlayStation and Switch Pro rumble and LED output speak clean-room implementations of each pad's HID protocol, and native pinch and rotate gestures use a clean-room synthesizer of macOS's undocumented gesture-event format. All of it goes through public APIs; no private frameworks are linked. Scripts and automation you import stay contained and are shown for review before they apply.</p>
       </div>
       <div class="faq-item">
         <h3>What does it not do?</h3>
