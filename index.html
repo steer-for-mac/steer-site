@@ -877,16 +877,35 @@ html[data-pad="ps"] li.pd-ps,
 html[data-pad="xb"] li.pd-xb,
 html[data-pad="sw"] li.pd-sw,
 html[data-pad="mf"] li.pd-mf{display:flex}
-/* Feel: xb/mf have no capability-true screenshot — the band becomes a single
-   centred column instead of leaving an empty right half */
+/* Feel: only sw keeps an in-band screenshot (gyro). ps moved its Haptics pane
+   into the gallery dialog — the trigger vignette is the band's anchor now — so
+   ps joins xb/mf in the single centred column instead of leaving an empty
+   right half. (:not([data-pad]) is the pre-JS default, which shows ps.) */
+html:not([data-pad]) #feel .hero-grid,
+html[data-pad="ps"] #feel .hero-grid,
 html[data-pad="xb"] #feel .hero-grid,
 html[data-pad="mf"] #feel .hero-grid{grid-template-columns:1fr;text-align:center}
+html:not([data-pad]) #feel .lead,
+html[data-pad="ps"] #feel .lead,
 html[data-pad="xb"] #feel .lead,
 html[data-pad="mf"] #feel .lead{margin-left:auto;margin-right:auto}
+html:not([data-pad]) #feel .price-inc,
+html[data-pad="ps"] #feel .price-inc,
 html[data-pad="xb"] #feel .price-inc,
 html[data-pad="mf"] #feel .price-inc{justify-items:center}
+html:not([data-pad]) #feel .price-inc li,
+html[data-pad="ps"] #feel .price-inc li,
 html[data-pad="xb"] #feel .price-inc li,
 html[data-pad="mf"] #feel .price-inc li{text-align:left}
+/* centre the ps-only extras under the single column */
+html:not([data-pad]) #feel .feel-extras,
+html[data-pad="ps"] #feel .feel-extras{justify-content:center}
+html:not([data-pad]) #feel .tvg,
+html[data-pad="ps"] #feel .tvg{margin-left:auto;margin-right:auto}
+/* the pd gate's display:revert makes .lb-picker a block, so centre its
+   flex-row of dots directly (the label is inline and follows text-align) */
+html:not([data-pad]) #feel .lb-picker .dots,
+html[data-pad="ps"] #feel .lb-picker .dots{justify-content:center}
 /* capabilities: the layers explainer beside the summary list */
 .cap-layers h3{font-size:22px;letter-spacing:-0.02em;margin-bottom:8px}
 .cap-layers p{font-size:16px;color:var(--text-2);line-height:1.55;max-width:52ch;margin-bottom:16px}
@@ -896,6 +915,47 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
 .feel-extras li{font-family:var(--mono);font-size:11.5px;letter-spacing:0.04em;color:#AEB6C6;border:1px solid rgba(233,237,246,0.22);border-radius:999px;padding:7px 13px}
 html:not([data-pad]) ul.feel-extras.pd-ps,
 html[data-pad="ps"] ul.feel-extras.pd-ps{display:flex}
+
+/* ── screenshot gallery: the invite + the native <dialog> ────────────────
+   Images carry data-light/data-dark only; JS resolves src on first open, so
+   nothing is fetched until the visitor asks. Theme-aware via the same
+   [data-theme] variables as the page. */
+.gal-invite{margin-top:48px;text-align:center}
+.gal-invite .gal-claim{margin-top:14px;text-align:center}
+dialog.shots{
+  /* the site's universal reset zeroes the UA's dialog margin:auto — restore it
+     or the panel pins to the top-left of the top layer */
+  margin:auto;
+  width:min(860px,calc(100vw - 24px));
+  max-height:calc(100dvh - 48px);
+  border:1px solid var(--sep-2);border-radius:16px;padding:0;
+  background:var(--bg);color:var(--text);
+  box-shadow:0 40px 120px -20px rgba(0,0,0,.55);
+}
+dialog.shots[open]{display:flex;flex-direction:column}
+dialog.shots::backdrop{background:rgba(7,10,18,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+/* subtle fade on open; frozen under reduced motion */
+dialog.shots[open]{animation:shots-in .2s ease}
+dialog.shots[open]::backdrop{animation:shots-in .2s ease}
+@keyframes shots-in{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+  dialog.shots[open],dialog.shots[open]::backdrop{animation:none}
+}
+.shots-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px 14px 22px;border-bottom:1px solid var(--sep)}
+.shots-head h2{font-size:16px;font-weight:600;letter-spacing:-0.015em}
+.shots-head .shots-note{font-size:12.5px;color:var(--text-3);margin-top:1px;letter-spacing:-0.005em}
+.shots-close{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--sep);background:var(--bg-inset);color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
+.shots-close:hover{background:var(--bg-inset-2);color:var(--text)}
+.shots-close svg{width:14px;height:14px}
+.shots-scroll{overflow-y:auto;min-height:0;overscroll-behavior:contain;padding:22px;display:grid;gap:30px}
+.shots-item{margin:0}
+.shots-item img{width:100%;display:block;border-radius:10px;border:1px solid var(--frame);background:var(--bg-inset);box-shadow:var(--shadow-rest)}
+.shots-item figcaption{font-size:13px;color:var(--text-3);margin-top:10px;letter-spacing:-0.005em;line-height:1.45}
+html.shots-open{overflow:hidden}
+@media(max-width:700px){
+  dialog.shots{width:calc(100vw - 12px);max-height:calc(100dvh - 12px);border-radius:14px}
+  .shots-scroll{padding:14px;gap:24px}
+}
 </style>
 </head>
 <body>
@@ -1677,23 +1737,16 @@ html[data-pad="ps"] ul.feel-extras.pd-ps{display:flex}
       </div>
     </div>
 
-    <div class="cols-2" style="margin-top:48px">
-      <div>
-        <div class="shot">
-          <img class="shot-light" src="assets/light/settings-sticks.png" alt="Steer's Sticks pane: per-layer stick modes and a cursor speed you can dial in" loading="lazy">
-          <img class="shot-dark" src="assets/dark/settings-sticks.png" alt="Steer's Sticks pane: per-layer stick modes and a cursor speed you can dial in" loading="lazy">
-        </div>
-        <p class="shot-cap">Sticks: per-layer modes and a cursor speed you shape yourself.</p>
-      </div>
-      <div>
-        <div class="shot">
-          <img class="shot-light" src="assets/light/settings-scripting.png" alt="Steer's Scripting pane: the documented steer:// automation surface and Shortcuts actions" loading="lazy">
-          <img class="shot-dark" src="assets/dark/settings-scripting.png" alt="Steer's Scripting pane: the documented steer:// automation surface and Shortcuts actions" loading="lazy">
-        </div>
-        <p class="shot-cap">Scripting: the documented steer:// surface, copy-paste ready.</p>
-      </div>
+    <!-- The dense settings panes live behind a click (the gallery <dialog> near
+         the end of <body>), so the main scroll stays calm and a skeptic can
+         still verify the app is real and deep. -->
+    <div class="gal-invite">
+      <button class="btn btn-secondary" type="button" id="shotsOpen" aria-haspopup="dialog">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:17px;height:17px"><rect x="2.5" y="4" width="15" height="12" rx="2"/><circle cx="7.2" cy="8.4" r="1.4"/><path d="M2.5 13.5l4-3.5 3.5 3 3-2.5 4.5 3.5"/></svg>
+        See real screenshots
+      </button>
+      <p class="shot-cap gal-claim">Real screenshots, captured from the app; no renders, no touch-ups.</p>
     </div>
-    <p class="shot-cap" style="margin-top:22px;text-align:center">Real screenshots, captured from the app; no renders, no touch-ups.</p>
   </div>
 </section>
 
@@ -1791,10 +1844,9 @@ html[data-pad="ps"] ul.feel-extras.pd-ps{display:flex}
           <span class="label">Try it: lock a colour, the whole page follows</span>
         </div>
       </div>
-      <div class="shot pd-ps">
-        <img class="shot-light" src="assets/light/settings-haptics.png" alt="Steer's Haptics &amp; Triggers pane: per-event haptic strength and adaptive-trigger presets" loading="lazy">
-        <img class="shot-dark" src="assets/dark/settings-haptics.png" alt="Steer's Haptics &amp; Triggers pane: per-event haptic strength and adaptive-trigger presets" loading="lazy">
-      </div>
+      <!-- The Haptics pane screenshot moved into the gallery <dialog>; the trigger
+           vignette above carries the band (ps joins the xb/mf single-column
+           centred layout, see the pd-gating CSS). -->
       <div class="shot pd-sw">
         <img class="shot-light" src="assets/light/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
         <img class="shot-dark" src="assets/dark/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
@@ -1963,6 +2015,59 @@ html[data-pad="ps"] ul.feel-extras.pd-ps{display:flex}
     </div>
   </div>
 </footer>
+
+<!-- SCREENSHOT GALLERY — native <dialog> (showModal gives focus trap, Esc,
+     backdrop). Images hold data-light/data-dark only; JS sets src on first
+     open per the current theme, so nothing downloads until asked. -->
+<dialog class="shots" id="shotsDialog" aria-labelledby="shotsTitle">
+  <header class="shots-head">
+    <div>
+      <h2 id="shotsTitle">Inside the app</h2>
+      <p class="shots-note">Captured from the app; no renders, no touch-ups.</p>
+    </div>
+    <button class="shots-close" type="button" id="shotsClose" aria-label="Close screenshots">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>
+    </button>
+  </header>
+  <div class="shots-scroll">
+    <!-- DEMO VIDEO SLOT: when the demo ships, it becomes the first item.
+         Drop the file at assets/demo.mp4 and uncomment (poster keeps the
+         open cheap; preload="none" keeps the lazy contract):
+    <figure class="shots-item">
+      <video controls preload="none" poster="assets/demo-poster.png" src="assets/demo.mp4" style="width:100%;border-radius:10px;display:block"></video>
+      <figcaption>Two minutes of Steer driving a Mac, uncut.</figcaption>
+    </figure>
+    -->
+    <figure class="shots-item">
+      <img data-light="assets/light/settings-sticks.png" data-dark="assets/dark/settings-sticks.png" alt="Steer's Sticks pane: per-layer stick modes and a cursor speed curve you can dial in" width="2000" height="1760">
+      <figcaption>Sticks: per-layer modes and a cursor speed you shape yourself.</figcaption>
+    </figure>
+    <figure class="shots-item">
+      <img data-light="assets/light/settings-buttons.png" data-dark="assets/dark/settings-buttons.png" alt="Steer's Buttons pane: every control mapped to a shortcut, tap or hold" width="2000" height="1760">
+      <figcaption>Buttons: any shortcut on any button, tap or hold.</figcaption>
+    </figure>
+    <figure class="shots-item">
+      <img data-light="assets/light/settings-profiles.png" data-dark="assets/dark/settings-profiles.png" alt="Steer's Profiles pane: per-app setups that switch automatically" width="2000" height="1760">
+      <figcaption>Profiles: a setup per app, switched for you.</figcaption>
+    </figure>
+    <figure class="shots-item">
+      <img data-light="assets/light/settings-haptics.png" data-dark="assets/dark/settings-haptics.png" alt="Steer's Haptics and Triggers pane: per-event haptic strength and adaptive-trigger presets" width="2000" height="1760">
+      <figcaption>Haptics and triggers: feedback per action, trigger presets and a fine editor (DualSense).</figcaption>
+    </figure>
+    <figure class="shots-item">
+      <img data-light="assets/light/settings-led.png" data-dark="assets/dark/settings-led.png" alt="Steer's Light Bar pane: colour, battery cues, and workflow signals" width="2000" height="1760">
+      <figcaption>Light bar: set a colour, or wire it to signal your workflow (DualSense).</figcaption>
+    </figure>
+    <figure class="shots-item">
+      <img data-light="assets/light/settings-gyro.png" data-dark="assets/dark/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" width="2000" height="1760">
+      <figcaption>Gyro: tilt to aim, with a speed curve you tune.</figcaption>
+    </figure>
+    <figure class="shots-item">
+      <img data-light="assets/light/settings-scripting.png" data-dark="assets/dark/settings-scripting.png" alt="Steer's Scripting pane: the documented steer:// automation surface and Shortcuts actions" width="2000" height="1760">
+      <figcaption>Scripting: the documented steer:// surface, copy-paste ready.</figcaption>
+    </figure>
+  </div>
+</dialog>
 
 <script>
 // theme toggle (initial theme is already set by the <head> script)
@@ -2150,6 +2255,36 @@ html[data-pad="ps"] ul.feel-extras.pd-ps{display:flex}
   }else{
     vgs.forEach(function(v){v.classList.add('on');});
   }
+})();
+// screenshot gallery: native <dialog>. showModal() supplies the focus trap,
+// Esc-to-close, and focus return to the opener; we add backdrop-click close,
+// a page scroll lock, and lazy hydration — data-light/data-dark become src on
+// first open, matched to the current theme (the modal blocks the theme toggle,
+// so the pick can't go stale while open; re-resolved on every open anyway).
+(function(){
+  var dlg=document.getElementById('shotsDialog');
+  var opener=document.getElementById('shotsOpen');
+  if(!dlg||!opener) return;
+  if(typeof dlg.showModal!=='function'){opener.hidden=true;return;}
+  function hydrate(){
+    var theme=document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
+    dlg.querySelectorAll('img[data-light]').forEach(function(img){
+      var want=img.getAttribute('data-'+theme);
+      if(want&&img.getAttribute('src')!==want) img.setAttribute('src',want);
+    });
+  }
+  opener.addEventListener('click',function(){
+    hydrate();
+    dlg.showModal();
+    document.documentElement.classList.add('shots-open');
+    dlg.querySelector('.shots-scroll').scrollTop=0;
+  });
+  document.getElementById('shotsClose').addEventListener('click',function(){dlg.close();});
+  // a click that lands on the dialog element itself is on the backdrop
+  // (padding is 0, so every in-panel click targets a child)
+  dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});
+  // 'close' fires for Esc, backdrop, and the button alike — unlock once here
+  dlg.addEventListener('close',function(){document.documentElement.classList.remove('shots-open');});
 })();
 </script>
 </body>
