@@ -892,7 +892,8 @@ html[data-pad="xb"] #feel .price-inc li,
 html[data-pad="mf"] #feel .price-inc li{text-align:left}
 /* capabilities grid: hardware-specific rows carry a which-controllers tag so
    they never read as universal, in any picker state */
-.cap-pads{font-family:var(--mono);font-size:10.5px;letter-spacing:0.05em;color:var(--text-3);border:1px solid var(--sep-2);border-radius:999px;padding:2px 8px;white-space:nowrap}
+.cap-pads{font-family:var(--mono);font-size:10.5px;letter-spacing:0.03em;color:var(--text-3);white-space:nowrap}
+.grow-lead{display:flex;flex-direction:column;gap:3px;min-width:0}
 </style>
 </head>
 <body>
@@ -1697,8 +1698,8 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
         <div class="seclabel">Point &amp; move</div>
         <div class="group">
           <div class="grow"><span class="lbl">Sticks</span><span class="val">Move &amp; scroll</span></div>
-          <div class="grow"><span class="lbl">Touchpad</span><span class="val">Pinch &amp; rotate <span class="cap-pads">DualSense &amp; DS4</span></span></div>
-          <div class="grow"><span class="lbl">Gyro</span><span class="val">Tilt to aim <span class="cap-pads">DualSense &amp; Switch Pro</span></span></div>
+          <div class="grow"><div class="grow-lead"><span class="lbl">Touchpad</span><span class="cap-pads">DualSense · DS4</span></div><span class="val">Pinch &amp; rotate</span></div>
+          <div class="grow"><div class="grow-lead"><span class="lbl">Gyro</span><span class="cap-pads">DualSense · Switch Pro</span></div><span class="val">Tilt to aim</span></div>
           <div class="grow"><span class="lbl">On-screen keyboard</span><span class="val">Type anything</span></div>
         </div>
       </div>
