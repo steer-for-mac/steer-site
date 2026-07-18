@@ -136,6 +136,19 @@
 .faq .faq-body{padding:0 4px 20px;font-size:15px;color:var(--text-2);line-height:1.6;max-width:64ch}
 .faq .faq-body a{color:var(--blue-text)}
 
+/* The hero is always the dark studio (see below). While the sticky nav
+   overlaps it, the nav floats transparent with light text; once the hero
+   scrolls under it, the nav returns to the normal theme-following bar. */
+header.nav{transition:background .25s ease,border-color .25s ease}
+/* dark glass matching the hero top (not fully transparent — keeps light text
+   audit-safe, since a transparent nav leaves contrast tools guessing the bg) */
+html.nav-over-hero header.nav{background:rgba(11,15,26,0.86);border-bottom-color:rgba(255,255,255,0.06)}
+html.nav-over-hero .brand{color:#F4F7FC}
+html.nav-over-hero .nav-links a{color:#C7CEDA}
+html.nav-over-hero .nav-links a:hover{color:#fff}
+html.nav-over-hero .theme-toggle{color:#C7CEDA;border-color:rgba(255,255,255,0.22)}
+html.nav-over-hero .theme-toggle:hover{background:rgba(255,255,255,0.12);color:#fff}
+
 /* ───────────────── controller-picker hero (.chero) ─────────────────
    Namespaced port of hero-fable.html. All tokens live ON .chero (not :root)
    so nothing leaks; theme is driven by the site's html[data-theme] (dark
@@ -175,7 +188,7 @@
   color:var(--ink);
   font-family:var(--sans);
 }
-html[data-theme="light"] .chero{
+html[data-theme="lightoff"] .chero{
   color-scheme:light;
   /* daylight studio: Apple-product-shot, not "dark with the lights on".
      Deepened again 2026-07 — the old #D6DDE9 floor still read "overcast sky";
@@ -213,21 +226,21 @@ html[data-theme="light"] .chero{
 .chero[data-pad="ps"]{--accent:var(--led);--accent-ink:var(--led);--washO:0.19;--poolO:0.15}
 .chero[data-pad="xb"]{--accent:#D9E9DF;--accent-ink:#D9E9DF;--washO:0.12;--poolO:0.09}
 .chero[data-pad="sw"]{--accent:#5FD48D;--accent-ink:#5FD48D;--washO:0.13;--poolO:0.10}
-html[data-theme="light"] .chero[data-pad="ps"]{--accent-ink:color-mix(in srgb,var(--led) 72%,#0A1A3A);--washO:0.14;--poolO:0.10}
-html[data-theme="light"] .chero[data-pad="xb"]{--accent:#AFC2B7;--accent-ink:#4E6357;--washO:0.08;--poolO:0.06}
-html[data-theme="light"] .chero[data-pad="sw"]{--accent:#2FC272;--accent-ink:#0F7A44;--washO:0.11;--poolO:0.08}
+html[data-theme="lightoff"] .chero[data-pad="ps"]{--accent-ink:color-mix(in srgb,var(--led) 72%,#0A1A3A);--washO:0.14;--poolO:0.10}
+html[data-theme="lightoff"] .chero[data-pad="xb"]{--accent:#AFC2B7;--accent-ink:#4E6357;--washO:0.08;--poolO:0.06}
+html[data-theme="lightoff"] .chero[data-pad="sw"]{--accent:#2FC272;--accent-ink:#0F7A44;--washO:0.11;--poolO:0.08}
 /* "& others": no branded light to own the room — a quiet neutral wash */
 .chero[data-pad="mf"]{--accent:#98A1B5;--accent-ink:#98A1B5;--washO:0.07;--poolO:0.05}
-html[data-theme="light"] .chero[data-pad="mf"]{--accent:#7A8398;--accent-ink:#49525F;--washO:0.05;--poolO:0.04}
+html[data-theme="lightoff"] .chero[data-pad="mf"]{--accent:#7A8398;--accent-ink:#49525F;--washO:0.05;--poolO:0.04}
 /* brand dots on the picker tabs, per theme */
 .chero #tab-ps{--tc:#4D8DFF}
 .chero #tab-xb{--tc:#6FCF8F}
 .chero #tab-sw{--tc:#E86A6A}
 .chero #tab-mf{--tc:#98A1B5}
-html[data-theme="light"] .chero #tab-ps{--tc:#2E7CF6}
-html[data-theme="light"] .chero #tab-xb{--tc:#2E9E4F}
-html[data-theme="light"] .chero #tab-sw{--tc:#D64545}
-html[data-theme="light"] .chero #tab-mf{--tc:#5C6675}
+html[data-theme="lightoff"] .chero #tab-ps{--tc:#2E7CF6}
+html[data-theme="lightoff"] .chero #tab-xb{--tc:#2E9E4F}
+html[data-theme="lightoff"] .chero #tab-sw{--tc:#D64545}
+html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
 
 /* grain */
 .chero .grain{
@@ -381,35 +394,35 @@ html[data-theme="light"] .chero #tab-mf{--tc:#5C6675}
 .chero #bumpGrad .s1{stop-color:#333C52} .chero #bumpGrad .s2{stop-color:#20263A} .chero #bumpGrad .s3{stop-color:#151A28}
 
 /* SVG materials: daylight studio */
-html[data-theme="light"] .chero .ol-a{stroke:rgba(23,28,38,0.14)}
-html[data-theme="light"] .chero .ol-b{stroke:rgba(23,28,38,0.19)}
-html[data-theme="light"] .chero .rim{stroke:rgba(255,255,255,0.95)}
-html[data-theme="light"] .chero .seam{stroke:rgba(23,28,38,0.15)}
-html[data-theme="light"] .chero .cast{fill:rgba(24,34,60,0.22)}
-html[data-theme="light"] .chero .ic{stroke:rgba(40,50,70,0.55)}
-html[data-theme="light"] .chero .ic-f{fill:rgba(40,50,70,0.40)}
-html[data-theme="light"] .chero .f-btn{fill:#F3F5F9}
-html[data-theme="light"] .chero .f-small{fill:#E2E7F0}
-html[data-theme="light"] .chero .f-dpad{fill:#DFE5EF}
-html[data-theme="light"] .chero .f-dish{fill:#C5CCD9}
-html[data-theme="light"] .chero .f-well{fill:#C9D0DC}
-html[data-theme="light"] .chero .f-nexus{fill:#1C2330}  /* stays dark, so the lit ring reads emissive */
-html[data-theme="light"] .chero .f-off{fill:#C2C9D6}
-html[data-theme="light"] .chero .g-tri{stroke:#1F8A69}
-html[data-theme="light"] .chero .g-cir{stroke:#CE4459}
-html[data-theme="light"] .chero .g-cross{stroke:#3E76D6}
-html[data-theme="light"] .chero .g-sq{stroke:#B4539B}
-html[data-theme="light"] .chero .g-y{fill:#B08D1E} html[data-theme="light"] .chero .g-b{fill:#C93F3F}
-html[data-theme="light"] .chero .g-a{fill:#2E9E4F} html[data-theme="light"] .chero .g-x{fill:#3E76D6}
-html[data-theme="light"] .chero .g-sw{fill:#5C6675}
-html[data-theme="light"] .chero .g-nex{stroke:#F4FAF6}
-html[data-theme="light"] .chero .nex-hl{stroke:rgba(255,255,255,0.45)}
-html[data-theme="light"] .chero #bodyGrad .s1{stop-color:#FEFEFF} html[data-theme="light"] .chero #bodyGrad .s2{stop-color:#EBEFF5} html[data-theme="light"] .chero #bodyGrad .s3{stop-color:#D9DFE9}
-html[data-theme="light"] .chero #swBodyGrad .s1{stop-color:#F8FAFC} html[data-theme="light"] .chero #swBodyGrad .s2{stop-color:#E2E7EF} html[data-theme="light"] .chero #swBodyGrad .s3{stop-color:#CFD6E1}
-html[data-theme="light"] .chero #padGrad .s1{stop-color:#F6F8FB} html[data-theme="light"] .chero #padGrad .s2{stop-color:#E1E6EE}
-html[data-theme="light"] .chero #stickGrad .s1{stop-color:#59637A} html[data-theme="light"] .chero #stickGrad .s2{stop-color:#333B4C} html[data-theme="light"] .chero #stickGrad .s3{stop-color:#262D3C}
-html[data-theme="light"] .chero #trigTopGrad .s1{stop-color:#E4E9F0} html[data-theme="light"] .chero #trigTopGrad .s2{stop-color:#CBD2DE} html[data-theme="light"] .chero #trigTopGrad .s3{stop-color:#B3BCCB}
-html[data-theme="light"] .chero #bumpGrad .s1{stop-color:#F7F9FC} html[data-theme="light"] .chero #bumpGrad .s2{stop-color:#E0E5EE} html[data-theme="light"] .chero #bumpGrad .s3{stop-color:#C8CFDC}
+html[data-theme="lightoff"] .chero .ol-a{stroke:rgba(23,28,38,0.14)}
+html[data-theme="lightoff"] .chero .ol-b{stroke:rgba(23,28,38,0.19)}
+html[data-theme="lightoff"] .chero .rim{stroke:rgba(255,255,255,0.95)}
+html[data-theme="lightoff"] .chero .seam{stroke:rgba(23,28,38,0.15)}
+html[data-theme="lightoff"] .chero .cast{fill:rgba(24,34,60,0.22)}
+html[data-theme="lightoff"] .chero .ic{stroke:rgba(40,50,70,0.55)}
+html[data-theme="lightoff"] .chero .ic-f{fill:rgba(40,50,70,0.40)}
+html[data-theme="lightoff"] .chero .f-btn{fill:#F3F5F9}
+html[data-theme="lightoff"] .chero .f-small{fill:#E2E7F0}
+html[data-theme="lightoff"] .chero .f-dpad{fill:#DFE5EF}
+html[data-theme="lightoff"] .chero .f-dish{fill:#C5CCD9}
+html[data-theme="lightoff"] .chero .f-well{fill:#C9D0DC}
+html[data-theme="lightoff"] .chero .f-nexus{fill:#1C2330}  /* stays dark, so the lit ring reads emissive */
+html[data-theme="lightoff"] .chero .f-off{fill:#C2C9D6}
+html[data-theme="lightoff"] .chero .g-tri{stroke:#1F8A69}
+html[data-theme="lightoff"] .chero .g-cir{stroke:#CE4459}
+html[data-theme="lightoff"] .chero .g-cross{stroke:#3E76D6}
+html[data-theme="lightoff"] .chero .g-sq{stroke:#B4539B}
+html[data-theme="lightoff"] .chero .g-y{fill:#B08D1E} html[data-theme="lightoff"] .chero .g-b{fill:#C93F3F}
+html[data-theme="lightoff"] .chero .g-a{fill:#2E9E4F} html[data-theme="lightoff"] .chero .g-x{fill:#3E76D6}
+html[data-theme="lightoff"] .chero .g-sw{fill:#5C6675}
+html[data-theme="lightoff"] .chero .g-nex{stroke:#F4FAF6}
+html[data-theme="lightoff"] .chero .nex-hl{stroke:rgba(255,255,255,0.45)}
+html[data-theme="lightoff"] .chero #bodyGrad .s1{stop-color:#FEFEFF} html[data-theme="lightoff"] .chero #bodyGrad .s2{stop-color:#EBEFF5} html[data-theme="lightoff"] .chero #bodyGrad .s3{stop-color:#D9DFE9}
+html[data-theme="lightoff"] .chero #swBodyGrad .s1{stop-color:#F8FAFC} html[data-theme="lightoff"] .chero #swBodyGrad .s2{stop-color:#E2E7EF} html[data-theme="lightoff"] .chero #swBodyGrad .s3{stop-color:#CFD6E1}
+html[data-theme="lightoff"] .chero #padGrad .s1{stop-color:#F6F8FB} html[data-theme="lightoff"] .chero #padGrad .s2{stop-color:#E1E6EE}
+html[data-theme="lightoff"] .chero #stickGrad .s1{stop-color:#59637A} html[data-theme="lightoff"] .chero #stickGrad .s2{stop-color:#333B4C} html[data-theme="lightoff"] .chero #stickGrad .s3{stop-color:#262D3C}
+html[data-theme="lightoff"] .chero #trigTopGrad .s1{stop-color:#E4E9F0} html[data-theme="lightoff"] .chero #trigTopGrad .s2{stop-color:#CBD2DE} html[data-theme="lightoff"] .chero #trigTopGrad .s3{stop-color:#B3BCCB}
+html[data-theme="lightoff"] .chero #bumpGrad .s1{stop-color:#F7F9FC} html[data-theme="lightoff"] .chero #bumpGrad .s2{stop-color:#E0E5EE} html[data-theme="lightoff"] .chero #bumpGrad .s3{stop-color:#C8CFDC}
 
 /* annotations */
 .chero .ann text{font-family:var(--mono);font-size:12px;letter-spacing:0.05em;fill:var(--ann)}
@@ -711,10 +724,10 @@ html.still .tvg *,html.still .agent-r2,html.still .agent-r2 *{animation:none!imp
 .chero .mf-body{fill:rgba(233,237,246,0.02)}
 .chero .mf-bl{font-family:var(--sans);font-size:12px;font-weight:600;fill:rgba(233,237,246,0.34)}
 .chero .mf-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;fill:var(--ann)}
-html[data-theme="light"] .chero .mf-o{stroke:rgba(23,28,38,0.46)}
-html[data-theme="light"] .chero .mf-o2{stroke:rgba(23,28,38,0.28)}
-html[data-theme="light"] .chero .mf-body{fill:rgba(23,28,38,0.025)}
-html[data-theme="light"] .chero .mf-bl{fill:rgba(23,28,38,0.42)}
+html[data-theme="lightoff"] .chero .mf-o{stroke:rgba(23,28,38,0.46)}
+html[data-theme="lightoff"] .chero .mf-o2{stroke:rgba(23,28,38,0.28)}
+html[data-theme="lightoff"] .chero .mf-body{fill:rgba(23,28,38,0.025)}
+html[data-theme="lightoff"] .chero .mf-bl{fill:rgba(23,28,38,0.42)}
 
 /* ═══ FEEL: adaptive-trigger vignette (.tvg) — squeeze, hit the wall, click through ═══
    Same grammar as .vg: transform/opacity only, base (no .on) = a meaningful
@@ -2025,6 +2038,14 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     root.setAttribute('data-theme',next);
     try{localStorage.setItem('steer-theme',next);}catch(e){}
   });
+})();
+// nav floats transparent/light while it overlaps the always-dark hero
+(function(){
+  var hero=document.querySelector('.chero');
+  if(!hero||!('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function(es){
+    document.documentElement.classList.toggle('nav-over-hero', es[0].isIntersecting);
+  },{rootMargin:'-52px 0px 0px 0px',threshold:0}).observe(hero);
 })();
 // face-button glyphs + pad-aware re-labelling. The hero picker owns the pad
 // state (html[data-pad], via the 'steerpad' event); every vignette glyph and
