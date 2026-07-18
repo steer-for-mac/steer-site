@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Steer — Your whole Mac, from a controller</title>
-<meta name="description" content="Steer turns a DualSense, Xbox, or Switch Pro controller into a complete Mac input device — cursor, typing, shortcuts, scroll — with feedback you can feel. Native, private, one-time price.">
+<title>Steer: Your whole Mac, from a controller</title>
+<meta name="description" content="Steer turns a DualSense, Xbox, or Switch Pro controller into a complete Mac input device: cursor, typing, shortcuts, scroll, with feedback you can feel. Native, private, one-time price.">
 <link rel="canonical" href="https://steer.seanfloyd.dev/" />
 
 <!-- Open Graph / Twitter. Card art: assets/og.png -- regenerate from og.html (#v1) when the tagline changes. -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Steer" />
-<meta property="og:title" content="Steer — Your whole Mac, from a controller" />
-<meta property="og:description" content="Steer turns a DualSense, Xbox, or Switch Pro controller into a complete Mac input device — cursor, typing, shortcuts, scroll — with feedback you can feel. Native, private, one-time price." />
+<meta property="og:title" content="Steer: Your whole Mac, from a controller" />
+<meta property="og:description" content="Steer turns a DualSense, Xbox, or Switch Pro controller into a complete Mac input device: cursor, typing, shortcuts, scroll, with feedback you can feel. Native, private, one-time price." />
 <meta property="og:url" content="https://steer.seanfloyd.dev/" />
 <meta property="og:image" content="https://steer.seanfloyd.dev/assets/og.png" />
 <meta property="og:image:width" content="1200" />
@@ -19,8 +19,8 @@
 <meta property="og:image:alt" content="The Steer app icon beside the wordmark Steer and the line: Your whole Mac, from a controller." />
 <meta property="og:locale" content="en_CA" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Steer — Your whole Mac, from a controller" />
-<meta name="twitter:description" content="Steer turns a DualSense, Xbox, or Switch Pro controller into a complete Mac input device — cursor, typing, shortcuts, scroll — with feedback you can feel. Native, private, one-time price." />
+<meta name="twitter:title" content="Steer: Your whole Mac, from a controller" />
+<meta name="twitter:description" content="Steer turns a DualSense, Xbox, or Switch Pro controller into a complete Mac input device: cursor, typing, shortcuts, scroll, with feedback you can feel. Native, private, one-time price." />
 <meta name="twitter:image" content="https://steer.seanfloyd.dev/assets/og.png" />
 <!-- theme init in <head> so the page paints in the right appearance on first frame (no light flash on a dark Mac) -->
 <script>
@@ -273,10 +273,13 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
   width:100%;max-width:900px;
 }
 /* the pad picker — the eyebrow, made interactive */
+.chero .app-eyebrow{font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-2);margin-bottom:16px}
+.chero .sub-own{font-size:13.5px;color:var(--ink-3);margin-top:14px}
+.chero .picker-wrap{margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:11px}
+.chero .picker-prompt{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3)}
 .chero .tabs{
   display:inline-flex;align-items:center;gap:2px;padding:4px;
   border:1px solid var(--line);border-radius:999px;background:var(--chip-bg);
-  margin-bottom:16px;
 }
 .chero .tab{
   appearance:none;border:0;cursor:pointer;
@@ -473,8 +476,8 @@ html[data-theme="lightoff"] .chero #bumpGrad .s1{stop-color:#F7F9FC} html[data-t
 
 .chero .bottombar{
   position:relative;z-index:5;width:100%;max-width:1320px;margin-top:4px;
-  display:grid;grid-template-columns:1fr auto 1fr;
-  align-items:end;gap:44px;padding:8px 52px 18px;
+  display:flex;justify-content:center;
+  align-items:end;gap:44px;padding:8px 52px 26px;
 }
 .chero .shown{
   max-width:430px;font-family:var(--mono);
@@ -544,7 +547,9 @@ html.still .chero .pool{opacity:var(--poolO)}
 }
 @media (max-width:899px){
   .chero .copy{padding-top:30px}
-  .chero .tabs{flex-wrap:wrap;justify-content:center}
+  /* clean 2x2 grid instead of an uneven wrap inside the pill */
+  .chero .tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;border-radius:16px;width:100%;max-width:300px}
+  .chero .tab{justify-content:center;padding:10px 8px}
   .chero .bottombar{grid-template-columns:1fr;justify-items:center;gap:22px;margin-top:6px;padding:12px 28px 44px}
   .chero .picker{order:-1}
   .chero:not([data-pad="ps"]) .picker{display:none}
@@ -941,22 +946,22 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
   <div class="pool" aria-hidden="true"></div>
 
   <div class="copy">
-    <div class="tabs" role="tablist" aria-label="Pick the controller you own">
-      <button class="tab" role="tab" id="tab-ps" aria-selected="true"  data-pad="ps">PlayStation</button>
-      <button class="tab" role="tab" id="tab-xb" aria-selected="false" data-pad="xb">Xbox</button>
-      <button class="tab" role="tab" id="tab-sw" aria-selected="false" data-pad="sw">Nintendo</button>
-      <button class="tab" role="tab" id="tab-mf" aria-selected="false" data-pad="mf">&amp; Others</button>
-    </div>
-    <h1><span class="quiet">Your controller.</span><br>Your whole Mac.</h1>
-    <p class="sub"><strong>The pad you already own moves the cursor, scrolls, and fires any shortcut you map</strong> — from the couch, one-handed, or without ever reaching for the mouse.
-      <span class="only-ps">And your DualSense answers back: triggers stiffen before a click, the touchpad reads gestures, gyro aims the cursor, the light bar glows your colour.</span>
-      <span class="only-xb">Hold a bumper and every button takes a second job — chords, layers, rumble on the click. The complete core, nothing held back.</span>
-      <span class="only-sw">And your Switch&nbsp;Pro leans in: tilt to aim, HD rumble on every click.</span>
-      <span class="only-mf">And it isn't just the big three — any MFi-certified pad steers the whole Mac: layers, chords, and tap-vs-hold included. Feel extras follow the hardware in your hands.</span>
-    </p>
+    <div class="app-eyebrow">A Mac app</div>
+    <h1>Control your whole Mac<br>with a game controller.</h1>
+    <p class="sub">Steer turns almost any game controller into a wireless mouse and keyboard for your Mac. Scroll, type, switch apps, turn pages, start dictation, point at slides. From your couch, your bed, or one hand.</p>
+    <p class="sub sub-own">Own a controller? You're set. If not, a used one costs less than the app.</p>
     <div class="cta-row">
       <a class="cta" href="#pricing">Join the launch list</a>
-      <span class="terms"><b>€19.99</b> once at launch · yours forever</span>
+      <span class="terms"><b>€19.99</b> once. Yours forever.</span>
+    </div>
+    <div class="picker-wrap">
+      <div class="picker-prompt">Already have a controller? See yours</div>
+      <div class="tabs" role="tablist" aria-label="See your controller">
+        <button class="tab" role="tab" id="tab-ps" aria-selected="true"  data-pad="ps">PlayStation</button>
+        <button class="tab" role="tab" id="tab-xb" aria-selected="false" data-pad="xb">Xbox</button>
+        <button class="tab" role="tab" id="tab-sw" aria-selected="false" data-pad="sw">Nintendo</button>
+        <button class="tab" role="tab" id="tab-mf" aria-selected="false" data-pad="mf">Other</button>
+      </div>
     </div>
   </div>
 
@@ -1010,7 +1015,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
 
     <!-- ═══════════ PLAYSTATION · DualSense ═══════════ -->
     <div class="padwrap ps active" role="img"
-         aria-label="Stylized DualSense controller, its controls mapped to Mac inputs — light bar glowing, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, plus adaptive triggers, touchpad gestures, and gyro aim">
+         aria-label="Stylized DualSense controller, its controls mapped to Mac inputs, light bar glowing, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, plus adaptive triggers, touchpad gestures, and gyro aim">
       <svg viewBox="0 0 1200 440" aria-hidden="true">
         <ellipse class="contact" cx="600" cy="428" rx="275" ry="14"/>
         <g class="device">
@@ -1146,7 +1151,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           <circle cx="452" cy="340" r="2.5"/>
           <polyline points="452,340 334,364 320,364"/>
           <text class="t x" x="312" y="360">+ GYRO AIM</text>
-          <text x="312" y="378">tilt the pad — the cursor follows</text>
+          <text x="312" y="378">tilt the controller: the cursor follows</text>
         </g>
         <!-- annotations · right column: labels left-aligned to the x=888 guide, same rhythm -->
         <g class="ann d5">
@@ -1159,7 +1164,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           <circle cx="806" cy="140" r="2.5"/>
           <polyline points="806,140 866,164 880,164"/>
           <text class="t" x="888" y="160">EVERY BUTTON</text>
-          <text x="888" y="178">any shortcut you map — chords too</text>
+          <text x="888" y="178">any shortcut you map, chords too</text>
         </g>
         <g class="ann d7">
           <circle cx="722" cy="262" r="2.5"/>
@@ -1178,7 +1183,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
 
     <!-- ═══════════ XBOX ═══════════ -->
     <div class="padwrap xb" role="img"
-         aria-label="Stylized Xbox controller, its controls mapped to Mac inputs — annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, bumpers and triggers shift layers, chords, d-pad, rumble">
+         aria-label="Stylized Xbox controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, bumpers and triggers shift layers, chords, d-pad, rumble">
       <svg viewBox="0 0 1200 440" aria-hidden="true">
         <ellipse class="contact" cx="600" cy="424" rx="265" ry="14"/>
         <g class="device">
@@ -1281,7 +1286,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           <circle cx="496" cy="249" r="2.5"/>
           <polyline points="496,249 334,314 320,314"/>
           <text class="t" x="312" y="310">D-PAD</text>
-          <text x="312" y="328">arrows, media keys — anything you map</text>
+          <text x="312" y="328">arrows, media keys, anything you map</text>
         </g>
         <!-- annotations · right column: x=888 guide, 4 rows (60/160/260/360) -->
         <g class="ann d4">
@@ -1294,7 +1299,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           <circle cx="752" cy="200" r="2.5"/>
           <polyline points="752,200 866,164 880,164"/>
           <text class="t" x="888" y="160">CHORDS</text>
-          <text x="888" y="178">press two together — a new shortcut</text>
+          <text x="888" y="178">press two together: a new shortcut</text>
         </g>
         <g class="ann d6">
           <circle cx="705" cy="252" r="2.5"/>
@@ -1313,7 +1318,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
 
     <!-- ═══════════ NINTENDO · Switch Pro ═══════════ -->
     <div class="padwrap sw" role="img"
-         aria-label="Stylized Switch Pro controller, its controls mapped to Mac inputs — annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, bumpers shift layers, plus gyro aim and HD rumble">
+         aria-label="Stylized Switch Pro controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, bumpers shift layers, plus gyro aim and HD rumble">
       <svg viewBox="0 0 1200 440" aria-hidden="true">
         <ellipse class="contact" cx="600" cy="418" rx="255" ry="14"/>
         <g class="device">
@@ -1412,20 +1417,20 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           <circle cx="500" cy="250" r="2.5"/>
           <polyline points="500,250 334,264 320,264"/>
           <text class="t" x="312" y="260">D-PAD</text>
-          <text x="312" y="278">arrows, media keys — anything you map</text>
+          <text x="312" y="278">arrows, media keys, anything you map</text>
         </g>
         <g class="ann d4" text-anchor="end">
           <circle cx="466" cy="322" r="2.5"/>
           <polyline points="466,322 334,364 320,364"/>
           <text class="t x" x="312" y="360">+ GYRO AIM</text>
-          <text x="312" y="378">tilt the pad — the cursor follows</text>
+          <text x="312" y="378">tilt the controller: the cursor follows</text>
         </g>
         <!-- annotations · right column: x=888 guide, 3 rows centered on the rhythm (110/210/310) -->
         <g class="ann d5">
           <circle cx="778" cy="132" r="2.5"/>
           <polyline points="778,132 866,114 880,114"/>
           <text class="t" x="888" y="110">EVERY BUTTON</text>
-          <text x="888" y="128">any shortcut you map — chords too</text>
+          <text x="888" y="128">any shortcut you map, chords too</text>
         </g>
         <g class="ann d6">
           <circle cx="705" cy="254" r="2.5"/>
@@ -1446,7 +1451,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
          A schematic outline, not a fourth product render: no brand, no extras,
          Apple's own A/B/X/Y naming. Callouts reduced to the honest core. -->
     <div class="padwrap mf" role="img"
-         aria-label="Outline of a generic controller standing in for any MFi-certified pad — annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, bumpers and triggers shift layers">
+         aria-label="Outline of a generic controller standing in for any MFi-certified controller, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, bumpers and triggers shift layers">
       <svg viewBox="0 0 1200 440" aria-hidden="true">
         <g>
           <!-- shoulders: same silhouette language, line-art -->
@@ -1468,7 +1473,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           <circle class="mf-o2" cx="600" cy="94" r="19"/>
           <circle class="mf-o2" cx="552" cy="142" r="8"/>
           <circle class="mf-o2" cx="648" cy="142" r="8"/>
-          <text class="mf-tag" x="600" y="188" text-anchor="middle">ANY MFI PAD</text>
+          <text class="mf-tag" x="600" y="188" text-anchor="middle">ANY MFI CONTROLLER</text>
 
           <!-- left stick -->
           <circle class="mf-o" cx="472" cy="150" r="37"/>
@@ -1509,7 +1514,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           <circle cx="782" cy="132" r="2.5"/>
           <polyline points="782,132 866,114 880,114"/>
           <text class="t" x="888" y="110">EVERY BUTTON</text>
-          <text x="888" y="128">any shortcut you map — chords too</text>
+          <text x="888" y="128">any shortcut you map, chords too</text>
         </g>
         <g class="ann d4">
           <circle cx="705" cy="252" r="2.5"/>
@@ -1535,7 +1540,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     <li>Cursor + scroll on the sticks</li>
     <li>Any shortcut on any button</li>
     <li>Hold bumpers for layers</li>
-    <li>Chords — two buttons, one more shortcut</li>
+    <li>Chords: two buttons, one more shortcut</li>
     <li>Rumble on every click</li>
   </ul>
   <ul class="features feat-sw">
@@ -1553,27 +1558,16 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
   </ul>
 
   <div class="bottombar">
-    <p class="shown">
-      <span class="only-ps">Shown: a stylized DualSense. Adaptive triggers, touchpad, and light bar are Sony extras — the steering works on every pad. Edge adds back paddles (beta) · DualShock 4 keeps the light bar, touchpad &amp; rumble — no adaptive triggers.</span>
-      <span class="only-xb">Shown: a stylized Xbox pad. Light bar, adaptive triggers, and touchpad are Sony extras — the full core works on every pad. Xbox Elite adds deep paddle profiles.</span>
-      <span class="only-sw">Shown: a stylized Switch Pro. Gyro and HD rumble ride along; the touchpad, adaptive triggers, and light bar are Sony extras — the steering is identical everywhere.</span>
-      <span class="only-mf">Shown: no pad in particular. Steer runs on Apple's controller framework, so any MFi-certified pad steers the whole Mac — adaptive triggers, touchpad, and light bar stay Sony extras.</span>
-    </p>
-
     <div class="picker">
-      <div class="dots" role="group" aria-label="Light bar colour — Auto cycles slowly, or lock a colour">
-        <button class="dot dot-auto" aria-pressed="true" aria-label="Auto — slowly cycle colours"></button>
+      <div class="dots" role="group" aria-label="Light bar colour. Auto cycles slowly, or lock a colour.">
+        <button class="dot dot-auto" aria-pressed="true" aria-label="Auto. Slowly cycle colours."></button>
         <button class="dot" style="--c:#4D8DFF" aria-pressed="false" aria-label="Steer blue"  data-c="#4D8DFF"></button>
         <button class="dot" style="--c:#A87CFF" aria-pressed="false" aria-label="Violet"      data-c="#A87CFF"></button>
         <button class="dot" style="--c:#3FE0C0" aria-pressed="false" aria-label="Teal"        data-c="#3FE0C0"></button>
         <button class="dot" style="--c:#FFB454" aria-pressed="false" aria-label="Amber"       data-c="#FFB454"></button>
       </div>
-      <span class="label">Light bar — drifts on its own, or locks to your colour</span>
+      <span class="label">Light bar: drifts on its own, or lock a colour</span>
     </div>
-
-    <p class="legal">
-      PlayStation, DualSense, Xbox, and Switch are trademarks of their owners. Steer is independent — not affiliated with or endorsed by Sony, Microsoft, or Nintendo.
-    </p>
   </div>
 
   <div class="grain"></div>
@@ -1584,13 +1578,14 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
 <section class="sec" style="border-top:1px solid var(--sep)">
   <div class="wrap">
     <div class="eyebrow">Who it's for</div>
-    <h2 class="h2" style="max-width:20ch">Editors. Streamers. Speakers. You.</h2>
+    <h2 class="h2" style="max-width:22ch">For everyone. Not just gamers.</h2>
+    <p class="lead" style="margin-top:16px;max-width:60ch">Unchain yourself from the keyboard. Run your Mac from the couch, on your feet, or pacing the room. With a sore wrist, one free hand, or when a mouse just isn't an option. A few of the jobs people reach for it to do:</p>
 
     <div class="cols-3" style="margin-top:44px">
       <div class="uc-lead uc-ed">
         <div class="uc-tag">Editors</div>
         <h3>Cut without touching the keyboard.</h3>
-        <p>JKL shuttle on the triggers, blade under your thumb. The <span class="num">$435</span> transport deck, on the pad you own. (Resolve &amp; Final Cut, in-box.)</p>
+        <p>Scrub the timeline with the triggers, cut under your thumb. A <span class="num">$435</span> editing deck, on the controller you already own. (Resolve and Final Cut, in-box.)</p>
         <div class="vg vg-edit" aria-hidden="true">
           <span class="vg-key kl"><b data-ps="L2" data-xb="LT" data-sw="ZL" data-mf="L trigger">L2</b><i class="vg-ring rl"></i></span>
           <div class="vg-timeline">
@@ -1599,7 +1594,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           </div>
           <span class="vg-key kr"><b data-ps="R2" data-xb="RT" data-sw="ZR" data-mf="R trigger">R2</b><i class="vg-ring rr"></i><i class="vg-ring rr2"></i></span>
         </div>
-        <div class="uc-mech"><b data-ps="L2 / R2" data-xb="LT / RT" data-sw="ZL / ZR" data-mf="The triggers">L2 / R2</b> · JKL shuttle + blade</div>
+        <div class="uc-mech"><b data-ps="L2 / R2" data-xb="LT / RT" data-sw="ZL / ZR" data-mf="The triggers">L2 / R2</b> · scrub and cut</div>
       </div>
       <div class="uc-lead uc-st">
         <div class="uc-tag">Streamers</div>
@@ -1632,19 +1627,23 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
 
     <div class="pills-label">And plenty more</div>
     <div class="pills">
-      <a class="pill-uc" href="accessibility.html">One-handed &amp; RSI <span class="a">→</span></a>
-      <a class="pill-uc" href="agents.html">Running AI agents <span class="a">→</span></a>
-      <span class="pill-uc">Coding &amp; IDEs</span>
-      <span class="pill-uc">Writers &amp; note-taking</span>
-      <span class="pill-uc">Figma &amp; design</span>
-      <span class="pill-uc">Photo culling</span>
+      <a class="pill-uc" href="accessibility.html">RSI, pain &amp; tremor <span class="a">→</span></a>
+      <a class="pill-uc" href="accessibility.html">One-handed &amp; limited mobility <span class="a">→</span></a>
+      <span class="pill-uc">Seniors &amp; easy access</span>
+      <span class="pill-uc">Couch, bed &amp; the TV</span>
+      <span class="pill-uc">Presentations &amp; lectures</span>
+      <span class="pill-uc">Students &amp; studying</span>
+      <span class="pill-uc">Reading &amp; browsing</span>
+      <span class="pill-uc">Writing &amp; notes</span>
+      <span class="pill-uc">Photo &amp; video editing</span>
       <span class="pill-uc">Spreadsheets &amp; data</span>
-      <span class="pill-uc">Web &amp; reading</span>
-      <span class="pill-uc">Roguelikes &amp; turn-based games</span>
-      <span class="pill-uc">Mac on the TV</span>
-      <span class="pill-uc">Precision cursor work</span>
+      <span class="pill-uc">Coding &amp; IDEs</span>
+      <span class="pill-uc">Design &amp; Figma</span>
+      <a class="pill-uc" href="agents.html">Running AI agents <span class="a">→</span></a>
+      <span class="pill-uc">Music &amp; podcasts</span>
+      <span class="pill-uc">Meetings &amp; calls</span>
     </div>
-    <p class="pills-note"><b>Any app, really.</b> Start from a ready-made profile, build your own in minutes, or have an AI write one from our docs. Keyboard-driven games only for now — mouse-look is on the roadmap.</p>
+    <p class="pills-note"><b>Any app, really.</b> Start from a ready-made setup, or build your own in minutes.</p>
   </div>
 </section>
 
@@ -1652,13 +1651,13 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
 <section class="sec-loose sunken">
   <div class="wrap">
     <div class="eyebrow">Made for</div>
-    <h2 class="h2" style="max-width:24ch">Point, click, type, scroll — however you're holding it.</h2>
+    <h2 class="h2" style="max-width:24ch">Point, click, type, scroll: however you're holding it.</h2>
     <div class="vigns">
       <div class="vign">
         <div class="v-eyebrow">Comfort</div>
         <div>
           <h3>A sore wrist, or one free hand.</h3>
-          <p>A controller rests in relaxed hands, no fine wrist work required. If a mouse is tiring, painful, or out of reach — RSI, tremor, chronic pain, limited mobility, or a one-handed day — Steer does the whole job: point, click, type, and scroll, with a shaped response curve you can slow right down.</p>
+          <p>A controller rests in relaxed hands, no fine wrist work required. If a mouse is tiring, painful, or out of reach (RSI, tremor, chronic pain, limited mobility, or a one-handed day), Steer does the whole job: point, click, type, and scroll, with a cursor you can slow right down.</p>
           <a class="arrow-link v-link" href="accessibility.html">See the accessibility setup <span class="a">→</span></a>
         </div>
       </div>
@@ -1666,7 +1665,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
         <div class="v-eyebrow">The couch</div>
         <div>
           <h3>Mac on the TV finally makes sense.</h3>
-          <p>Browse, type, launch apps, play and pause — from the sofa, the bed, or anywhere a mouse won't follow. The stick is your pointer from across the room, and the on-screen keyboard means you never get up for a search box.</p>
+          <p>Browse, type, launch apps, play and pause: from the sofa, the bed, or anywhere a mouse won't follow. The stick is your pointer from across the room, and the on-screen keyboard means you never get up for a search box.</p>
           <div class="vg vg-glide" aria-hidden="true">
             <span class="vg-stick"><i class="vg-cap"></i><i class="vg-ring gr"></i></span>
             <div class="vg-screen">
@@ -1681,7 +1680,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
         <div class="v-eyebrow">The desk</div>
         <div>
           <h3>Every shortcut within reach.</h3>
-          <p>Map the buttons to what you do all day — snap windows, run Shortcuts, fire macros, flick open a radial launcher. Hold a shoulder button and the whole pad changes job, so one controller carries several full sets of shortcuts without ever leaving home row.</p>
+          <p>Map the buttons to what you do all day: snap windows, run Shortcuts, fire macros, flick open a radial launcher. Hold a shoulder button and the whole controller changes job, so one controller carries several full sets of shortcuts without ever leaving home row.</p>
           <div class="vg vg-layers" aria-hidden="true">
             <span class="vg-key vg-hold"><b data-ps="L1" data-xb="LB" data-sw="L" data-mf="L bumper">L1</b><i class="vg-ring"></i></span>
             <div class="vg-chips">
@@ -1703,7 +1702,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     <div class="sec-head-split">
       <div class="eyebrow">What it does</div>
       <h2 class="h2" style="max-width:18ch">Everything under your thumbs.</h2>
-      <p class="lead">Every button can do more than one thing. Hold a shoulder button and they all change job — the way Shift changes your keyboard — so one controller carries several full sets of shortcuts. A button can tell a quick tap from a long hold, and Steer switches setups on its own to match whatever app you are in.</p>
+      <p class="lead">Every button can do more than one thing. Hold a shoulder button and they all change job (the way Shift changes your keyboard), so one controller carries several full sets of shortcuts. A button can tell a quick tap from a long hold, and Steer switches setups on its own to match whatever app you are in.</p>
     </div>
 
     <div class="cols-3" style="margin-top:48px">
@@ -1739,20 +1738,20 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     <div class="cols-2" style="margin-top:48px">
       <div>
         <div class="shot">
-          <img class="shot-light" src="assets/light/settings-sticks.png" alt="Steer's Sticks pane: per-layer stick modes and a shaped response curve" loading="lazy">
-          <img class="shot-dark" src="assets/dark/settings-sticks.png" alt="Steer's Sticks pane: per-layer stick modes and a shaped response curve" loading="lazy">
+          <img class="shot-light" src="assets/light/settings-sticks.png" alt="Steer's Sticks pane: per-layer stick modes and a cursor speed you can dial in" loading="lazy">
+          <img class="shot-dark" src="assets/dark/settings-sticks.png" alt="Steer's Sticks pane: per-layer stick modes and a cursor speed you can dial in" loading="lazy">
         </div>
-        <p class="shot-cap">Sticks — per-layer modes and a response curve you shape yourself.</p>
+        <p class="shot-cap">Sticks: per-layer modes and a cursor speed you shape yourself.</p>
       </div>
       <div>
         <div class="shot">
           <img class="shot-light" src="assets/light/settings-scripting.png" alt="Steer's Scripting pane: the documented steer:// automation surface and Shortcuts actions" loading="lazy">
           <img class="shot-dark" src="assets/dark/settings-scripting.png" alt="Steer's Scripting pane: the documented steer:// automation surface and Shortcuts actions" loading="lazy">
         </div>
-        <p class="shot-cap">Scripting — the documented steer:// surface, copy-paste ready.</p>
+        <p class="shot-cap">Scripting: the documented steer:// surface, copy-paste ready.</p>
       </div>
     </div>
-    <p class="shot-cap" style="margin-top:22px;text-align:center">Real screenshots, captured from the app — no renders, no touch-ups.</p>
+    <p class="shot-cap" style="margin-top:22px;text-align:center">Real screenshots, captured from the app; no renders, no touch-ups.</p>
   </div>
 </section>
 
@@ -1767,15 +1766,15 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
       <div>
         <div class="eyebrow">The part a remapper can't do</div>
         <h2 class="h2"><span class="pd-ps">The trigger stiffens before it clicks.</span><span class="pd-xb">The click lands in your hands.</span><span class="pd-sw">HD rumble answers. Gyro aims.</span><span class="pd-mf">Feedback that follows your hardware.</span></h2>
-        <p class="lead" style="margin-top:16px;max-width:46ch"><span class="pd-ps">A plain remapper just sends key presses. Steer drives the controller in return — the DualSense triggers stiffen so you feel a click before it fires, the grip buzzes to confirm an action, and the light bar can mean whatever you want.</span><span class="pd-xb">A plain remapper just sends key presses. Steer drives the controller in return — your grip buzzes to confirm an action landed: the click, the layer shift, the macro that finished.</span><span class="pd-sw">A plain remapper just sends key presses. Steer drives the controller in return — Nintendo's finer HD rumble confirms each action, and the gyro aims the cursor when you tilt the pad.</span><span class="pd-mf">A plain remapper just sends key presses. Where the hardware allows, Steer drives the controller in return — haptic feedback on pads that support it, tuned per action.</span></p>
+        <p class="lead" style="margin-top:16px;max-width:46ch"><span class="pd-ps">A plain remapper just sends key presses. Steer drives the controller in return: the DualSense triggers stiffen so you feel a click before it fires, the grip buzzes to confirm an action, and the light bar can mean whatever you want.</span><span class="pd-xb">A plain remapper just sends key presses. Steer drives the controller in return; your grip buzzes to confirm an action landed: the click, the layer shift, the macro that finished.</span><span class="pd-sw">A plain remapper just sends key presses. Steer drives the controller in return: Nintendo's finer HD rumble confirms each action, and the gyro aims the cursor when you tilt the controller.</span><span class="pd-mf">A plain remapper just sends key presses. Where the hardware allows, Steer drives the controller in return: haptic feedback on controllers that support it, tuned per action.</span></p>
         <ul class="price-inc" style="margin:26px 0 0;max-width:none">
-          <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Adaptive triggers you can feel a click through — five presets and a fine editor</li>
+          <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Adaptive triggers you can feel a click through: five presets and a fine editor</li>
           <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A gentle buzz per action, tuned by strength</li>
           <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A light bar you set yourself, or hand to your own workflow</li>
-          <li class="pd-xb"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A gentle buzz per action — click, layer shift, radial pick — tuned by strength</li>
-          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> HD rumble — Nintendo's finer thump, per action, tuned by strength</li>
-          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Gyro aim — tilt the pad and the cursor follows</li>
-          <li class="pd-mf"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Haptic feedback on controllers that support it — per action, strength you tune</li>
+          <li class="pd-xb"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A gentle buzz per action (click, layer shift, radial pick), tuned by strength</li>
+          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> HD rumble: Nintendo's finer thump, per action, tuned by strength</li>
+          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Gyro aim: tilt the controller and the cursor follows</li>
+          <li class="pd-mf"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Haptic feedback on controllers that support it: per action, strength you tune</li>
         </ul>
         <!-- the headline, drawn: squeeze → resistance wall → click-through.
              Adaptive resistance is DualSense-only, so the whole vignette is
@@ -1838,8 +1837,8 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
         <img class="shot-dark" src="assets/dark/settings-haptics.png" alt="Steer's Haptics &amp; Triggers pane: per-event haptic strength and adaptive-trigger presets" loading="lazy">
       </div>
       <div class="shot pd-sw">
-        <img class="shot-light" src="assets/light/settings-gyro.png" alt="Steer's Gyro pane: response curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
-        <img class="shot-dark" src="assets/dark/settings-gyro.png" alt="Steer's Gyro pane: response curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
+        <img class="shot-light" src="assets/light/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
+        <img class="shot-dark" src="assets/dark/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
       </div>
     </div>
   </div>
@@ -1852,7 +1851,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
       <div>
         <div class="eyebrow">A new job for the controller in your hand</div>
         <h2 class="h3" style="font-size:26px;letter-spacing:-0.02em">While your agent works, your controller keeps watch.</h2>
-        <p style="color:var(--text-2);margin-top:12px;max-width:52ch;font-size:16px;line-height:1.55"><span class="pd-ps">Light bar shows status. Grip buzzes when it needs you. Squeeze the trigger to approve.</span><span class="pd-xb pd-sw">Grip buzzes when it needs you. Squeeze the trigger to approve.</span><span class="pd-mf">Squeeze the trigger to approve — and a buzz when it needs you, on pads with haptics.</span> It's wired through the same documented <span class="mono">steer://</span> surface — so it works with Claude Code, or anything that can open a URL. Optional — and there the day you want it.</p>
+        <p style="color:var(--text-2);margin-top:12px;max-width:52ch;font-size:16px;line-height:1.55"><span class="pd-ps">Light bar shows status. Grip buzzes when it needs you. Squeeze the trigger to approve.</span><span class="pd-xb pd-sw">Grip buzzes when it needs you. Squeeze the trigger to approve.</span><span class="pd-mf">Squeeze the trigger to approve, and a buzz when it needs you, on controllers with haptics.</span> It's wired through the same documented <span class="mono">steer://</span> surface, so it works with Claude Code, or anything that can open a URL. Optional, and there the day you want it.</p>
         <a class="arrow-link" href="agents.html">See the agent setup <span class="a">→</span></a>
       </div>
       <div style="display:grid;gap:16px" id="ledCycle">
@@ -1870,7 +1869,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     <div class="sec-head-split">
       <div class="eyebrow">Built to be trusted</div>
       <h2 class="h2" style="max-width:22ch">Your setup never leaves your Mac. No account, no cloud, no tracking.</h2>
-      <p class="lead">Steer needs permission to move your cursor and type — the app can't work without it. So here is exactly what it does with that access, in plain terms. Not a trust badge; the whole answer.</p>
+      <p class="lead">Steer needs permission to move your cursor and type: the app can't work without it. So here is exactly what it does with that access, in plain terms. Not a trust badge; the whole answer.</p>
     </div>
     <div class="trust-list" style="margin-top:44px;max-width:840px">
       <div class="trust-row">
@@ -1879,11 +1878,11 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-14 2 8h6"/></svg>
-        <div><h3>No analytics. No tracking. No account.</h3><p>No telemetry, ever — nothing about how you use Steer is sent anywhere. It contacts the network for three things only: to check your licence (when you enter your key, then a quiet re-check on launch and about once a day), to look for an update when you ask it to, and to fetch a profile only if you paste a link to import one. The last two happen only when you act.</p></div>
+        <div><h3>No analytics. No tracking. No account.</h3><p>No telemetry, ever: nothing about how you use Steer is sent anywhere. It contacts the network for three things only: to check your licence (when you enter your key, then a quiet re-check on launch and about once a day), to look for an update when you ask it to, and to fetch a profile only if you paste a link to import one. The last two happen only when you act.</p></div>
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.5l2 2 4-4.5"/><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
-        <div><h3>Anything risky is shown to you first</h3><p>Import someone else's setup and, if a button does more than press a key — opens a web page, runs a script — Steer shows you each one before it applies. You approve it, or it never runs. And scripts run only from your own macOS scripts folder: an imported profile can name one you already installed, never bring its own.</p></div>
+        <div><h3>Anything risky is shown to you first</h3><p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it never runs. And scripts run only from your own macOS scripts folder: an imported profile can name one you already installed, never bring its own.</p></div>
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 2.3 5.6"/><path d="M4 20v-4h4"/></svg>
@@ -1891,7 +1890,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
-        <div><h3>Reverse-engineered, and disclosed</h3><p>Native pinch and rotate use a clean-room synthesizer of macOS's undocumented gesture format; triggers, rumble, and the light bar speak each pad's HID protocol. All through public APIs — no private frameworks linked — and spelled out plainly in the FAQ.</p></div>
+        <div><h3>Built on public APIs, and disclosed</h3><p>Native pinch and rotate use a clean-room synthesizer of macOS's undocumented gesture format; triggers, rumble, and the light bar speak each controller's HID protocol. All through public APIs (no private frameworks linked), and spelled out plainly in the FAQ.</p></div>
       </div>
     </div>
   </div>
@@ -1903,11 +1902,11 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
      still gets it via the link below. -->
 <section class="sec-snug" id="reach">
   <div class="wrap center">
-    <div class="eyebrow" style="justify-content:center">Built by one person</div>
-    <h2 class="h2">Tell me what would make it perfect.</h2>
-    <p class="lead" style="margin:16px auto 0;max-width:52ch">The roadmap is what people ask for. Steer is built and answered by one person — so if it's missing the thing you need, say so, and you'll hear back from me, not a ticket queue.</p>
+    <div class="eyebrow" style="justify-content:center">From the developer</div>
+    <h2 class="h2">Hi, I'm Sean. I build Steer on my own.</h2>
+    <p class="lead" style="margin:16px auto 0;max-width:48ch">I read and reply to every email. If Steer is missing something you need, just ask.</p>
     <div class="cta-row" style="margin-top:28px;display:flex;gap:20px;justify-content:center;align-items:center;flex-wrap:wrap">
-      <a class="btn btn-primary" href="mailto:steer@seanfloyd.dev?subject=Steer%20%E2%80%94%20an%20idea&amp;body=Here%27s%20what%20would%20make%20Steer%20perfect%20for%20how%20I%20work%3A%0A%0A">Share an idea <span aria-hidden="true">→</span></a>
+      <a class="btn btn-primary" href="mailto:steer@seanfloyd.dev?subject=An%20idea%20for%20Steer&amp;body=Here%27s%20what%20would%20make%20Steer%20perfect%20for%20how%20I%20work%3A%0A%0A">Share an idea <span aria-hidden="true">→</span></a>
       <a class="arrow-link" href="vs.html">Or see how Steer compares <span class="a">→</span></a>
     </div>
   </div>
@@ -1953,35 +1952,35 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
         <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Direct from the developer, notarized by Apple</li>
       </ul>
       <a class="btn btn-primary" href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list&amp;body=I'd%20like%20to%20know%20when%20Steer%20is%20available.%20Feel%20free%20to%20mention%20which%20controller%20you%20have%20or%20how%20you'd%20use%20it." style="margin-top:30px;width:100%;justify-content:center">Join the launch list</a>
-      <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is finishing up. Join the list and I'll email you the day the trial is ready — one message, no list-selling.</p>
-      <p style="font-size:13px;color:var(--text-3);margin-top:10px">Built for myself. I use it daily. — Sean Floyd</p>
+      <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is finishing up. Join the list and I'll email you the day the trial is ready: one message, no list-selling.</p>
+      <p style="font-size:13px;color:var(--text-3);margin-top:10px">Built for myself. I use it daily. Sean Floyd</p>
     </div>
 
     <!-- FAQ -->
     <div class="faq" style="text-align:left">
       <details>
         <summary>Which controllers work?</summary>
-        <div class="faq-body">DualSense and DualSense Edge, DualShock 4, Xbox Series, Xbox One, and Xbox Elite, Switch Pro, and any MFi controller. The feel features — adaptive triggers, rumble, light bar — depend on what the hardware supports; a DualSense gets all of them. Elite rear-paddle reading is in beta. <a href="compatibility.html">See exactly what each controller does →</a></div>
+        <div class="faq-body">DualSense and DualSense Edge, DualShock 4, Xbox Series, Xbox One, and Xbox Elite, Switch Pro, and any MFi controller. The feel features (adaptive triggers, rumble, light bar) depend on what the hardware supports; a DualSense gets all of them. Elite rear-paddle reading is in beta. <a href="compatibility.html">See exactly what each controller does →</a></div>
       </details>
       <details>
         <summary>Is this a subscription?</summary>
-        <div class="faq-body">No. One payment, one price, yours to keep — including free updates as macOS changes. No account, no recurring charge.</div>
+        <div class="faq-body">No. One payment, one price, yours to keep, including free updates as macOS changes. No account, no recurring charge.</div>
       </details>
       <details>
         <summary>What permissions does it need, and why?</summary>
-        <div class="faq-body">Accessibility, so Steer can move the cursor and type — the app can't do its job without it. Input Monitoring only if you use DualSense Edge rear paddles. Nothing is tracked, and your setup never leaves your Mac. The full picture is in the <a href="#trust">trust section</a> and the <a href="privacy.html">privacy page</a>.</div>
+        <div class="faq-body">Accessibility, so Steer can move the cursor and type: the app can't do its job without it. Input Monitoring only if you use DualSense Edge rear paddles. Nothing is tracked, and your setup never leaves your Mac. The full picture is in the <a href="#trust">trust section</a> and the <a href="privacy.html">privacy page</a>.</div>
       </details>
       <details>
         <summary>Why not the Mac App Store?</summary>
-        <div class="faq-body">The App Store can't offer a real, no-account free trial. You download Steer straight from the developer, and Apple still notarizes every release — the same malware scan the store runs — so you get the safety check without a store in between.</div>
+        <div class="faq-body">The App Store can't offer a real, no-account free trial. You download Steer straight from the developer, and Apple still notarizes every release (the same malware scan the store runs), so you get the safety check without a store in between.</div>
       </details>
       <details>
-        <summary>Is anything reverse-engineered?</summary>
-        <div class="faq-body">Yes, and it's disclosed rather than hidden. Adaptive triggers, PlayStation and Switch Pro rumble, and light-bar output speak clean-room implementations of each pad's HID protocol; native pinch and rotate use a clean-room synthesizer of macOS's undocumented gesture-event format. All of it goes through public APIs — no private frameworks are linked. Scripts and automation you import stay contained and are shown for review before they apply.</div>
+        <summary>Does Steer rely on undocumented behaviour?</summary>
+        <div class="faq-body">Yes, and it's disclosed rather than hidden. Adaptive triggers, PlayStation and Switch Pro rumble, and light-bar output speak clean-room implementations of each controller's HID protocol; native pinch and rotate use a clean-room synthesizer of macOS's undocumented gesture-event format. All of it goes through public APIs (no private frameworks are linked). Scripts and automation you import stay contained and are shown for review before they apply.</div>
       </details>
       <details>
         <summary>Can I get a refund?</summary>
-        <div class="faq-body">Yes — the 14-day free trial means you try everything before paying, and if you change your mind after buying, there are <a href="refund.html">refunds within 14 days</a>.</div>
+        <div class="faq-body">Yes: the 14-day free trial means you try everything before paying, and if you change your mind after buying, there are <a href="refund.html">refunds within 14 days</a>.</div>
       </details>
     </div>
   </div>
@@ -2022,7 +2021,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     </div>
     <div class="foot-bottom">
       <span>© 2026 Sean Floyd. All rights reserved.</span>
-      <span>macOS 14+ · Apple Silicon · Not affiliated with Sony, Microsoft, or Nintendo.</span>
+      <span>macOS 14+ · Apple Silicon. PlayStation, Xbox, and Switch are trademarks of their owners; Steer is independent, not affiliated with Sony, Microsoft, or Nintendo.</span>
     </div>
   </div>
 </footer>
