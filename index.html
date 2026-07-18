@@ -50,18 +50,20 @@
 .shot img{width:100%;display:block}
 .shot-cap{font-size:12.5px;color:var(--text-3);margin-top:12px;letter-spacing:-0.005em}
 
-/* stacked use-case vignettes — the wide left column is a designed gutter:
-   mono section numeral + short hairline spine above each label */
-.vigns{margin-top:44px;max-width:960px;counter-reset:vig}
-.vign{display:grid;grid-template-columns:150px 1fr;gap:32px;padding:34px 0;border-top:1px solid var(--sep);align-items:start;counter-increment:vig}
-.vign:first-child{border-top:0}
-.vign .v-eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.11em;color:var(--text-3);padding-top:7px;display:flex;flex-direction:column;gap:10px}
-.vign .v-eyebrow::before{content:counter(vig,decimal-leading-zero);order:-2;font-size:28px;font-weight:500;letter-spacing:-0.02em;line-height:1;color:color-mix(in srgb,var(--blue) 55%,var(--text-3));font-variant-numeric:tabular-nums}
-.vign .v-eyebrow::after{content:"";order:-1;width:30px;height:1px;background:var(--sep-2)}
-.vign h3{font-size:22px;font-weight:600;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.12}
-.vign p{font-size:16px;color:var(--text-2);line-height:1.55;max-width:56ch}
-.vign .v-link{margin-top:12px;display:inline-flex}
-@media(max-width:720px){.vign{grid-template-columns:1fr;gap:8px}.vign .v-eyebrow{padding-top:0}}
+/* merged who-it's-for grid: one relatable lead card (the couch) spanning the
+   row, then four supporting cards. Static grid; single column on mobile. */
+.uc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.uc-couch{grid-column:1/-1}
+.uc-couch .uc-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:8px 40px;align-items:center}
+.uc-couch h3{font-size:21px}
+.uc-lead .arrow-link{font-size:14px;margin-bottom:15px}
+@media(max-width:860px){.uc-grid{grid-template-columns:1fr}.uc-couch .uc-body{grid-template-columns:1fr}}
+@media(max-width:520px){
+  .uc-lead{padding:18px 16px 16px}
+  .trust-list{padding:6px 18px}
+  .trust-row{padding:18px 0}
+  .faq summary{padding:15px 4px}
+}
 
 /* ── FEEL: the one cinematic dark band ──────────────────────────────────
    Full-bleed near-black regardless of page theme, so it reads as a deliberate
@@ -102,28 +104,6 @@
 /* this section always shows the dark screenshot, even in light page theme */
 .feel-cinema .shot img.shot-light{display:none}
 .feel-cinema .shot img.shot-dark{display:block}
-
-/* agent card */
-.agent{background:var(--card-bg);border:1px solid var(--sep);border-radius:18px;padding:44px 48px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;box-shadow:var(--shadow-rest-lg),var(--card-hi)}
-.agent .arrow-link{margin-top:16px;display:inline-flex}
-.led-demo{display:flex;gap:10px;align-items:center}
-.led-dot{width:15px;height:15px;border-radius:50%;background:var(--sep-2);box-shadow:0 0 0 0 transparent}
-.led-dot.on{background:var(--green);box-shadow:0 0 14px 1px color-mix(in srgb,var(--green) 70%,transparent)}
-.led-dot.warn{background:var(--yellow);box-shadow:0 0 14px 1px color-mix(in srgb,var(--yellow) 70%,transparent)}
-.led-dot.blue{background:var(--blue);box-shadow:0 0 14px 1px color-mix(in srgb,var(--blue) 70%,transparent)}
-.led-dot.red{background:var(--red);box-shadow:0 0 14px 1px color-mix(in srgb,var(--red) 70%,transparent)}
-/* live status loop: JS adds .led-cycle when the card scrolls into view and
-   steps data-state through work → approve → done. Only the active row is lit;
-   "needs approval" pulses. Without JS or with reduced motion, the static
-   three-row state above stands. */
-.led-cycle .led-demo{opacity:.32;transition:opacity .35s ease}
-.led-cycle[data-state="work"] .led-work,
-.led-cycle[data-state="approve"] .led-approve,
-.led-cycle[data-state="done"] .led-done{opacity:1}
-.led-cycle[data-state="approve"] .led-approve .led-dot{animation:led-pulse .85s ease-in-out infinite}
-@keyframes led-pulse{50%{opacity:.3;box-shadow:0 0 4px 0 color-mix(in srgb,var(--red) 40%,transparent)}}
-@media(prefers-reduced-motion:reduce){.led-cycle .led-demo{opacity:1}.led-cycle[data-state="approve"] .led-approve .led-dot{animation:none}}
-@media(max-width:860px){.agent{grid-template-columns:1fr;padding:32px 24px}}
 
 /* FAQ */
 .faq{max-width:760px;margin:40px auto 0}
@@ -327,7 +307,7 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
   transition:transform 0.15s ease,box-shadow 0.15s ease;
 }
 .chero .cta:hover{transform:translateY(-1px);box-shadow:var(--cta-sh-hover);text-decoration:none}
-.chero .cta:focus-visible,.chero .dot:focus-visible{outline:2px solid var(--accent-ink);outline-offset:3px}
+.chero .cta:focus-visible{outline:2px solid var(--accent-ink);outline-offset:3px}
 .chero .terms{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-3)}
 .chero .terms b{color:var(--ink-2);font-weight:500}
 
@@ -338,7 +318,7 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
 /* width scales with viewport height so the hero fits laptops, but never below
    a legible floor (~620px) — on very short windows the hero scrolls instead of
    shrinking the pad + callouts to unreadable. */
-.chero .stage{position:relative;z-index:4;width:min(960px,94vw,max(620px,calc((100dvh - 560px) * 2.72)));margin-top:0;display:grid;justify-self:center}
+.chero .stage{position:relative;z-index:4;width:min(960px,94vw,max(620px,calc((100dvh - 668px) * 2.72)));margin-top:0;display:grid;justify-self:center}
 .chero .padwrap{grid-area:1 / 1}
 .chero .padwrap svg{display:block;width:100%;height:auto;overflow:visible}
 .chero .padwrap{
@@ -454,39 +434,43 @@ html[data-theme="lightoff"] .chero #bumpGrad .s1{stop-color:#F7F9FC} html[data-t
 .chero[data-pad="sw"] .only-sw,
 .chero[data-pad="mf"] .only-mf{display:inline}
 
-/* light-bar picker (PlayStation state only) */
-.chero .picker{display:flex;flex-direction:column;align-items:center;gap:11px}
-.chero:not([data-pad="ps"]) .picker{visibility:hidden}
-.chero .picker .label{
-  font-family:var(--mono);font-size:11px;letter-spacing:0.16em;
-  text-transform:uppercase;color:var(--ink-3);
-}
-.chero .dots{display:flex;gap:10px}
-.chero .dot{
+/* light-bar picker — lives in the Feel band (always dark), beside the
+   light-bar claim it demonstrates. Still drives the hero bar + page accent. */
+.lb-picker{margin-top:26px;display:flex;flex-direction:column;align-items:flex-start;gap:11px}
+.lb-picker .label{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8791A6}
+.lb-picker .dots{display:flex;gap:10px}
+.lb-picker .dot{
   appearance:none;border:0;cursor:pointer;
   width:18px;height:18px;border-radius:50%;
-  background:var(--c);box-shadow:var(--dot-sh);
+  background:var(--c);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.14) inset,0 0 12px color-mix(in srgb,var(--c) 55%,transparent);
   transition:transform 0.15s ease;position:relative;
 }
-.chero .dot:hover{transform:scale(1.18)}
-.chero .dot[aria-pressed="true"]::after{
+.lb-picker .dot:hover{transform:scale(1.18)}
+.lb-picker .dot[aria-pressed="true"]::after{
   content:"";position:absolute;inset:-5px;
   border:1.5px solid var(--c);border-radius:50%;
 }
+.lb-picker .dot:focus-visible{outline:2px solid #4D8DFF;outline-offset:3px}
+.lb-picker .dot-auto{--c:#98A1B5;background:conic-gradient(from 210deg,#4D8DFF,#A87CFF,#FF6FAE,#FFB454,#5FD48D,#3FE0C0,#4D8DFF)}
+@media(prefers-reduced-motion:reduce){.lb-picker .dot{transition:none}}
 
 .chero .bottombar{
   position:relative;z-index:5;width:100%;max-width:1320px;margin-top:4px;
   display:flex;justify-content:center;
-  align-items:end;gap:44px;padding:8px 52px 26px;
+  align-items:end;gap:44px;padding:8px 52px 16px;
 }
-.chero .shown{
-  max-width:430px;font-family:var(--mono);
-  font-size:11px;line-height:1.8;letter-spacing:0.03em;color:var(--ink-3);
+/* hero glide demo: the couch stick-glide beat, restaged in the studio, so a
+   first-timer SEES the stick drive the Mac cursor without scrolling. Local
+   token overrides keep it dark-studio in both site themes. */
+.chero .hero-demo{display:flex;flex-direction:column;align-items:stretch;width:100%;max-width:440px}
+.chero .hero-demo .vg{
+  --bg:#0B0F1A;--bg-inset:rgba(233,237,246,0.045);--bg-inset-2:rgba(233,237,246,0.07);
+  --card-bg:#1A2130;--sep:rgba(233,237,246,0.13);--sep-2:rgba(233,237,246,0.20);
+  --text:#E9EDF6;--text-2:#98A1B5;--blue:#4D8DFF;--ps-cross:#7DA7E8;
+  margin:0;max-width:none;
 }
-.chero .legal{
-  max-width:470px;justify-self:end;text-align:right;font-family:var(--mono);
-  font-size:11px;line-height:1.8;letter-spacing:0.03em;color:var(--ink-3);
-}
+.chero .hero-demo .cap{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-2);text-align:center;margin-top:10px}
 
 /* entrance choreography */
 .chero .copy{opacity:0;animation:chero-rise 0.9s cubic-bezier(0.2,0.6,0.2,1) forwards}
@@ -521,7 +505,7 @@ html.still .chero .pool{opacity:var(--poolO)}
   .chero .wash{animation:none;opacity:var(--washO)}
   .chero .pool{animation:none;opacity:var(--poolO)}
   .chero.booted .wash,.chero.booted .pool{transition:none}
-  .chero .cta,.chero .dot,.chero .tab{transition:none}
+  .chero .cta,.chero .tab{transition:none}
 }
 
 /* responsive: the annotations yield to feature chips when they can't stay
@@ -538,6 +522,15 @@ html.still .chero .pool{opacity:var(--poolO)}
   border-radius:999px;padding:7px 13px;
 }
 .chero .features li.x{color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent-ink) 40%,transparent)}
+/* the laptop window (dvh ~761-990): the pad is scaled down so the glide demo
+   fits the fold, which would render the 12px in-SVG annotations at ~6-7px —
+   scale the annotation type up to compensate (gutters have the room) */
+@media (min-width:900px) and (min-height:761px) and (max-height:990px){
+  .chero .ann text{font-size:15px}
+  .chero .ann .t{font-size:14.5px}
+  .chero .bl13{font-size:16px}
+  .chero .bl12{font-size:15px}
+}
 @media (max-width:899px),(min-width:900px) and (max-height:760px){
   .chero .ann{display:none}
   .chero[data-pad="ps"] .features.feat-ps,
@@ -550,10 +543,7 @@ html.still .chero .pool{opacity:var(--poolO)}
   /* clean 2x2 grid instead of an uneven wrap inside the pill */
   .chero .tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;border-radius:16px;width:100%;max-width:300px}
   .chero .tab{justify-content:center;padding:10px 8px}
-  .chero .bottombar{grid-template-columns:1fr;justify-items:center;gap:22px;margin-top:6px;padding:12px 28px 44px}
-  .chero .picker{order:-1}
-  .chero:not([data-pad="ps"]) .picker{display:none}
-  .chero .shown,.chero .legal{max-width:420px;text-align:center;justify-self:center}
+  .chero .bottombar{margin-top:6px;padding:12px 24px 44px}
 }
 
 /* ── light bar: idle "bleeding rainbow" ─────────────────────────────────
@@ -588,8 +578,6 @@ html.still .chero .pool{opacity:var(--poolO)}
   html.anim-halt .chero .rbl,html.anim-halt .chero .rbb{animation-play-state:paused!important}
 }
 @keyframes chero-hue{0%{opacity:0}16.667%{opacity:1}33.334%{opacity:0}100%{opacity:0}}
-/* the Auto swatch: a small colour wheel; ring colour stays neutral ink */
-.chero .dot-auto{--c:var(--ink-2);background:conic-gradient(from 210deg,#4D8DFF,#A87CFF,#FF6FAE,#FFB454,#5FD48D,#3FE0C0,#4D8DFF)}
 
 /* ═══════════ input vignettes (.vg): press → the Mac reacts → the pad answers ═══
    One grammar, three rules: transform/opacity only; the base (no .on)
@@ -689,12 +677,12 @@ html.still .chero .pool{opacity:var(--poolO)}
   .vg-layers.on .vg-chip:nth-child(3) .vg-lab{animation-delay:-5.38s}
   .vg-layers.on .vg-chip:nth-child(4) .vg-lab{animation-delay:-5.32s}
   /* hidden tab: pause everything */
-  html.anim-halt .vg,html.anim-halt .vg *,html.anim-halt .tvg *,html.anim-halt .agent-r2,html.anim-halt .agent-r2 *,
+  html.anim-halt .vg,html.anim-halt .vg *,html.anim-halt .tvg *,
   html.anim-halt .vg *::before,html.anim-halt .vg *::after{animation-play-state:paused!important}
 }
 /* deterministic webdriver stills: freeze vignettes at the meaningful base frame */
 html.still .vg,html.still .vg *,html.still .vg *::before,html.still .vg *::after,
-html.still .tvg *,html.still .agent-r2,html.still .agent-r2 *{animation:none!important}
+html.still .tvg *{animation:none!important}
 
 @keyframes vgE-scrub{0%,6%{transform:translateX(34%)}26%,58%{transform:translateX(74%)}84%,100%{transform:translateX(34%)}}
 @keyframes vgE-pressR{0%,4%{transform:none}7%{transform:translateY(1.5px)}11%,100%{transform:none}}
@@ -864,17 +852,8 @@ html[data-theme="lightoff"] .chero .mf-bl{fill:rgba(23,28,38,0.42)}
 @keyframes vgG-tap{0%,55%{transform:none}58%{transform:scale(.88)}62%,100%{transform:none}}
 @keyframes vgG-ring{0%,57%{transform:scale(.5);opacity:0}61%{opacity:.5;transform:scale(.85)}78%,100%{transform:scale(1.5);opacity:0}}
 
-/* ── Agent beat: "needs approval" carries its own answer — the trigger chip
-   squeezes mid-state and the cycle clears to done. Static/reduced-motion:
-   the chip simply labels the squeeze-to-approve mapping. */
-.agent-r2{position:relative;margin-left:2px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:0.07em;color:var(--text-2);background:var(--card-bg);border:1px solid var(--sep-2);border-radius:7px;padding:5px 8px}
-.agent-r2 b,.vg-key b{font:inherit;color:inherit}
-.led-cycle[data-state="approve"] .agent-r2{animation:agent-squeeze 2s linear both}
-.led-cycle[data-state="approve"] .agent-r2 .vg-ring{animation:agent-sqring 2s ease-out both}
-@keyframes agent-squeeze{0%,48%{transform:none}56%,66%{transform:translateY(1.5px)}74%,100%{transform:none}}
-@keyframes agent-sqring{0%,54%{opacity:0;transform:scale(.5)}60%{opacity:.5;transform:scale(.85)}80%,100%{opacity:0;transform:scale(1.5)}}
+.vg-key b{font:inherit;color:inherit}
 @media(prefers-reduced-motion:reduce){
-  .led-cycle[data-state="approve"] .agent-r2,.led-cycle[data-state="approve"] .agent-r2 .vg-ring{animation:none}
   .tvg.on *{animation:none!important}
 }
 
@@ -908,10 +887,15 @@ html[data-pad="xb"] #feel .price-inc,
 html[data-pad="mf"] #feel .price-inc{justify-items:center}
 html[data-pad="xb"] #feel .price-inc li,
 html[data-pad="mf"] #feel .price-inc li{text-align:left}
-/* capabilities grid: hardware-specific rows carry a which-controllers tag so
-   they never read as universal, in any picker state */
-.cap-pads{font-family:var(--mono);font-size:10.5px;letter-spacing:0.03em;color:var(--text-3);white-space:nowrap}
-.grow-lead{display:flex;flex-direction:column;gap:3px;min-width:0}
+/* capabilities: the layers explainer beside the summary list */
+.cap-layers h3{font-size:22px;letter-spacing:-0.02em;margin-bottom:8px}
+.cap-layers p{font-size:16px;color:var(--text-2);line-height:1.55;max-width:52ch;margin-bottom:16px}
+/* Feel: hardware-extras chips (moved from the hero's mobile callouts).
+   NOTE no display here — the pd-* gate owns it (flex when shown, below). */
+.feel-extras{list-style:none;flex-wrap:wrap;gap:8px;margin:22px 0 0;padding:0}
+.feel-extras li{font-family:var(--mono);font-size:11.5px;letter-spacing:0.04em;color:#AEB6C6;border:1px solid rgba(233,237,246,0.22);border-radius:999px;padding:7px 13px}
+html:not([data-pad]) ul.feel-extras.pd-ps,
+html[data-pad="ps"] ul.feel-extras.pd-ps{display:flex}
 </style>
 </head>
 <body>
@@ -948,8 +932,7 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
   <div class="copy">
     <div class="app-eyebrow">A Mac app</div>
     <h1>Control your whole Mac<br>with a game controller.</h1>
-    <p class="sub">Steer turns almost any game controller into a full mouse and keyboard for your Mac. Scroll, type, switch apps, turn pages, start dictation, point at slides. From your couch, your bed, or one hand.</p>
-    <p class="sub">The stick moves the pointer, the buttons click like a mouse, and an on-screen keyboard types.</p>
+    <p class="sub">Steer turns almost any game controller into a full mouse and keyboard for your Mac: point, click, type, and scroll from the couch, the bed, or one hand.</p>
     <p class="sub sub-own">Own a controller? You're set. If not, a used one costs less than the app.</p>
     <div class="cta-row">
       <a class="cta" href="#pricing">Join the launch list</a>
@@ -1532,10 +1515,6 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     <li>Cursor + scroll on the sticks</li>
     <li>Any shortcut on any button</li>
     <li>Hold bumpers for layers</li>
-    <li class="x">+ Touchpad gestures</li>
-    <li class="x">+ Adaptive triggers</li>
-    <li class="x">+ Gyro aim</li>
-    <li class="x">+ Light bar</li>
   </ul>
   <ul class="features feat-xb">
     <li>Cursor + scroll on the sticks</li>
@@ -1548,8 +1527,6 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     <li>Cursor + scroll on the sticks</li>
     <li>Any shortcut on any button</li>
     <li>Hold bumpers for layers</li>
-    <li class="x">+ Gyro aim</li>
-    <li class="x">+ HD rumble</li>
   </ul>
   <ul class="features feat-mf">
     <li>Cursor + scroll on the sticks</li>
@@ -1559,30 +1536,57 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
   </ul>
 
   <div class="bottombar">
-    <div class="picker">
-      <div class="dots" role="group" aria-label="Light bar colour. Auto cycles slowly, or lock a colour.">
-        <button class="dot dot-auto" aria-pressed="true" aria-label="Auto. Slowly cycle colours."></button>
-        <button class="dot" style="--c:#4D8DFF" aria-pressed="false" aria-label="Steer blue"  data-c="#4D8DFF"></button>
-        <button class="dot" style="--c:#A87CFF" aria-pressed="false" aria-label="Violet"      data-c="#A87CFF"></button>
-        <button class="dot" style="--c:#3FE0C0" aria-pressed="false" aria-label="Teal"        data-c="#3FE0C0"></button>
-        <button class="dot" style="--c:#FFB454" aria-pressed="false" aria-label="Amber"       data-c="#FFB454"></button>
+    <div class="hero-demo">
+      <div class="vg vg-glide" aria-hidden="true">
+        <span class="vg-stick"><i class="vg-cap"></i><i class="vg-ring gr"></i></span>
+        <div class="vg-screen">
+          <span class="vg-tile"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.5l8 4.5-8 4.5z"/></svg><i class="tring"></i></span>
+          <span class="vg-cursor"><svg viewBox="0 0 15 16" aria-hidden="true"><path d="M1 0.5 L1 12.5 L4.4 9.6 L6.6 14.6 L9.2 13.4 L7 8.6 L11.4 8.2 Z" fill="var(--text)" stroke="var(--card-bg)" stroke-width="1.1" stroke-linejoin="round"/></svg></span>
+        </div>
+        <span class="vg-facewrap"><span class="face-slot" data-b="cross"></span></span>
       </div>
-      <span class="label">Light bar: drifts on its own, or lock a colour</span>
+      <p class="cap">The stick is the mouse. <span class="only-ps">Cross</span><span class="only-xb">A</span><span class="only-sw">B</span><span class="only-mf">A</span> clicks.</p>
     </div>
   </div>
 
   <div class="grain"></div>
 </section>
 
-<!-- USE CASES — recognition strip: 3 job leads + a muted pill row. Every item must be
+<!-- WHO IT'S FOR — the one audience section: a relatable lead card (the couch),
+     accessibility promoted to a card, then the job cards. Every item must be
      shipped/true (no FPS, no CAD orbit, no DAW). Only $435 Speed Editor price is verified. -->
-<section class="sec" style="border-top:1px solid var(--sep)">
+<section class="sec-loose sunken" id="uses">
   <div class="wrap">
     <div class="eyebrow">Who it's for</div>
     <h2 class="h2" style="max-width:22ch">For everyone. Not just gamers.</h2>
-    <p class="lead" style="margin-top:16px;max-width:60ch">Unchain yourself from the keyboard. Run your Mac from the couch, on your feet, or pacing the room. With a sore wrist, one free hand, or when a mouse just isn't an option. A few of the jobs people use it for:</p>
+    <p class="lead" style="margin-top:16px;max-width:60ch">Unchain yourself from the keyboard. A few of the jobs people use it for:</p>
 
-    <div class="cols-3" style="margin-top:44px">
+    <div class="uc-grid" style="margin-top:44px">
+      <div class="uc-lead uc-couch">
+        <div class="uc-tag">The couch</div>
+        <div class="uc-body">
+          <div>
+            <h3>Run your whole Mac from the couch.</h3>
+            <p>Browse, type, launch apps, play and pause: from the sofa, the bed, anywhere a mouse won't follow. The stick points from across the room; an on-screen keyboard means you never get up for a search box.</p>
+          </div>
+          <div class="vg vg-glide" aria-hidden="true">
+            <span class="vg-stick"><i class="vg-cap"></i><i class="vg-ring gr"></i></span>
+            <div class="vg-screen">
+              <span class="vg-tile"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.5l8 4.5-8 4.5z"/></svg><i class="tring"></i></span>
+              <span class="vg-cursor"><svg viewBox="0 0 15 16" aria-hidden="true"><path d="M1 0.5 L1 12.5 L4.4 9.6 L6.6 14.6 L9.2 13.4 L7 8.6 L11.4 8.2 Z" fill="var(--text)" stroke="var(--card-bg)" stroke-width="1.1" stroke-linejoin="round"/></svg></span>
+            </div>
+            <span class="vg-facewrap"><span class="face-slot" data-b="cross"></span></span>
+          </div>
+        </div>
+        <div class="uc-mech"><b>Left stick</b> · pointer from across the room</div>
+      </div>
+      <div class="uc-lead uc-comf">
+        <div class="uc-tag">Comfort &amp; accessibility</div>
+        <h3>A sore wrist, or one free hand.</h3>
+        <p>A controller rests in relaxed hands: no fine wrist work, no reaching for a mouse. Built for RSI, tremor, chronic pain, and one-handed days.</p>
+        <a class="arrow-link" href="accessibility.html">See the accessibility setup <span class="a">→</span></a>
+        <div class="uc-mech"><b>Cursor speed</b> · slow it right down</div>
+      </div>
       <div class="uc-lead uc-ed">
         <div class="uc-tag">Editors</div>
         <h3>Cut without touching the keyboard.</h3>
@@ -1628,110 +1632,47 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
 
     <div class="pills-label">And plenty more</div>
     <div class="pills">
-      <a class="pill-uc" href="accessibility.html">RSI, pain &amp; tremor <span class="a">→</span></a>
-      <a class="pill-uc" href="accessibility.html">One-handed &amp; limited mobility <span class="a">→</span></a>
       <span class="pill-uc">Seniors &amp; easy access</span>
-      <span class="pill-uc">Couch, bed &amp; the TV</span>
-      <span class="pill-uc">Presentations &amp; lectures</span>
-      <span class="pill-uc">Students &amp; studying</span>
       <span class="pill-uc">Reading &amp; browsing</span>
       <span class="pill-uc">Writing &amp; notes</span>
-      <span class="pill-uc">Photo &amp; video editing</span>
-      <span class="pill-uc">Spreadsheets &amp; data</span>
       <span class="pill-uc">Coding &amp; IDEs</span>
       <span class="pill-uc">Design &amp; Figma</span>
       <a class="pill-uc" href="agents.html">Running AI agents <span class="a">→</span></a>
-      <span class="pill-uc">Music &amp; podcasts</span>
-      <span class="pill-uc">Meetings &amp; calls</span>
     </div>
-    <p class="pills-note"><b>Any app, really.</b> Start from a ready-made setup, or build your own in minutes.</p>
+    <p class="pills-note"><b>Any app, really.</b> Start from a ready-made setup, or build your own in minutes. <a href="#capabilities">See everything it does <span aria-hidden="true">→</span></a></p>
   </div>
 </section>
 
-<!-- USES — weighted vignettes, Comfort first -->
-<section class="sec-loose sunken">
-  <div class="wrap">
-    <div class="eyebrow">Made for</div>
-    <h2 class="h2" style="max-width:24ch">Point, click, type, scroll: however you're holding it.</h2>
-    <div class="vigns">
-      <div class="vign">
-        <div class="v-eyebrow">Comfort</div>
-        <div>
-          <h3>A sore wrist, or one free hand.</h3>
-          <p>A controller rests in relaxed hands, no fine wrist work required. If a mouse is tiring, painful, or out of reach (RSI, tremor, chronic pain, limited mobility, or a one-handed day), Steer does the whole job: point, click, type, and scroll, with a cursor you can slow right down.</p>
-          <a class="arrow-link v-link" href="accessibility.html">See the accessibility setup <span class="a">→</span></a>
-        </div>
-      </div>
-      <div class="vign">
-        <div class="v-eyebrow">The couch</div>
-        <div>
-          <h3>Mac on the TV finally makes sense.</h3>
-          <p>Browse, type, launch apps, play and pause: from the sofa, the bed, or anywhere a mouse won't follow. The stick is your pointer from across the room, and the on-screen keyboard means you never get up for a search box.</p>
-          <div class="vg vg-glide" aria-hidden="true">
-            <span class="vg-stick"><i class="vg-cap"></i><i class="vg-ring gr"></i></span>
-            <div class="vg-screen">
-              <span class="vg-tile"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.5l8 4.5-8 4.5z"/></svg><i class="tring"></i></span>
-              <span class="vg-cursor"><svg viewBox="0 0 15 16" aria-hidden="true"><path d="M1 0.5 L1 12.5 L4.4 9.6 L6.6 14.6 L9.2 13.4 L7 8.6 L11.4 8.2 Z" fill="var(--text)" stroke="var(--card-bg)" stroke-width="1.1" stroke-linejoin="round"/></svg></span>
-            </div>
-            <span class="vg-facewrap"><span class="face-slot" data-b="cross"></span></span>
-          </div>
-        </div>
-      </div>
-      <div class="vign">
-        <div class="v-eyebrow">The desk</div>
-        <div>
-          <h3>Every shortcut within reach.</h3>
-          <p>Map the buttons to what you do all day: snap windows, run Shortcuts, fire macros, flick open a radial launcher. Hold a shoulder button and the whole controller changes job, so one controller carries several full sets of shortcuts, your hands never moving.</p>
-          <div class="vg vg-layers" aria-hidden="true">
-            <span class="vg-key vg-hold"><b data-ps="L1" data-xb="LB" data-sw="L" data-mf="L bumper">L1</b><i class="vg-ring"></i></span>
-            <div class="vg-chips">
-              <span class="vg-chip"><span class="face-slot" data-b="cross"></span><span class="vg-labs"><span class="vg-lab a">Click</span><span class="vg-lab b">Snap left</span></span></span>
-              <span class="vg-chip"><span class="face-slot" data-b="circle"></span><span class="vg-labs"><span class="vg-lab a">Right-click</span><span class="vg-lab b">Snap right</span></span></span>
-              <span class="vg-chip"><span class="face-slot" data-b="triangle"></span><span class="vg-labs"><span class="vg-lab a">Enter</span><span class="vg-lab b">Maximize</span></span></span>
-              <span class="vg-chip"><span class="face-slot" data-b="square"></span><span class="vg-labs"><span class="vg-lab a">Esc</span><span class="vg-lab b">Centre</span></span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CAPABILITIES -->
+<!-- CAPABILITIES — one tight summary list + the layers idea, stated once,
+     illustrated by the desk layer-shift vignette. Screenshots are the proof. -->
 <section class="sec" id="capabilities">
   <div class="wrap">
     <div class="sec-head-split">
       <div class="eyebrow">What it does</div>
       <h2 class="h2" style="max-width:18ch">Everything under your thumbs.</h2>
-      <p class="lead">Every button can do more than one thing: a quick tap or a long hold, shifted again when you hold a shoulder button, the way Shift changes your keyboard. Steer switches setups on its own to match whatever app you're in.</p>
+      <p class="lead">The whole mouse-and-keyboard job, plus the shortcuts you use all day, mapped your way. Steer switches setups on its own to match the app you're in.</p>
     </div>
 
-    <div class="cols-3" style="margin-top:48px">
-      <div>
-        <div class="seclabel">Point &amp; move</div>
-        <div class="group">
-          <div class="grow"><span class="lbl">Sticks</span><span class="val">Move &amp; scroll</span></div>
-          <div class="grow"><div class="grow-lead"><span class="lbl">Touchpad</span><span class="cap-pads">DualSense · DS4</span></div><span class="val">Pinch &amp; rotate</span></div>
-          <div class="grow"><div class="grow-lead"><span class="lbl">Gyro</span><span class="cap-pads">DualSense · Switch Pro</span></div><span class="val">Tilt to aim</span></div>
-          <div class="grow"><span class="lbl">On-screen keyboard</span><span class="val">Type anything</span></div>
-        </div>
+    <div class="hero-grid" style="margin-top:48px">
+      <div class="group">
+        <div class="grow"><span class="lbl">Sticks</span><span class="val">Move &amp; scroll</span></div>
+        <div class="grow"><span class="lbl">Every button</span><span class="val">Any shortcut, tap or hold</span></div>
+        <div class="grow"><span class="lbl">On-screen keyboard</span><span class="val">Type anything</span></div>
+        <div class="grow"><span class="lbl"><span class="num">6</span> layers</span><span class="val">Hold a shoulder button</span></div>
+        <div class="grow"><span class="lbl">Per-app profiles</span><span class="val">Switch on their own</span></div>
+        <div class="grow"><span class="lbl">Macros &amp; Apple Shortcuts</span><span class="val">Record &amp; run</span></div>
       </div>
-      <div>
-        <div class="seclabel">Get things done</div>
-        <div class="group">
-          <div class="grow"><span class="lbl">Macros</span><span class="val">Record &amp; replay</span></div>
-          <div class="grow"><span class="lbl">Apple Shortcuts</span><span class="val">Run any shortcut</span></div>
-          <div class="grow"><span class="lbl">Snap windows</span><span class="val">Aim to tidy</span></div>
-          <div class="grow"><span class="lbl">Radial launcher</span><span class="val">Flick to open</span></div>
-        </div>
-      </div>
-      <div>
-        <div class="seclabel">Made to fit you</div>
-        <div class="group">
-          <div class="grow"><span class="lbl"><span class="num">6</span> layers</span><span class="val">Shift, held</span></div>
-          <div class="grow"><span class="lbl">Per-app profiles</span><span class="val">Auto-switch</span></div>
-          <div class="grow"><span class="lbl">Two jobs per button</span><span class="val">Tap vs hold</span></div>
-          <div class="grow"><span class="lbl">Automation</span><span class="val">Scripts &amp; Shortcuts</span></div>
+      <div class="cap-layers">
+        <h3>Layers are Shift, for a controller.</h3>
+        <p>Hold a shoulder button and every button changes job, the way Shift changes your keyboard. Six layers: snap windows, fire macros, flick open a radial launcher, hands never moving.</p>
+        <div class="vg vg-layers" aria-hidden="true">
+          <span class="vg-key vg-hold"><b data-ps="L1" data-xb="LB" data-sw="L" data-mf="L bumper">L1</b><i class="vg-ring"></i></span>
+          <div class="vg-chips">
+            <span class="vg-chip"><span class="face-slot" data-b="cross"></span><span class="vg-labs"><span class="vg-lab a">Click</span><span class="vg-lab b">Snap left</span></span></span>
+            <span class="vg-chip"><span class="face-slot" data-b="circle"></span><span class="vg-labs"><span class="vg-lab a">Right-click</span><span class="vg-lab b">Snap right</span></span></span>
+            <span class="vg-chip"><span class="face-slot" data-b="triangle"></span><span class="vg-labs"><span class="vg-lab a">Enter</span><span class="vg-lab b">Maximize</span></span></span>
+            <span class="vg-chip"><span class="face-slot" data-b="square"></span><span class="vg-labs"><span class="vg-lab a">Esc</span><span class="vg-lab b">Centre</span></span></span>
+          </div>
         </div>
       </div>
     </div>
@@ -1776,6 +1717,11 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> HD rumble: Nintendo's finer thump, per action, tuned by strength</li>
           <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Gyro aim: tilt the controller and the cursor follows</li>
           <li class="pd-mf"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Haptic feedback on controllers that support it: per action, strength you tune</li>
+        </ul>
+        <!-- the hardware extras the pad brings beyond buttons (moved from the hero chips) -->
+        <ul class="feel-extras pd-ps" aria-label="More DualSense hardware Steer uses">
+          <li>+ Touchpad gestures: pinch &amp; rotate</li>
+          <li>+ Gyro aim: tilt to point</li>
         </ul>
         <!-- the headline, drawn: squeeze → resistance wall → click-through.
              Adaptive resistance is DualSense-only, so the whole vignette is
@@ -1832,6 +1778,18 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
           </svg>
           <div class="tvg-cap"><span>Adaptive trigger · L2</span><span class="bite">brake bite · 140/255</span></div>
         </div>
+        <!-- light-bar swatches (moved from the hero): lock a colour and the hero
+             bar + the page accent follow. DualSense-only hardware, so pd-ps. -->
+        <div class="lb-picker pd-ps">
+          <div class="dots" role="group" aria-label="Light bar colour. Auto cycles slowly, or lock a colour.">
+            <button class="dot dot-auto" aria-pressed="true" aria-label="Auto. Slowly cycle colours."></button>
+            <button class="dot" style="--c:#4D8DFF" aria-pressed="false" aria-label="Steer blue"  data-c="#4D8DFF"></button>
+            <button class="dot" style="--c:#A87CFF" aria-pressed="false" aria-label="Violet"      data-c="#A87CFF"></button>
+            <button class="dot" style="--c:#3FE0C0" aria-pressed="false" aria-label="Teal"        data-c="#3FE0C0"></button>
+            <button class="dot" style="--c:#FFB454" aria-pressed="false" aria-label="Amber"       data-c="#FFB454"></button>
+          </div>
+          <span class="label">Try it: lock a colour, the whole page follows</span>
+        </div>
       </div>
       <div class="shot pd-ps">
         <img class="shot-light" src="assets/light/settings-haptics.png" alt="Steer's Haptics &amp; Triggers pane: per-event haptic strength and adaptive-trigger presets" loading="lazy">
@@ -1840,25 +1798,6 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
       <div class="shot pd-sw">
         <img class="shot-light" src="assets/light/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
         <img class="shot-dark" src="assets/dark/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AGENT ANGLE — demoted, after the product is proven -->
-<section class="sec-tight">
-  <div class="wrap">
-    <div class="agent">
-      <div>
-        <div class="eyebrow">A new job for the controller in your hand</div>
-        <h2 class="h3" style="font-size:26px;letter-spacing:-0.02em">While your agent works, your controller keeps watch.</h2>
-        <p style="color:var(--text-2);margin-top:12px;max-width:52ch;font-size:16px;line-height:1.55"><span class="pd-ps">Light bar shows status. Grip buzzes when it needs you. Squeeze the trigger to approve.</span><span class="pd-xb pd-sw">Grip buzzes when it needs you. Squeeze the trigger to approve.</span><span class="pd-mf">Squeeze the trigger to approve, and a buzz when it needs you, on controllers with haptics.</span> It's wired through the same documented <span class="mono">steer://</span> surface, so it works with Claude Code, or anything that can open a URL. Optional, and there the day you want it.</p>
-        <a class="arrow-link" href="agents.html">See the agent setup <span class="a">→</span></a>
-      </div>
-      <div style="display:grid;gap:16px" id="ledCycle">
-        <div class="led-demo led-work"><span class="led-dot warn"></span><span class="mono" style="font-size:13px;color:var(--text-2)">agent working</span></div>
-        <div class="led-demo led-approve"><span class="led-dot red"></span><span class="mono" style="font-size:13px;color:var(--text-2)">needs approval</span><span class="agent-r2" aria-hidden="true"><b data-ps="R2" data-xb="RT" data-sw="ZR" data-mf="R trigger">R2</b><i class="vg-ring"></i></span></div>
-        <div class="led-demo led-done"><span class="led-dot on"></span><span class="mono" style="font-size:13px;color:var(--text-2)">done, tests pass</span></div>
       </div>
     </div>
   </div>
@@ -1875,19 +1814,19 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     <div class="trust-list" style="margin-top:44px;max-width:840px">
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-        <div><h3>Plain files, on your computer.</h3><p>Your mappings are plain files on your own computer. No account, no sign-in, no cloud. They are yours, and they do not leave the machine.</p></div>
+        <div><h3>Plain files, on your computer.</h3><p>Your mappings are plain files you can open, back up, and move. No sign-in, nothing synced.</p></div>
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-14 2 8h6"/></svg>
-        <div><h3>Nothing about you is sent anywhere.</h3><p>Nothing about how you use Steer is ever sent anywhere. It contacts the network for three things only: to check your licence (when you enter your key, then a quiet re-check on launch and about once a day), to look for an update when you ask it to, and to fetch a profile only if you paste a link to import one. The last two happen only when you act.</p></div>
+        <div><h3>Nothing about you is sent anywhere.</h3><p>Steer contacts the network for three things only: to check your licence (when you enter your key, then a quiet re-check on launch and about once a day), to look for an update when you ask it to, and to fetch a profile you paste a link to import. The last two happen only when you act.</p></div>
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.5l2 2 4-4.5"/><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
-        <div><h3>Anything risky is shown to you first</h3><p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it never runs. And scripts run only from your own macOS scripts folder: an imported profile can name one you already installed, never bring its own.</p></div>
+        <div><h3>Anything risky is shown to you first</h3><p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it never runs. Scripts run only from your own macOS scripts folder: an import can name one you already installed, never bring its own.</p></div>
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 2.3 5.6"/><path d="M4 20v-4h4"/></svg>
-        <div><h3>Every change can be undone</h3><p>Each edit becomes a restore point, with a history you can walk back. Nothing about your setup changes without a clear way to return to how it was.</p></div>
+        <div><h3>Every change can be undone</h3><p>Each edit becomes a restore point, with a history you can walk back.</p></div>
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
@@ -1913,31 +1852,6 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
   </div>
 </section>
 
-<!-- REQUIREMENTS -->
-<section class="sec-snug sunken" id="requirements">
-  <div class="wrap">
-    <div class="eyebrow">Requirements</div>
-    <h2 class="h2">What you need.</h2>
-    <div class="specs" style="margin-top:40px">
-      <div>
-        <div class="spec-row"><span class="k">System</span><span class="v">macOS 14 or later, Apple Silicon</span></div>
-        <div class="spec-row"><span class="k">Form</span><span class="v">Menu-bar app, no window</span></div>
-        <div class="spec-row"><span class="k">Delivery</span><span class="v">Notarized Developer-ID download</span></div>
-        <div class="spec-row"><span class="k">Connection</span><span class="v">Wired or Bluetooth</span></div>
-      </div>
-      <div>
-        <div class="spec-row"><span class="k">Accessibility</span><span class="v">Required, to move the cursor and type</span></div>
-        <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">DualSense Edge rear paddles only</span></div>
-        <div class="spec-row"><span class="k">Account</span><span class="v">None</span></div>
-        <div class="spec-row"><span class="k">Subscription</span><span class="v">None</span></div>
-      </div>
-    </div>
-    <div class="note-callout" style="margin-top:32px">
-      <strong>Controllers.</strong> DualSense and DualSense Edge, DualShock 4, Xbox Series, One, and Elite, Switch Pro, and any MFi controller. Elite rear paddles read but are untested <span class="pill-beta">beta</span>. Switch Pro rumble supported.
-    </div>
-  </div>
-</section>
-
 <!-- PRICING -->
 <section class="sec-loose" id="pricing">
   <div class="wrap center">
@@ -1955,6 +1869,29 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
       <a class="btn btn-primary" href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list&amp;body=I'd%20like%20to%20know%20when%20Steer%20is%20available.%20Feel%20free%20to%20mention%20which%20controller%20you%20have%20or%20how%20you'd%20use%20it." style="margin-top:30px;width:100%;justify-content:center">Join the launch list</a>
       <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is finishing up. Join the list and I'll email you the day the trial is ready: one message, no list-selling.</p>
       <p style="font-size:13px;color:var(--text-3);margin-top:10px">Built for myself. I use it daily. Sean Floyd</p>
+    </div>
+  </div>
+</section>
+
+<!-- REQUIREMENTS + FAQ — the practical tail, after the buying decision -->
+<section class="sec-snug sunken" id="requirements">
+  <div class="wrap">
+    <div class="eyebrow">Requirements</div>
+    <h2 class="h2">What you need.</h2>
+    <div class="specs" style="margin-top:40px">
+      <div>
+        <div class="spec-row"><span class="k">System</span><span class="v">macOS 14 or later, Apple Silicon</span></div>
+        <div class="spec-row"><span class="k">Form</span><span class="v">Menu-bar app, no window</span></div>
+        <div class="spec-row"><span class="k">Delivery</span><span class="v">Notarized Developer-ID download</span></div>
+      </div>
+      <div>
+        <div class="spec-row"><span class="k">Connection</span><span class="v">Wired or Bluetooth</span></div>
+        <div class="spec-row"><span class="k">Accessibility</span><span class="v">Required, to move the cursor and type</span></div>
+        <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">DualSense Edge rear paddles only</span></div>
+      </div>
+    </div>
+    <div class="note-callout" style="margin-top:32px">
+      <strong>Controllers.</strong> DualSense and DualSense Edge, DualShock 4, Xbox Series, One, and Elite, Switch Pro, and any MFi controller. Elite rear paddles read but are untested <span class="pill-beta">beta</span>. Switch Pro rumble supported.
     </div>
 
     <!-- FAQ -->
@@ -2087,24 +2024,6 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
   render('ps');
   document.addEventListener('steerpad',function(e){render(e.detail);});
 })();
-// agent LED status loop: working → needs approval (pulse) → done, ~5s, only
-// while on-screen (IntersectionObserver). Reduced motion / no-JS: static rows.
-(function(){
-  var cyc=document.getElementById('ledCycle');
-  if(!cyc) return;
-  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var states=[['work',2200],['approve',2000],['done',1500]];
-  var i=0,timer=null;
-  function step(){
-    cyc.setAttribute('data-state',states[i][0]);
-    timer=setTimeout(function(){i=(i+1)%states.length;step();},states[i][1]);
-  }
-  function start(){if(timer) return;cyc.classList.add('led-cycle');i=0;step();}
-  function stop(){if(!timer) return;clearTimeout(timer);timer=null;cyc.classList.remove('led-cycle');cyc.removeAttribute('data-state');}
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?start():stop();});},{threshold:0.4}).observe(cyc);
-  }else{start();}
-})();
 // controller-picker hero (.chero): pad tabs, deep links, light-bar swatches.
 // (The source hero's theme JS is dropped — the site's toggle owns html[data-theme].)
 (function(){
@@ -2140,16 +2059,16 @@ html[data-pad="mf"] #feel .price-inc li{text-align:left}
     var n=(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;
     setPad(tabs[n].dataset.pad); tabs[n].focus(); e.preventDefault();
   });
-  // light bar colour (PlayStation state); --led lives on .chero, so set it there.
-  // The pick is the page's signature: it also recolours the global accent —
-  // every emissive/interactive element (eyebrow dots, links, focus rings, CTAs)
-  // crossfades to AA-safe variants of the chosen colour (see styles.css
-  // data-accent blocks). Default stays system blue.
+  // light bar colour swatches — the picker now lives in the Feel band, but
+  // --led stays on .chero (it drives the hero bar) and the pick still
+  // recolours the global accent: every emissive/interactive element (eyebrow
+  // dots, links, focus rings, CTAs) crossfades to AA-safe variants of the
+  // chosen colour (see styles.css data-accent blocks). Default stays blue.
   // Idle, the bar auto-cycles a slow rainbow (.lb-auto). Locking a swatch
   // stops the drift and re-themes the page accent; the Auto swatch (or
   // re-clicking the active colour) hands the bar back to the rainbow.
-  var dots=[].slice.call(hero.querySelectorAll('.dot'));
-  var autoDot=hero.querySelector('.dot-auto');
+  var dots=[].slice.call(document.querySelectorAll('.lb-picker .dot'));
+  var autoDot=document.querySelector('.lb-picker .dot-auto');
   var colourDots=dots.filter(function(d){return d!==autoDot;});
   var accentNames={'#4d8dff':'blue','#a87cff':'violet','#3fe0c0':'teal','#ffb454':'amber'};
   var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
