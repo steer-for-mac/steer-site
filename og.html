@@ -18,8 +18,10 @@
       --screenshot=/tmp/og-1-2x.png "file://ABSOLUTE/PATH/og.html#v1"
     sips -z 630 1200 /tmp/og-1-2x.png --out assets/og-1.png
 
-  Tokens mirror style.css: dark gradient, light gradient, ink/ink-2/ink-3,
-  accent #0A84FF, SF Pro stack, -0.025em headline tracking.
+  Tokens mirror styles.css: accent #0A84FF (= --blue, dark theme), SF Pro
+  stack, tight headline tracking. The gradient is poster art, NOT a crop of
+  the hero -- the hero is flat white. Keep .tagline in sync with index.html's
+  h1; a stale tagline here ships a stale card to every social preview.
 -->
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -153,7 +155,7 @@
     <img class="icon" src="icon.png" alt="" />
     <div class="content">
       <div class="wordmark">Steer</div>
-      <div class="tagline">Your game controller is now a Mac input device.</div>
+      <div class="tagline">Your whole Mac, from a controller.</div>
       <div class="pill"><span class="dot"></span>macOS 14+ · Apple Silicon</div>
     </div>
   </div>
