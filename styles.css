@@ -315,7 +315,12 @@ a.pill-uc .a{color:var(--blue-text);font-size:11px}
   .cmp .steer-col{background:transparent}
 }
 @media(max-width:520px){
-  .foot-grid{grid-template-columns:1fr}
+  /* keep two link columns: a single column made the footer ~a full screen tall
+     on phones, and the link labels fit half-width comfortably */
   body{font-size:16px}
+  .sec{padding:60px 0}
+  .sec-loose{padding:76px 0}
+  .sec-snug{padding:56px 0}
+  .sec-tight{padding:48px 0}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
