@@ -1,0 +1,321 @@
+/* Steer — marketing site. Inherits the app's macOS Settings language.
+   System fonts only. System blue is the only interactive accent.
+   Measured against Linear / Vercel Geist / Raycast / apple.com. */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "SF Mono", ui-monospace, SFMono-Regular, "Menlo", monospace; /* @kind font */
+  /* light — surface ramp widened 2026-07 so sunken/inset actually separate from bg
+     (the old #fbfbfd/#f5f5f7 steps read as one flat plane). */
+  --bg:#ffffff; --bg-sunken:#f6f7fa; --bg-inset:#eef0f4; --bg-inset-2:#e6e9ee;
+  /* --text-3 carries ALL small print (eyebrows, captions, table headers, price fine print).
+     Retuned with the wider surface ramp: #626269 measures 4.97:1 on the darkest light
+     surface --bg-inset-2 #e6e9ee (verified 2026-07 via contrast.mjs), 6.05 on white.
+     Re-check against the DARKEST light surface, not --bg, if you ever retune. */
+  --text:#1d1d1f; --text-2:#5c5c61; --text-3:#626269;
+  --sep:rgba(0,0,0,0.09); --sep-2:rgba(0,0,0,0.14); --hairline:rgba(0,0,0,0.08);
+  /* #007aff (Apple system blue) gives white-on-blue only 4.02:1 — fails AA on CTAs.
+     #0071eb is visually the same blue and clears 4.60. Don't restore #007aff. */
+  --blue:#0071eb; --blue-text:#0066cc; --blue-fill:rgba(0,122,255,0.10);
+  --green:#34c759; --red:#ff3b30; --yellow:#ff9f0a;
+  /* text-weight variants: the fills fail AA as small text, these clear 4.5:1 on white/inset */
+  --green-text:#177d33; --amber-text:#9a5b00;
+  --ps-cross:#1e9bf0; --ps-circle:#ff3b30; --ps-triangle:#34c759; --ps-square:#ff375f;
+  --frame:rgba(0,0,0,0.10);
+  --shadow-window:0 1px 1px rgba(0,0,0,.04),0 12px 40px -8px rgba(0,0,0,.16),0 2px 8px rgba(0,0,0,.06);
+  /* elevation ramp: resting card < large card < window/hero. The deepest tier
+     (--shadow-window) stays reserved for screenshots + the hero band. */
+  --card-bg:#ffffff;
+  --shadow-rest:0 1px 2px rgba(0,0,0,.04),0 10px 30px -16px rgba(6,22,60,.16);
+  --shadow-rest-lg:0 2px 4px rgba(0,0,0,.05),0 20px 50px -22px rgba(6,22,60,.22);
+  --shadow-hover:0 2px 4px rgba(0,0,0,.05),0 16px 40px -16px rgba(6,22,60,.24);
+  --card-hi:inset 0 1px 0 rgba(255,255,255,.7);
+  --maxw:1040px; --pad:24px;
+  --r-card:14px; --r-inset:10px; --r-btn:980px;
+}
+[data-theme="dark"]{
+  --bg:#161617; --bg-sunken:#1d1d20; --bg-inset:#242426; --bg-inset-2:#2c2c2e;
+  /* dark: #7c7c82 measured 3.36:1 on --bg-inset-2 -- fails AA. #949499 clears it (worst 4.62). */
+  --text:#f5f5f7; --text-2:#a8a8ad; --text-3:#949499;
+  --sep:rgba(255,255,255,0.10); --sep-2:rgba(255,255,255,0.16); --hairline:rgba(255,255,255,0.09);
+  /* dark: white-on-blue needs >=4.5; Apple's bright #0a84ff is only 3.65. #0b76dd is the
+     brightest blue that still clears it (4.52) while keeping button-vs-bg pop. */
+  --blue:#0b76dd; --blue-text:#4aa8ff; --blue-fill:rgba(10,132,255,0.16);
+  --green:#30d158; --red:#ff453a; --yellow:#ffd60a;
+  /* on the dark surface the bright fills already clear 4.5:1 as text */
+  --green-text:#30d158; --amber-text:#ffd60a;
+  --ps-cross:#3aa0f0; --ps-circle:#ff453a; --ps-triangle:#30d158; --ps-square:#ff4f7d;
+  --frame:rgba(255,255,255,0.12);
+  --shadow-window:0 1px 1px rgba(0,0,0,.4),0 20px 60px -12px rgba(0,0,0,.6),0 2px 10px rgba(0,0,0,.4);
+  /* dark elevation: raised = a lighter surface + a deeper, tighter shadow */
+  --card-bg:#202024;
+  --shadow-rest:0 1px 2px rgba(0,0,0,.45),0 12px 32px -16px rgba(0,0,0,.55);
+  --shadow-rest-lg:0 2px 4px rgba(0,0,0,.5),0 22px 54px -22px rgba(0,0,0,.65);
+  --shadow-hover:0 2px 4px rgba(0,0,0,.5),0 18px 44px -16px rgba(0,0,0,.7);
+  --card-hi:inset 0 1px 0 rgba(255,255,255,.06);
+}
+/* ── accent system: the hero light-bar picker recolours the page's emissive/
+   interactive layer. Every variant below is AA-verified (contrast.mjs 2026-07):
+   white-on-fill >=4.5 for CTAs, text variants >=4.5 on the darkest surface of
+   the theme (--bg-inset-2). Default (no data-accent / "blue") is the :root set. */
+:root[data-accent="violet"]{--blue:#6a3fd8;--blue-text:#6633cc;--blue-fill:rgba(122,82,232,0.12)}
+:root[data-accent="teal"]{--blue:#0a7561;--blue-text:#056a56;--blue-fill:rgba(63,224,192,0.15)}
+:root[data-accent="amber"]{--blue:#96550a;--blue-text:#8a5200;--blue-fill:rgba(255,180,84,0.17)}
+[data-theme="dark"][data-accent="violet"]{--blue:#754ce6;--blue-text:#b79cff;--blue-fill:rgba(122,82,232,0.22)}
+[data-theme="dark"][data-accent="teal"]{--blue:#0b7a66;--blue-text:#3fe0c0;--blue-fill:rgba(63,224,192,0.16)}
+[data-theme="dark"][data-accent="amber"]{--blue:#9a5b00;--blue-text:#ffb454;--blue-fill:rgba(255,180,84,0.16)}
+/* ~400ms crossfade when the accent changes; the class is added per-switch by JS
+   and removed after the fade (skipped under prefers-reduced-motion). */
+html.accent-anim body *{transition:background-color .4s ease,border-color .4s ease,color .4s ease,box-shadow .4s ease,fill .4s ease,stroke .4s ease,outline-color .4s ease!important}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;background:var(--bg)}
+body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.5;font-size:17px;letter-spacing:-0.01em;transition:background .3s ease,color .3s ease}
+a{color:var(--blue-text);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:2px}
+img{display:block;max-width:100%}
+::selection{background:var(--blue-fill)}
+/* Keyboard focus: a deliberate, visible accent ring (mouse clicks stay clean via :focus-visible). */
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+.btn:focus-visible,.btn-nav:focus-visible{outline-offset:3px}
+.segmented button:focus-visible{outline-offset:-2px}
+
+/* layout */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+.wrap-wide{max-width:1200px;margin:0 auto;padding:0 var(--pad)}
+section{position:relative}
+/* section eyebrow = the hero's engineered-instrument signature, carried down:
+   SF Mono label + one emissive accent dot. Ties every section back to the pad. */
+.eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;text-transform:uppercase;letter-spacing:0.13em;color:var(--text-3);margin-bottom:16px;display:inline-flex;align-items:center;gap:9px}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;flex:none;background:var(--blue);box-shadow:0 0 0 1px color-mix(in srgb,var(--blue) 20%,transparent),0 0 9px color-mix(in srgb,var(--blue) 55%,transparent)}
+h1,h2,h3{letter-spacing:-0.022em;line-height:1.06;font-weight:600}
+.h2{font-size:clamp(28px,3.6vw,40px);letter-spacing:-0.024em;line-height:1.08;text-wrap:balance}
+.h3{font-size:21px;font-weight:600;letter-spacing:-0.02em}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--text-2);line-height:1.5;font-weight:400;letter-spacing:-0.014em}
+/* section rhythm: three deliberate tempos instead of one uniform 104px */
+.sec{padding:104px 0}
+.sec-loose{padding:132px 0}
+.sec-snug{padding:84px 0}
+.sec-tight{padding:72px 0}
+/* split section header: h2 left, lead right — fills the wide right void the
+   single-column template stranded on text-heavy sections */
+.sec-head-split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:8px 56px;align-items:start}
+.sec-head-split .eyebrow{grid-column:1 / -1;margin-bottom:8px}
+.sec-head-split .lead{margin:6px 0 0;max-width:44ch}
+/* numbers as texture: mono, tabular, slightly tightened */
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:0.94em;letter-spacing:-0.01em}
+.sunken{background:var(--bg-sunken)}
+.divider{height:1px;background:var(--sep);border:0;max-width:var(--maxw);margin:0 auto}
+.center{text-align:center}
+.mono{font-family:var(--mono);font-size:0.92em;letter-spacing:0}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--hairline)}
+.nav-in{max-width:1200px;margin:0 auto;padding:0 var(--pad);height:52px;display:flex;align-items:center;gap:22px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px;letter-spacing:-0.02em;color:var(--text)}
+.brand:hover{text-decoration:none}
+.brand .logo{width:22px;height:22px;flex:none}
+.nav-links{display:flex;gap:22px;margin-left:8px}
+.nav-links a{color:var(--text-2);font-size:14px;letter-spacing:-0.01em}
+.nav-links a:hover{color:var(--text);text-decoration:none}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.theme-toggle{width:30px;height:30px;border-radius:50%;border:1px solid var(--sep);background:transparent;color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
+.theme-toggle:hover{background:var(--bg-inset);color:var(--text)}
+.theme-toggle svg{width:15px;height:15px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 22px;border-radius:var(--r-btn);font-size:15px;font-weight:500;letter-spacing:-0.01em;cursor:pointer;border:1px solid transparent;transition:transform .12s ease,background .15s,border-color .15s,opacity .15s;white-space:nowrap}
+.btn:hover{text-decoration:none}
+.btn:active{transform:scale(0.98)}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:color-mix(in srgb,var(--blue) 88%,#000)}
+.btn-secondary{background:var(--bg-inset);color:var(--text);border-color:var(--sep)}
+.btn-secondary:hover{background:var(--bg-inset-2)}
+.btn-ghost{background:transparent;color:var(--blue-text);padding:0 8px;height:auto}
+.btn-ghost:hover{text-decoration:underline;text-underline-offset:3px}
+.btn-sm{height:32px;padding:0 14px;font-size:13px}
+.btn-nav{height:30px;padding:0 15px;font-size:13px;background:var(--blue);color:#fff}
+.btn-nav:hover{background:color-mix(in srgb,var(--blue) 88%,#000);text-decoration:none}
+.arrow-link{color:var(--blue-text);font-size:15px;font-weight:450;display:inline-flex;align-items:center;gap:5px}
+.arrow-link:hover{text-decoration:none}
+.arrow-link .a{transition:transform .15s}
+.arrow-link:hover .a{transform:translateX(3px)}
+
+/* macOS window frame */
+.window{border-radius:12px;background:var(--bg);border:1px solid var(--frame);box-shadow:var(--shadow-window);overflow:hidden}
+.window-bar{height:38px;display:flex;align-items:center;padding:0 14px;gap:8px;border-bottom:1px solid var(--hairline);background:var(--bg-inset);position:relative}
+.traffic{display:flex;gap:8px}
+.traffic i{width:12px;height:12px;border-radius:50%;display:block}
+.traffic .r{background:#ff5f57}.traffic .y{background:#febc2e}.traffic .g{background:#28c840}
+[data-theme="dark"] .traffic .r{background:#ff5f57}
+.window-title{position:absolute;left:0;right:0;text-align:center;font-size:13px;font-weight:590;color:var(--text-2);pointer-events:none}
+.window-body{background:var(--bg)}
+.window img{width:100%;display:block}
+
+/* app-recreated: grouped card, now resting on the elevation ramp */
+.group{background:var(--card-bg);border:1px solid var(--sep);border-radius:var(--r-inset);overflow:hidden;box-shadow:var(--shadow-rest),var(--card-hi)}
+.grow{display:flex;align-items:center;gap:14px;padding:13px 16px;position:relative}
+.grow+.grow::before{content:"";position:absolute;top:0;left:16px;right:0;height:1px;background:var(--sep)}
+.grow .lbl{font-size:15px;font-weight:450;color:var(--text)}
+.grow .sub{font-size:13px;color:var(--text-3);margin-top:1px}
+.grow .val{margin-left:auto;font-size:15px;color:var(--text-2);display:flex;align-items:center;gap:8px}
+.grow .val.mono{font-family:var(--mono);font-size:13.5px}
+.seclabel{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.11em;color:var(--text-3);padding:0 4px 9px}
+
+/* face buttons */
+.face{width:26px;height:26px;flex:none;display:block}
+.chevrons{color:var(--text-3);display:flex}
+.chip-key{font-family:var(--mono);font-size:12px;padding:2px 7px;border-radius:6px;background:var(--bg-inset-2);color:var(--text-2);border:1px solid var(--sep)}
+.toggle{width:38px;height:23px;border-radius:12px;background:var(--blue);position:relative;flex:none}
+.toggle.off{background:var(--sep-2)}
+.toggle i{position:absolute;top:2px;left:17px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.toggle.off i{left:2px}
+.stepper{display:flex;flex-direction:column;color:var(--text-3);font-size:9px;line-height:.8}
+
+/* segmented control */
+.segmented{display:inline-flex;background:var(--bg-inset-2);border-radius:9px;padding:2px;gap:2px}
+.segmented button{border:0;background:transparent;font-family:var(--font);font-size:13.5px;font-weight:500;color:var(--text-2);padding:5px 13px;border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:6px;letter-spacing:-0.01em}
+.segmented button .n{font-size:12px;color:var(--text-3);font-weight:450}
+.segmented button[aria-selected="true"]{background:var(--bg);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.10),0 0 0 .5px rgba(0,0,0,.04)}
+[data-theme="dark"] .segmented button[aria-selected="true"]{box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.segmented button[aria-selected="true"] .n{color:var(--blue-text)}
+
+/* feature card grid (settings-group style, NOT icon tiles) */
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center}
+
+/* trust rows — the list sits on a raised card so the section has a surface */
+.trust-list{display:grid;gap:0;background:var(--card-bg);border:1px solid var(--sep);border-radius:var(--r-card);padding:10px 28px;box-shadow:var(--shadow-rest),var(--card-hi)}
+.trust-row{display:grid;grid-template-columns:26px 1fr;gap:16px;padding:22px 0;border-top:1px solid var(--sep);align-items:start}
+.trust-row:first-child{border-top:0}
+.trust-row .ic{width:22px;height:22px;color:var(--blue);margin-top:2px}
+.trust-row h3{font-size:17px;font-weight:590;margin-bottom:5px;letter-spacing:-0.015em}
+.trust-row p{font-size:15px;color:var(--text-2);line-height:1.5;max-width:60ch}
+.trust-row .yes{color:var(--green)}.trust-row .no{color:var(--text-3)}
+
+/* comparison */
+.cmp-card{margin:36px auto 0;max-width:840px;overflow:hidden;border-radius:var(--r-card);border:1px solid var(--sep);background:var(--card-bg);box-shadow:var(--shadow-rest),var(--card-hi)}
+.cmp{width:100%;border-collapse:collapse;font-size:15px}
+.cmp th,.cmp td{text-align:left;padding:15px 18px;border-top:1px solid var(--sep)}
+.cmp thead th{border-top:0;font-size:13px;font-weight:590;color:var(--text-3);text-transform:uppercase;letter-spacing:0.05em;padding-bottom:12px}
+.cmp .feat{color:var(--text);font-weight:450;width:44%}
+.cmp .col{text-align:center;width:28%}
+.cmp thead .col{text-align:center}
+.cmp .steer-col{background:var(--bg-inset);color:var(--text)}
+.cmp td.dot{text-align:center}
+.tick{color:var(--green-text);font-weight:600}
+.dash{color:var(--text-3)}
+
+/* spec grid */
+.specs{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px}
+.spec-row{display:flex;justify-content:space-between;gap:24px;padding:14px 0;border-top:1px solid var(--sep);font-size:15px}
+.spec-row .k{color:var(--text-2)}
+.spec-row .v{color:var(--text);text-align:right;font-weight:450;max-width:60%}
+
+/* pricing */
+.price-card{background:var(--card-bg);border:1px solid var(--sep);border-radius:18px;padding:44px;max-width:520px;margin:0 auto;text-align:center;box-shadow:var(--shadow-rest-lg),var(--card-hi)}
+/* the price is a designed moment: big mono tabular numeral, small currency cap */
+.price-big{display:flex;align-items:baseline;justify-content:center;gap:12px;line-height:1}
+.price-big .price-cur{font-family:var(--mono);font-size:15px;font-weight:500;letter-spacing:0.12em;color:var(--text-3)}
+.price-big .price-num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(60px,8vw,84px);font-weight:600;letter-spacing:-0.045em;color:var(--text)}
+.price-card .once{font-size:15px;color:var(--text-2);margin-top:6px}
+.price-inc{text-align:left;max-width:340px;margin:28px auto 0;display:grid;gap:11px}
+.price-inc li{list-style:none;display:flex;gap:11px;font-size:15px;color:var(--text-2);align-items:flex-start}
+.price-inc svg{width:17px;height:17px;color:var(--green);flex:none;margin-top:2px}
+
+/* footer */
+footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-sunken);font-size:14px}
+.foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
+.foot-grid h4{font-size:13px;font-weight:590;color:var(--text-3);margin-bottom:14px;letter-spacing:0}
+/* column links only -- the brand lockup keeps its own flex/colour/size */
+.foot-grid a:not(.brand){display:block;color:var(--text-2);margin-bottom:9px;font-size:14px}
+.foot-grid a:not(.brand):hover{color:var(--text);text-decoration:none}
+.foot-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--sep);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--text-3);font-size:13px}
+.foot-note{max-width:44ch;color:var(--text-3);font-size:13.5px;line-height:1.5;margin-top:12px}
+
+/* misc */
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 10px;border-radius:980px;background:var(--bg-inset);color:var(--text-2);border:1px solid var(--sep)}
+.tag .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.pill-beta{font-size:11px;font-weight:590;color:#7a4600;background:color-mix(in srgb,var(--yellow) 20%,transparent);padding:2px 8px;border-radius:980px;text-transform:uppercase;letter-spacing:0.04em}
+[data-theme="dark"] .pill-beta{color:var(--amber-text)}
+
+/* use-case section: 3 filled lead cards + a subordinate outline-pill strip.
+   Hierarchy is load-bearing — the filled leads must win the glance, the pills
+   are recognition-only ("yes, my thing's in there"). Keep the pills lighter. */
+.uc-lead{background:var(--card-bg);border:1px solid var(--sep);border-radius:var(--r-card);padding:22px 22px 20px;position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-rest),var(--card-hi);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+/* a single emissive accent edge — the pad's light, brought to the panel */
+.uc-lead::before{content:"";position:absolute;top:0;left:22px;right:22px;height:1.5px;background:linear-gradient(90deg,var(--blue),color-mix(in srgb,var(--blue) 20%,transparent) 55%,transparent);opacity:.7}
+.uc-lead:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover),var(--card-hi);border-color:var(--sep-2)}
+.uc-tag{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--blue-text);margin-bottom:12px;display:inline-flex;align-items:center;gap:7px}
+.uc-tag::before{content:"";width:5px;height:5px;border-radius:50%;flex:none;background:var(--blue);box-shadow:0 0 7px color-mix(in srgb,var(--blue) 60%,transparent)}
+.uc-lead h3{font-size:18px;letter-spacing:-0.02em;margin-bottom:8px}
+.uc-lead p{font-size:14.5px;color:var(--text-2);line-height:1.5}
+/* the mechanism line: which part of the pad does the job — the hero's callout, on a card */
+.uc-mech{margin-top:auto;padding-top:14px;border-top:1px solid var(--sep);font-family:var(--mono);font-size:11.5px;letter-spacing:0.01em;color:var(--text-3);line-height:1.4}
+.uc-lead h3{margin-top:0}
+.uc-lead p+.uc-mech{margin-top:auto}
+.uc-lead p{margin-bottom:15px}
+.uc-mech b{color:var(--text-2);font-weight:500}
+.pills-label{font-size:12px;font-weight:590;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin:36px 0 14px}
+.pills{display:flex;flex-wrap:wrap;gap:9px}
+.pill-uc{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--text-2);background:transparent;border:1px solid var(--sep);border-radius:980px;padding:7px 14px;letter-spacing:-0.01em}
+/* linked pills read as links: accent ink + tinted border, so they no longer
+   masquerade as the static recognition pills beside them */
+a.pill-uc{color:var(--blue-text);border-color:color-mix(in srgb,var(--blue) 32%,transparent)}
+a.pill-uc:hover{color:var(--blue-text);background:var(--blue-fill);border-color:color-mix(in srgb,var(--blue) 48%,transparent);text-decoration:none}
+a.pill-uc .a{color:var(--blue-text);font-size:11px}
+.pills-note{font-size:13px;color:var(--text-3);margin-top:16px;max-width:70ch;line-height:1.5}
+.pills-note b{color:var(--text-2);font-weight:600}
+.kicker{color:var(--blue-text);font-weight:500}
+.stat{font-size:40px;font-weight:600;letter-spacing:-0.03em}
+.stat-sub{font-size:14px;color:var(--text-3);margin-top:4px}
+.note-callout{background:var(--bg-inset);border-radius:12px;padding:18px 20px;font-size:14px;color:var(--text-2);line-height:1.55}
+.note-callout strong{color:var(--text);font-weight:590}
+
+/* doc pages */
+.doc{max-width:720px;margin:0 auto;padding:64px var(--pad) 96px}
+.doc h1{font-size:38px;margin-bottom:8px;letter-spacing:-0.025em}
+.doc .updated{color:var(--text-3);font-size:14px;margin-bottom:40px}
+.doc h2{font-size:22px;margin:40px 0 12px;letter-spacing:-0.02em}
+.doc h3{font-size:17px;margin:26px 0 8px;font-weight:590}
+.doc p,.doc li{color:var(--text-2);font-size:16px;line-height:1.62;margin-bottom:14px}
+.doc ul{padding-left:22px;margin-bottom:14px}
+.doc li{margin-bottom:7px}
+.doc strong{color:var(--text);font-weight:590}
+.doc .lede{font-size:18px;color:var(--text);margin-bottom:28px}
+.back-link{font-size:14px;color:var(--text-2);display:inline-flex;gap:6px;align-items:center;margin-bottom:28px}
+.back-link:hover{color:var(--text);text-decoration:none}
+
+@media(max-width:860px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .cols-2,.cols-3,.specs{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .nav-links{display:none}
+  .sec{padding:72px 0}
+  .price-card{padding:32px 24px}
+}
+@media(max-width:860px){
+  .sec-loose{padding:88px 0}
+  .sec-head-split{grid-template-columns:1fr}
+  .sec-head-split .lead{max-width:56ch}
+}
+/* compare table: below 640px the 3-column grid wraps into unreadable multi-line
+   cells — collapse each row into a stacked card with labelled value lines */
+@media(max-width:640px){
+  .cmp thead{display:none}
+  .cmp,.cmp tbody{display:block}
+  .cmp tr{display:block;padding:14px 16px;border-top:1px solid var(--sep)}
+  .cmp tbody tr:first-child{border-top:0}
+  .cmp td{display:block;border:0;padding:0;width:auto}
+  .cmp .feat{font-weight:590;margin-bottom:8px}
+  .cmp td.dot{display:flex;justify-content:space-between;align-items:center;text-align:right;padding:4px 0}
+  .cmp td.dot::before{font-size:13px;color:var(--text-3);font-weight:500;letter-spacing:0.02em}
+  .cmp td:nth-child(2)::before{content:"Steer"}
+  .cmp td:nth-child(3)::before{content:"ControllerKeys"}
+  .cmp .steer-col{background:transparent}
+}
+@media(max-width:520px){
+  .foot-grid{grid-template-columns:1fr}
+  body{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
