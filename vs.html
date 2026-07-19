@@ -65,6 +65,22 @@
             <tr><td class="feat">On-screen keyboard</td><td class="dot steer-col"><span style="color:var(--text-2)">Daisy wheel</span></td><td class="dot"><span style="color:var(--text-2)">Swipe typing</span></td></tr>
             <tr><td class="feat">Adaptive triggers you can feel</td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">—</span></td></tr>
             <tr><td class="feat">Mapping layers</td><td class="dot steer-col"><span class="tick"><span class="num">6</span></span></td><td class="dot"><span style="color:var(--text-2)"><span class="num">3</span></span></td></tr>
+            <!-- Researched 2026-07-19 and deliberately NOT turned into a claim.
+                 The tempting line, that ControllerKeys runs untrusted shell code
+                 without review, is false. They ship a real import-time consent
+                 sheet (ProfileImportSafetyAuditor + a "This profile runs code on
+                 your Mac" prompt), and they REMOVED an earlier shell blocklist in
+                 v1.8.0 on the sound argument that syntax filters are trivially
+                 bypassable and give false comfort. Their reasoning is better than
+                 the blocklist was.
+                 The one verified difference is narrow and about payload, not
+                 review: a CK profile embeds JavaScript source, and their sheet
+                 shows shell commands verbatim but scripts only as "N lines"; a
+                 Steer import carries a script NAME and never a body. It was left
+                 off the page because it needs a paragraph to be fair, and because
+                 their own marketing overstates their sheet, so stating it invites
+                 a fight over their copy rather than our product.
+                 Do not add a security row here without re-reading that research. -->
             <tr><td class="feat">Automation</td><td class="dot steer-col"><span style="color:var(--text-2)">Shortcuts, URLs,<br>AppleScript, shell</span></td><td class="dot"><span style="color:var(--text-2)">JavaScript,<br>webhooks, shell</span></td></tr>
             <tr><td class="feat">Walled off by macOS (sandboxed)</td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">No</span></td></tr>
             <tr><td class="feat">No usage analytics, none at all</td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">—</span></td></tr>
