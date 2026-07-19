@@ -58,9 +58,37 @@ should never try to be one.
 - No emoji in copy.
 - Write for the non-technical reader first. Audience before feature list.
 - One primary CTA per view. Price is microcopy beside the CTA, not a competing
-  button.
+  button. Exactly one blue `btn-primary` exists on the homepage and it is the
+  launch list; the founder section's "Share an idea" is deliberately secondary,
+  because it sits one section above pricing and would otherwise intercept a
+  ready buyer with an email draft about feature requests.
 - Trust language stays literal and verifiable: on-device, no account, no
-  telemetry. Never soften it into marketing vagueness.
+  telemetry. Never soften it into marketing vagueness. A trust heading may not
+  overstate and then get walked back by its own body: the licence check does
+  send something, so the claim is about what never leaves (mappings, keystrokes),
+  not a blanket "nothing about you".
+- Say what is true about availability. While Steer is pre-launch, the hero price
+  microcopy reads "once, when it ships". Burying launch status in 13px grey text
+  seven screens down is out of character for a page that discloses undocumented
+  API use in its FAQ.
+- Comparisons need a source. The $435 Speed Editor is the only verified price on
+  the page, so it is the only one that ships. Do not add another.
+- Don't restate the hero. The hero annotations own sticks, buttons, and layers.
+  Sections below must add something a picture of a controller cannot show
+  (it arrives working, it follows you between apps, it types, it reaches past
+  shortcuts into Shortcuts, macros, and scripts). Half of Capabilities used to be
+  a second reading of the hero, and a reader who learns nothing for the scroll
+  starts skimming, which costs Feel and Trust further down.
+- Plain words beat product jargon in visible copy. "Chords", "MFi", "radial
+  launcher", and `steer://` belong in the FAQ and the spec tables, not in hero
+  annotations or feature chips. A non-technical reader is the default reader.
+- Configurability is only a selling point when paired with "it already works".
+  Lead with the fact that it runs on plug-in, then say nothing is fixed.
+  Unpaired, "highly configurable" reads as "you have homework".
+- The mobile feature chips (`.features`) stand in for the SVG annotations, which
+  are unreadable on a phone. Keep each chip at or under ~36 mono characters
+  (at 375px the pill has ~335px of room), and never let the DualSense list be
+  shorter than another pad's: it is the controller with the most to show.
 
 ## Drift rejection (reject on sight)
 
@@ -89,6 +117,49 @@ A simplifier pass will be tempted to flatten these. They are the point.
   are recognition-only. Keep the pills visually lighter.
 - The per-controller copy and headline variants (`.pd-ps` / `.pd-xb` / `.pd-sw`
   / `.pd-mf`) that swap sitewide with the selected pad.
+
+## The `.vg` vignette family
+
+Seven members: `.vg-glide` (hero), `.vg-type` (couch), `.vg-edit`, `.vg-stream`,
+`.vg-speak` (use-case cards), `.vg-layers`, `.vg-launch` (capabilities). Before
+building the eighth, know what makes one a member; it is a grammar, not a class
+prefix.
+
+- **One claim, proven.** A vignette illustrates exactly one capability, stated
+  in the copy beside it and shown nowhere else on the page. If the claim is
+  already illustrated, the vignette is a duplicate, not a variation (the couch
+  card once reused the hero's `.vg-glide` byte for byte; that is the failure
+  mode).
+- **Truth from the app repo.** The interaction shown must match the shipped
+  implementation in `~/Developer/steer`, not a generic version of the idea:
+  real button, real layout, real commit model. Cite the source file in the CSS
+  block comment. (`.vg-type` mirrors `DaisyWheelLayout`; `.vg-launch` mirrors
+  `RadialMenu.swift` down to the instant open and fade-only close.)
+- **Three instruments.** A controller-side control (stick, trigger chip, face
+  button), a Mac-side surface (screen, timeline, scenes, deck, chips, field,
+  disc), and the pad's answer (a `.vg-ring` haptic echo). The sentence is
+  always: press, the Mac reacts, the pad answers.
+- **Base state is the claim, frozen mid-proof.** The un-animated markup (no
+  `.on`) must read as the capability already demonstrated: word typed, layer
+  held, app selected. Reduced motion and no-JS ship exactly this frame. `.on`
+  is added only while on-screen, by the one shared IntersectionObserver.
+- **Motion:** transform and opacity only, one 5 to 6.5s loop. Vignettes that
+  can share a viewport (`.vg-layers` and `.vg-launch`) get different durations
+  so they never sync.
+- **Width:** if the Mac-side surface is a `flex:1` member that absorbs width
+  (timeline, scenes, deck, search field), the vignette fills its column. If
+  the geometry is fixed (`.vg-glide`'s travel distance, `.vg-layers`' chip
+  grid, `.vg-launch`'s disc), cap at `max-width:430px`. This is the rule the
+  existing split follows; it is principled, keep it.
+- **Controller glyphs and labels** go through `.face-slot[data-b]` and
+  `data-ps/xb/sw/mf` so every vignette re-labels with the selected pad.
+  Mac-side surfaces may use the pad palette or the accent; buttons never
+  hardcode a glyph.
+- **Watch list:** `.vg-speak` is the family's weakest member. Its flick-to-
+  advance beat shares its visual idea with `.vg-stream`'s A/B swap and re-
+  proves "the stick moves things", which the hero demo owns. It stays because
+  it is small and the Speakers card would otherwise be prose-only, but it is
+  first on the cut list, and its shape is not a template to copy.
 
 ## Before you call it done
 
