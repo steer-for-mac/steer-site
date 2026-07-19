@@ -76,7 +76,6 @@
         <div class="eyebrow" style="justify-content:center">Controller support</div>
         <h2 class="h2">Every pad does the core. Here's what each one adds.</h2>
         <p class="lead" style="margin:16px auto 0;max-width:62ch">Cursor, scroll, typing, and every shortcut you map work on <strong>any</strong> supported controller. The extras (adaptive triggers, the light bar, the touchpad, gyro) depend on what the hardware can actually do. Every gap and caveat is in the table.</p>
-        <p class="lead" style="margin:12px auto 0;max-width:62ch">Beyond the families below, Steer carries SDL's controller database, <span class="num">300+</span> mappings, and uses it automatically. Plug in an off-brand or older pad and it is usually recognised with no setup.</p>
       </div>
 
       <div class="matrix-scroll">
@@ -107,7 +106,7 @@
       </div>
 
       <ul class="notes">
-        <li><span class="k dep-k">*&nbsp;MFi</span><span>Core input works on any Made-for-iPhone controller macOS recognises. Anything else is matched against the bundled SDL controller database (<span class="num">300+</span> Mac mappings) and mapped automatically, which covers most generic and older pads but not every one. MFi pads get battery, and haptics only if the controller reports them. Neither route gets the light bar, touchpad, gyro, or adaptive triggers: those need each controller family's own protocol.</span></li>
+        <li><span class="k dep-k">*&nbsp;MFi</span><span>Core input works on any Made-for-iPhone controller macOS recognises, which covers most modern pads. Fully generic controllers that macOS does not present as a game controller are not supported yet. MFi pads get battery, and haptics only if the controller reports them. Neither gets the light bar, touchpad, gyro, or adaptive triggers: those need each controller family's own protocol.</span></li>
         <li><span class="k dep-k">†&nbsp;Switch</span><span>Switch Pro rumble is a simplified single-band HD-rumble approximation: real feedback, not the full two-band effect.</span></li>
         <li><span class="k">‡&nbsp;DS4</span><span>macOS reports no motion for a DualShock 4, so gyro runs through a raw-HID path that's <strong>off by default</strong>. Turn it on in settings. Treat it as beta.</span></li>
         <li><span class="k">§&nbsp;Edge</span><span>DualSense Edge back buttons read through low-level input monitoring (needs the Input Monitoring permission). The PS button over Bluetooth is off by default pending hardware QA.</span></li>
