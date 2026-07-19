@@ -66,14 +66,16 @@
   background:radial-gradient(135% 130% at 50% -12%,#101728 0%,#0a0e1a 52%,#070a12 100%);
   color:#E9EDF6;color-scheme:dark;
   overflow:hidden;position:relative;
-  padding:156px 0 168px;  /* extra head/tail room clears the gradient bridges */
+  padding:156px 0 168px;
 }
-/* ~120px gradient bridges into and out of the dark band — the page bg dissolves
-   into the studio black instead of hitting a razor edge (works in both themes:
-   var(--bg) is the surrounding page colour) */
-.feel-bridge{position:absolute;left:0;right:0;height:120px;z-index:1;pointer-events:none}
-.feel-bridge.in{top:0;background:linear-gradient(to bottom,var(--bg),transparent)}
-.feel-bridge.out{bottom:0;background:linear-gradient(to top,var(--bg),transparent)}
+/* No gradient bridges. There were two 120px scrims dissolving the page into the
+   dark band; both a plain two-stop fade and a 12-stop eased ramp still read as a
+   grey smear across the full page width. The premise was wrong: the hero already
+   meets #uses with a hard cut and it looks confident, so a razor edge is this
+   page's established vocabulary for a dark/pale boundary, not a defect to hide.
+   A gradient also works against what this band is for, since softening an edge is
+   the opposite of "break the pale page rhythm". The band's generous 156/168
+   padding stays: it now reads as breathing room after a clean cut. */
 .feel-cinema::before{
   content:"";position:absolute;z-index:0;pointer-events:none;
   right:-4%;top:52%;transform:translateY(-50%);
@@ -88,6 +90,10 @@
 .feel-cinema .lead{color:#AEB6C6}
 .feel-cinema .price-inc li{color:#C6CDDA}
 .feel-cinema .price-inc svg{color:#5FD48D}
+/* the page's --blue-text is tuned for a pale surface; on the studio black it
+   would sit under AA. #7FB0FF measures 8.7:1 on #0a0e1a (the band's mid stop). */
+.feel-compat{margin:26px 0 0}
+.feel-cinema .arrow-link{color:#7FB0FF}
 .feel-cinema .shot{
   border:1px solid rgba(255,255,255,0.10);background:#0d111c;
   box-shadow:0 34px 90px -24px rgba(0,0,0,0.78),0 0 0 1px rgba(255,255,255,0.04);
@@ -812,7 +818,7 @@ html[data-theme="lightoff"] .chero .mf-bl{fill:rgba(23,28,38,0.42)}
 @keyframes tvg-mk{0%,42%{opacity:0}46%,66%{opacity:1}76%,100%{opacity:0}}
 @keyframes tvg-rg{0%,46%{opacity:0;transform:scale(.5)}49%{opacity:.6;transform:scale(.9)}60%,100%{opacity:0;transform:scale(1.6)}}
 
-/* ── Couch beat (.vg-glide): deflect the stick → the cursor glides across the
+/* ── Hero demo (.vg-glide): deflect the stick → the cursor glides across the
    room-sized screen on the shaped curve (slow start, fast middle, soft landing)
    → Cross clicks the tile. Base = landed-and-clicked. */
 .vg-glide{max-width:430px;--gd:260px}
@@ -863,6 +869,155 @@ html[data-theme="lightoff"] .chero .mf-bl{fill:rgba(23,28,38,0.42)}
 @keyframes vgG-pause{0%,58%{opacity:0}60%,94%{opacity:1}97%,100%{opacity:0}}
 @keyframes vgG-click{0%,57%{opacity:0;transform:scale(.4)}60%{opacity:.8;transform:scale(.8)}70%,100%{opacity:0;transform:scale(1.5)}}
 
+/* ── Couch beat (.vg-type): the daisy-wheel keyboard types "cat" into a search
+   box. Aim the stick at a letter cluster, and the four face buttons type that
+   cluster's four letters by position. Mirrors the app's DaisyWheelLayout: on
+   the N cluster Circle is c and Square is a (two letters, one aim), then the
+   wheel swings S where Cross is t. Face glyphs are .face-slot spans, so the
+   diamond re-labels itself when the visitor picks another pad. Base = word
+   typed, caret ready, wheel still aimed at S: the claim, frozen mid-proof.
+   Word text is --text on --card-bg: 16.83:1 light / 14.91:1 dark; on the
+   worst surface --bg-inset-2 still 13.83 / 12.80 (contrast.mjs 2026-07). */
+/* No max-width: the search field is flex:1, so this fills whatever column it is
+   given (bounded on desktop by the couch card's two-column grid, full width once
+   that collapses). .vg-glide and .vg-layers cap at 430px because their animation
+   travel is a fixed distance; this one has no travel to protect. */
+.vg-type{--cw:7px}  /* --cw = one mono char cell; the caret steps by it */
+.vg-wheel{flex:none;width:44px;height:44px;display:block;overflow:visible}
+.vg-wheel .dw-rim{fill:var(--card-bg);stroke:var(--sep-2)}
+.vg-wheel .dw-spokes{stroke:var(--sep);fill:none}
+.vg-wheel .dw-hub{fill:none;stroke:var(--sep-2)}
+/* aimed cluster: the one blue element on the wheel. Drawn at N, parked at S
+   (the last aim) in the static frame; rotation is the aim. */
+.vg-wheel .dw-sect{fill:var(--blue-fill);stroke:var(--blue);stroke-width:1.3;transform-box:view-box;transform-origin:22px 22px;transform:rotate(180deg)}
+.vg-field{flex:1;min-width:0;display:flex;align-items:center;gap:2px;height:26px;padding:0 9px;border-radius:7px;background:var(--card-bg);border:1px solid var(--sep-2)}
+.vg-field .dw-mag{flex:none;width:11px;height:11px;margin-right:4px;color:var(--text-3)}
+.vg-word{display:flex;flex:none}
+.vg-word b{display:block;width:var(--cw);font-family:var(--mono);font-size:11px;font-weight:400;line-height:1;color:var(--text);text-align:center}
+.vg-caret{flex:none;width:1.5px;height:12px;border-radius:1px;background:var(--blue)}
+/* the face diamond: four live .face-slot glyphs in controller positions */
+.vg-dwf{position:relative;flex:none;display:grid;grid-template-columns:repeat(3,14px);grid-template-rows:repeat(3,14px)}
+.vg-dwf .face-slot{display:block}
+.vg-dwf .face{width:14px;height:14px}
+.vg-dwf .fp-t{grid-area:1/2}.vg-dwf .fp-l{grid-area:2/1}.vg-dwf .fp-r{grid-area:2/3}.vg-dwf .fp-b{grid-area:3/2}
+@media (prefers-reduced-motion: no-preference){
+  /* 6s: aim N → Circle taps (c) → Square taps (a, no re-aim) → swing S →
+     Cross taps (t) → caret blinks on the finished word → reset in the dark */
+  .vg-type.on .dw-sect{animation:vgT-aim 6s cubic-bezier(.55,.05,.25,1) infinite}
+  .vg-type.on .vg-cap{animation:vgT-stick 6s ease infinite}
+  .vg-type.on .w1{animation:vgT-c 6s ease infinite}
+  .vg-type.on .w2{animation:vgT-a 6s ease infinite}
+  .vg-type.on .w3{animation:vgT-t 6s ease infinite}
+  .vg-type.on .vg-caret{animation:vgT-caret 6s linear infinite}
+  .vg-type.on .fp-r .face{animation:vgT-tapC 6s ease infinite}
+  .vg-type.on .fp-l .face{animation:vgT-tapA 6s ease infinite}
+  .vg-type.on .fp-b .face{animation:vgT-tapT 6s ease infinite}
+  .vg-type.on .dwr{animation:vgT-ring 6s ease-out infinite}
+}
+@keyframes vgT-aim{
+  0%,5%{opacity:0;transform:rotate(0deg)}
+  9%{opacity:1;transform:rotate(0deg)}
+  26%{transform:rotate(0deg)}
+  32%,88%{opacity:1;transform:rotate(180deg)}
+  93%,100%{opacity:0;transform:rotate(180deg)}
+}
+@keyframes vgT-stick{0%,5%{transform:none}9%,24%{transform:translateY(-4.5px)}27%,84%{transform:translateY(4.5px)}90%,100%{transform:none}}
+@keyframes vgT-c{0%,11%{opacity:0;transform:translateY(3px)}13.5%,86%{opacity:1;transform:none}90%,100%{opacity:0;transform:translateY(3px)}}
+@keyframes vgT-a{0%,19%{opacity:0;transform:translateY(3px)}21.5%,86%{opacity:1;transform:none}90%,100%{opacity:0;transform:translateY(3px)}}
+@keyframes vgT-t{0%,33%{opacity:0;transform:translateY(3px)}35.5%,86%{opacity:1;transform:none}90%,100%{opacity:0;transform:translateY(3px)}}
+@keyframes vgT-tapC{0%,10%{transform:none}12%{transform:scale(.82)}15%,100%{transform:none}}
+@keyframes vgT-tapA{0%,18%{transform:none}20%{transform:scale(.82)}23%,100%{transform:none}}
+@keyframes vgT-tapT{0%,32%{transform:none}34%{transform:scale(.82)}37%,100%{transform:none}}
+@keyframes vgT-ring{
+  0%,11%{transform:scale(.5);opacity:0}13%{opacity:.5;transform:scale(.85)}18%,19%{transform:scale(1.4);opacity:0}
+  19.5%{transform:scale(.5);opacity:0}21%{opacity:.5;transform:scale(.85)}26%,33%{transform:scale(1.4);opacity:0}
+  33.5%{transform:scale(.5);opacity:0}35%{opacity:.5;transform:scale(.85)}44%,100%{transform:scale(1.4);opacity:0}
+}
+@keyframes vgT-caret{
+  0%,11%{opacity:1;transform:translateX(calc(var(--cw)*-3))}
+  12%,19%{transform:translateX(calc(var(--cw)*-2))}
+  20%,33%{transform:translateX(calc(var(--cw)*-1))}
+  34%,44%{opacity:1;transform:translateX(0)}
+  45%,51%{opacity:0}52%,58%{opacity:1}59%,65%{opacity:0}66%,86%{opacity:1;transform:translateX(0)}
+  88%{opacity:0;transform:translateX(0)}
+  89%{opacity:0;transform:translateX(calc(var(--cw)*-3))}
+  92%,100%{opacity:1;transform:translateX(calc(var(--cw)*-3))}
+}
+
+/* ── Launcher beat (.vg-launch): click the stick, a ring of apps opens, aim,
+   Cross launches. Everything mirrors RadialMenu.swift: nine default items
+   clockwise from the top (Safari at N, Music at E), open bound to L3, aim on
+   the left stick, selection is a discrete jump (index change, never a sweep)
+   with an accent halo + grown tile + a label that exists only while selected,
+   a haptic tick per selection change, Cross to commit. The open is a straight
+   cut and only the close fades, because that is how the app ships (the HUD
+   answers the press with no perceptible delay; the close still fades). One
+   liberty: the app hangs the label under the selected icon, here it sits in
+   the disc hub so 10px type never crowds a 12px tile.
+   Rhymes with .vg-type's daisy wheel (same rim-and-disc language, blue
+   selection, face-slot commit) without repeating it: petals vs floating
+   tiles, rotating wedge vs jumping halo, typing vs launching.
+   Hub label --text-2 on --card-bg: 6.65:1 light / 6.86:1 dark (worst surface
+   --bg-inset-2: 5.46 / 5.89). L3 chip --text-3 on --bg-inset-2: 4.97 / 4.62
+   (contrast.mjs 2026-07). */
+.vg-launch{max-width:430px;justify-content:space-between}  /* fixed-geometry: the disc can't stretch, so cap and space the three instruments */
+.vg-stickcol{flex:none;display:flex;flex-direction:column;align-items:center;gap:5px}
+.vg-klab{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:0.07em;color:var(--text-3)}
+.vg-disc{position:relative;flex:none;width:92px;height:92px;border-radius:50%;background:var(--card-bg);border:1px solid var(--sep-2)}
+.vg-disc .tl{position:absolute;width:12px;height:12px;border-radius:3px;background:var(--bg-inset);border:1px solid var(--sep-2)}
+/* nine tiles, 40 degrees apart, clockwise from N: the default ring order.
+   ts = Safari (N), tm = Music (E): the two the loop selects. */
+.vg-disc .tl:nth-child(1){left:40px;top:7px}
+.vg-disc .tl:nth-child(2){left:61.2px;top:14.7px}
+.vg-disc .tl:nth-child(3){left:72.5px;top:34.3px}
+.vg-disc .tl:nth-child(4){left:68.6px;top:56.5px}
+.vg-disc .tl:nth-child(5){left:51.3px;top:71px}
+.vg-disc .tl:nth-child(6){left:28.7px;top:71px}
+.vg-disc .tl:nth-child(7){left:11.4px;top:56.5px}
+.vg-disc .tl:nth-child(8){left:7.5px;top:34.3px}
+.vg-disc .tl:nth-child(9){left:18.8px;top:14.7px}
+/* the selection halo: the app's soft accent glow behind the chosen icon */
+.vg-disc .tl::after{content:"";position:absolute;inset:-9px;border-radius:50%;background:radial-gradient(closest-side,var(--blue),transparent 72%);opacity:0}
+/* base = mid-aim: Safari held, halo lit, label up. The claim, frozen mid-proof. */
+.vg-disc .ts{transform:scale(1.25)}
+.vg-disc .ts::after{opacity:.35}
+.vg-hub{position:absolute;inset:0;display:grid;place-items:center}
+.vg-hub b{grid-area:1/1;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.03em;color:var(--text-2)}
+.vg-hub .hm{opacity:0}
+@media (prefers-reduced-motion: no-preference){
+  /* 6.5s (desynced from .vg-layers' 5.5s above it): L3 click → the ring cuts
+     in → aim E, Music ticks → aim N, Safari ticks → Cross → the ring fades */
+  .vg-launch.on .vg-disc{animation:vgR-disc 6.5s linear infinite}
+  .vg-launch.on .vg-cap{animation:vgR-cap 6.5s cubic-bezier(.5,.05,.25,1) infinite}
+  .vg-launch.on .tm{animation:vgR-tselM 6.5s ease infinite}
+  .vg-launch.on .tm::after{animation:vgR-selM 6.5s ease infinite}
+  .vg-launch.on .ts{animation:vgR-tselS 6.5s ease infinite}
+  .vg-launch.on .ts::after{animation:vgR-selS 6.5s ease infinite}
+  .vg-launch.on .hm{animation:vgR-labM 6.5s ease infinite}
+  .vg-launch.on .hs{animation:vgR-labS 6.5s ease infinite}
+  .vg-launch.on .vg-facewrap .face{animation:vgR-tap 6.5s ease infinite}
+  .vg-launch.on .lr{animation:vgR-ring 6.5s ease-out infinite}
+}
+@keyframes vgR-disc{0%,6.5%{opacity:0}8%,79%{opacity:1}83%,100%{opacity:0}}
+@keyframes vgR-cap{
+  0%,4%{transform:none}5.5%{transform:scale(.85)}8%,10%{transform:none}
+  13%,36%{transform:translateX(4.5px)}
+  40%,78%{transform:translateY(-4.5px)}
+  82%,100%{transform:none}
+}
+@keyframes vgR-tselM{0%,12%{transform:none}13.5%,39%{transform:scale(1.25)}41%,100%{transform:none}}
+@keyframes vgR-selM{0%,12%{opacity:0}13.5%,39%{opacity:.35}41%,100%{opacity:0}}
+@keyframes vgR-tselS{0%,40%{transform:none}41.5%,79%{transform:scale(1.25)}82%,100%{transform:none}}
+@keyframes vgR-selS{0%,40%{opacity:0}41.5%,79%{opacity:.35}82%,100%{opacity:0}}
+@keyframes vgR-labM{0%,12%{opacity:0}14%,39%{opacity:1}41%,100%{opacity:0}}
+@keyframes vgR-labS{0%,40%{opacity:0}42%,79%{opacity:1}82%,100%{opacity:0}}
+@keyframes vgR-tap{0%,76%{transform:none}78%{transform:scale(.82)}80%,100%{transform:none}}
+@keyframes vgR-ring{
+  0%,12%{transform:scale(.5);opacity:0}14%{opacity:.5;transform:scale(.85)}19%,40%{transform:scale(1.4);opacity:0}
+  40.5%{transform:scale(.5);opacity:0}42%{opacity:.5;transform:scale(.85)}47%,76%{transform:scale(1.4);opacity:0}
+  76.5%{transform:scale(.5);opacity:0}78%{opacity:.5;transform:scale(.85)}86%,100%{transform:scale(1.4);opacity:0}
+}
+
 .vg-key b{font:inherit;color:inherit}
 @media(prefers-reduced-motion:reduce){
   .tvg.on *{animation:none!important}
@@ -908,9 +1063,6 @@ html:not([data-pad]) #feel .price-inc li,
 html[data-pad="ps"] #feel .price-inc li,
 html[data-pad="xb"] #feel .price-inc li,
 html[data-pad="mf"] #feel .price-inc li{text-align:left}
-/* centre the ps-only extras under the single column */
-html:not([data-pad]) #feel .feel-extras,
-html[data-pad="ps"] #feel .feel-extras{justify-content:center}
 html:not([data-pad]) #feel .tvg,
 html[data-pad="ps"] #feel .tvg{margin-left:auto;margin-right:auto}
 /* the pd gate's display:revert makes .lb-picker a block, so centre its
@@ -920,12 +1072,6 @@ html[data-pad="ps"] #feel .lb-picker .dots{justify-content:center}
 /* capabilities: the layers explainer beside the summary list */
 .cap-layers h3{font-size:22px;letter-spacing:-0.02em;margin-bottom:8px}
 .cap-layers p{font-size:16px;color:var(--text-2);line-height:1.55;max-width:52ch;margin-bottom:16px}
-/* Feel: hardware-extras chips (moved from the hero's mobile callouts).
-   NOTE no display here — the pd-* gate owns it (flex when shown, below). */
-.feel-extras{list-style:none;flex-wrap:wrap;gap:8px;margin:22px 0 0;padding:0}
-.feel-extras li{font-family:var(--mono);font-size:11.5px;letter-spacing:0.04em;color:#AEB6C6;border:1px solid rgba(233,237,246,0.22);border-radius:999px;padding:7px 13px}
-html:not([data-pad]) ul.feel-extras.pd-ps,
-html[data-pad="ps"] ul.feel-extras.pd-ps{display:flex}
 
 /* ── screenshot gallery: the invite + the native <dialog> ────────────────
    Images carry data-light/data-dark only; JS resolves src on first open, so
@@ -1015,7 +1161,7 @@ html.shots-open{overflow:hidden}
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle appearance">
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.1 5.1l1.4 1.4M17.5 17.5l1.4 1.4M18.9 5.1l-1.4 1.4M6.5 17.5l-1.4 1.4"/></svg>
       </button>
-      <a class="btn btn-nav" href="#pricing">Join the list</a>
+      <a class="btn btn-nav" href="#pricing">Join the launch list</a>
     </div>
   </div>
 </header>
@@ -1032,14 +1178,14 @@ html.shots-open{overflow:hidden}
   <div class="copy">
     <div class="app-eyebrow">A Mac app</div>
     <h1>Control your whole Mac<br>with a game controller.</h1>
-    <p class="sub">Steer turns almost any game controller into a full mouse and keyboard for your Mac: point, click, type, and scroll from the couch, the bed, or one hand.</p>
-    <p class="sub sub-own">Own a controller? You're set. If not, a used one costs less than the app.</p>
+    <p class="sub">Point, click, type, and scroll from the couch, from bed, or with one hand. Almost any controller works.</p>
+    <p class="sub sub-own">Own a controller? You're set. If not, almost any second-hand one will do.</p>
     <div class="cta-row">
       <a class="cta" href="#pricing">Join the launch list</a>
-      <span class="terms"><b>€19.99</b> once. Yours forever.</span>
+      <span class="terms"><b>€19.99</b> once, when it ships.</span>
     </div>
     <div class="picker-wrap">
-      <div class="picker-prompt">Already have a controller? See yours</div>
+      <div class="picker-prompt">Pick your controller</div>
       <div class="tabs" role="tablist" aria-label="See your controller">
         <button class="tab" role="tab" id="tab-ps" aria-selected="true"  data-pad="ps">PlayStation</button>
         <button class="tab" role="tab" id="tab-xb" aria-selected="false" data-pad="xb">Xbox</button>
@@ -1099,7 +1245,7 @@ html.shots-open{overflow:hidden}
 
     <!-- ═══════════ PLAYSTATION · DualSense ═══════════ -->
     <div class="padwrap ps active" role="img"
-         aria-label="Stylized DualSense controller, its controls mapped to Mac inputs, light bar glowing, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, plus adaptive triggers, touchpad gestures, and gyro aim">
+         aria-label="Stylized DualSense controller, its controls mapped to Mac inputs, light bar glowing, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, plus triggers that push back, touchpad gestures, tilt to point, and a quiet buzz when a click lands">
       <svg viewBox="0 0 1200 440" aria-hidden="true">
         <ellipse class="contact" cx="600" cy="428" rx="275" ry="14"/>
         <g class="device">
@@ -1216,8 +1362,8 @@ html.shots-open{overflow:hidden}
         <g class="ann d1" text-anchor="end">
           <circle cx="404" cy="42" r="2.5"/>
           <polyline points="404,42 334,64 320,64"/>
-          <text class="t x" x="312" y="60">+ ADAPTIVE TRIGGERS</text>
-          <text x="312" y="78">feel the click before it fires</text>
+          <text class="t x" x="312" y="60">+ FIRM TRIGGERS</text>
+          <text x="312" y="78">they push back before the click</text>
         </g>
         <g class="ann d2" text-anchor="end">
           <circle cx="528" cy="152" r="2.5"/>
@@ -1229,45 +1375,45 @@ html.shots-open{overflow:hidden}
           <circle cx="478" cy="262" r="2.5"/>
           <polyline points="478,262 334,264 320,264"/>
           <text class="t" x="312" y="260">LEFT STICK</text>
-          <text x="312" y="278">moves the cursor, tuned to glide</text>
+          <text x="312" y="278">moves the cursor, smooth and steady</text>
         </g>
         <g class="ann d4" text-anchor="end">
           <circle cx="452" cy="340" r="2.5"/>
           <polyline points="452,340 334,364 320,364"/>
-          <text class="t x" x="312" y="360">+ GYRO AIM</text>
-          <text x="312" y="378">tilt the controller: the cursor follows</text>
+          <text class="t x" x="312" y="360">+ TILT TO POINT</text>
+          <text x="312" y="378">aim by moving your hands, not a stick</text>
         </g>
         <!-- annotations · right column: labels left-aligned to the x=888 guide, same rhythm -->
         <g class="ann d5">
           <circle cx="800" cy="38" r="2.5"/>
           <polyline points="800,38 866,64 880,64"/>
-          <text class="t" x="888" y="60">HOLD FOR LAYERS</text>
-          <text x="888" y="78">bumpers + triggers shift every button</text>
+          <text class="t" x="888" y="60">HOLD ONE BUTTON</text>
+          <text x="888" y="78">like Shift: every other button changes</text>
         </g>
         <g class="ann d6">
           <circle cx="806" cy="140" r="2.5"/>
           <polyline points="806,140 866,164 880,164"/>
           <text class="t" x="888" y="160">EVERY BUTTON</text>
-          <text x="888" y="178">any shortcut you map, chords too</text>
+          <text x="888" y="178">any shortcut, app, or saved task</text>
         </g>
         <g class="ann d7">
           <circle cx="722" cy="262" r="2.5"/>
           <polyline points="722,262 866,264 880,264"/>
           <text class="t" x="888" y="260">RIGHT STICK</text>
-          <text x="888" y="278">smooth scrolling, speed you tune</text>
+          <text x="888" y="278">scrolls the page, at your speed</text>
         </g>
         <g class="ann d8">
           <circle cx="846" cy="414" r="2.5"/>
           <polyline points="846,414 866,364 880,364"/>
-          <text class="t" x="888" y="360">HAPTIC GRIPS</text>
-          <text x="888" y="378">a quiet thump when the click lands</text>
+          <text class="t" x="888" y="360">A QUIET BUZZ</text>
+          <text x="888" y="378">you feel every click land in your hands</text>
         </g>
       </svg>
     </div>
 
     <!-- ═══════════ XBOX ═══════════ -->
     <div class="padwrap xb" role="img"
-         aria-label="Stylized Xbox controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, bumpers and triggers shift layers, chords, d-pad, rumble">
+         aria-label="Stylized Xbox controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, arrow buttons, and a quiet buzz">
       <svg viewBox="0 0 1200 440" aria-hidden="true">
         <ellipse class="contact" cx="600" cy="424" rx="265" ry="14"/>
         <g class="device">
@@ -1357,52 +1503,52 @@ html.shots-open{overflow:hidden}
         <g class="ann d1" text-anchor="end">
           <circle cx="430" cy="42" r="2.5"/>
           <polyline points="430,42 334,114 320,114"/>
-          <text class="t" x="312" y="110">HOLD FOR LAYERS</text>
-          <text x="312" y="128">bumpers + triggers shift every button</text>
+          <text class="t" x="312" y="110">HOLD ONE BUTTON</text>
+          <text x="312" y="128">like Shift: every other button changes</text>
         </g>
         <g class="ann d2" text-anchor="end">
           <circle cx="435" cy="142" r="2.5"/>
           <polyline points="435,142 334,214 320,214"/>
           <text class="t" x="312" y="210">LEFT STICK</text>
-          <text x="312" y="228">moves the cursor, tuned to glide</text>
+          <text x="312" y="228">moves the cursor, smooth and steady</text>
         </g>
         <g class="ann d3" text-anchor="end">
           <circle cx="496" cy="249" r="2.5"/>
           <polyline points="496,249 334,314 320,314"/>
-          <text class="t" x="312" y="310">D-PAD</text>
-          <text x="312" y="328">arrows, media keys, anything you map</text>
+          <text class="t" x="312" y="310">ARROW BUTTONS</text>
+          <text x="312" y="328">volume, skip, anything you choose</text>
         </g>
         <!-- annotations · right column: x=888 guide, 4 rows (60/160/260/360) -->
         <g class="ann d4">
           <circle cx="782" cy="132" r="2.5"/>
           <polyline points="782,132 866,64 880,64"/>
           <text class="t" x="888" y="60">EVERY BUTTON</text>
-          <text x="888" y="78">any shortcut you map</text>
+          <text x="888" y="78">any shortcut, app, or saved task</text>
         </g>
         <g class="ann d5">
           <circle cx="752" cy="200" r="2.5"/>
           <polyline points="752,200 866,164 880,164"/>
-          <text class="t" x="888" y="160">CHORDS</text>
-          <text x="888" y="178">press two together: a new shortcut</text>
+          <text class="t" x="888" y="160">TWO BUTTONS</text>
+          <text x="888" y="178">press two at once: one more job</text>
         </g>
         <g class="ann d6">
           <circle cx="705" cy="252" r="2.5"/>
           <polyline points="705,252 866,264 880,264"/>
           <text class="t" x="888" y="260">RIGHT STICK</text>
-          <text x="888" y="278">smooth scrolling, speed you tune</text>
+          <text x="888" y="278">scrolls the page, at your speed</text>
         </g>
         <g class="ann d7">
           <circle cx="832" cy="408" r="2.5"/>
           <polyline points="832,408 866,364 880,364"/>
-          <text class="t" x="888" y="360">RUMBLE</text>
-          <text x="888" y="378">a quiet thump when the click lands</text>
+          <text class="t" x="888" y="360">A QUIET BUZZ</text>
+          <text x="888" y="378">you feel every click land in your hands</text>
         </g>
       </svg>
     </div>
 
     <!-- ═══════════ NINTENDO · Switch Pro ═══════════ -->
     <div class="padwrap sw" role="img"
-         aria-label="Stylized Switch Pro controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, bumpers shift layers, plus gyro aim and HD rumble">
+         aria-label="Stylized Switch Pro controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, plus tilt to point and a finer buzz">
       <svg viewBox="0 0 1200 440" aria-hidden="true">
         <ellipse class="contact" cx="600" cy="418" rx="255" ry="14"/>
         <g class="device">
@@ -1488,45 +1634,45 @@ html.shots-open{overflow:hidden}
         <g class="ann d1" text-anchor="end">
           <circle cx="446" cy="46" r="2.5"/>
           <polyline points="446,46 334,64 320,64"/>
-          <text class="t" x="312" y="60">HOLD FOR LAYERS</text>
-          <text x="312" y="78">bumpers + triggers shift every button</text>
+          <text class="t" x="312" y="60">HOLD ONE BUTTON</text>
+          <text x="312" y="78">like Shift: every other button changes</text>
         </g>
         <g class="ann d2" text-anchor="end">
           <circle cx="437" cy="140" r="2.5"/>
           <polyline points="437,140 334,164 320,164"/>
           <text class="t" x="312" y="160">LEFT STICK</text>
-          <text x="312" y="178">moves the cursor, tuned to glide</text>
+          <text x="312" y="178">moves the cursor, smooth and steady</text>
         </g>
         <g class="ann d3" text-anchor="end">
           <circle cx="500" cy="250" r="2.5"/>
           <polyline points="500,250 334,264 320,264"/>
-          <text class="t" x="312" y="260">D-PAD</text>
-          <text x="312" y="278">arrows, media keys, anything you map</text>
+          <text class="t" x="312" y="260">ARROW BUTTONS</text>
+          <text x="312" y="278">volume, skip, anything you choose</text>
         </g>
         <g class="ann d4" text-anchor="end">
           <circle cx="466" cy="322" r="2.5"/>
           <polyline points="466,322 334,364 320,364"/>
-          <text class="t x" x="312" y="360">+ GYRO AIM</text>
-          <text x="312" y="378">tilt the controller: the cursor follows</text>
+          <text class="t x" x="312" y="360">+ TILT TO POINT</text>
+          <text x="312" y="378">aim by moving your hands, not a stick</text>
         </g>
         <!-- annotations · right column: x=888 guide, 3 rows centered on the rhythm (110/210/310) -->
         <g class="ann d5">
           <circle cx="778" cy="132" r="2.5"/>
           <polyline points="778,132 866,114 880,114"/>
           <text class="t" x="888" y="110">EVERY BUTTON</text>
-          <text x="888" y="128">any shortcut you map, chords too</text>
+          <text x="888" y="128">any shortcut, app, or saved task</text>
         </g>
         <g class="ann d6">
           <circle cx="705" cy="254" r="2.5"/>
           <polyline points="705,254 866,214 880,214"/>
           <text class="t" x="888" y="210">RIGHT STICK</text>
-          <text x="888" y="228">smooth scrolling, speed you tune</text>
+          <text x="888" y="228">scrolls the page, at your speed</text>
         </g>
         <g class="ann d7">
           <circle cx="851" cy="368" r="2.5"/>
           <polyline points="851,368 866,314 880,314"/>
-          <text class="t x" x="888" y="310">+ HD RUMBLE</text>
-          <text x="888" y="328">Nintendo's finer thump on clicks</text>
+          <text class="t x" x="888" y="310">+ A FINER BUZZ</text>
+          <text x="888" y="328">small, precise taps you can feel</text>
         </g>
       </svg>
     </div>
@@ -1535,7 +1681,7 @@ html.shots-open{overflow:hidden}
          A schematic outline, not a fourth product render: no brand, no extras,
          Apple's own A/B/X/Y naming. Callouts reduced to the honest core. -->
     <div class="padwrap mf" role="img"
-         aria-label="Outline of a generic controller standing in for any MFi-certified controller, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, bumpers and triggers shift layers">
+         aria-label="Outline of a generic controller standing in for most other controllers that pair with a Mac, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change">
       <svg viewBox="0 0 1200 440" aria-hidden="true">
         <g>
           <!-- shoulders: same silhouette language, line-art -->
@@ -1557,7 +1703,7 @@ html.shots-open{overflow:hidden}
           <circle class="mf-o2" cx="600" cy="94" r="19"/>
           <circle class="mf-o2" cx="552" cy="142" r="8"/>
           <circle class="mf-o2" cx="648" cy="142" r="8"/>
-          <text class="mf-tag" x="600" y="188" text-anchor="middle">ANY MFI CONTROLLER</text>
+          <text class="mf-tag" x="600" y="188" text-anchor="middle">OTHER CONTROLLERS</text>
 
           <!-- left stick -->
           <circle class="mf-o" cx="472" cy="150" r="37"/>
@@ -1585,54 +1731,64 @@ html.shots-open{overflow:hidden}
         <g class="ann d1" text-anchor="end">
           <circle cx="430" cy="42" r="2.5"/>
           <polyline points="430,42 334,114 320,114"/>
-          <text class="t" x="312" y="110">HOLD FOR LAYERS</text>
-          <text x="312" y="128">bumpers + triggers shift every button</text>
+          <text class="t" x="312" y="110">HOLD ONE BUTTON</text>
+          <text x="312" y="128">like Shift: every other button changes</text>
         </g>
         <g class="ann d2" text-anchor="end">
           <circle cx="435" cy="142" r="2.5"/>
           <polyline points="435,142 334,214 320,214"/>
           <text class="t" x="312" y="210">LEFT STICK</text>
-          <text x="312" y="228">moves the cursor, tuned to glide</text>
+          <text x="312" y="228">moves the cursor, smooth and steady</text>
         </g>
         <g class="ann d3">
           <circle cx="782" cy="132" r="2.5"/>
           <polyline points="782,132 866,114 880,114"/>
           <text class="t" x="888" y="110">EVERY BUTTON</text>
-          <text x="888" y="128">any shortcut you map, chords too</text>
+          <text x="888" y="128">any shortcut, app, or saved task</text>
         </g>
         <g class="ann d4">
           <circle cx="705" cy="252" r="2.5"/>
           <polyline points="705,252 866,264 880,264"/>
           <text class="t" x="888" y="260">RIGHT STICK</text>
-          <text x="888" y="278">smooth scrolling, speed you tune</text>
+          <text x="888" y="278">scrolls the page, at your speed</text>
         </g>
       </svg>
     </div>
   </div>
 
   <!-- mobile feature chips -->
+  <!-- The SVG annotations are unreadable on a phone, so these chips stand in for
+       them. Keep each list as long as its pad's annotation set: a DualSense owner
+       must not see fewer features here than an Xbox owner does. -->
+  <!-- Keep every chip at or under ~36 mono characters: at 375px the pill has
+       ~335px of room and longer strings push the hero into horizontal overflow. -->
   <ul class="features feat-ps">
-    <li>Cursor + scroll on the sticks</li>
-    <li>Any shortcut on any button</li>
-    <li>Hold bumpers for layers</li>
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Triggers push back before the click</li>
+    <li>A quiet buzz when a click lands</li>
+    <li>The light strip, any colour you like</li>
   </ul>
   <ul class="features feat-xb">
-    <li>Cursor + scroll on the sticks</li>
-    <li>Any shortcut on any button</li>
-    <li>Hold bumpers for layers</li>
-    <li>Chords: two buttons, one more shortcut</li>
-    <li>Rumble on every click</li>
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Two buttons at once: one more job</li>
+    <li>A quiet buzz on every click</li>
   </ul>
   <ul class="features feat-sw">
-    <li>Cursor + scroll on the sticks</li>
-    <li>Any shortcut on any button</li>
-    <li>Hold bumpers for layers</li>
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Tilt it and the cursor follows</li>
+    <li>A small, detailed buzz on clicks</li>
   </ul>
   <ul class="features feat-mf">
-    <li>Cursor + scroll on the sticks</li>
-    <li>Any shortcut on any button</li>
-    <li>Hold bumpers for layers</li>
-    <li>Chords + tap-vs-hold</li>
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Tap or hold: two jobs per button</li>
   </ul>
 
   <div class="bottombar">
@@ -1643,9 +1799,9 @@ html.shots-open{overflow:hidden}
           <span class="vg-tile"><svg class="pi-play" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.5l8 4.5-8 4.5z"/></svg><svg class="pi-pause" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.7 1.5h2.5v9H2.7zM6.8 1.5h2.5v9H6.8z"/></svg><i class="tring"></i></span>
           <span class="vg-cursor"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M2.002 0.731 L10.385 9.132 C11.438 10.188 10.691 11.99 9.2 11.99 L5.753 11.989 L3.285 14.174 C2.204 15.13 0.501 14.363 0.501 12.919 L0.501 1.352 C0.501 0.568 1.448 0.176 2.002 0.731 Z" fill="#FFFFFF"/><path d="M1.5 2 L1.5 12.897 C1.5 13.487 2.197 13.801 2.639 13.41 L5.374 10.989 L9.174 10.99 C9.784 10.99 10.09 10.253 9.659 9.821 L1.751 1.896 C1.659 1.803 1.5 1.869 1.5 2 Z" fill="#000000"/></svg><i class="vg-click"></i></span>
         </div>
-        <span class="vg-facewrap"><span class="face-slot" data-b="cross"></span></span>
+        <span class="vg-facewrap"><span class="face-slot" data-b="cross"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-cross)" stroke-width="1.5" opacity="0.9"/><path d="M9 9l8 8M17 9l-8 8" stroke="var(--ps-cross)" stroke-width="1.7" stroke-linecap="round"/></svg></span></span>
       </div>
-      <p class="cap">The stick is the mouse. <span class="only-ps">Cross</span><span class="only-xb">A</span><span class="only-sw">B</span><span class="only-mf">A</span> clicks.</p>
+      <p class="cap">The stick is the mouse. Press <span class="only-ps">Cross</span><span class="only-xb">A</span><span class="only-sw">B</span><span class="only-mf">A</span> to click.</p>
     </div>
   </div>
 
@@ -1654,12 +1810,23 @@ html.shots-open{overflow:hidden}
 
 <!-- WHO IT'S FOR — the one audience section: a relatable lead card (the couch),
      accessibility promoted to a card, then the job cards. Every item must be
-     shipped/true (no FPS, no CAD orbit, no DAW). Only $435 Speed Editor price is verified. -->
+     shipped/true (no FPS, no CAD orbit, no DAW). The only price comparison left
+     is the $435 Speed Editor, because it is the only one verified. Do not add
+     another one back without a source. -->
 <section class="sec-loose sunken" id="uses">
   <div class="wrap">
     <div class="eyebrow">Who it's for</div>
-    <h2 class="h2" style="max-width:22ch">For everyone. Not just gamers.</h2>
-    <p class="lead" style="margin-top:16px;max-width:60ch">Unchain yourself from the keyboard. A few of the jobs people use it for:</p>
+    <!-- Enumerate, don't assert. "For everyone. Not just gamers." and "Most of
+         this has nothing to do with games." both named the objection in order to
+         rebut it, which keeps the frame they were trying to escape. "Comfortable
+         to hold. Useful all day." fixed the negativity but made comfort the single
+         frame, which is the narrowing Sean rejected in May ("we don't have to
+         reposition the hero, but we might want to lean into a set of use cases").
+         A list of ordinary non-gaming verbs demonstrates breadth instead of
+         claiming it, each verb maps to a card below, and it avoids a third
+         "run/control your Mac" within two screens of the hero. -->
+    <h2 class="h2" style="max-width:22ch">Browse, write, edit, present. From anywhere in the room.</h2>
+    <p class="lead" style="margin-top:16px;max-width:60ch">A game controller is built to be held for hours, with your thumbs already resting on the buttons. Steer lets those buttons run your Mac, and you decide what each one does, so one small handful covers very different jobs.</p>
 
     <div class="uc-grid" style="margin-top:44px">
       <div class="uc-lead uc-couch">
@@ -1669,28 +1836,42 @@ html.shots-open{overflow:hidden}
             <h3>Run your whole Mac from the couch.</h3>
             <p>Browse, type, launch apps, play and pause: from the sofa, the bed, anywhere a mouse won't follow. The stick points from across the room; an on-screen keyboard means you never get up for a search box.</p>
           </div>
-          <div class="vg vg-glide" aria-hidden="true">
-            <span class="vg-stick"><i class="vg-cap"></i><i class="vg-ring gr"></i></span>
-            <div class="vg-screen">
-              <span class="vg-tile"><svg class="pi-play" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.5l8 4.5-8 4.5z"/></svg><svg class="pi-pause" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.7 1.5h2.5v9H2.7zM6.8 1.5h2.5v9H6.8z"/></svg><i class="tring"></i></span>
-              <span class="vg-cursor"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M2.002 0.731 L10.385 9.132 C11.438 10.188 10.691 11.99 9.2 11.99 L5.753 11.989 L3.285 14.174 C2.204 15.13 0.501 14.363 0.501 12.919 L0.501 1.352 C0.501 0.568 1.448 0.176 2.002 0.731 Z" fill="#FFFFFF"/><path d="M1.5 2 L1.5 12.897 C1.5 13.487 2.197 13.801 2.639 13.41 L5.374 10.989 L9.174 10.99 C9.784 10.99 10.09 10.253 9.659 9.821 L1.751 1.896 C1.659 1.803 1.5 1.869 1.5 2 Z" fill="#000000"/></svg><i class="vg-click"></i></span>
-            </div>
-            <span class="vg-facewrap"><span class="face-slot" data-b="cross"></span></span>
+          <div class="vg vg-type" aria-hidden="true">
+            <span class="vg-stick"><i class="vg-cap"></i></span>
+            <svg class="vg-wheel" viewBox="0 0 44 44">
+              <circle class="dw-rim" cx="22" cy="22" r="19.5"/>
+              <path class="dw-spokes" d="M25.64 13.22L29.27 4.45M30.78 18.36L39.55 14.73M30.78 25.64L39.55 29.27M25.64 30.78L29.27 39.55M18.36 30.78L14.73 39.55M13.22 25.64L4.45 29.27M13.22 18.36L4.45 14.73M18.36 13.22L14.73 4.45"/>
+              <circle class="dw-hub" cx="22" cy="22" r="7.5"/>
+              <path class="dw-sect" d="M14.73 4.45A19 19 0 0 1 29.27 4.45L25.64 13.22A9.5 9.5 0 0 0 18.36 13.22Z"/>
+            </svg>
+            <span class="vg-field">
+              <svg class="dw-mag" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4"/><path d="M9.1 9.1L12.4 12.4" stroke-linecap="round"/></svg>
+              <span class="vg-word"><b class="w1">c</b><b class="w2">a</b><b class="w3">t</b></span>
+              <i class="vg-caret"></i>
+            </span>
+            <span class="vg-dwf">
+              <span class="face-slot fp-t" data-b="triangle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-triangle)" stroke-width="1.5" opacity="0.9"/><path d="M13 7.6l5.4 9.4H7.6z" stroke="var(--ps-triangle)" stroke-width="1.7" stroke-linejoin="round" fill="none"/></svg></span>
+              <span class="face-slot fp-l" data-b="square"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-square)" stroke-width="1.5" opacity="0.9"/><rect x="8.4" y="8.4" width="9.2" height="9.2" rx="1.4" stroke="var(--ps-square)" stroke-width="1.7"/></svg></span>
+              <span class="face-slot fp-r" data-b="circle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-circle)" stroke-width="1.5" opacity="0.9"/><circle cx="13" cy="13" r="4.6" stroke="var(--ps-circle)" stroke-width="1.7"/></svg></span>
+              <span class="face-slot fp-b" data-b="cross"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-cross)" stroke-width="1.5" opacity="0.9"/><path d="M9 9l8 8M17 9l-8 8" stroke="var(--ps-cross)" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+              <i class="vg-ring dwr"></i>
+            </span>
           </div>
         </div>
-        <div class="uc-mech"><b>Left stick</b> · pointer from across the room</div>
+        <div class="uc-mech"><b>Stick + face buttons</b> · type without getting up</div>
       </div>
       <div class="uc-lead uc-comf">
         <div class="uc-tag">Comfort &amp; accessibility</div>
-        <h3>A sore wrist, or one free hand.</h3>
-        <p>A controller rests in relaxed hands: no fine wrist work, no reaching for a mouse. Built for RSI, tremor, chronic pain, and one-handed days.</p>
+        <h3>When a mouse hurts, or you only have one hand.</h3>
+        <p>A controller rests in loose hands: nothing to pinch, no fine wrist work, no reaching across the desk. If sore wrists, tremor, pain, or using one hand make a mouse hard, this is a different shape to hold.</p>
+        <p>Comfort is personal, so the honest test is your own hands. At launch there is a 14-day free trial: no card, no account.</p>
         <a class="arrow-link" href="accessibility.html">See the accessibility setup <span class="a">→</span></a>
         <div class="uc-mech"><b>Cursor speed</b> · slow it right down</div>
       </div>
       <div class="uc-lead uc-ed">
         <div class="uc-tag">Editors</div>
         <h3>Cut without touching the keyboard.</h3>
-        <p>Scrub the timeline with the triggers, cut under your thumb. A <span class="num">$435</span> editing console pros buy, free on the controller you already own. (Ready-made for Resolve and Final Cut.)</p>
+        <p>Scrub the timeline with the triggers, cut under your thumb. The <span class="num">$435</span> editing console that pro editors buy for this job, running on a controller you already own. (Ready-made for Resolve and Final Cut.)</p>
         <div class="vg vg-edit" aria-hidden="true">
           <span class="vg-key kl"><b data-ps="L2" data-xb="LT" data-sw="ZL" data-mf="L trigger">L2</b><i class="vg-ring rl"></i></span>
           <div class="vg-timeline">
@@ -1703,10 +1884,10 @@ html.shots-open{overflow:hidden}
       </div>
       <div class="uc-lead uc-st">
         <div class="uc-tag">Streamers</div>
-        <h3>Scene switches, minus the <span class="num">$150</span> deck.</h3>
-        <p>Swap scenes and kill your mic from the controller already in your hands.<span class="pd-ps"> The LED even doubles as an on-air light.</span></p>
+        <h3>Switch scenes without a second gadget.</h3>
+        <p>Change scene and mute your mic from the controller already in your hands.<span class="pd-ps"> The light bar even doubles as an on-air light.</span></p>
         <div class="vg vg-stream" aria-hidden="true">
-          <span class="vg-facewrap"><span class="face-slot" data-b="cross"></span><i class="vg-ring"></i></span>
+          <span class="vg-facewrap"><span class="face-slot" data-b="cross"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-cross)" stroke-width="1.5" opacity="0.9"/><path d="M9 9l8 8M17 9l-8 8" stroke="var(--ps-cross)" stroke-width="1.7" stroke-linecap="round"/></svg></span><i class="vg-ring"></i></span>
           <div class="vg-scenes">
             <div class="vg-scene vs1"><i class="thumb"></i><i class="onring"></i></div>
             <div class="vg-scene vs2"><i class="thumb"></i><i class="onring"></i></div>
@@ -1717,8 +1898,8 @@ html.shots-open{overflow:hidden}
       </div>
       <div class="uc-lead uc-sp">
         <div class="uc-tag">Speakers &amp; teachers</div>
-        <h3>The clicker you never pack.</h3>
-        <p>Advance slides from across the room, point with the stick's on-screen laser<span class="pd-ps pd-xb pd-sw">, feel a quiet buzz when time runs low</span>.</p>
+        <h3>Point at your slides from the back row.</h3>
+        <p>Advance slides, then point at a chart with the bright dot the stick moves across the screen, without going back to the laptop<span class="pd-ps pd-xb pd-sw">, and a quiet buzz warns you when time is running low</span>.</p>
         <div class="vg vg-speak" aria-hidden="true">
           <span class="vg-stick"><i class="vg-cap"></i><i class="vg-ring r1"></i><i class="vg-ring r2"></i></span>
           <div class="vg-deck">
@@ -1726,67 +1907,19 @@ html.shots-open{overflow:hidden}
             <div class="vg-slide sB"><i class="t"></i><i class="l"></i><i class="l2"></i></div>
           </div>
         </div>
-        <div class="uc-mech"><b>Right stick</b> · on-screen laser</div>
+        <div class="uc-mech"><b>Right stick</b> · a dot on the screen</div>
       </div>
     </div>
 
     <div class="pills-label">And plenty more</div>
     <div class="pills">
-      <span class="pill-uc">Seniors &amp; easy access</span>
       <span class="pill-uc">Reading &amp; browsing</span>
       <span class="pill-uc">Writing &amp; notes</span>
       <span class="pill-uc">Coding &amp; IDEs</span>
       <span class="pill-uc">Design &amp; Figma</span>
       <a class="pill-uc" href="agents.html">Running AI agents <span class="a">→</span></a>
     </div>
-    <p class="pills-note"><b>Any app, really.</b> Start from a ready-made setup, or build your own in minutes. <a href="#capabilities">See everything it does <span aria-hidden="true">→</span></a></p>
-  </div>
-</section>
-
-<!-- CAPABILITIES — one tight summary list + the layers idea, stated once,
-     illustrated by the desk layer-shift vignette. Screenshots are the proof. -->
-<section class="sec" id="capabilities">
-  <div class="wrap">
-    <div class="sec-head-split">
-      <div class="eyebrow">What it does</div>
-      <h2 class="h2" style="max-width:18ch">Everything under your thumbs.</h2>
-      <p class="lead">The whole mouse-and-keyboard job, plus the shortcuts you use all day, mapped your way. Steer switches setups on its own to match the app you're in.</p>
-    </div>
-
-    <div class="hero-grid" style="margin-top:48px">
-      <div class="group">
-        <div class="grow"><span class="lbl">Sticks</span><span class="val">Move &amp; scroll</span></div>
-        <div class="grow"><span class="lbl">Every button</span><span class="val">Any shortcut, tap or hold</span></div>
-        <div class="grow"><span class="lbl">On-screen keyboard</span><span class="val">Type anything</span></div>
-        <div class="grow"><span class="lbl"><span class="num">6</span> layers</span><span class="val">Hold a shoulder button</span></div>
-        <div class="grow"><span class="lbl">Per-app profiles</span><span class="val">Switch on their own</span></div>
-        <div class="grow"><span class="lbl">Macros &amp; Apple Shortcuts</span><span class="val">Record &amp; run</span></div>
-      </div>
-      <div class="cap-layers">
-        <h3>Layers are Shift, for a controller.</h3>
-        <p>Hold a shoulder button and every button changes job, the way Shift changes your keyboard. Six layers: snap windows, fire macros, flick open a radial launcher, hands never moving.</p>
-        <div class="vg vg-layers" aria-hidden="true">
-          <span class="vg-key vg-hold"><b data-ps="L1" data-xb="LB" data-sw="L" data-mf="L bumper">L1</b><i class="vg-ring"></i></span>
-          <div class="vg-chips">
-            <span class="vg-chip"><span class="face-slot" data-b="cross"></span><span class="vg-labs"><span class="vg-lab a">Click</span><span class="vg-lab b">Snap left</span></span></span>
-            <span class="vg-chip"><span class="face-slot" data-b="circle"></span><span class="vg-labs"><span class="vg-lab a">Right-click</span><span class="vg-lab b">Snap right</span></span></span>
-            <span class="vg-chip"><span class="face-slot" data-b="triangle"></span><span class="vg-labs"><span class="vg-lab a">Enter</span><span class="vg-lab b">Maximize</span></span></span>
-            <span class="vg-chip"><span class="face-slot" data-b="square"></span><span class="vg-labs"><span class="vg-lab a">Esc</span><span class="vg-lab b">Centre</span></span></span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- The dense settings panes live behind a click (the gallery <dialog> near
-         the end of <body>), so the main scroll stays calm and a skeptic can
-         still verify the app is real and deep. -->
-    <div class="gal-invite">
-      <button class="btn btn-secondary" type="button" id="shotsOpen" aria-haspopup="dialog">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:17px;height:17px"><rect x="2.5" y="4" width="15" height="12" rx="2"/><circle cx="7.2" cy="8.4" r="1.4"/><path d="M2.5 13.5l4-3.5 3.5 3 3-2.5 4.5 3.5"/></svg>
-        See real screenshots
-      </button>
-      <p class="shot-cap gal-claim">Real screenshots, captured from the app; no renders, no touch-ups.</p>
-    </div>
+    <p class="pills-note"><b>Any app, really.</b> If it takes a keyboard or a mouse, it takes a controller.</p>
   </div>
 </section>
 
@@ -1794,27 +1927,20 @@ html.shots-open{overflow:hidden}
      page rhythm and dramatizes the invisible thing (feel) the way Apple stages
      a single feature dark and large. -->
 <section class="feel-cinema" id="feel">
-  <div class="feel-bridge in" aria-hidden="true"></div>
-  <div class="feel-bridge out" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-grid" style="align-items:center">
       <div>
-        <div class="eyebrow">The part a remapper can't do</div>
-        <h2 class="h2"><span class="pd-ps">The trigger stiffens before it clicks.</span><span class="pd-xb">The click lands in your hands.</span><span class="pd-sw">HD rumble answers. Gyro aims.</span><span class="pd-mf">Feedback that follows your hardware.</span></h2>
-        <p class="lead" style="margin-top:16px;max-width:46ch"><span class="pd-ps">A plain remapper just sends key presses. Steer drives the controller in return: the DualSense triggers stiffen so you feel a click before it fires, the grip buzzes to confirm an action, and the light bar can mean whatever you want.</span><span class="pd-xb">A plain remapper just sends key presses. Steer drives the controller in return; your grip buzzes to confirm an action landed: the click, the layer shift, the macro that finished.</span><span class="pd-sw">A plain remapper just sends key presses. Steer drives the controller in return: Nintendo's finer HD rumble confirms each action, and the gyro aims the cursor when you tilt the controller.</span><span class="pd-mf">A plain remapper just sends key presses. Where the hardware allows, Steer drives the controller in return: haptic feedback on controllers that support it, tuned per action.</span></p>
+        <div class="eyebrow">The part you feel</div>
+        <h2 class="h2"><span class="pd-ps">The trigger stiffens before it clicks.</span><span class="pd-xb">The click lands in your hands.</span><span class="pd-sw">The buzz answers back. Tilt to move the cursor.</span><span class="pd-mf">Feedback that follows your hardware.</span></h2>
+        <p class="lead" style="margin-top:16px;max-width:46ch"><span class="pd-ps">Other apps of this kind only send key presses. Steer answers back through the controller in your hands: the DualSense triggers stiffen so you feel a click before it fires, the grip buzzes to confirm an action, and the light bar can mean whatever you want.</span><span class="pd-xb">Other apps of this kind only send key presses. Steer answers back through the controller in your hands; your grip buzzes to confirm an action landed: the click, the hold that changed your buttons, the saved task that finished.</span><span class="pd-sw">Other apps of this kind only send key presses. Steer answers back through the controller in your hands: a finer, more detailed buzz confirms each action, and the cursor follows when you tilt the controller.</span><span class="pd-mf">Other apps of this kind only send key presses. Where the hardware allows, Steer answers back through the controller in your hands: haptic feedback on controllers that support it, tuned per action.</span></p>
         <ul class="price-inc" style="margin:26px 0 0;max-width:none">
           <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Adaptive triggers: feel the click before it fires. Five presets and a fine editor.</li>
           <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A gentle buzz per action, tuned by strength</li>
           <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A light bar you set yourself, or wire to signal your workflow</li>
-          <li class="pd-xb"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A gentle buzz per action (click, layer shift, radial pick), tuned by strength</li>
-          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> HD rumble: Nintendo's finer thump, per action, tuned by strength</li>
-          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Gyro aim: tilt the controller and the cursor follows</li>
+          <li class="pd-xb"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A gentle buzz per action (the click, the hold that changed your buttons, the saved task that finished), tuned by strength</li>
+          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A finer buzz: small, precise taps, per action, strength you tune</li>
+          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Tilt to point: tilt the controller and the cursor follows</li>
           <li class="pd-mf"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Haptic feedback on controllers that support it: per action, strength you tune</li>
-        </ul>
-        <!-- the hardware extras the pad brings beyond buttons (moved from the hero chips) -->
-        <ul class="feel-extras pd-ps" aria-label="More DualSense hardware Steer uses">
-          <li>+ Touchpad gestures: pinch &amp; rotate</li>
-          <li>+ Gyro aim: tilt to point</li>
         </ul>
         <!-- the headline, drawn: squeeze → resistance wall → click-through.
              Adaptive resistance is DualSense-only, so the whole vignette is
@@ -1883,6 +2009,10 @@ html.shots-open{overflow:hidden}
           </div>
           <span class="label">Try it: lock a colour, the whole page follows</span>
         </div>
+        <!-- This band promises hardware-dependent things (triggers, rumble, light
+             bar, gyro). It has to hand the reader the page that says which pad
+             gets which, or the promise reads as a blanket claim. -->
+        <p class="feel-compat"><a class="arrow-link" href="compatibility.html">See what your controller can do <span class="a">→</span></a></p>
       </div>
       <!-- The Haptics pane screenshot moved into the gallery <dialog>; the trigger
            vignette above carries the band (ps joins the xb/mf single-column
@@ -1891,6 +2021,68 @@ html.shots-open{overflow:hidden}
         <img class="shot-light" src="assets/light/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
         <img class="shot-dark" src="assets/dark/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES — one tight summary list + the layers idea, stated once,
+     illustrated by the desk layer-shift vignette. Screenshots are the proof. -->
+<section class="sec" id="capabilities">
+  <div class="wrap">
+    <div class="sec-head-split">
+      <div class="eyebrow">What it does</div>
+      <h2 class="h2" style="max-width:18ch">Make any button do anything.</h2>
+      <p class="lead">It works the moment you plug in. After that nothing is fixed: pick a button, pick what it should do, and that's the whole job. No code, no setup to finish first.</p>
+    </div>
+
+    <!-- The hero annotations already say what the sticks and buttons do; repeating
+         them here bought the reader nothing. These rows carry only what a picture
+         of a controller can't show: that it arrives working, follows you between
+         apps, types, and reaches past shortcuts into Shortcuts, macros, scripts. -->
+    <div class="hero-grid" style="margin-top:48px">
+      <div class="group">
+        <div class="grow"><span class="lbl">Ready to use</span><span class="val">Every button already does something</span></div>
+        <div class="grow"><span class="lbl">Any button</span><span class="val">Tap or hold: two jobs each</span></div>
+        <div class="grow"><span class="lbl">On-screen keyboard</span><span class="val">Types into any app, no cursor to aim</span></div>
+        <div class="grow"><span class="lbl">A setup for each app</span><span class="val">Changes with the app you open</span></div>
+        <div class="grow"><span class="lbl">Apple Shortcuts &amp; macros</span><span class="val">Runs anything you have saved</span></div>
+        <div class="grow"><span class="lbl">Scripts &amp; automation</span><span class="val">Yours, if you write them</span></div>
+      </div>
+      <div class="cap-layers">
+        <h3>Layers are Shift, for a controller.</h3>
+        <p>Hold one of the buttons along the top edge and every other button takes a second job, the way Shift turns 1 into an exclamation mark. Steer gives you six of these holds, so a handful of buttons covers a whole day: snap a window into place, run a saved task, pop up a ring of your apps to pick from, without your hands moving. You choose how long the hold has to be.</p>
+        <div class="vg vg-layers" aria-hidden="true">
+          <span class="vg-key vg-hold"><b data-ps="L1" data-xb="LB" data-sw="L" data-mf="L bumper">L1</b><i class="vg-ring"></i></span>
+          <div class="vg-chips">
+            <span class="vg-chip"><span class="face-slot" data-b="cross"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-cross)" stroke-width="1.5" opacity="0.9"/><path d="M9 9l8 8M17 9l-8 8" stroke="var(--ps-cross)" stroke-width="1.7" stroke-linecap="round"/></svg></span><span class="vg-labs"><span class="vg-lab a">Click</span><span class="vg-lab b">Snap left</span></span></span>
+            <span class="vg-chip"><span class="face-slot" data-b="circle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-circle)" stroke-width="1.5" opacity="0.9"/><circle cx="13" cy="13" r="4.6" stroke="var(--ps-circle)" stroke-width="1.7"/></svg></span><span class="vg-labs"><span class="vg-lab a">Right-click</span><span class="vg-lab b">Snap right</span></span></span>
+            <span class="vg-chip"><span class="face-slot" data-b="triangle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-triangle)" stroke-width="1.5" opacity="0.9"/><path d="M13 7.6l5.4 9.4H7.6z" stroke="var(--ps-triangle)" stroke-width="1.7" stroke-linejoin="round" fill="none"/></svg></span><span class="vg-labs"><span class="vg-lab a">Enter</span><span class="vg-lab b">Maximize</span></span></span>
+            <span class="vg-chip"><span class="face-slot" data-b="square"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-square)" stroke-width="1.5" opacity="0.9"/><rect x="8.4" y="8.4" width="9.2" height="9.2" rx="1.4" stroke="var(--ps-square)" stroke-width="1.7"/></svg></span><span class="vg-labs"><span class="vg-lab a">Esc</span><span class="vg-lab b">Centre</span></span></span>
+          </div>
+        </div>
+        <div class="vg vg-launch" aria-hidden="true">
+          <span class="vg-stickcol">
+            <span class="vg-stick"><i class="vg-cap"></i></span>
+            <b class="vg-klab" data-ps="L3" data-xb="LS" data-sw="L stick" data-mf="L stick">L3</b>
+          </span>
+          <span class="vg-disc">
+            <i class="tl ts"></i><i class="tl"></i><i class="tl tm"></i><i class="tl"></i><i class="tl"></i><i class="tl"></i><i class="tl"></i><i class="tl"></i><i class="tl"></i>
+            <span class="vg-hub"><b class="hm">Music</b><b class="hs">Safari</b></span>
+          </span>
+          <span class="vg-facewrap"><span class="face-slot" data-b="cross"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-cross)" stroke-width="1.5" opacity="0.9"/><path d="M9 9l8 8M17 9l-8 8" stroke="var(--ps-cross)" stroke-width="1.7" stroke-linecap="round"/></svg></span><i class="vg-ring lr"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- The dense settings panes live behind a click (the gallery <dialog> near
+         the end of <body>), so the main scroll stays calm and a skeptic can
+         still verify the app is real and deep. -->
+    <div class="gal-invite">
+      <button class="btn btn-secondary" type="button" id="shotsOpen" aria-haspopup="dialog">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:17px;height:17px"><rect x="2.5" y="4" width="15" height="12" rx="2"/><circle cx="7.2" cy="8.4" r="1.4"/><path d="M2.5 13.5l4-3.5 3.5 3 3-2.5 4.5 3.5"/></svg>
+        See real screenshots
+      </button>
+      <p class="shot-cap gal-claim">Real screenshots, captured from the app; no renders, no touch-ups.</p>
     </div>
   </div>
 </section>
@@ -1910,19 +2102,19 @@ html.shots-open{overflow:hidden}
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-14 2 8h6"/></svg>
-        <div><h3>Nothing about you is sent anywhere.</h3><p>Steer contacts the network for three things only: to check your licence (when you enter your key, then a quiet re-check on launch and about once a day), to look for an update when you ask it to, and to fetch a profile you paste a link to import. The last two happen only when you act.</p></div>
+        <div><h3>What you type is never sent anywhere.</h3><p>Steer goes online for three reasons, and none of them are about what you do on your Mac. It checks your licence key when you enter it, then re-checks that key on launch and about once a day. It looks for an update when you ask. And it fetches a setup only if you paste a link to one. That is the whole list.</p></div>
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.5l2 2 4-4.5"/><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
-        <div><h3>Anything risky is shown to you first</h3><p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it never runs. Scripts run only from your own macOS scripts folder: an import can name one you already installed, never bring its own.</p></div>
+        <div><h3>Anything risky is shown to you first.</h3><p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it never runs. Scripts run only from your own macOS scripts folder: an import can name one you already installed, never bring its own.</p></div>
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 2.3 5.6"/><path d="M4 20v-4h4"/></svg>
-        <div><h3>Every change can be undone</h3><p>Each edit becomes a restore point, with a history you can walk back.</p></div>
+        <div><h3>Every change can be undone.</h3><p>Each edit becomes a restore point, with a history you can walk back.</p></div>
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
-        <div><h3>Built on public APIs, and disclosed</h3><p>Native pinch and rotate use a clean-room synthesizer of macOS's undocumented gesture format; triggers, rumble, and the light bar speak each controller's HID protocol. All through public APIs (no private frameworks linked), and spelled out plainly in the FAQ.</p></div>
+        <div><h3>Built on public APIs, and disclosed.</h3><p>Some of what Steer does, Apple never published a recipe for: real pinch and rotate, and speaking directly to a controller's triggers, rumble, and light bar. Steer works those out from scratch. It never borrows Apple's private internals, only the tools Apple publishes for every developer. The full technical account is in the FAQ, because hiding it would be worse.</p></div>
       </div>
     </div>
   </div>
@@ -1938,7 +2130,10 @@ html.shots-open{overflow:hidden}
     <h2 class="h2">Hi, I'm Sean. I build Steer on my own.</h2>
     <p class="lead" style="margin:16px auto 0;max-width:48ch">I read and reply to every email. If Steer is missing something you need, just ask.</p>
     <div class="cta-row" style="margin-top:28px;display:flex;gap:20px;justify-content:center;align-items:center;flex-wrap:wrap">
-      <a class="btn btn-primary" href="mailto:steer@seanfloyd.dev?subject=An%20idea%20for%20Steer&amp;body=Here%27s%20what%20would%20make%20Steer%20perfect%20for%20how%20I%20work%3A%0A%0A">Share an idea <span aria-hidden="true">→</span></a>
+      <!-- Deliberately secondary: this sits one section above pricing, and a
+           full-weight primary here intercepts a ready buyer with an email draft
+           about feature requests. One primary CTA per view, and it is the list. -->
+      <a class="btn btn-secondary" href="mailto:steer@seanfloyd.dev?subject=An%20idea%20for%20Steer&amp;body=Here%27s%20what%20would%20make%20Steer%20perfect%20for%20how%20I%20work%3A%0A%0A">Share an idea <span aria-hidden="true">→</span></a>
       <a class="arrow-link" href="vs.html">Or see how Steer compares <span class="a">→</span></a>
     </div>
   </div>
@@ -1953,13 +2148,13 @@ html.shots-open{overflow:hidden}
       <div class="price-big"><span class="price-cur">€</span><span class="price-num">19.99</span></div>
       <div class="once">paid once, no subscription</div>
       <ul class="price-inc">
-        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> 14-day free trial, no card, no account</li>
-        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Every feature, every controller family</li>
-        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Free updates for macOS as it changes</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> 14-day free trial at launch: no card, no account</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Everything your controller can do</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Free updates as macOS changes</li>
         <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Direct from the developer, notarized by Apple</li>
       </ul>
       <a class="btn btn-primary" href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list&amp;body=I'd%20like%20to%20know%20when%20Steer%20is%20available.%20Feel%20free%20to%20mention%20which%20controller%20you%20have%20or%20how%20you'd%20use%20it." style="margin-top:30px;width:100%;justify-content:center">Join the launch list</a>
-      <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is finishing up. Join the list and I'll email you the day the trial is ready: one message, no list-selling.</p>
+      <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is nearly ready. Join the list and I'll email you the day the free trial opens: one message, from me, and your address goes nowhere else.</p>
       <p style="font-size:13px;color:var(--text-3);margin-top:10px">Built for myself. I use it daily. Sean Floyd</p>
     </div>
   </div>
@@ -1974,23 +2169,31 @@ html.shots-open{overflow:hidden}
       <div>
         <div class="spec-row"><span class="k">System</span><span class="v">macOS 14 or later, Apple Silicon</span></div>
         <div class="spec-row"><span class="k">Form</span><span class="v">Menu-bar app, no window</span></div>
-        <div class="spec-row"><span class="k">Delivery</span><span class="v">Notarized Developer-ID download</span></div>
+        <div class="spec-row"><span class="k">Delivery</span><span class="v">Direct download, checked by Apple</span></div>
       </div>
       <div>
         <div class="spec-row"><span class="k">Connection</span><span class="v">Wired or Bluetooth</span></div>
-        <div class="spec-row"><span class="k">Accessibility</span><span class="v">Required, to move the cursor and type</span></div>
-        <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">DualSense Edge rear paddles only</span></div>
+        <div class="spec-row"><span class="k">Accessibility permission</span><span class="v">A Mac setting you switch on once</span></div>
+        <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">Only for DualSense Edge back buttons</span></div>
       </div>
     </div>
-    <div class="note-callout" style="margin-top:32px">
-      <strong>Controllers.</strong> DualSense and DualSense Edge, DualShock 4, Xbox Series, One, and Elite, Switch Pro, and any MFi controller. Elite rear paddles read but are untested <span class="pill-beta">beta</span>. Switch Pro rumble supported.
-    </div>
+    <!-- The controller list used to be repeated here as a callout and again as
+         the first FAQ answer, forty lines apart. The FAQ version is the better
+         one (it explains the hardware caveat and links out), so it stands alone. -->
 
     <!-- FAQ -->
     <div class="faq" style="text-align:left">
+      <!-- First, because it is the biggest doubt. Real users in this category say
+           the competitor is not another remapper: it is a lap keyboard, or just
+           reaching for the mouse. The answer concedes the desk rather than
+           claiming to beat a mouse at precision, which is not winnable or true. -->
+      <details>
+        <summary>Why not just use a mouse and keyboard?</summary>
+        <div class="faq-body">At a desk doing precise work, a mouse is better, and Steer is not trying to replace it there. Everywhere else is the point: a mouse needs a flat surface and a keyboard needs a table or a lap, and a controller needs neither. Your hands also never leave it, because pointing, clicking, dragging, typing, and your shortcuts are all on the one device, with nothing extra to buy or keep charged. Dragging is real dragging too, so moving a file into a folder works the way it does with a mouse.</div>
+      </details>
       <details>
         <summary>Which controllers work?</summary>
-        <div class="faq-body">DualSense and DualSense Edge, DualShock 4, Xbox Series, Xbox One, and Xbox Elite, Switch Pro, and any MFi controller. The feel features (adaptive triggers, rumble, light bar) depend on what the hardware supports; a DualSense gets all of them. Elite rear-paddle reading is in beta. <a href="compatibility.html">See exactly what each controller does →</a></div>
+        <div class="faq-body">DualSense and DualSense Edge, DualShock 4, Xbox Series, Xbox One, and Xbox Elite, Switch Pro, and most other controllers that pair with a Mac (anything Apple calls MFi). Moving the cursor and pressing shortcuts works the same on all of them. The things you feel (stiffening triggers, rumble, light bar) depend on what the hardware can do; a DualSense gets all of them. Elite rear-paddle reading is in beta. <a href="compatibility.html">See exactly what each controller does →</a></div>
       </details>
       <details>
         <summary>Is this a subscription?</summary>
@@ -1998,7 +2201,7 @@ html.shots-open{overflow:hidden}
       </details>
       <details>
         <summary>What permissions does it need, and why?</summary>
-        <div class="faq-body">Accessibility, so Steer can move the cursor and type: the app can't do its job without it. Input Monitoring only if you use DualSense Edge rear paddles. Nothing is tracked, and your setup never leaves your Mac. The full picture is in the <a href="#trust">trust section</a> and the <a href="privacy.html">privacy page</a>.</div>
+        <div class="faq-body">Accessibility, so Steer can move the cursor and type: the app can't do its job without it. Input Monitoring only if you use the DualSense Edge back buttons. Nothing is tracked, and your setup never leaves your Mac. The full picture is in the <a href="#trust">trust section</a> and the <a href="privacy.html">privacy page</a>.</div>
       </details>
       <details>
         <summary>Why not the Mac App Store?</summary>
@@ -2010,7 +2213,7 @@ html.shots-open{overflow:hidden}
       </details>
       <details>
         <summary>Can I get a refund?</summary>
-        <div class="faq-body">Yes: the 14-day free trial means you try everything before paying, and if you change your mind after buying, there are <a href="refund.html">refunds within 14 days</a>.</div>
+        <div class="faq-body">Yes. At launch there's a 14-day free trial, so you try everything before paying, and if you change your mind after buying, there are <a href="refund.html">refunds within 14 days</a>.</div>
       </details>
     </div>
   </div>
@@ -2094,7 +2297,7 @@ html.shots-open{overflow:hidden}
         <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
           <img data-light="assets/light/settings-buttons.png" data-dark="assets/dark/settings-buttons.png" alt="Steer's Buttons pane: every control mapped to a shortcut, tap or hold" width="2000" height="1760">
         </button>
-        <figcaption>Buttons: any shortcut on any button, tap or hold.</figcaption>
+        <figcaption>Buttons: a shortcut, an app, or a saved task on any button, tap or hold.</figcaption>
       </figure>
       <figure class="shots-item">
         <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
@@ -2122,9 +2325,9 @@ html.shots-open{overflow:hidden}
       </figure>
       <figure class="shots-item">
         <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
-          <img data-light="assets/light/settings-scripting.png" data-dark="assets/dark/settings-scripting.png" alt="Steer's Scripting pane: the documented steer:// automation surface and Shortcuts actions" width="2000" height="1760">
+          <img data-light="assets/light/settings-scripting.png" data-dark="assets/dark/settings-scripting.png" alt="Steer's Scripting pane: driving Steer from your own scripts, and Shortcuts actions" width="2000" height="1760">
         </button>
-        <figcaption>Scripting: the documented steer:// surface, copy-paste ready.</figcaption>
+        <figcaption>Scripting: drive Steer from your own scripts, copy-paste ready.</figcaption>
       </figure>
     </div>
     <button class="shots-nav shots-next" type="button" id="shotsNext" aria-label="Next screenshot">
@@ -2153,7 +2356,10 @@ html.shots-open{overflow:hidden}
     document.documentElement.classList.toggle('nav-over-hero', es[0].isIntersecting);
   },{rootMargin:'-52px 0px 0px 0px',threshold:0}).observe(hero);
 })();
-// face-button glyphs + pad-aware re-labelling. The hero picker owns the pad
+// face-button glyphs + pad-aware re-labelling. The markup ships the default
+// PlayStation glyph inline so the vignettes still state their claim with JS
+// disabled (a design-rules non-negotiable); render() overwrites it on load and
+// on every pad change, so the JS remains the single source of truth. The hero picker owns the pad
 // state (html[data-pad], via the 'steerpad' event); every vignette glyph and
 // key/mech label follows it, mapped by POSITION so the muscle-memory claim
 // stays true: bottom = Cross/A/B, right = Circle/B/A, etc. Switch and MFi

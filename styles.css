@@ -236,8 +236,6 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
 /* misc */
 .tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 10px;border-radius:980px;background:var(--bg-inset);color:var(--text-2);border:1px solid var(--sep)}
 .tag .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
-.pill-beta{font-size:11px;font-weight:590;color:#7a4600;background:color-mix(in srgb,var(--yellow) 20%,transparent);padding:2px 8px;border-radius:980px;text-transform:uppercase;letter-spacing:0.04em}
-[data-theme="dark"] .pill-beta{color:var(--amber-text)}
 
 /* use-case section: 3 filled lead cards + a subordinate outline-pill strip.
    Hierarchy is load-bearing — the filled leads must win the glance, the pills
