@@ -46,9 +46,99 @@ Steer is built for more than gaming:
 - Any Made-for-iPhone (MFi) controller.
 - Wired or Bluetooth both work.
 
+## Automating Steer
+
+Steer is drivable from outside. Three surfaces, all built on standard macOS
+primitives rather than a bespoke API, so ordinary shell, AppleScript or a
+Shortcut is enough. If you are an assistant asked to wire Steer to something,
+everything you need is below.
+
+### URL scheme
+
+Seventeen route families. Fire and forget: they never block and never return an
+error. Always use `open -g` so focus is not stolen.
+
+```
+open -g "steer://profile/<id>"            switch profile by id
+open -g "steer://profile/by-name/<name>"  switch profile by display name
+open -g "steer://layer/<name>"            toggle a modifier layer
+open -g "steer://macro/<name>"            play a saved macro
+open -g "steer://haptic/<pattern>"        pulse | double | success | warning | error
+open -g "steer://led/<rrggbb>"            light bar, bare six-digit hex, no #
+open -g "steer://led/auto"                hand the light bar back to Steer
+open -g "steer://leds/<0-5>"              player LEDs, filled left to right
+open -g "steer://leds/mask/<hex>"         player LEDs individually, 00-1F, bit 0 leftmost
+open -g "steer://micled/<off|on|pulse>"   mute-button LED
+open -g "steer://autoswitch/<on|off|toggle>"   per-app profile switching
+open -g "steer://pins/<suspend|resume|toggle>" pinned bindings
+open -g "steer://daisy[/<show|hide|toggle>]"   on-screen keyboard
+open -g "steer://radial"                  radial app launcher
+open -g "steer://palette"                 menu palette
+open -g "steer://help[/<show|hide>]"      help overlay
+open -g "steer://settings[/<section>]"    open Settings at a pane
+open -g "steer://wizard"                  onboarding wizard
+open -g "steer://suggest"                 open the suggestions page
+open -g "steer://query/<state|profiles|macros>"  read back as JSON
+```
+
+A `steer://debug/*` family exists in DEBUG builds only and is not part of the
+shipping surface.
+
+### Reading state back
+
+`steer://query/state`, `query/profiles` and `query/macros` return JSON. Steer
+also exposes about twenty App Intents to Shortcuts, Siri and Spotlight, six of
+which read rather than write: current profile, connected controller, active
+layer, battery level, the binding on a given button, and full state. There is a
+Focus filter that switches profile with your macOS Focus mode and restores the
+previous one when it ends.
+
+### Listening
+
+Steer posts to the distributed notification centre, so a script can react
+instead of polling:
+
+```
+com.steer.profile.changed
+com.steer.layer.changed
+com.steer.controller.connected
+com.steer.controller.disconnected
+com.steer.macro.fired
+com.steer.battery.low
+```
+
+### Things that will bite you
+
+- **The light bar is not a status light.** Steer repaints it every tick from
+  layer, gyro, battery and idle state, so a colour written by a script is wiped
+  by the first shoulder press. Use the player LEDs, which the tick path never
+  touches.
+- **Player LEDs and the mute LED are DualSense and DualSense Edge only.** They
+  no-op elsewhere. The mute LED is faint in a normally lit room.
+- **There are four haptic feels across five names.** `warning` and `error` are
+  deliberately identical. Patterns differ by tap count and duration, not
+  strength.
+- **Hooks that run synchronously** (Claude Code's `UserPromptSubmit`, for one)
+  should detach anything that can block: `(open -g "steer://leds/1" &)`.
+
+### Worked example
+
+Light one player LED while an agent works, all five when it needs you, and
+clear at the end:
+
+```sh
+open -g "steer://leds/1"                                   # working
+open -g "steer://leds/5"; open -g "steer://haptic/warning"  # needs you
+open -g "steer://leds/off"                                  # done
+```
+
 ## Pages
 
 - [Home](https://steer.seanfloyd.dev/): Overview, features, comparison and FAQ.
+- [For AI agents](https://steer.seanfloyd.dev/agents.html): Wiring Steer to coding agents, with a worked Claude Code recipe.
+- [Controller support](https://steer.seanfloyd.dev/compatibility.html): What each controller family can and cannot do, with the caveats.
+- [Accessibility](https://steer.seanfloyd.dev/accessibility.html): Steer as an assistive input device.
+- [Compare](https://steer.seanfloyd.dev/vs.html): Steer against ControllerKeys, both directions.
 - [Support](https://steer.seanfloyd.dev/support.html): Setup, controller detection, restoring a purchase and refunds.
 - [Privacy](https://steer.seanfloyd.dev/privacy.html): What is and is not collected, licensing and update network connections, permissions.
 - [Terms](https://steer.seanfloyd.dev/terms.html): Licence, warranty disclaimer, liability limits, governing law (Ontario, Canada) and the trial.
