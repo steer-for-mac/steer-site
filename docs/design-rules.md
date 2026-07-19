@@ -90,6 +90,47 @@ should never try to be one.
   (at 375px the pill has ~335px of room), and never let the DualSense list be
   shorter than another pad's: it is the controller with the most to show.
 
+## Verifying a capability claim
+
+Every claim on this site about what the app does must be checked against
+`~/Developer/steer`, and **"the symbol exists" is not a check**. Three false
+claims shipped from this page in a single day, all with the same shape: a
+feature was found in the source and assumed to work.
+
+The ladder, weakest to strongest. Know which rung you are standing on before
+you write a sentence.
+
+1. **A doc or changelog says so.** Worth nothing on its own.
+   `docs/automation.md` was missing six routes for months, including the two
+   that turn out to be the only surfaces that can hold a status.
+2. **The symbol exists in source.** Still not a feature.
+   `HIDDeviceManager` declared and fired `onGenericHIDReady`,
+   `onGenericHIDInputState` and `onGenericHIDDisconnected`; nothing ever
+   assigned them, so every decoded frame went into a nil optional. The site
+   claimed generic controllers worked. They did not.
+   `TriggerBinding.release` is persisted, localised and shown in Settings, and
+   `ActionResolver` never resolves it. The site claimed a button had four
+   jobs. It has three plus a dead slot.
+3. **The symbol is consumed.** Callback assigned, field resolved, event
+   dispatched. This is the minimum bar for writing a capability into copy.
+4. **Rendered, or executed.** For anything visual, look at it. For a recipe,
+   run it.
+5. **Confirmed on hardware.** Some claims stop at this rung and nothing below
+   substitutes. Reading `LEDSystem.swift` was enough to prove the light bar
+   cannot hold a status; only plugging in a controller proved the mute LED is
+   too faint to read in a lit room.
+
+Where a claim cannot reach rung 5 and the hardware is not here, say so and ask
+for testers, the way the Elite paddles and generic controllers already do.
+"Beta" with a call for testers is honest. Silence is not, and neither is a
+confident "Yes".
+
+Corollary for numbers: a count sourced from a bundle (35 `.lproj`, 315 SDL
+entries, 17 route families) is checkable and should be stated. A count inferred
+from a feature list is not. When ControllerKeys' page said nothing about
+languages, the answer was to count the `.lproj` directories in their public
+repository, not to write a dash.
+
 ## Drift rejection (reject on sight)
 
 The format is borrowed from VibeCurb; the content is Steer's.
