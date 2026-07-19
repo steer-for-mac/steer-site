@@ -2042,7 +2042,19 @@ html.shots-open{overflow:hidden}
     <div class="hero-grid" style="margin-top:48px">
       <div class="group">
         <div class="grow"><span class="lbl">Ready to use</span><span class="val">Every button already does something</span></div>
-        <div class="grow"><span class="lbl">Any button</span><span class="val">Tap, hold, double-tap, release</span></div>
+        <!-- The `release` slot is stored and shown in the app's own settings but
+             ActionResolver has no resolveRelease and the engine never fires it
+             (Mapping/ActionResolver.swift), so the site cannot claim it.
+             `whileHeld` IS wired, with a macOS-style initial delay and repeat
+             interval (Input/ButtonProcessor.swift), so that is the fourth slot. -->
+        <div class="grow"><span class="lbl">Any button</span><span class="val">Tap, hold, double-tap, hold to repeat</span></div>
+        <!-- Stick drift is the commonest reason an older pad feels broken, and
+             fixing it silently is an "it works on plug-in" claim rather than a
+             feature-list claim, which is why this one earns homepage space when
+             the other depth features do not. Input/StickCalibration.swift:
+             ~3s centre calibration on connect, then autoCorrectDrift during
+             idle whenever hasDrifted passes threshold. -->
+        <div class="grow"><span class="lbl">A worn controller</span><span class="val">Drifting sticks re-centre on their own</span></div>
         <div class="grow"><span class="lbl">On-screen keyboard</span><span class="val">Types into any app, no cursor to aim</span></div>
         <div class="grow"><span class="lbl">A setup for each app</span><span class="val">Changes with the app you open</span></div>
         <div class="grow"><span class="lbl">Apple Shortcuts &amp; macros</span><span class="val">Runs anything you have saved</span></div>
@@ -2175,6 +2187,10 @@ html.shots-open{overflow:hidden}
         <div class="spec-row"><span class="k">Connection</span><span class="v">Wired or Bluetooth</span></div>
         <div class="spec-row"><span class="k">Accessibility permission</span><span class="v">A Mac setting you switch on once</span></div>
         <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">Only for DualSense Edge back buttons</span></div>
+        <!-- 35 .lproj bundles and 35 help-docs-*.md in the app repo, at string
+             parity with English. Kept here rather than anywhere prominent: it is
+             a credibility signal, not a reason anyone buys. -->
+        <div class="spec-row"><span class="k">Languages</span><span class="v">35, including the built-in help</span></div>
       </div>
     </div>
     <!-- The controller list used to be repeated here as a callout and again as
