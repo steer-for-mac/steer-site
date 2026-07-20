@@ -81,7 +81,8 @@
       <li><strong>Accessibility</strong>: required to move the cursor and dispatch keyboard events on your behalf.</li>
       <li><strong>Input Monitoring</strong>: only requested if you use a DualSense Edge and want to bind its two rear paddles. Every other controller works with Accessibility alone.</li>
     </ul>
-    <p>These permissions are used exclusively to translate controller input into Mac input events. No input data is recorded or transmitted.</p>
+    <p>Accessibility is mostly an output permission here: it is what lets Steer post the cursor, scroll and keyboard events your controller stands in for. Three optional features also reach into the frontmost app, and only while you are using them: the menu palette reads the frontmost app's menu bar to list the menus for you and activates the item you pick; cursor magnetism reads the position and size of the element under the pointer; and window snap sets the window's position.</p>
+    <p>Steer never records or transmits your input, never watches your keystrokes, and never reads the contents of your documents or your screen. It reads the pasteboard only where you would expect it to: selecting text or a link in another app and choosing Services → &ldquo;Bind to Steer&rdquo; sends that selection to the binding editor, and copying and pasting a binding inside the bindings editor checks the pasteboard for one.</p>
 
     <h2>Who runs Steer</h2>
     <p>Steer is built and operated by Sean Floyd in Ottawa, Canada. For anything privacy-related, including a copy or deletion of what little I hold (support emails and order records), write to <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a>.</p>
