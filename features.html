@@ -38,6 +38,13 @@
 .dep-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:var(--text-3)}
 @media(max-width:700px){.frow{grid-template-columns:1fr;gap:4px}}
 </style>
+<style>
+.faq details{border-top:1px solid var(--sep)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 4px;font-size:16.5px;font-weight:500;letter-spacing:-0.015em}
+.faq summary::-webkit-details-marker{display:none}
+.faq .faq-body{padding:0 4px 20px;font-size:15px;color:var(--text-2);line-height:1.6;max-width:64ch}
+.faq .faq-body a{color:var(--blue-text)}
+</style>
 </head>
 <body>
 <header class="nav">
@@ -129,7 +136,7 @@
 
       <div class="fgroup">
         <h3>Make it yours, safely</h3>
-        <p class="fwhy">Changing things should never be the scary part.</p>
+        <p class="fwhy">Changing things should not be the scary part.</p>
         <div class="frow"><div class="fn">Ready-made setups</div><div class="fd">Profiles that already know Xcode, Figma, VS Code, Mail, DaVinci Resolve and Final Cut Pro, plus community setups for apps like Slack, Zoom, Claude Desktop and Cursor.</div></div>
         <div class="frow"><div class="fn">Per-app switching</div><div class="fd">The buttons change automatically when you switch apps, and can follow your Focus mode.</div></div>
         <div class="frow"><div class="fn">Always-on bindings</div><div class="fd">Pin a few buttons that stay available no matter which app you are in, with one button to suspend them.</div></div>
@@ -154,6 +161,49 @@
         <div class="frow"><div class="fn">Pixel work</div><div class="fd">Retouching and precise vector editing want a mouse or a tablet.</div></div>
         <div class="frow"><div class="fn">Long writing</div><div class="fd">Use a keyboard. The on-screen one is for short entries.</div></div>
         <div class="frow"><div class="fn">Every controller equally</div><div class="fd">The core works on every controller family listed on <a href="compatibility.html">the controller page</a>, which marks every gap, including off-brand pads that are matched from a database and still untested.</div></div>
+      </div>
+
+      <div class="fgroup">
+        <h3>Questions</h3>
+        <p class="fwhy">The ones that come up most, answered plainly.</p>
+        <div class="faq" style="text-align:left">
+      <details>
+        <summary>Why not a wireless keyboard with a trackpad?</summary>
+        <div class="faq-body">Because it still wants a surface. A keyboard needs a lap or a table, and the trackpad puts your wrist back in the shape that hurt in the first place. A controller is held in two hands with nothing underneath it, and everything is under your thumbs: pointing, typing, your shortcuts, the menus.</div>
+      </details>
+      <details>
+        <summary>Is this a subscription?</summary>
+        <div class="faq-body">No. One payment, yours to keep, with free updates as macOS changes.</div>
+      </details>
+      <details>
+        <summary>Does it lag?</summary>
+        <div class="faq-body">No. Your input takes no trip over the internet: the controller talks to Steer, wired or over Bluetooth, the same radio a wireless mouse uses, and Steer posts the same events a mouse and keyboard do.</div>
+      </details>
+      <details>
+        <summary>Does it drain the controller's battery?</summary>
+        <div class="faq-body">Pointing and typing barely register. Rumble and adaptive triggers do cost battery, which is part of why they are off or kept to a few moments. Turn them on where they earn it.</div>
+      </details>
+      <details>
+        <summary>Can I still use my mouse and keyboard at the same time?</summary>
+        <div class="faq-body">Yes. Steer adds an input device, it does not replace one. Your mouse, trackpad and keyboard keep working, and nothing needs switching between them.</div>
+      </details>
+      <details>
+        <summary>Will I be able to read my screen from the sofa?</summary>
+        <div class="faq-body">Steer cannot fix that: an input app cannot make small text bigger. The Mac's own text size and zoom can. Steer handles the other half, reaching what you can already read.</div>
+      </details>
+      <details>
+        <summary>Why not the Mac App Store?</summary>
+        <div class="faq-body">The App Store can't offer a real, no-account free trial. You download Steer straight from the developer, and Apple still checks each release before it will run (called notarization, the same malware scan the store runs), so you get the safety check without a store in between.</div>
+      </details>
+      <details>
+        <summary>Does Steer rely on undocumented behaviour?</summary>
+        <div class="faq-body">Yes, and it's disclosed rather than hidden. The adaptive triggers, PlayStation and Switch Pro rumble, and the light bar speak each controller's own wire language, worked out from scratch without borrowing anyone's code; the native pinch and rotate gestures, which the website build offers as an option for pinch and uses by default for rotate, recreate an event format Apple uses but has not documented. All of it is built with Apple's published developer tools, and no private Apple code is linked in. Scripts and automation you import stay contained and are shown for review before they apply.</div>
+      </details>
+      <details>
+        <summary>Can I get a refund?</summary>
+        <div class="faq-body">Yes. There are <a href="refund.html">refunds within 14 days</a>, and at launch a free trial before you pay at all.</div>
+      </details>
+        </div>
       </div>
 
       <div style="max-width:74ch;margin:0 auto;text-align:center">

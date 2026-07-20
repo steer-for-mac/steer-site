@@ -28,6 +28,13 @@
 <link rel="icon" type="image/png" href="assets/mark.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="styles.css">
+<style>
+.faq details{border-top:1px solid var(--sep)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 4px;font-size:16.5px;font-weight:500;letter-spacing:-0.015em}
+.faq summary::-webkit-details-marker{display:none}
+.faq .faq-body{padding:0 4px 20px;font-size:15px;color:var(--text-2);line-height:1.6;max-width:64ch}
+.faq .faq-body a{color:var(--blue-text)}
+</style>
 </head>
 <body>
 <header class="nav">
@@ -63,6 +70,17 @@
 
     <h2>Help guide</h2>
     <p>The in-app help page covers setup, button mapping, profiles, gyro, haptics, and troubleshooting. Open Steer → Preferences → Help, or hold Command and press ? from the menu bar.</p>
+
+    <div class="faq" style="text-align:left;margin-bottom:26px">
+      <details>
+        <summary>When can I actually buy it?</summary>
+        <div class="faq-body">Steer is in final testing. The launch list gets one email the day the free trial opens, and nothing before that. The trial runs 14 days with no card and no account, so you can decide with the app in your hands rather than from this page.</div>
+      </details>
+      <details>
+        <summary>What permissions does it need, and why?</summary>
+        <div class="faq-body">Accessibility, so Steer can move the cursor and type: the app can't do its job without it. Input Monitoring for three things: the DualSense Edge back buttons, tilt-to-aim on a DualShock 4, and off-brand pads macOS does not recognise on its own. No tracking, no analytics, and your setup stays on your Mac. The full picture is in the <a href="#trust">trust section</a> and the <a href="privacy.html">privacy page</a>.</div>
+      </details>
+    </div>
 
     <h2>Controller not detected</h2>
     <p>Connect via USB first to confirm the controller is working, then try Bluetooth. Use &ldquo;Scan for controller&rdquo; in the menu bar. If Steer was recently updated, macOS may have revoked Accessibility. Check System Settings → Privacy &amp; Security → Accessibility. Input Monitoring is a separate permission and is not needed for detection: it applies only to a DualSense Edge's rear paddles, tilt-to-aim on a DualShock 4, and off-brand pads.</p>
