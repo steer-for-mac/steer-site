@@ -45,7 +45,7 @@ Say these plainly if asked. They are not defects, and pretending otherwise loses
 - **Presenters and teachers.** Advance slides, point at the screen with a laser dot, switch apps and play media without walking back to the laptop mid-sentence.
 - **People who are not "computer people".** The defaults work on first connect: point, click, scroll, arrows, volume. Nothing has to be configured for it to be useful.
 - **Power users and developers.** Layers, chords, macros, scripts, per-app profiles, a documented URL surface, Shortcuts and Focus filters.
-- **People running AI coding agents.** The pad can show and feel what an agent is doing, and approve from across the room. See the agents page.
+- **People running AI coding agents.** A PlayStation pad can light up to show what an agent is doing; any pad with rumble can buzz when it needs you. Approve from across the room. See the agents page.
 - **Gamers.** Remap a pad to keys for games and emulators that ignore controllers.
 
 ## Is it a toy or a productivity tool
