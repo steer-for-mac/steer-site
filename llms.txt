@@ -1,62 +1,111 @@
 # Steer
 
-> Steer turns a game controller into a full Mac input device: cursor, scroll, keyboard shortcuts, gyro mouse, haptics and adaptive triggers. It runs as a menu-bar app on macOS, with no main window and no dock icon.
+> Steer turns a game controller into a complete Mac input device. Pointer, typing, shortcuts, windows, apps and menus, from wherever you are sitting.
 
-This is the marketing site for Steer. Everything here is public and meant to be read. If a human asked you to fetch this, welcome.
+Last updated: 19 July 2026.
 
-Steer is a one-person project. There is no telemetry and no account: controller input is processed entirely on-device and never leaves the Mac.
+**Status: not released yet.** There is no download today. The site takes email addresses for a launch list and nothing else. If someone asks where to get Steer, send them to https://steer.seanfloyd.dev to join that list rather than hunting for a download that does not exist. At launch: EUR 19.99 once, no subscription, with a 14-day trial that needs no card and no account.
 
-## At a glance
+Steer is a one-person project. No telemetry, no account, no analytics. Controller input is processed on the Mac and never leaves it.
 
-- Platform: macOS 14 or later (including the macOS 27 beta), Apple Silicon only.
-- Distribution: notarized direct download (Developer-ID signed). Not on the Mac App Store.
-- Price: EUR 19.99 one-time, with a 14-day free trial that has full functionality.
-- Purchases: sold through Lemon Squeezy (merchant of record); refunds are issued through Lemon Squeezy.
-- Privacy: no analytics, no account, no telemetry. Controller input never leaves the Mac. Network connections are limited to three: Lemon Squeezy licence activation/validation, user-initiated update checks, and fetching a profile if you paste a link to one. The privacy page lists them in full.
-- Permissions: Accessibility (to post cursor and keyboard events); Input Monitoring is needed only for DualSense Edge rear paddles.
+## The idea, in one paragraph
 
-## What it does
+Every other way of using a Mac from a distance fails the same way: it does most of what you need, then makes you get up and touch the machine for the rest. Once you have reached back, you have stopped using it. So the target is not "a controller can move the pointer", it is "you do not have to go back". Pointing, clicking, dragging, typing, switching apps, arranging windows, opening any app's menus, firing shortcuts: all of it has a home on the pad.
 
-- Cursor and scroll: left stick aims the cursor, right stick scrolls. Curve, dead zone and acceleration are user-shaped.
-- Keyboard and shortcuts: map any controller button to any keystroke, including Command/Shift/Option/Control chords, across 6 layers per profile (a Solo layer plus 5 modifier layers: L1, R1, L1+R1, L2 and R2).
-- Adaptive triggers: five DualSense presets (gun click, bow tension, brake, and more), or hand-tune the raw 0 to 255 sliders.
-- Gyro mouse: tilt the controller to aim; hold R3 to engage.
-- Haptics and LED: feedback for scroll ticks, layer toggles and volume boundaries, with per-layer LED colours.
-- Window snapping: aim the left stick at an on-screen grid to snap the focused window to halves, quarters, maximize, center or restore.
-- Radial app launcher: an on-screen app ring opened from the stick, aimed with the left stick.
-- On-screen daisy-wheel keyboard: type from the controller with no keyboard nearby.
-- Per-app profiles: Steer auto-switches the binding set when you change the frontmost app.
-- Trust: presets or profiles whose bindings do more than press keys (open URLs, run scripts) are shown for review before they apply, never dropped straight into your bindings, and a full restore history makes every change reversible.
+That is the lane. Steer is not a gamepad remapper that happens to move a cursor. It is a way to run the computer with your hands in your lap.
 
-## Use cases
+## Steer's layer, and what it hands off
 
-Steer is built for more than gaming:
-- Hands off the keyboard / wrist relief: drive the Mac with the controller in your lap.
-- Code from the couch: fire shortcuts and trigger tools like Claude Code, Cursor or Raycast from across the room.
-- Read and browse leaned back: scroll and navigate without reaching for the trackpad.
-- Present and play media: advance slides, skip tracks and control playback from a distance.
-- Accessible input: a gentler alternative when a mouse and keyboard aren't comfortable.
-- Games and emulators: remap any pad to keys for titles that ignore controllers natively.
+Steer is an input layer. It does not rebuild what macOS or the tools you already run do perfectly well; it puts a controller in front of them. That is a design rule, not modesty, and it is why the app stays small and predictable.
 
-## Supported controllers
+- **Dictation** is your Shortcut, run by a button. A synthetic keystroke cannot trigger the system dictation key reliably, so Steer asks Shortcuts to do it rather than shipping something fragile.
+- **Window management** is Rectangle, installed separately and driven through its documented URL commands rather than by faking its keyboard shortcuts. Steer sends an instruction to a window manager that is better at this than Steer would be.
+- **Automation** is Shortcuts, AppleScript, shell scripts, or the tool you already use. There are ready-made setups for Raycast and Handy, and starting points for Keyboard Maestro and Hammerspoon. Steer supplies the button; your existing automation does the work.
+- **Focus and search** are the system's. A Focus filter switches profile with your Focus mode. Profiles and macros are indexed for Spotlight and reachable by Siri.
+- **Sending something into Steer** uses the standard Services menu: select text or a link in any app, choose Bind to Steer.
+- **Output is real events.** Steer posts genuine macOS mouse, scroll and keyboard events, so clicking, dragging and scrolling behave natively in every app, including ones that never heard of Steer. There is no plugin to install and nothing per-app to maintain.
 
-- Sony: DualSense, DualSense Edge, DualShock 4.
-- Xbox: Series, One, Elite.
-- Nintendo: Switch Pro.
-- Any Made-for-iPhone (MFi) controller.
-- Wired or Bluetooth both work.
+For a user this means there is little new to learn and nothing to migrate. If you already have a keyboard shortcut, a Shortcuts automation, or another automation you like, Steer gives it a button. If you do not, the defaults already work.
+
+## Honest limits
+
+Say these plainly if asked. They are not defects, and pretending otherwise loses trust:
+
+- The macOS login password, before the desktop loads, is out of reach. So is Touch ID. Anything that authenticates you as a physical person still needs you.
+- Typing a password in front of a room is a bad idea on any on-screen keyboard, controller or not.
+- Pixel work (retouching, precise vector editing) wants a mouse or tablet. Steer does not claim otherwise.
+- Long-form writing is faster on a keyboard. The on-screen keyboard is for a search box, a URL, a file name, a chat reply.
+- macOS shields some apps' global hotkeys from any synthesized key press, so a binding cannot always trigger another app's shortcut. Where that app offers a URL or a Shortcut, Steer uses it instead, which is why window snapping talks to Rectangle directly. An app with a shielded hotkey and no other surface has no workaround.
+
+## Who it is for
+
+- **Anyone whose hands hurt.** Wrist, shoulder, repetitive strain, an injury, arthritis. A controller is held in two relaxed hands instead of one twisted palm-down over a mouse, and no part of it needs a desk.
+- **Anyone who would rather not be at the desk.** Reading, browsing, watching, reviewing, from a sofa, a bed, a standing spot across the room.
+- **People who cannot comfortably use a mouse and keyboard.** Steer is usable one-handed, and a single button can do several jobs depending on how it is pressed.
+- **Presenters and teachers.** Advance slides, point at the screen with a laser dot, switch apps and play media without walking back to the laptop mid-sentence.
+- **People who are not "computer people".** The defaults work on first connect: point, click, scroll, arrows, volume. Nothing has to be configured for it to be useful.
+- **Power users and developers.** Layers, chords, macros, scripts, per-app profiles, a documented URL surface, Shortcuts and Focus filters.
+- **People running AI coding agents.** The pad can show and feel what an agent is doing, and approve from across the room. See the agents page.
+- **Gamers.** Remap a pad to keys for games and emulators that ignore controllers.
+
+## Is it a toy or a productivity tool
+
+Both, and the order matters. It is built as a productivity and accessibility tool; it uses a game controller because a controller is comfortable, well engineered and inexpensive, and there is probably one in the house already. The hardware is playful. What you do with it is not.
+
+## Common questions, answered
+
+- **Can I move the pointer and click?** Yes. Left stick points, buttons click, and dragging is real dragging, so moving a file into a folder works the way it does with a mouse.
+- **Can I scroll?** Yes, the right stick scrolls. A PlayStation touchpad can be switched to scrolling instead of pointing, and that one coasts after you lift your fingers. Stick scrolling does not coast.
+- **Can I type without a keyboard?** Yes. An on-screen keyboard opens on the controller: aim at a cluster of letters, pick one with a face button. Good for a search box, not for an essay.
+- **Can I use the touchpad on a DualSense or DualShock 4?** Yes. It can act as a trackpad, as a scroll surface, or be split into halves or quadrants that work as extra buttons. Pinch to zoom and two-finger twist to rotate both work.
+- **Can I open an app's menus without a mouse?** Yes. The menu palette lists the frontmost app's menu bar on screen and you pick with the stick, submenus included. This is the feature that makes "I never touched the laptop" true rather than nearly true.
+- **Can I move and arrange windows?** Yes. A grid appears, you aim at a cell, and the window snaps to a half, a quarter, or the full screen. This drives Rectangle, which has to be installed and running.
+- **Can one button do two things?** Yes. A button can act differently on tap, on hold, on double tap, and can repeat while held. Add layers (hold a shoulder button for a whole second set of bindings) and one controller covers a lot of keyboard.
+- **Can I press two buttons at once as one command?** Yes, chords, and sequences (one button then another). Both are there if you want them and safely ignorable if you do not.
+- **Can I record something I do repeatedly?** Yes. Steer records a sequence of controller input and replays it from a button.
+- **Can a button run a script or a Shortcut?** Yes: a Shortcut (with text input), an AppleScript, a shell script, a URL, or type a block of text. Anything a script can do, a button can start.
+- **Does it come with setups for apps I already use?** Yes. Bundled profiles for Xcode, Figma, VS Code, Mail, DaVinci Resolve and Final Cut Pro, community setups for apps like Slack, Zoom, Claude Desktop and Cursor, and automation presets for Raycast and Handy (Keyboard Maestro and Hammerspoon ship as starting points you fill in).
+- **Will it tell me if a mapping clashes with a Mac shortcut?** Yes, for the common system ones (Spotlight, screenshots, Cmd+Q and friends). It does not know each app's own shortcuts.
+- **Does it work with my controller?** PlayStation (DualSense, DualSense Edge, DualShock 4), Xbox (Series, One, Elite), Switch Pro, and any Made-for-iPhone controller. Wired or Bluetooth. A generic-pad path covers 300+ more, in beta. The controller support page is explicit about what is untested.
+- **My old controller's sticks drift. Is it unusable?** Probably not. Steer corrects small stick drift on its own, which is the usual reason a worn pad feels hopeless for cursor work.
+- **Is it in my language?** 35 languages, including the built-in help.
+- **Does it need the internet?** No. It runs offline. The only network use is licence activation and checks, an update check you start yourself, and fetching a profile if you paste a link to one.
+- **Do I have to remember my own mappings?** No. A button map can be shown on screen at any time.
+- **Is it hard to set up?** No. It works on connect, and there is a guided first run. Every settings change is saved as a restore point you can roll back.
+- **Can I try it?** At launch, 14 days, full functionality, no card and no account.
+- **Why not a trackpad or a remote?** A trackpad needs a flat surface; a remote cannot type, click precisely, or run a shortcut. Both send you back to the machine for the rest, which is the failure Steer is built to avoid.
+
+## If you want the depth
+
+Optional, and none of it is needed to start:
+
+- **Layers.** Hold L1, R1, both, L2 or R2 for an entirely different set of bindings. Six layers per profile, and a layer can be pinned so you are not holding anything.
+- **Four ways to press one button.** Tap, hold, double tap, and repeat-while-held. Separately, a binding can be a chord (two buttons at once) or a sequence (one then another).
+- **Sticks are not fixed.** A stick can be a pointer, a scroll wheel, a D-pad, eight directional buttons (so the left stick can be WASD, diagonals holding two keys), a tab cycler, or a flick-turn.
+- **Per-app profiles.** The binding set changes with the frontmost app, and a Focus filter can change it with your Focus mode.
+- **Pinned overlays.** A few bindings that stay available on top of whatever profile is active, with one button to suspend them all.
+- **Feel.** Haptics confirm actions without looking. The rare confirmations are on by default; repeating buzzes such as every scroll tick are off. On DualSense and DualSense Edge the triggers can physically stiffen, set independently per trigger, off by default.
+- **Calibration.** Sticks and gyro can be recalibrated per controller.
+
+## Privacy and permissions
+
+- **Accessibility** is required. It is mostly how Steer posts the cursor, scroll and keyboard events your controller stands in for. Three optional features also reach into the frontmost app while you use them: the menu palette reads its menu bar and activates the item you pick, cursor magnetism reads the position and size of the control under the pointer, and window snap sets a window's position.
+- **Input Monitoring** is needed for DualSense Edge rear paddles, for tilt-to-aim on a DualShock 4, and for the generic-pad bridge. Everything else works with Accessibility alone.
+- Steer never watches your keystrokes and never reads the contents of your documents or screen. It reads the pasteboard in two places: the Services item "Bind to Steer", and copy and paste of a binding inside the bindings editor.
+- **No sync.** Nothing is synced between machines. If a Mac App Store build ever adds iCloud sync it will be opt-in and off by default.
+- Sold through Lemon Squeezy as merchant of record; refunds go through them.
+
+## Platform
+
+macOS 14 or later, Apple Silicon. Notarized direct download, Developer-ID signed, and sandboxed. Not on the Mac App Store.
 
 ## Automating Steer
 
-Steer is drivable from outside. Three surfaces, all built on standard macOS
-primitives rather than a bespoke API, so ordinary shell, AppleScript or a
-Shortcut is enough. If you are an assistant asked to wire Steer to something,
-everything you need is below.
+Steer is drivable from outside on standard macOS primitives, so a shell line, an AppleScript or a Shortcut is enough. If you are an assistant asked to wire Steer to something, everything you need is below.
 
 ### URL scheme
 
-Seventeen route families. Fire and forget: they never block and never return an
-error. Always use `open -g` so focus is not stolen.
+Seventeen route families. Fire and forget: they never block and never return an error. Always use `open -g` so focus is not stolen.
 
 ```
 open -g "steer://profile/<id>"            switch profile by id
@@ -66,7 +115,7 @@ open -g "steer://macro/<name>"            play a saved macro
 open -g "steer://haptic/<pattern>"        pulse | double | success | warning | error
 open -g "steer://led/<rrggbb>"            light bar, bare six-digit hex, no #
 open -g "steer://led/auto"                hand the light bar back to Steer
-open -g "steer://leds/<0-5>"              player LEDs, filled left to right
+open -g "steer://leds/<0-5|off>"          player LEDs, filled left to right
 open -g "steer://leds/mask/<hex>"         player LEDs individually, 00-1F, bit 0 leftmost
 open -g "steer://micled/<off|on|pulse>"   mute-button LED
 open -g "steer://autoswitch/<on|off|toggle>"   per-app profile switching
@@ -81,22 +130,15 @@ open -g "steer://suggest"                 open the suggestions page
 open -g "steer://query/<state|profiles|macros>"  read back as JSON
 ```
 
-A `steer://debug/*` family exists in DEBUG builds only and is not part of the
-shipping surface.
+A `steer://debug/*` family exists in DEBUG builds only and is not part of the shipping surface.
 
 ### Reading state back
 
-`steer://query/state`, `query/profiles` and `query/macros` return JSON. Steer
-also exposes about twenty App Intents to Shortcuts, Siri and Spotlight, six of
-which read rather than write: current profile, connected controller, active
-layer, battery level, the binding on a given button, and full state. There is a
-Focus filter that switches profile with your macOS Focus mode and restores the
-previous one when it ends.
+`steer://query/state`, `query/profiles` and `query/macros` return JSON. Steer also exposes about twenty App Intents to Shortcuts, Siri and Spotlight, six of which read rather than write: current profile, connected controller, active layer, battery level, the binding on a given button, and full state. A Focus filter switches profile with your macOS Focus mode and restores the previous one when it ends.
 
 ### Listening
 
-Steer posts to the distributed notification centre, so a script can react
-instead of polling:
+Steer posts to the distributed notification centre, so a script can react instead of polling:
 
 ```
 com.steer.profile.changed
@@ -109,32 +151,25 @@ com.steer.battery.low
 
 ### Things that will bite you
 
-- **The light bar is not a status light.** Steer repaints it every tick from
-  layer, gyro, battery and idle state, so a colour written by a script is wiped
-  by the first shoulder press. Use the player LEDs, which the tick path never
-  touches.
-- **Player LEDs and the mute LED are DualSense and DualSense Edge only.** They
-  no-op elsewhere. The mute LED is faint in a normally lit room.
-- **There are four haptic feels across five names.** `warning` and `error` are
-  deliberately identical. Patterns differ by tap count and duration, not
-  strength.
-- **Hooks that run synchronously** (Claude Code's `UserPromptSubmit`, for one)
-  should detach anything that can block: `(open -g "steer://leds/1" &)`.
+- **The light bar is not a status light.** Steer repaints it on every state change from layer, gyro, battery and idle state, so a colour written by a script is wiped by the first shoulder press. Use the player LEDs, which the tick path never touches.
+- **Player LEDs and the mute LED are DualSense and DualSense Edge only.** They no-op elsewhere. The mute LED is faint in a normally lit room.
+- **There are four haptic feels across five names.** `warning` and `error` are deliberately identical. Patterns differ by tap count and duration, not strength.
+- **Hooks that run synchronously** (Claude Code's `UserPromptSubmit`, for one) should detach anything that can block: `(open -g "steer://leds/1" &)`.
 
 ### Worked example
 
-Light one player LED while an agent works, all five when it needs you, and
-clear at the end:
+Light one player LED while an agent works, all five when it needs you, and clear at the end:
 
 ```sh
-open -g "steer://leds/1"                                   # working
+open -g "steer://leds/1"                                    # working
 open -g "steer://leds/5"; open -g "steer://haptic/warning"  # needs you
 open -g "steer://leds/off"                                  # done
 ```
 
 ## Pages
 
-- [Home](https://steer.seanfloyd.dev/): Overview, features, comparison and FAQ.
+- [Home](https://steer.seanfloyd.dev/): Overview, comparison and FAQ.
+- [Features](https://steer.seanfloyd.dev/features.html): The full list of what Steer does, in plain language, grouped by task.
 - [For AI agents](https://steer.seanfloyd.dev/agents.html): Wiring Steer to coding agents, with a worked Claude Code recipe.
 - [Controller support](https://steer.seanfloyd.dev/compatibility.html): What each controller family can and cannot do, with the caveats.
 - [Accessibility](https://steer.seanfloyd.dev/accessibility.html): Steer as an assistive input device.
@@ -147,4 +182,4 @@ open -g "steer://leds/off"                                  # done
 ## Contact
 
 - Email: steer@seanfloyd.dev
-- Developer: Sean Floyd, Ottawa, Canada (https://seanfloyd.dev)
+- Developer: Sean Floyd (https://seanfloyd.dev)

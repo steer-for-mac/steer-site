@@ -288,9 +288,23 @@ a.pill-uc .a{color:var(--blue-text);font-size:11px}
   .hero-grid{grid-template-columns:1fr;gap:36px}
   .cols-2,.cols-3,.specs{grid-template-columns:1fr}
   .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
-  .nav-links{display:none}
+  /* Was display:none, which left phones with no navigation at all: every
+     sub-page was reachable only through the footer. Keep the links, let them
+     scroll sideways, and drop the one item the adjacent CTA already covers. */
+  .nav-in{gap:12px}
+  .brand,.nav-right{flex-shrink:0}
+  .nav-links{gap:16px;margin-left:0;min-width:0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{font-size:13px;white-space:nowrap}
+  .nav-links a[href$="#pricing"]{display:none}
   .sec{padding:72px 0}
   .price-card{padding:32px 24px}
+}
+/* Below ~520px even a scrolling nav is a sliver, so drop Compare too and keep
+   the three that answer a purchase question: what it does, what it runs on,
+   and whether it suits me. */
+@media(max-width:520px){
+  .nav-links a[href$="vs.html"]{display:none}
 }
 @media(max-width:860px){
   .sec-loose{padding:88px 0}
