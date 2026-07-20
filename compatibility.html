@@ -45,6 +45,13 @@
 .notes .k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--amber-text);flex:none;padding-top:3px;min-width:64px}
 .notes .k.dep-k{color:var(--text-3)}
 </style>
+<style>
+.faq details{border-top:1px solid var(--sep)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 4px;font-size:16.5px;font-weight:500;letter-spacing:-0.015em}
+.faq summary::-webkit-details-marker{display:none}
+.faq .faq-body{padding:0 4px 20px;font-size:15px;color:var(--text-2);line-height:1.6;max-width:64ch}
+.faq .faq-body a{color:var(--blue-text)}
+</style>
 </head>
 <body>
 <header class="nav">
@@ -77,6 +84,13 @@
         <div class="eyebrow" style="justify-content:center">Controller support</div>
         <h2 class="h2">Every pad does the core. Here's what each one adds.</h2>
         <p class="lead" style="margin:16px auto 0;max-width:62ch">Steer turns a game controller into a way to run your Mac. Cursor, scroll, typing, and every shortcut you map work on <strong>any</strong> supported controller. The extras (adaptive triggers, the light bar, the touchpad, tilt-to-aim) depend on what the hardware can actually do. Every gap and caveat is in the table.</p>
+      </div>
+
+      <div class="faq" style="max-width:70ch;margin:36px auto 0;text-align:left">
+      <details>
+        <summary>Which controllers work?</summary>
+        <div class="faq-body">DualSense and DualSense Edge, DualShock 4, Xbox Series, Xbox One, and Xbox Elite, Switch Pro, and most other controllers that pair with a Mac (anything Apple calls MFi, its label for made-for-Apple accessories). Moving the cursor and pressing shortcuts works the same on all of them. Pads outside those families are matched from a community database and are beta: nobody here owns one to confirm it, so treat it as untested. The things you feel (stiffening triggers, rumble, light bar) depend on what the hardware can do; a DualSense gets all of them. Elite rear-paddle reading is in beta. <a href="compatibility.html">See exactly what each controller does →</a></div>
+      </details>
       </div>
 
       <div class="matrix-scroll">
