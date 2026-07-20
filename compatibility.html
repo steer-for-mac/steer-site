@@ -54,8 +54,9 @@
       Steer
     </a>
     <nav class="nav-links">
-      <a href="index.html#feel">Feel</a>
-      <a href="index.html#capabilities">Features</a>
+      <a href="features.html">Features</a>
+      <a href="compatibility.html">Controllers</a>
+      <a href="accessibility.html">Accessibility</a>
       <a href="vs.html">Compare</a>
       <a href="index.html#pricing">Pricing</a>
     </nav>
@@ -75,7 +76,7 @@
         <div><a class="back-link" href="index.html" style="margin:0 0 24px"><span aria-hidden="true">←</span> Steer</a></div>
         <div class="eyebrow" style="justify-content:center">Controller support</div>
         <h2 class="h2">Every pad does the core. Here's what each one adds.</h2>
-        <p class="lead" style="margin:16px auto 0;max-width:62ch">Cursor, scroll, typing, and every shortcut you map work on <strong>any</strong> supported controller. The extras (adaptive triggers, the light bar, the touchpad, gyro) depend on what the hardware can actually do. Every gap and caveat is in the table.</p>
+        <p class="lead" style="margin:16px auto 0;max-width:62ch">Steer turns a game controller into a way to run your Mac. Cursor, scroll, typing, and every shortcut you map work on <strong>any</strong> supported controller. The extras (adaptive triggers, the light bar, the touchpad, tilt-to-aim) depend on what the hardware can actually do. Every gap and caveat is in the table.</p>
       </div>
 
       <div class="matrix-scroll">
@@ -108,16 +109,17 @@
       </div>
 
       <ul class="notes">
-        <li><span class="k dep-k">*&nbsp;MFi</span><span>Core input works on any Made-for-iPhone controller macOS recognises, which covers most modern pads. Fully generic controllers are matched against a bundled database of 300+ Mac mappings and wired through to the input pipeline, but that path is <strong>beta</strong>: it needs a pad that is in the database, is not Made-for-iPhone, and is not one of the families above, and nobody here owns one to confirm it. Treat it as untested until a tester does. <a href="mailto:steer@seanfloyd.dev?subject=Steer%3A%20generic%20controller%20tester">Got one? Reach out</a>. MFi pads get battery, and haptics only if the controller reports them. Neither gets the light bar, touchpad, gyro, or adaptive triggers: those need each controller family's own protocol. A single Joy-Con is the one odd case in this column: macOS presents one half as a buttons-only device, so Steer connects it rather than ignoring it, but with buttons and battery only (gyro if macOS reports motion, no sticks, so no cursor, and no rumble), and the button layout hasn't been confirmed on real hardware yet. Treat a lone Joy-Con as unfinished.</span></li>
+        <li><span class="k dep-k">*&nbsp;MFi</span><span>Core input works on any Made-for-iPhone controller macOS recognises, which covers most modern pads. Fully generic controllers are matched against a bundled database of 300+ Mac mappings and wired through to the input pipeline, but that path is <strong>beta</strong>: it reads the controller directly, so it needs the Input Monitoring permission, a pad that is in the database, is not Made-for-iPhone, and is not one of the families above, and nobody here owns one to confirm it. Treat it as untested until a tester does. <a href="mailto:steer@seanfloyd.dev?subject=Steer%3A%20generic%20controller%20tester">Got one? Reach out</a>. MFi pads get battery, and haptics only if the controller reports them. Neither gets the light bar, touchpad, gyro, or adaptive triggers: those need each controller family's own protocol. A single Joy-Con is the one odd case in this column: macOS presents one half as a buttons-only device, so Steer connects it rather than ignoring it, but with buttons and battery only (gyro if macOS reports motion, no sticks, so no cursor, and no rumble), and the button layout hasn't been confirmed on real hardware yet. Treat a lone Joy-Con as unfinished.</span></li>
         <li><span class="k">›&nbsp;Switch LEDs</span><span>Switch Pro has four player LEDs and Steer can address them, but the wire format is transcribed from reverse-engineering notes, the feature is off by default, and nobody here owns a Pro Controller to confirm it. Untested rather than supported.</span></li>
         <li><span class="k">‹&nbsp;Mute LED</span><span>Readable on a dim desk, barely visible in a normally lit room. A quiet extra, not something to rely on across the room.</span></li>
         <li><span class="k dep-k">†&nbsp;Switch</span><span>Switch Pro rumble is a simplified single-band HD-rumble approximation: real feedback, not the full two-band effect.</span></li>
-        <li><span class="k">‡&nbsp;DS4</span><span>macOS reports no motion for a DualShock 4, so gyro runs through a raw-HID path that's <strong>off by default</strong>. Turn it on in settings. Treat it as beta.</span></li>
+        <li><span class="k">‡&nbsp;DS4</span><span>macOS reports no motion for a DualShock 4, so tilt-to-aim reads the controller directly and needs the Input Monitoring permission. It is <strong>off by default</strong>; turn it on in settings. Treat it as beta.</span></li>
         <li><span class="k">§&nbsp;Edge</span><span>DualSense Edge back buttons read through low-level input monitoring (needs the Input Monitoring permission). The PS button over Bluetooth is off by default pending hardware QA.</span></li>
         <li><span class="k">¶&nbsp;Elite</span><span>Xbox Elite paddles are fully wired up, but I don't own an Elite to verify on hardware, so they're marked beta until a tester confirms. Want to help? <a href="mailto:steer@seanfloyd.dev?subject=Steer%3A%20Elite%20paddle%20tester">Reach out</a>.</span></li>
       </ul>
 
-      <p class="foot-note" style="max-width:62ch;margin:26px auto 0;text-align:center">Steer only advertises what it actually drives: where the hardware can't do something, the app hides it rather than pretending. That's the whole point.</p>
+      <p style="max-width:62ch;margin:30px auto 0;text-align:center;color:var(--text-2);font-size:15.5px;line-height:1.6">Steer only advertises what it actually drives: where the hardware can't do something, the app hides it rather than pretending. That's the whole point.</p>
+      <p class="foot-note" style="max-width:62ch;margin:16px auto 0;text-align:center">Wondering why you would want this? <a href="accessibility.html">If a mouse hurts</a>, or <a href="agents.html">if you run coding agents</a>.</p>
       <div style="margin-top:36px;text-align:center">
         <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
       </div>
@@ -138,7 +140,7 @@
       <div>
         <h4>Product</h4>
         <a href="index.html#feel">Feel</a>
-        <a href="index.html#capabilities">Features</a>
+        <a href="features.html">Features</a>
         <a href="compatibility.html">Controller support</a>
         <a href="accessibility.html">Accessibility</a>
         <a href="agents.html">For AI agents</a>
