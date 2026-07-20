@@ -18,10 +18,10 @@ That is the lane. Steer is not a gamepad remapper that happens to move a cursor.
 
 Steer is an input layer. It does not rebuild what macOS or the tools you already run do perfectly well; it puts a controller in front of them. That is a design rule, not modesty, and it is why the app stays small and predictable.
 
-- **Dictation** is your Shortcut, run by a button. A synthetic keystroke cannot trigger the system dictation key reliably, so Steer asks Shortcuts to do it rather than shipping something fragile.
+- **Dictation** is your Shortcut, run by a button. You make it once and name it as Steer asks. A synthetic keystroke cannot trigger the system dictation key reliably, so Steer asks Shortcuts to do it rather than shipping something fragile.
 - **Window management** is Rectangle, installed separately and driven through its documented URL commands rather than by faking its keyboard shortcuts. Steer sends an instruction to a window manager that is better at this than Steer would be.
 - **Automation** is Shortcuts, AppleScript, shell scripts, or the tool you already use. There are ready-made setups for Raycast and Handy, and starting points for Keyboard Maestro and Hammerspoon. Steer supplies the button; your existing automation does the work.
-- **Focus and search** are the system's. A Focus filter switches profile with your Focus mode. Profiles and macros are indexed for Spotlight and reachable by Siri.
+- **Focus and search** are the system's. A Focus filter switches profile with your Focus mode. Profiles are indexed for Spotlight and reachable by Siri; macros are indexed too on macOS 15 and later.
 - **Sending something into Steer** uses the standard Services menu: select text or a link in any app, choose Bind to Steer.
 - **Output is real events.** Steer posts genuine macOS mouse, scroll and keyboard events, so clicking, dragging and scrolling behave natively in every app, including ones that never heard of Steer. There is no plugin to install and nothing per-app to maintain.
 
@@ -65,7 +65,7 @@ Both, and the order matters. It is built as a productivity and accessibility too
 - **Can I record something I do repeatedly?** Yes. Steer records a sequence of controller input and replays it from a button.
 - **Can a button run a script or a Shortcut?** Yes: a Shortcut (with text input), an AppleScript, a shell script, a URL, or type a block of text. Anything a script can do, a button can start.
 - **Does it come with setups for apps I already use?** Yes. Bundled profiles for Xcode, Figma, VS Code, Mail, DaVinci Resolve and Final Cut Pro, community setups for apps like Slack, Zoom, Claude Desktop and Cursor, and automation presets for Raycast and Handy (Keyboard Maestro and Hammerspoon ship as starting points you fill in).
-- **Will it tell me if a mapping clashes with a Mac shortcut?** Yes, for the common system ones (Spotlight, screenshots, Cmd+Q and friends). It does not know each app's own shortcuts.
+- **Will it tell me if a mapping clashes with a Mac shortcut?** Yes, for seven system shortcuts it knows: the three screenshot chords, Spotlight, app switching, Cmd+Q and Cmd+W. It does not know each app's own shortcuts.
 - **Does it work with my controller?** PlayStation (DualSense, DualSense Edge, DualShock 4), Xbox (Series, One, Elite), Switch Pro, and any Made-for-iPhone controller. Wired or Bluetooth. A generic-pad path covers 300+ more, in beta. The controller support page is explicit about what is untested.
 - **My old controller's sticks drift. Is it unusable?** Probably not. Steer corrects small stick drift on its own, which is the usual reason a worn pad feels hopeless for cursor work.
 - **Is it in my language?** 35 languages, including the built-in help.
