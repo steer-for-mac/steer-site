@@ -6,5 +6,10 @@
 
 User-agent: *
 Allow: /
+# Cloudflare Content-Signal (CC0, emerging): search results, live AI
+# context, and training all allowed. This is a marketing site; we want AI
+# tools to surface and cite it.
+# Unknown directive to strict validators; RFC 9309 says ignore unknown lines.
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 Sitemap: https://steer.seanfloyd.dev/sitemap.xml
