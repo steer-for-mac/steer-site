@@ -32,7 +32,7 @@
   --shadow-hover:0 2px 4px rgba(0,0,0,.05),0 16px 40px -16px rgba(6,22,60,.24);
   --card-hi:inset 0 1px 0 rgba(255,255,255,.7);
   --maxw:1040px; --pad:24px;
-  --r-card:14px; --r-inset:10px; --r-btn:980px;
+  --r-card:14px; --r-inset:10px; --r-btn:980px; --r-window:12px; /* window: screenshot frames only */
 }
 [data-theme="dark"]{
   --bg:#161617; --bg-sunken:#1d1d20; --bg-inset:#242426; --bg-inset-2:#2c2c2e;
@@ -96,6 +96,12 @@ h1,h2,h3{letter-spacing:-0.022em;line-height:1.06;font-weight:600}
 .sec-loose{padding:132px 0}
 .sec-snug{padding:84px 0}
 .sec-tight{padding:72px 0}
+/* head-to-first-surface gap inside a section: one value, not a per-section
+   guess (it had drifted 36/40/44/48 as inline styles) */
+.sec-body{margin-top:40px}
+.sec-loose .sec-body{margin-top:44px}
+.cta-row-center{margin-top:28px;display:flex;gap:20px;justify-content:center;align-items:center;flex-wrap:wrap}
+.center .eyebrow{justify-content:center}
 /* split section header: h2 left, lead right — fills the wide right void the
    single-column template stranded on text-heavy sections */
 .sec-head-split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:8px 56px;align-items:start}
@@ -114,24 +120,50 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px;letter-spacing:-0.02em;color:var(--text)}
 .brand:hover{text-decoration:none}
 .brand .logo{width:22px;height:22px;flex:none}
-.nav-links{display:flex;gap:22px;margin-left:8px}
-.nav-links a{color:var(--text-2);font-size:14px;letter-spacing:-0.01em}
-.nav-links a:hover{color:var(--text);text-decoration:none}
-/* On a phone the links collapse into a native <details> dropdown (see the
-   max-width:860 block); on desktop the disclosure is inert -- the summary is
-   hidden and display:contents dissolves the <details> box so the links lay out
-   inline. No JS: navigation works with scripting off. */
-.nav-toggle{list-style:none;cursor:pointer;-webkit-user-select:none;user-select:none}
+/* Dropdown-first: the labelled pill + sheet below are the base state at every
+   width, so engines without ::details-content (Safari <18.4, older iOS) get
+   the styled dropdown instead of a naked "Menu" in body text. Engines with
+   support dissolve the <details> into inline links on desktop (the gated
+   block below). No JS: navigation works with scripting off in both shapes. */
+.nav-menu{display:block;position:relative}
+.nav-menu::details-content{display:block}
+.nav-menu:not([open])::details-content{content-visibility:hidden}
+.nav-toggle{list-style:none;cursor:pointer;-webkit-user-select:none;user-select:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;letter-spacing:0.01em;color:var(--text-2);padding:6px 11px;border:1px solid var(--sep);border-radius:var(--r-inset)}
 .nav-toggle::-webkit-details-marker{display:none}
-/* The desktop inline layout depends on ::details-content to reveal the closed
-   panel's links. Gate it on that: engines without it (Safari <18.4, older iOS
-   Safari) skip this block and fall back to the working "Menu" dropdown at all
-   widths, rather than an empty desktop nav. Mobile (max-width:860) overrides
-   back to the dropdown regardless. */
+.nav-toggle:hover{color:var(--text)}
+.nav-toggle .chev{transition:transform .2s ease}
+.nav-menu[open] .nav-toggle{color:var(--text);background:var(--bg-inset)}
+.nav-menu[open] .nav-toggle .chev{transform:rotate(180deg)}
+/* the sheet: card surface, the fixed radius tiers, current page in accent */
+.nav-links{position:absolute;top:calc(100% + 9px);left:0;display:flex;flex-direction:column;gap:2px;min-width:200px;padding:6px;background:var(--card-bg);border:1px solid var(--sep);border-radius:var(--r-card);box-shadow:var(--shadow-rest-lg)}
+.nav-links a{color:var(--text);font-size:15px;letter-spacing:-0.01em;padding:9px 12px;border-radius:var(--r-inset)}
+.nav-links a:hover{background:var(--bg-inset);color:var(--text);text-decoration:none}
+.nav-links a[aria-current="page"]{color:var(--blue-text)}
+/* the open sheet is opaque at any width, so undo the over-hero light link
+   colour (set in the hero's page-local <style>, which loads after this file)
+   wherever the dropdown is the active shape: below 861px, and at every width
+   in engines without ::details-content. Kept in sync, both blocks. */
+@media(max-width:860px){
+  html.nav-over-hero .nav-menu .nav-links a{color:var(--text)}
+  html.nav-over-hero .nav-menu .nav-links a[aria-current="page"]{color:var(--blue-text)}
+  html.nav-over-hero .nav-toggle{color:#C7CEDA;border-color:rgba(255,255,255,0.22)}
+}
+@supports not selector(::details-content){
+  html.nav-over-hero .nav-menu .nav-links a{color:var(--text)}
+  html.nav-over-hero .nav-menu .nav-links a[aria-current="page"]{color:var(--blue-text)}
+  html.nav-over-hero .nav-toggle{color:#C7CEDA;border-color:rgba(255,255,255,0.22)}
+}
+/* desktop with support: dissolve the disclosure, links lay out inline */
 @supports selector(::details-content){
-  .nav-menu{display:contents}
-  .nav-menu::details-content{display:contents;content-visibility:visible}
-  .nav-toggle{display:none}
+  @media(min-width:861px){
+    .nav-menu{display:contents}
+    .nav-menu::details-content{display:contents;content-visibility:visible}
+    .nav-toggle{display:none}
+    .nav-links{position:static;flex-direction:row;gap:22px;min-width:0;margin-left:8px;padding:0;background:none;border:0;border-radius:0;box-shadow:none}
+    .nav-links a{color:var(--text-2);font-size:14px;padding:0;border-radius:0}
+    .nav-links a:hover{color:var(--text);background:none}
+    .nav-links a[aria-current="page"]{color:var(--text)}
+  }
 }
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
 .theme-toggle{width:30px;height:30px;border-radius:50%;border:1px solid var(--sep);background:transparent;color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
@@ -157,7 +189,7 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .arrow-link:hover .a{transform:translateX(3px)}
 
 /* macOS window frame */
-.window{border-radius:12px;background:var(--bg);border:1px solid var(--frame);box-shadow:var(--shadow-window);overflow:hidden}
+.window{border-radius:var(--r-window);background:var(--bg);border:1px solid var(--frame);box-shadow:var(--shadow-window);overflow:hidden}
 .window-bar{height:38px;display:flex;align-items:center;padding:0 14px;gap:8px;border-bottom:1px solid var(--hairline);background:var(--bg-inset);position:relative}
 .traffic{display:flex;gap:8px}
 .traffic i{width:12px;height:12px;border-radius:50%;display:block}
@@ -210,7 +242,7 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .trust-row .yes{color:var(--green)}.trust-row .no{color:var(--text-3)}
 
 /* comparison */
-.cmp-card{margin:36px auto 0;max-width:840px;overflow:hidden;border-radius:var(--r-card);border:1px solid var(--sep);background:var(--card-bg);box-shadow:var(--shadow-rest),var(--card-hi)}
+.cmp-card{margin-left:auto;margin-right:auto;max-width:840px;overflow:hidden;border-radius:var(--r-card);border:1px solid var(--sep);background:var(--card-bg);box-shadow:var(--shadow-rest),var(--card-hi)}
 .cmp{width:100%;border-collapse:collapse;font-size:15px}
 .cmp th,.cmp td{text-align:left;padding:15px 18px;border-top:1px solid var(--sep)}
 .cmp thead th{border-top:0;font-size:13px;font-weight:590;color:var(--text-3);text-transform:uppercase;letter-spacing:0.05em;padding-bottom:12px}
@@ -227,9 +259,11 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .spec-row{display:flex;justify-content:space-between;gap:24px;padding:14px 0;border-top:1px solid var(--sep);font-size:15px}
 .spec-row .k{color:var(--text-2)}
 .spec-row .v{color:var(--text);text-align:right;font-weight:450;max-width:60%}
+/* rows draw only a top rule; close each column so the table doesn't end mid-air */
+.specs>div>.spec-row:last-child{border-bottom:1px solid var(--sep)}
 
 /* pricing */
-.price-card{background:var(--card-bg);border:1px solid var(--sep);border-radius:18px;padding:44px;max-width:520px;margin:0 auto;text-align:center;box-shadow:var(--shadow-rest-lg),var(--card-hi)}
+.price-card{background:var(--card-bg);border:1px solid var(--sep);border-radius:var(--r-card);padding:44px;max-width:520px;margin-left:auto;margin-right:auto;text-align:center;box-shadow:var(--shadow-rest-lg),var(--card-hi)}
 /* the price is a designed moment: big mono tabular numeral, small currency cap */
 .price-big{display:flex;align-items:baseline;justify-content:center;gap:12px;line-height:1}
 .price-big .price-cur{font-family:var(--mono);font-size:15px;font-weight:500;letter-spacing:0.12em;color:var(--text-3)}
@@ -283,7 +317,7 @@ a.pill-uc .a{color:var(--blue-text);font-size:11px}
 .kicker{color:var(--blue-text);font-weight:500}
 .stat{font-size:40px;font-weight:600;letter-spacing:-0.03em}
 .stat-sub{font-size:14px;color:var(--text-3);margin-top:4px}
-.note-callout{background:var(--bg-inset);border-radius:12px;padding:18px 20px;font-size:14px;color:var(--text-2);line-height:1.55}
+.note-callout{background:var(--bg-inset);border-radius:var(--r-inset);padding:18px 20px;font-size:14px;color:var(--text-2);line-height:1.55}
 .note-callout strong{color:var(--text);font-weight:590}
 
 /* doc pages */
@@ -306,28 +340,17 @@ a.pill-uc .a{color:var(--blue-text);font-size:11px}
   .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
   /* Was a sideways-scrolling row with a hidden scrollbar, so most links were
      invisible until you happened to drag: a tester had no idea other pages
-     existed. Now a labelled dropdown that shows every option on tap. */
+     existed. The labelled dropdown is now the base state (see the nav block);
+     nothing to switch here beyond spacing. */
   .nav-in{gap:12px}
   .brand,.nav-right{flex-shrink:0}
-  .nav-menu{display:block;position:relative}
-  .nav-menu::details-content{display:block}
-  .nav-menu:not([open])::details-content{content-visibility:hidden}
-  .nav-toggle{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;letter-spacing:0.01em;color:var(--text-2);padding:6px 11px;border:1px solid var(--sep);border-radius:var(--r-inset)}
-  .nav-toggle:hover{color:var(--text)}
-  .nav-toggle .chev{transition:transform .2s ease}
-  .nav-menu[open] .nav-toggle{color:var(--text);background:var(--bg-inset)}
-  .nav-menu[open] .nav-toggle .chev{transform:rotate(180deg)}
-  .nav-links{position:absolute;top:calc(100% + 9px);left:0;flex-direction:column;gap:2px;margin-left:0;min-width:190px;padding:6px;background:var(--bg);border:1px solid var(--sep);border-radius:var(--r-card);box-shadow:var(--shadow-rest-lg)}
-  .nav-links a{font-size:15px;padding:9px 12px;border-radius:var(--r-inset);color:var(--text)}
-  .nav-links a:hover{background:var(--bg-inset);color:var(--text)}
-  /* the panel is opaque, so undo the over-hero light link colour (set in the
-     hero's page-local <style>, which loads after this file); the extra
-     .nav-menu segment outweighs it */
-  html.nav-over-hero .nav-menu .nav-links a{color:var(--text)}
-  html.nav-over-hero .nav-toggle{color:#C7CEDA;border-color:rgba(255,255,255,0.22)}
+  /* keep the whole tempo scale ordered at this width: tight < sec < snug < loose
+     (sec used to drop to 72px while snug stayed 84px, inverting the scale) */
   .sec{padding:72px 0}
   .price-card{padding:32px 24px}
   .sec-loose{padding:88px 0}
+  .sec-snug{padding:60px 0}
+  .sec-tight{padding:52px 0}
   .sec-head-split{grid-template-columns:1fr}
   .sec-head-split .lead{max-width:56ch}
 }
