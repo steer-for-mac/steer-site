@@ -38,14 +38,23 @@ should never try to be one.
   (`--bg-inset-2`), not against `--bg`. The measured ratios are recorded inline
   in `styles.css`; if you retune a colour, re-measure and update the comment.
   All small print rides `--text-3`.
-- **Radius tiers are fixed:** 14 card / 10 inset / 980 pill (`--r-card`,
-  `--r-inset`, `--r-btn`). Do not invent a new radius.
+- **Radius tiers are fixed:** 14 card / 10 inset / 980 pill / 12 window
+  (`--r-card`, `--r-inset`, `--r-btn`, `--r-window`). The window tier is for
+  screenshot frames only (`.window`, `.shot`). Do not invent a new radius.
 - **Motion: transform and opacity only.** Custom cubic-bezier eases, no keyword
   or bounce eases. Everything is gated behind `prefers-reduced-motion` with a
   meaningful static frame, and the page must render with JS disabled (all
   sections are static markup, never JS-injected).
 - **Section rhythm uses the tempo classes** (`.sec`, `.sec-loose`, `.sec-snug`,
-  `.sec-tight`), not ad-hoc padding.
+  `.sec-tight`), not ad-hoc padding. One tier down, the gap between a section
+  head and its first surface is `.sec-body` (40px, 44px inside `.sec-loose`),
+  not an inline margin; it had drifted to four different values before it was
+  tokenized. Keep the whole scale ordered (tight < sec < snug < loose) at every
+  breakpoint; the 860px block once inverted it by shrinking only `.sec`.
+- **Surfaces alternate.** Adjacent sections should not share a surface unless
+  something else draws the boundary; two plain-bg sections in a row read as one
+  tall empty band (that was the reach-to-pricing dead zone). The page tail runs
+  trust (sunken) / reach / pricing (sunken) / requirements / footer (sunken).
 - **The eyebrow signature stays consistent:** SF Mono uppercase label plus one
   emissive accent dot. It is the instrument signature carried down from the
   hero to every section. Keep it.
@@ -58,10 +67,16 @@ should never try to be one.
 - No emoji in copy.
 - Write for the non-technical reader first. Audience before feature list.
 - One primary CTA per view. Price is microcopy beside the CTA, not a competing
-  button. Exactly one blue `btn-primary` exists on the homepage and it is the
-  launch list; the founder section's "Share an idea" is deliberately secondary,
-  because it sits one section above pricing and would otherwise intercept a
-  ready buyer with an email draft about feature requests.
+  button. The launch list is a real form (the pricing card inline, and the
+  small dialog the hero/nav CTAs open), never a bare mailto: a mailto dies
+  silently on a machine with no mail client, at the exact moment of highest
+  intent. The only blue `btn-primary` in the page flow is the pricing form's
+  submit; the dialog's twin lives outside the scroll. CTA buttons that open the
+  dialog keep `href="#pricing"` so scripting off still lands on a working form,
+  and the mailto survives as visible fallback text, not as the mechanism. The
+  founder section's "Share an idea" is deliberately secondary, because it sits
+  one section above pricing and would otherwise intercept a ready buyer with an
+  email draft about feature requests.
 - Trust language stays literal and verifiable: on-device, no account, no
   telemetry. Never soften it into marketing vagueness. A trust heading may not
   overstate and then get walked back by its own body: the licence check does
@@ -80,8 +95,19 @@ should never try to be one.
   a second reading of the hero, and a reader who learns nothing for the scroll
   starts skimming, which costs Feel and Trust further down.
 - Plain words beat product jargon in visible copy. "Chords", "MFi", "radial
-  launcher", and `steer://` belong in the FAQ and the spec tables, not in hero
-  annotations or feature chips. A non-technical reader is the default reader.
+  launcher", "app ring", and `steer://` belong in the FAQ and the spec tables,
+  not in hero annotations or feature chips. A non-technical reader is the
+  default reader. A fresh reader met "each step of the ring" three screens
+  before anything said what the ring was; on the homepage it is "flip through
+  your apps".
+- Named third-party software carries its category at point of use. "Resolve
+  and Final Cut" read as random words to a non-editor; "DaVinci Resolve and
+  Final Cut Pro" under a "Video editors" tag read as products. Same rule made
+  "Rectangle" into "the Rectangle app". Full product names, category nearby.
+- A vignette's meaning must be carried by the visible copy beside it, because
+  the vignette itself is aria-hidden decoration. The couch card said "on-screen
+  keyboard" while the picture showed a daisy wheel; a first-time reader could
+  not connect sentence to picture until the sentence described the wheel.
 - Configurability is only a selling point when paired with "it already works".
   Lead with the fact that it runs on plug-in, then say nothing is fixed.
   Unpaired, "highly configurable" reads as "you have homework".

@@ -42,7 +42,7 @@
 
 /* real screenshots: a plain frame, NO synthetic title bar (the app window in the
    PNG already carries its own traffic lights + title — a second bar was double chrome). */
-.shot{border-radius:12px;overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
+.shot{border-radius:var(--r-window);overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
 .shot img{width:100%;display:block}
 .shot-cap{font-size:12.5px;color:var(--text-3);margin-top:12px;letter-spacing:-0.005em}
 
@@ -947,7 +947,7 @@ html[data-pad="ps"] #feel .lb-picker .dots{justify-content:center}
    nothing is fetched until the visitor asks. Theme-aware via the same
    [data-theme] variables as the page. */
 .gal-invite{margin-top:48px;text-align:center}
-.gal-invite .gal-claim{margin-top:14px;text-align:center}
+.gal-invite .gal-claim{margin-top:14px;text-align:center;font-size:12.5px;color:var(--text-3);letter-spacing:-0.005em}
 dialog.shots{
   /* the site's universal reset zeroes the UA's dialog margin:auto — restore it
      or the panel pins to the top-left of the top layer */
@@ -974,6 +974,20 @@ dialog.shots[open]::backdrop{animation:shots-in .2s ease}
 .shots-close{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--sep);background:var(--bg-inset);color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
 .shots-close:hover{background:var(--bg-inset-2);color:var(--text)}
 .shots-close svg{width:14px;height:14px}
+
+/* ── launch-list form (pricing card) + the small dialog the CTAs open ──── */
+.ml-form{margin-top:26px;display:flex;flex-direction:column;gap:10px}
+.ml-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+.ml-in{font:inherit;font-size:15px;padding:11px 14px;border-radius:var(--r-inset);border:1px solid var(--sep);background:var(--bg);color:var(--text);width:100%;text-align:left}
+.ml-in::placeholder{color:var(--text-3)}
+.ml-in:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.ml-msg{font-size:13.5px;color:var(--text-2);margin:2px 0 0}
+dialog.ml-dialog{margin:auto;width:min(400px,calc(100vw - 32px));border:1px solid var(--sep-2);border-radius:var(--r-card);padding:28px;background:var(--bg);color:var(--text);box-shadow:0 40px 120px -20px rgba(0,0,0,.55);position:relative;text-align:left}
+dialog.ml-dialog::backdrop{background:rgba(7,10,18,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.ml-dialog h2{font-size:21px;letter-spacing:-0.02em;font-weight:700;padding-right:40px}
+.ml-dialog .ml-sub{margin-top:8px;font-size:14px;color:var(--text-2);line-height:1.5}
+.ml-dialog .ml-alt{margin-top:14px;font-size:12.5px;color:var(--text-3)}
+.ml-dialog .ml-close{position:absolute;top:16px;right:16px}
 /* lightbox: one shot at a time, arrows either side, swipe on touch.
    Tap/click the shot to zoom; zoomed, the view pans by scroll/drag. */
 .shots-stage{position:relative;flex:1;min-height:0}
@@ -1035,7 +1049,7 @@ html.shots-open{overflow:hidden}
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle appearance">
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.1 5.1l1.4 1.4M17.5 17.5l1.4 1.4M18.9 5.1l-1.4 1.4M6.5 17.5l-1.4 1.4"/></svg>
       </button>
-      <a class="btn btn-nav" href="#pricing"><span class="nav-cta-full">Join the launch list</span><span class="nav-cta-short">Join</span></a>
+      <a class="btn btn-nav" href="#pricing" data-ml><span class="nav-cta-full">Join the launch list</span><span class="nav-cta-short">Join</span></a>
     </div>
   </div>
 </header>
@@ -1055,7 +1069,7 @@ html.shots-open{overflow:hidden}
     <p class="sub">Steer turns it into a mouse and keyboard: point and click, type, scroll, arrange windows, reach an app's own menus. You stop getting up.</p>
     <p class="sub sub-own">Plug it in, grant one Mac permission, and it already works. Nothing to configure.</p>
     <div class="cta-row">
-      <a class="cta" href="#pricing">Join the launch list</a>
+      <a class="cta" href="#pricing" data-ml>Join the launch list</a>
       <span class="terms"><b>€19.99</b> once, when it ships. 14-day trial, no card, no account.</span>
     </div>
     <div class="picker-wrap">
@@ -1280,7 +1294,7 @@ html.shots-open{overflow:hidden}
           <circle cx="846" cy="414" r="2.5"/>
           <polyline points="846,414 866,364 880,364"/>
           <text class="t" x="888" y="360">A QUIET BUZZ</text>
-          <text x="888" y="378">at the volume ceiling, and each step of the ring</text>
+          <text x="888" y="378">at the volume ceiling, and as you flip through apps</text>
         </g>
       </svg>
     </div>
@@ -1415,7 +1429,7 @@ html.shots-open{overflow:hidden}
           <circle cx="832" cy="408" r="2.5"/>
           <polyline points="832,408 866,364 880,364"/>
           <text class="t" x="888" y="360">A QUIET BUZZ</text>
-          <text x="888" y="378">at the volume ceiling, and each step of the ring</text>
+          <text x="888" y="378">at the volume ceiling, and as you flip through apps</text>
         </g>
       </svg>
     </div>
@@ -1546,7 +1560,7 @@ html.shots-open{overflow:hidden}
           <circle cx="851" cy="368" r="2.5"/>
           <polyline points="851,368 866,314 880,314"/>
           <text class="t" x="888" y="310">A QUIET BUZZ</text>
-          <text x="888" y="328">at the volume ceiling, and each step of the ring</text>
+          <text x="888" y="328">at the volume ceiling, and as you flip through apps</text>
         </g>
       </svg>
     </div>
@@ -1718,16 +1732,19 @@ html.shots-open{overflow:hidden}
          claiming it, each verb maps to a card below, and it avoids a third
          "run/control your Mac" within two screens of the hero. -->
     <h2 class="h2" style="max-width:22ch">Browse, write, edit, present.</h2>
-    <p class="lead" style="margin-top:16px;max-width:56ch">Nudge the stick and the cursor crawls; push it and it sweeps, and the curve between those two is yours to shape. Tuned to your hands, a menu item is an easy target, and pixel work in an image editor is still the mouse's job.</p>
-    <p class="lead" style="margin-top:16px;max-width:56ch">Most ways of working away from the desk do four things out of five, and the fifth sends you back. Typing, an app's own menus, moving windows, launching apps: they are all on the controller, so the trip back does not happen.</p>
+    <!-- One paragraph, and it names what it beats. The pixel-work concession
+         that used to open this section lives in FAQ 2, where conceding once,
+         late, beside the trial offer earns trust; conceding twice, once of them
+         before anything has been sold, read as the page apologizing for itself. -->
+    <p class="lead" style="margin-top:16px;max-width:56ch">A lap keyboard, a phone remote, a trackpad on the sofa arm: each does four things out of five, and the fifth sends you back to the desk. Typing, an app's own menus, moving windows, launching apps: they are all on the controller, so the trip back does not happen.</p>
 
-    <div class="uc-grid" style="margin-top:44px">
+    <div class="uc-grid sec-body">
       <div class="uc-lead uc-couch">
         <div class="uc-tag">The couch</div>
         <div class="uc-body">
           <div>
             <h3>Run your whole Mac from the couch.</h3>
-            <p>Browse, type, launch apps, play and pause: from the sofa, the bed, anywhere a mouse won't follow. An on-screen keyboard handles the search box, so it doesn't get you off the sofa.</p>
+            <p>Browse, type, launch apps, play and pause: from the sofa, the bed, anywhere a mouse won't follow. The on-screen keyboard is a wheel: aim the stick at a slice of letters, tap a button under your thumb, and the search box fills without you getting up.</p>
           </div>
           <div class="vg vg-type" aria-hidden="true">
             <span class="vg-stick"><i class="vg-cap"></i></span>
@@ -1768,9 +1785,9 @@ html.shots-open{overflow:hidden}
         <div class="uc-mech"><b>Right stick</b> · a dot on the screen</div>
       </div>
       <div class="uc-lead uc-ed">
-        <div class="uc-tag">Editors</div>
+        <div class="uc-tag">Video editors</div>
         <h3>Cut without touching the keyboard.</h3>
-        <p>Scrub the timeline with the triggers and cut under your thumb, the way a dedicated editing console does it, on the controller in your drawer. Ready-made for Resolve and Final Cut.</p>
+        <p>Scrub with the triggers: one rolls the video back, the other forward, and the cut lands under your thumb, the way a dedicated editing console does it, on the controller in your drawer. Ready-made for DaVinci Resolve and Final Cut Pro.</p>
         <div class="vg vg-edit" aria-hidden="true">
           <span class="vg-key kl"><b data-ps="L2" data-xb="LT" data-sw="ZL" data-mf="L trigger">L2</b><i class="vg-ring rl"></i></span>
           <div class="vg-timeline">
@@ -1805,7 +1822,7 @@ html.shots-open{overflow:hidden}
       <div>
         <div class="eyebrow">The part you feel</div>
         <h2 class="h2"><span class="pd-ps">The trigger stiffens before it clicks.</span><span class="pd-xb">You feel the step before you see it.</span><span class="pd-sw">Tilt the controller. The cursor follows.</span><span class="pd-mf">You know it worked without looking up.</span></h2>
-        <p class="lead" style="margin-top:16px;max-width:46ch"><span class="pd-ps">You do not have to watch the screen to know it worked. Turn on the adaptive triggers and they stiffen under your finger, so you feel the click before it fires. The grip buzzes as you step through the app ring or hit the volume ceiling, and the light bar can mean whatever you want.</span><span class="pd-xb">Turn the app ring and every step lands as a pulse in your grip. Hit the volume ceiling and your hands know before the screen does. The chattier buzzes wait until you ask.</span><span class="pd-sw">Tilt your hands and the pointer follows: a second way to point, on top of the sticks. The rumble marks each step of the app ring and the volume ceiling.</span><span class="pd-mf">If your controller has haptics, Steer drives them: a pulse for each step of the app ring, a tap at the volume ceiling, at a strength you set.</span></p>
+        <p class="lead" style="margin-top:16px;max-width:46ch"><span class="pd-ps">You do not have to watch the screen to know it worked. Turn on the adaptive triggers and they stiffen under your finger, so you feel the click before it fires. The grip buzzes as you flip through your apps or hit the volume ceiling, and the light bar can mean whatever you want.</span><span class="pd-xb">Flip through your apps and each one lands as a pulse in your grip. Hit the volume ceiling and your hands know before the screen does. The chattier buzzes wait until you ask.</span><span class="pd-sw">Tilt your hands and the pointer follows: a second way to point, on top of the sticks. The rumble marks each app you flip past, and the volume ceiling.</span><span class="pd-mf">If your controller has haptics, Steer drives them: a pulse for each app you flip past, a tap at the volume ceiling, at a strength you set.</span></p>
         <ul class="price-inc" style="margin:26px 0 0;max-width:none">
           <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Adaptive triggers, off until you turn them on: feel the click before it fires. Five presets and a fine editor.</li>
           <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A buzz for the moments that earn it, and more if you turn it on</li>
@@ -1862,7 +1879,7 @@ html.shots-open{overflow:hidden}
          them here bought the reader nothing. These rows carry only what a picture
          of a controller can't show: that it arrives working, follows you between
          apps, types, and reaches past shortcuts into Shortcuts, macros, scripts. -->
-    <div class="hero-grid" style="margin-top:48px">
+    <div class="hero-grid sec-body">
       <div class="group">
         <div class="grow"><span class="lbl">Ready to use</span><span class="val">Comes with a working layout, yours to change</span></div>
         <!-- The `release` slot is stored and shown in the app's own settings but
@@ -1878,7 +1895,7 @@ html.shots-open{overflow:hidden}
              idle whenever hasDrifted passes threshold. -->
         <div class="grow"><span class="lbl">A worn controller</span><span class="val">Drifting sticks re-centre on their own</span></div>
         <div class="grow"><span class="lbl">On-screen keyboard</span><span class="val">Types where you can already type, no cursor to aim</span></div>
-        <div class="grow"><span class="lbl">Longer text</span><span class="val">Speak it: a button runs your dictation Shortcut, set up once</span></div>
+        <div class="grow"><span class="lbl">Longer text</span><span class="val">Speak it: a button starts dictation, set up once with Apple's Shortcuts app</span></div>
         <div class="grow"><span class="lbl">A setup for each app</span><span class="val">Changes with the app you open</span></div>
         <div class="grow"><span class="lbl">Your mouse still works</span><span class="val">This adds a device, it does not replace one</span></div>
         <div class="grow"><span class="lbl">Everything else</span><span class="val"><a href="features.html">See all 39, in plain language</a></span></div>
@@ -1906,6 +1923,9 @@ html.shots-open{overflow:hidden}
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:17px;height:17px"><rect x="2.5" y="4" width="15" height="12" rx="2"/><circle cx="7.2" cy="8.4" r="1.4"/><path d="M2.5 13.5l4-3.5 3.5 3 3-2.5 4.5 3.5"/></svg>
         Look inside the app: seven panes
       </button>
+      <!-- The skeptic decides at the button, not inside the modal; the realness
+           claim has to be readable before the click. It stays in the dialog too. -->
+      <p class="gal-claim">Captured from the app; no renders, no touch-ups.</p>
     </div>
   </div>
 </section>
@@ -1918,7 +1938,7 @@ html.shots-open{overflow:hidden}
       <h2 class="h2" style="max-width:22ch">Your setup stays on your Mac. No account, no cloud, no tracking.</h2>
       <p class="lead">Steer needs permission to move your cursor and type. Here is what it does with that access. Not a trust badge; the actual answer.</p>
     </div>
-    <div class="trust-list" style="margin-top:44px;max-width:840px">
+    <div class="trust-list sec-body" style="max-width:840px">
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
         <div><h3>Plain files, on your computer.</h3><p>Your mappings live on your Mac, in a file you can open and read. No sign-in, nothing synced.</p></div>
@@ -1941,7 +1961,7 @@ html.shots-open{overflow:hidden}
       </div>
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.4-3.2 8.2-8 9-4.8-.8-8-4.6-8-9V7z"/><path d="M9.5 12.5l1.8 1.8 3.4-3.6"/></svg>
-        <div><h3>What it can't do is written down too.</h3><p>Where a controller can't do something, Steer hides it rather than pretending. The <a href="compatibility.html">controller page</a> marks the gaps, including the features nobody has yet confirmed on real hardware because I don't own the pad. Window snapping needs Rectangle installed. The login screen and Touch ID stay out of reach.</p></div>
+        <div><h3>What it can't do is written down too.</h3><p>Where a controller can't do something, Steer hides it rather than pretending. The <a href="compatibility.html">controller page</a> marks the gaps, including the features nobody has yet confirmed on real hardware because I don't own the pad. Snapping windows into place needs the Rectangle app, installed separately. The login screen and Touch ID stay out of reach.</p></div>
       </div>
     </div>
   </div>
@@ -1953,10 +1973,10 @@ html.shots-open{overflow:hidden}
      still gets it via the link below. -->
 <section class="sec-snug" id="reach">
   <div class="wrap center">
-    <div class="eyebrow" style="justify-content:center">From the developer</div>
+    <div class="eyebrow">From the developer</div>
     <h2 class="h2">Hi, I'm Sean. I build Steer on my own.</h2>
     <p class="lead" style="margin:16px auto 0;max-width:48ch">Built, documented and supported by one person. The support address is my inbox, so a bug report lands with whoever can fix it.</p>
-    <div class="cta-row" style="margin-top:28px;display:flex;gap:20px;justify-content:center;align-items:center;flex-wrap:wrap">
+    <div class="cta-row-center">
       <!-- Deliberately secondary: this sits one section above pricing, and a
            full-weight primary here intercepts a ready buyer with an email draft
            about feature requests. One primary CTA per view, and it is the list. -->
@@ -1966,44 +1986,63 @@ html.shots-open{overflow:hidden}
   </div>
 </section>
 
-<!-- PRICING -->
-<section class="sec-loose" id="pricing">
+<!-- PRICING — carries the sunken band (moved from #requirements) so the tail
+     alternates trust(sunken) / reach / pricing(sunken) / requirements / footer
+     (sunken): the reach-to-pricing padding stack gets a visible boundary and
+     the price card pops harder against the recessed surface. -->
+<section class="sec-loose sunken" id="pricing">
   <div class="wrap center">
     <div class="eyebrow">Pricing</div>
     <h2 class="h2">One price. Yours to keep.</h2>
-    <div class="price-card" style="margin-top:40px">
+    <div class="price-card sec-body">
       <div class="price-big"><span class="price-cur">€</span><span class="price-num">19.99</span></div>
       <div class="once">paid once, no subscription</div>
       <ul class="price-inc">
         <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> 14-day free trial at launch: no card, no account</li>
-        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> What your controller can do</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Every feature your controller supports, included</li>
         <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Free updates as macOS changes</li>
         <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Direct from the developer, checked by Apple</li>
       </ul>
-      <a class="btn btn-primary" href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list&amp;body=I'd%20like%20to%20know%20when%20Steer%20is%20available.%20Feel%20free%20to%20mention%20which%20controller%20you%20have%20or%20how%20you'd%20use%20it." style="margin-top:30px;width:100%;justify-content:center">Join the launch list</a>
-      <p style="font-size:12.5px;color:var(--text-3);margin-top:8px">This opens an email, already written. Send it and you are on the list.</p>
-      <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is in final testing. One email the day the free trial opens: one message, from me, and your address goes nowhere else.</p>
+      <!-- The list is a real form, not a mailto: a mailto dies silently on a
+           machine with no mail client, at the exact moment of highest intent.
+           With JS the submit posts in place; without JS the native POST still
+           works (the endpoint answers with a small confirmation page). The
+           mailto stays below as the fallback for both failure modes. -->
+      <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
+        <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
+        <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
+        <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Join the launch list</button>
+        <p class="ml-msg" role="status" aria-live="polite"></p>
+      </form>
+      <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is in final testing. One email the day the free trial opens: one message, from me, and your address goes nowhere else. Name your controller and you hear first when a pad needs a tester.</p>
+      <p style="font-size:12.5px;color:var(--text-3);margin-top:10px">Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
       <p style="font-size:13px;color:var(--text-3);margin-top:10px">Built for myself. I use it daily. Sean Floyd</p>
     </div>
   </div>
 </section>
 
 <!-- REQUIREMENTS + FAQ — the practical tail, after the buying decision -->
-<section class="sec-snug sunken" id="requirements">
+<section class="sec-snug" id="requirements">
   <div class="wrap">
-    <div class="eyebrow">Requirements</div>
-    <h2 class="h2">What you need.</h2>
-    <div class="specs" style="margin-top:40px">
+    <!-- Same head device as #capabilities and #trust: the lead fills the wide
+         right void that a lone left-aligned heading leaves above the columns. -->
+    <div class="sec-head-split">
+      <div class="eyebrow">Requirements</div>
+      <h2 class="h2">What you need.</h2>
+      <p class="lead">A recent Mac, the controller you already own, and one permission switched on once.</p>
+    </div>
+    <div class="specs sec-body">
       <div>
         <div class="spec-row"><span class="k">System</span><span class="v">macOS 14 or later, Apple Silicon (M1 or newer)</span></div>
+        <div class="spec-row"><span class="k">Connection</span><span class="v">Wired or Bluetooth</span></div>
         <div class="spec-row"><span class="k">Form</span><span class="v">Menu-bar app, no window</span></div>
         <div class="spec-row"><span class="k">Delivery</span><span class="v">Direct download, checked by Apple</span></div>
       </div>
       <div>
-        <div class="spec-row"><span class="k">Connection</span><span class="v">Wired or Bluetooth</span></div>
         <div class="spec-row"><span class="k">Accessibility permission</span><span class="v">A Mac setting you switch on once</span></div>
         <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">For three cases: Edge back buttons, DualShock 4 tilt-to-aim, off-brand pads</span></div>
-        <div class="spec-row"><span class="k">Window snapping</span><span class="v">Needs <a href="https://rectangleapp.com">Rectangle</a>, installed separately</span></div>
+        <div class="spec-row"><span class="k">Window snapping</span><span class="v">Needs the <a href="https://rectangleapp.com">Rectangle</a> app, installed separately</span></div>
         <!-- 35 .lproj bundles and 35 help-docs-*.md in the app repo, at string
              parity with English. Kept here rather than anywhere prominent: it is
              a credibility signal, not a reason anyone buys. -->
@@ -2156,6 +2195,24 @@ html.shots-open{overflow:hidden}
   </div>
 </dialog>
 
+<!-- LAUNCH LIST — the hero and nav CTAs open this small form; their href
+     falls back to #pricing, where the same form sits inline, when JS is off. -->
+<dialog class="ml-dialog" id="mlDialog" aria-labelledby="mlTitle">
+  <button class="shots-close ml-close" type="button" id="mlClose" aria-label="Close">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>
+  </button>
+  <h2 id="mlTitle">Join the launch list</h2>
+  <p class="ml-sub">€19.99 once, when it ships. 14-day free trial: no card, no account. One email the day it opens, from me, and your address goes nowhere else.</p>
+  <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
+    <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address" autofocus>
+    <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
+    <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Join the launch list</button>
+    <p class="ml-msg" role="status" aria-live="polite"></p>
+  </form>
+  <p class="ml-alt">Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
+</dialog>
+
 <script>
 // theme toggle (initial theme is already set by the <head> script)
 (function(){
@@ -2175,6 +2232,37 @@ html.shots-open{overflow:hidden}
   new IntersectionObserver(function(es){
     document.documentElement.classList.toggle('nav-over-hero', es[0].isIntersecting);
   },{rootMargin:'-52px 0px 0px 0px',threshold:0}).observe(hero);
+})();
+// launch list: the hero/nav CTAs open the <dialog> form; the pricing card holds
+// the same form inline. Submits go form-encoded (a "simple" request, so no
+// CORS preflight) to the list endpoint; failure offers the mailto instead of a
+// dead end, because the alternative is losing the reader at peak intent.
+(function(){
+  var dlg=document.getElementById('mlDialog');
+  if(dlg&&dlg.showModal){
+    document.querySelectorAll('[data-ml]').forEach(function(a){
+      a.addEventListener('click',function(e){e.preventDefault();dlg.showModal();});
+    });
+    var x=document.getElementById('mlClose');
+    if(x)x.addEventListener('click',function(){dlg.close();});
+  }
+  document.querySelectorAll('.ml-form').forEach(function(f){
+    f.addEventListener('submit',function(e){
+      e.preventDefault();
+      var msg=f.querySelector('.ml-msg'),btn=f.querySelector('button[type="submit"]');
+      btn.disabled=true;msg.textContent='Adding you...';
+      fetch(f.action,{method:'POST',headers:{'Accept':'application/json'},body:new URLSearchParams(new FormData(f))})
+        .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
+        .then(function(){
+          msg.textContent="You're on the list. One email when the trial opens.";
+          f.querySelectorAll('.ml-in,button').forEach(function(el){el.disabled=true;});
+        })
+        .catch(function(){
+          btn.disabled=false;
+          msg.innerHTML='Could not reach the list. Email <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> and I\'ll add you.';
+        });
+    });
+  });
 })();
 // face-button glyphs + pad-aware re-labelling. The markup ships the default
 // PlayStation glyph inline so the vignettes still state their claim with JS
