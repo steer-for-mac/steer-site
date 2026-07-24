@@ -230,9 +230,20 @@ prefix.
 
 ## Before you call it done
 
-- Any new colour pair clears AA against the darkest surface it can sit on.
+- Run `node scripts/curb-check.mjs`. It mechanizes the copy and value-drift
+  rules that were enforced by eye: em/en-dashes, AI clichés, and emoji in
+  *visible* copy (text nodes + alt/title/aria-label + meta descriptions, never
+  code comments or SVG path data); web/display fonts; forbidden hexes
+  (`#0d6efd`, `#007aff`, warm creams); the Bootstrap shadow; and off-token
+  component radii (8-40px). ERROR fails the run; WARN is a review nudge. It is
+  dependency-free and self-verifying: `node scripts/curb-check.mjs --self-test`
+  proves every detector still bites before you trust a clean run.
+  - Two curb rules deliberately stay human-judged, not mechanized, because they
+    fire ~100% false on this codebase: **AI-purple** (Steer's controller-LED and
+    accent-picker swatches are legitimately violet/teal/amber) and **sub-8px
+    radii** (the hand-built SVG vignettes). The script's comments record why.
+- Any new colour pair clears AA against the darkest surface it can sit on
+  (the `--blue`/text math still lives with `contrast.mjs`, not in this checker).
 - The page renders with JavaScript disabled and under `prefers-reduced-motion`
   (static frames are present, nothing disappears).
 - No horizontal overflow at 375, 768, and 1440 px.
-- Grep the diff for em-dashes, clichés, and emoji in visible copy (they are
-  fine inside code comments, never in rendered text).
