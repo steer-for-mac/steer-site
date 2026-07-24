@@ -90,7 +90,7 @@ section{position:relative}
 h1,h2,h3{letter-spacing:-0.022em;line-height:1.06;font-weight:600}
 .h2{font-size:clamp(28px,3.6vw,40px);letter-spacing:-0.024em;line-height:1.08;text-wrap:balance}
 .h3{font-size:21px;font-weight:600;letter-spacing:-0.02em}
-.lead{font-size:clamp(18px,2vw,21px);color:var(--text-2);line-height:1.5;font-weight:400;letter-spacing:-0.014em}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--text-2);line-height:1.5;font-weight:400;letter-spacing:-0.014em;text-wrap:pretty}
 /* section rhythm: three deliberate tempos instead of one uniform 104px */
 .sec{padding:104px 0}
 .sec-loose{padding:132px 0}
@@ -190,6 +190,18 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 
 /* macOS window frame */
 .window{border-radius:var(--r-window);background:var(--bg);border:1px solid var(--frame);box-shadow:var(--shadow-window);overflow:hidden}
+
+/* Apple-continuous corners on the card/window surfaces. Progressive enhancement:
+   Chromium (Chrome/Edge 139+, ~70% of traffic) renders the superellipse; Safari
+   27 and Firefox ignore the property and keep the border-radius arc, i.e. today's
+   look with no regression (verified unsupported on Safari 27 / macOS 27 b4, so
+   even the author's own browser falls back — this is a bonus for Chromium, not a
+   dependency). Scoped to rectangular surfaces ONLY: the --r-btn pills and the
+   circular LED/eyebrow dots (50%) must stay round — a squircle of a circle is a
+   blob. Add a new card/window class here when one ships; do not go universal. */
+.window,.shot,.shots,.nav-links,.trust-list,.cmp-card,.price-card,.uc-lead,.ml-dialog,.close{
+  corner-shape: squircle;
+}
 .window-bar{height:38px;display:flex;align-items:center;padding:0 14px;gap:8px;border-bottom:1px solid var(--hairline);background:var(--bg-inset);position:relative}
 .traffic{display:flex;gap:8px}
 .traffic i{width:12px;height:12px;border-radius:50%;display:block}
@@ -220,7 +232,7 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .stepper{display:flex;flex-direction:column;color:var(--text-3);font-size:9px;line-height:.8}
 
 /* segmented control */
-.segmented{display:inline-flex;background:var(--bg-inset-2);border-radius:9px;padding:2px;gap:2px}
+.segmented{display:inline-flex;background:var(--bg-inset-2);border-radius:var(--r-inset);padding:2px;gap:2px}
 .segmented button{border:0;background:transparent;font-family:var(--font);font-size:13.5px;font-weight:500;color:var(--text-2);padding:5px 13px;border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:6px;letter-spacing:-0.01em}
 .segmented button .n{font-size:12px;color:var(--text-3);font-weight:450}
 .segmented button[aria-selected="true"]{background:var(--bg);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.10),0 0 0 .5px rgba(0,0,0,.04)}
@@ -322,11 +334,11 @@ a.pill-uc .a{color:var(--blue-text);font-size:11px}
 
 /* doc pages */
 .doc{max-width:720px;margin:0 auto;padding:64px var(--pad) 96px}
-.doc h1{font-size:38px;margin-bottom:8px;letter-spacing:-0.025em}
+.doc h1{font-size:38px;margin-bottom:8px;letter-spacing:-0.025em;text-wrap:balance}
 .doc .updated{color:var(--text-3);font-size:14px;margin-bottom:40px}
-.doc h2{font-size:22px;margin:40px 0 12px;letter-spacing:-0.02em}
+.doc h2{font-size:22px;margin:40px 0 12px;letter-spacing:-0.02em;text-wrap:balance}
 .doc h3{font-size:17px;margin:26px 0 8px;font-weight:590}
-.doc p,.doc li{color:var(--text-2);font-size:16px;line-height:1.62;margin-bottom:14px}
+.doc p,.doc li{color:var(--text-2);font-size:16px;line-height:1.62;margin-bottom:14px;text-wrap:pretty}
 .doc ul{padding-left:22px;margin-bottom:14px}
 .doc li{margin-bottom:7px}
 .doc strong{color:var(--text);font-weight:590}

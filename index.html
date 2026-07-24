@@ -543,7 +543,7 @@ html.still .chero .pool{opacity:var(--poolO)}
 @media (max-width:899px){
   .chero .copy{padding-top:30px}
   /* clean 2x2 grid instead of an uneven wrap inside the pill */
-  .chero .tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;border-radius:16px;width:100%;max-width:300px}
+  .chero .tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;border-radius:var(--r-card);width:100%;max-width:300px}
   .chero .tab{justify-content:center;padding:10px 8px}
   .chero .bottombar{margin-top:6px;padding:12px 24px 44px}
 }
@@ -954,7 +954,7 @@ dialog.shots{
   margin:auto;
   width:min(1080px,calc(100vw - 24px));
   height:min(calc(100dvh - 48px),860px);
-  border:1px solid var(--sep-2);border-radius:16px;padding:0;
+  border:1px solid var(--sep-2);border-radius:var(--r-card);padding:0;
   background:var(--bg);color:var(--text);
   box-shadow:0 40px 120px -20px rgba(0,0,0,.55);
 }
