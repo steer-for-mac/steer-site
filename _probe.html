@@ -749,13 +749,7 @@ html[data-theme="lightoff"] .chero .mf-bl{fill:rgba(23,28,38,0.42)}
    the mouse. Press Cross to click", and that is all the motion is allowed to
    claim; animating the right stick would assert a scroll that nothing on screen
    is doing. Transform and opacity only, and the deflection (7px on a 28px cap
-   inside a 37px well) stays inside the travel real hardware has.
-
-   PLAYSTATION PAD ONLY, for now. The Xbox, Switch and "& others" pads carry no
-   .pad-stick-l / .pad-cross-* classes, so picking one of those tabs leaves a
-   static controller above a caption that still promises a click and a demo that
-   still loops. Porting the classes to the other three is the fix; until then
-   this is a known gap, not an oversight. */
+   inside a 37px well) stays inside the travel real hardware has. */
 @media (prefers-reduced-motion: no-preference){
   .chero.on .padwrap.active .pad-stick-l{
     animation:chero-padGlide 6s cubic-bezier(.32,.72,.28,1) infinite;
@@ -770,13 +764,8 @@ html[data-theme="lightoff"] .chero .mf-bl{fill:rgba(23,28,38,0.42)}
 }
 @keyframes chero-padGlide{0%,8%{transform:none}14%,44%{transform:translateX(7px)}52%,100%{transform:none}}
 @keyframes chero-padPress{0%,55%{transform:none}58%{transform:translateY(1.5px)}62%,100%{transform:none}}
-/* Accent, not white: at .22 over the light hero's #F3F5F9 button a white
-   tint measures 1.02:1 and the click beat simply vanishes. */
-@keyframes chero-padTint{0%,55%{opacity:0}58%{opacity:.3}64%,100%{opacity:0}}
-html.anim-halt .chero .padwrap .pad-stick-l,
-html.anim-halt .chero .padwrap .pad-cross-btn,
-html.anim-halt .chero .padwrap .g-cross,
-html.anim-halt .chero .padwrap .pad-cross-tint{animation-play-state:paused!important}
+@keyframes chero-padTint{0%,55%{opacity:0}58%{opacity:.22}64%,100%{opacity:0}}
+html.anim-halt .chero .padwrap *{animation-play-state:paused!important}
 @keyframes vgG-ring{0%,57%{transform:scale(.5);opacity:0}61%{opacity:.5;transform:scale(.85)}78%,100%{transform:scale(1.5);opacity:0}}
 /* the click flips play → pause the moment the tile compresses (~59%), then
    resets while the cursor is faded out before the next pass */
@@ -1267,7 +1256,7 @@ html.shots-open{overflow:hidden}
             <circle class="g-cir" cx="789" cy="152" r="6" fill="none" stroke-width="1.8" opacity="0.9"/>
             <path class="g-cross" d="M750,181 L760,191 M760,181 L750,191" stroke-width="1.8" stroke-linecap="round" opacity="0.9"/>
             <rect class="g-sq" x="716" y="147" width="10" height="10" fill="none" stroke-width="1.8" opacity="0.9"/>
-            <circle class="pad-cross-tint" cx="755" cy="186" r="15.5" fill="var(--accent)" opacity="0"/>
+            <circle class="pad-cross-tint" cx="755" cy="186" r="15.5" fill="#FFFFFF" opacity="0"/>
           </g>
 
           <!-- sticks: dark caps in both rooms, like the real hardware.
@@ -2470,23 +2459,14 @@ html.shots-open{overflow:hidden}
   document.addEventListener('visibilitychange',function(){
     document.documentElement.classList.toggle('anim-halt',document.hidden);
   });
-  var vgs=[].slice.call(document.querySelectorAll('.vg'));
+  // `.chero` rides along so the hero pad's loop is gated on visibility too,
+  // exactly like the .vg demos.
+  var vgs=[].slice.call(document.querySelectorAll('.vg, .chero'));
   if(!vgs.length) return;
   if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        e.target.classList.toggle('on',e.isIntersecting);
-        // The hero pad is phase-locked to the glide demo, so it has to switch
-        // with the SAME box. Observing .chero separately desynced them: the
-        // hero is far taller, so at threshold 0.3 it lost .on ~228px of scroll
-        // before .vg-glide did, and the pad's animation restarted from 0% while
-        // the cursor demo kept running.
-        if(e.target.classList.contains('vg-glide')){
-          var hero=e.target.closest('.chero');
-          if(hero) hero.classList.toggle('on',e.isIntersecting);
-        }
-      });
+      es.forEach(function(e){e.target.classList.toggle('on',e.isIntersecting);});
     },{threshold:0.3});
     vgs.forEach(function(v){io.observe(v);});
   }else{
@@ -2577,5 +2557,31 @@ html.shots-open{overflow:hidden}
   dlg.addEventListener('close',function(){document.documentElement.classList.remove('shots-open');unzoom();});
 })();
 </script>
+<script>
+(function(){
+  var root=document.documentElement;
+  root.classList.remove('still');
+  new MutationObserver(function(){ root.classList.remove('still'); }).observe(root,{attributes:true,attributeFilter:['class']});
+  window.addEventListener('load',function(){
+    setTimeout(function(){
+      var c=document.querySelector('.chero'), g=document.querySelector('.vg-glide');
+      var cr=c.getBoundingClientRect(), gr=g.getBoundingClientRect();
+      var vh=window.innerHeight;
+      function ratio(r){var vis=Math.max(0,Math.min(r.bottom,vh)-Math.max(r.top,0));return r.height?vis/r.height:0;}
+      var pre=document.createElement('pre'); pre.id='PROBE';
+      pre.textContent=JSON.stringify({
+        vw:window.innerWidth, vh:vh,
+        heroTop:Math.round(cr.top), heroH:Math.round(cr.height), heroRatio:+ratio(cr).toFixed(3),
+        glideTop:Math.round(gr.top), glideH:Math.round(gr.height), glideRatio:+ratio(gr).toFixed(3),
+        cheroOn:c.classList.contains('on'), glideOn:g.classList.contains('on'),
+        padAnim:getComputedStyle(document.querySelector('.pad-stick-l')).animationName,
+        annDisplay:getComputedStyle(document.querySelector('.chero .ann')).display
+      },null,1);
+      document.body.appendChild(pre);
+    },900);
+  });
+})();
+</script>
 </body>
+
 </html>

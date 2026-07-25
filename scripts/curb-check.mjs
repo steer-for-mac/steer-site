@@ -27,7 +27,8 @@ const HTML_FILES = [
   "index.html", "features.html", "agents.html", "compatibility.html",
   "accessibility.html", "vs.html", "buy.html", "support.html",
   "terms.html", "privacy.html", "refund.html",
-];
+
+  "download.html",];
 const CSS_FILES = ["styles.css"];
 
 // ---- the lists the curb enforces by eye (copy rules) ----------------------

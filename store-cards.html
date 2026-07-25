@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Steer: store card source</title>
+<!--
+  Reproducible product-image source for the Lemon Squeezy store.
+  Renders at exactly 1600x1200 (4:3, LS's recommended size). Variants by hash:
+  Upload order lives in docs/store-assets.md and is argued there; keep the two
+  in step. As of 2026-07-25 it is:
+    1 #pad       the hero's own DualSense art (scripts/make-pad-card.py)
+    2 #grammar   input-to-result rows, the causation card
+    3 #radial    the radial launcher, live capture
+    4 #typing    the daisy wheel over a real document, live capture
+    5 #deal      coverage and controller families
+    6 #identity  icon over wordmark, tagline, requirements pill
+    -- #menubar  retired: its visible items were Preferences, Verbose Logging
+                 and Quit, which sells a debug menu
+
+  Render (2x, then downscale; see docs/store-assets.md):
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless --disable-gpu --force-device-scale-factor=2 \
+      --window-size=1600,1200 --hide-scrollbars \
+      --screenshot=/tmp/card-2x.png "file://ABSOLUTE/PATH/store-cards.html#identity"
+
+  WHY THIS EXISTS rather than cropping the demo frames in screenshots/*.jpg:
+  those frames are composed to be watched full-screen, where the settings
+  detail is the point. Lemon Squeezy renders a product image at roughly 440px
+  wide in the checkout panel. At that size a dense pane collapses into grey
+  mush and a small window floating in wallpaper says nothing. Every card here
+  is built for the small size: one subject, filling the frame, one line of
+  type. Verify any new card by downscaling it to 440px and looking at it
+  BEFORE shipping it.
+
+  Tokens mirror og.html, which mirrors styles.css: accent #0A84FF, the hero's
+  radial gradient, SF Pro stack, SF Mono for the pill. Keep .tagline in sync
+  with index.html's h1.
+-->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { width: 1600px; height: 1200px; overflow: hidden; }
+
+  body {
+    width: 1600px;
+    height: 1200px;
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+    background: radial-gradient(120% 90% at 18% 0%, #4A5A6E 0%, #2E3744 46%, #1A2230 100%);
+  }
+  /* faint accent bloom, matching og.html */
+  body::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(60% 70% at 82% 90%, rgba(10,132,255,0.16) 0%, rgba(10,132,255,0) 60%);
+  }
+  .frame {
+    position: absolute; inset: 0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+    z-index: 3;
+  }
+
+  .stage {
+    position: absolute; inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 2;
+    padding: 0 90px;
+  }
+
+  /* ---- identity card ---- */
+  .icon {
+    width: 260px; height: 260px;
+    border-radius: 26%;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06) inset;
+    margin-bottom: 46px;
+  }
+  .wordmark {
+    font-size: 150px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #FFFFFF;
+    margin-bottom: 32px;
+  }
+  .tagline {
+    font-size: 44px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.32;
+    color: rgba(255,255,255,0.80);
+    max-width: 1000px;
+    margin-bottom: 56px;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+    font-size: 27px;
+    color: rgba(255,255,255,0.66);
+    padding: 15px 26px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10);
+  }
+  .pill .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #28C941;
+    box-shadow: 0 0 10px rgba(40,201,65,0.55);
+  }
+
+  /* ---- subject cards: one caption, one large shot ---- */
+  .caption {
+    font-size: 88px;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    line-height: 1.1;
+    color: #FFFFFF;
+    margin-bottom: 64px;
+    max-width: 1280px;
+  }
+  /* Both subjects are alpha PNGs of translucent overlays that already carry
+     their own corner radius. A box-shadow traces the element BOX, which draws
+     a rectangle around a round overlay; drop-shadow traces the alpha, so the
+     shape reads as itself. Never add border-radius or a hairline here:
+     that turns an overlay into a fake window. */
+  .shot {
+    display: block;
+    filter: drop-shadow(0 34px 64px rgba(0,0,0,0.55));
+  }
+  /* Scaled per-asset so each fills the frame at render size; the sources
+     differ in native size and aspect, so do not "unify" these widths. */
+  .shot.menubar { width: 1200px; }
+  .shot.radial  { width: 780px; }
+
+  /* ---- grammar card: physical input on the left, Mac result on the right ----
+     The one thing a static frame CAN prove is that a controller input is the
+     cause: a glyph in a keycap is a vocabulary every pad owner reads without
+     being taught, and it stays legible at keycap size, which is exactly the
+     scale it was designed for. Every chip here must match the SHIPPED default
+     binding (SteerCore/Defaults.swift, soloLayer) or the card is a lie:
+     Cross = left click, left stick = cursor, right stick = scroll. */
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    width: 100%;
+    max-width: 980px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 150px 76px 1fr;
+    align-items: center;
+    gap: 34px;
+    text-align: left;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px; height: 112px;
+    border-radius: 26px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.06));
+    box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.16), 0 10px 24px rgba(0,0,0,0.35);
+  }
+  .arrow { color: rgba(255,255,255,0.38); }
+  .result {
+    font-size: 68px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+    white-space: nowrap;
+  }
+
+  /* ---- desktop backdrop ----
+     The overlays are transparent always-on-top panels, so showing one on a
+     void depicts a state no user will ever see. Compositing over a real
+     desktop is a reconstruction of what the software genuinely draws, which
+     is the more honest image, not the less.
+
+     The backdrop is a clean region of screenshots/slot-10-radial.jpg (the
+     project's own marketing wallpaper, so the card matches the site and the
+     demo video). Source is 2880x1800. Careful: that frame has its OWN radial
+     centred at about x1440, and it extends to roughly x1900, so the obvious
+     right-hand quadrant (x1680..) still catches its edge. The genuinely clean
+     region is x1900..2880, y820..1555 (980x735, exactly 4:3).
+     Scaled by 1600/980 = 1.63265:
+       background-size:     2880*1.63265 x 1800*1.63265 = 4702 x 2939
+       background-position: -1900*1.63265, -820*1.63265 = -3102px, -1339px
+     Recompute these if the source frame is ever replaced, and LOOK at the
+     result: the intrusion is invisible in a thumbnail and obvious at size. */
+  .backdrop {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: url("screenshots/slot-10-radial.jpg");
+    background-size: 4702px 2939px;
+    background-position: -3102px -1339px;
+    filter: brightness(0.46) saturate(0.85);
+  }
+  .backdrop::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,14,22,0.72) 0%, rgba(10,14,22,0.30) 42%, rgba(10,14,22,0.62) 100%);
+  }
+  /* Content sits above the backdrop layers. Both layer classes must be
+     excluded here: this rule sets position:relative, which overrides an
+     absolutely-positioned layer's inset and collapses it to zero height. */
+  .stage > *:not(.backdrop):not(.shotfill) { position: relative; z-index: 1; }
+
+  /* ---- full-bleed live capture ----
+     A real screen capture already contains its own context, so it fills the
+     frame rather than floating on the card gradient. The scrim exists only to
+     hold the headline: without it the type lands on app icons and the contrast
+     is unreadable at 440px. */
+  .shotfill {
+    position: absolute; inset: 0; z-index: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .shotfill::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(8,11,18,0.90) 0%, rgba(8,11,18,0.62) 26%, rgba(8,11,18,0.10) 48%, rgba(8,11,18,0.35) 100%);
+  }
+  /* Selector must out-specify `.stage > *:not(.backdrop):not(.shotfill)`,
+     which sets position:relative and would otherwise drop this headline back
+     into flow and land it on top of the subject. */
+  .stage > .caption.over {
+    position: absolute;
+    top: 86px; left: 90px; right: 90px;
+    margin-bottom: 0;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.55);
+  }
+
+  /* Bottom-left headline: this capture already has content top-left (the
+     document) and bottom-right (the wheel), so the type takes the empty
+     quadrant rather than sitting on either of them. */
+  .stage > .caption.low {
+    position: absolute;
+    left: 90px; bottom: 96px; right: 44%;
+    margin-bottom: 0;
+    text-align: left;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+  }
+
+  /* Coverage card: type only, so every element clears the 440px floor. */
+  .capgrid {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 26px 64px;
+    margin-bottom: 66px;
+    font-size: 52px;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: rgba(255,255,255,0.92);
+  }
+  .fine {
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+    font-size: 30px;
+    letter-spacing: 0.01em;
+    color: rgba(255,255,255,0.70);
+    margin-bottom: 18px;
+  }
+  .fine.quiet { color: rgba(255,255,255,0.48); margin-bottom: 0; }
+
+  .hide { display: none !important; }
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+
+  <div class="stage" id="identity">
+    <img class="icon" src="icon.png" alt="" />
+    <div class="wordmark">Steer</div>
+    <div class="tagline">Your whole Mac, from a controller.</div>
+    <div class="pill"><span class="dot"></span>macOS 14+ &middot; Apple Silicon</div>
+  </div>
+
+  <div class="stage hide" id="grammar">
+    <div class="caption">Point, click, scroll. No desk.</div>
+    <div class="rows">
+      <div class="row">
+        <div class="chip">
+          <!-- Left stick pushed right. The cap sits where it was pushed TO and a
+               ghost cap marks where it came FROM, so the deflection reads without
+               an arrow. An arrow here pointed opposite the cap and inverted the
+               whole meaning of the card. -->
+          <svg width="92" height="92" viewBox="0 0 92 92" fill="none" aria-hidden="true">
+            <circle cx="46" cy="46" r="35" stroke="rgba(255,255,255,0.30)" stroke-width="4"/>
+            <circle cx="46" cy="46" r="16" fill="rgba(255,255,255,0.16)"/>
+            <path d="M30 33 a17 17 0 0 0 0 26" stroke="rgba(10,132,255,0.55)" stroke-width="3.5"
+                  stroke-linecap="round"/>
+            <circle cx="64" cy="46" r="17" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <svg class="arrow" width="52" height="30" viewBox="0 0 52 30" fill="none" aria-hidden="true">
+          <path d="M2 15h44M36 4l11 11-11 11" stroke="currentColor" stroke-width="4"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="result">Move the cursor</div>
+      </div>
+
+      <div class="row">
+        <div class="chip">
+          <!-- Right stick pulled down. Same ghost-cap grammar, rotated, so the two
+               stick chips are visibly different glyphs rather than the same circle
+               with a dot in it. -->
+          <svg width="92" height="92" viewBox="0 0 92 92" fill="none" aria-hidden="true">
+            <circle cx="46" cy="46" r="35" stroke="rgba(255,255,255,0.30)" stroke-width="4"/>
+            <circle cx="46" cy="46" r="16" fill="rgba(255,255,255,0.16)"/>
+            <path d="M33 30 a17 17 0 0 1 26 0" stroke="rgba(10,132,255,0.55)" stroke-width="3.5"
+                  stroke-linecap="round"/>
+            <circle cx="46" cy="64" r="17" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <svg class="arrow" width="52" height="30" viewBox="0 0 52 30" fill="none" aria-hidden="true">
+          <path d="M2 15h44M36 4l11 11-11 11" stroke="currentColor" stroke-width="4"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="result">Scroll the page</div>
+      </div>
+
+      <div class="row">
+        <div class="chip">
+          <!-- Cross. PS face-button blue, matching the app's own ButtonGlyph. Drawn
+               filled rather than outlined so it reads as a pressed face button and
+               not as the macOS dismiss affordance. -->
+          <svg width="92" height="92" viewBox="0 0 92 92" fill="none" aria-hidden="true">
+            <circle cx="46" cy="46" r="35" fill="rgba(76,155,232,0.20)" stroke="#4C9BE8" stroke-width="4"/>
+            <path d="M32 32l28 28M60 32L32 60" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <svg class="arrow" width="52" height="30" viewBox="0 0 52 30" fill="none" aria-hidden="true">
+          <path d="M2 15h44M36 4l11 11-11 11" stroke="currentColor" stroke-width="4"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="result">Click</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live capture: the daisy wheel open over a real TextEdit document, driven
+       by injected frames while screencapture recorded. The lit cluster is a real
+       aim state, and the face-button colours on it are the app's real commit
+       mapping, not decoration. -->
+  <div class="stage hide" id="typing">
+    <div class="shotfill" style="background-image:url('assets/desk-typing.jpg')"></div>
+    <div class="caption low">Type without a keyboard.</div>
+  </div>
+
+  <!-- The coverage card. Both review passes landed on the same gap: nothing in
+       the set said what the money buys, and three cards read PlayStation with
+       no countervailing text, so an Xbox owner had no signal at all. Copy is
+       lifted from the live site (index.html: "14-day trial, no card, no
+       account") rather than written fresh, so the claims stay ones that have
+       already been checked. -->
+  <div class="stage hide" id="deal">
+    <div class="caption">Everything, from the pad in your hand.</div>
+    <!-- The grid carries only what EVERY supported pad can do. Checked against
+         SteerCore/ControllerCapabilities.swift: adaptive triggers are DualSense
+         alone, gyro is DualSense / DualShock 4 / Switch Pro, and MFi's base set
+         is battery only. Listing those beside the five families bound them
+         together and promised an Xbox buyer two things his pad does not have,
+         on the image the checkout renders. Hardware-conditional features get
+         their own qualified line, and it must stay qualified. -->
+    <div class="capgrid">
+      <span>Cursor</span><span>Scroll</span><span>Shortcuts</span>
+      <span>App launcher</span><span>Typing</span><span>Window snap</span>
+    </div>
+    <div class="fine">DualSense &middot; DualShock 4 &middot; Xbox &middot; Switch Pro &middot; MFi</div>
+    <div class="fine quiet">Gyro aim, haptics and adaptive triggers on the pads that have them.</div>
+    <div class="fine quiet">One-time purchase. No subscription, no account.</div>
+  </div>
+
+  <div class="stage hide" id="menubar">
+    <div class="caption">Lives in the menu bar.</div>
+    <img class="shot menubar" src="assets/menubar-dropdown-dark.png" alt="" />
+  </div>
+
+  <!-- Live capture, not a composite: the dev build was driven by injected
+       controller frames (steer://debug/inject) while screencapture recorded the
+       real screen, so the translucency, the lit selection, and the desktop
+       behind it are all genuine. See docs/store-assets.md for the recipe. -->
+  <div class="stage hide" id="radial">
+    <div class="shotfill" style="background-image:url('assets/desk-radial.jpg')"></div>
+    <div class="caption over">Aim the stick. Press to launch.</div>
+  </div>
+
+  <script>
+    // One source, one card visible per render, selected by URL hash.
+    (function () {
+      var want = (location.hash || "#identity").replace("#", "");
+      var stages = document.querySelectorAll(".stage");
+      for (var i = 0; i < stages.length; i++) {
+        stages[i].classList.toggle("hide", stages[i].id !== want);
+      }
+    })();
+  </script>
+</body>
+</html>
