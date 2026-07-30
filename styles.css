@@ -22,6 +22,7 @@
   /* text-weight variants: the fills fail AA as small text, these clear 4.5:1 on white/inset */
   --green-text:#177d33; --amber-text:#9a5b00;
   --ps-cross:#1e9bf0; --ps-circle:#ff3b30; --ps-triangle:#34c759; --ps-square:#ff375f;
+  --pad-body:#e4e7ec; --pad-ink:#767c88; --pad-edge:rgba(0,0,0,0.24);
   --frame:rgba(0,0,0,0.10);
   --shadow-window:0 1px 1px rgba(0,0,0,.04),0 12px 40px -8px rgba(0,0,0,.16),0 2px 8px rgba(0,0,0,.06);
   /* elevation ramp: resting card < large card < window/hero. The deepest tier
@@ -46,6 +47,7 @@
   /* on the dark surface the bright fills already clear 4.5:1 as text */
   --green-text:#30d158; --amber-text:#ffd60a;
   --ps-cross:#3aa0f0; --ps-circle:#ff453a; --ps-triangle:#30d158; --ps-square:#ff4f7d;
+  --pad-body:#34353b; --pad-ink:#9aa0ac; --pad-edge:rgba(255,255,255,0.28);
   --frame:rgba(255,255,255,0.12);
   --shadow-window:0 1px 1px rgba(0,0,0,.4),0 20px 60px -12px rgba(0,0,0,.6),0 2px 10px rgba(0,0,0,.4);
   /* dark elevation: raised = a lighter surface + a deeper, tighter shadow */
