@@ -269,6 +269,20 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .dash{color:var(--text-3)}
 
 /* spec grid */
+/* FAQ: moved out of the homepage sheet 2026-07-30. The requirements block
+   and its two FAQ rows now live on support.html, which links styles.css and
+   not home.css, so these rules were shipping to a page with no markup and the
+   markup was rendering unstyled. Found by scripts/dead-css.mjs. */
+.faq{max-width:760px;margin:40px auto 0}
+.faq details{border-top:1px solid var(--sep);padding:2px 0}
+.faq details:last-child{border-bottom:1px solid var(--sep)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 4px;font-size:16px;font-weight:500;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:16px;letter-spacing:-0.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";width:10px;height:10px;flex:none;border-right:1.6px solid var(--text-3);border-bottom:1.6px solid var(--text-3);transform:rotate(45deg);transition:transform .18s ease;margin-right:4px;margin-top:-3px}
+.faq details[open] summary::after{transform:rotate(-135deg);margin-top:2px}
+.faq .faq-body{padding:0 4px 20px;font-size:16px;color:var(--text-2);line-height:1.6;max-width:64ch}
+.faq .faq-body a{color:var(--blue-text)}
+
 .specs{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px}
 .spec-row{display:flex;justify-content:space-between;gap:24px;padding:14px 0;border-top:1px solid var(--sep);font-size:16px}
 .spec-row .k{color:var(--text-2)}

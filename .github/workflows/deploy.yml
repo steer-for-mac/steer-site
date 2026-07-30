@@ -1,0 +1,66 @@
+name: build and deploy
+
+# index.html and home.css are generated from parts/, so Pages cannot serve the
+# repo as-is: it has to build first. bin/build is stdlib python, and the checks
+# below are the repo's own dependency-free scripts, so this needs no lockfile
+# and nothing to install beyond a headless Chrome for the rendering gates.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+
+      - name: Assemble the page
+        run: bin/build
+
+      # The generated files are committed, so a mismatch means someone edited
+      # index.html directly or forgot to rebuild. Fail rather than quietly
+      # shipping something nobody reviewed.
+      - name: Generated files match parts/
+        run: bin/build --check
+
+      - name: Copy and design rules
+        run: |
+          node scripts/curb-check.mjs
+          node scripts/curb-check.mjs --self-test
+
+      - name: Install headless Chrome
+        run: npx --yes @puppeteer/browsers install chrome-headless-shell@stable --path "$HOME/.cache/puppeteer"
+
+      # The one that catches real breakage: renders every band at 1440 and 375
+      # and fails on horizontal overflow.
+      - name: Render every band
+        run: node scripts/shots.mjs --out /tmp/ci-shots
+
+      - name: Unreachable CSS
+        run: node scripts/dead-css.mjs --min 400
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

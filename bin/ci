@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+"""Run every check, in parallel, and fail loudly.
+
+    bin/ci            all checks
+    bin/ci --quick    skip the slow rendering checks
+
+Same shape as ../seanfloyd.dev/bin/ci and ../news-digest: steps run
+concurrently, output is printed per step in a stable order, exit is non-zero if
+any step fails. Nothing here needs installing; it is all stdlib plus the repo's
+own dependency-free scripts.
+
+The rendering checks are the ones that actually catch things. curb-check reads
+the source, but the shots gate is what notices a band overflowing at 375, and
+dead-css is what noticed the FAQ moving to a page that never loaded its
+stylesheet. A check that only reads source would have passed both.
+"""
+import subprocess
+import sys
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+BOLD, PURPLE, GREEN, RED, DIM, RESET = "\033[1m", "\033[35m", "\033[32m", "\033[31m", "\033[2m", "\033[0m"
+
+QUICK = "--quick" in sys.argv
+
+STEPS = [
+    ("Build: index.html and home.css are current", ["bin/build", "--check"], False),
+    ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
+    ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),
+    ("Render: every band, 1440 and 375, no overflow", ["node", "scripts/shots.mjs", "--out", "scratch/shots/ci"], True),
+    ("CSS: unreachable selectors", ["node", "scripts/dead-css.mjs", "--min", "400"], True),
+]
+
+
+def run(step):
+    name, cmd, slow = step
+    if QUICK and slow:
+        return name, None, ""
+    p = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    return name, p.returncode, (p.stdout + p.stderr).strip()
+
+
+def main() -> int:
+    steps = [s for s in STEPS]
+    with ThreadPoolExecutor(max_workers=len(steps)) as pool:
+        results = list(pool.map(run, steps))
+
+    failed = 0
+    for name, code, out in results:
+        print(f"\n{BOLD}{PURPLE}=== {name} ==={RESET}")
+        if code is None:
+            print(f"{DIM}skipped (--quick){RESET}")
+            continue
+        if out:
+            print(out)
+        if code == 0:
+            print(f"{GREEN}Passed{RESET}")
+        else:
+            print(f"{RED}Failed{RESET}")
+            failed += 1
+
+    print()
+    if failed:
+        print(f"{RED}CI failed: {failed} step(s){RESET}")
+        return 1
+    print(f"{GREEN}CI passed{RESET}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
