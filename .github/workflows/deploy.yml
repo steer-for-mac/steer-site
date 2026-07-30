@@ -43,12 +43,21 @@ jobs:
       - name: Install headless Chrome
         run: npx --yes @puppeteer/browsers install chrome-headless-shell@stable --path "$HOME/.cache/puppeteer"
 
-      # The one that catches real breakage: renders every band at 1440 and 375
-      # and fails on horizontal overflow.
+      # Serve with the same nginx config that runs locally, and drive it with a
+      # browser on the runner. Chrome inside the image would be a 958MB build
+      # for no gain: the checks need a browser, not a container, and pointing
+      # them at nginx is what actually exercises try_files and the MIME types.
+      - name: Serve
+        run: docker compose up -d --wait
+
       - name: Render every band
+        env:
+          BASE_URL: http://127.0.0.1:8080
         run: node scripts/shots.mjs --out /tmp/ci-shots
 
       - name: Unreachable CSS
+        env:
+          BASE_URL: http://127.0.0.1:8080
         run: node scripts/dead-css.mjs --min 400
 
       - uses: actions/upload-pages-artifact@v3

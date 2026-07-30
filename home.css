@@ -1661,7 +1661,10 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
   .dgs.on .cp-click{animation:cpClick 6.2s cubic-bezier(.2,.6,.3,1) infinite}
   .dgs.on .cp-caret{animation:cpCaret 6.2s steps(1,end) infinite}
   /* ── under 900px the cells stack and .hconn goes; the vertical connectors
-        carry the signal instead, or the narrow chain has no flow at all ──── */
+        carry the signal instead, or the narrow chain has no flow at all.
+        Both connectors run the one clock on purpose: they are the same signal
+        one hop apart, and each starts when its own cell scrolls in, so they
+        cannot land in lockstep anyway. ─────────────────────────────────────*/
   .dgs.on .vcd{animation:cpVert 6.2s linear infinite}
 }
 
@@ -1733,7 +1736,7 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
    and every word.
 
    What changed: the band now speaks the same language as #uses and
-   #capabilities — .d-head, .d-top, .d-spec, .d-fig, .dgs — so the only new
+   #capabilities (.d-head, .d-top, .d-spec, .d-fig, .dgs), so the only new
    rules here are the dark-ground token remap, the two-cell stage, and the one
    plate this band owns.
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -1744,18 +1747,17 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
    both themes. Rebinding the tokens inside the band is what lets every shared
    class come along unmodified, instead of a parallel .feel-cinema copy of each.
 
-   Contrast, measured against the brightest ground the band can produce — the
-   #101728 gradient stop with the ::before accent glow composited over it at
-   its full 0.24 alpha (#25375C). That composite is the theoretical peak; the
-   glow is blurred 34px and centred off-canvas, so real pixels sit lighter on
-   contrast than this. Sampled from the rendered PNG the darkest ground under
-   body text is #0d1322 and the lightest is #131c33.
-     #F4F7FC  text     11.60:1  (17.93:1 on the #0a0e1a mid stop)
-     #AEB6C6  text-2    6.11:1  (9.45:1)
-     #9AA4B8  text-3    4.97:1  (7.68:1)   ← was #8791A6, which is 3.93:1 on
-                                   the same worst case and shipped as the band's
-                                   small print. Lifted rather than reused.
-     #7FB0FF  accent    5.67:1  (8.76:1)   ← the band's existing link blue;
+   Contrast is measured, not derived. The band's ground is a radial gradient
+   plus a blurred accent glow, so the worst case is not a hex you can read off
+   a rule: the band was rendered with its own content hidden and every pixel
+   sampled. Lightest ground anywhere inside it is #1B2847 (the glow, at 1113,
+   418 in a 1440 frame); darkest is #080A12. Ratios against the lightest:
+     #F4F7FC  text     13.57:1   (18.41:1 on the darkest)
+     #AEB6C6  text-2    7.15:1   (9.70:1)
+     #9AA4B8  text-3    5.81:1   (7.88:1)  ← replaces the band's #8791A6, which
+                                   measures 4.60:1: passing, but with 0.1 of
+                                   headroom under every small mono label here.
+     #7FB0FF  accent    6.63:1   (8.99:1)  ← the band's existing link blue;
                                    --blue-text is tuned for pale surfaces. */
 .feel-cinema{
   --text:#F4F7FC;
@@ -1774,24 +1776,30 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
    inherited from `main > section > .wrap`. #uses and #capabilities do not
    carry them either, and a ruled cell grid draws its own structure. */
 .feel-cinema .dw{position:relative;z-index:2}
+/* the band's small print was two greys: #8791A6 hardcoded on the eyebrow and
+   the picker label, --text-3 everywhere the shared classes reach. One grey. */
+.feel-cinema .eyebrow{color:var(--text-3)}
 #feel .d-display{color:var(--text);max-width:16ch}
 /* the pd- gate centres the band for ps/xb/mf via `html[data-pad] #feel .lead`
    (1,2,1). Beaten on the cascade at equal specificity, not with !important. */
 html #feel .d-top .lead{margin-left:0;margin-right:0;max-width:48ch}
 
 /* ── the stage: rows against the plate ────────────────────────────────────
-   Centre-aligned, the way #uses centres a short text column against a wide
-   figure. The row count swings 1 to 3 across the four pads, so a top- or
-   bottom-aligned cell would leave a visible hole on Xbox and MFi; centred,
-   the slack lands equally above and below and reads as placement. */
+   The row count swings 1 to 3 across the four pads, so the left cell cannot be
+   sized to its content. It is stretched to the plate instead and the compat
+   link is pinned to its floor: the rows start on the plate's spec rule and the
+   link lands on the plate's ground line, so both columns terminate on ink at
+   both ends and the pad-to-pad slack falls in the middle rather than opening a
+   hole at the top of the cell. #uses' rule, in a different direction: no
+   column may bottom out in white space. */
 .fl-stage{
   display:grid;grid-template-columns:minmax(0,5.6fr) minmax(0,6.4fr);
-  gap:36px 60px;align-items:center;
+  gap:36px 60px;align-items:stretch;
   border-top:1px solid var(--sep);border-bottom:1px solid var(--sep);
   margin-top:44px;padding:40px 0 44px;
 }
-.fl-say{min-width:0}
-.fl-plate{min-width:0}
+.fl-say{min-width:0;display:flex;flex-direction:column}
+.fl-plate{min-width:0;display:flex;flex-direction:column;justify-content:flex-end}
 
 /* the checklist as spec rows: the thing in mono flush left, what it does in
    the right column. Same split the sentences already carried at their first
@@ -1815,7 +1823,7 @@ html[data-pad="mf"] .fl-row.pd-mf{display:grid}
 
 .feel-cinema .lb-picker{margin-top:22px}
 .feel-cinema .lb-picker .label{color:var(--text-3)}
-.feel-cinema .feel-compat{margin-top:22px}
+.feel-cinema .feel-compat{margin-top:auto;padding-top:22px}
 
 /* ── the plate: d-pad up, and the volume ceiling ──────────────────────────
    The one claim that is true on all four pads and needs no glyph: d-pad up is

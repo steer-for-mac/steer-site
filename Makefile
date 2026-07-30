@@ -13,10 +13,11 @@ up: ## Serve on https://steer.seanfloyd.dev.local (nginx, matches production)
 down: ## Stop the container
 	docker compose down
 
-ci: ## Every check, in parallel
-	bin/ci
+ci: ## Every check, against the real nginx container
+	docker compose up -d --wait
+	BASE_URL=http://127.0.0.1:8080 bin/ci
 
-ci-quick: ## Skip the rendering checks
+ci-quick: ## Skip the rendering checks (no container needed)
 	bin/ci --quick
 
 shots: ## Render every band at 1440 and 375 into scratch/shots/

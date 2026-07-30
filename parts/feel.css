@@ -1,0 +1,170 @@
+/* ══ FEEL ═══════════════════════════════════════════════════════════════════
+   The band was the last one still shaped like the pre-graft page: centred
+   prose, a green tick per line (a second saturated accent the curb forbids),
+   and an empty right half for three pads out of four. Everything around it had
+   been redrawn as ruled cells and line-art plates, so it read as a hole in the
+   middle of the page rather than as the page's one dark moment.
+
+   What is kept: the dark treatment and its hard cut (styles/base.css explains
+   why a gradient bridge was wrong), the per-pad copy, the light-bar picker,
+   and every word.
+
+   What changed: the band now speaks the same language as #uses and
+   #capabilities (.d-head, .d-top, .d-spec, .d-fig, .dgs), so the only new
+   rules here are the dark-ground token remap, the two-cell stage, and the one
+   plate this band owns.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── the dark-ground token remap ──────────────────────────────────────────
+   The .d-* grammar is written against --text / --text-2 / --text-3 / --sep /
+   --blue-text, which follow the page theme. This band does not: it is dark in
+   both themes. Rebinding the tokens inside the band is what lets every shared
+   class come along unmodified, instead of a parallel .feel-cinema copy of each.
+
+   Contrast is measured, not derived. The band's ground is a radial gradient
+   plus a blurred accent glow, so the worst case is not a hex you can read off
+   a rule: the band was rendered with its own content hidden and every pixel
+   sampled. Lightest ground anywhere inside it is #1B2847 (the glow, at 1113,
+   418 in a 1440 frame); darkest is #080A12. Ratios against the lightest:
+     #F4F7FC  text     13.57:1   (18.41:1 on the darkest)
+     #AEB6C6  text-2    7.15:1   (9.70:1)
+     #9AA4B8  text-3    5.81:1   (7.88:1)  ← replaces the band's #8791A6, which
+                                   measures 4.60:1: passing, but with 0.1 of
+                                   headroom under every small mono label here.
+     #7FB0FF  accent    6.63:1   (8.99:1)  ← the band's existing link blue;
+                                   --blue-text is tuned for pale surfaces. */
+.feel-cinema{
+  --text:#F4F7FC;
+  --text-2:#AEB6C6;
+  --text-3:#9AA4B8;
+  --sep:rgba(255,255,255,0.09);
+  --sep-2:rgba(255,255,255,0.16);
+  --hairline:rgba(255,255,255,0.10);
+  --blue-text:#7FB0FF;
+  --blue-fill:rgba(127,176,255,0.13);
+  /* one tier under #uses (96) now that the band ends on ink rather than on the
+     168px of padding that used to stand in for content */
+  padding:92px 0 96px;
+}
+/* .dw replaces .wrap here, which drops the two vertical column rules the band
+   inherited from `main > section > .wrap`. #uses and #capabilities do not
+   carry them either, and a ruled cell grid draws its own structure. */
+.feel-cinema .dw{position:relative;z-index:2}
+/* the band's small print was two greys: #8791A6 hardcoded on the eyebrow and
+   the picker label, --text-3 everywhere the shared classes reach. One grey. */
+.feel-cinema .eyebrow{color:var(--text-3)}
+#feel .d-display{color:var(--text);max-width:16ch}
+/* the pd- gate centres the band for ps/xb/mf via `html[data-pad] #feel .lead`
+   (1,2,1). Beaten on the cascade at equal specificity, not with !important. */
+html #feel .d-top .lead{margin-left:0;margin-right:0;max-width:48ch}
+
+/* ── the stage: rows against the plate ────────────────────────────────────
+   The row count swings 1 to 3 across the four pads, so the left cell cannot be
+   sized to its content. It is stretched to the plate instead and the compat
+   link is pinned to its floor: the rows start on the plate's spec rule and the
+   link lands on the plate's ground line, so both columns terminate on ink at
+   both ends and the pad-to-pad slack falls in the middle rather than opening a
+   hole at the top of the cell. #uses' rule, in a different direction: no
+   column may bottom out in white space. */
+.fl-stage{
+  display:grid;grid-template-columns:minmax(0,5.6fr) minmax(0,6.4fr);
+  gap:36px 60px;align-items:stretch;
+  border-top:1px solid var(--sep);border-bottom:1px solid var(--sep);
+  margin-top:44px;padding:40px 0 44px;
+}
+.fl-say{min-width:0;display:flex;flex-direction:column}
+.fl-plate{min-width:0;display:flex;flex-direction:column;justify-content:flex-end}
+
+/* the checklist as spec rows: the thing in mono flush left, what it does in
+   the right column. Same split the sentences already carried at their first
+   comma or colon.
+
+   The pd- gate is (0,1,0) and this sheet is concatenated after base.css, so a
+   bare `.fl-row{display:grid}` would out-cascade `display:none` and show all
+   four pads' rows at once. base.css hit the same wall with `li.pd-*`; same
+   fix, one tier up. */
+.fl-row{grid-template-columns:150px minmax(0,1fr);gap:2px 24px;
+  padding:13px 0 14px;border-bottom:1px solid var(--sep)}
+.fl-row.pd-ps,.fl-row.pd-xb,.fl-row.pd-sw,.fl-row.pd-mf{display:none}
+html:not([data-pad]) .fl-row.pd-ps,
+html[data-pad="ps"] .fl-row.pd-ps,
+html[data-pad="xb"] .fl-row.pd-xb,
+html[data-pad="sw"] .fl-row.pd-sw,
+html[data-pad="mf"] .fl-row.pd-mf{display:grid}
+.fl-row .k{font-family:var(--mono);font-size:11px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--text);line-height:1.55}
+.fl-row .v{font-size:14.5px;line-height:1.5;color:var(--text-2);letter-spacing:-0.005em}
+
+.feel-cinema .lb-picker{margin-top:22px}
+.feel-cinema .lb-picker .label{color:var(--text-3)}
+.feel-cinema .feel-compat{margin-top:auto;padding-top:22px}
+
+/* ── the plate: d-pad up, and the volume ceiling ──────────────────────────
+   The one claim that is true on all four pads and needs no glyph: d-pad up is
+   bound to volumeUp out of the box, and the haptic at the top is a different
+   event from the nine steps below it. Cited in the markup with file and line.
+
+   Dead air below the ground line is 30 of 240 viewBox units; the crop margin
+   resolves against .d-fig's width, so the trim is 30/420. */
+.ff{--cb:-7.1%}
+.fl-up{fill:var(--blue-text);opacity:.2;stroke:var(--blue-text);stroke-opacity:.55;stroke-width:1}
+/* deliberately not .acc-t / .acc-s / .acc-h.knob: base.css hangs the #uses
+   plate loops off those class names, and a .dgs.on here would inherit them. */
+.fl-ring{transform-box:view-box;transform-origin:86px 140px}
+.fl-mark{transform-box:view-box}
+
+@media (prefers-reduced-motion:no-preference){
+  /* 6.2s, distinct from every other loop on the page (6 / 5.5 / 6.5 / 4.4) so
+     two plates in one viewport never sync. Transform and opacity only.
+     steps(1,end): volume is discrete, so the marker must jump a step at a
+     time, not glide. */
+  .dgs.on .fl-mark{animation:flClimb 6.2s steps(1,end) infinite}
+  .dgs.on .fl-ring{animation:flPulse 6.2s cubic-bezier(.4,.05,.2,1) infinite}
+  .dgs.on .fl-ring.r2{animation-name:flPulse2}
+}
+/* the cap steps across the nine bars: 22 view-box units along, 14 up, per step */
+@keyframes flClimb{
+  0%,7%{transform:translate(-176px,111.6px);opacity:1}
+  11%{transform:translate(-154px,97.6px)}
+  15%{transform:translate(-132px,83.6px)}
+  19%{transform:translate(-110px,69.6px)}
+  23%{transform:translate(-88px,55.6px)}
+  27%{transform:translate(-66px,41.6px)}
+  31%{transform:translate(-44px,27.6px)}
+  35%{transform:translate(-22px,13.6px)}
+  39%,88%{transform:translate(0,0);opacity:1}
+  92%{transform:translate(0,0);opacity:0}
+  94%,100%{transform:translate(-176px,111.6px);opacity:1}
+}
+/* two pulses, because volumeBoundary is a doublePulse and the single tick the
+   steps get is not */
+@keyframes flPulse{
+  0%,41%{opacity:0;transform:scale(.9)}
+  45%{opacity:.4;transform:scale(1)}
+  53%{opacity:.05;transform:scale(1.05)}
+  58%{opacity:.4;transform:scale(1)}
+  70%,100%{opacity:.05;transform:scale(1.06)}
+}
+@keyframes flPulse2{
+  0%,43%{opacity:0;transform:scale(.9)}
+  49%{opacity:.28;transform:scale(1)}
+  56%{opacity:.04;transform:scale(1.05)}
+  62%{opacity:.28;transform:scale(1)}
+  74%,100%{opacity:.04;transform:scale(1.06)}
+}
+
+@media(max-width:1040px){
+  .fl-stage{grid-template-columns:1fr;gap:30px;padding:34px 0 36px;margin-top:36px}
+  .fl-plate .d-fig{max-width:420px}
+}
+@media(max-width:900px){
+  .feel-cinema{padding:68px 0 72px}
+  #feel .d-display{max-width:20ch}
+  /* the leader goes with .dgs .ld below 900, so the ink now starts at the top
+     of the outer ring: 74 of 420 units of dead air above it */
+  .ff{--ct:-17.6%}
+  .fl-plate .d-fig{max-width:340px;margin-left:auto;margin-right:auto}
+}
+@media(max-width:560px){
+  .fl-row{grid-template-columns:1fr;gap:4px;padding:12px 0 13px}
+}

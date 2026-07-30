@@ -48,6 +48,9 @@ const VIEWPORTS = [1440, 375];
 const OVERFLOW_WIDTHS = [1440, 768, 375];
 
 function findChrome() {
+  /* CHROME_PATH first, because in the CI container the browser is at
+     /usr/bin/chromium and none of the host paths below exist. */
+  if (process.env.CHROME_PATH) return process.env.CHROME_PATH;
   const candidates = [];
   const cache = join(homedir(), ".cache", "puppeteer", "chrome-headless-shell");
   if (existsSync(cache)) {
@@ -89,6 +92,11 @@ const known = new Set(SECTIONS.map(([n]) => n));
 const unknown = only.filter((n) => !known.has(n));
 if (unknown.length) die(`--only: no such section: ${unknown.join(", ")}\nknown: ${[...known].join(", ")}`);
 
+/* BASE_URL points the checks at an already-running server (make up), so CI
+   exercises the same nginx that production behaviour comes from: try_files,
+   extensionless URLs, real MIME types. Unset, each script serves the repo
+   itself, which keeps a bare `node scripts/shots.mjs` self-contained. */
+const BASE_URL = process.env.BASE_URL?.replace(/\/$/, "") || null;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* The SVG symbols live in assets/svg/ and are pulled in with
@@ -155,7 +163,7 @@ process.on("exit", reap);
 process.on("SIGINT", () => { reap(); process.exit(130); });
 
 let ws;
-const httpServer = await serveRepo();
+const httpServer = BASE_URL ? null : await serveRepo();
 try {
   const endpoint = await new Promise((resolve, reject) => {
     let buf = "";
@@ -186,7 +194,7 @@ try {
   await s.send("Runtime.enable");
 
   mkdirSync(outDir, { recursive: true });
-  const origin_ = `http://127.0.0.1:${httpServer.address().port}`;
+  const origin_ = BASE_URL || `http://127.0.0.1:${httpServer.address().port}`;
   const url = `${origin_}/${page}`;
   const wanted = SECTIONS.filter(([name]) => !only.length || only.includes(name));
   let count = 0;

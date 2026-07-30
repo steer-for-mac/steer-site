@@ -23,11 +23,18 @@
         </div>
         <div class="d-fig fp1">
           <svg class="dgs" viewBox="0 0 330 300" aria-hidden="true">
-            <use class="padart" href="assets/svg/pad-art-ps.svg#s" transform="translate(-108.72,39.86) scale(0.4562)"/>
+            <!-- the press dips the whole pad: the button that moved is a
+                 different button on every pad, and pad-art-mf draws no face
+                 buttons at all, so nothing pad-specific may be marked here.
+                 The <use> keeps its own transform; the wrapper takes the CSS
+                 one, because a CSS transform would replace the attribute. -->
+            <g class="cp-pad"><use class="padart" href="assets/svg/pad-art-ps.svg#s" transform="translate(-108.72,39.86) scale(0.4562)"/></g>
             <path class="o2 hconn" d="M300,150 H330"/>
+            <circle class="cp-emit acc-h hconn" cx="300" cy="150" r="6"/>
+            <circle class="flow f0 hconn" cx="300" cy="150" r="3"/>
           </svg>
         </div>
-        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
+        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><circle class="flow vcd" cx="20" cy="0" r="2.6"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
       </div>
 
       <div class="d-st">
@@ -48,7 +55,10 @@
             <path class="fillsoft" d="M225,60 L220.5,69 L229.5,69 Z"/>
             <!-- the piece in between -->
             <rect class="o1" x="106" y="116" width="120" height="68" rx="10"/>
-            
+            <!-- the same box again in the accent, so the piece in between is
+                 the one lit object in the chain and can brighten as the press
+                 passes through it -->
+            <rect class="cp-lit acc-h" x="106" y="116" width="120" height="68" rx="10"/>
             <image href="assets/mark.png" x="151.0" y="134.0" width="30" height="30" preserveAspectRatio="xMidYMid meet"/>
             <path class="o2 hconn" d="M0,150 H97 M236,150 H332"/>
             <path class="fillsoft hconn" d="M106,150 L97,145.5 L97,154.5 Z"/>
@@ -56,7 +66,7 @@
             <circle class="flow f2 hconn" cx="236" cy="150" r="3"/>
           </svg>
         </div>
-        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
+        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><circle class="flow vcd" cx="20" cy="0" r="2.6"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
       </div>
 
       <div class="d-st">
@@ -68,12 +78,17 @@
           <svg class="dgs" viewBox="0 0 330 300" aria-hidden="true">
             <path class="o2 hconn" d="M0,150 H31"/>
             <path class="fillsoft hconn" d="M40,150 L31,145.5 L31,154.5 Z"/>
+            <circle class="flow f3 hconn" cx="0" cy="150" r="3"/>
             <rect class="o1" x="40" y="80" width="250" height="140" rx="8"/>
             <rect class="o3" x="70" y="104" width="190" height="84" rx="6"/>
             <path class="o3" d="M70,120 H260"/>
             <path class="o3" d="M86,140 H190 M86,156 H214 M86,172 H150"/>
-            <rect class="acc" x="194" y="150" width="2" height="12"/>
-            <path class="o1" d="M120,132 L120,158 L126,152.5 L130,162 L134,160 L130,150.5 L138,150 Z"/>
+            <!-- the caret sits at the end of the last line rather than mid
+                 paragraph: it is the keystroke half of this cell's claim, and
+                 a caret only reads as typing where the text stopped -->
+            <rect class="acc cp-caret" x="153" y="166" width="2" height="12"/>
+            <path class="o1 cp-cursor" d="M120,132 L120,158 L126,152.5 L130,162 L134,160 L130,150.5 L138,150 Z"/>
+            <circle class="cp-click acc-h" cx="120" cy="132" r="7"/>
             <path class="o1" d="M165,220 V240"/>
             <path class="o1b" d="M132,240 H198"/>
           </svg>

@@ -1,0 +1,108 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   TRUST — the band the redesign skipped.
+
+   Everything here is scoped to #trust because base.css is shared: .sec,
+   .sunken, .shot and .d-item all belong to other bands too, and this sheet is
+   concatenated after base.css by bin/build, so an unscoped rule here would
+   silently retune uses, capabilities and feel.
+
+   Colours: no new pair. --text, --text-2 and --blue-text on the surface ramp,
+   which the page already measures. Worst case is --bg-inset-2, the darkest
+   surface any of this can land on: --text 13.83:1 light / 12.80:1 dark,
+   --text-2 5.46 / 5.89, --blue-text 4.57 / 5.53. All clear AA 4.5:1
+   (measured 2026-07-30; the sRGB relative-luminance formula against the
+   tokens in styles.css). No radius is set here at all: the only rounded thing
+   in the band is .shot, which is already --r-window.
+
+   No motion: the band has none to gate. The screenshot is the static frame.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── the head's spec line ────────────────────────────────────────────────── */
+/* "No account, no cloud, no tracking." was the headline's second sentence.
+   Set as a mono rule it is the same object as .d-spec in the index: a
+   checkable fact, drawn rather than said. It also carries the rule that
+   divides the head from the body, so it costs no vertical space of its own. */
+#trust .t-strap{
+  margin-top:34px;border-top:1px solid var(--sep);padding-top:12px;
+  font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.45;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--text);
+}
+
+/* ── the proof block ─────────────────────────────────────────────────────── */
+/* Three cells, two columns. The figure spans both rows so the shot tops out
+   level with the claim it proves, and the three short items fill the column
+   under the claim rather than leaving the screenshot standing beside air.
+   That absorption is the whole trick: a 0.92-aspect capture is ~450px tall at
+   any legible width, and the band only gets shorter if that height is doing
+   two jobs. */
+#trust .t-proof{
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+  column-gap:56px;align-items:start;
+  padding:30px 0 34px;border-bottom:1px solid var(--sep);
+}
+#trust .t-lede{grid-column:1;grid-row:1}
+#trust .t-fig{grid-column:2;grid-row:1 / span 2}
+#trust .t-list{grid-column:1;grid-row:2}
+
+#trust .t-lede p{
+  font-size:15.5px;color:var(--text-2);line-height:1.56;
+  letter-spacing:-0.006em;max-width:62ch;margin-top:12px;text-wrap:pretty;
+}
+
+/* .shot brings --r-window, --shadow-window, the frame and `height:auto`
+   (without which the width/height attributes win as presentational hints and
+   stretch the capture). Nothing left to set: the capture is 1040x960 and the
+   column renders it at ~468px, so it is already a 2.2x source at this slot and
+   a downscaled copy would buy nothing but a third file to keep in sync. */
+
+/* ── the short items, under the claim ────────────────────────────────────── */
+/* Ruled, not boxed: the gutter is the line. Same reason .uc-grid's gap became
+   a hairline. The first rule doubles as the divider from the lede. */
+#trust .t-item{border-top:1px solid var(--sep);padding:15px 0 16px}
+#trust .t-item h3{
+  font-size:17px;font-weight:590;letter-spacing:-0.017em;line-height:1.25;
+  margin-bottom:5px;text-wrap:balance;
+}
+#trust .t-item p{
+  font-size:14.5px;color:var(--text-2);line-height:1.5;
+  letter-spacing:-0.005em;max-width:66ch;
+}
+
+/* ── the two disclosures ─────────────────────────────────────────────────── */
+/* Reuses .d-item, the use-case cell, unchanged apart from the heading step:
+   they are the same object (a titled cell in a ruled row), so they should be
+   the same rule. --cx is the cell padding the .d-index idiom bleeds out by,
+   so the vertical rule lands on the column edge rather than inside it. */
+#trust .t-disc{
+  --cx:var(--pad);
+  margin-left:calc(var(--cx) * -1);margin-right:calc(var(--cx) * -1);
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+}
+#trust .t-disc .d-item h3{font-size:17px;font-weight:590;letter-spacing:-0.017em}
+
+/* ── narrow ──────────────────────────────────────────────────────────────── */
+@media(max-width:1040px){
+  #trust .t-proof{column-gap:40px}
+  #trust .t-disc{--cx:20px}
+}
+/* One column from 900, the width every other band in the page folds at. The
+   DOM order is lede, figure, items, so the stack reads claim, proof, rest
+   without an `order` shuffle that would leave the tab sequence lying. */
+@media(max-width:900px){
+  #trust .t-proof{grid-template-columns:1fr;padding-bottom:28px}
+  #trust .t-lede,#trust .t-fig,#trust .t-list{grid-column:1;grid-row:auto}
+  #trust .t-fig{margin:20px 0 4px;max-width:560px}
+  /* base caps a folded .d-item at 44ch. That is right for a use-case cell with
+     a drawing under it and wrong here: at 768 the column is 720px wide and a
+     44ch measure leaves a 250px void down the whole band, which is the
+     card-sized hole the curb names. These cells are prose only, so they take a
+     reading measure instead. */
+  #trust .t-lede p,#trust .t-item p,#trust .t-disc .d-item p{max-width:60ch}
+  #trust .t-disc .d-item h3{max-width:none}
+  #trust .t-disc{--cx:0px;grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  #trust .t-strap{margin-top:26px}
+  #trust .t-proof{padding-top:24px}
+  #trust .t-item{padding:13px 0 14px}
+}

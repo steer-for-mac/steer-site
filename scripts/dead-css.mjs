@@ -41,6 +41,9 @@ const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript
   ".txt": "text/plain", ".ico": "image/x-icon" };
 
 function findChrome() {
+  /* CHROME_PATH first, because in the CI container the browser is at
+     /usr/bin/chromium and none of the host paths below exist. */
+  if (process.env.CHROME_PATH) return process.env.CHROME_PATH;
   const cache = join(homedir(), ".cache", "puppeteer", "chrome-headless-shell");
   const paths = existsSync(cache)
     ? readdirSync(cache).flatMap((r) => ["arm64", "x64"].map((a) =>
@@ -52,6 +55,11 @@ function findChrome() {
   return hit;
 }
 
+/* BASE_URL points the checks at an already-running server (make up), so CI
+   exercises the same nginx that production behaviour comes from: try_files,
+   extensionless URLs, real MIME types. Unset, each script serves the repo
+   itself, which keeps a bare `node scripts/shots.mjs` self-contained. */
+const BASE_URL = process.env.BASE_URL?.replace(/\/$/, "") || null;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const server = createServer((q, r) => {
   const rel = decodeURIComponent(q.url.split("?")[0]).replace(/^\/+/, "") || "index.html";
@@ -60,8 +68,8 @@ const server = createServer((q, r) => {
   r.writeHead(200, { "content-type": MIME[extname(f)] || "application/octet-stream" });
   r.end(readFileSync(f));
 });
-await new Promise((r) => server.listen(0, "127.0.0.1", r));
-const origin = `http://127.0.0.1:${server.address().port}`;
+if (!BASE_URL) await new Promise((r) => server.listen(0, "127.0.0.1", r));
+const origin = BASE_URL || `http://127.0.0.1:${server.address().port}`;
 
 const chrome = spawn(findChrome(), ["--headless", "--disable-gpu", "--remote-debugging-port=0", "about:blank"],
   { stdio: ["ignore", "ignore", "pipe"] });

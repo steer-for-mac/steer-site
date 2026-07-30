@@ -1,35 +1,80 @@
-<!-- TRUST -->
-<section class="sec-loose sunken" id="trust">
-  <div class="wrap">
-    <div class="sec-head-split">
+<!-- TRUST — rebuilt in the ruled/plate language the rest of the page now uses
+     (parts/uses.html, parts/capabilities.html). It was the one band the graft
+     never reached: 1,341px of six prose rows in a floating card, which made the
+     rarest content on the site (undocumented API use, features unconfirmed on
+     hardware I don't own, what the app can't do) the quietest object on it.
+
+     Nothing here is rewritten. Every word is the same; what changed is role.
+
+     1. The one claim that can be proven leads and carries the proof.
+        assets/import-review.png is the app's own review dialog, and
+        docs/screenshots.md calls it the only possible evidence for "anything
+        risky is shown to you first". It is also the only capture with no
+        controller glyphs in it, so it is the only screenshot that can ship
+        before the per-pad re-shoot; every other one would show an Xbox owner
+        PlayStation labels. .shot is the frame and --shadow-window is reserved
+        for exactly this.
+     2. The six rows split by kind. What the app does with the access you grant
+        it sits in the column beside the proof; the two disclosures sit as ruled
+        cells at the foot, where they read as a signed statement rather than as
+        rows five and six of a list.
+     3. No card, and no icon rail. The lead says "not a trust badge" and a
+        column of little shields was arguing the opposite of its own sentence. -->
+<section class="sec sunken" id="trust">
+  <div class="dw">
+    <div class="d-head">
       <div class="eyebrow">Built to be trusted</div>
-      <h2 class="h2" style="max-width:22ch">Your setup stays on your Mac. No account, no cloud, no tracking.</h2>
+      <i aria-hidden="true"></i>
+    </div>
+    <div class="d-top">
+      <!-- the headline's second sentence became the spec line under it. Three
+           literal negatives set in mono is the page's own grammar for a
+           checkable fact, and it keeps the display step to one clause so this
+           band opens at the same size as the two above it. -->
+      <h2 class="d-display">Your setup stays on your Mac.</h2>
       <p class="lead">Steer needs permission to move your cursor and type. Here is what it does with that access. Not a trust badge; the actual answer.</p>
     </div>
-    <div class="trust-list sec-body" style="max-width:840px">
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-        <div><h3>Plain files, on your computer.</h3><p>Your mappings live on your Mac, in a file you can open and read. No sign-in, nothing synced.</p></div>
+    <p class="t-strap">No account, no cloud, no tracking.</p>
+
+    <div class="t-proof">
+      <div class="t-lede">
+        <h3 class="d-mid">Anything risky is shown to you first.</h3>
+        <p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it does not run. Scripts run from your own macOS scripts folder: an import can name one you already installed, not bring its own.</p>
       </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-14 2 8h6"/></svg>
-        <div><h3>What you type stays on your Mac.</h3><p>Steer goes online for three reasons. It checks your licence key when you enter it, then re-checks that key on launch and about once a day. It looks for an update when you ask. It fetches a setup only if you paste a link to one.</p></div>
+
+      <div class="t-fig">
+        <div class="shot">
+          <img class="shot-light" src="assets/import-review.png" width="1040" height="960" loading="lazy" decoding="async" alt="Steer's import review: three imported bindings, each tagged Opens URL beside the address it would open, with Cancel and Import buttons at the foot.">
+          <img class="shot-dark" src="assets/import-review-dark.png" width="1040" height="960" loading="lazy" decoding="async" alt="Steer's import review: three imported bindings, each tagged Opens URL beside the address it would open, with Cancel and Import buttons at the foot.">
+        </div>
       </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.5l2 2 4-4.5"/><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
-        <div><h3>Anything risky is shown to you first.</h3><p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it does not run. Scripts run from your own macOS scripts folder: an import can name one you already installed, not bring its own.</p></div>
+
+      <div class="t-list">
+        <div class="t-item">
+          <h3>Plain files, on your computer.</h3>
+          <p>Your mappings live on your Mac, in a file you can open and read. No sign-in, nothing synced.</p>
+        </div>
+        <div class="t-item">
+          <h3>What you type stays on your Mac.</h3>
+          <p>Steer goes online for three reasons. It checks your licence key when you enter it, then re-checks that key on launch and about once a day. It looks for an update when you ask. It fetches a setup only if you paste a link to one.</p>
+        </div>
+        <div class="t-item">
+          <h3>Changes can be undone.</h3>
+          <p>Steer saves a restore point as you edit each settings pane, and keeps a history you can walk back through.</p>
+        </div>
       </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 2.3 5.6"/><path d="M4 20v-4h4"/></svg>
-        <div><h3>Changes can be undone.</h3><p>Steer saves a restore point as you edit each settings pane, and keeps a history you can walk back through.</p></div>
+    </div>
+
+    <!-- the two disclosures, as cells rather than list rows: they are the only
+         two claims on the page that cost the developer something to make. -->
+    <div class="t-disc">
+      <div class="d-item">
+        <h3>No private Apple code is linked in.</h3>
+        <p>Apple published no recipe for some of what Steer does: real pinch and rotate, and speaking directly to a controller's triggers, rumble, and light bar. Steer works those out from scratch, linking no private frameworks, only the developer tools Apple publishes for everyone. The <a href="features.html">full technical account</a> is written out, because hiding it would be worse.</p>
       </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
-        <div><h3>No private Apple code is linked in.</h3><p>Apple published no recipe for some of what Steer does: real pinch and rotate, and speaking directly to a controller's triggers, rumble, and light bar. Steer works those out from scratch, linking no private frameworks, only the developer tools Apple publishes for everyone. The <a href="features.html">full technical account</a> is written out, because hiding it would be worse.</p></div>
-      </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.4-3.2 8.2-8 9-4.8-.8-8-4.6-8-9V7z"/><path d="M9.5 12.5l1.8 1.8 3.4-3.6"/></svg>
-        <div><h3>What it can't do is written down too.</h3><p>Where a controller can't do something, Steer hides it rather than pretending. The <a href="compatibility.html">controller page</a> marks the gaps, including the features nobody has yet confirmed on real hardware because I don't own the pad. Snapping windows into place needs the Rectangle app, installed separately. The login screen and Touch ID stay out of reach.</p></div>
+      <div class="d-item">
+        <h3>What it can't do is written down too.</h3>
+        <p>Where a controller can't do something, Steer hides it rather than pretending. The <a href="compatibility.html">controller page</a> marks the gaps, including the features nobody has yet confirmed on real hardware because I don't own the pad. Snapping windows into place needs the Rectangle app, installed separately. The login screen and Touch ID stay out of reach.</p>
       </div>
     </div>
   </div>
