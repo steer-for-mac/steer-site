@@ -33,6 +33,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 /* Selector per frame, in scroll order. */
 const SECTIONS = [
   ["hero", ".chero"],
+  ["padstrip", ".padstrip"],
   ["uses", "#uses"],
   ["feel", "#feel"],
   ["capabilities", "#capabilities"],
@@ -186,7 +187,16 @@ try {
       const box = await s.eval(`(() => {
         const el = document.querySelector(${JSON.stringify(selector)});
         if (!el) return null;
-        el.scrollIntoView({ block: 'start' });
+        /* instant, both of them: styles.css sets scroll-behavior:smooth, so the
+           scrollIntoView is animated and a scrollBy on the next line computes
+           its target from the still-at-zero offset, retargets to -70, clamps to
+           0 and cancels the scroll outright. Every frame was shot at the top of
+           the page with the IntersectionObserver never having fired. */
+        el.scrollIntoView({ block: 'start', behavior: 'instant' });
+        /* the sticky nav paints at the viewport top, which is exactly where a
+           block:'start' scroll parks the section, so it landed inside the clip
+           and covered the first 52px of every frame. Drop the section clear. */
+        window.scrollBy({ top: -70, behavior: 'instant' });
         const r = el.getBoundingClientRect();
         return { x: 0, y: r.top + scrollY, width: innerWidth, height: r.height };
       })()`);
