@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440">
+  <!-- Drawn from the hero pad geometry. Filled with var() tokens so the
+       page CSS still colours it through <use>; presentation attributes
+       only, because class selectors do not reach a use shadow tree. -->
+  <g id="s" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" vector-effect="non-scaling-stroke">
+    <g opacity="0.62">
+      <path d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z" vector-effect="non-scaling-stroke"/>
+      <path d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z" vector-effect="non-scaling-stroke"/>
+    </g>
+    <g opacity="0.62" transform="matrix(-1 0 0 1 1200 0)">
+      <path d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z" vector-effect="non-scaling-stroke"/>
+      <path d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z" vector-effect="non-scaling-stroke"/>
+    </g>
+    <path opacity="0.72" vector-effect="non-scaling-stroke" d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"/>
+    <g opacity="0.4" vector-effect="non-scaling-stroke">
+      <circle cx="600" cy="94" r="19" vector-effect="non-scaling-stroke"/>
+      <circle cx="552" cy="142" r="8" vector-effect="non-scaling-stroke"/>
+      <circle cx="648" cy="142" r="8" vector-effect="non-scaling-stroke"/>
+      <circle cx="728" cy="114" r="15.5" vector-effect="non-scaling-stroke"/>
+      <circle cx="764" cy="150" r="15.5" vector-effect="non-scaling-stroke"/>
+      <circle cx="728" cy="186" r="15.5" vector-effect="non-scaling-stroke"/>
+      <circle cx="692" cy="150" r="15.5" vector-effect="non-scaling-stroke"/>
+      <path vector-effect="non-scaling-stroke" d="M521,217 H535 A2,2 0 0 1 537,219 V229 A2,2 0 0 0 539,231 H549 A2,2 0 0 1 551,233 V245 A2,2 0 0 1 549,247 H539 A2,2 0 0 0 537,249 V259 A2,2 0 0 1 535,261 H521 A2,2 0 0 1 519,259 V249 A2,2 0 0 0 517,247 H507 A2,2 0 0 1 505,245 V233 A2,2 0 0 1 507,231 H517 A2,2 0 0 0 519,229 V219 A2,2 0 0 1 521,217 Z"/>
+    </g>
+    <g opacity="0.62">
+      <circle cx="472" cy="150" r="37" vector-effect="non-scaling-stroke"/>
+      <circle cx="472" cy="150" r="26" vector-effect="non-scaling-stroke" opacity="0.6"/>
+      <circle cx="668" cy="238" r="37" vector-effect="non-scaling-stroke"/>
+      <circle cx="668" cy="238" r="26" vector-effect="non-scaling-stroke" opacity="0.6"/>
+    </g>
+  </g>
+  <!-- the same pad at thumbnail size: body and sticks only, or it turns to mush -->
+  <g id="padSm" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" opacity="0.68">
+    <path vector-effect="non-scaling-stroke" d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"/>
+    <circle cx="472" cy="150" r="37" vector-effect="non-scaling-stroke" opacity="0.7"/>
+    <circle cx="668" cy="238" r="37" vector-effect="non-scaling-stroke" opacity="0.7"/>
+  </g>
+</svg>

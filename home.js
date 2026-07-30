@@ -88,7 +88,7 @@
     document.querySelectorAll('.face-slot').forEach(function(s){s.innerHTML=glyph(s.dataset.b,pad);});
     // the drawn plates carry the pad too: a single fixed symbol meant every
     // pick rendered the same generic controller.
-    document.querySelectorAll('use.padart').forEach(function(u){u.setAttribute('href','#padArt-'+pad);});
+    document.querySelectorAll('use.padart').forEach(function(u){u.setAttribute('href','assets/svg/pad-art-'+pad+'.svg#s');});
     document.querySelectorAll('[data-ps]').forEach(function(el){
       var v=el.getAttribute('data-'+pad);
       if(v!=null) el.textContent=v;

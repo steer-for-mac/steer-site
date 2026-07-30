@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440">
+  <!-- Drawn from the hero pad geometry. Filled with var() tokens so the
+       page CSS still colours it through <use>; presentation attributes
+       only, because class selectors do not reach a use shadow tree. -->
+  <g id="s" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" opacity="0.62">
+    <path vector-effect="non-scaling-stroke" d="M420,82 C412,66 413,50 423,42 C433,35 452,33 467,36 C479,39 487,46 488,54 L485,70 Z"/>
+  </g>
+</svg>
