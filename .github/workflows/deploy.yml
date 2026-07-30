@@ -35,6 +35,9 @@ jobs:
       - name: Generated files match parts/
         run: bin/build --check
 
+      - name: Structural accessibility invariants
+        run: bin/a11y-check
+
       - name: Copy and design rules
         run: |
           node scripts/curb-check.mjs
@@ -52,12 +55,12 @@ jobs:
 
       - name: Render every band
         env:
-          BASE_URL: http://127.0.0.1:8080
+          BASE_URL: http://127.0.0.1:8391
         run: node scripts/shots.mjs --out /tmp/ci-shots
 
       - name: Unreachable CSS
         env:
-          BASE_URL: http://127.0.0.1:8080
+          BASE_URL: http://127.0.0.1:8391
         run: node scripts/dead-css.mjs --min 400
 
       - uses: actions/upload-pages-artifact@v3
