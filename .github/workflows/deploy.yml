@@ -49,7 +49,7 @@ jobs:
       - name: HTML and CSS lint
         run: |
           npx html-validate 'parts/*.html'
-          npx stylelint styles/tokens.css styles/shared.css styles/base.css 'parts/*.css'
+          npx stylelint 'styles/*.css' 'parts/*.css'
 
       - name: Copy and design rules
         run: |
@@ -73,6 +73,28 @@ jobs:
 
       - name: Unreachable CSS
         run: bin/purge-check
+
+      # `path: .` publishes the whole checkout, which put CLAUDE.md on the live
+      # site (200, not a 404). Subtractive rather than an allowlist on purpose:
+      # forgetting an entry here leaves a file published, which is the status
+      # quo, where forgetting one in an allowlist would silently 404 a real
+      # page. Task 7 replaces this with a dist/ directory that only ever holds
+      # shipped output, at which point this step goes away.
+      # The --prod build at the top of this job is overwritten by the plain
+      # `bin/build` that --check needs, and nothing put it back, so the
+      # published index.html shipped 111 dev comments citing docs/ paths and
+      # commit hashes. Re-strip here, after every check that wants the dev
+      # build has run, or the step below deletes docs/ while the largest quote
+      # of it sails past in the HTML.
+      - name: Strip dev comments and remove sources from the artifact
+        run: |
+          bin/build --prod
+          rm -rf docs bin scripts parts styles docker .github node_modules
+          rm -f CLAUDE.md AGENTS.md Makefile compose.yaml package.json \
+                package-lock.json purgecss.config.js index.src.html \
+                .stylelintrc.json .htmlvalidate.json
+          test -f index.html && test -f styles.css && test -f home.css \
+            && test -d assets && test -s home.js
 
       - uses: actions/upload-pages-artifact@v3
         with:
