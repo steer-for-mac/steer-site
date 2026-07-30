@@ -6,7 +6,7 @@
   "scripts": {
     "build": "bin/build",
     "ci": "bin/ci",
-    "lint:css": "stylelint styles/tokens.css styles/shared.css styles/base.css 'parts/*.css'",
+    "lint:css": "stylelint 'styles/*.css' 'parts/*.css'",
     "lint:html": "html-validate 'parts/*.html'"
   },
   "devDependencies": {
