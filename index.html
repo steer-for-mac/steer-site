@@ -43,17 +43,24 @@
 /* real screenshots: a plain frame, NO synthetic title bar (the app window in the
    PNG already carries its own traffic lights + title — a second bar was double chrome). */
 .shot{border-radius:var(--r-window);overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
-.shot img{width:100%;display:block}
+/* height:auto or the width/height attributes (which reserve the box and stop
+   the layout shifting) win as presentational hints and stretch the shot */
+.shot img{width:100%;height:auto;display:block}
 .shot-cap{font-size:12.5px;color:var(--text-3);margin-top:12px;letter-spacing:-0.005em}
 
 /* merged who-it's-for grid: one relatable lead card (the couch) spanning the
    row, then four supporting cards. Static grid; single column on mobile. */
 .uc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.uc-couch{grid-column:1/-1}
-.uc-couch .uc-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:8px 40px;align-items:center}
-.uc-couch h3{font-size:21px}
+/* Four cards, two columns, and the couch spans both: that left the fourth card
+   alone on the last row with a card-sized hole beside it, which is most of why
+   the band read as empty. Both cards that carry a vignette span the full width
+   now, so the rows are 1 / 2 / 1 and the wide vignettes get the width the
+   .vg rules say they want (a flex:1 Mac-side surface fills its column). */
+.uc-couch,.uc-ed{grid-column:1/-1}
+.uc-couch .uc-body,.uc-ed .uc-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:8px 40px;align-items:center}
+.uc-couch h3,.uc-ed h3{font-size:21px}
 .uc-lead .arrow-link{font-size:14px;margin-bottom:15px}
-@media(max-width:860px){.uc-grid{grid-template-columns:1fr}.uc-couch .uc-body{grid-template-columns:1fr}}
+@media(max-width:860px){.uc-grid{grid-template-columns:1fr}.uc-couch .uc-body,.uc-ed .uc-body{grid-template-columns:1fr}}
 @media(max-width:520px){
   .uc-lead{padding:18px 16px 16px}
   .trust-list{padding:6px 18px}
@@ -954,10 +961,12 @@ html[data-pad="ps"] li.pd-ps,
 html[data-pad="xb"] li.pd-xb,
 html[data-pad="sw"] li.pd-sw,
 html[data-pad="mf"] li.pd-mf{display:flex}
-/* Feel: only sw keeps an in-band screenshot (gyro). ps moved its Haptics pane
-   into the gallery dialog — the trigger vignette is the band's anchor now — so
-   ps joins xb/mf in the single centred column instead of leaving an empty
-   right half. (:not([data-pad]) is the pre-JS default, which shows ps.) */
+/* Feel: only sw has a screenshot for the right half (Gyro). Every capture is
+   PlayStation-labelled, so the other three pads cannot borrow one without
+   showing an Xbox owner the wrong glyphs, and gating one back to a single pad
+   is what left this band empty in the first place. Until the capture script can
+   shoot per pad, the other three get the single centred column.
+   (:not([data-pad]) is the pre-JS default, which shows ps.) */
 html:not([data-pad]) #feel .hero-grid,
 html[data-pad="ps"] #feel .hero-grid,
 html[data-pad="xb"] #feel .hero-grid,
@@ -974,11 +983,19 @@ html:not([data-pad]) #feel .price-inc li,
 html[data-pad="ps"] #feel .price-inc li,
 html[data-pad="xb"] #feel .price-inc li,
 html[data-pad="mf"] #feel .price-inc li{text-align:left}
-/* the pd gate's display:revert makes .lb-picker a block, so centre its
-   flex-row of dots directly (the label is inline and follows text-align) */
-html:not([data-pad]) #feel .lb-picker .dots,
-html[data-pad="ps"] #feel .lb-picker .dots{justify-content:center}
-/* capabilities: the layers explainer beside the summary list */
+/* The pd gate hides on .pd-ps and reveals with display:revert, which resolves a
+   div to block, so .lb-picker's own display:flex on line 451 was inert and its
+   flex-direction/align-items/gap were decorative lies. Reveal it as flex. */
+html:not([data-pad]) .lb-picker.pd-ps,
+html[data-pad="ps"] .lb-picker.pd-ps{display:flex;justify-content:center}
+/* capabilities: two columns that each flow on their own, top-aligned. Centred
+   cells (the old .hero-grid) pushed the shorter column's content down and left
+   a gap above it; independent flow means neither column has to match. */
+.cap-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:40px 56px;align-items:start}
+.cap-grid .h2{margin-bottom:28px}
+.cap-grid .lead+.lead{margin-top:14px}
+.cap-grid .cap-layers{margin-top:40px}
+@media(max-width:860px){.cap-grid{grid-template-columns:1fr;gap:28px}.cap-grid .h2{margin-bottom:18px}}
 .cap-layers h3{font-size:22px;letter-spacing:-0.02em;margin-bottom:8px}
 .cap-layers p{font-size:16px;color:var(--text-2);line-height:1.55;max-width:52ch;margin-bottom:16px}
 
@@ -987,6 +1004,13 @@ html[data-pad="ps"] #feel .lb-picker .dots{justify-content:center}
    nothing is fetched until the visitor asks. Theme-aware via the same
    [data-theme] variables as the page. */
 .gal-invite{margin-top:48px;text-align:center}
+/* In-page panes are served from assets/inline/ at 1000px, half the capture
+   width: they sit in a ~500px column, so full-res would be four times the
+   bytes for no visible pixels. The dialog keeps the originals, because it
+   zooms. */
+.gal-panes{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:0 0 28px}
+.gal-panes figure{margin:0}
+@media(max-width:720px){.gal-panes{grid-template-columns:1fr;gap:16px}}
 .gal-invite .gal-claim{margin-top:14px;text-align:center;font-size:12.5px;color:var(--text-3);letter-spacing:-0.005em}
 dialog.shots{
   /* the site's universal reset zeroes the UA's dialog margin:auto — restore it
@@ -1065,6 +1089,55 @@ html.shots-open{overflow:hidden}
   .shots-prev{left:8px}
   .shots-next{right:8px}
 }
+
+/* ═══════════ the ruled sheet ═══════════════════════════════════════════
+   Below the hero this page was soft-shadowed rounded cards floating in a
+   1040px column on near-white. That pattern is what reads as generic, not
+   the system font or the single accent, and no amount of typography fixes
+   it while every element is a separate floating rectangle.
+
+   So: draw the structure. The column carries continuous side rules, every
+   band is separated by a rule, and card gutters become hairlines instead
+   of gaps, which is what turns four cards into one object. Monochrome, no
+   new radius tier, no second accent, no texture, no webfont. Both of the
+   references the curb names (Linear, Vercel) are built this way; so is the
+   macOS Settings sidebar, which is ruled rather than shadowed.
+
+   Everything here is one block on purpose: it is a direction, and a
+   direction should be revertible in one cut. */
+
+/* the column, drawn. Each section's .wrap segment abuts the next, so the
+   side rules stack into two lines running the height of the page. */
+main > section > .wrap{border-inline:1px solid var(--hairline)}
+/* the dark band needs light ink for the same lines */
+.feel-cinema > .wrap{border-inline-color:rgba(255,255,255,0.10)}
+/* bands separated by a rule that spans the viewport, not the column */
+main > section + section{border-top:1px solid var(--hairline)}
+/* the hero and the dark band already meet the page with a hard cut, which
+   the curb calls this page's vocabulary for that boundary. Don't rule it. */
+#uses,.feel-cinema,#capabilities{border-top:0}
+
+/* cards become cells: the gutter is the rule, so the grid reads as one
+   ruled object rather than four things that happen to be near each other */
+.uc-grid{gap:1px;background:var(--hairline);border:1px solid var(--hairline)}
+.uc-lead{border:0;border-radius:0;box-shadow:none}
+.uc-lead:hover{transform:none;box-shadow:none;border-color:transparent}
+.uc-lead::before{left:0;right:0}
+/* the summary list is a ruled table, not a floating card */
+.group{border-radius:0;box-shadow:none;border-inline:0}
+.grow + .grow::before{left:0}
+/* the same for the spec rows and the trust list */
+.trust-list{border:1px solid var(--hairline);border-inline:0}
+.trust-row{padding-inline:0}
+
+/* tempo: the 1,660px of section padding was scaled for the 2,900-word page
+   that bad901e cut. Same proportions, ~28% off, so the bands stop being a
+   screen of air each. */
+.sec{padding:76px 0}
+.sec-loose{padding:96px 0}
+.sec-snug{padding:60px 0}
+.sec-tight{padding:52px 0}
+.feel-cinema{padding:104px 0 112px}
 </style>
 </head>
 <body>
@@ -1784,7 +1857,9 @@ html.shots-open{overflow:hidden}
          that used to open this section lives in FAQ 2, where conceding once,
          late, beside the trial offer earns trust; conceding twice, once of them
          before anything has been sold, read as the page apologizing for itself. -->
-    <p class="lead" style="margin-top:16px;max-width:56ch">A lap keyboard, a phone remote, a trackpad on the sofa arm: each does four things out of five, and the fifth sends you back to the desk. Typing, an app's own menus, moving windows, launching apps: they are all on the controller, so the trip back does not happen.</p>
+    <!-- 46ch, not 56: `ch` is the advance of a zero, about 1.4x an average SF
+         lowercase glyph, so 56ch rendered as a 78-character line. Measured. -->
+    <p class="lead" style="margin-top:16px;max-width:46ch">A lap keyboard, a phone remote, a trackpad on the sofa arm: each does four things out of five, and the fifth sends you back to the desk. Typing, an app's own menus, moving windows, launching apps: they are all on the controller, so the trip back does not happen.</p>
 
     <div class="uc-grid sec-body">
       <div class="uc-lead uc-couch">
@@ -1823,7 +1898,7 @@ html.shots-open{overflow:hidden}
         <h3>When a mouse hurts, or never felt natural.</h3>
         <p>A controller rests in loose hands: nothing to pinch, no fine wrist work, no reaching across the desk. If sore wrists, tremor, pain, or using one hand make a mouse hard, this is a different shape to hold.</p>
         <p>Comfort is personal, so the honest test is your own hands.</p>
-        <a class="arrow-link" href="accessibility.html">See the accessibility setup <span class="a">→</span></a>
+        <a class="arrow-link" href="accessibility.html">See the accessibility setup&nbsp;<span class="a">→</span></a>
         <div class="uc-mech"><b>Cursor speed</b> · slow it right down</div>
       </div>
       <div class="uc-lead uc-sp">
@@ -1834,15 +1909,19 @@ html.shots-open{overflow:hidden}
       </div>
       <div class="uc-lead uc-ed">
         <div class="uc-tag">Video editors</div>
-        <h3>Cut without touching the keyboard.</h3>
-        <p>Scrub with the triggers: one rolls the video back, the other forward, and the cut lands under your thumb, the way a dedicated editing console does it, on the controller in your drawer. Ready-made for DaVinci Resolve and Final Cut Pro.</p>
-        <div class="vg vg-edit" aria-hidden="true">
-          <span class="vg-key kl"><b data-ps="L2" data-xb="LT" data-sw="ZL" data-mf="L trigger">L2</b><i class="vg-ring rl"></i></span>
-          <div class="vg-timeline">
-            <i class="vg-clip c1"></i><i class="vg-clip c2"></i><i class="vg-clip c3"></i>
-            <div class="vg-phw"><i class="vg-ph"></i></div>
+        <div class="uc-body">
+          <div>
+            <h3>Cut without touching the keyboard.</h3>
+            <p>Scrub with the triggers: one rolls the video back, the other forward, and the cut lands under your thumb, the way a dedicated editing console does it, on the controller in your drawer. Ready-made for DaVinci Resolve and Final Cut Pro.</p>
           </div>
-          <span class="vg-key kr"><b data-ps="R2" data-xb="RT" data-sw="ZR" data-mf="R trigger">R2</b><i class="vg-ring rr"></i><i class="vg-ring rr2"></i></span>
+          <div class="vg vg-edit" aria-hidden="true">
+            <span class="vg-key kl"><b data-ps="L2" data-xb="LT" data-sw="ZL" data-mf="L trigger">L2</b><i class="vg-ring rl"></i></span>
+            <div class="vg-timeline">
+              <i class="vg-clip c1"></i><i class="vg-clip c2"></i><i class="vg-clip c3"></i>
+              <div class="vg-phw"><i class="vg-ph"></i></div>
+            </div>
+            <span class="vg-key kr"><b data-ps="R2" data-xb="RT" data-sw="ZR" data-mf="R trigger">R2</b><i class="vg-ring rr"></i><i class="vg-ring rr2"></i></span>
+          </div>
         </div>
         <div class="uc-mech"><b data-ps="L2 / R2" data-xb="LT / RT" data-sw="ZL / ZR" data-mf="The triggers">L2 / R2</b> · scrub and cut</div>
       </div>
@@ -1854,10 +1933,10 @@ html.shots-open{overflow:hidden}
       <span class="pill-uc">Writing &amp; notes</span>
       <span class="pill-uc">Coding &amp; IDEs</span>
       <span class="pill-uc">Design &amp; Figma</span>
-      <a class="pill-uc" href="agents.html">Running AI agents <span class="a">→</span></a>
+      <a class="pill-uc" href="agents.html">Running AI agents&nbsp;<span class="a">→</span></a>
     </div>
     <p class="pills-note"><b>Nearly any app.</b> If it takes a keyboard or a mouse, it takes a controller.</p>
-    <p class="pills-note" style="margin-top:10px"><b>Running coding agents?</b> A PlayStation pad can light up to show what the agent is doing, any pad with rumble can buzz when it needs you, and you approve from across the room. <a href="agents.html">See the recipe <span class="a">→</span></a></p>
+    <p class="pills-note" style="margin-top:10px"><b>Running coding agents?</b> A PlayStation pad can light up to show what the agent is doing, any pad with rumble can buzz when it needs you, and you approve from across the room. <a href="agents.html">See the recipe&nbsp;<span class="a">→</span></a></p>
   </div>
 </section>
 
@@ -1899,11 +1978,13 @@ html.shots-open{overflow:hidden}
         <!-- This band promises hardware-dependent things (triggers, rumble, light
              bar, gyro). It has to hand the reader the page that says which pad
              gets which, or the promise reads as a blanket claim. -->
-        <p class="feel-compat"><a class="arrow-link" href="compatibility.html">See what your controller can do <span class="a">→</span></a></p>
+        <p class="feel-compat"><a class="arrow-link" href="compatibility.html">See what your controller can do&nbsp;<span class="a">→</span></a></p>
       </div>
-      <!-- The Haptics pane screenshot moved into the gallery <dialog>; the trigger
-           vignette above carries the band (ps joins the xb/mf single-column
-           centred layout, see the pd-gating CSS). -->
+      <!-- Screenshots cannot anchor this band. Every capture is PlayStation-shot
+           and the page re-labels itself per pad, so an in-flow pane shows an Xbox
+           owner the wrong glyphs; gating it back to one pad is what left the band
+           empty in the first place. The vignette above is the anchor instead,
+           because the .vg family re-labels by construction. -->
       <div class="shot pd-sw">
         <img class="shot-light" src="assets/light/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
         <img class="shot-dark" src="assets/dark/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
@@ -1916,19 +1997,23 @@ html.shots-open{overflow:hidden}
      illustrated by the desk layer-shift vignette. Screenshots are the proof. -->
 <section class="sec" id="capabilities">
   <div class="wrap">
-    <div class="sec-head-split">
-      <div class="eyebrow">What it does</div>
-      <h2 class="h2" style="max-width:18ch">Make any button do anything.</h2>
-      <p class="lead">It works the moment you plug in. Pick a button, pick what it does. No code, no setup first.</p>
-      <p class="lead" style="margin-top:14px">Steer is the piece in between: it reads the controller, applies the meaning you gave each button, and produces the same clicks and keystrokes a mouse and keyboard would. Work that belongs to another app, like dictation or moving a window, it hands over rather than reinventing.</p>
-    </div>
+    <div class="eyebrow">What it does</div>
 
-    <!-- The hero annotations already say what the sticks and buttons do; repeating
-         them here bought the reader nothing. These rows carry only what a picture
-         of a controller can't show: that it arrives working, follows you between
-         apps, types, and reaches past shortcuts into Shortcuts, macros, scripts. -->
-    <div class="hero-grid sec-body">
-      <div class="group">
+    <!-- One grid rather than a split head stacked on a split body. The head's
+         two cells are never the same height here (two lines of display type
+         against eight lines of lead), so whichever column held the prose left a
+         card-sized hole beside it; the paragraphs alternated columns too, which
+         dropped the second one back under the headline. Letting each column run
+         its own flow closes both holes and needs no copy cut. -->
+    <div class="cap-grid">
+      <div>
+        <h2 class="h2" style="max-width:18ch">Make any button do anything.</h2>
+        <!-- The hero annotations already say what the sticks and buttons do;
+             repeating them here bought the reader nothing. These rows carry only
+             what a picture of a controller can't show: that it arrives working,
+             follows you between apps, types, and reaches past shortcuts into
+             Shortcuts, macros, scripts. -->
+        <div class="group">
         <div class="grow"><span class="lbl">Ready to use</span><span class="val">Comes with a working layout, yours to change</span></div>
         <!-- The `release` slot is stored and shown in the app's own settings but
              ActionResolver has no resolveRelease and the engine never fires it
@@ -1947,8 +2032,12 @@ html.shots-open{overflow:hidden}
         <div class="grow"><span class="lbl">A setup for each app</span><span class="val">Changes with the app you open</span></div>
         <div class="grow"><span class="lbl">Your mouse still works</span><span class="val">This adds a device, it does not replace one</span></div>
         <div class="grow"><span class="lbl">Everything else</span><span class="val"><a href="features.html">See all 39, in plain language</a></span></div>
+        </div>
       </div>
-      <div class="cap-layers">
+      <div>
+        <p class="lead">It works the moment you plug in. Pick a button, pick what it does. No code, no setup first.</p>
+        <p class="lead">Steer is the piece in between: it reads the controller, applies the meaning you gave each button, and produces the same clicks and keystrokes a mouse and keyboard would. Work that belongs to another app, like dictation or moving a window, it hands over rather than reinventing.</p>
+        <div class="cap-layers">
         <h3>Layers are Shift, for a controller.</h3>
         <p>Hold one of the buttons along the top edge and every other button takes a second job, the way Shift turns 1 into an exclamation mark. Five holds, so a handful of buttons covers a whole day: snap a window into place, run a saved task, pop up a ring of your apps.</p>
         <div class="vg vg-layers" aria-hidden="true">
@@ -1961,11 +2050,17 @@ html.shots-open{overflow:hidden}
           </div>
         </div>
         </div>
+      </div>
     </div>
 
     <!-- The dense settings panes live behind a click (the gallery <dialog> near
          the end of <body>), so the main scroll stays calm and a skeptic can
          still verify the app is real and deep. -->
+    <!-- Panes stay behind the button until the capture script can shoot them per
+         pad. In the page they read as "you can configure this", which is the
+         opposite of the claim above them, and every one is PlayStation-labelled
+         on a page that re-labels itself per pad. docs/screenshots.md ranks the
+         in-use captures far above these for exactly that reason. -->
     <div class="gal-invite">
       <button class="btn btn-secondary" type="button" id="shotsOpen" aria-haspopup="dialog">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:17px;height:17px"><rect x="2.5" y="4" width="15" height="12" rx="2"/><circle cx="7.2" cy="8.4" r="1.4"/><path d="M2.5 13.5l4-3.5 3.5 3 3-2.5 4.5 3.5"/></svg>
@@ -2029,7 +2124,7 @@ html.shots-open{overflow:hidden}
            full-weight primary here intercepts a ready buyer with an email draft
            about feature requests. One primary CTA per view, and it is the list. -->
       <a class="btn btn-secondary" href="mailto:steer@seanfloyd.dev?subject=An%20idea%20for%20Steer&amp;body=Here%27s%20what%20would%20make%20Steer%20perfect%20for%20how%20I%20work%3A%0A%0A">Share an idea <span aria-hidden="true">→</span></a>
-      <a class="arrow-link" href="vs.html">Or see how Steer compares <span class="a">→</span></a>
+      <a class="arrow-link" href="vs.html">Or see how Steer compares&nbsp;<span class="a">→</span></a>
     </div>
   </div>
 </section>

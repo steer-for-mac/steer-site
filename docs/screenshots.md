@@ -36,6 +36,30 @@ number one abandonment cause and the daisy wheel is what users ask for by name.
 The import-review dialog is the **only possible evidence** for the strongest
 trust claim on the site, which is currently prose with nothing behind it.
 
+## Why nothing new went in the page (2026-07-30)
+
+The homepage below the hero shows no product image at all on the default
+controller pick, and still does: the one in-flow shot is gated to the Nintendo
+pad and the other seven panes sit behind a button. Panes were tried in the Feel
+band and closing Capabilities, and pulled back out, for two reasons that this
+file mostly already predicted.
+
+1. **They read as configuration.** In the page, a settings pane says "you can
+   configure this", which argues against the section it sits under.
+2. **Every capture is PlayStation-labelled** and the page re-labels itself per
+   pad. The Haptics pane's trigger presets read "L2 / R2", `daisy-wheel` shows
+   L1/L2/R1/R2/R3, `radial-menu` shows PS face glyphs. Showing any of them to an
+   Xbox owner is a wrong claim; gating them back to one pad is what left the
+   Feel band empty in the first place. **The unblocking work is a per-pad
+   re-shoot**, which makes the blockers below the critical path for the
+   homepage's visual density, not just for the gallery's ordering.
+
+`import-review` remains the largest unspent asset: the Trust band's strongest
+claim, "anything risky is shown to you first", is prose with nothing behind it,
+and that dialog is the only possible evidence for it. It is also the one capture
+with no controller glyphs in it, so it is the only one shippable today. Note it
+carries an em-dash in the app's own title string.
+
 ## What exists today
 
 Current matched set, `assets/light/` and `assets/dark/`, 2026-07-18,

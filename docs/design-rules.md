@@ -185,11 +185,44 @@ A simplifier pass will be tempted to flatten these. They are the point.
 - The per-controller copy and headline variants (`.pd-ps` / `.pd-xb` / `.pd-sw`
   / `.pd-mf`) that swap sitewide with the selected pad.
 
+## Length is a word budget, not an ink budget
+
+`bad901e` cut the page from 2,900 words to peer length (median ~920 across
+fourteen craft Mac app pages, none over 1,900). That was right. What it did not
+do was re-tune the layout for the shorter page, so three bands kept the shape of
+a longer one and rendered with card-sized holes in them: the use-case grid
+stranded its fourth card in a two-column row, the capabilities head stranded
+whichever column held the prose, and Feel lost both its screenshot and the
+vignette meant to replace it, leaving centred prose in a band with 168px of
+padding under it. A third of the page below the hero was empty rectangles, which
+is what "bland" turned out to mean.
+
+When a band reads as empty, the fix is ink, not words: a column that fills, a
+card that spans, a rule that draws the structure, a measure that stops at 64
+characters. Prose added to fill space puts the page straight back over the
+budget the cut bought.
+
+- **Screenshots are not available as that ink yet.** Every capture in `assets/`
+  is PlayStation-shot, and the page re-labels itself per pad, so an in-flow pane
+  shows an Xbox owner the wrong glyphs. Gating one back to a single pad is what
+  left the Feel band empty to begin with. In-flow screenshots wait for the
+  capture script to shoot per pad; the gallery `<dialog>` is pad-neutral
+  evidence and stays. The `.vg` vignettes re-label by construction, which is why
+  they, not screenshots, are this page's per-pad proof.
+- **`ch` is not a character.** It is the advance of a zero, about 1.4x an
+  average SF lowercase glyph, so `56ch` renders as a 78-character line. Measure
+  the resulting line, do not trust the unit.
+- **`.shot img` needs `height:auto`**, or the `width`/`height` attributes that
+  reserve the box win as presentational hints and stretch the image.
+
 ## The `.vg` vignette family
 
-Seven members: `.vg-glide` (hero), `.vg-type` (couch), `.vg-edit`, `.vg-stream`,
-`.vg-speak` (use-case cards), `.vg-layers`, `.vg-launch` (capabilities). Before
-building the eighth, know what makes one a member; it is a grammar, not a class
+Four are in the page: `.vg-glide` (hero), `.vg-type` (couch), `.vg-edit` (video
+editors), `.vg-layers` (capabilities). `bad901e` cut `.vg-stream`, `.vg-speak`
+and `.vg-launch` when the page came down to peer length. `.vg-stream` has no CSS
+left; `.vg-speak` and `.vg-launch` still do, 1.2KB, kept because that is cheaper
+than re-deriving them from the app if a card ever needs one again. Before
+building a fifth, know what makes one a member; it is a grammar, not a class
 prefix.
 
 - **One claim, proven.** A vignette illustrates exactly one capability, stated
@@ -222,14 +255,22 @@ prefix.
   `data-ps/xb/sw/mf` so every vignette re-labels with the selected pad.
   Mac-side surfaces may use the pad palette or the accent; buttons never
   hardcode a glyph.
-- **Watch list:** `.vg-speak` is the family's weakest member. Its flick-to-
-  advance beat shares its visual idea with `.vg-stream`'s A/B swap and re-
-  proves "the stick moves things", which the hero demo owns. It stays because
-  it is small and the Speakers card would otherwise be prose-only, but it is
-  first on the cut list, and its shape is not a template to copy.
+- **Cut, and why:** `.vg-speak` re-proved "the stick moves things", which the
+  hero demo owns, and shared its visual idea with `.vg-stream`. Both went in
+  `bad901e`, along with the force-over-travel chart, which proved a hardware
+  parameter to an engineer and nothing to a reader. The Speakers card is
+  prose-only now and that is the accepted cost. Do not restore any of the three
+  to fill space; a band that reads as empty wants ink, not a repeated claim.
 
 ## Before you call it done
 
+- Run `node scripts/shots.mjs`. It renders every section at 1440 and 375 into
+  `scratch/shots/`, and reports horizontal overflow at 1440/768/375 on the way
+  past, so the three by-eye checks below get looked at rather than remembered.
+  `--pad xb` and `--theme dark` drive the gates the page hides behind an
+  attribute; `--only feel,pricing` while iterating. It drives Chrome's headless
+  shell over CDP with Node's own WebSocket, so it stays dependency-free like
+  curb-check.mjs.
 - Run `node scripts/curb-check.mjs`. It mechanizes the copy and value-drift
   rules that were enforced by eye: em/en-dashes, AI clichés, and emoji in
   *visible* copy (text nodes + alt/title/aria-label + meta descriptions, never
