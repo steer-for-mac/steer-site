@@ -29,8 +29,8 @@ lighthouse: ## Lighthouse gate (slow, pre-deploy rather than per-commit)
 	docker compose up -d --wait
 	bin/lighthouse --url http://127.0.0.1:$(SITE_PORT)/ --url http://127.0.0.1:$(SITE_PORT)/features --min 95
 
-dead: ## Report CSS selectors that can never match
-	node scripts/dead-css.mjs --min 0
+dead: ## Report CSS rules no page can reach (PurgeCSS)
+	bin/purge-check
 
 check: build ## Build, then run every check
 	bin/ci

@@ -40,22 +40,6 @@
     grid-column: 1 / -1;
   }
 
-  .uc-couch .uc-body, .uc-ed .uc-body {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
-    align-items: center;
-    gap: 8px 40px;
-    display: grid;
-  }
-
-  .uc-couch h3, .uc-ed h3 {
-    font-size: 21px;
-  }
-
-  .uc-lead .arrow-link {
-    margin-bottom: 15px;
-    font-size: 14px;
-  }
-
   @media (width <= 860px) {
     .uc-grid, .uc-couch .uc-body, .uc-ed .uc-body {
       grid-template-columns: 1fr;
@@ -84,7 +68,7 @@
     color: #e9edf6;
     color-scheme: dark;
     background: radial-gradient(135% 130% at 50% -12%, #101728 0%, #0a0e1a 52%, #070a12 100%);
-    padding: 156px 0 168px;
+    padding: 104px 0 112px;
     position: relative;
     overflow: hidden;
   }
@@ -3853,23 +3837,6 @@
     gap: 1px;
   }
 
-  .uc-lead {
-    box-shadow: none;
-    border: 0;
-    border-radius: 0;
-  }
-
-  .uc-lead:hover {
-    box-shadow: none;
-    border-color: #0000;
-    transform: none;
-  }
-
-  .uc-lead:before {
-    left: 0;
-    right: 0;
-  }
-
   .group {
     box-shadow: none;
     border-inline: 0;
@@ -3951,65 +3918,11 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .uc-couch {
-    grid-area: 1 / 1 / 3 / 3;
-  }
-
-  .uc-comf {
-    grid-area: 1 / 3;
-  }
-
-  .uc-sp {
-    grid-area: 2 / 3;
-  }
-
-  .uc-ed {
-    grid-area: 3 / 1 / auto / -1;
-  }
-
-  .uc-couch .uc-body {
-    display: block;
-  }
-
-  .uc-couch .uc-body > div {
-    max-width: 52ch;
-  }
-
-  .uc-couch {
-    flex-direction: column;
-    display: flex;
-  }
-
   .uc-couch .uc-body {
     flex-direction: column;
     flex: 1;
     align-items: stretch;
     display: flex;
-  }
-
-  .uc-couch .win {
-    flex-direction: column;
-    flex: 1;
-    margin-top: 22px;
-    display: flex;
-  }
-
-  .uc-couch .win-body {
-    flex: 1;
-    place-items: center;
-    padding: 30px;
-    display: grid;
-  }
-
-  .uc-couch .vg-wheel {
-    width: 210px;
-    height: 210px;
-  }
-
-  .uc-couch .vg-type {
-    gap: 26px;
-    width: 100%;
-    max-width: none;
   }
 
   @media (width <= 1040px) {
@@ -5348,10 +5261,6 @@
     height: 34px;
   }
 
-  .uc-couch .uc-ico, .uc-ed .uc-ico {
-    margin-bottom: 14px;
-  }
-
   main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow {
     width: 100%;
     display: flex;
@@ -5385,10 +5294,6 @@
 
   .sec-tight {
     padding: 52px 0;
-  }
-
-  .feel-cinema {
-    padding: 104px 0 112px;
   }
 }
 

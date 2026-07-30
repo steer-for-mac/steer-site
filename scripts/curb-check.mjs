@@ -16,7 +16,7 @@
 // data. Two severities: ERROR fails the run (exit 1); WARN is a review nudge
 // (exit 0). Tune the word lists below; they are meant to be edited, not frozen.
 
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -29,7 +29,13 @@ const HTML_FILES = [
   "terms.html", "privacy.html", "refund.html",
 
   "download.html",];
-const CSS_FILES = ["styles.css"];
+// Sources, never the generated sheets. Lightning CSS compresses colours, so
+// rgba(0,122,255,0.10) becomes #007aff1a in the output and the forbidden-hex
+// detector fires on a value the author never wrote. Check what a human edits.
+const CSS_FILES = [
+  "styles/tokens.css", "styles/shared.css", "styles/base.css",
+  ...readdirSync("parts").filter((f) => f.endsWith(".css")).map((f) => `parts/${f}`),
+];
 
 // ---- the lists the curb enforces by eye (copy rules) ----------------------
 

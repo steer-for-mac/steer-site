@@ -59,9 +59,7 @@ jobs:
         run: node scripts/shots.mjs --out /tmp/ci-shots
 
       - name: Unreachable CSS
-        env:
-          BASE_URL: http://127.0.0.1:8391
-        run: node scripts/dead-css.mjs --min 400
+        run: bin/purge-check
 
       - uses: actions/upload-pages-artifact@v3
         with:

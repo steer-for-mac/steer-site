@@ -26,9 +26,6 @@
    now, so the rows are 1 / 2 / 1 and the wide vignettes get the width the
    .vg rules say they want (a flex:1 Mac-side surface fills its column). */
 .uc-couch,.uc-ed{grid-column:1/-1}
-.uc-couch .uc-body,.uc-ed .uc-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:8px 40px;align-items:center}
-.uc-couch h3,.uc-ed h3{font-size:21px}
-.uc-lead .arrow-link{font-size:14px;margin-bottom:15px}
 @media(max-width:860px){.uc-grid{grid-template-columns:1fr}.uc-couch .uc-body,.uc-ed .uc-body{grid-template-columns:1fr}}
 @media(max-width:520px){
   .uc-lead{padding:18px 16px 16px}
@@ -45,7 +42,7 @@
   background:radial-gradient(135% 130% at 50% -12%,#101728 0%,#0a0e1a 52%,#070a12 100%);
   color:#E9EDF6;color-scheme:dark;
   overflow:hidden;position:relative;
-  padding:156px 0 168px;
+  padding:104px 0 112px;   /* was declared twice; the later value won */
 }
 /* No gradient bridges. There were two 120px scrims dissolving the page into the
    dark band; both a plain two-stop fade and a 12-stop eased ramp still read as a
@@ -1091,9 +1088,6 @@ main > section + section{border-top:1px solid var(--hairline)}
 /* cards become cells: the gutter is the rule, so the grid reads as one
    ruled object rather than four things that happen to be near each other */
 .uc-grid{gap:1px;background:var(--hairline);border:1px solid var(--hairline)}
-.uc-lead{border:0;border-radius:0;box-shadow:none}
-.uc-lead:hover{transform:none;box-shadow:none;border-color:transparent}
-.uc-lead::before{left:0;right:0}
 /* the summary list is a ruled table, not a floating card */
 .group{border-radius:0;box-shadow:none;border-inline:0}
 .grow + .grow::before{left:0}
@@ -1122,25 +1116,10 @@ main > section + section{border-top:1px solid var(--hairline)}
    weight is a composition, and it gives the couch card, which owns the claim
    readers disbelieve most, the room to show the wheel at a legible size. */
 .uc-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.uc-couch{grid-column:1/3;grid-row:1/3}
-.uc-comf{grid-column:3;grid-row:1}
-.uc-sp{grid-column:3;grid-row:2}
-.uc-ed{grid-column:1/-1;grid-row:3}
-.uc-couch .uc-body{display:block}
-.uc-couch .uc-body > div{max-width:52ch}
-/* the window fills the tall cell rather than floating in the top of it: the
-   whole point of giving this card double weight was room to show the wheel at
-   a size a reader can actually read. */
-.uc-couch{display:flex;flex-direction:column}
 /* align-items:center is inherited from the old two-column body rule, and in a
    flex column it centres on the cross axis: it was indenting the copy and
    shrinking the window to its content instead of letting it fill. */
 .uc-couch .uc-body{flex:1;display:flex;flex-direction:column;align-items:stretch}
-.uc-couch .win{margin-top:22px;flex:1;display:flex;flex-direction:column}
-.uc-couch .win-body{flex:1;display:grid;place-items:center;padding:30px}
-.uc-couch .vg-wheel{width:210px;height:210px}
-.uc-couch .vg-type{gap:26px}
-.uc-couch .vg-type{max-width:none;width:100%}
 @media(max-width:1040px){
   .uc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .uc-couch{grid-column:1/-1;grid-row:auto}
@@ -1154,7 +1133,6 @@ main > section + section{border-top:1px solid var(--hairline)}
   /* the wheel is the subject, but not at the cost of a screen and a half */
   .uc-couch .vg-wheel{width:min(190px,58vw);height:min(190px,58vw)}
 }
-
 
 /* ═══════════ plate motion ══════════════════════════════════════════════
    bad901e kept three loops on purpose: "the ones that show a cursor being
@@ -1562,7 +1540,6 @@ a.d-pill:hover{background:var(--blue-fill);text-decoration:none}
    mark is drawn at size in the hero's stroke language and left unboxed. */
 .uc-ico{display:block;width:34px;height:34px;margin-bottom:16px;color:var(--blue-text)}
 .uc-ico svg{width:34px;height:34px;stroke-width:1.35}
-.uc-couch .uc-ico,.uc-ed .uc-ico{margin-bottom:14px}
 
 /* the section head as an object, not a line of small grey text: mono label,
    then a hairline to the column edge. romm's device, and it is just a rule. */
@@ -1582,4 +1559,3 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
 .sec-loose{padding:96px 0}
 .sec-snug{padding:60px 0}
 .sec-tight{padding:52px 0}
-.feel-cinema{padding:104px 0 112px}

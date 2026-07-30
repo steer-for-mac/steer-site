@@ -28,11 +28,17 @@ STEPS = [
     ("Build: index.html and home.css are current", ["bin/build", "--check"], False),
     ("A11y: structural invariants", ["bin/a11y-check"], False),
     ("CSS: duplicate selectors and dead declarations",
-     ["npx", "--yes", "stylelint@16", "styles.css", "styles/base.css", "parts/*.css"], False),
+     ["npx", "--yes", "stylelint@16",
+      "styles/tokens.css", "styles/shared.css", "styles/base.css", "parts/*.css"], False),
     ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
     ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),
     ("Render: every band, 1440 and 375, no overflow", ["node", "scripts/shots.mjs", "--out", "scratch/shots/ci"], True),
-    ("CSS: unreachable selectors", ["node", "scripts/dead-css.mjs", "--min", "400"], True),
+    # PurgeCSS rather than the hand-rolled scripts/dead-css.mjs: it scans home.js
+    # as well as the markup, so a class the script applies at runtime is found
+    # instead of needing a hand-maintained exemption list. The hand-rolled one
+    # over-reported badly (18.6KB "dead" against PurgeCSS's 2%) and would have
+    # deleted live styles if trusted.
+    ("CSS: unreachable rules", ["bin/purge-check"], True),
 ]
 
 

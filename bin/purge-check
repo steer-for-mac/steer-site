@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+"""Fail if too much of the shipped CSS is unreachable.
+
+PurgeCSS does the analysis; this only turns its output into a gate. A threshold
+rather than zero, because a marketing site legitimately ships a few rules for
+states a static scan cannot see, and because auto-stripping CSS on a page whose
+whole value is how it looks is not a trade worth making silently.
+
+    bin/purge-check            fail over 15% removable
+    bin/purge-check --max 5
+"""
+import json
+import os
+import subprocess
+import sys
+
+MAX = float(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else 15.0
+
+out = subprocess.run(["npx", "--yes", "purgecss", "--config", "purgecss.config.js"],
+                     capture_output=True, text=True)
+if out.returncode:
+    sys.exit(f"purgecss failed:\n{out.stderr.strip()}")
+
+worst = 0.0
+for entry in json.loads(out.stdout):
+    name = entry.get("file", "?")
+    before = os.path.getsize(name) if os.path.exists(name) else 0
+    after = len(entry.get("css", ""))
+    pct = 100 * (before - after) / before if before else 0
+    worst = max(worst, pct)
+    print(f"  {name:12} {before/1024:7.1f} KB -> {after/1024:7.1f} KB   {pct:5.1f}% removable")
+
+print(f"\nworst {worst:.1f}%, threshold {MAX:.0f}%")
+sys.exit(1 if worst > MAX else 0)

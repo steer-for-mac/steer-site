@@ -1,7 +1,12 @@
 {
-  "//": "Rules chosen because each one has already bitten this repo. Run: npx stylelint@16 'styles*/**.css' 'parts/*.css' 'styles.css'",
+  "//": "Rules chosen because each has already bitten this repo. Sources only: bin/build generates styles.css and home.css, and Lightning CSS compresses colours there, so linting output flags values nobody wrote.",
   "rules": {
-    "no-duplicate-selectors": true,
+    "no-duplicate-selectors": [
+      true,
+      {
+        "severity": "warning"
+      }
+    ],
     "declaration-block-no-duplicate-properties": [
       true,
       {

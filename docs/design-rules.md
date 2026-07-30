@@ -299,6 +299,13 @@ Two things that will waste your time otherwise:
 
 ## Before you call it done
 
+- Run `make ci`. It builds, lints and renders in parallel. The CSS toolchain is
+  adopted rather than hand-rolled, after three attempts at hand-rolling broke the
+  page: Lightning CSS bundles (it parses, so it cannot cut a selector list in
+  half), stylelint catches duplicate selectors and dead declarations, PurgeCSS
+  answers "is this rule reachable" by scanning `home.js` as well as the markup.
+  A hand-written reachability check over-reported by an order of magnitude and
+  would have deleted live styles if trusted.
 - Run `bin/build --check`, then `node scripts/shots.mjs`. It renders every section at 1440 and 375 into
   `scratch/shots/`, and reports horizontal overflow at 1440/768/375 on the way
   past, so the three by-eye checks below get looked at rather than remembered.
