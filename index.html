@@ -752,7 +752,7 @@
      added back, it needs a verified source — the one that used to live here
      ($435 Speed Editor) was removed along with the card that cited it. -->
 <!-- symbols live in assets/svg/, one file each, referenced by <use>.
-     They need a server: bin/serve -->
+     They need a server: make up -->
 
 <section class="sec-loose sunken" id="uses">
   <div class="dw">
@@ -927,27 +927,44 @@
 
 <!-- FEEL — the moat, up front. The one cinematic dark band: breaks the pale
      page rhythm and dramatizes the invisible thing (feel) the way Apple stages
-     a single feature dark and large. -->
+     a single feature dark and large. The hard cut into it is deliberate; see
+     the "no gradient bridges" note in styles/base.css.
+
+     Redrawn in the ruled-plate language the rest of the page now speaks: a
+     section head with a rule to the column edge, a display headline against
+     its lede, then one anchor plate beside the per-pad spec rows. It was the
+     last band still shaped like the old page: centred prose, a green tick per
+     line, and an empty right half for three pads out of four. -->
 <section class="feel-cinema" id="feel">
-  <div class="wrap">
-    <div class="hero-grid" style="align-items:center">
-      <div>
-        <div class="eyebrow">The part you feel</div>
-        <h2 class="h2"><span class="pd-ps">The trigger stiffens before it clicks.</span><span class="pd-xb">You feel the step before you see it.</span><span class="pd-sw">Tilt the controller. The cursor follows.</span><span class="pd-mf">You know it worked without looking up.</span></h2>
-        <p class="lead" style="margin-top:16px;max-width:46ch"><span class="pd-ps">You do not have to watch the screen to know it worked. Turn on the adaptive triggers and they stiffen under your finger, so you feel the click before it fires. The grip buzzes as you flip through your apps or hit the volume ceiling, and the light bar can mean whatever you want.</span><span class="pd-xb">Flip through your apps and each one lands as a pulse in your grip. Hit the volume ceiling and your hands know before the screen does. The chattier buzzes wait until you ask.</span><span class="pd-sw">Tilt your hands and the pointer follows: a second way to point, on top of the sticks. The rumble marks each app you flip past, and the volume ceiling.</span><span class="pd-mf">If your controller has haptics, Steer drives them: a pulse for each app you flip past, a tap at the volume ceiling, at a strength you set.</span></p>
-        <ul class="price-inc" style="margin:26px 0 0;max-width:none">
-          <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Adaptive triggers, off until you turn them on: feel the click before it fires. Five presets and a fine editor.</li>
-          <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A buzz for the moments that earn it, and more if you turn it on</li>
-          <li class="pd-ps"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A light bar you set yourself, or wire to signal your workflow</li>
-          <li class="pd-xb"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> A buzz for the moments that earn it, and more if you turn it on</li>
-          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Rumble on the same moments, at a strength you set</li>
-          <li class="pd-sw"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Tilt to point: tilt the controller and the cursor follows</li>
-          <li class="pd-mf"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Haptic feedback on controllers that support it, at a strength you set</li>
-        </ul>
-        <!-- the headline, drawn: squeeze → resistance wall → click-through.
-             Adaptive resistance is DualSense-only, so the whole vignette is
-             gated to the PlayStation pick (.pd-ps) — showing it re-labelled
-             LT/ZR would promise hardware that isn't there. -->
+  <div class="dw">
+    <div class="d-head">
+      <div class="eyebrow">The part you feel</div>
+      <i aria-hidden="true"></i>
+    </div>
+    <div class="d-top">
+      <h2 class="d-display"><span class="pd-ps">The trigger stiffens before it clicks.</span><span class="pd-xb">You feel the step before you see it.</span><span class="pd-sw">Tilt the controller. The cursor follows.</span><span class="pd-mf">You know it worked without looking up.</span></h2>
+      <p class="lead"><span class="pd-ps">You do not have to watch the screen to know it worked. Turn on the adaptive triggers and they stiffen under your finger, so you feel the click before it fires. The grip buzzes as you flip through your apps or hit the volume ceiling, and the light bar can mean whatever you want.</span><span class="pd-xb">Flip through your apps and each one lands as a pulse in your grip. Hit the volume ceiling and your hands know before the screen does. The chattier buzzes wait until you ask.</span><span class="pd-sw">Tilt your hands and the pointer follows: a second way to point, on top of the sticks. The rumble marks each app you flip past, and the volume ceiling.</span><span class="pd-mf">If your controller has haptics, Steer drives them: a pulse for each app you flip past, a tap at the volume ceiling, at a strength you set.</span></p>
+    </div>
+  </div>
+
+  <div class="dw">
+    <!-- Two cells, centre-aligned against each other, so the short pads (one
+         row for Xbox and MFi, three for PlayStation) read as placed rather
+         than as a column that ran out. -->
+    <div class="fl-stage">
+      <div class="fl-say">
+        <!-- The checklist, re-set as spec rows: the thing flush left in mono,
+             what it does in the right column. Same words as the ticks it
+             replaces, split at the comma or colon they already carried. -->
+        <div class="fl-rows">
+          <div class="fl-row pd-ps"><span class="k">Adaptive triggers</span><span class="v">Off until you turn them on: feel the click before it fires. Five presets and a fine editor.</span></div>
+          <div class="fl-row pd-ps"><span class="k">A buzz</span><span class="v">For the moments that earn it, and more if you turn it on</span></div>
+          <div class="fl-row pd-ps"><span class="k">A light bar</span><span class="v">You set yourself, or wire to signal your workflow</span></div>
+          <div class="fl-row pd-xb"><span class="k">A buzz</span><span class="v">For the moments that earn it, and more if you turn it on</span></div>
+          <div class="fl-row pd-sw"><span class="k">Rumble</span><span class="v">On the same moments, at a strength you set</span></div>
+          <div class="fl-row pd-sw"><span class="k">Tilt to point</span><span class="v">Tilt the controller and the cursor follows</span></div>
+          <div class="fl-row pd-mf"><span class="k">Haptic feedback</span><span class="v">On controllers that support it, at a strength you set</span></div>
+        </div>
         <!-- light-bar swatches (moved from the hero): lock a colour and the hero
              bar + the page accent follow. DualSense-only hardware, so pd-ps. -->
         <div class="lb-picker pd-ps">
@@ -965,19 +982,70 @@
              gets which, or the promise reads as a blanket claim. -->
         <p class="feel-compat"><a class="arrow-link" href="compatibility.html">See what your controller can do&nbsp;<span class="a">→</span></a></p>
       </div>
-      <!-- Screenshots cannot anchor this band. Every capture is PlayStation-shot
-           and the page re-labels itself per pad, so an in-flow pane shows an Xbox
-           owner the wrong glyphs; gating it back to one pad is what left the band
-           empty in the first place. The vignette above is the anchor instead,
-           because the .vg family re-labels by construction. -->
-      <div class="shot pd-sw">
-        <img class="shot-light" src="assets/light/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
-        <img class="shot-dark" src="assets/dark/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" loading="lazy">
+
+      <!-- THE ANCHOR. Screenshots cannot do this job: every capture is
+           PlayStation-shot and the page re-labels per pad, so an in-flow pane
+           shows an Xbox owner the wrong glyphs (docs/screenshots.md). A drawing
+           can be pad-neutral, and the d-pad is the one control all four pads
+           name the same way.
+
+           The claim drawn is the band's own: you know it worked without
+           looking. D-pad up is bound to volumeUp out of the box
+           (SteerCore/Defaults.swift:93), and OutputDispatcher.swift:79-85
+           swaps the per-step tick for haptics.volumeBoundary() once
+           systemVolume >= 1.0 — a double pulse (HapticSystem.swift:132),
+           which is why the ceiling feels unlike the nine steps under it and
+           why the pad answers with two rings, not one.
+
+           Base state is the claim already proven: the marker is at the
+           ceiling and the rings are showing. That frame is what reduced
+           motion and JS-off ship. -->
+      <div class="fl-plate">
+        <div class="d-spec"><span class="k">D-pad up</span><span class="v">the volume ceiling</span></div>
+        <div class="d-fig ff">
+          <svg class="dgs" viewBox="0 0 420 240" aria-hidden="true">
+            <polyline class="ld" points="18,2 18,26 300,72"/>
+            <circle class="ldot" cx="300" cy="72" r="2.5"/>
+            <path class="datum" d="M0,210 H420"/>
+            <!-- the pad's answer: two rings, because the ceiling event is a
+                 double pulse and the nine steps under it are single ticks -->
+            <circle class="acc-h fl-ring r2" cx="86" cy="140" r="66"/>
+            <circle class="acc-h fl-ring r1" cx="86" cy="140" r="50"/>
+            <!-- the d-pad, top view, up arm live -->
+            <path class="o1" d="M74,104 H98 V128 H122 V152 H98 V176 H74 V152 H50 V128 H74 Z"/>
+            <path class="fl-up" d="M74,104 H98 V128 H74 Z"/>
+            <path class="acc" d="M86,110 L93,121 H79 Z"/>
+            <path class="sig" d="M152,170 L190,188"/>
+            <!-- nine steps standing on the ground line, then the ceiling: one
+                 line, heavier and wider than any step, that the steps stop at -->
+            <g class="o2">
+              <rect x="196" y="194" width="14" height="16"/>
+              <rect x="218" y="180" width="14" height="30"/>
+              <rect x="240" y="166" width="14" height="44"/>
+              <rect x="262" y="152" width="14" height="58"/>
+              <rect x="284" y="138" width="14" height="72"/>
+              <rect x="306" y="124" width="14" height="86"/>
+              <rect x="328" y="110" width="14" height="100"/>
+              <rect x="350" y="96" width="14" height="114"/>
+              <rect x="372" y="82" width="14" height="128"/>
+            </g>
+            <path class="o1b" d="M186,88 V76 H396 V88"/>
+            <rect class="acc fl-mark" x="372" y="77.4" width="14" height="5"/>
+          </svg>
+        </div>
       </div>
     </div>
+
+    <!-- The Gyro capture that used to fill the right half for Nintendo is gone
+         from the flow. It shipped the failure the curb warns about, one pad
+         wide: a pane of sliders is configurability, not feel, it is illegible
+         at any width that fits this band, and it made the Nintendo band 75%
+         taller than the other three. Nothing is lost — the same file, the same
+         alt text and a fuller caption already ship in the pad-neutral gallery
+         dialog (parts/dialogs.html), which the curb keeps as the evidence
+         surface. In-flow screenshots wait for a per-pad capture script. -->
   </div>
 </section>
-
 <!-- CAPABILITIES — one tight summary list + the layers idea, stated once,
      illustrated by the desk layer-shift vignette. Screenshots are the proof. -->
 <section class="sec" id="capabilities">
@@ -1003,11 +1071,18 @@
         </div>
         <div class="d-fig fp1">
           <svg class="dgs" viewBox="0 0 330 300" aria-hidden="true">
-            <use class="padart" href="assets/svg/pad-art-ps.svg#s" transform="translate(-108.72,39.86) scale(0.4562)"/>
+            <!-- the press dips the whole pad: the button that moved is a
+                 different button on every pad, and pad-art-mf draws no face
+                 buttons at all, so nothing pad-specific may be marked here.
+                 The <use> keeps its own transform; the wrapper takes the CSS
+                 one, because a CSS transform would replace the attribute. -->
+            <g class="cp-pad"><use class="padart" href="assets/svg/pad-art-ps.svg#s" transform="translate(-108.72,39.86) scale(0.4562)"/></g>
             <path class="o2 hconn" d="M300,150 H330"/>
+            <circle class="cp-emit acc-h hconn" cx="300" cy="150" r="6"/>
+            <circle class="flow f0 hconn" cx="300" cy="150" r="3"/>
           </svg>
         </div>
-        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
+        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><circle class="flow vcd" cx="20" cy="0" r="2.6"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
       </div>
 
       <div class="d-st">
@@ -1028,7 +1103,10 @@
             <path class="fillsoft" d="M225,60 L220.5,69 L229.5,69 Z"/>
             <!-- the piece in between -->
             <rect class="o1" x="106" y="116" width="120" height="68" rx="10"/>
-            
+            <!-- the same box again in the accent, so the piece in between is
+                 the one lit object in the chain and can brighten as the press
+                 passes through it -->
+            <rect class="cp-lit acc-h" x="106" y="116" width="120" height="68" rx="10"/>
             <image href="assets/mark.png" x="151.0" y="134.0" width="30" height="30" preserveAspectRatio="xMidYMid meet"/>
             <path class="o2 hconn" d="M0,150 H97 M236,150 H332"/>
             <path class="fillsoft hconn" d="M106,150 L97,145.5 L97,154.5 Z"/>
@@ -1036,7 +1114,7 @@
             <circle class="flow f2 hconn" cx="236" cy="150" r="3"/>
           </svg>
         </div>
-        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
+        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><circle class="flow vcd" cx="20" cy="0" r="2.6"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
       </div>
 
       <div class="d-st">
@@ -1048,12 +1126,17 @@
           <svg class="dgs" viewBox="0 0 330 300" aria-hidden="true">
             <path class="o2 hconn" d="M0,150 H31"/>
             <path class="fillsoft hconn" d="M40,150 L31,145.5 L31,154.5 Z"/>
+            <circle class="flow f3 hconn" cx="0" cy="150" r="3"/>
             <rect class="o1" x="40" y="80" width="250" height="140" rx="8"/>
             <rect class="o3" x="70" y="104" width="190" height="84" rx="6"/>
             <path class="o3" d="M70,120 H260"/>
             <path class="o3" d="M86,140 H190 M86,156 H214 M86,172 H150"/>
-            <rect class="acc" x="194" y="150" width="2" height="12"/>
-            <path class="o1" d="M120,132 L120,158 L126,152.5 L130,162 L134,160 L130,150.5 L138,150 Z"/>
+            <!-- the caret sits at the end of the last line rather than mid
+                 paragraph: it is the keystroke half of this cell's claim, and
+                 a caret only reads as typing where the text stopped -->
+            <rect class="acc cp-caret" x="153" y="166" width="2" height="12"/>
+            <path class="o1 cp-cursor" d="M120,132 L120,158 L126,152.5 L130,162 L134,160 L130,150.5 L138,150 Z"/>
+            <circle class="cp-click acc-h" cx="120" cy="132" r="7"/>
             <path class="o1" d="M165,220 V240"/>
             <path class="o1b" d="M132,240 H198"/>
           </svg>
@@ -1116,38 +1199,83 @@
   </div>
 </section>
 
-<!-- TRUST -->
-<section class="sec-loose sunken" id="trust">
-  <div class="wrap">
-    <div class="sec-head-split">
+<!-- TRUST — rebuilt in the ruled/plate language the rest of the page now uses
+     (parts/uses.html, parts/capabilities.html). It was the one band the graft
+     never reached: 1,341px of six prose rows in a floating card, which made the
+     rarest content on the site (undocumented API use, features unconfirmed on
+     hardware I don't own, what the app can't do) the quietest object on it.
+
+     Nothing here is rewritten. Every word is the same; what changed is role.
+
+     1. The one claim that can be proven leads and carries the proof.
+        assets/import-review.png is the app's own review dialog, and
+        docs/screenshots.md calls it the only possible evidence for "anything
+        risky is shown to you first". It is also the only capture with no
+        controller glyphs in it, so it is the only screenshot that can ship
+        before the per-pad re-shoot; every other one would show an Xbox owner
+        PlayStation labels. .shot is the frame and --shadow-window is reserved
+        for exactly this.
+     2. The six rows split by kind. What the app does with the access you grant
+        it sits in the column beside the proof; the two disclosures sit as ruled
+        cells at the foot, where they read as a signed statement rather than as
+        rows five and six of a list.
+     3. No card, and no icon rail. The lead says "not a trust badge" and a
+        column of little shields was arguing the opposite of its own sentence. -->
+<section class="sec sunken" id="trust">
+  <div class="dw">
+    <div class="d-head">
       <div class="eyebrow">Built to be trusted</div>
-      <h2 class="h2" style="max-width:22ch">Your setup stays on your Mac. No account, no cloud, no tracking.</h2>
+      <i aria-hidden="true"></i>
+    </div>
+    <div class="d-top">
+      <!-- the headline's second sentence became the spec line under it. Three
+           literal negatives set in mono is the page's own grammar for a
+           checkable fact, and it keeps the display step to one clause so this
+           band opens at the same size as the two above it. -->
+      <h2 class="d-display">Your setup stays on your Mac.</h2>
       <p class="lead">Steer needs permission to move your cursor and type. Here is what it does with that access. Not a trust badge; the actual answer.</p>
     </div>
-    <div class="trust-list sec-body" style="max-width:840px">
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-        <div><h3>Plain files, on your computer.</h3><p>Your mappings live on your Mac, in a file you can open and read. No sign-in, nothing synced.</p></div>
+    <p class="t-strap">No account, no cloud, no tracking.</p>
+
+    <div class="t-proof">
+      <div class="t-lede">
+        <h3 class="d-mid">Anything risky is shown to you first.</h3>
+        <p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it does not run. Scripts run from your own macOS scripts folder: an import can name one you already installed, not bring its own.</p>
       </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-14 2 8h6"/></svg>
-        <div><h3>What you type stays on your Mac.</h3><p>Steer goes online for three reasons. It checks your licence key when you enter it, then re-checks that key on launch and about once a day. It looks for an update when you ask. It fetches a setup only if you paste a link to one.</p></div>
+
+      <div class="t-fig">
+        <div class="shot">
+          <img class="shot-light" src="assets/import-review.png" width="1040" height="960" loading="lazy" decoding="async" alt="Steer's import review: three imported bindings, each tagged Opens URL beside the address it would open, with Cancel and Import buttons at the foot.">
+          <img class="shot-dark" src="assets/import-review-dark.png" width="1040" height="960" loading="lazy" decoding="async" alt="Steer's import review: three imported bindings, each tagged Opens URL beside the address it would open, with Cancel and Import buttons at the foot.">
+        </div>
       </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.5l2 2 4-4.5"/><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
-        <div><h3>Anything risky is shown to you first.</h3><p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it does not run. Scripts run from your own macOS scripts folder: an import can name one you already installed, not bring its own.</p></div>
+
+      <div class="t-list">
+        <div class="t-item">
+          <h3>Plain files, on your computer.</h3>
+          <p>Your mappings live on your Mac, in a file you can open and read. No sign-in, nothing synced.</p>
+        </div>
+        <div class="t-item">
+          <h3>What you type stays on your Mac.</h3>
+          <p>Steer goes online for three reasons. It checks your licence key when you enter it, then re-checks that key on launch and about once a day. It looks for an update when you ask. It fetches a setup only if you paste a link to one.</p>
+        </div>
+        <div class="t-item">
+          <h3>Changes can be undone.</h3>
+          <p>Steer saves a restore point as you edit each settings pane, and keeps a history you can walk back through.</p>
+        </div>
       </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 2.3 5.6"/><path d="M4 20v-4h4"/></svg>
-        <div><h3>Changes can be undone.</h3><p>Steer saves a restore point as you edit each settings pane, and keeps a history you can walk back through.</p></div>
+    </div>
+
+    <!-- the two disclosures, as cells rather than list rows: they are the only
+         two claims on the page that cost the developer something to make. -->
+    <div class="t-disc">
+      <div class="d-item">
+        <h3>No private Apple code is linked in.</h3>
+        <p>Apple published no recipe for some of what Steer does: real pinch and rotate, and speaking directly to a controller's triggers, rumble, and light bar. Steer works those out from scratch, linking no private frameworks, only the developer tools Apple publishes for everyone. The <a href="features.html">full technical account</a> is written out, because hiding it would be worse.</p>
       </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
-        <div><h3>No private Apple code is linked in.</h3><p>Apple published no recipe for some of what Steer does: real pinch and rotate, and speaking directly to a controller's triggers, rumble, and light bar. Steer works those out from scratch, linking no private frameworks, only the developer tools Apple publishes for everyone. The <a href="features.html">full technical account</a> is written out, because hiding it would be worse.</p></div>
-      </div>
-      <div class="trust-row">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.4-3.2 8.2-8 9-4.8-.8-8-4.6-8-9V7z"/><path d="M9.5 12.5l1.8 1.8 3.4-3.6"/></svg>
-        <div><h3>What it can't do is written down too.</h3><p>Where a controller can't do something, Steer hides it rather than pretending. The <a href="compatibility.html">controller page</a> marks the gaps, including the features nobody has yet confirmed on real hardware because I don't own the pad. Snapping windows into place needs the Rectangle app, installed separately. The login screen and Touch ID stay out of reach.</p></div>
+      <div class="d-item">
+        <h3>What it can't do is written down too.</h3>
+        <p>Where a controller can't do something, Steer hides it rather than pretending. The <a href="compatibility.html">controller page</a> marks the gaps, including the features nobody has yet confirmed on real hardware because I don't own the pad. Snapping windows into place needs the Rectangle app, installed separately. The login screen and Touch ID stay out of reach.</p>
       </div>
     </div>
   </div>
@@ -1191,34 +1319,62 @@
   </div>
 </section>
 
-<section class="sec-loose" id="pricing">
-  <div class="wrap center">
-    <div class="eyebrow">Pricing</div>
-    <h2 class="h2">One price. Yours to keep.</h2>
-    <div class="price-card sec-body">
-      <div class="price-big"><span class="price-cur">€</span><span class="price-num">19.99</span></div>
-      <div class="once">paid once, no subscription</div>
-      <ul class="price-inc">
-        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> 14-day free trial at launch: no card, no account</li>
-        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Every feature your controller supports, included</li>
-        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Free updates as macOS changes</li>
-        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Direct from the developer, checked by Apple</li>
+<!-- PRICING — the close, built in the same grammar as the bands above it:
+     eyebrow rule, display headline, ruled columns. It used to be a centred
+     card floating in 132px of padding, which read as a panel lifted from
+     another site and cost the band 1,088px. Nothing here is new copy; the
+     words are the card's words in different typographic roles. -->
+<section class="sec" id="pricing">
+  <div class="dw">
+    <div class="d-head">
+      <div class="eyebrow">Pricing</div>
+      <i aria-hidden="true"></i>
+    </div>
+
+    <!-- the page's own head grammar: display left, the figure in the lead slot.
+         The price is the one big number on the site that does real work, so it
+         keeps the display tier while staying microcopy in role: no button, no
+         second price, no comparison. -->
+    <div class="d-top pr-top">
+      <h2 class="d-display">One price. Yours to keep.</h2>
+      <div class="pr-price">
+        <div class="pr-fig"><span class="pr-cur">€</span><span class="pr-num">19.99</span></div>
+        <div class="pr-once">paid once, no subscription</div>
+      </div>
+    </div>
+
+    <div class="pr-body">
+      <!-- what the price buys, as ruled rows rather than a bulleted block, so
+           the list draws the same structure the capability table does. -->
+      <ul class="pr-inc">
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"/></svg> 14-day free trial at launch: no card, no account</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Every feature your controller supports, included</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Free updates as macOS changes</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Direct from the developer, checked by Apple</li>
       </ul>
-      <!-- The list is a real form, not a mailto: a mailto dies silently on a
-           machine with no mail client, at the exact moment of highest intent.
-           With JS the submit posts in place; without JS the native POST still
-           works (the endpoint answers with a small confirmation page). The
-           mailto stays below as the fallback for both failure modes. -->
-      <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
-        <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
-        <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
-        <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Join the launch list</button>
-        <p class="ml-msg" role="status" aria-live="polite"></p>
-      </form>
-      <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is in final testing. One email the day the free trial opens: one message, from me, and your address goes nowhere else. Name your controller and you hear first when a pad needs a tester.</p>
-      <p style="font-size:12px;color:var(--text-3);margin-top:10px">Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
-      <p style="font-size:13px;color:var(--text-3);margin-top:10px">Built for myself. I use it daily. Sean Floyd</p>
+
+      <div class="pr-act">
+        <!-- The list is a real form, not a mailto: a mailto dies silently on a
+             machine with no mail client, at the exact moment of highest intent.
+             With JS the submit posts in place; without JS the native POST still
+             works (the endpoint answers with a small confirmation page). The
+             mailto stays below as the fallback for both failure modes. -->
+        <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
+          <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
+          <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
+          <button class="btn btn-primary pr-go" type="submit">Join the launch list</button>
+          <p class="ml-msg" role="status" aria-live="polite"></p>
+        </form>
+        <!-- stays against the field it is a promise about -->
+        <p class="pr-note">Steer is in final testing. One email the day the free trial opens: one message, from me, and your address goes nowhere else. Name your controller and you hear first when a pad needs a tester.</p>
+      </div>
+    </div>
+
+    <!-- the band closes on a ruled strip, not on padding -->
+    <div class="pr-fine">
+      <p class="pr-alt">Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
+      <p class="pr-sig">Built for myself. I use it daily. Sean Floyd</p>
     </div>
   </div>
 </section>

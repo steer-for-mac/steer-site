@@ -93,7 +93,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* The SVG symbols live in assets/svg/ and are pulled in with
    <use href="…svg#s">, which browsers refuse to resolve over file://. So the
-   renderer serves the repo the same way bin/serve does rather than pointing
+   renderer serves the repo in-process rather than pointing
    Chrome at a path. Same reason a gate that rendered file:// would silently
    show every pad missing. */
 const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript",

@@ -9,7 +9,7 @@ them back together.
     bin/build --check   exit 1 if index.html is stale (for the commit gate)
 
 Includes only, no template language: the repo's tooling is deliberately
-dependency-free (curb-check.mjs, shots.mjs, bin/serve all run on what ships with
+dependency-free (curb-check.mjs, shots.mjs, bin/ci all run on what ships with
 the machine), and a pip install to concatenate files would not earn itself.
 
 Syntax, on its own line:

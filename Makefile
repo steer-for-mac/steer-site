@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help build serve up down ci ci-quick shots dead check deploy-check
+.PHONY: help build up down ci ci-quick shots dead check
 
 help: ## Show this
 	@grep -E '^[a-z][a-z-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
@@ -7,10 +7,7 @@ help: ## Show this
 build: ## Assemble index.html and home.css from parts/
 	bin/build
 
-serve: ## Serve on localhost:8080 (SVG symbols need http, not file://)
-	bin/serve
-
-up: ## Serve on https://steer.seanfloyd.dev.local via OrbStack
+up: ## Serve on https://steer.seanfloyd.dev.local (nginx, matches production)
 	docker compose up -d && echo "https://steer.seanfloyd.dev.local"
 
 down: ## Stop the container

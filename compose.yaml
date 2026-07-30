@@ -5,8 +5,9 @@
 #   docker compose up -d      -> https://steer.seanfloyd.dev.local
 #   docker compose down
 #
-# bin/serve stays as the zero-dependency fallback; this exists so the local
-# hostname matches production, which file:// and localhost:8080 cannot do.
+# This is the only way to serve the site. A plain static server is not an
+# equivalent: it has no try_files, so /buy would 404 locally and work on Pages,
+# and a dev server that behaves differently from production is worse than none.
 # OrbStack reads dev.orbstack.domains off the container and routes the name
 # to the exposed port with TLS, so no ports need publishing to the host.
 services:

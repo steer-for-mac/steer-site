@@ -287,9 +287,15 @@ Two things that will waste your time otherwise:
   `.still` when `navigator.webdriver` is true, which is deliberate (deterministic
   screenshots) and means no headless check can see motion. To test a loop, remove
   the class first: `document.documentElement.classList.remove('still')`.
-- **Serving matters.** The SVG symbols in `assets/svg/` come in through
-  `<use href="…svg#s">`, which browsers refuse over `file://`. Use `bin/serve` or
-  `docker compose up`; `shots.mjs` serves the repo itself for the same reason.
+- **Serving matters, and there is one way to do it.** The SVG symbols in
+  `assets/svg/` come in through `<use href="…svg#s">`, which browsers refuse over
+  `file://`. Use `make up`: nginx in Docker, on the production hostname, with the
+  same `try_files` behaviour Pages gives you. A plain static server is not an
+  equivalent fallback, which is why `bin/serve` was removed: it had no
+  `try_files`, so `/buy` 404'd locally and worked everywhere else.
+  `scripts/shots.mjs` runs its own throwaway server in-process, which is the one
+  justified exception: a screenshot gate has to be self-contained rather than
+  needing a container up first.
 
 ## Before you call it done
 
