@@ -1,0 +1,19 @@
+{
+  "name": "steer-site",
+  "private": true,
+  "type": "module",
+  "description": "Marketing site for Steer. Static output, but the toolchain is real: see bin/build, bin/ci.",
+  "scripts": {
+    "build": "bin/build",
+    "ci": "bin/ci",
+    "lint:css": "stylelint styles/tokens.css styles/shared.css styles/base.css 'parts/*.css'",
+    "lint:html": "html-validate 'parts/*.html'"
+  },
+  "devDependencies": {
+    "html-validate": "^11.6.0",
+    "lightningcss-cli": "^1.33.0",
+    "purgecss": "^8.0.0",
+    "stylelint": "^17.14.1",
+    "stylelint-config-recommended": "^18.0.0"
+  }
+}

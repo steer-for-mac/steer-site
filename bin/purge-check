@@ -12,11 +12,13 @@ whole value is how it looks is not a trade worth making silently.
 import json
 import os
 import subprocess
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent.parent
 import sys
 
 MAX = float(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else 15.0
 
-out = subprocess.run(["npx", "--yes", "purgecss", "--config", "purgecss.config.js"],
+out = subprocess.run([str(ROOT / "node_modules" / ".bin" / "purgecss"), "--config", "purgecss.config.js"],
                      capture_output=True, text=True)
 if out.returncode:
     sys.exit(f"purgecss failed:\n{out.stderr.strip()}")

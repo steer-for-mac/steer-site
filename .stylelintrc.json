@@ -1,34 +1,13 @@
 {
-  "//": "Rules chosen because each has already bitten this repo. Sources only: bin/build generates styles.css and home.css, and Lightning CSS compresses colours there, so linting output flags values nobody wrote.",
+  "//": "stylelint-config-recommended is the baseline: it turns on every 'possible error' rule rather than whatever a person thought to list. The overrides below are this repo's own, each one earned. Sources only, never the generated sheets: Lightning CSS compresses colours there and the output flags values nobody wrote.",
+  "extends": ["stylelint-config-recommended"],
   "rules": {
-    "no-duplicate-selectors": [
-      true,
-      {
-        "severity": "warning"
-      }
-    ],
-    "declaration-block-no-duplicate-properties": [
-      true,
-      {
-        "ignore": [
-          "consecutive-duplicates-with-different-values"
-        ]
-      }
-    ],
+    "no-duplicate-selectors": [true, { "severity": "warning" }],
+    "declaration-block-no-duplicate-properties": [true, { "ignore": ["consecutive-duplicates-with-different-values"] }],
     "declaration-block-no-shorthand-property-overrides": true,
-    "block-no-empty": true,
-    "color-no-invalid-hex": true,
-    "property-no-unknown": [
-      true,
-      {
-        "ignoreProperties": [
-          "corner-shape"
-        ]
-      }
-    ],
-    "unit-no-unknown": true,
-    "no-invalid-double-slash-comments": true,
+    "property-no-unknown": [true, { "ignoreProperties": ["corner-shape"] }],
     "no-descending-specificity": null,
-    "function-no-unknown": null
+    "function-no-unknown": null,
+    "media-feature-name-no-unknown": [true, { "ignoreMediaFeatureNames": ["prefers-reduced-motion"] }]
   }
 }

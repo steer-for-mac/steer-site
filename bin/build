@@ -6,6 +6,7 @@ not touch different bands at once. Each band is its own file now; this stitches
 them back together.
 
     bin/build           write index.html from parts/
+    bin/build --prod    same, with dev-only comments stripped
     bin/build --check   exit 1 if index.html is stale (for the commit gate)
 
 Includes only, no template language: the repo's tooling is deliberately
@@ -79,15 +80,33 @@ def bundle(entry: str, out: str) -> str:
     being implied by the order a script pasted things together in.
     """
     proc = subprocess.run(
-        ["npx", "--yes", "lightningcss-cli@1", "--bundle", f"styles/{entry}", "-o", out],
+        [str(ROOT / "node_modules" / ".bin" / "lightningcss"), "--bundle", f"styles/{entry}", "-o", out],
         cwd=ROOT, capture_output=True, text=True)
     if proc.returncode:
         sys.exit(f"lightningcss failed on styles/{entry}:\n{proc.stderr.strip()}")
     return (ROOT / out).read_text(encoding="utf-8")
 
 
+COMMENT = re.compile(r"[ \t]*<!--(?!\[if).*?-->[ \t]*\n?", re.S)
+
+
+def strip_dev(html: str) -> str:
+    """Drop HTML comments for production.
+
+    17% of index.html is comments, and they are design rationale written for
+    whoever edits parts/ next: they cite app source files, name commits, and
+    explain decisions. That is exactly the material to keep in the repo and not
+    ship to strangers. Conditional comments are spared, though this site has
+    none.
+    """
+    return re.sub(r"\n{3,}", "\n\n", COMMENT.sub("", html))
+
+
 def main() -> int:
+    prod = "--prod" in sys.argv
     built = BANNER + render(SRC)
+    if prod:
+        built = strip_dev(built)
     write_home_entry()
 
     if "--check" in sys.argv:
@@ -111,7 +130,8 @@ def main() -> int:
     home = bundle("home.entry.css", "home.css")
     parts = len(re.findall(r"<!--\s*include:", SRC.read_text(encoding="utf-8")))
     bands = len(list((ROOT / "parts").glob("*.css")))
-    print(f"index.html <- index.src.html + {parts} parts ({len(built)//1024} KB)")
+    tag = " [prod: comments stripped]" if prod else ""
+    print(f"index.html <- index.src.html + {parts} parts ({len(built)//1024} KB){tag}")
     print(f"styles.css <- tokens + shared ({len(shared)//1024} KB)")
     print(f"home.css   <- base + {bands} band sheets ({len(home)//1024} KB)")
     return 0

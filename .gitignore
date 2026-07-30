@@ -1,3 +1,4 @@
 # Throwaway QA artifacts (screenshots, PoC output)
 scratch/
 hero-*
+node_modules/

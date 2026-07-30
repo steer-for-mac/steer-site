@@ -24,19 +24,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: "22" }
+        with:
+          node-version: "22"
+          cache: npm
 
+      - run: npm ci
+
+      # --prod strips the design-rationale comments, which are 17% of index.html
+      # and written for whoever edits parts/ next rather than for visitors.
       - name: Assemble the page
-        run: bin/build
+        run: bin/build --prod
 
       # The generated files are committed, so a mismatch means someone edited
       # index.html directly or forgot to rebuild. Fail rather than quietly
       # shipping something nobody reviewed.
+      # A dev build here, because --check compares against the committed files
+      # and those are the un-stripped ones.
       - name: Generated files match parts/
-        run: bin/build --check
+        run: bin/build && bin/build --check
 
       - name: Structural accessibility invariants
         run: bin/a11y-check
+
+      - name: HTML and CSS lint
+        run: |
+          npx html-validate 'parts/*.html'
+          npx stylelint styles/tokens.css styles/shared.css styles/base.css 'parts/*.css'
 
       - name: Copy and design rules
         run: |
