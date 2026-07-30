@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://steer.seanfloyd.dev/assets/og.png" />
 <!-- theme init in <head> so the page paints in the right appearance on first frame (no light flash on a dark Mac) -->
 <script>
-(function(){var s=null,a=null;try{s=localStorage.getItem('steer-theme');a=localStorage.getItem('steer-accent');}catch(e){}var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme', s||'dark');void d;if(a&&a!=='blue'&&a!=='auto')document.documentElement.setAttribute('data-accent',a);})();
+(function(){var s=null,a=null;try{s=localStorage.getItem('steer-theme');a=localStorage.getItem('steer-accent');}catch(e){}var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme', s||(d?'dark':'light'));if(a&&a!=='blue'&&a!=='auto')document.documentElement.setAttribute('data-accent',a);})();
 </script>
 <link rel="icon" type="image/png" href="assets/mark.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -1195,7 +1195,6 @@ main > section + section{border-top:1px solid var(--hairline)}
   .uc-couch .vg-wheel{width:min(190px,58vw);height:min(190px,58vw)}
 }
 
-.chain-icon{width:30px;height:30px;border-radius:7px;margin:0 auto 7px;display:block}
 /* ── grafted from the D synthesis (scratch/alt/d-synthesis.html) ────────── */
 /* ══ DIRECTION D: SYNTHESIS ═══════════════════════════════════════════════════
    C is the base. Its drawn plates stay, because a line-art diagram in the
@@ -1295,7 +1294,7 @@ main > section + section{border-top:1px solid var(--hairline)}
 .acc-s{fill:none;stroke:var(--blue-text);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
 .acc-h{fill:none;stroke:var(--blue-text);stroke-width:1;opacity:.35}
 .acc-t{fill:var(--blue-text);opacity:.2;stroke:var(--blue-text);stroke-opacity:.55;stroke-width:1}
-.mono{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;fill:currentColor;opacity:.8}
+.dgs .mono,.d-chain .mono{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;fill:currentColor}
 
 /* ── THE MOMENT: the couch, at roughly half the band ─────────────────────── */
 /* The couch owns the claim readers most disbelieve, so it is the one drawing
@@ -2283,6 +2282,46 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
      shipped/true (no FPS, no CAD orbit, no DAW). If a price comparison is
      added back, it needs a verified source — the one that used to live here
      ($435 Speed Editor) was removed along with the card that cited it. -->
+<!-- symbol defs for the drawn plates, grafted with them -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="padFull" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" vector-effect="non-scaling-stroke">
+    <g opacity="0.62">
+      <path d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z" vector-effect="non-scaling-stroke"/>
+      <path d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z" vector-effect="non-scaling-stroke"/>
+    </g>
+    <g opacity="0.62" transform="matrix(-1 0 0 1 1200 0)">
+      <path d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z" vector-effect="non-scaling-stroke"/>
+      <path d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z" vector-effect="non-scaling-stroke"/>
+    </g>
+    <path opacity="0.72" vector-effect="non-scaling-stroke" d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"/>
+    <g opacity="0.4" vector-effect="non-scaling-stroke">
+      <circle cx="600" cy="94" r="19" vector-effect="non-scaling-stroke"/>
+      <circle cx="552" cy="142" r="8" vector-effect="non-scaling-stroke"/>
+      <circle cx="648" cy="142" r="8" vector-effect="non-scaling-stroke"/>
+      <circle cx="728" cy="114" r="15.5" vector-effect="non-scaling-stroke"/>
+      <circle cx="764" cy="150" r="15.5" vector-effect="non-scaling-stroke"/>
+      <circle cx="728" cy="186" r="15.5" vector-effect="non-scaling-stroke"/>
+      <circle cx="692" cy="150" r="15.5" vector-effect="non-scaling-stroke"/>
+      <path vector-effect="non-scaling-stroke" d="M521,217 H535 A2,2 0 0 1 537,219 V229 A2,2 0 0 0 539,231 H549 A2,2 0 0 1 551,233 V245 A2,2 0 0 1 549,247 H539 A2,2 0 0 0 537,249 V259 A2,2 0 0 1 535,261 H521 A2,2 0 0 1 519,259 V249 A2,2 0 0 0 517,247 H507 A2,2 0 0 1 505,245 V233 A2,2 0 0 1 507,231 H517 A2,2 0 0 0 519,229 V219 A2,2 0 0 1 521,217 Z"/>
+    </g>
+    <g opacity="0.62">
+      <circle cx="472" cy="150" r="37" vector-effect="non-scaling-stroke"/>
+      <circle cx="472" cy="150" r="26" vector-effect="non-scaling-stroke" opacity="0.6"/>
+      <circle cx="668" cy="238" r="37" vector-effect="non-scaling-stroke"/>
+      <circle cx="668" cy="238" r="26" vector-effect="non-scaling-stroke" opacity="0.6"/>
+    </g>
+  </g>
+  <!-- the same pad at thumbnail size: body and sticks only, or it turns to mush -->
+  <g id="padSm" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" opacity="0.68">
+    <path vector-effect="non-scaling-stroke" d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"/>
+    <circle cx="472" cy="150" r="37" vector-effect="non-scaling-stroke" opacity="0.7"/>
+    <circle cx="668" cy="238" r="37" vector-effect="non-scaling-stroke" opacity="0.7"/>
+  </g>
+  <g id="trig" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" opacity="0.62">
+    <path vector-effect="non-scaling-stroke" d="M420,82 C412,66 413,50 423,42 C433,35 452,33 467,36 C479,39 487,46 488,54 L485,70 Z"/>
+  </g>
+</defs></svg>
+
 <section class="sec-loose sunken" id="uses">
   <div class="dw">
     <div class="d-head">
@@ -2359,7 +2398,7 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
         <h3>When a mouse hurts, or never felt natural.</h3>
         <p>A controller rests in loose hands: nothing to pinch, no fine wrist work, no reaching across the desk. If sore wrists, tremor, pain, or using one hand make a mouse hard, this is a different shape to hold.</p>
         <p>Comfort is personal, so the honest test is your own hands.</p>
-        <a class="arrow-link" href="../../accessibility.html">See the accessibility setup&nbsp;<span class="a">→</span></a>
+        <a class="arrow-link" href="accessibility.html">See the accessibility setup&nbsp;<span class="a">→</span></a>
         <div class="d-foot">
           <div class="d-spec"><span class="k">Cursor speed</span><span class="v">slow it right down</span></div>
           <div class="d-fig fa">
@@ -2419,7 +2458,7 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
         <h3>Cut without touching the keyboard.</h3>
         <p>Scrub with the triggers: one rolls the video back, the other forward, and the cut lands under your thumb, the way a dedicated editing console does it, on the controller in your drawer. Ready-made for DaVinci Resolve and Final Cut Pro.</p>
         <div class="d-foot">
-          <div class="d-spec"><span class="k"><b data-ps="L2 / R2" data-xb="LT / RT" data-sw="ZL / ZR" data-mf="The triggers" style="font-weight:inherit">L2 / R2</b></span><span class="v">scrub and cut</span></div>
+          <div class="d-spec"><span class="k"><b data-ps="L2 / R2" data-xb="LT / RT" data-sw="ZL / ZR" data-mf="The triggers" style="font-weight:inherit"><b data-ps="L2 / R2" data-xb="LT / RT" data-sw="ZL / ZR" data-mf="The triggers">L2 / R2</b></b></span><span class="v">scrub and cut</span></div>
           <div class="d-fig fv">
             <svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
               <polyline class="ld" points="18,2 18,26 118,110"/>
@@ -2449,7 +2488,7 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
       <span class="d-pill">Writing &amp; notes</span>
       <span class="d-pill">Coding &amp; IDEs</span>
       <span class="d-pill">Design &amp; Figma</span>
-      <a class="d-pill" href="../../agents.html">Running AI agents&nbsp;<span class="a">→</span></a>
+      <a class="d-pill" href="agents.html">Running AI agents&nbsp;<span class="a">→</span></a>
     </div>
     <div class="d-note">
       <span class="k">Nearly any app.</span>
@@ -2457,7 +2496,7 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
     </div>
     <div class="d-note">
       <span class="k">Running coding agents?</span>
-      <p class="v">A PlayStation pad can light up to show what the agent is doing, any pad with rumble can buzz when it needs you, and you approve from across the room. <a href="../../agents.html">See the recipe&nbsp;<span class="a">→</span></a></p>
+      <p class="v">A PlayStation pad can light up to show what the agent is doing, any pad with rumble can buzz when it needs you, and you approve from across the room. <a href="agents.html">See the recipe&nbsp;<span class="a">→</span></a></p>
     </div>
   </div>
 </section>
@@ -2566,7 +2605,7 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
             <!-- the piece in between -->
             <rect class="o1" x="106" y="116" width="120" height="68" rx="10"/>
             <rect class="o3" x="112" y="122" width="108" height="56" rx="7"/>
-            <text class="mono" x="166" y="155" text-anchor="middle" letter-spacing="0.22em">STEER</text>
+            <image href="assets/mark.png" x="151.0" y="134.0" width="30" height="30" preserveAspectRatio="xMidYMid meet"/>
             <path class="o2 hconn" d="M0,150 H97 M236,150 H332"/>
             <path class="fillsoft hconn" d="M106,150 L97,145.5 L97,154.5 Z"/>
             <circle class="flow f1 hconn" cx="0" cy="150" r="3"/>
@@ -2614,19 +2653,19 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
         </div>
         <div class="lay-rows">
           <div class="lay-row">
-            <svg viewBox="0 0 26 26" fill="none" stroke="currentColor"><circle cx="13" cy="13" r="11.7" stroke-width="1.2" opacity=".55"/><path d="M9 9l8 8M17 9l-8 8" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="face-slot" data-b="cross"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-cross)" stroke-width="1.5" opacity="0.9"/><path d="M9 9l8 8M17 9l-8 8" stroke="var(--ps-cross)" stroke-width="1.7" stroke-linecap="round"/></svg></span>
             <span class="lay-a">Click</span><span class="lay-arrow">→</span><span class="lay-b">Fullscreen</span>
           </div>
           <div class="lay-row">
-            <svg viewBox="0 0 26 26" fill="none" stroke="currentColor"><circle cx="13" cy="13" r="11.7" stroke-width="1.2" opacity=".55"/><circle cx="13" cy="13" r="4.6" stroke-width="1.5"/></svg>
+            <span class="face-slot" data-b="circle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-circle)" stroke-width="1.5" opacity="0.9"/><circle cx="13" cy="13" r="4.6" stroke="var(--ps-circle)" stroke-width="1.7"/></svg></span>
             <span class="lay-a">Right-click</span><span class="lay-arrow">→</span><span class="lay-b">Close tab</span>
           </div>
           <div class="lay-row">
-            <svg viewBox="0 0 26 26" fill="none" stroke="currentColor"><circle cx="13" cy="13" r="11.7" stroke-width="1.2" opacity=".55"/><path d="M13 7.6l5.4 9.4H7.6z" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            <span class="face-slot" data-b="triangle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-triangle)" stroke-width="1.5" opacity="0.9"/><path d="M13 7.6l5.4 9.4H7.6z" stroke="var(--ps-triangle)" stroke-width="1.7" stroke-linejoin="round" fill="none"/></svg></span>
             <span class="lay-a">Enter</span><span class="lay-arrow">→</span><span class="lay-b">Dictation</span>
           </div>
           <div class="lay-row">
-            <svg viewBox="0 0 26 26" fill="none" stroke="currentColor"><circle cx="13" cy="13" r="11.7" stroke-width="1.2" opacity=".55"/><rect x="8.4" y="8.4" width="9.2" height="9.2" rx="1.4" stroke-width="1.5"/></svg>
+            <span class="face-slot" data-b="square"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-square)" stroke-width="1.5" opacity="0.9"/><rect x="8.4" y="8.4" width="9.2" height="9.2" rx="1.4" stroke="var(--ps-square)" stroke-width="1.7"/></svg></span>
             <span class="lay-a">Esc</span><span class="lay-arrow">→</span><span class="lay-b">Mute</span>
           </div>
         </div>
@@ -2640,11 +2679,11 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
       <div class="d-trow"><span class="d-tn">04</span><span class="d-tk">Longer text</span><span class="d-tv">Speak it: a button starts dictation, set up once with Apple's Shortcuts app</span></div>
       <div class="d-trow"><span class="d-tn">05</span><span class="d-tk">A setup for each app</span><span class="d-tv">Changes with the app you open</span></div>
       <div class="d-trow"><span class="d-tn">06</span><span class="d-tk">Your mouse still works</span><span class="d-tv">This adds a device, it does not replace one</span></div>
-      <div class="d-trow"><span class="d-tn">07</span><span class="d-tk">Everything else</span><span class="d-tv"><a href="../../features.html">See all 39, in plain language</a></span></div>
+      <div class="d-trow"><span class="d-tn">07</span><span class="d-tk">Everything else</span><span class="d-tv"><a href="features.html">See all 39, in plain language</a></span></div>
     </div>
 
     <div class="d-gal">
-      <button class="btn btn-secondary" type="button" aria-haspopup="dialog">
+      <button class="btn btn-secondary" type="button" id="shotsOpen" aria-haspopup="dialog">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:17px;height:17px"><rect x="2.5" y="4" width="15" height="12" rx="2"/><circle cx="7.2" cy="8.4" r="1.4"/><path d="M2.5 13.5l4-3.5 3.5 3 3-2.5 4.5 3.5"/></svg>
         Look inside the app: seven panes
       </button>
@@ -2695,10 +2734,9 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
      vs.html so cold visitors aren't handed a competitor; the comparing buyer
      still gets it via the link below. -->
 
-<!-- PRICING — carries the sunken band (moved from #requirements) so the tail
-     alternates trust(sunken) / reach / pricing(sunken) / requirements / footer
-     (sunken): the reach-to-pricing padding stack gets a visible boundary and
-     the price card pops harder against the recessed surface. -->
+<!-- PRICING: the plain band in the tail. #reach and #requirements were the
+     only two plain surfaces down here and both were cut, which left
+     trust/pricing/footer sunken in a row. -->
 <!-- PAD STRIP — the one thin band on the page. Everything else below the hero
      is 700px or taller, so nothing was dense; romm reads packed because it puts
      100-150px strips between its bodies, and this is the honest material for
@@ -2729,7 +2767,7 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
   </div>
 </section>
 
-<section class="sec-loose sunken" id="pricing">
+<section class="sec-loose" id="pricing">
   <div class="wrap center">
     <div class="eyebrow">Pricing</div>
     <h2 class="h2">One price. Yours to keep.</h2>

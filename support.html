@@ -98,15 +98,61 @@
     <p style="color:var(--text-3);margin-top:22px">Steer is a one-person project. Response times vary, but I read everything.</p>
 
     <p style="color:var(--text-3);margin-top:18px">New here? Steer turns a game controller into a way to run your Mac. <a href="index.html">Start at the beginning</a>, or see <a href="compatibility.html">what your controller can do</a>.</p>
-  </div>
-
-  <section class="sec">
+  
     <h2>What you need</h2>
-    <!-- moved off the homepage 2026-07-30: a spec table and two FAQ rows are
-         reference content, and this page owns buying and permissions. -->
+    <!-- moved off the homepage 2026-07-30. A spec table and two FAQ rows are
+         reference content, and this page owns buying and permissions. The
+         languages count is bundle-counted (35 .lproj), which design-rules
+         singles out as the kind of number that should be stated. -->
+<!-- Same head device as #capabilities and #trust: the lead fills the wide
+         right void that a lone left-aligned heading leaves above the columns. -->
+    <div class="sec-head-split">
+      <p class="lead">A recent Mac, the controller you already own, and one permission switched on once.</p>
+    </div>
+    <div class="specs sec-body">
+      <div>
+        <div class="spec-row"><span class="k">System</span><span class="v">macOS 14 or later, Apple Silicon (M1 or newer)</span></div>
+        <div class="spec-row"><span class="k">Connection</span><span class="v">Wired or Bluetooth</span></div>
+        <div class="spec-row"><span class="k">Form</span><span class="v">Menu-bar app, no window</span></div>
+        <div class="spec-row"><span class="k">Delivery</span><span class="v">Direct download, checked by Apple</span></div>
+      </div>
+      <div>
+        <div class="spec-row"><span class="k">Accessibility permission</span><span class="v">A Mac setting you switch on once</span></div>
+        <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">For three cases: Edge back buttons, DualShock 4 tilt-to-aim, off-brand pads</span></div>
+        <div class="spec-row"><span class="k">Window snapping</span><span class="v">Needs the <a href="https://rectangleapp.com">Rectangle</a> app, installed separately</span></div>
+        <!-- 35 .lproj bundles and 35 help-docs-*.md in the app repo, at string
+             parity with English. Kept here rather than anywhere prominent: it is
+             a credibility signal, not a reason anyone buys. -->
+        <div class="spec-row"><span class="k">Languages</span><span class="v">35, including the built-in help</span></div>
+      </div>
+    </div>
+    <!-- The controller list used to be repeated here as a callout and again as
+         the first FAQ answer, forty lines apart. The FAQ version is the better
+         one (it explains the hardware caveat and links out), so it stands alone. -->
 
+    <!-- FAQ -->
+    <div class="faq" style="text-align:left">
+      <!-- First, because it is the biggest doubt. Real users in this category say
+           the competitor is not another remapper: it is a lap keyboard, or just
+           reaching for the mouse. The answer concedes the desk rather than
+           claiming to beat a mouse at precision, which is not winnable or true. -->
+      <details>
+        <summary>Why not just use a mouse and keyboard?</summary>
+        <div class="faq-body">At a desk doing precise work, a mouse is better, and Steer is not trying to replace it there. Everywhere else is the point. Your hands stay on the controller: pointing, clicking, dragging, typing, and your shortcuts are all on one device, with nothing extra to buy or charge. Dragging is real dragging, so moving a file into a folder works the way it does with a mouse.</div>
+      </details>
 
-  </section>
+      <!-- The doubt nobody says out loud: that a stick is a novelty that gets
+           abandoned in a week. Conceding the half that is true (pixel work) is
+           what makes the other half believable. -->
+
+      <details>
+        <summary>Is a stick actually precise enough for real work?</summary>
+        <div class="faq-body">For clicking a menu item, hitting a link, dragging a file, yes, once the speed suits your hands: the cursor crawls when you nudge the stick and sweeps when you push it, and you set that yourself. For pixel work in Photoshop, no. Most people set the cursor speed once on the first day and stop thinking about it. This is the part you have to feel, which is what the trial is for.</div>
+      </details>
+
+      <p class="foot-note" style="margin-top:20px">More questions: <a href="features.html">what it does</a>, <a href="compatibility.html">your controller</a>, <a href="support.html">buying and permissions</a>.</p>
+    </div>
+  </div>
 </main>
 
 <footer>

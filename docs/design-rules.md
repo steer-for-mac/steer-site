@@ -54,7 +54,9 @@ should never try to be one.
 - **Surfaces alternate.** Adjacent sections should not share a surface unless
   something else draws the boundary; two plain-bg sections in a row read as one
   tall empty band (that was the reach-to-pricing dead zone). The page tail runs
-  trust (sunken) / reach / pricing (sunken) / requirements / footer (sunken).
+  trust (sunken) / pricing (plain) / footer (sunken). `reach` and `requirements`
+  were cut in `4c871d1`; they were the tail's only two plain bands, so pricing
+  took the plain surface to keep the alternation.
 - **The eyebrow signature stays consistent:** SF Mono uppercase label plus one
   emissive accent dot. It is the instrument signature carried down from the
   hero to every section. Keep it.
@@ -217,8 +219,13 @@ budget the cut bought.
 
 ## The `.vg` vignette family
 
-Four are in the page: `.vg-glide` (hero), `.vg-type` (couch), `.vg-edit` (video
-editors), `.vg-layers` (capabilities). `bad901e` cut `.vg-stream`, `.vg-speak`
+One is in the page: `.vg-glide` (hero). `.vg-edit` went in `133f527` and
+`.vg-type` and `.vg-layers` went with the D graft in `4c871d1`, which replaced
+both bands with drawn plates. **Below the hero there is now no looping proof at
+all**, and `bad901e` kept those loops on purpose: the ones that show a cursor
+being driven, text being typed and buttons changing job carry more than the
+paragraphs beside them. Restoring motion to the plates is outstanding work, not
+a settled decision. `bad901e` cut `.vg-stream`, `.vg-speak`
 and `.vg-launch` when the page came down to peer length. `.vg-stream` has no CSS
 left; `.vg-speak` and `.vg-launch` still do, 1.2KB, kept because that is cheaper
 than re-deriving them from the app if a card ever needs one again. Before

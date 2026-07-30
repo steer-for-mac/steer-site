@@ -175,7 +175,10 @@ try {
     await s.send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: 1, mobile: width < 500 });
     await s.send("Page.navigate", { url });
     await sleep(900);
-    if (pad) await s.eval(`document.documentElement.setAttribute('data-pad',${JSON.stringify(pad)})`);
+    /* click the real tab: the label/glyph swap listens for the `steerpad` event
+       that setPad dispatches, so setting the attribute alone moves the CSS-only
+       .pd-* gates and leaves every [data-ps] label on PlayStation. */
+    if (pad) await s.eval(`(() => { const t = document.querySelector('.tab[data-pad="' + ${JSON.stringify(pad)} + '"]'); if (t) { t.click(); return true; } document.documentElement.setAttribute('data-pad', ${JSON.stringify(pad)}); return false; })()`);
     if (theme) await s.eval(`document.documentElement.setAttribute('data-theme',${JSON.stringify(theme)})`);
     if (pad || theme) await sleep(200);
   };
