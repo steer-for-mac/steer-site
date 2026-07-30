@@ -85,7 +85,7 @@ img{display:block;max-width:100%}
 section{position:relative}
 /* section eyebrow = the hero's engineered-instrument signature, carried down:
    SF Mono label + one emissive accent dot. Ties every section back to the pad. */
-.eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;text-transform:uppercase;letter-spacing:0.13em;color:var(--text-3);margin-bottom:16px;display:inline-flex;align-items:center;gap:9px}
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.13em;color:var(--text-3);margin-bottom:16px;display:inline-flex;align-items:center;gap:9px}
 .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;flex:none;background:var(--blue);box-shadow:0 0 0 1px color-mix(in srgb,var(--blue) 20%,transparent),0 0 9px color-mix(in srgb,var(--blue) 55%,transparent)}
 h1,h2,h3{letter-spacing:-0.022em;line-height:1.06;font-weight:600}
 .h2{font-size:clamp(28px,3.6vw,40px);letter-spacing:-0.024em;line-height:1.08;text-wrap:balance}
@@ -215,10 +215,10 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .group{background:var(--card-bg);border:1px solid var(--sep);border-radius:var(--r-inset);overflow:hidden;box-shadow:var(--shadow-rest),var(--card-hi)}
 .grow{display:flex;align-items:center;gap:14px;padding:13px 16px;position:relative}
 .grow+.grow::before{content:"";position:absolute;top:0;left:16px;right:0;height:1px;background:var(--sep)}
-.grow .lbl{font-size:15px;font-weight:450;color:var(--text)}
+.grow .lbl{font-size:16px;font-weight:450;color:var(--text)}
 .grow .sub{font-size:13px;color:var(--text-3);margin-top:1px}
-.grow .val{margin-left:auto;font-size:15px;color:var(--text-2);display:flex;align-items:center;gap:8px}
-.grow .val.mono{font-family:var(--mono);font-size:13.5px}
+.grow .val{margin-left:auto;font-size:16px;color:var(--text-2);display:flex;align-items:center;gap:8px}
+.grow .val.mono{font-family:var(--mono);font-size:13px}
 .seclabel{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.11em;color:var(--text-3);padding:0 4px 9px}
 
 /* face buttons */
@@ -233,7 +233,7 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 
 /* segmented control */
 .segmented{display:inline-flex;background:var(--bg-inset-2);border-radius:var(--r-inset);padding:2px;gap:2px}
-.segmented button{border:0;background:transparent;font-family:var(--font);font-size:13.5px;font-weight:500;color:var(--text-2);padding:5px 13px;border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:6px;letter-spacing:-0.01em}
+.segmented button{border:0;background:transparent;font-family:var(--font);font-size:13px;font-weight:500;color:var(--text-2);padding:5px 13px;border-radius:7px;cursor:pointer;display:flex;align-items:center;gap:6px;letter-spacing:-0.01em}
 .segmented button .n{font-size:12px;color:var(--text-3);font-weight:450}
 .segmented button[aria-selected="true"]{background:var(--bg);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.10),0 0 0 .5px rgba(0,0,0,.04)}
 [data-theme="dark"] .segmented button[aria-selected="true"]{box-shadow:0 1px 2px rgba(0,0,0,.4)}
@@ -250,12 +250,12 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .trust-row:first-child{border-top:0}
 .trust-row .ic{width:22px;height:22px;color:var(--blue);margin-top:2px}
 .trust-row h3{font-size:17px;font-weight:590;margin-bottom:5px;letter-spacing:-0.015em}
-.trust-row p{font-size:15px;color:var(--text-2);line-height:1.5;max-width:60ch}
+.trust-row p{font-size:16px;color:var(--text-2);line-height:1.5;max-width:60ch}
 .trust-row .yes{color:var(--green)}.trust-row .no{color:var(--text-3)}
 
 /* comparison */
 .cmp-card{margin-left:auto;margin-right:auto;max-width:840px;overflow:hidden;border-radius:var(--r-card);border:1px solid var(--sep);background:var(--card-bg);box-shadow:var(--shadow-rest),var(--card-hi)}
-.cmp{width:100%;border-collapse:collapse;font-size:15px}
+.cmp{width:100%;border-collapse:collapse;font-size:16px}
 .cmp th,.cmp td{text-align:left;padding:15px 18px;border-top:1px solid var(--sep)}
 .cmp thead th{border-top:0;font-size:13px;font-weight:590;color:var(--text-3);text-transform:uppercase;letter-spacing:0.05em;padding-bottom:12px}
 .cmp .feat{color:var(--text);font-weight:450;width:44%}
@@ -268,7 +268,7 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 
 /* spec grid */
 .specs{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px}
-.spec-row{display:flex;justify-content:space-between;gap:24px;padding:14px 0;border-top:1px solid var(--sep);font-size:15px}
+.spec-row{display:flex;justify-content:space-between;gap:24px;padding:14px 0;border-top:1px solid var(--sep);font-size:16px}
 .spec-row .k{color:var(--text-2)}
 .spec-row .v{color:var(--text);text-align:right;font-weight:450;max-width:60%}
 /* rows draw only a top rule; close each column so the table doesn't end mid-air */
@@ -282,7 +282,7 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .price-big .price-num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(60px,8vw,84px);font-weight:600;letter-spacing:-0.045em;color:var(--text)}
 .price-card .once{font-size:15px;color:var(--text-2);margin-top:6px}
 .price-inc{text-align:left;max-width:340px;margin:28px auto 0;display:grid;gap:11px}
-.price-inc li{list-style:none;display:flex;gap:11px;font-size:15px;color:var(--text-2);align-items:flex-start}
+.price-inc li{list-style:none;display:flex;gap:11px;font-size:16px;color:var(--text-2);align-items:flex-start}
 .price-inc svg{width:17px;height:17px;color:var(--green);flex:none;margin-top:2px}
 
 /* footer */
@@ -293,7 +293,7 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
 .foot-grid a:not(.brand){display:block;color:var(--text-2);margin-bottom:9px;font-size:14px}
 .foot-grid a:not(.brand):hover{color:var(--text);text-decoration:none}
 .foot-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--sep);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--text-3);font-size:13px}
-.foot-note{max-width:44ch;color:var(--text-3);font-size:13.5px;line-height:1.5;margin-top:12px}
+.foot-note{max-width:44ch;color:var(--text-3);font-size:13px;line-height:1.5;margin-top:12px}
 
 /* misc */
 .tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 10px;border-radius:980px;background:var(--bg-inset);color:var(--text-2);border:1px solid var(--sep)}
@@ -309,16 +309,16 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
 .uc-tag{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--blue-text);margin-bottom:12px;display:inline-flex;align-items:center;gap:7px}
 .uc-tag::before{content:"";width:5px;height:5px;border-radius:50%;flex:none;background:var(--blue);box-shadow:0 0 7px color-mix(in srgb,var(--blue) 60%,transparent)}
 .uc-lead h3{font-size:18px;letter-spacing:-0.02em;margin-bottom:8px}
-.uc-lead p{font-size:14.5px;color:var(--text-2);line-height:1.5}
+.uc-lead p{font-size:16px;color:var(--text-2);line-height:1.5}
 /* the mechanism line: which part of the pad does the job — the hero's callout, on a card */
-.uc-mech{margin-top:auto;padding-top:14px;border-top:1px solid var(--sep);font-family:var(--mono);font-size:11.5px;letter-spacing:0.01em;color:var(--text-3);line-height:1.4}
+.uc-mech{margin-top:auto;padding-top:14px;border-top:1px solid var(--sep);font-family:var(--mono);font-size:11px;letter-spacing:0.01em;color:var(--text-3);line-height:1.4}
 .uc-lead h3{margin-top:0}
 .uc-lead p+.uc-mech{margin-top:auto}
 .uc-lead p{margin-bottom:15px}
 .uc-mech b{color:var(--text-2);font-weight:500}
 .pills-label{font-size:12px;font-weight:590;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);margin:36px 0 14px}
 .pills{display:flex;flex-wrap:wrap;gap:9px}
-.pill-uc{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--text-2);background:transparent;border:1px solid var(--sep);border-radius:980px;padding:7px 14px;letter-spacing:-0.01em}
+.pill-uc{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-2);background:transparent;border:1px solid var(--sep);border-radius:980px;padding:7px 14px;letter-spacing:-0.01em}
 /* linked pills read as links: accent ink + tinted border, so they no longer
    masquerade as the static recognition pills beside them */
 a.pill-uc{color:var(--blue-text);border-color:color-mix(in srgb,var(--blue) 32%,transparent)}

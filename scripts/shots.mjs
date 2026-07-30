@@ -34,6 +34,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SECTIONS = [
   ["hero", ".chero"],
   ["padstrip", ".padstrip"],
+  ["numstrip", ".numstrip"],
   ["uses", "#uses"],
   ["feel", "#feel"],
   ["capabilities", "#capabilities"],
