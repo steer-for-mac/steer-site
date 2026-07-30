@@ -1141,7 +1141,6 @@ main > section + section{border-top:1px solid var(--hairline)}
 .trust-list{border:1px solid var(--hairline);border-inline:0}
 .trust-row{padding-inline:0}
 
-
 /* macOS window chrome. The most native device on romm's list and the one worth
    taking first here: Steer is a Mac app, its on-screen keyboard genuinely is a
    window with that title bar, and --r-window plus --shadow-window already exist
@@ -1196,6 +1195,288 @@ main > section + section{border-top:1px solid var(--hairline)}
   .uc-couch .vg-wheel{width:min(190px,58vw);height:min(190px,58vw)}
 }
 
+.chain-icon{width:30px;height:30px;border-radius:7px;margin:0 auto 7px;display:block}
+/* ── grafted from the D synthesis (scratch/alt/d-synthesis.html) ────────── */
+/* ══ DIRECTION D: SYNTHESIS ═══════════════════════════════════════════════════
+   C is the base. Its drawn plates stay, because a line-art diagram in the
+   hero's annotation language is the one thing on this page a competitor cannot
+   copy. What C got wrong was rank: four equal columns, so nothing won the
+   glance. B's answer was rank without restraint (a 112px headline over a page
+   whose hero sits at 66). A's answer was that no column may bottom out in
+   white space, wrapped in tick rulers that pretend to be data.
+
+   So: B's steepness at a step the hero still outranks (64 display / 41
+   sub-display / 19 index), A's folios, spec rows and terminated columns, and
+   none of A's rulers. Rules appear only where they divide: full bleed between
+   bands, inset between cells.
+
+   Narrow is a first-class target, not a reflow. At 375 each drawing is cropped
+   to its own ink with a negative margin inside an overflow box (--ct / --cb,
+   measured per plate from the viewBox), the leaders are dropped because the
+   label already sits directly above the drawing, and the vertical rhythm
+   compresses rather than merely stacking.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── measure ─────────────────────────────────────────────────────────────── */
+/* 1180: the width A and B independently landed on. --maxw (1040) is a reading
+   measure; a plate wants the extra 140px and the prose inside stays capped. */
+.dw{max-width:1180px;margin:0 auto;padding:0 var(--pad)}
+
+/* full-bleed hairline: a direct child of <section>, so it needs no 100vw trick
+   (100vw overflows by the scrollbar). These divide bands. Nothing else does. */
+.d-hr{height:1px;background:var(--sep-2);border:0;margin:64px 0 0}
+.d-hr-2{background:var(--sep);margin-top:0}
+
+/* ── section head ────────────────────────────────────────────────────────── */
+.d-head{display:flex;align-items:center;gap:20px;margin-bottom:30px}
+.d-head .eyebrow{margin-bottom:0}
+.d-head i{flex:1;height:1px;background:var(--sep)}
+/* end-aligned: the headline's last line and the lead's last line share a
+   baseline, so the shorter column's slack reads as placed, not as a hole. */
+.d-top{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,0.94fr);gap:14px 64px;align-items:end}
+.d-top .lead{margin:0;max-width:46ch}
+
+/* the display step. SF at 64, under the hero's 66, so the hero still owns the
+   top of the ramp. 640 rather than 600: at this size the system font needs the
+   extra weight to hold a dark ground. */
+.d-display{font-size:clamp(34px,4.5vw,64px);line-height:1.02;letter-spacing:-0.035em;font-weight:640;text-wrap:balance;max-width:15ch}
+/* sub-display: the one promoted use case, one clear step down */
+.d-sub{font-size:clamp(26px,2.9vw,41px);line-height:1.06;letter-spacing:-0.03em;font-weight:620;text-wrap:balance}
+.d-mid{font-size:clamp(21px,1.9vw,26px);line-height:1.16;letter-spacing:-0.024em;font-weight:620;text-wrap:balance}
+
+/* ── the folio rail (from A) ─────────────────────────────────────────────── */
+.d-folio{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.d-folio .n{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:11.5px;font-weight:600;letter-spacing:0.14em;color:var(--text-3)}
+.d-folio .uc-tag{margin-bottom:0}
+
+/* ── the mechanism line as a spec row (from A), pinned above its drawing (C) ─ */
+.d-spec{display:flex;flex-wrap:wrap;justify-content:space-between;gap:3px 18px;
+  border-top:1px solid var(--sep);padding-top:11px;margin-bottom:8px;
+  font-family:var(--mono);font-size:11px;line-height:1.45}
+.d-spec .k{color:var(--text);font-weight:500;text-transform:uppercase;letter-spacing:0.12em}
+.d-spec .v{color:var(--text-3);letter-spacing:0.01em}
+
+/* ── drawings ────────────────────────────────────────────────────────────── */
+/* The crop box. A viewBox is not ink: every plate carries dead air above and
+   below its drawing, and four of those stacked is most of what made C's band
+   3,342px tall at 375. --ct / --cb pull the svg up and in by its own measured
+   dead air inside an overflow box, so a plate contributes its drawing and
+   nothing else. Percentage margins resolve against .d-fig's width, which is
+   why .d-fig is what gets capped, never the svg. */
+.d-fig{overflow:hidden;line-height:0}
+.d-fig>svg{margin-top:var(--ct,0);margin-bottom:var(--cb,0)}
+/* every plate's ground line becomes the floor of its cell */
+.fc{--cb:-6.7%}
+/* one trim across the index, set by the deepest plate (02's speed scale hangs
+   9 units below the ground line), so the three spec rows land on one line */
+.fa,.fs,.fv{--cb:-7.7%}
+/* the chain shares one bottom trim: the plates are floor-aligned, so an equal
+   trim is what keeps the flow line level as it crosses the cell rules */
+.fp1,.fp2,.fp3{--cb:-16.7%}
+.fp1{--ct:-15.2%}
+.fp2{--ct:-9%}
+.fp3{--ct:-23%}
+.dgs{display:block;width:100%;height:auto;color:var(--text-2)}
+/* one stroke system across every plate regardless of the scale it is drawn at:
+   without this the promoted couch would render at 2.4x the line weight of the
+   index plates and stop looking like the same drawing. */
+.dgs *{vector-effect:non-scaling-stroke}
+.o1,.o2,.o3,.ld,.datum,.sig,.o1b{fill:none;stroke:currentColor;stroke-linejoin:round;stroke-linecap:round}
+.o1{stroke-width:1.4;opacity:.72}
+.o1b{stroke-width:2;opacity:.72}
+.o2{stroke-width:1.3;opacity:.44}
+.o3{stroke-width:1.1;opacity:.28}
+.datum{stroke-width:1;opacity:.2}
+.ld{stroke-width:1;opacity:.34}
+.ldot{fill:currentColor;opacity:.62}
+.sig{stroke-width:1;opacity:.34;stroke-dasharray:3 4}
+.fillsoft{fill:currentColor;opacity:.5;stroke:none}
+.acc{fill:var(--blue-text);stroke:none}
+.acc-s{fill:none;stroke:var(--blue-text);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.acc-h{fill:none;stroke:var(--blue-text);stroke-width:1;opacity:.35}
+.acc-t{fill:var(--blue-text);opacity:.2;stroke:var(--blue-text);stroke-opacity:.55;stroke-width:1}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;fill:currentColor;opacity:.8}
+
+/* ── THE MOMENT: the couch, at roughly half the band ─────────────────────── */
+/* The couch owns the claim readers most disbelieve, so it is the one drawing
+   rendered big enough to study. Redrawn to a 420-wide plate (the same three
+   objects, translated apart on the same ground line) so a landscape figure
+   sits beside a column of type instead of towering over it. */
+.d-moment{display:grid;grid-template-columns:minmax(0,5.4fr) minmax(0,6.6fr);gap:40px 60px;align-items:center;padding:58px 0 62px}
+.d-mtext .d-lede{font-size:16.5px;color:var(--text-2);line-height:1.56;letter-spacing:-0.006em;max-width:44ch;margin-top:20px;text-wrap:pretty}
+
+/* ── THE INDEX: the other three, demoted, in ruled cells ─────────────────── */
+/* Cells are padded identically and the grid is pulled out by exactly that
+   padding, so the outer cells' type still lands on the container's own left
+   edge. Flushing the first and last cell instead made them 26px wider than the
+   middle one, which put the three plates at three sizes and knocked their spec
+   rows out of line by the same amount. */
+.d-index,.d-chain,.d-pills{--cx:var(--pad);margin-left:calc(var(--cx) * -1);margin-right:calc(var(--cx) * -1)}
+.d-index{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--sep)}
+.d-item{display:flex;flex-direction:column;min-width:0;padding:26px var(--cx) 28px}
+.d-item+.d-item{border-left:1px solid var(--sep)}
+.d-item h3{font-size:19px;line-height:1.2;letter-spacing:-0.021em;margin-bottom:9px;text-wrap:balance}
+.d-item p{font-size:14.5px;color:var(--text-2);line-height:1.55;letter-spacing:-0.005em}
+.d-item p+p{margin-top:9px}
+.d-item .arrow-link{font-size:14px;margin-top:11px;align-self:flex-start}
+/* A's rule, enforced: no column may bottom out in white space. The spec row
+   and its drawing are pushed to the floor, so all three plates stand on one
+   ground line and every slack pixel lands mid-cell between two rules. */
+.d-foot{margin-top:auto;padding-top:30px}
+
+/* ── the tail: recognition strip, then the two notes as key/value rows ───── */
+.d-morelabel{font-family:var(--mono);font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:0.13em;color:var(--text-3);padding:34px 0 13px}
+.d-pills{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--sep);border-bottom:1px solid var(--sep)}
+.d-pill{padding:14px var(--cx);font-family:var(--mono);font-size:11.5px;letter-spacing:0.01em;color:var(--text-2);border-left:1px solid var(--sep);line-height:1.4}
+.d-pill:first-child{border-left:0}
+a.d-pill{color:var(--blue-text)}
+a.d-pill:hover{background:var(--blue-fill);text-decoration:none}
+.d-note{display:grid;grid-template-columns:230px minmax(0,1fr);gap:0 26px;border-bottom:1px solid var(--sep);padding:14px 0 15px}
+.d-note .k{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-2);line-height:1.5}
+.d-note .v{font-size:13.5px;color:var(--text-3);line-height:1.55;max-width:76ch}
+
+/* ── the signal chain (C's plate 2), in ruled cells ──────────────────────── */
+.d-chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--sep)}
+.d-st{display:flex;flex-direction:column;min-width:0;padding:26px var(--cx) 30px}
+.d-st+.d-st{border-left:1px solid var(--sep)}
+/* the plate runs to the cell rule on both sides: the flow line leaves one
+   viewBox at its right edge and enters the next at its left, so with the cell
+   padding cancelled the chain reads as one line crossing three rules */
+.d-st .d-fig{margin-top:auto;margin-left:calc(var(--cx) * -1);margin-right:calc(var(--cx) * -1)}
+.d-pin{margin-bottom:18px}
+.d-pin .k{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:var(--text);display:block}
+.d-pin .k.x{color:var(--blue-text)}
+.d-pin .v{font-family:var(--mono);font-size:11.5px;letter-spacing:0.01em;color:var(--text-3);display:block;margin-top:4px;line-height:1.45}
+.vconn{display:none}
+.flow{fill:var(--blue-text);opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  /* the only motion here: one accent dot per hop, so the middle plate reads as
+     a thing signal passes through. Transform and opacity only. */
+  .flow{animation:dflow 4.4s cubic-bezier(.55,.05,.45,.95) infinite}
+  .flow.f2{animation-delay:.55s}
+}
+@keyframes dflow{
+  0%{transform:translateX(4px);opacity:0}
+  12%{opacity:.9}
+  72%{opacity:.9}
+  86%,100%{transform:translateX(92px);opacity:0}
+}
+
+/* ── layers (C's plate 3) ────────────────────────────────────────────────── */
+.d-layers{display:grid;grid-template-columns:minmax(0,0.94fr) minmax(0,1.06fr);gap:30px 60px;align-items:center;padding:54px 0 56px}
+.d-layers p{font-size:15.5px;color:var(--text-2);line-height:1.56;max-width:46ch;margin-top:11px}
+.lay-fig{display:flex;align-items:center;gap:0}
+.lay-hold{flex:none;display:flex;align-items:center}
+.lay-key{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--blue-text);border:1px solid var(--blue-text);border-radius:var(--r-inset);padding:9px 13px;background:var(--blue-fill)}
+.lay-arm{width:26px;height:1px;background:var(--sep-2)}
+.lay-rows{flex:1;min-width:0;border-left:1px solid var(--sep-2);padding:2px 0}
+.lay-row{display:flex;align-items:center;padding:5px 0}
+.lay-row::before{content:"";width:16px;height:1px;background:var(--sep-2);flex:none}
+.lay-row svg{width:21px;height:21px;flex:none;margin:0 11px 0 5px;color:var(--text-2)}
+.lay-a{font-family:var(--mono);font-size:12px;letter-spacing:0.01em;color:var(--text-3);flex:none;width:11ch}
+/* the same spec-row grammar as .d-spec: control left, what it becomes right,
+   so the figure fills its column instead of trailing off into a gutter. The
+   result column is fixed width, which is what keeps the four arrows in a line
+   once the pair is pushed right. */
+.lay-arrow{font-family:var(--mono);font-size:12px;color:var(--text-3);opacity:.6;margin:0 12px 0 auto}
+.lay-b{font-family:var(--mono);font-size:12px;letter-spacing:0.01em;color:var(--blue-text);flex:none;width:11ch}
+
+/* ── the seven rows as a genuine table (from A) ──────────────────────────── */
+.d-tbl{border-top:1px solid var(--sep-2)}
+.d-trow{display:grid;grid-template-columns:56px 250px minmax(0,1fr);gap:0 26px;padding:13px 0 14px;transition:background .15s ease}
+.d-trow+.d-trow{border-top:1px solid var(--sep)}
+.d-trow:hover{background:color-mix(in srgb,var(--text) 3.5%,transparent)}
+.d-tn{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.1em;color:var(--text-3);line-height:1.5;padding-top:2px}
+.d-tk{font-family:var(--mono);font-size:12.5px;letter-spacing:0.01em;color:var(--text);line-height:1.45}
+.d-tv{font-size:14.5px;line-height:1.45;color:var(--text-2);letter-spacing:-0.005em}
+.d-tv a{color:var(--blue-text)}
+
+/* ── the evidence strip: the band closes on ink, not on padding ──────────── */
+.d-gal{display:flex;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid var(--sep-2);padding-top:26px;margin-top:0}
+.d-gal p{font-size:12.5px;color:var(--text-3);letter-spacing:-0.005em}
+
+/* ── narrow ──────────────────────────────────────────────────────────────── */
+@media(max-width:1040px){
+  .d-moment{grid-template-columns:1fr;gap:34px;padding:48px 0 52px}
+  .d-sub{max-width:18ch}
+  .d-layers{grid-template-columns:1fr;gap:28px;padding:44px 0 46px}
+  .d-index,.d-chain,.d-pills{--cx:20px}
+  .d-item{padding-top:22px;padding-bottom:24px}
+  .d-st{padding-top:22px;padding-bottom:26px}
+  .d-note{grid-template-columns:190px minmax(0,1fr)}
+  .d-trow{grid-template-columns:48px 210px minmax(0,1fr)}
+}
+/* One column from 900, not from 760. Two columns for three entries strands the
+   third in a half-width row (the curb records this exact failure), and three
+   256px chain cells squeezed the middle plate until the STEER box was smaller
+   than its own label. Below this width every plate is cropped to its own ink
+   and the leaders go: the mono label already sits directly above the drawing,
+   so the leader was pointing at something already named. C shipped a 3,342px
+   band at 375 and most of it was viewBox. */
+@media(max-width:900px){
+  .d-top{grid-template-columns:1fr;gap:18px;align-items:start}
+  .d-display{max-width:20ch}
+  .d-hr{margin-top:44px}
+  .d-fig{max-width:340px;margin-left:auto;margin-right:auto}
+  .dgs .ld,.dgs .ldot{display:none}
+  .fc{--ct:-11.5%}
+  .fa{--ct:-22.2%}
+  .fs{--ct:-21%}
+  .fv{--ct:-43.5%}
+  /* stacked, so nothing has to stay level across a rule: each chain plate can
+     take its own trim */
+  .fp1{--cb:-17.3%}
+  .fp2{--cb:-33.7%}
+  .fp3{--cb:-17.3%}
+  /* the promoted plate stays the biggest drawing in the band on a phone too */
+  .d-moment .d-fig{max-width:100%}
+  .d-moment{gap:24px;padding:36px 0 38px}
+  .d-mtext .d-lede{margin-top:16px}
+  .d-foot{padding-top:22px}
+  .d-index,.d-chain,.d-pills{--cx:0px}
+  .d-index{grid-template-columns:1fr}
+  .d-item{padding-top:24px;padding-bottom:26px}
+  .d-item+.d-item,.d-item:nth-child(3){border-left:0;border-top:1px solid var(--sep)}
+  .d-item h3,.d-item p{max-width:44ch}
+  .d-chain{grid-template-columns:1fr}
+  .d-st{padding-top:24px;padding-bottom:26px}
+  .d-st+.d-st{border-left:0;border-top:1px solid var(--sep)}
+  .d-st .d-fig{margin-top:14px;margin-left:auto;margin-right:auto}
+  .d-pin .v{max-width:54ch}
+  .d-pills{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .d-pill{padding:13px 0}
+  .d-pill:nth-child(odd){border-left:0}
+  .d-pill:nth-child(even){padding-left:20px}
+  .d-pill:nth-child(n+3){border-top:1px solid var(--sep)}
+  /* five entries in two columns leaves the fifth beside an empty cell */
+  .d-pill:nth-child(5){grid-column:1 / -1}
+  .hconn{display:none}
+  .vconn{display:block;height:40px;width:40px;margin:14px auto 0;color:var(--text-2)}
+  .d-layers{padding:36px 0 38px}
+  .d-note{grid-template-columns:1fr;gap:5px}
+  .d-trow{grid-template-columns:44px minmax(0,1fr);gap:2px 16px;padding:11px 0 12px}
+  .d-tk{grid-column:2}
+  .d-tv{grid-column:2}
+  .d-morelabel{padding:26px 0 12px}
+}
+@media(max-width:600px){
+  /* the pills become an ordinary wrapping row: no cells to collide inside, and
+     the recognition strip stays the lightest thing in the band */
+  .d-pills{display:flex;flex-wrap:wrap;gap:9px;border:0;padding:2px 0 4px}
+  .d-pill,.d-pill:nth-child(even){padding:7px 13px;border:1px solid var(--sep);border-radius:var(--r-btn);font-size:11.5px}
+  a.d-pill{border-color:color-mix(in srgb,var(--blue) 32%,transparent)}
+  /* the index plates come down again so the promoted landscape plate, which is
+     short by construction, is still the widest drawing on a phone */
+  .d-fig{max-width:250px}
+  .d-moment{padding:30px 0 32px}
+  .d-item{padding-top:22px;padding-bottom:24px}
+  .d-st{padding-top:22px;padding-bottom:24px}
+  .d-foot{padding-top:18px}
+  .d-head{margin-bottom:22px}
+  .d-hr{margin-top:34px}
+  .d-layers{padding:32px 0 34px}
+  .d-gal{gap:14px;padding-top:22px}
+}
 
 /* the numbers band: four counted facts, mono, tabular, on one hairline row.
    romm gets a lot of its density from a stats band and this is the honest
@@ -2003,71 +2284,181 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
      added back, it needs a verified source — the one that used to live here
      ($435 Speed Editor) was removed along with the card that cited it. -->
 <section class="sec-loose sunken" id="uses">
-  <div class="wrap">
-    <div class="eyebrow">What people use it for</div>
-    <!-- Enumerate, don't assert. "For everyone. Not just gamers." and "Most of
-         this has nothing to do with games." both named the objection in order to
-         rebut it, which keeps the frame they were trying to escape. "Comfortable
-         to hold. Useful all day." fixed the negativity but made comfort the single
-         frame, which is the narrowing Sean rejected in May ("we don't have to
-         reposition the hero, but we might want to lean into a set of use cases").
-         A list of ordinary non-gaming verbs demonstrates breadth instead of
-         claiming it, each verb maps to a card below, and it avoids a third
-         "run/control your Mac" within two screens of the hero. -->
-    <h2 class="h2" style="max-width:22ch">Browse, write, edit, present.</h2>
-    <!-- One paragraph, and it names what it beats. The pixel-work concession
-         that used to open this section lives in FAQ 2, where conceding once,
-         late, beside the trial offer earns trust; conceding twice, once of them
-         before anything has been sold, read as the page apologizing for itself. -->
-    <!-- 46ch, not 56: `ch` is the advance of a zero, about 1.4x an average SF
-         lowercase glyph, so 56ch rendered as a 78-character line. Measured. -->
-    <p class="lead" style="margin-top:16px;max-width:46ch">A lap keyboard, a phone remote, a trackpad on the sofa arm: each does four things out of five, and the fifth sends you back to the desk. Typing, an app's own menus, moving windows, launching apps: they are all on the controller, so the trip back does not happen.</p>
+  <div class="dw">
+    <div class="d-head">
+      <div class="eyebrow">What people use it for</div>
+      <i aria-hidden="true"></i>
+    </div>
+    <div class="d-top">
+      <h2 class="d-display">Browse, write, edit, present.</h2>
+      <p class="lead">A lap keyboard, a phone remote, a trackpad on the sofa arm: each does four things out of five, and the fifth sends you back to the desk. Typing, an app's own menus, moving windows, launching apps: they are all on the controller, so the trip back does not happen.</p>
+    </div>
+  </div>
 
-    <div class="uc-grid sec-body">
-      <div class="uc-lead uc-couch">
-        <span class="uc-ico" aria-hidden="true"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="13" cy="13" r="10"/><circle cx="15.4" cy="10.6" r="4.1" fill="currentColor" stroke="none" opacity=".85"/></svg></span>
-        <div class="uc-tag">The couch</div>
-        <div class="uc-body">
-          <div>
-            <h3>Run your whole Mac from the couch.</h3>
-            <p>Browse, type, launch apps, play and pause: from the sofa, the bed, anywhere a mouse won't follow. The on-screen keyboard is a wheel: aim the stick at a slice of letters, tap a button under your thumb, and the search box fills without you getting up.</p>
-          </div>
-          <div class="vg vg-type" aria-hidden="true">
-            <span class="vg-stick"><i class="vg-cap"></i></span>
-            <svg class="vg-wheel" viewBox="0 0 44 44">
-              <circle class="dw-rim" cx="22" cy="22" r="19.5"/>
-              <path class="dw-spokes" d="M25.64 13.22L29.27 4.45M30.78 18.36L39.55 14.73M30.78 25.64L39.55 29.27M25.64 30.78L29.27 39.55M18.36 30.78L14.73 39.55M13.22 25.64L4.45 29.27M13.22 18.36L4.45 14.73M18.36 13.22L14.73 4.45"/>
-              <circle class="dw-hub" cx="22" cy="22" r="7.5"/>
-              <path class="dw-sect" d="M14.73 4.45A19 19 0 0 1 29.27 4.45L25.64 13.22A9.5 9.5 0 0 0 18.36 13.22Z"/>
-            </svg>
-            <span class="vg-field">
-              <svg class="dw-mag" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4"/><path d="M9.1 9.1L12.4 12.4" stroke-linecap="round"/></svg>
-              <span class="vg-word"><b class="w1">c</b><b class="w2">a</b><b class="w3">t</b></span>
-              <i class="vg-caret"></i>
-            </span>
-            <span class="vg-dwf">
-              <span class="face-slot fp-t" data-b="triangle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-triangle)" stroke-width="1.5" opacity="0.9"/><path d="M13 7.6l5.4 9.4H7.6z" stroke="var(--ps-triangle)" stroke-width="1.7" stroke-linejoin="round" fill="none"/></svg></span>
-              <span class="face-slot fp-l" data-b="square"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-square)" stroke-width="1.5" opacity="0.9"/><rect x="8.4" y="8.4" width="9.2" height="9.2" rx="1.4" stroke="var(--ps-square)" stroke-width="1.7"/></svg></span>
-              <span class="face-slot fp-r" data-b="circle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-circle)" stroke-width="1.5" opacity="0.9"/><circle cx="13" cy="13" r="4.6" stroke="var(--ps-circle)" stroke-width="1.7"/></svg></span>
-              <span class="face-slot fp-b" data-b="cross"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-cross)" stroke-width="1.5" opacity="0.9"/><path d="M9 9l8 8M17 9l-8 8" stroke="var(--ps-cross)" stroke-width="1.7" stroke-linecap="round"/></svg></span>
-              <i class="vg-ring dwr"></i>
-            </span>
-          </div>
+  <hr class="d-hr">
+
+  <!-- 01 · the couch. The claim readers most disbelieve, so it gets the plate
+       you can actually study: one room in elevation, the pad on the sofa, the
+       wheel aimed at a slice of letters, the Mac across the room. -->
+  <div class="dw">
+    <div class="d-moment">
+      <div class="d-mtext">
+        <div class="d-folio"><span class="n">01</span><span class="uc-tag">The couch</span></div>
+        <h3 class="d-sub">Run your whole Mac from the couch.</h3>
+        <p class="d-lede">Browse, type, launch apps, play and pause: from the sofa, the bed, anywhere a mouse won't follow. The on-screen keyboard is a wheel: aim the stick at a slice of letters, tap a button under your thumb, and the search box fills without you getting up.</p>
+      </div>
+      <div class="d-mart">
+        <div class="d-spec"><span class="k">Stick + face buttons</span><span class="v">type without getting up</span></div>
+        <div class="d-fig fc">
+          <svg class="dgs" viewBox="0 0 420 240" aria-hidden="true">
+            <polyline class="ld" points="18,2 18,26 200,60"/>
+            <circle class="ldot" cx="200" cy="60" r="2.5"/>
+            <path class="datum" d="M0,210 H420"/>
+            <!-- couch, elevation, with the pad resting on it -->
+            <g transform="translate(10,0)">
+              <rect class="o2" x="22" y="146" width="68" height="32" rx="10"/>
+              <rect class="o1" x="14" y="170" width="84" height="16" rx="6"/>
+              <rect class="o2" x="8" y="158" width="12" height="28" rx="5"/>
+              <rect class="o2" x="92" y="158" width="12" height="28" rx="5"/>
+              <path class="o2" d="M22,186 V210 M90,186 V210"/>
+              <use href="#padSm" transform="translate(16.58,148.91) scale(0.0657)"/>
+            </g>
+            <!-- the wheel: aim at a slice, tap a button -->
+            <g transform="translate(96,0)">
+              <circle class="o1" cx="124" cy="80" r="28"/>
+              <circle class="o2" cx="124" cy="80" r="12"/>
+              <path class="o3" d="M124,52 V68 M143.8,60.2 L132.49,71.51 M152,80 H136 M143.8,99.8 L132.49,88.49 M124,108 V92 M104.2,99.8 L115.51,88.49 M96,80 H112 M104.2,60.2 L115.51,71.51"/>
+              <path class="acc-t" d="M134.71,54.13 A28,28 0 0 1 149.87,69.29 L135.09,75.41 A12,12 0 0 0 128.59,68.91 Z"/>
+            </g>
+            <path class="sig" d="M86,152 L196,98"/>
+            <path class="sig" d="M244,92 L320,134"/>
+            <!-- the Mac, across the room -->
+            <g transform="translate(150,0)">
+              <rect class="o1" x="162" y="118" width="70" height="50" rx="6"/>
+              <rect class="o2" x="170" y="138" width="54" height="14" rx="5"/>
+              <circle class="o3" cx="178" cy="145" r="3.4"/>
+              <path class="o3" d="M180.4,147.4 L183,150"/>
+              <rect class="acc" x="198" y="141" width="1.8" height="8"/>
+              <path class="o1" d="M197,168 V210"/>
+              <path class="o1b" d="M181,210 H213"/>
+            </g>
+          </svg>
         </div>
-        <div class="uc-mech"><b>Stick + face buttons</b> · type without getting up</div>
       </div>
     </div>
+  </div>
 
-    <div class="pills-label">And plenty more</div>
-    <div class="pills">
-      <span class="pill-uc">Reading &amp; browsing</span>
-      <span class="pill-uc">Writing &amp; notes</span>
-      <span class="pill-uc">Coding &amp; IDEs</span>
-      <span class="pill-uc">Design &amp; Figma</span>
-      <a class="pill-uc" href="agents.html">Running AI agents&nbsp;<span class="a">→</span></a>
+  <hr class="d-hr d-hr-2">
+
+  <div class="dw">
+    <div class="d-index">
+
+      <!-- 02 · the pad rests, and the ground line becomes a speed scale -->
+      <div class="d-item">
+        <div class="d-folio"><span class="n">02</span><span class="uc-tag">Comfort &amp; accessibility</span></div>
+        <h3>When a mouse hurts, or never felt natural.</h3>
+        <p>A controller rests in loose hands: nothing to pinch, no fine wrist work, no reaching across the desk. If sore wrists, tremor, pain, or using one hand make a mouse hard, this is a different shape to hold.</p>
+        <p>Comfort is personal, so the honest test is your own hands.</p>
+        <a class="arrow-link" href="../../accessibility.html">See the accessibility setup&nbsp;<span class="a">→</span></a>
+        <div class="d-foot">
+          <div class="d-spec"><span class="k">Cursor speed</span><span class="v">slow it right down</span></div>
+          <div class="d-fig fa">
+            <svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
+              <polyline class="ld" points="18,2 18,186 61,208"/>
+              <path class="datum" d="M0,210 H248"/>
+              <use href="#padFull" transform="translate(-40.23,49.14) scale(0.27372)"/>
+              <!-- loose hands: the pad is carried, not gripped -->
+              <path class="o2" d="M42,170 Q59,190 76,170"/>
+              <path class="o2" d="M172,170 Q189,190 206,170"/>
+              <!-- the ground line does double duty as the speed scale -->
+              <path class="o3" d="M40,202 V210 M61,202 V210 M82,202 V210 M103,202 V210 M124,202 V210 M145,202 V210 M166,202 V210 M187,202 V210 M208,202 V210"/>
+              <circle class="acc-h" cx="61" cy="210" r="9"/>
+              <circle class="acc" cx="61" cy="210" r="4.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 · a stick aiming a dot at a chart, from the back row -->
+      <div class="d-item">
+        <div class="d-folio"><span class="n">03</span><span class="uc-tag">Speakers &amp; teachers</span></div>
+        <h3>Point at your slides from the back row.</h3>
+        <p>Advance your slides from wherever you are standing, and move a bright dot onto the chart you are talking about. You never walk back to the laptop.</p>
+        <div class="d-foot">
+          <div class="d-spec"><span class="k">Right stick</span><span class="v">a dot on the screen</span></div>
+          <div class="d-fig fs">
+            <svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
+              <polyline class="ld" points="18,2 18,26 42,90"/>
+              <circle class="ldot" cx="42" cy="90" r="2.5"/>
+              <path class="datum" d="M0,210 H248"/>
+              <!-- the slides behind the slide -->
+              <rect class="o3" x="90" y="56" width="142" height="94" rx="6"/>
+              <rect class="o3" x="85" y="61" width="142" height="94" rx="6"/>
+              <rect class="o1" x="80" y="66" width="146" height="96" rx="6"/>
+              <path class="o3" d="M94,146 H212"/>
+              <rect class="o2" x="100" y="124" width="14" height="22" rx="2"/>
+              <rect class="o2" x="126" y="108" width="14" height="38" rx="2"/>
+              <rect class="o2" x="152" y="116" width="14" height="30" rx="2"/>
+              <rect class="o2" x="178" y="96" width="14" height="50" rx="2"/>
+              <path class="o1" d="M153,162 V210"/>
+              <path class="o1b" d="M133,210 H173"/>
+              <!-- the stick, top view, deflected -->
+              <circle class="o1" cx="44" cy="110" r="20"/>
+              <circle class="o2" cx="49" cy="105" r="13"/>
+              <path class="sig" d="M64,101 L172,96"/>
+              <circle class="acc-h" cx="185" cy="96" r="10"/>
+              <circle class="acc" cx="185" cy="96" r="4.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 · triggers scrub, the cut lands under the playhead -->
+      <div class="d-item">
+        <div class="d-folio"><span class="n">04</span><span class="uc-tag">Video editors</span></div>
+        <h3>Cut without touching the keyboard.</h3>
+        <p>Scrub with the triggers: one rolls the video back, the other forward, and the cut lands under your thumb, the way a dedicated editing console does it, on the controller in your drawer. Ready-made for DaVinci Resolve and Final Cut Pro.</p>
+        <div class="d-foot">
+          <div class="d-spec"><span class="k"><b data-ps="L2 / R2" data-xb="LT / RT" data-sw="ZL / ZR" data-mf="The triggers" style="font-weight:inherit">L2 / R2</b></span><span class="v">scrub and cut</span></div>
+          <div class="d-fig fv">
+            <svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
+              <polyline class="ld" points="18,2 18,26 118,110"/>
+              <circle class="ldot" cx="118" cy="110" r="2.5"/>
+              <path class="datum" d="M0,210 H248"/>
+              <rect class="o2" x="16" y="132" width="70" height="26" rx="4"/>
+              <rect class="o2" x="90" y="132" width="28" height="26" rx="4"/>
+              <rect class="o1" x="124" y="132" width="108" height="26" rx="4"/>
+              <path class="acc" d="M114,112 L126,112 L120,119 Z"/>
+              <path class="acc-s" d="M120,118 V172"/>
+              <use href="#trig" transform="translate(-157.45,175.11) scale(0.421)"/>
+              <use href="#trig" transform="translate(405.45,175.11) scale(-0.421,0.421)"/>
+              <path class="o2" d="M96,200 H58"/>
+              <path class="fillsoft" d="M56,200 L65,195.5 L65,204.5 Z"/>
+              <path class="o2" d="M152,200 H190"/>
+              <path class="fillsoft" d="M192,200 L183,195.5 L183,204.5 Z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <p class="pills-note"><b>Nearly any app.</b> If it takes a keyboard or a mouse, it takes a controller.</p>
-    <p class="pills-note" style="margin-top:10px"><b>Running coding agents?</b> A PlayStation pad can light up to show what the agent is doing, any pad with rumble can buzz when it needs you, and you approve from across the room. <a href="agents.html">See the recipe&nbsp;<span class="a">→</span></a></p>
+
+    <div class="d-morelabel">And plenty more</div>
+    <div class="d-pills">
+      <span class="d-pill">Reading &amp; browsing</span>
+      <span class="d-pill">Writing &amp; notes</span>
+      <span class="d-pill">Coding &amp; IDEs</span>
+      <span class="d-pill">Design &amp; Figma</span>
+      <a class="d-pill" href="../../agents.html">Running AI agents&nbsp;<span class="a">→</span></a>
+    </div>
+    <div class="d-note">
+      <span class="k">Nearly any app.</span>
+      <p class="v">If it takes a keyboard or a mouse, it takes a controller.</p>
+    </div>
+    <div class="d-note">
+      <span class="k">Running coding agents?</span>
+      <p class="v">A PlayStation pad can light up to show what the agent is doing, any pad with rumble can buzz when it needs you, and you approve from across the room. <a href="../../agents.html">See the recipe&nbsp;<span class="a">→</span></a></p>
+    </div>
   </div>
 </section>
 
@@ -2127,79 +2518,137 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
 <!-- CAPABILITIES — one tight summary list + the layers idea, stated once,
      illustrated by the desk layer-shift vignette. Screenshots are the proof. -->
 <section class="sec" id="capabilities">
-  <div class="wrap">
-    <div class="eyebrow">What it does</div>
+  <div class="dw">
+    <div class="d-head">
+      <div class="eyebrow">What it does</div>
+      <i aria-hidden="true"></i>
+    </div>
+    <div class="d-top">
+      <h2 class="d-display">Make any button do anything.</h2>
+      <p class="lead">It works the moment you plug in. Pick a button, pick what it does. No code, no setup first.</p>
+    </div>
+  </div>
 
-    <!-- One grid rather than a split head stacked on a split body. The head's
-         two cells are never the same height here (two lines of display type
-         against eight lines of lead), so whichever column held the prose left a
-         card-sized hole beside it; the paragraphs alternated columns too, which
-         dropped the second one back under the headline. Letting each column run
-         its own flow closes both holes and needs no copy cut. -->
-    <div class="cap-grid">
-      <div>
-        <h2 class="h2" style="max-width:18ch">Make any button do anything.</h2>
-        <!-- The hero annotations already say what the sticks and buttons do;
-             repeating them here bought the reader nothing. These rows carry only
-             what a picture of a controller can't show: that it arrives working,
-             follows you between apps, types, and reaches past shortcuts into
-             Shortcuts, macros, scripts. -->
-        <div class="group">
-        <div class="grow"><span class="lbl">Ready to use</span><span class="val">Comes with a working layout, yours to change</span></div>
-        <!-- The `release` slot is stored and shown in the app's own settings but
-             ActionResolver has no resolveRelease and the engine never fires it
-             (Mapping/ActionResolver.swift), so the site cannot claim it.
-             `whileHeld` IS wired, with a macOS-style initial delay and repeat
-             interval (Input/ButtonProcessor.swift), so that is the fourth slot. -->
-        <!-- Stick drift is the commonest reason an older pad feels broken, and
-             fixing it silently is an "it works on plug-in" claim rather than a
-             feature-list claim, which is why this one earns homepage space when
-             the other depth features do not. Input/StickCalibration.swift:
-             ~3s centre calibration on connect, then autoCorrectDrift during
-             idle whenever hasDrifted passes threshold. -->
-        <div class="grow"><span class="lbl">A worn controller</span><span class="val">Drifting sticks re-centre on their own</span></div>
-        <div class="grow"><span class="lbl">On-screen keyboard</span><span class="val">Types where you can already type, no cursor to aim</span></div>
-        <div class="grow"><span class="lbl">Longer text</span><span class="val">Speak it: a button starts dictation, set up once with Apple's Shortcuts app</span></div>
-        <div class="grow"><span class="lbl">A setup for each app</span><span class="val">Changes with the app you open</span></div>
-        <div class="grow"><span class="lbl">Your mouse still works</span><span class="val">This adds a device, it does not replace one</span></div>
-        <div class="grow"><span class="lbl">Everything else</span><span class="val"><a href="features.html">See all 39, in plain language</a></span></div>
+  <hr class="d-hr">
+
+  <div class="dw">
+    <div class="d-chain">
+      <div class="d-st">
+        <div class="d-pin">
+          <span class="k">Your controller</span>
+          <span class="v">it reads the controller</span>
+        </div>
+        <div class="d-fig fp1">
+          <svg class="dgs" viewBox="0 0 330 300" aria-hidden="true">
+            <use href="#padFull" transform="translate(-108.72,39.86) scale(0.4562)"/>
+            <path class="o2 hconn" d="M300,150 H330"/>
+          </svg>
+        </div>
+        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
+      </div>
+
+      <div class="d-st">
+        <div class="d-pin">
+          <span class="k x">Steer is the piece in between:</span>
+          <span class="v">applies the meaning you gave each button</span>
+          <span class="v">Work that belongs to another app, like dictation or moving a window, it hands over rather than reinventing.</span>
+        </div>
+        <div class="d-fig fp2">
+          <svg class="dgs" viewBox="0 0 332 300" aria-hidden="true">
+            <!-- work that belongs to another app is handed up and out -->
+            <rect class="o2" x="14" y="34" width="96" height="26" rx="8"/>
+            <text class="mono" x="62" y="51.5" text-anchor="middle" letter-spacing="0.08em">Dictation</text>
+            <rect class="o2" x="150" y="34" width="150" height="26" rx="8"/>
+            <text class="mono" x="225" y="51.5" text-anchor="middle" letter-spacing="0.08em">Moving a window</text>
+            <path class="o3" d="M62,84 H225 M62,84 V68 M225,84 V68 M166,84 V116"/>
+            <path class="fillsoft" d="M62,60 L57.5,69 L66.5,69 Z"/>
+            <path class="fillsoft" d="M225,60 L220.5,69 L229.5,69 Z"/>
+            <!-- the piece in between -->
+            <rect class="o1" x="106" y="116" width="120" height="68" rx="10"/>
+            <rect class="o3" x="112" y="122" width="108" height="56" rx="7"/>
+            <text class="mono" x="166" y="155" text-anchor="middle" letter-spacing="0.22em">STEER</text>
+            <path class="o2 hconn" d="M0,150 H97 M236,150 H332"/>
+            <path class="fillsoft hconn" d="M106,150 L97,145.5 L97,154.5 Z"/>
+            <circle class="flow f1 hconn" cx="0" cy="150" r="3"/>
+            <circle class="flow f2 hconn" cx="236" cy="150" r="3"/>
+          </svg>
+        </div>
+        <svg class="dgs vconn" viewBox="0 0 40 44" aria-hidden="true"><path class="o2" d="M20,0 V34"/><path class="fillsoft" d="M20,42 L15.5,33 L24.5,33 Z"/></svg>
+      </div>
+
+      <div class="d-st">
+        <div class="d-pin">
+          <span class="k">Your Mac</span>
+          <span class="v">produces the same clicks and keystrokes a mouse and keyboard would</span>
+        </div>
+        <div class="d-fig fp3">
+          <svg class="dgs" viewBox="0 0 330 300" aria-hidden="true">
+            <path class="o2 hconn" d="M0,150 H31"/>
+            <path class="fillsoft hconn" d="M40,150 L31,145.5 L31,154.5 Z"/>
+            <rect class="o1" x="40" y="80" width="250" height="140" rx="8"/>
+            <rect class="o3" x="70" y="104" width="190" height="84" rx="6"/>
+            <path class="o3" d="M70,120 H260"/>
+            <path class="o3" d="M86,140 H190 M86,156 H214 M86,172 H150"/>
+            <rect class="acc" x="194" y="150" width="2" height="12"/>
+            <path class="o1" d="M120,132 L120,158 L126,152.5 L130,162 L134,160 L130,150.5 L138,150 Z"/>
+            <path class="o1" d="M165,220 V240"/>
+            <path class="o1b" d="M132,240 H198"/>
+          </svg>
         </div>
       </div>
+    </div>
+  </div>
+
+  <hr class="d-hr d-hr-2">
+
+  <div class="dw">
+    <div class="d-layers">
       <div>
-        <p class="lead">It works the moment you plug in. Pick a button, pick what it does. No code, no setup first.</p>
-        <p class="lead">Steer is the piece in between: it reads the controller, applies the meaning you gave each button, and produces the same clicks and keystrokes a mouse and keyboard would. Work that belongs to another app, like dictation or moving a window, it hands over rather than reinventing.</p>
-        <div class="cap-layers">
-        <h3>Layers are Shift, for a controller.</h3>
+        <h3 class="d-mid">Layers are Shift, for a controller.</h3>
         <p>Hold one of the buttons along the top edge and every other button takes a second job, the way Shift turns 1 into an exclamation mark. Five holds, so a handful of buttons covers a whole day: snap a window into place, run a saved task, pop up a ring of your apps.</p>
-        <div class="vg vg-layers" aria-hidden="true">
-          <span class="vg-key vg-hold"><b data-ps="L1" data-xb="LB" data-sw="L" data-mf="L bumper">L1</b><i class="vg-ring"></i></span>
-          <div class="vg-chips">
-            <span class="vg-chip"><span class="face-slot" data-b="cross"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-cross)" stroke-width="1.5" opacity="0.9"/><path d="M9 9l8 8M17 9l-8 8" stroke="var(--ps-cross)" stroke-width="1.7" stroke-linecap="round"/></svg></span><span class="vg-labs"><span class="vg-lab a">Click</span><span class="vg-lab b">Fullscreen</span></span></span>
-            <span class="vg-chip"><span class="face-slot" data-b="circle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-circle)" stroke-width="1.5" opacity="0.9"/><circle cx="13" cy="13" r="4.6" stroke="var(--ps-circle)" stroke-width="1.7"/></svg></span><span class="vg-labs"><span class="vg-lab a">Right-click</span><span class="vg-lab b">Close tab</span></span></span>
-            <span class="vg-chip"><span class="face-slot" data-b="triangle"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-triangle)" stroke-width="1.5" opacity="0.9"/><path d="M13 7.6l5.4 9.4H7.6z" stroke="var(--ps-triangle)" stroke-width="1.7" stroke-linejoin="round" fill="none"/></svg></span><span class="vg-labs"><span class="vg-lab a">Enter</span><span class="vg-lab b">Dictation</span></span></span>
-            <span class="vg-chip"><span class="face-slot" data-b="square"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-square)" stroke-width="1.5" opacity="0.9"/><rect x="8.4" y="8.4" width="9.2" height="9.2" rx="1.4" stroke="var(--ps-square)" stroke-width="1.7"/></svg></span><span class="vg-labs"><span class="vg-lab a">Esc</span><span class="vg-lab b">Mute</span></span></span>
-          </div>
+      </div>
+      <div class="lay-fig" aria-hidden="true">
+        <div class="lay-hold">
+          <span class="lay-key"><b data-ps="L1" data-xb="LB" data-sw="L" data-mf="L bumper" style="font-weight:inherit">L1</b></span>
+          <span class="lay-arm"></span>
         </div>
+        <div class="lay-rows">
+          <div class="lay-row">
+            <svg viewBox="0 0 26 26" fill="none" stroke="currentColor"><circle cx="13" cy="13" r="11.7" stroke-width="1.2" opacity=".55"/><path d="M9 9l8 8M17 9l-8 8" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="lay-a">Click</span><span class="lay-arrow">→</span><span class="lay-b">Fullscreen</span>
+          </div>
+          <div class="lay-row">
+            <svg viewBox="0 0 26 26" fill="none" stroke="currentColor"><circle cx="13" cy="13" r="11.7" stroke-width="1.2" opacity=".55"/><circle cx="13" cy="13" r="4.6" stroke-width="1.5"/></svg>
+            <span class="lay-a">Right-click</span><span class="lay-arrow">→</span><span class="lay-b">Close tab</span>
+          </div>
+          <div class="lay-row">
+            <svg viewBox="0 0 26 26" fill="none" stroke="currentColor"><circle cx="13" cy="13" r="11.7" stroke-width="1.2" opacity=".55"/><path d="M13 7.6l5.4 9.4H7.6z" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            <span class="lay-a">Enter</span><span class="lay-arrow">→</span><span class="lay-b">Dictation</span>
+          </div>
+          <div class="lay-row">
+            <svg viewBox="0 0 26 26" fill="none" stroke="currentColor"><circle cx="13" cy="13" r="11.7" stroke-width="1.2" opacity=".55"/><rect x="8.4" y="8.4" width="9.2" height="9.2" rx="1.4" stroke-width="1.5"/></svg>
+            <span class="lay-a">Esc</span><span class="lay-arrow">→</span><span class="lay-b">Mute</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- The dense settings panes live behind a click (the gallery <dialog> near
-         the end of <body>), so the main scroll stays calm and a skeptic can
-         still verify the app is real and deep. -->
-    <!-- Panes stay behind the button until the capture script can shoot them per
-         pad. In the page they read as "you can configure this", which is the
-         opposite of the claim above them, and every one is PlayStation-labelled
-         on a page that re-labels itself per pad. docs/screenshots.md ranks the
-         in-use captures far above these for exactly that reason. -->
-    <div class="gal-invite">
-      <button class="btn btn-secondary" type="button" id="shotsOpen" aria-haspopup="dialog">
+    <div class="d-tbl">
+      <div class="d-trow"><span class="d-tn">01</span><span class="d-tk">Ready to use</span><span class="d-tv">Comes with a working layout, yours to change</span></div>
+      <div class="d-trow"><span class="d-tn">02</span><span class="d-tk">A worn controller</span><span class="d-tv">Drifting sticks re-centre on their own</span></div>
+      <div class="d-trow"><span class="d-tn">03</span><span class="d-tk">On-screen keyboard</span><span class="d-tv">Types where you can already type, no cursor to aim</span></div>
+      <div class="d-trow"><span class="d-tn">04</span><span class="d-tk">Longer text</span><span class="d-tv">Speak it: a button starts dictation, set up once with Apple's Shortcuts app</span></div>
+      <div class="d-trow"><span class="d-tn">05</span><span class="d-tk">A setup for each app</span><span class="d-tv">Changes with the app you open</span></div>
+      <div class="d-trow"><span class="d-tn">06</span><span class="d-tk">Your mouse still works</span><span class="d-tv">This adds a device, it does not replace one</span></div>
+      <div class="d-trow"><span class="d-tn">07</span><span class="d-tk">Everything else</span><span class="d-tv"><a href="../../features.html">See all 39, in plain language</a></span></div>
+    </div>
+
+    <div class="d-gal">
+      <button class="btn btn-secondary" type="button" aria-haspopup="dialog">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:17px;height:17px"><rect x="2.5" y="4" width="15" height="12" rx="2"/><circle cx="7.2" cy="8.4" r="1.4"/><path d="M2.5 13.5l4-3.5 3.5 3 3-2.5 4.5 3.5"/></svg>
         Look inside the app: seven panes
       </button>
-      <!-- The skeptic decides at the button, not inside the modal; the realness
-           claim has to be readable before the click. It stays in the dialog too. -->
-      <p class="gal-claim">Captured from the app; no renders, no touch-ups.</p>
+      <p>Captured from the app; no renders, no touch-ups.</p>
     </div>
   </div>
 </section>
@@ -2245,20 +2694,6 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
      participation (confidence, not apology). The named head-to-head moved to
      vs.html so cold visitors aren't handed a competitor; the comparing buyer
      still gets it via the link below. -->
-<section class="sec-snug" id="reach">
-  <div class="wrap center">
-    <div class="eyebrow">From the developer</div>
-    <h2 class="h2">Hi, I'm Sean. I build Steer on my own.</h2>
-    <p class="lead" style="margin:16px auto 0;max-width:48ch">Built, documented and supported by one person. The support address is my inbox, so a bug report lands with whoever can fix it.</p>
-    <div class="cta-row-center">
-      <!-- Deliberately secondary: this sits one section above pricing, and a
-           full-weight primary here intercepts a ready buyer with an email draft
-           about feature requests. One primary CTA per view, and it is the list. -->
-      <a class="btn btn-secondary" href="mailto:steer@seanfloyd.dev?subject=An%20idea%20for%20Steer&amp;body=Here%27s%20what%20would%20make%20Steer%20perfect%20for%20how%20I%20work%3A%0A%0A">Share an idea <span aria-hidden="true">→</span></a>
-      <a class="arrow-link" href="vs.html">Or see how Steer compares&nbsp;<span class="a">→</span></a>
-    </div>
-  </div>
-</section>
 
 <!-- PRICING — carries the sunken band (moved from #requirements) so the tail
      alternates trust(sunken) / reach / pricing(sunken) / requirements / footer
@@ -2327,60 +2762,7 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
 </section>
 
 <!-- REQUIREMENTS + FAQ — the practical tail, after the buying decision -->
-<section class="sec-snug" id="requirements">
-  <div class="wrap">
-    <!-- Same head device as #capabilities and #trust: the lead fills the wide
-         right void that a lone left-aligned heading leaves above the columns. -->
-    <div class="sec-head-split">
-      <div class="eyebrow">Requirements</div>
-      <h2 class="h2">What you need.</h2>
-      <p class="lead">A recent Mac, the controller you already own, and one permission switched on once.</p>
-    </div>
-    <div class="specs sec-body">
-      <div>
-        <div class="spec-row"><span class="k">System</span><span class="v">macOS 14 or later, Apple Silicon (M1 or newer)</span></div>
-        <div class="spec-row"><span class="k">Connection</span><span class="v">Wired or Bluetooth</span></div>
-        <div class="spec-row"><span class="k">Form</span><span class="v">Menu-bar app, no window</span></div>
-        <div class="spec-row"><span class="k">Delivery</span><span class="v">Direct download, checked by Apple</span></div>
-      </div>
-      <div>
-        <div class="spec-row"><span class="k">Accessibility permission</span><span class="v">A Mac setting you switch on once</span></div>
-        <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">For three cases: Edge back buttons, DualShock 4 tilt-to-aim, off-brand pads</span></div>
-        <div class="spec-row"><span class="k">Window snapping</span><span class="v">Needs the <a href="https://rectangleapp.com">Rectangle</a> app, installed separately</span></div>
-        <!-- 35 .lproj bundles and 35 help-docs-*.md in the app repo, at string
-             parity with English. Kept here rather than anywhere prominent: it is
-             a credibility signal, not a reason anyone buys. -->
-        <div class="spec-row"><span class="k">Languages</span><span class="v">35, including the built-in help</span></div>
-      </div>
-    </div>
-    <!-- The controller list used to be repeated here as a callout and again as
-         the first FAQ answer, forty lines apart. The FAQ version is the better
-         one (it explains the hardware caveat and links out), so it stands alone. -->
 
-    <!-- FAQ -->
-    <div class="faq" style="text-align:left">
-      <!-- First, because it is the biggest doubt. Real users in this category say
-           the competitor is not another remapper: it is a lap keyboard, or just
-           reaching for the mouse. The answer concedes the desk rather than
-           claiming to beat a mouse at precision, which is not winnable or true. -->
-      <details>
-        <summary>Why not just use a mouse and keyboard?</summary>
-        <div class="faq-body">At a desk doing precise work, a mouse is better, and Steer is not trying to replace it there. Everywhere else is the point. Your hands stay on the controller: pointing, clicking, dragging, typing, and your shortcuts are all on one device, with nothing extra to buy or charge. Dragging is real dragging, so moving a file into a folder works the way it does with a mouse.</div>
-      </details>
-
-      <!-- The doubt nobody says out loud: that a stick is a novelty that gets
-           abandoned in a week. Conceding the half that is true (pixel work) is
-           what makes the other half believable. -->
-
-      <details>
-        <summary>Is a stick actually precise enough for real work?</summary>
-        <div class="faq-body">For clicking a menu item, hitting a link, dragging a file, yes, once the speed suits your hands: the cursor crawls when you nudge the stick and sweeps when you push it, and you set that yourself. For pixel work in Photoshop, no. Most people set the cursor speed once on the first day and stop thinking about it. This is the part you have to feel, which is what the trial is for.</div>
-      </details>
-
-      <p class="foot-note" style="margin-top:20px">More questions: <a href="features.html">what it does</a>, <a href="compatibility.html">your controller</a>, <a href="support.html">buying and permissions</a>.</p>
-    </div>
-  </div>
-</section>
 </main>
 
 <footer>

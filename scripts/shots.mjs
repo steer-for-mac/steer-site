@@ -39,9 +39,7 @@ const SECTIONS = [
   ["feel", "#feel"],
   ["capabilities", "#capabilities"],
   ["trust", "#trust"],
-  ["reach", "#reach"],
   ["pricing", "#pricing"],
-  ["requirements", "#requirements"],
 ];
 
 const VIEWPORTS = [1440, 375];
