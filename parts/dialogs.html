@@ -1,0 +1,98 @@
+<dialog> (showModal gives focus trap, Esc,
+     backdrop). Images hold data-light/data-dark only; JS sets src on first
+     open per the current theme, so nothing downloads until asked. -->
+<dialog class="shots" id="shotsDialog" aria-labelledby="shotsTitle">
+  <header class="shots-head">
+    <div>
+      <h2 id="shotsTitle">Inside the app</h2>
+      <p class="shots-note">Captured from the app; no renders, no touch-ups.</p>
+    </div>
+    <div class="shots-count" id="shotsCount" aria-live="polite">1 / 7</div>
+    <button class="shots-close" type="button" id="shotsClose" aria-label="Close screenshots">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>
+    </button>
+  </header>
+  <div class="shots-stage">
+    <button class="shots-nav shots-prev" type="button" id="shotsPrev" aria-label="Previous screenshot">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>
+    </button>
+    <div class="shots-view" id="shotsView">
+      <!-- DEMO VIDEO SLOT: when the demo ships, it becomes the first slide
+           (the JS counts .shots-item, so the counter follows). Drop the file
+           at assets/demo.mp4 and uncomment (poster keeps the open cheap;
+           preload="none" keeps the lazy contract):
+      <figure class="shots-item">
+        <video controls preload="none" poster="assets/demo-poster.png" src="assets/demo.mp4" style="max-width:100%;max-height:100%;border-radius:10px;display:block"></video>
+        <figcaption>Two minutes of Steer driving a Mac, uncut.</figcaption>
+      </figure>
+      -->
+      <figure class="shots-item cur">
+        <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="assets/light/settings-sticks.png" data-dark="assets/dark/settings-sticks.png" alt="Steer's Sticks pane: per-layer stick modes and a cursor speed curve you can dial in" width="2000" height="1760">
+        </button>
+        <figcaption>Sticks: per-layer modes and a cursor speed you shape yourself.</figcaption>
+      </figure>
+      <figure class="shots-item">
+        <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="assets/light/settings-buttons.png" data-dark="assets/dark/settings-buttons.png" alt="Steer's Buttons pane: every control mapped to a shortcut, tap or hold" width="2000" height="1760">
+        </button>
+        <figcaption>Buttons: a shortcut, an app, or a saved task on any button, tap or hold.</figcaption>
+      </figure>
+      <figure class="shots-item">
+        <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="assets/light/settings-profiles.png" data-dark="assets/dark/settings-profiles.png" alt="Steer's Profiles pane: per-app setups that switch automatically" width="2000" height="1760">
+        </button>
+        <figcaption>Profiles: a setup per app, switched for you.</figcaption>
+      </figure>
+      <figure class="shots-item">
+        <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="assets/light/settings-haptics.png" data-dark="assets/dark/settings-haptics.png" alt="Steer's Haptics and Triggers pane: per-event haptic strength and adaptive-trigger presets" width="2000" height="1760">
+        </button>
+        <figcaption>Haptics and triggers: a switch per event, trigger presets and a fine editor (DualSense).</figcaption>
+      </figure>
+      <figure class="shots-item">
+        <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="assets/light/settings-led.png" data-dark="assets/dark/settings-led.png" alt="Steer's Light Bar pane: colour, battery cues, and workflow signals" width="2000" height="1760">
+        </button>
+        <figcaption>Light bar: set a colour, or wire it to signal your workflow (DualSense).</figcaption>
+      </figure>
+      <figure class="shots-item">
+        <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="assets/light/settings-gyro.png" data-dark="assets/dark/settings-gyro.png" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" width="2000" height="1760">
+        </button>
+        <figcaption>Gyro: tilt to aim, with a speed curve you tune.</figcaption>
+      </figure>
+      <figure class="shots-item">
+        <button class="shots-zoom" type="button" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="assets/light/settings-scripting.png" data-dark="assets/dark/settings-scripting.png" alt="Steer's Scripting pane: driving Steer from your own scripts, and Shortcuts actions" width="2000" height="1760">
+        </button>
+        <figcaption>Scripting: drive Steer from your own scripts, copy-paste ready.</figcaption>
+      </figure>
+    </div>
+    <button class="shots-nav shots-next" type="button" id="shotsNext" aria-label="Next screenshot">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+    </button>
+  </div>
+</dialog>
+
+<!-- LAUNCH LIST — the hero and nav CTAs open this small form; their href
+     falls back to #pricing, where the same form sits inline, when JS is off. -->
+<dialog class="ml-dialog" id="mlDialog" aria-labelledby="mlTitle">
+  <button class="shots-close ml-close" type="button" id="mlClose" aria-label="Close">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>
+  </button>
+  <h2 id="mlTitle">Join the launch list</h2>
+  <p class="ml-sub">€19.99 once, when it ships. 14-day free trial: no card, no account. One email the day it opens, from me, and your address goes nowhere else.</p>
+  <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
+    <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address" autofocus>
+    <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
+    <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Join the launch list</button>
+    <p class="ml-msg" role="status" aria-live="polite"></p>
+  </form>
+  <p class="ml-alt">Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
+</dialog>
+
+<script src="home.js" defer></script>
+</body>
+</html>

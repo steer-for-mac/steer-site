@@ -269,9 +269,31 @@ prefix.
   prose-only now and that is the accepted cost. Do not restore any of the three
   to fill space; a band that reads as empty wants ink, not a repeated claim.
 
+## The page is assembled, not authored
+
+`index.html` is generated. Edit `parts/*.html` and run `bin/build`; the file
+carries a banner saying so and `bin/build --check` fails a stale copy. It was
+one 92KB file, which meant every edit was surgery on a shared blob and two
+people could not touch different bands at once.
+
+Includes only, no template language: the tooling here is deliberately
+dependency-free (`curb-check.mjs`, `shots.mjs`, `bin/serve`, `bin/build` all run
+on what ships with the machine), and a pip install to concatenate files would
+not earn itself. Syntax is `<!-- include: parts/uses.html -->` on its own line.
+
+Two things that will waste your time otherwise:
+
+- **The page freezes its own animations under automation.** `home.js` adds
+  `.still` when `navigator.webdriver` is true, which is deliberate (deterministic
+  screenshots) and means no headless check can see motion. To test a loop, remove
+  the class first: `document.documentElement.classList.remove('still')`.
+- **Serving matters.** The SVG symbols in `assets/svg/` come in through
+  `<use href="…svg#s">`, which browsers refuse over `file://`. Use `bin/serve` or
+  `docker compose up`; `shots.mjs` serves the repo itself for the same reason.
+
 ## Before you call it done
 
-- Run `node scripts/shots.mjs`. It renders every section at 1440 and 375 into
+- Run `bin/build --check`, then `node scripts/shots.mjs`. It renders every section at 1440 and 375 into
   `scratch/shots/`, and reports horizontal overflow at 1440/768/375 on the way
   past, so the three by-eye checks below get looked at rather than remembered.
   `--pad xb` and `--theme dark` drive the gates the page hides behind an

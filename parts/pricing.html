@@ -1,0 +1,36 @@
+<section class="sec-loose" id="pricing">
+  <div class="wrap center">
+    <div class="eyebrow">Pricing</div>
+    <h2 class="h2">One price. Yours to keep.</h2>
+    <div class="price-card sec-body">
+      <div class="price-big"><span class="price-cur">€</span><span class="price-num">19.99</span></div>
+      <div class="once">paid once, no subscription</div>
+      <ul class="price-inc">
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> 14-day free trial at launch: no card, no account</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Every feature your controller supports, included</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Free updates as macOS changes</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l3.5 3.5L16 6"/></svg> Direct from the developer, checked by Apple</li>
+      </ul>
+      <!-- The list is a real form, not a mailto: a mailto dies silently on a
+           machine with no mail client, at the exact moment of highest intent.
+           With JS the submit posts in place; without JS the native POST still
+           works (the endpoint answers with a small confirmation page). The
+           mailto stays below as the fallback for both failure modes. -->
+      <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
+        <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
+        <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
+        <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Join the launch list</button>
+        <p class="ml-msg" role="status" aria-live="polite"></p>
+      </form>
+      <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is in final testing. One email the day the free trial opens: one message, from me, and your address goes nowhere else. Name your controller and you hear first when a pad needs a tester.</p>
+      <p style="font-size:12px;color:var(--text-3);margin-top:10px">Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
+      <p style="font-size:13px;color:var(--text-3);margin-top:10px">Built for myself. I use it daily. Sean Floyd</p>
+    </div>
+  </div>
+</section>
+
+<!-- REQUIREMENTS + FAQ — the practical tail, after the buying decision -->
+
+</main>
+

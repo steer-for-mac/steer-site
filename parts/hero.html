@@ -1,0 +1,667 @@
+<!-- HERO — trimodal controller-picker (PS / Xbox / Switch Pro).
+     Namespaced .chero: its CSS is the appended block in the page-local <style>,
+     its JS the appended IIFE in the bottom <script>. Theme follows the site's
+     html[data-theme]; deep links: #playstation / #xbox / #nintendo / #led=RRGGBB. -->
+<section class="chero" data-pad="ps">
+  <div class="wash" aria-hidden="true"></div>
+  <div class="pool" aria-hidden="true"></div>
+
+  <div class="copy">
+    <div class="app-eyebrow">A Mac app for the controller you already own</div>
+    <h1>A mouse needs a desk.<br>Your controller doesn't.</h1>
+    <p class="sub">Steer turns it into a mouse and keyboard: point and click, type, scroll, arrange windows, reach an app's own menus. You stop getting up.</p>
+    <p class="sub sub-own">Plug it in, grant one Mac permission, and it already works. Nothing to configure.</p>
+    <div class="cta-row">
+      <a class="cta" href="#pricing" data-ml>Join the launch list</a>
+      <span class="terms"><b>€19.99</b> once, when it ships. 14-day trial, no card, no account.</span>
+    </div>
+    <div class="picker-wrap">
+      <div class="picker-prompt">Pick your controller</div>
+      <div class="tabs" role="tablist" aria-label="See your controller">
+        <button class="tab" role="tab" id="tab-ps" aria-selected="true"  data-pad="ps">PlayStation</button>
+        <button class="tab" role="tab" id="tab-xb" aria-selected="false" data-pad="xb">Xbox</button>
+        <button class="tab" role="tab" id="tab-sw" aria-selected="false" data-pad="sw">Nintendo</button>
+        <button class="tab" role="tab" id="tab-mf" aria-selected="false" data-pad="mf">Other</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <!-- shared studio materials (stops themed via CSS) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop class="s1" offset="0"/><stop class="s2" offset="0.55"/><stop class="s3" offset="1"/>
+        </linearGradient>
+        <linearGradient id="swBodyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop class="s1" offset="0"/><stop class="s2" offset="0.55"/><stop class="s3" offset="1"/>
+        </linearGradient>
+        <linearGradient id="padGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop class="s1" offset="0"/><stop class="s2" offset="1"/>
+        </linearGradient>
+        <radialGradient id="stickGrad" cx="0.5" cy="0.35" r="0.75">
+          <stop class="s1" offset="0"/><stop class="s2" offset="0.7"/><stop class="s3" offset="1"/>
+        </radialGradient>
+        <!-- shoulder materials: trigger sits deeper in shadow, bumper catches the key light -->
+        <linearGradient id="trigTopGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop class="s1" offset="0"/><stop class="s2" offset="0.45"/><stop class="s3" offset="1"/>
+        </linearGradient>
+        <linearGradient id="bumpGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop class="s1" offset="0"/><stop class="s2" offset="0.5"/><stop class="s3" offset="1"/>
+        </linearGradient>
+        <filter id="soften" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="26"/>
+        </filter>
+        <clipPath id="psClip">
+          <path d="M600,48 C670,48 725,56 765,74 C805,92 822,120 836,160 C852,208 872,268 880,320 C887,368 883,410 850,428 C826,441 796,436 778,410 C760,382 750,346 728,322 C706,299 660,290 600,290 C540,290 494,299 472,322 C450,346 440,382 422,410 C404,436 374,441 350,428 C317,410 313,368 320,320 C328,268 348,208 364,160 C378,120 395,92 435,74 C475,56 530,48 600,48 Z"/>
+        </clipPath>
+        <clipPath id="xbClip">
+          <path d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"/>
+        </clipPath>
+        <clipPath id="swClip">
+          <path d="M600,60 C658,60 706,66 740,82 C774,98 794,124 806,158 C822,202 842,258 850,308 C858,356 852,398 822,416 C796,430 770,424 754,398 C738,372 730,340 710,318 C690,296 652,288 600,288 C548,288 510,296 490,318 C470,340 462,372 446,398 C430,424 404,430 378,416 C348,398 342,356 350,308 C358,258 378,202 394,158 C406,124 426,98 460,82 C494,66 542,60 600,60 Z"/>
+        </clipPath>
+        <!-- trigger silhouettes, for clipping the bumper's cast shadow -->
+        <clipPath id="psTrigClip">
+          <path d="M420,82 C412,66 413,50 423,42 C433,35 452,33 467,36 C479,39 487,46 488,54 L485,70 Z"/>
+        </clipPath>
+        <clipPath id="xbTrigClip">
+          <path d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z"/>
+        </clipPath>
+        <clipPath id="swTrigClip">
+          <path d="M440,92 C432,76 433,60 443,52 C453,45 472,43 487,46 C499,49 507,56 508,64 L505,80 Z"/>
+        </clipPath>
+      </defs>
+    </svg>
+
+    <!-- ═══════════ PLAYSTATION · DualSense ═══════════ -->
+    <div class="padwrap ps active" role="img"
+         aria-label="Stylized DualSense controller, its controls mapped to Mac inputs, light bar glowing, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, plus triggers that can push back once you turn them on, touchpad gestures, tilt to point, and a quiet buzz for the moments that earn it">
+      <svg viewBox="0 0 1200 440" aria-hidden="true">
+        <ellipse class="contact" cx="600" cy="428" rx="275" ry="14"/>
+        <g class="device">
+          <!-- shoulders: L2 trigger angled up behind, L1 bumper bar hugging the body edge -->
+          <g id="psShoL">
+            <path class="ol-a" d="M420,82 C412,66 413,50 423,42 C433,35 452,33 467,36 C479,39 487,46 488,54 L485,70 Z" fill="url(#trigTopGrad)"/>
+            <path class="rim" d="M425,44 C433,36 450,34 464,37" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <g clip-path="url(#psTrigClip)">
+              <path class="cast" transform="translate(0,-3)" d="M408,97 C404,90 405,83 410,77 C424,63 448,55 474,50 C488,47 500,48 504,52 C506,55 506,58 504,60 C478,63 452,70 432,80 C422,85 414,91 411,97 Z"/>
+            </g>
+            <path class="ol-a" d="M408,97 C404,90 405,83 410,77 C424,63 448,55 474,50 C488,47 500,48 504,52 C506,55 506,58 504,60 C478,63 452,70 432,80 C422,85 414,91 411,97 Z" fill="url(#bumpGrad)"/>
+            <path class="rim" d="M412,78 C426,64 450,56 474,51" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <use href="#psShoL" transform="matrix(-1 0 0 1 1200 0)"/>
+
+          <!-- body -->
+          <path class="ol-b" d="M600,48 C670,48 725,56 765,74 C805,92 822,120 836,160 C852,208 872,268 880,320 C887,368 883,410 850,428 C826,441 796,436 778,410 C760,382 750,346 728,322 C706,299 660,290 600,290 C540,290 494,299 472,322 C450,346 440,382 422,410 C404,436 374,441 350,428 C317,410 313,368 320,320 C328,268 348,208 364,160 C378,120 395,92 435,74 C475,56 530,48 600,48 Z"
+                fill="url(#bodyGrad)" stroke-width="1.5"/>
+          <path class="rim" d="M470,66 C510,54 552,49 600,49 C648,49 690,54 730,66" fill="none" stroke-width="2" stroke-linecap="round"/>
+          <!-- grip seams -->
+          <path class="seam" d="M478,296 C462,318 452,348 447,382" fill="none" stroke-width="2"/>
+          <path class="seam" d="M722,296 C738,318 748,348 753,382" fill="none" stroke-width="2"/>
+
+          <!-- light spill inside the body (accent), plus the idle-rainbow hue stack -->
+          <g clip-path="url(#psClip)">
+            <ellipse class="bloom" cx="600" cy="136" rx="185" ry="95" filter="url(#soften)"/>
+            <g class="rbbs" aria-hidden="true">
+              <ellipse class="rbb hu1" cx="600" cy="136" rx="185" ry="95" filter="url(#soften)"/>
+              <ellipse class="rbb hu2" style="animation-delay:-2s" cx="600" cy="136" rx="185" ry="95" filter="url(#soften)"/>
+              <ellipse class="rbb hu3" style="animation-delay:-4s" cx="600" cy="136" rx="185" ry="95" filter="url(#soften)"/>
+              <ellipse class="rbb hu4" style="animation-delay:-6s" cx="600" cy="136" rx="185" ry="95" filter="url(#soften)"/>
+              <ellipse class="rbb hu5" style="animation-delay:-8s" cx="600" cy="136" rx="185" ry="95" filter="url(#soften)"/>
+              <ellipse class="rbb hu6" style="animation-delay:-10s" cx="600" cy="136" rx="185" ry="95" filter="url(#soften)"/>
+            </g>
+          </g>
+
+          <!-- touchpad -->
+          <rect class="ol-b" x="508" y="72" width="184" height="92" rx="28" fill="url(#padGrad)"/>
+
+          <!-- light bar: one continuous strip wrapping the touchpad on three sides -->
+          <g class="glow">
+            <path class="lb" d="M502,86 L502,136 A34 34 0 0 0 536 170 L664,170 A34 34 0 0 0 698 136 L698,86" fill="none" stroke-width="6.5" stroke-linecap="round"/>
+            <path d="M502,86 L502,136 A34 34 0 0 0 536 170 L664,170 A34 34 0 0 0 698 136 L698,86" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <!-- idle rainbow: six hue copies crossfading on opacity, white core on top -->
+          <g class="rbg" aria-hidden="true">
+            <path class="rbl hu1" d="M502,86 L502,136 A34 34 0 0 0 536 170 L664,170 A34 34 0 0 0 698 136 L698,86"/>
+            <path class="rbl hu2" style="animation-delay:-2s" d="M502,86 L502,136 A34 34 0 0 0 536 170 L664,170 A34 34 0 0 0 698 136 L698,86"/>
+            <path class="rbl hu3" style="animation-delay:-4s" d="M502,86 L502,136 A34 34 0 0 0 536 170 L664,170 A34 34 0 0 0 698 136 L698,86"/>
+            <path class="rbl hu4" style="animation-delay:-6s" d="M502,86 L502,136 A34 34 0 0 0 536 170 L664,170 A34 34 0 0 0 698 136 L698,86"/>
+            <path class="rbl hu5" style="animation-delay:-8s" d="M502,86 L502,136 A34 34 0 0 0 536 170 L664,170 A34 34 0 0 0 698 136 L698,86"/>
+            <path class="rbl hu6" style="animation-delay:-10s" d="M502,86 L502,136 A34 34 0 0 0 536 170 L664,170 A34 34 0 0 0 698 136 L698,86"/>
+            <path class="rb-core" d="M502,86 L502,136 A34 34 0 0 0 536 170 L664,170 A34 34 0 0 0 698 136 L698,86"/>
+          </g>
+          <rect class="lb-reflect" x="508" y="72" width="184" height="92" rx="28"/>
+
+          <!-- player LEDs -->
+          <g class="pled" opacity="0.9">
+            <circle cx="584" cy="182" r="2.2"/><circle cx="592" cy="182" r="2.2"/>
+            <circle cx="600" cy="182" r="2.2"/><circle cx="608" cy="182" r="2.2"/>
+            <circle cx="616" cy="182" r="2.2"/>
+          </g>
+
+          <!-- mic grille, like the real thing: a row of pinholes under the player LEDs -->
+          <g class="ic-f">
+            <circle cx="577" cy="200" r="1.3"/><circle cx="584.6" cy="200" r="1.3"/>
+            <circle cx="592.2" cy="200" r="1.3"/><circle cx="599.8" cy="200" r="1.3"/>
+            <circle cx="607.4" cy="200" r="1.3"/><circle cx="615" cy="200" r="1.3"/>
+            <circle cx="622.6" cy="200" r="1.3"/>
+          </g>
+
+          <!-- create / options: canted pills, following the shell's slope -->
+          <rect class="f-small ol-a" x="478" y="66" width="9" height="22" rx="4.5" transform="rotate(-12 482.5 77)"/>
+          <rect class="f-small ol-a" x="713" y="66" width="9" height="22" rx="4.5" transform="rotate(12 717.5 77)"/>
+
+          <!-- d-pad: four separate buttons, like the real thing -->
+          <g class="f-dpad ol-a">
+            <rect x="434" y="120" width="22" height="26" rx="8"/>
+            <rect x="434" y="158" width="22" height="26" rx="8"/>
+            <rect x="412" y="141" width="26" height="22" rx="8"/>
+            <rect x="452" y="141" width="26" height="22" rx="8"/>
+          </g>
+
+          <!-- face buttons -->
+          <g>
+            <circle class="f-btn ol-b" cx="755" cy="118" r="15.5"/>
+            <circle class="f-btn ol-b" cx="789" cy="152" r="15.5"/>
+            <circle class="f-btn ol-b pad-cross-btn" cx="755" cy="186" r="15.5"/>
+            <circle class="f-btn ol-b" cx="721" cy="152" r="15.5"/>
+            <path class="g-tri" d="M755,111 L761.5,123 L748.5,123 Z" fill="none" stroke-width="1.8" stroke-linejoin="round" opacity="0.9"/>
+            <circle class="g-cir" cx="789" cy="152" r="6" fill="none" stroke-width="1.8" opacity="0.9"/>
+            <path class="g-cross" d="M750,181 L760,191 M760,181 L750,191" stroke-width="1.8" stroke-linecap="round" opacity="0.9"/>
+            <rect class="g-sq" x="716" y="147" width="10" height="10" fill="none" stroke-width="1.8" opacity="0.9"/>
+            <circle class="pad-cross-tint" cx="755" cy="186" r="15.5" fill="var(--accent)" opacity="0"/>
+          </g>
+
+          <!-- sticks: dark caps in both rooms, like the real hardware.
+               The cap + its inner ring are grouped so they can travel; the
+               well is the recessed housing and must stay put, or the whole
+               socket slides and it reads as the pad melting. -->
+          <g>
+            <circle class="f-well ol-a" cx="515" cy="238" r="37"/>
+            <g class="pad-stick pad-stick-l">
+              <circle class="ol-b" cx="515" cy="238" r="28" fill="url(#stickGrad)"/>
+              <circle cx="515" cy="238" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+            </g>
+            <circle class="f-well ol-a" cx="685" cy="238" r="37"/>
+            <g class="pad-stick pad-stick-r">
+              <circle class="ol-b" cx="685" cy="238" r="28" fill="url(#stickGrad)"/>
+              <circle cx="685" cy="238" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+            </g>
+          </g>
+
+          <!-- home + mic slot -->
+          <circle class="ic" cx="600" cy="234" r="9" fill="none" stroke-width="1.2"/>
+          <rect class="f-small ol-a" x="588" y="262" width="24" height="5" rx="2.5"/>
+        </g>
+
+        <!-- annotations · left column: labels right-aligned to the x=312 guide,
+             rows on a 100px rhythm (60/160/260/360), one leader treatment:
+             dot on the control → straight diagonal → elbow → 14px run into the label -->
+        <g class="ann d1" text-anchor="end">
+          <circle cx="404" cy="42" r="2.5"/>
+          <polyline points="404,42 334,64 320,64"/>
+          <text class="t x" x="312" y="60">+ FIRM TRIGGERS</text>
+          <text x="312" y="78">turn them on and they push back</text>
+        </g>
+        <g class="ann d2" text-anchor="end">
+          <circle cx="528" cy="152" r="2.5"/>
+          <polyline points="528,152 334,164 320,164"/>
+          <text class="t x" x="312" y="160">+ TOUCHPAD</text>
+          <text x="312" y="178">taps and gestures, like a trackpad</text>
+        </g>
+        <g class="ann d3" text-anchor="end">
+          <circle cx="478" cy="262" r="2.5"/>
+          <polyline points="478,262 334,264 320,264"/>
+          <text class="t" x="312" y="260">LEFT STICK</text>
+          <text x="312" y="278">moves the cursor, smooth and steady</text>
+        </g>
+        <g class="ann d4" text-anchor="end">
+          <circle cx="452" cy="340" r="2.5"/>
+          <polyline points="452,340 334,364 320,364"/>
+          <text class="t x" x="312" y="360">+ TILT TO POINT</text>
+          <text x="312" y="378">aim by moving your hands, not a stick</text>
+        </g>
+        <!-- annotations · right column: labels left-aligned to the x=888 guide, same rhythm -->
+        <g class="ann d5">
+          <circle cx="800" cy="38" r="2.5"/>
+          <polyline points="800,38 866,64 880,64"/>
+          <text class="t" x="888" y="60">HOLD ONE BUTTON</text>
+          <text x="888" y="78">like Shift: every other button changes</text>
+        </g>
+        <g class="ann d6">
+          <circle cx="806" cy="140" r="2.5"/>
+          <polyline points="806,140 866,164 880,164"/>
+          <text class="t" x="888" y="160">EVERY BUTTON</text>
+          <text x="888" y="178">any shortcut, app, or saved task</text>
+        </g>
+        <g class="ann d7">
+          <circle cx="722" cy="262" r="2.5"/>
+          <polyline points="722,262 866,264 880,264"/>
+          <text class="t" x="888" y="260">RIGHT STICK</text>
+          <text x="888" y="278">scrolls the page, at your speed</text>
+        </g>
+        <g class="ann d8">
+          <circle cx="846" cy="414" r="2.5"/>
+          <polyline points="846,414 866,364 880,364"/>
+          <text class="t" x="888" y="360">A QUIET BUZZ</text>
+          <text x="888" y="378">at the volume ceiling, and as you flip through apps</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ═══════════ XBOX ═══════════ -->
+    <div class="padwrap xb" role="img"
+         aria-label="Stylized Xbox controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, arrow buttons, and a quiet buzz">
+      <svg viewBox="0 0 1200 440" aria-hidden="true">
+        <ellipse class="contact" cx="600" cy="424" rx="265" ry="14"/>
+        <g class="device">
+          <!-- shoulders: LT trigger angled up behind, LB bumper bar hugging the body edge -->
+          <g id="xbShoL">
+            <path class="ol-a" d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z" fill="url(#trigTopGrad)"/>
+            <path class="rim" d="M437,49 C446,42 464,40 479,43" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <g clip-path="url(#xbTrigClip)">
+              <path class="cast" transform="translate(0,-3)" d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z"/>
+            </g>
+            <path class="ol-a" d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z" fill="url(#bumpGrad)"/>
+            <path class="rim" d="M423,85 C438,71 463,62 488,57" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <use href="#xbShoL" transform="matrix(-1 0 0 1 1200 0)"/>
+
+          <!-- body -->
+          <path class="ol-b" d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"
+                fill="url(#bodyGrad)" stroke-width="1.5"/>
+          <path class="rim" d="M478,72 C518,62 556,59 600,59 C644,59 682,62 722,72" fill="none" stroke-width="2" stroke-linecap="round"/>
+          <!-- grip seams -->
+          <path class="seam" d="M486,296 C468,320 458,350 452,384" fill="none" stroke-width="2"/>
+          <path class="seam" d="M714,296 C732,320 742,350 748,384" fill="none" stroke-width="2"/>
+
+          <!-- light spill from the nexus -->
+          <g clip-path="url(#xbClip)">
+            <ellipse class="bloom" cx="600" cy="104" rx="130" ry="72" filter="url(#soften)"/>
+          </g>
+
+          <!-- nexus pod + lit ring: the pod face stays dark in both rooms, so the ring reads emissive -->
+          <ellipse class="ol-a" cx="600" cy="94" rx="32" ry="25" fill="url(#padGrad)"/>
+          <circle class="f-nexus ol-a" cx="600" cy="94" r="19"/>
+          <g class="glow">
+            <circle class="g-nex" cx="600" cy="94" r="15" fill="none" stroke-width="2.6"/>
+          </g>
+          <path class="nex-hl" d="M591,87 A13,13 0 0 1 609,87" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- view · share · menu, like the real thing: share carries the upload glyph -->
+          <circle class="f-small ol-b" cx="552" cy="142" r="8"/>
+          <g class="ic" fill="none" stroke-width="1.2">
+            <rect x="548.5" y="138.5" width="5" height="5"/>
+            <rect x="551" y="141" width="5" height="5"/>
+          </g>
+          <circle class="f-small ol-b" cx="648" cy="142" r="8"/>
+          <g class="ic" stroke-width="1.2">
+            <path d="M644,139.5 h8 M644,142.5 h8 M644,145.5 h8"/>
+          </g>
+          <rect class="f-small ol-a" x="593" y="152" width="14" height="14" rx="4.5"/>
+          <g class="ic" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M600,162 V156.8 M597.6,158.8 L600,156.4 L602.4,158.8 M596.5,162.6 h7"/>
+          </g>
+
+          <!-- left stick · upper left -->
+          <g>
+            <circle class="f-well ol-a" cx="472" cy="150" r="37"/>
+            <circle class="ol-b" cx="472" cy="150" r="28" fill="url(#stickGrad)"/>
+            <circle cx="472" cy="150" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+          </g>
+
+          <!-- face buttons with letters -->
+          <g>
+            <circle class="f-btn ol-b" cx="728" cy="114" r="15.5"/>
+            <circle class="f-btn ol-b" cx="764" cy="150" r="15.5"/>
+            <circle class="f-btn ol-b" cx="728" cy="186" r="15.5"/>
+            <circle class="f-btn ol-b" cx="692" cy="150" r="15.5"/>
+            <text class="bl bl13 g-y" x="728" y="118.5" text-anchor="middle" opacity="0.95">Y</text>
+            <text class="bl bl13 g-b" x="764" y="154.5" text-anchor="middle" opacity="0.95">B</text>
+            <text class="bl bl13 g-a" x="728" y="190.5" text-anchor="middle" opacity="0.95">A</text>
+            <text class="bl bl13 g-x" x="692" y="154.5" text-anchor="middle" opacity="0.95">X</text>
+          </g>
+
+          <!-- d-pad dish -->
+          <circle class="f-dish ol-b" cx="528" cy="238" r="31"/>
+          <g class="f-dpad ol-a">
+            <rect x="520" y="216" width="16" height="44" rx="6"/>
+            <rect x="506" y="230" width="44" height="16" rx="6"/>
+          </g>
+
+          <!-- right stick · lower centre-right -->
+          <g>
+            <circle class="f-well ol-a" cx="668" cy="238" r="37"/>
+            <circle class="ol-b" cx="668" cy="238" r="28" fill="url(#stickGrad)"/>
+            <circle cx="668" cy="238" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+          </g>
+        </g>
+
+        <!-- annotations · left column: x=312 guide, 3 rows centered on the rhythm (110/210/310) -->
+        <g class="ann d1" text-anchor="end">
+          <circle cx="430" cy="42" r="2.5"/>
+          <polyline points="430,42 334,114 320,114"/>
+          <text class="t" x="312" y="110">HOLD ONE BUTTON</text>
+          <text x="312" y="128">like Shift: every other button changes</text>
+        </g>
+        <g class="ann d2" text-anchor="end">
+          <circle cx="435" cy="142" r="2.5"/>
+          <polyline points="435,142 334,214 320,214"/>
+          <text class="t" x="312" y="210">LEFT STICK</text>
+          <text x="312" y="228">moves the cursor, smooth and steady</text>
+        </g>
+        <g class="ann d3" text-anchor="end">
+          <circle cx="496" cy="249" r="2.5"/>
+          <polyline points="496,249 334,314 320,314"/>
+          <text class="t" x="312" y="310">ARROW BUTTONS</text>
+          <text x="312" y="328">volume, skip, anything you choose</text>
+        </g>
+        <!-- annotations · right column: x=888 guide, 4 rows (60/160/260/360) -->
+        <g class="ann d4">
+          <circle cx="782" cy="132" r="2.5"/>
+          <polyline points="782,132 866,64 880,64"/>
+          <text class="t" x="888" y="60">EVERY BUTTON</text>
+          <text x="888" y="78">any shortcut, app, or saved task</text>
+        </g>
+        <g class="ann d5">
+          <circle cx="752" cy="200" r="2.5"/>
+          <polyline points="752,200 866,164 880,164"/>
+          <text class="t" x="888" y="160">TWO BUTTONS</text>
+          <text x="888" y="178">press two at once: one more job</text>
+        </g>
+        <g class="ann d6">
+          <circle cx="705" cy="252" r="2.5"/>
+          <polyline points="705,252 866,264 880,264"/>
+          <text class="t" x="888" y="260">RIGHT STICK</text>
+          <text x="888" y="278">scrolls the page, at your speed</text>
+        </g>
+        <g class="ann d7">
+          <circle cx="832" cy="408" r="2.5"/>
+          <polyline points="832,408 866,364 880,364"/>
+          <text class="t" x="888" y="360">A QUIET BUZZ</text>
+          <text x="888" y="378">at the volume ceiling, and as you flip through apps</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ═══════════ NINTENDO · Switch Pro ═══════════ -->
+    <div class="padwrap sw" role="img"
+         aria-label="Stylized Switch Pro controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, plus tilt to point and a quiet buzz">
+      <svg viewBox="0 0 1200 440" aria-hidden="true">
+        <ellipse class="contact" cx="600" cy="418" rx="255" ry="14"/>
+        <g class="device">
+          <!-- shoulders: ZL trigger angled up behind, L bumper bar hugging the body edge -->
+          <g id="swShoL">
+            <path class="ol-a" d="M440,92 C432,76 433,60 443,52 C453,45 472,43 487,46 C499,49 507,56 508,64 L505,80 Z" fill="url(#trigTopGrad)"/>
+            <path class="rim" d="M445,54 C454,47 471,45 486,48" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <g clip-path="url(#swTrigClip)">
+              <path class="cast" transform="translate(0,-3)" d="M430,108 C425,100 426,92 431,86 C446,73 470,64 496,59 C509,56 520,57 524,61 C526,64 526,67 524,69 C499,72 474,79 455,89 C445,94 437,101 433,108 Z"/>
+            </g>
+            <path class="ol-a" d="M430,108 C425,100 426,92 431,86 C446,73 470,64 496,59 C509,56 520,57 524,61 C526,64 526,67 524,69 C499,72 474,79 455,89 C445,94 437,101 433,108 Z" fill="url(#bumpGrad)"/>
+            <path class="rim" d="M433,87 C448,74 471,66 495,61" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <use href="#swShoL" transform="matrix(-1 0 0 1 1200 0)"/>
+
+          <!-- body -->
+          <path class="ol-b" d="M600,60 C658,60 706,66 740,82 C774,98 794,124 806,158 C822,202 842,258 850,308 C858,356 852,398 822,416 C796,430 770,424 754,398 C738,372 730,340 710,318 C690,296 652,288 600,288 C548,288 510,296 490,318 C470,340 462,372 446,398 C430,424 404,430 378,416 C348,398 342,356 350,308 C358,258 378,202 394,158 C406,124 426,98 460,82 C494,66 542,60 600,60 Z"
+                fill="url(#swBodyGrad)" stroke-width="1.5"/>
+          <path class="rim" d="M486,74 C524,64 560,61 600,61 C640,61 676,64 714,74" fill="none" stroke-width="2" stroke-linecap="round"/>
+          <!-- grip seams -->
+          <path class="seam" d="M492,294 C476,316 468,346 462,380" fill="none" stroke-width="2"/>
+          <path class="seam" d="M708,294 C724,316 732,346 738,380" fill="none" stroke-width="2"/>
+
+          <!-- light spill from the player LED -->
+          <g clip-path="url(#swClip)">
+            <ellipse class="bloom" cx="600" cy="262" rx="110" ry="48" filter="url(#soften)"/>
+          </g>
+
+          <!-- minus · plus -->
+          <circle class="f-small ol-a" cx="556" cy="102" r="8"/>
+          <path class="ic" d="M551.5,102 h9" stroke-width="1.6" stroke-linecap="round"/>
+          <circle class="f-small ol-a" cx="644" cy="102" r="8"/>
+          <path class="ic" d="M639.5,102 h9 M644,97.5 v9" stroke-width="1.6" stroke-linecap="round"/>
+
+          <!-- capture · home -->
+          <rect class="f-small ol-a" x="552" y="160" width="16" height="16" rx="4.5"/>
+          <circle class="ic" cx="560" cy="168" r="3.5" fill="none" stroke-width="1.2"/>
+          <circle class="f-small ol-a" cx="642" cy="168" r="9"/>
+          <circle class="ic" cx="642" cy="168" r="5" fill="none" stroke-width="1.2"/>
+
+          <!-- left stick · upper left -->
+          <g>
+            <circle class="f-well ol-a" cx="474" cy="148" r="37"/>
+            <circle class="ol-b" cx="474" cy="148" r="28" fill="url(#stickGrad)"/>
+            <circle cx="474" cy="148" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+          </g>
+
+          <!-- face buttons, Nintendo layout: A right, B bottom -->
+          <g>
+            <circle class="f-btn ol-b" cx="726" cy="112" r="14"/>
+            <circle class="f-btn ol-b" cx="762" cy="148" r="14"/>
+            <circle class="f-btn ol-b" cx="726" cy="184" r="14"/>
+            <circle class="f-btn ol-b" cx="690" cy="148" r="14"/>
+            <text class="bl bl12 g-sw" x="726" y="116.5" text-anchor="middle">X</text>
+            <text class="bl bl12 g-sw" x="762" y="152.5" text-anchor="middle">A</text>
+            <text class="bl bl12 g-sw" x="726" y="188.5" text-anchor="middle">B</text>
+            <text class="bl bl12 g-sw" x="690" y="152.5" text-anchor="middle">Y</text>
+          </g>
+
+          <!-- d-pad: one-piece cross -->
+          <g class="f-dpad ol-a">
+            <rect x="520" y="216" width="17" height="48" rx="5"/>
+            <rect x="504.5" y="231.5" width="48" height="17" rx="5"/>
+          </g>
+
+          <!-- right stick · lower centre-right -->
+          <g>
+            <circle class="f-well ol-a" cx="668" cy="240" r="37"/>
+            <circle class="ol-b" cx="668" cy="240" r="28" fill="url(#stickGrad)"/>
+            <circle cx="668" cy="240" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+          </g>
+
+          <!-- player LEDs: P1 lit -->
+          <g>
+            <rect class="pled" x="578" y="270" width="9" height="3.5" rx="1.75"/>
+            <rect class="f-off" x="592" y="270" width="9" height="3.5" rx="1.75"/>
+            <rect class="f-off" x="606" y="270" width="9" height="3.5" rx="1.75"/>
+            <rect class="f-off" x="620" y="270" width="9" height="3.5" rx="1.75"/>
+          </g>
+        </g>
+
+        <!-- annotations · left column: x=312 guide, 4 rows (60/160/260/360) -->
+        <g class="ann d1" text-anchor="end">
+          <circle cx="446" cy="46" r="2.5"/>
+          <polyline points="446,46 334,64 320,64"/>
+          <text class="t" x="312" y="60">HOLD ONE BUTTON</text>
+          <text x="312" y="78">like Shift: every other button changes</text>
+        </g>
+        <g class="ann d2" text-anchor="end">
+          <circle cx="437" cy="140" r="2.5"/>
+          <polyline points="437,140 334,164 320,164"/>
+          <text class="t" x="312" y="160">LEFT STICK</text>
+          <text x="312" y="178">moves the cursor, smooth and steady</text>
+        </g>
+        <g class="ann d3" text-anchor="end">
+          <circle cx="500" cy="250" r="2.5"/>
+          <polyline points="500,250 334,264 320,264"/>
+          <text class="t" x="312" y="260">ARROW BUTTONS</text>
+          <text x="312" y="278">volume, skip, anything you choose</text>
+        </g>
+        <g class="ann d4" text-anchor="end">
+          <circle cx="466" cy="322" r="2.5"/>
+          <polyline points="466,322 334,364 320,364"/>
+          <text class="t x" x="312" y="360">+ TILT TO POINT</text>
+          <text x="312" y="378">aim by moving your hands, not a stick</text>
+        </g>
+        <!-- annotations · right column: x=888 guide, 3 rows centered on the rhythm (110/210/310) -->
+        <g class="ann d5">
+          <circle cx="778" cy="132" r="2.5"/>
+          <polyline points="778,132 866,114 880,114"/>
+          <text class="t" x="888" y="110">EVERY BUTTON</text>
+          <text x="888" y="128">any shortcut, app, or saved task</text>
+        </g>
+        <g class="ann d6">
+          <circle cx="705" cy="254" r="2.5"/>
+          <polyline points="705,254 866,214 880,214"/>
+          <text class="t" x="888" y="210">RIGHT STICK</text>
+          <text x="888" y="228">scrolls the page, at your speed</text>
+        </g>
+        <g class="ann d7">
+          <circle cx="851" cy="368" r="2.5"/>
+          <polyline points="851,368 866,314 880,314"/>
+          <text class="t" x="888" y="310">A QUIET BUZZ</text>
+          <text x="888" y="328">at the volume ceiling, and as you flip through apps</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ═══════════ & OTHERS · any MFi-certified pad ═══════════
+         A schematic outline, not a fourth product render: no brand, no extras,
+         Apple's own A/B/X/Y naming. Callouts reduced to the honest core. -->
+    <div class="padwrap mf" role="img"
+         aria-label="Outline of a generic controller standing in for most other controllers that pair with a Mac, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, the arrow buttons take volume and skip, and a tap and a hold on the same button can do two different jobs">
+      <svg viewBox="0 0 1200 440" aria-hidden="true">
+        <g>
+          <!-- shoulders: same silhouette language, line-art -->
+          <!-- real mirrored copies, not <use>: class styles don't reach use clones,
+               and these paths have no presentation-attribute fallback -->
+          <g>
+            <path class="mf-o" d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z"/>
+            <path class="mf-o" d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z"/>
+          </g>
+          <g transform="matrix(-1 0 0 1 1200 0)">
+            <path class="mf-o" d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z"/>
+            <path class="mf-o" d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z"/>
+          </g>
+
+          <!-- body: the common asymmetric archetype, drawn as a blueprint -->
+          <path class="mf-o mf-body" d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"/>
+
+          <!-- home + two centre buttons -->
+          <circle class="mf-o2" cx="600" cy="94" r="19"/>
+          <circle class="mf-o2" cx="552" cy="142" r="8"/>
+          <circle class="mf-o2" cx="648" cy="142" r="8"/>
+          <text class="mf-tag" x="600" y="188" text-anchor="middle">OTHER CONTROLLERS</text>
+
+          <!-- left stick -->
+          <circle class="mf-o" cx="472" cy="150" r="37"/>
+          <circle class="mf-o2" cx="472" cy="150" r="26"/>
+
+          <!-- face buttons: Apple's GameController naming, no brand colours -->
+          <circle class="mf-o2" cx="728" cy="114" r="15.5"/>
+          <circle class="mf-o2" cx="764" cy="150" r="15.5"/>
+          <circle class="mf-o2" cx="728" cy="186" r="15.5"/>
+          <circle class="mf-o2" cx="692" cy="150" r="15.5"/>
+          <text class="mf-bl" x="728" y="118.5" text-anchor="middle">Y</text>
+          <text class="mf-bl" x="764" y="154.5" text-anchor="middle">B</text>
+          <text class="mf-bl" x="728" y="190.5" text-anchor="middle">A</text>
+          <text class="mf-bl" x="692" y="154.5" text-anchor="middle">X</text>
+
+          <!-- d-pad: one outline cross -->
+          <path class="mf-o2" d="M521,217 H535 A2,2 0 0 1 537,219 V229 A2,2 0 0 0 539,231 H549 A2,2 0 0 1 551,233 V245 A2,2 0 0 1 549,247 H539 A2,2 0 0 0 537,249 V259 A2,2 0 0 1 535,261 H521 A2,2 0 0 1 519,259 V249 A2,2 0 0 0 517,247 H507 A2,2 0 0 1 505,245 V233 A2,2 0 0 1 507,231 H517 A2,2 0 0 0 519,229 V219 A2,2 0 0 1 521,217 Z"/>
+
+          <!-- right stick -->
+          <circle class="mf-o" cx="668" cy="238" r="37"/>
+          <circle class="mf-o2" cx="668" cy="238" r="26"/>
+        </g>
+
+        <!-- annotations: the honest hardware core, plus the software claims
+             every pad gets (arrow buttons, tap-or-hold) so the "Other" pick is
+             not a thinner page than the branded ones. No Sony extras promised. -->
+        <g class="ann d1" text-anchor="end">
+          <circle cx="430" cy="42" r="2.5"/>
+          <polyline points="430,42 334,114 320,114"/>
+          <text class="t" x="312" y="110">HOLD ONE BUTTON</text>
+          <text x="312" y="128">like Shift: every other button changes</text>
+        </g>
+        <g class="ann d2" text-anchor="end">
+          <circle cx="435" cy="142" r="2.5"/>
+          <polyline points="435,142 334,214 320,214"/>
+          <text class="t" x="312" y="210">LEFT STICK</text>
+          <text x="312" y="228">moves the cursor, smooth and steady</text>
+        </g>
+        <g class="ann d5" text-anchor="end">
+          <circle cx="503" cy="241" r="2.5"/>
+          <polyline points="503,241 334,314 320,314"/>
+          <text class="t" x="312" y="310">ARROW BUTTONS</text>
+          <text x="312" y="328">volume, skip, anything you choose</text>
+        </g>
+        <g class="ann d3">
+          <circle cx="782" cy="132" r="2.5"/>
+          <polyline points="782,132 866,114 880,114"/>
+          <text class="t" x="888" y="110">EVERY BUTTON</text>
+          <text x="888" y="128">any shortcut, app, or saved task</text>
+        </g>
+        <g class="ann d6">
+          <circle cx="734" cy="206" r="2.5"/>
+          <polyline points="734,206 866,214 880,214"/>
+          <text class="t" x="888" y="210">TAP OR HOLD</text>
+          <text x="888" y="228">two jobs on the same button</text>
+        </g>
+        <g class="ann d4">
+          <circle cx="705" cy="252" r="2.5"/>
+          <polyline points="705,252 866,314 880,314"/>
+          <text class="t" x="888" y="310">RIGHT STICK</text>
+          <text x="888" y="328">scrolls the page, at your speed</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- mobile feature chips -->
+  <!-- The SVG annotations are unreadable on a phone, so these chips stand in for
+       them. Keep each list as long as its pad's annotation set: a DualSense owner
+       must not see fewer features here than an Xbox owner does. -->
+  <!-- Keep every chip at or under ~36 mono characters: at 375px the pill has
+       ~335px of room and longer strings push the hero into horizontal overflow. -->
+  <ul class="features feat-ps">
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Triggers can push back before the click</li>
+    <li>A quiet buzz for the moments that earn it</li>
+    <li>The light strip, any colour you like</li>
+  </ul>
+  <ul class="features feat-xb">
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Two buttons at once: one more job</li>
+    <li>A quiet buzz for the moments that earn it</li>
+    <li>Tap or hold: two jobs per button</li>
+  </ul>
+  <ul class="features feat-sw">
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Tilt it and the cursor follows</li>
+    <li>A quiet buzz for the moments that earn it</li>
+    <li>Tap or hold: two jobs per button</li>
+  </ul>
+  <ul class="features feat-mf">
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Tap or hold: two jobs per button</li>
+    <li>Two buttons at once: one more job</li>
+    <li>A buzz, if your pad supports it</li>
+  </ul>
+
+  <div class="bottombar">
+    <div class="hero-demo">
+      <div class="vg vg-glide" aria-hidden="true">
+        <span class="vg-stick"><i class="vg-cap"></i><i class="vg-ring gr"></i></span>
+        <div class="vg-screen">
+          <span class="vg-tile"><svg class="pi-play" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.5l8 4.5-8 4.5z"/></svg><svg class="pi-pause" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.7 1.5h2.5v9H2.7zM6.8 1.5h2.5v9H6.8z"/></svg><i class="tring"></i></span>
+          <span class="vg-cursor"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M2.002 0.731 L10.385 9.132 C11.438 10.188 10.691 11.99 9.2 11.99 L5.753 11.989 L3.285 14.174 C2.204 15.13 0.501 14.363 0.501 12.919 L0.501 1.352 C0.501 0.568 1.448 0.176 2.002 0.731 Z" fill="#FFFFFF"/><path d="M1.5 2 L1.5 12.897 C1.5 13.487 2.197 13.801 2.639 13.41 L5.374 10.989 L9.174 10.99 C9.784 10.99 10.09 10.253 9.659 9.821 L1.751 1.896 C1.659 1.803 1.5 1.869 1.5 2 Z" fill="#000000"/></svg><i class="vg-click"></i></span>
+        </div>
+        <span class="vg-facewrap"><span class="face-slot" data-b="cross"><svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var(--ps-cross)" stroke-width="1.5" opacity="0.9"/><path d="M9 9l8 8M17 9l-8 8" stroke="var(--ps-cross)" stroke-width="1.7" stroke-linecap="round"/></svg></span></span>
+      </div>
+      <p class="cap">The stick is the mouse. Press <span class="only-ps">Cross</span><span class="only-xb">A</span><span class="only-sw">B</span><span class="only-mf">A</span> to click.</p>
+    </div>
+  </div>
+
+  <div class="grain"></div>
+</section>
+

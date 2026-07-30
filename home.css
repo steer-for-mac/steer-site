@@ -1323,6 +1323,21 @@ html.still .dgs *,html.still .lay-fig *{animation:none!important}
 .d-index{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--sep)}
 .d-item{display:flex;flex-direction:column;min-width:0;padding:26px var(--cx) 28px}
 .d-item+.d-item{border-left:1px solid var(--sep)}
+/* Four in one row so the band is scannable at a glance, which is what C had and
+   the promoted-couch layout cost. The couch still leads, but on width and plate
+   size rather than by owning a band of its own. */
+.d-index{grid-template-columns:minmax(0,1.62fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)}
+.d-item-lead h3{font-size:clamp(21px,1.7vw,25px);letter-spacing:-0.022em}
+.d-item-lead .d-fig{max-width:none}
+@media(max-width:1100px){
+  .d-index{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr)}
+  .d-item:nth-child(4){grid-column:1/-1;border-left:0;border-top:1px solid var(--sep)}
+}
+@media(max-width:900px){
+  .d-index{grid-template-columns:1fr}
+  .d-item+.d-item{border-left:0;border-top:1px solid var(--sep)}
+  .d-item:nth-child(4){grid-column:auto}
+}
 .d-item h3{font-size:19px;line-height:1.2;letter-spacing:-0.021em;margin-bottom:9px;text-wrap:balance}
 .d-item p{font-size:14.5px;color:var(--text-2);line-height:1.55;letter-spacing:-0.005em}
 .d-item p+p{margin-top:9px}
