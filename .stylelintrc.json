@@ -1,0 +1,29 @@
+{
+  "//": "Rules chosen because each one has already bitten this repo. Run: npx stylelint@16 'styles*/**.css' 'parts/*.css' 'styles.css'",
+  "rules": {
+    "no-duplicate-selectors": true,
+    "declaration-block-no-duplicate-properties": [
+      true,
+      {
+        "ignore": [
+          "consecutive-duplicates-with-different-values"
+        ]
+      }
+    ],
+    "declaration-block-no-shorthand-property-overrides": true,
+    "block-no-empty": true,
+    "color-no-invalid-hex": true,
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": [
+          "corner-shape"
+        ]
+      }
+    ],
+    "unit-no-unknown": true,
+    "no-invalid-double-slash-comments": true,
+    "no-descending-specificity": null,
+    "function-no-unknown": null
+  }
+}

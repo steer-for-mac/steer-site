@@ -1,0 +1,75 @@
+/* Design tokens: the only place a colour, surface, radius, shadow or measure is
+   defined. "What is --blue-text" should be one grep with one answer, not a hunt
+   through 400 lines of components.
+
+   Several values carry their measured contrast ratio in a comment. Re-measure
+   before changing one: the curb requires every text pair to clear AA against the
+   DARKEST surface it can land on (--bg-inset-2), not against --bg. */
+
+:root{
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "SF Mono", ui-monospace, SFMono-Regular, "Menlo", monospace; /* @kind font */
+  /* light — surface ramp widened 2026-07 so sunken/inset actually separate from bg
+     (the old #fbfbfd/#f5f5f7 steps read as one flat plane). */
+  --bg:#ffffff; --bg-sunken:#f6f7fa; --bg-inset:#eef0f4; --bg-inset-2:#e6e9ee;
+  /* --text-3 carries ALL small print (eyebrows, captions, table headers, price fine print).
+     Retuned with the wider surface ramp: #626269 measures 4.97:1 on the darkest light
+     surface --bg-inset-2 #e6e9ee (verified 2026-07 via contrast.mjs), 6.05 on white.
+     Re-check against the DARKEST light surface, not --bg, if you ever retune. */
+  --text:#1d1d1f; --text-2:#5c5c61; --text-3:#626269;
+  --sep:rgba(0,0,0,0.09); --sep-2:rgba(0,0,0,0.14); --hairline:rgba(0,0,0,0.08);
+  /* #007aff (Apple system blue) gives white-on-blue only 4.02:1 — fails AA on CTAs.
+     #0071eb is visually the same blue and clears 4.60. Don't restore #007aff. */
+  --blue:#0071eb; --blue-text:#0066cc; --blue-fill:rgba(0,122,255,0.10);
+  --green:#34c759; --red:#ff3b30; --yellow:#ff9f0a;
+  /* text-weight variants: the fills fail AA as small text, these clear 4.5:1 on white/inset */
+  --green-text:#177d33; --amber-text:#9a5b00;
+  --ps-cross:#1e9bf0; --ps-circle:#ff3b30; --ps-triangle:#34c759; --ps-square:#ff375f;
+  --pad-body:#e4e7ec; --pad-ink:#767c88; --pad-edge:rgba(0,0,0,0.24);
+  --frame:rgba(0,0,0,0.10);
+  --shadow-window:0 1px 1px rgba(0,0,0,.04),0 12px 40px -8px rgba(0,0,0,.16),0 2px 8px rgba(0,0,0,.06);
+  /* elevation ramp: resting card < large card < window/hero. The deepest tier
+     (--shadow-window) stays reserved for screenshots + the hero band. */
+  --card-bg:#ffffff;
+  --shadow-rest:0 1px 2px rgba(0,0,0,.04),0 10px 30px -16px rgba(6,22,60,.16);
+  --shadow-rest-lg:0 2px 4px rgba(0,0,0,.05),0 20px 50px -22px rgba(6,22,60,.22);
+  --shadow-hover:0 2px 4px rgba(0,0,0,.05),0 16px 40px -16px rgba(6,22,60,.24);
+  --card-hi:inset 0 1px 0 rgba(255,255,255,.7);
+  --maxw:1040px; --pad:24px;
+  --r-card:14px; --r-inset:10px; --r-btn:980px; --r-window:12px; /* window: screenshot frames only */
+}
+
+[data-theme="dark"]{
+  --bg:#161617; --bg-sunken:#1d1d20; --bg-inset:#242426; --bg-inset-2:#2c2c2e;
+  /* dark: #7c7c82 measured 3.36:1 on --bg-inset-2 -- fails AA. #949499 clears it (worst 4.62). */
+  --text:#f5f5f7; --text-2:#a8a8ad; --text-3:#949499;
+  --sep:rgba(255,255,255,0.10); --sep-2:rgba(255,255,255,0.16); --hairline:rgba(255,255,255,0.09);
+  /* dark: white-on-blue needs >=4.5; Apple's bright #0a84ff is only 3.65. #0b76dd is the
+     brightest blue that still clears it (4.52) while keeping button-vs-bg pop. */
+  --blue:#0b76dd; --blue-text:#4aa8ff; --blue-fill:rgba(10,132,255,0.16);
+  --green:#30d158; --red:#ff453a; --yellow:#ffd60a;
+  /* on the dark surface the bright fills already clear 4.5:1 as text */
+  --green-text:#30d158; --amber-text:#ffd60a;
+  --ps-cross:#3aa0f0; --ps-circle:#ff453a; --ps-triangle:#30d158; --ps-square:#ff4f7d;
+  --pad-body:#34353b; --pad-ink:#9aa0ac; --pad-edge:rgba(255,255,255,0.28);
+  --frame:rgba(255,255,255,0.12);
+  --shadow-window:0 1px 1px rgba(0,0,0,.4),0 20px 60px -12px rgba(0,0,0,.6),0 2px 10px rgba(0,0,0,.4);
+  /* dark elevation: raised = a lighter surface + a deeper, tighter shadow */
+  --card-bg:#202024;
+  --shadow-rest:0 1px 2px rgba(0,0,0,.45),0 12px 32px -16px rgba(0,0,0,.55);
+  --shadow-rest-lg:0 2px 4px rgba(0,0,0,.5),0 22px 54px -22px rgba(0,0,0,.65);
+  --shadow-hover:0 2px 4px rgba(0,0,0,.5),0 18px 44px -16px rgba(0,0,0,.7);
+  --card-hi:inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+:root[data-accent="violet"]{--blue:#6a3fd8;--blue-text:#6633cc;--blue-fill:rgba(122,82,232,0.12)}
+
+:root[data-accent="teal"]{--blue:#0a7561;--blue-text:#056a56;--blue-fill:rgba(63,224,192,0.15)}
+
+:root[data-accent="amber"]{--blue:#96550a;--blue-text:#8a5200;--blue-fill:rgba(255,180,84,0.17)}
+
+[data-theme="dark"][data-accent="violet"]{--blue:#754ce6;--blue-text:#b79cff;--blue-fill:rgba(122,82,232,0.22)}
+
+[data-theme="dark"][data-accent="teal"]{--blue:#0b7a66;--blue-text:#3fe0c0;--blue-fill:rgba(63,224,192,0.16)}
+
+[data-theme="dark"][data-accent="amber"]{--blue:#9a5b00;--blue-text:#ffb454;--blue-fill:rgba(255,180,84,0.16)}

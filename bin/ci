@@ -27,6 +27,8 @@ QUICK = "--quick" in sys.argv
 STEPS = [
     ("Build: index.html and home.css are current", ["bin/build", "--check"], False),
     ("A11y: structural invariants", ["bin/a11y-check"], False),
+    ("CSS: duplicate selectors and dead declarations",
+     ["npx", "--yes", "stylelint@16", "styles.css", "styles/base.css", "parts/*.css"], False),
     ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
     ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),
     ("Render: every band, 1440 and 375, no overflow", ["node", "scripts/shots.mjs", "--out", "scratch/shots/ci"], True),
