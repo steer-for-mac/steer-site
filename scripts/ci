@@ -66,31 +66,22 @@ STEPS = [
     # comments cite was only ever re-checked when somebody thought to.
     ("Contrast: every token pair clears AA on its darkest surface",
      ["make", "contrast"], False),
-    # The only step that operates the page rather than reading it. Every other
+    # The only steps that operate the page rather than reading it. Every other
     # gate here grades a document holding still, so none of them could see that
-    # the theme toggle had two states and no route back to "follow my Mac".
-    # It drives prefers-color-scheme through CDP, since "still follows the OS"
-    # is a claim about a live media-query change. Verified to bite: against the
-    # two-state toggle it replaced it scores 0/18, and deleting just the
-    # matchMedia listener drops it to 16/18.
+    # the theme toggle had two states and no route back to "follow my Mac", or
+    # that the picker's arrow keys were a hand-written handler.
     #
-    # `node scripts/theme-check.mjs`, NOT `make theme`, for the same reason the
-    # shots and purge steps below spell out their commands: that target carries a
-    # `build` prerequisite, and everything in this list runs in the thread pool
-    # against the single artifact built at line 31. Invoking it here fires a
-    # second eleventy concurrently with the gates reading _site/ -- home.css was
-    # observed at zero length mid-write. The Makefile keeps `theme: build` for
-    # the human entry point, where there is no build to race.
+    # `npx playwright test`, NOT `make e2e`: that target carries a `build`
+    # prerequisite, and everything in this list runs in the thread pool against
+    # the single artifact built at line 31. Invoking it would fire a second
+    # eleventy concurrently with the gates reading _site/ -- home.css was
+    # observed at zero length mid-write when this step was first added.
     #
-    # Not marked slow: --quick means "skip the slow RENDERING checks", and this
-    # measures 4.2s. Excluding it would leave --quick with no behavioural gate
-    # at all, which is the one thing this list was missing.
-    ("Theme: three states, storage, live OS following", ["node", "scripts/theme-check.mjs"], False),
-    # The page's other control, on the same argument and with the same "node,
-    # not make" rule: `make pad` carries a build prerequisite that would race
-    # this list. It presses ArrowRight, which is the only way to see that the
-    # browser really owns the keyboard now that the roving-focus handler is gone.
-    ("Pad picker: sync, arrow keys, deep links", ["node", "scripts/pad-check.mjs"], False),
+    # Not marked slow: --quick means "skip the slow RENDERING checks", and the
+    # whole suite is 1.7s. Excluding it would leave --quick with no behavioural
+    # gate at all, which is the one thing this list was missing.
+    ("Behaviour: theme toggle and controller picker (Playwright)",
+     ["npx", "playwright", "test"], False),
     ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
     ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),
     ("Render: every band, 1440 and 375, no overflow", ["node", "scripts/shots.mjs", "--out", "scratch/shots/ci"], True),

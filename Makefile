@@ -21,7 +21,7 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast theme pad shots dead lighthouse check
+.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast e2e shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z][a-z-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
@@ -71,7 +71,9 @@ lint-html: ## html-validate every page in _site/
 
 # eslint's own flat-config discovery walks the tree and reads eslint.config.js,
 # so there is no glob to keep in step here the way lint-css has one. Covers
-# home.js (browser), scripts/*.mjs and the two root .config.js files.
+# home.js (browser), scripts/*.mjs, tests/*.spec.js and the root .config.js
+# files -- and keeps covering whatever is added next, which is the point of not
+# writing the list down.
 lint-js: ## eslint home.js and every .mjs tool
 	npx eslint .
 
@@ -113,20 +115,13 @@ contrast: ## Every token colour pair clears AA on the darkest surface it can lan
 # thing when clicked, which is how a two-state theme toggle shipped on 14 pages
 # with no way back to "follow my Mac" and every gate green.
 #
-# It drives prefers-color-scheme through CDP rather than trusting a stub,
-# because "keeps following the OS" is a claim about a live media-query change
-# and nothing else can make one happen. Negative control before it was trusted:
-# run against HEAD's two-state toggle it scores 0/18, not 18/18.
-theme: build ## Drive the theme toggle: three states, storage, live OS following
-	node scripts/theme-check.mjs
-
-# Same argument as `theme` above, for the other control on the page. The picker
-# stopped being four role="tab" buttons with a hand-written arrow-key handler
-# and became two native radio groups; nothing else here can press ArrowRight to
-# find out whether the browser really took over. Both gates share the CDP
-# harness in scripts/lib/cdp.mjs.
-pad: build ## Drive the controller picker: sync, arrow keys, deep links
-	node scripts/pad-check.mjs
+# Playwright, after these were briefly ~410 lines of hand-rolled CDP driving in
+# scripts/. It brings the browser lifecycle, the runner, retrying assertions,
+# prefers-color-scheme emulation and tracing, all of which that code was
+# reimplementing worse. Config, including why the static server is `serve` and
+# not python3 -m http.server, is in playwright.config.js.
+e2e: build ## Playwright: drive the theme toggle and the controller picker
+	npx playwright test
 
 shots: build ## Render every band at 1440 and 375 into scratch/shots/
 	node scripts/shots.mjs

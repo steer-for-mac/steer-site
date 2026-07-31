@@ -60,4 +60,18 @@ export default defineConfig([
     files: ["scripts/**/*.mjs", "*.config.js"],
     languageOptions: { globals: globals.node, sourceType: "module" },
   },
+
+  // Playwright specs are the one place both environments are genuinely present
+  // in one file: the test body is a Node module, and the callbacks handed to
+  // page.evaluate() are serialised and run inside the browser, where `document`
+  // and `localStorage` are exactly right. eslint cannot tell the two apart --
+  // to it they are ordinary nested arrow functions -- so declaring both is the
+  // honest description of the file rather than a suppression.
+  {
+    files: ["tests/**/*.spec.js"],
+    languageOptions: {
+      globals: { ...globals.node, ...globals.browser },
+      sourceType: "module",
+    },
+  },
 ]);

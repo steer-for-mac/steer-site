@@ -101,6 +101,7 @@ work. Add a task by adding a target with a `##` comment, and it shows up in
     make lint-py     ruff over every Python gate
     make a11y        axe-core, WCAG 2 A/AA, every page in _site/
     make contrast    every token colour pair clears AA on its darkest surface
+    make e2e         Playwright: drive the theme toggle and the controller picker
     make shots       render every band at 1440 and 375 into scratch/shots/
 
 `scripts/` holds all the tooling, whatever language it is in: `scripts/ci` is
@@ -111,8 +112,25 @@ two directories.
 Tooling is adopted, not hand-rolled: Eleventy assembles, Lightning CSS bundles,
 stylelint / eslint / ruff lint the three languages, PurgeCSS answers
 reachability, axe-core grades accessibility, colorjs.io does the contrast maths,
-`scripts/a11y-check` and `scripts/lighthouse` came from `../news-digest`. Three
-attempts at hand-rolling CSS edits broke the page; see `docs/lessons/`.
+**Playwright drives the page**, `scripts/a11y-check` and `scripts/lighthouse`
+came from `../news-digest`. Three attempts at hand-rolling CSS edits broke the
+page; see `docs/lessons/`.
+
+**`tests/*.spec.js` is Playwright and is the only place a control gets pressed.**
+Everything else here grades a document holding still, which is how a two-state
+theme toggle shipped on all 14 pages with every gate green. Those specs briefly
+existed as ~410 lines of hand-rolled CDP under `scripts/`, which was
+reimplementing browser lifecycle, a runner, retrying assertions,
+`prefers-color-scheme` emulation and screenshot diffing — all of it worse.
+`playwright.config.js` records the two decisions worth knowing: Chromium only
+(these assert platform behaviour, not rendering), and `serve` rather than
+`python3 -m http.server`, whose listen backlog of 5 dropped `home.js` under
+parallel workers and turned a server limit into a wrong assertion about the page.
+
+`scripts/shots.mjs` and `scripts/cssdiff.mjs` still drive Chrome themselves and
+have not moved over. Both select the pad by clicking the picker, and both broke
+silently when its markup changed because they guarded the lookup with `if (t)`;
+they throw now. Move them when something needs changing in them.
 
 Each linter is its recommended preset and nothing else selected on top, so the
 configs hold environment facts and earned exceptions rather than taste. Two of
