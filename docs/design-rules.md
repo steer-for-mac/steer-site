@@ -6,7 +6,8 @@ drift toward the average website. This site is not average on purpose, and the
 reasons are not obvious from the markup. If a change violates a non-negotiable
 below, it is wrong even if it looks fine in isolation.
 
-The design thesis is already recorded in the top comment of `styles.css` and
+The design thesis is already recorded in the top comments of `styles/tokens.css`
+and `styles/shared.css`, and
 in the annotations throughout `index.html`. This file is the readable index of
 those decisions.
 
@@ -36,7 +37,7 @@ should never try to be one.
 - **Contrast clears WCAG AA.** Every text-on-surface pair must clear 4.5:1 for
   small text, measured against the *darkest* surface it can land on
   (`--bg-inset-2`), not against `--bg`. The measured ratios are recorded inline
-  in `styles.css`; if you retune a colour, re-measure and update the comment.
+  in `styles/tokens.css`; if you retune a colour, re-measure and update the comment.
   All small print rides `--text-3`.
 - **Radius tiers are fixed:** 14 card / 10 inset / 980 pill / 12 window
   (`--r-card`, `--r-inset`, `--r-btn`, `--r-window`). The window tier is for
@@ -180,7 +181,7 @@ A simplifier pass will be tempted to flatten these. They are the point.
 
 - The hand-built per-pad hero SVG and the looping input demos.
 - The light-bar / accent-picker interactivity in the Feel band.
-- The AA-contrast comments in `styles.css`. They are the audit trail, not
+- The AA-contrast comments in `styles/tokens.css`. They are the audit trail, not
   clutter. Update the math if you retune; never delete it.
 - The use-case hierarchy: filled lead cards win the glance, the outline pills
   are recognition-only. Keep the pills visually lighter.
@@ -332,7 +333,9 @@ Two things that will waste your time otherwise:
     accent-picker swatches are legitimately violet/teal/amber) and **sub-8px
     radii** (the hand-built SVG vignettes). The script's comments record why.
 - Any new colour pair clears AA against the darkest surface it can sit on
-  (the `--blue`/text math still lives with `contrast.mjs`, not in this checker).
+  (the `--blue`/text math has no checker: `contrast.mjs` is cited by
+  `styles/tokens.css` but does not exist in this repo, so every ratio recorded
+  in those comments was measured by a tool nobody can re-run).
 - The page renders with JavaScript disabled and under `prefers-reduced-motion`
   (static frames are present, nothing disappears).
 - No horizontal overflow at 375, 768, and 1440 px.

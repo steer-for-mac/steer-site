@@ -6,7 +6,7 @@ rather than zero, because a marketing site legitimately ships a few rules for
 states a static scan cannot see, and because auto-stripping CSS on a page whose
 whole value is how it looks is not a trade worth making silently.
 
-    scripts/purge-check            fail over 15% removable
+    scripts/purge-check            fail over 2% removable
     scripts/purge-check --max 5
 """
 import json

@@ -1,13 +1,17 @@
 # Handover, 2026-07-30
 
-Long redesign session. Read `CLAUDE.md` first (it says which three files are
-generated and names two traps that cost hours), then this.
+Two sessions. The design half is below and stands. The infrastructure half was
+rewritten in the second session and **everything this doc originally said about
+the build was made false by it** — corrected in place rather than left to
+mislead, because that is exactly the failure the second session spent the day
+removing. Read `CLAUDE.md` first, then this.
 
 ## Where the page is
 
 6,960px, 7.7 screens, from 8,546 at the start of the day. `make ci` is green:
-build freshness, a11y structure, stylelint, curb-check + self-test, a 1440/375
-render with an overflow gate, and PurgeCSS reachability.
+a11y structure, stylelint, curb-check + self-test, a 1440/375 render with an
+overflow gate, and PurgeCSS reachability. Build freshness is no longer checked
+because the build output is no longer committed.
 
 Rebuilt today: `#uses` (four use cases scannable in one row again), `#feel`,
 `#trust` (1,340 to 1,119, with `import-review.png` now behind its strongest
@@ -15,11 +19,18 @@ claim), `#pricing` (1,087 to 708), and the capabilities signal chain, which now
 animates a press from controller to Steer to Mac. `#reach` and `#requirements`
 were cut; requirements content moved to `support.html`.
 
-Infrastructure is new and is the most-verified work here: `parts/*.html` +
-`styles/` assembled by `bin/build`, Lightning CSS bundling with real `@layer`,
-a `package.json`, Docker on the production hostname, and a GitHub Actions
-deploy. The build round-trip is byte-identical and the whole CSS migration was
-proven pixel-identical across 16 frames.
+Infrastructure, as of the second session and superseding what this paragraph
+used to say: Eleventy assembles all 14 pages from `_includes/{bands,chrome,
+layouts}` into `_site/`, Lightning CSS bundles `site.css` and `home.css` with
+`--minify --targets`, the `Makefile` is the single place a task is defined, and
+`scripts/` holds every gate and instrument. `bin/build`, `parts/` and `bin/`
+are gone. Output is no longer committed.
+
+Two live bugs were found and fixed on the way, both invisible to every gate:
+Lightning CSS was emitting Media Queries Level 4 range syntax that Safari 16.3
+cannot parse, silently disabling the responsive layout, and the production
+build was overwritten by a dev build so 111 comments citing `docs/` paths and
+commit hashes were shipping.
 
 ## What Sean still thinks is wrong
 
@@ -65,10 +76,19 @@ pad art, #19 private-APIs row, #20 chain box and arrows.
 Content: #11 copy 1,327 words toward ~900, #25 `llms.txt` is stale and describes
 the pre-redesign page.
 
-Code health: #10 unreachable CSS and the orphaned `.sec-snug` tier, #22 band
-rules still scattered through `styles/base.css`, #23 inline styles (15 in
-`parts/`, ~80 more across sub-pages, plus `<style>` blocks in seven files, none
-of which stylelint or PurgeCSS can see).
+Code health: #10, #22 and the `.sec-snug` tier are **done** — `base.css` no
+longer exists and PurgeCSS reports zero rejected selectors on both sheets. #23
+is corrected and still open: the real figure is 98 inline styles, not the ~95
+guessed here, and it is now blocking something. html-validate is absent from CI
+entirely, because it used to lint band fragments against a config that switched
+eight rules off (fragments are not documents), and those fragments are Nunjucks
+now. Pointing it at `_site/**/*.html` restores validation *and* upgrades it to
+whole documents, which is worth doing the moment the 98 are gone.
+
+Also open, discovered in the second session: `contrast.mjs` does not exist.
+`styles/tokens.css` cites it for every AA ratio it records, so those
+measurements were taken with a tool nobody can re-run, and no new colour can be
+verified against the curb until it is rebuilt. It is about fifteen lines.
 
 Blocked: #24 re-shoot every screenshot per controller. This gates real product
 imagery anywhere in the flow, because every capture is PlayStation-labelled and
@@ -77,13 +97,24 @@ and is already used.
 
 ## How to work here
 
-Delegation works well now: one agent per band, given `parts/<band>.html` and
-`parts/<band>.css` and nothing else. Give it the CSS index for its band up
-front, because `styles/base.css` is still 98KB with band rules scattered from
-line 44 to 1594, and an agent will otherwise spend real tokens finding them.
+Delegation works well: one agent per band, given `_includes/bands/<band>.html`
+and `styles/bands/<band>.css` and nothing else. The pair is derivable — swap
+`_includes` for `styles` and `.html` for `.css` — so no index is needed. The
+sentence this replaces sent agents to a file that no longer exists, which is
+why the layout is now a convention rather than a note in a doc.
 
-Verify by rendering. Every claim I shipped without a render this session turned
-out to be wrong, and two of them were "the animation works".
+Verify by rendering, and verify the instrument too. Every claim shipped without
+a render turned out to be wrong, and separately, three gates were found passing
+while checking nothing: a stray `_probe.html` full of CSS text sat in PurgeCSS's
+content glob so every selector in it read as used; `curb-check` named a deleted
+file behind an `existsSync` guard and skipped 452 lines in silence; and the
+stylelint invocation was a hand-written list that stopped covering new sheets.
+Two of those were introduced the same day by someone fixing the other one.
+
+Note for pixel diffs: `capabilities-375.png` and `feel-375.png` are both
+bistable. Each produces two distinct hashes from repeated renders of an
+unchanged tree, so neither is evidence on its own. Render twice before
+concluding anything.
 
 ## Related
 

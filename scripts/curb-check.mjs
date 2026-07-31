@@ -4,8 +4,9 @@
 // cliches, and emoji" line, plus the value-drift rules (web fonts, forbidden
 // hexes, invented radii, bootstrap shadow, AI-purple hues).
 //
-// Zero dependencies on purpose: this site has no build step and no package.json.
-// Run it the way contrast.mjs is run — straight from node:
+// Zero dependencies on purpose. That predates the build: there is an Eleventy
+// build and a package.json now, and this still runs straight from node so a
+// broken toolchain cannot take the design gate down with it.
 //
 //     node scripts/curb-check.mjs            # scan the committed pages + CSS
 //     node scripts/curb-check.mjs --self-test  # prove every detector still bites

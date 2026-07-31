@@ -144,7 +144,7 @@
   // --led stays on .chero (it drives the hero bar) and the pick still
   // recolours the global accent: every emissive/interactive element (eyebrow
   // dots, links, focus rings, CTAs) crossfades to AA-safe variants of the
-  // chosen colour (see styles.css data-accent blocks). Default stays blue.
+  // chosen colour (see the data-accent blocks in styles/tokens.css). Default stays blue.
   // Idle, the bar auto-cycles a slow rainbow (.lb-auto). Locking a swatch
   // stops the drift and re-themes the page accent; the Auto swatch (or
   // re-clicking the active colour) hands the bar back to the rainbow.
