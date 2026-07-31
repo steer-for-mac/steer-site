@@ -7,7 +7,9 @@
     "strict": true,
     "noEmit": false,
     "removeComments": false,
+    // rootDir, or tsc infers it from the input and emits dist/src/theme.js.
+    "rootDir": "src",
     "outDir": "dist"
   },
-  "files": ["theme.ts"]
+  "files": ["src/theme.ts"]
 }

@@ -1,19 +1,8 @@
-// JS lint. Until now this repo linted CSS (stylelint) and markup (html-validate)
-// and left 17.9KB of home.js plus six .mjs gates completely unread by a tool.
-//
-// `js.configs.recommended` and nothing added on top, for the same reason
-// stylelint-config-recommended is the CSS baseline: it turns on the rules that
-// catch *errors* rather than whatever a person thought to list, and it carries
-// no style opinions, so it cannot start a formatting argument with a codebase
-// that has its own dense house style. Everything below is either an environment
-// declaration (which globals exist) or a rule the preset gets wrong *here*,
-// with the reason. No taste rules, deliberately: a lint config is a bad place
-// to hold an opinion nobody has asked for.
-//
-// Two environments, and the split matters: home.js runs in a browser as a
-// classic script (six IIFEs, no module scope), everything else is an ES module
-// on Node. Lint them as one and every `document` is undefined in the scripts or
-// every `process` is undefined in the page.
+// `js.configs.recommended` and nothing on top, for the reason
+// stylelint-config-recommended is the CSS baseline: it catches *errors* rather
+// than whatever a person thought to list, and holds no style opinion to argue
+// with a dense house style. Everything below is an environment declaration or a
+// rule the preset gets wrong here. No taste rules, deliberately.
 
 import js from "@eslint/js";
 import globals from "globals";
@@ -30,22 +19,14 @@ export default defineConfig([
     files: ["**/*.js", "**/*.mjs"],
     extends: [js.configs.recommended],
     rules: {
-      // An empty catch here is the intended path, not an oversight, at all
-      // thirteen sites: localStorage throws in private browsing (the theme and
-      // accent writes are best-effort by design, and the page must keep working
-      // without them), and the CDP teardowns kill a Chrome or close a socket
-      // that has usually exited already. The alternative to switching this off
-      // is thirteen `catch { /* intentional */ }` comments saying the same
-      // thing, which is noise rather than signal.
+      // An empty catch is the intended path here: localStorage throws in
+      // private browsing and the theme and accent writes are best-effort by
+      // design, so the page has to keep working without them.
       "no-empty": ["error", { allowEmptyCatch: true }],
-      // curb-check's emoji detector is a character class holding VS16 and ZWJ
-      // as members in their own right, beside the astral ranges. Written as
-      // escapes that is unambiguous, but as adjacent members they read as the
-      // grapheme clusters this rule exists to catch, so it fires on the
-      // detector however the members are ordered (verified: both orderings
-      // report, and the class is set-identical either way over all 1,112,064
-      // code points). `allowEscape` is the rule's own answer for escapes and it
-      // keeps the teeth: verified that a literal combined character still errors.
+      // curb-check's emoji detector holds VS16 and ZWJ as members beside the
+      // astral ranges, so as adjacent members they read as the grapheme
+      // clusters this rule catches. allowEscape is the rule's own answer and
+      // keeps the teeth: a literal combined character still errors.
       "no-misleading-character-class": ["error", { allowEscape: true }],
     },
   },
@@ -54,7 +35,7 @@ export default defineConfig([
   // `sourceType: "script"` is what it actually is, and declaring it is what
   // stops `no-undef` reporting every browser global in the file.
   {
-    files: ["home.js", "theme.js", "_includes/scripts/*.js"],
+    files: ["src/home.js", "src/theme.js", "src/_includes/scripts/*.js"],
     languageOptions: { globals: globals.browser, sourceType: "script" },
   },
 

@@ -1,19 +1,8 @@
-/* Eleventy config. Replaces bin/build, which assembled one page out of sixteen.
+/* Eleventy config.
  *
- *   npx eleventy              build to dist/
- *   npx eleventy --serve      dev server with live reload
- *
- * Three things Eleventy does not do are kept here, because losing any of them
- * is silent rather than loud:
- *
- *   1. styles/home.entry.css is generated from a glob of styles/bands/*.css,
- *      because Lightning CSS --bundle takes no glob and @import takes no glob
- *      either. Without it a new band sheet is simply never imported and nobody
- *      is told.
- *   2. Lightning CSS runs with --minify AND --targets. The targets are a bug
- *      fix, not tuning; the reasoning is at the call site below.
- *   3. --prod comment stripping, now a transform.
- */
+ * Three things Eleventy does not do are done here because losing any of them
+ * is silent rather than loud: the home.entry.css glob, Lightning CSS targets,
+ * and comment stripping. Each is explained at its own call site. */
 import { execFileSync } from "node:child_process";
 import { minify } from "html-minifier-next";
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
@@ -23,14 +12,9 @@ import { fileURLToPath } from "node:url";
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(ROOT, "dist");
 
-/* home.entry.css lists the band sheets, because @import takes no glob.
- *
- * Generated, so adding styles/bands/<band>.css is the only step. Nobody has to
- * remember to register it, which is the kind of bookkeeping that rots.
- *
- * The two homepage sheets above the bands are named rather than globbed: the
- * layer each one lands in is a decision, not a filename convention, and
- * styles/ also holds the entry files themselves and the shared sheet. */
+/* Generated because @import takes no glob, so adding styles/bands/<band>.css is
+   the only step. The two sheets above the bands are named rather than globbed:
+   the layer each lands in is a decision, not a filename convention. */
 function writeHomeEntry() {
   const bands = readdirSync(resolve(ROOT, "styles/bands"))
     .filter((f) => f.endsWith(".css"))
@@ -47,23 +31,12 @@ function writeHomeEntry() {
     "utf8");
 }
 
-/* A page's sheet is at the same path in the other tree, exactly like a band's.
- *
- * Swap the directory and the extension: vs.html is styled by
- * styles/pages/vs.css, which is bundled to dist/vs.css and linked by the
- * layout for that page and no other. Derivable by rule, so there is no map to
- * go stale and no front matter to remember.
- *
- * This exists so styles/shared.css can stay shared. It ships on all 14 pages,
- * and it was carrying rules one page used, while five pages carried a <style>
- * block in their front matter instead. Both are the same mistake in opposite
- * directions.
- *
- * Page sheets are UNLAYERED on purpose. They replace <style> blocks that sat in
- * <head> after the site.css link, i.e. unlayered, which outranks every layer in
- * site.css whatever the specificity. Putting them in a layer would quietly hand
- * some of those rules back to shared.css. Nothing else on the site is unlayered:
- * site.entry.css and home.entry.css import every sheet into a layer. */
+/* A page's sheet is at the same path in the other tree, like a band's: swap the
+   directory and the extension and vs.html gives styles/pages/vs.css.
+   UNLAYERED on purpose. These replace <style> blocks that sat after the
+   site.css link, which outranks every layer in it whatever the specificity;
+   putting them in a layer hands those rules back to shared.css. Nothing else
+   on the site is unlayered. */
 const pageSheets = () => (existsSync(resolve(ROOT, "styles/pages"))
   ? readdirSync(resolve(ROOT, "styles/pages"))
     .filter((f) => f.endsWith(".css")).map((f) => f.replace(/\.css$/, "")).sort()
@@ -96,23 +69,11 @@ function compileBrowserTs() {
 }
 
 function bundle(entry, out) {
-  // --minify is safe to run always: both linters read the hand-written sheets
-  // under styles/, never the generated ones, so compressed representations
-  // (rgba(0,122,255,.1) ->
-  // #007aff1a) never reach the curb's hex detector.
-  //
-  // --targets is not optional here, it is a bug fix. With no targets set,
-  // Lightning CSS rewrites every breakpoint into Media Queries Level 4 range
-  // syntax that nobody wrote: `@media (width<=899px)` in place of max-width.
-  // That is Safari 16.4+, and on anything older the query does not parse, so
-  // the whole responsive layout silently stops applying on a site whose
-  // audience is macOS. 28 of them were shipping. Targets lower all 28 back for
-  // 341 bytes.
-  //
-  // safari 15 is the floor because it is what the range syntax costs us;
-  // nothing else in the sheet downlevels at that target. color-mix() taking
-  // var() cannot resolve statically and is left alone, @layer is untouched,
-  // and corner-shape:squircle survives as the progressive enhancement it is.
+  // --targets is a bug fix, not tuning. Unset, Lightning CSS rewrites every
+  // breakpoint into Media Queries Level 4 range syntax (`@media (width<=899px)`)
+  // which is Safari 16.4+, so on anything older the whole responsive layout
+  // silently stops applying. safari 15 is the floor because that is what the
+  // range syntax costs; nothing else in the sheet downlevels there.
   // Diff the computed styles before and after if you move it.
   execFileSync(resolve(ROOT, "node_modules/.bin/lightningcss"),
     ["--bundle", "--minify", "--targets", "safari >= 15, chrome >= 100, firefox >= 100",
@@ -144,48 +105,21 @@ const MINIFY = {
 };
 
 export default function (eleventyConfig) {
-  /* Inline SVG lives in _includes/art/, not in the band markup, and is pasted
-   * back by Nunjucks' own include:
-   *
-   *   {% include "art/hero-pad-ps.svg" %}
-   *
-   * hero.html was 46KB, 39KB of it pad geometry, so an agent sent to change one
-   * line of copy read 46KB to find it. It is 7KB now. The output is unchanged
-   * on purpose: this is a source-readability move, not a page-weight one.
-   *
-   * NO PLUGIN. eleventy-plugin-svg-contents does this and is in Eleventy's
-   * community list, so it was adopted first — then measured. It last published
-   * in 2022, pulls 31 packages for cheerio, and round-trips the file through a
-   * parse and re-serialize instead of pasting bytes, which silently rewrapped a
-   * <path> in three of the pad files. `{% include %}` is byte-identical to it,
-   * ships with the template engine, and cannot reformat anything. Verified by
-   * building both ways and diffing the output.
-   *
-   * WHY _includes/ AND NOT assets/svg/. These files are never served; the build
-   * pastes them into the page. assets/svg/ holds pad-art-{mf,ps,sw,xb}.svg,
-   * which ARE served and are fetched at runtime by home.js rewriting
-   * use.padart's href. One directory holding both is how the next person
-   * deletes the wrong one. _includes/ already means "things the build
-   * assembles", which is exactly what these are.
-   *
-   * NAMED <band>-<thing>.svg, like everything else here: a band's files are
-   * derivable from its name, so a delegated agent can be handed them without a
-   * map. capabilities-face-cross.svg and hero-face-cross.svg are byte-identical
-   * and stay separate for that reason.
-   *
-   * Nunjucks renders what it includes, so an SVG containing {{ or {% would be
-   * interpreted. None does, and none should: these are art files. _includes/scripts/*.js is pasted the same way and is NOT art -- `{{` is plausible in JavaScript, and while a malformed one fails the build loudly, a well-formed `{{ name }}` renders to empty string and deletes code silently. */
+  /* NO PLUGIN for the inline SVG in src/_includes/art/: eleventy-plugin-svg-
+     contents was adopted first, then measured. It last published in 2022, pulls
+     31 packages for cheerio, and re-serializes instead of pasting bytes, which
+     rewrapped a <path> in three pad files. `{% include %}` is byte-identical.
+     Nunjucks renders what it includes, so a well-formed `{{ name }}` in one of
+     these files renders to empty string and deletes code silently. */
 
-  eleventyConfig.addPassthroughCopy("assets");
-  eleventyConfig.addPassthroughCopy("screenshots");
-  eleventyConfig.addPassthroughCopy("home.js");
-  eleventyConfig.addPassthroughCopy("apple-touch-icon.png");
-  eleventyConfig.addPassthroughCopy("icon.png");
-  eleventyConfig.addPassthroughCopy("CNAME");
-  eleventyConfig.addPassthroughCopy("robots.txt");
-  eleventyConfig.addPassthroughCopy("llms.txt");
-  eleventyConfig.addPassthroughCopy("sitemap.xml");
-  eleventyConfig.addPassthroughCopy("appcast.xml");
+  /* src/public/ lands at the output root, so a file that has to ship under its
+     own name is added by putting it there, not by editing this list. The list
+     it replaces named ten files, and a root asset that was not on it -- probed
+     with probe-asset.png -- was dropped without a word. */
+  eleventyConfig.addPassthroughCopy("src/assets");
+  eleventyConfig.addPassthroughCopy("src/screenshots");
+  eleventyConfig.addPassthroughCopy("src/home.js");
+  eleventyConfig.addPassthroughCopy({ "src/public": "/" });
 
   // _includes/ is watched for free because it is dir.includes; styles/ is not, so
   // under --serve a save to tokens.css did nothing at all and read as a stale
@@ -236,13 +170,15 @@ export default function (eleventyConfig) {
 
   return {
     dir: {
-      input: ".",
+      /* src/, not ".": with the repo root as input every file in it was a
+         potential page, so .eleventyignore had to name the prose and
+         addPassthroughCopy had to name the assets. Both were lists nobody
+         updates. Eleventy requires includes and data to sit inside input. */
+      input: "src",
       output: "dist",
-      /* _includes/{bands,chrome,layouts}, mirrored by styles/{bands}. A band's
-         two files are at the same path in each tree: swap _includes -> styles
-         and .html -> .css and you have the sheet. Derivable by rule, so a
-         delegated agent can still be handed exactly two files without anyone
-         maintaining a map of where a band's CSS lives — and maps go stale. */
+      /* src/_includes/{bands,chrome,layouts}, mirrored by styles/{bands}. A
+         band's two files are at the same path in each tree: swap
+         src/_includes -> styles and .html -> .css and you have the sheet. */
       includes: "_includes",
       layouts: "_includes",
       data: "_data",

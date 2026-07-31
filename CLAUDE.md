@@ -6,7 +6,7 @@ deploys. `make help` lists every task; `make ci` is the gate.
 
 `docs/design-rules.md` binds any change to layout, styling or copy.
 
-`_includes/art/` is pasted in at build time. `assets/svg/` is served and fetched
+`src/_includes/art/` is pasted in at build time. `src/assets/svg/` is served and fetched
 at runtime. They are not interchangeable.
 
 One band per file is what lets several agents work at once: give an agent its

@@ -205,7 +205,7 @@ card that spans, a rule that draws the structure, a measure that stops at 64
 characters. Prose added to fill space puts the page straight back over the
 budget the cut bought.
 
-- **Screenshots are not available as that ink yet.** Every capture in `assets/`
+- **Screenshots are not available as that ink yet.** Every capture in `src/assets/`
   is PlayStation-shot, and the page re-labels itself per pad, so an in-flow pane
   shows an Xbox owner the wrong glyphs. Gating one back to a single pad is what
   left the Feel band empty to begin with. In-flow screenshots wait for the
@@ -272,7 +272,7 @@ prefix.
 
 ## The page is assembled, not authored
 
-Every page is generated into `dist/`. Edit `_includes/bands/*.html` (or the
+Every page is generated into `dist/`. Edit `src/_includes/bands/*.html` (or the
 page's own `.html`, which is now front matter plus its `<main>`) and run `make
 build`. It
 was one 92KB file, which meant every edit was surgery on a shared blob and two
@@ -284,7 +284,7 @@ theme script and 31 meta tags, and the theme script had already drifted into two
 variants. Extending a hand-rolled includer to cover that meant writing front
 matter, layouts and slots, which is a template engine, and this repo's own
 history records hand-rolling as the failure mode. A delegated agent is still
-handed exactly two files, and it can work out which two: `_includes/bands/
+handed exactly two files, and it can work out which two: `src/_includes/bands/
 <band>.html` and `styles/bands/<band>.css` are the same path in two trees, so
 the pair is derivable rather than looked up.
 
@@ -295,7 +295,7 @@ Two things that will waste your time otherwise:
   screenshots) and means no headless check can see motion. To test a loop, remove
   the class first: `document.documentElement.classList.remove('still')`.
 - **Serving matters, and there is one way to do it.** The SVG symbols in
-  `assets/svg/` come in through `<use href="…svg#s">`, which browsers refuse over
+  `src/assets/svg/` come in through `<use href="…svg#s">`, which browsers refuse over
   `file://`. Use `make up`: nginx in Docker, on the production hostname, with the
   same `try_files` behaviour Pages gives you. A plain static server is not an
   equivalent fallback, which is why `bin/serve` was removed: it had no
