@@ -13,10 +13,10 @@ working tree to keep in step, and no `--check` gate any more.
 | edit this | to change |
 |---|---|
 | `<page>.html` | one sub-page: front matter (title, meta, extra head) plus its `<main>` |
-| `parts/base.njk` | the document every page shares: head, meta, theme init, body frame |
-| `parts/nav.html`, `parts/footer.html` | site chrome, on all 14 chrome pages at once |
-| `parts/<band>.html` | markup of one homepage band |
-| `parts/<band>.css` | styling of one homepage band |
+| `_includes/layouts/base.njk` | the document every page shares: head, meta, theme init, body frame |
+| `_includes/chrome/nav.html`, `_includes/chrome/footer.html` | site chrome, on all 14 chrome pages at once |
+| `_includes/bands/<band>.html` | markup of one homepage band |
+| `styles/bands/<band>.css` | styling of one homepage band |
 | `styles/tokens.css` | any colour, surface, radius, shadow, measure |
 | `styles/primitives.css` | the SVG stroke language and other cross-page primitives |
 | `styles/grammar.css` | the `.d-*` design system every band speaks |
@@ -27,7 +27,7 @@ Then `make build`. Cascade order is `@layer tokens, base, components, bands`,
 declared in the two entry files under `styles/`, so a band rule beats a shared
 one without needing to out-specify it. Each sheet above sits in exactly one
 layer: tokens, primitives in `base`, grammar and shared in `components`,
-`parts/*.css` in `bands`.
+`styles/bands/*.css` in `bands`.
 
 **Moving a rule between those files moves it between layers, and layer order
 beats specificity outright.** A rule that drops to `base` now loses to anything
@@ -36,17 +36,23 @@ Nothing lints this. The headers of `primitives.css` and `grammar.css` name the
 three rules that had to stay where they are for exactly this reason.
 
 One band per file is what lets several people or agents work at once. Give a
-delegated agent its two files; keep it out of `styles/grammar.css`. That is why
-`dir.includes` points at `parts` rather than `_includes`.
+delegated agent its two files; keep it out of `styles/grammar.css`.
+
+**A band's two files are at the same path in each tree.** Swap `_includes` for
+`styles` and `.html` for `.css`: `_includes/bands/feel.html` is styled by
+`styles/bands/feel.css`. Derivable by rule, so nobody has to be told, and there
+is no map to go stale. Not every band has a sheet (`uses` has none, and neither
+does the chrome); an absent file means the band has no CSS of its own, not that
+it is somewhere else.
 
 ## Three things Eleventy does not do, kept in `eleventy.config.js`
 
 Each fails silently rather than loudly if it goes missing, so read the comments
 at the call sites before touching them.
 
-- `styles/home.entry.css` is **generated** from a glob of `parts/*.css`, because
-  neither `@import` nor Lightning CSS `--bundle` takes a glob. Lose it and a new
-  band sheet is simply never imported.
+- `styles/home.entry.css` is **generated** from a glob of `styles/bands/*.css`,
+  because neither `@import` nor Lightning CSS `--bundle` takes a glob. Lose it
+  and a new band sheet is simply never imported.
 - Lightning CSS runs with `--minify` **and** `--targets`. The targets are a bug
   fix: without them it emits Media Queries Level 4 range syntax that Safari 16.3
   cannot parse, and the responsive layout stops applying with no error.
@@ -55,19 +61,30 @@ at the call sites before touching them.
 
 ## Commands
 
+**Every task is defined in the `Makefile`, once.** The header there says why.
+`package.json` has two scripts and both forward to `make`; nothing else defines
+work. Add a task by adding a target with a `##` comment, and it shows up in
+`make help`.
+
     make help        every target
     make build       assemble the site into _site/
     make build-prod  same, with dev comments stripped
     make up          build, then nginx on https://steer.seanfloyd.dev.local (and :8391)
     make ci          build, then lint and render in parallel
+    make lint-css    stylelint every hand-written sheet
     make shots       render every band at 1440 and 375 into scratch/shots/
 
-Tooling is adopted, not hand-rolled: Eleventy assembles, Lightning CSS bundles,
-stylelint lints, PurgeCSS answers reachability, `bin/a11y-check` and
-`bin/lighthouse` came from `../news-digest`. Three attempts at hand-rolling CSS
-edits broke the page; see `docs/lessons/`.
+`scripts/` holds all the tooling, whatever language it is in: `scripts/ci` is
+the parallel runner `make ci` invokes, and the Python gates sit beside the Node
+ones. `bin/` is gone; splitting by language put two halves of one toolchain in
+two directories.
 
-html-validate is not in CI. It used to lint `parts/*.html` against a config that
+Tooling is adopted, not hand-rolled: Eleventy assembles, Lightning CSS bundles,
+stylelint lints, PurgeCSS answers reachability, `scripts/a11y-check` and
+`scripts/lighthouse` came from `../news-digest`. Three attempts at hand-rolling
+CSS edits broke the page; see `docs/lessons/`.
+
+html-validate is not in CI. It used to lint the band fragments against a config that
 switched off eight rules because fragments are not documents; the fragments are
 Nunjucks now. Pointing it at `_site/**/*.html` is the right replacement and is
 tracked separately: `npx html-validate '_site/*.html'` reports 103 pre-existing

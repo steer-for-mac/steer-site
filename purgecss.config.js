@@ -9,13 +9,14 @@
 //   npx purgecss --config purgecss.config.js --output . # rewrite (review the diff)
 export default {
   // Shipped pages only, which since the Eleventy migration means the build
-  // output and nothing else. parts/*.html was in here and was the same mistake
-  // _probe.html was: a build input, not a page. Its content is already inside
-  // index.html, so listing it could only ever keep a band alive after the band
-  // stopped being included. Measured: drop a band from index.src.html and the
-  // gate still passed at 2.5% with parts/ in the glob, 4.5% without it.
+  // output and nothing else. The band fragments were in here and were the same
+  // mistake _probe.html was: a build input, not a page. Their content is already
+  // inside index.html, so listing them could only ever keep a band alive after
+  // the band stopped being included. Measured: drop a band from index.src.html
+  // and the gate still passed at 2.5% with the fragments in the glob, 4.5%
+  // without them.
   content: ["_site/*.html", "_site/home.js"],
-  css: ["_site/home.css", "_site/styles.css"],
+  css: ["_site/home.css", "_site/site.css"],
   safelist: {
     standard: [
       // per-pad gates. pd-* IS written literally in the markup, so it is not
@@ -31,7 +32,7 @@ export default {
       // unreachable and would strip the site's whole keyboard focus ring.
       // `.btn:focus-visible` survives on its class; `:focus-visible` alone does not.
       /^:focus-visible$/,
-      // parts/hero.css carries 42 rules under html[data-theme="lightoff"], the
+      // styles/bands/hero.css carries 42 rules under html[data-theme="lightoff"], the
       // "daylight studio" hero treatment: a designed, commented light-mode
       // variant of the pad plate. Nothing sets that value today — no markup, no
       // home.js — so PurgeCSS is right that it is unreachable, and it is kept
@@ -47,7 +48,7 @@ export default {
       // Do NOT read the trigger as "when data-theme gets wired up": it already
       // is, home.js and the head script both set light/dark. Only the lightoff
       // value is unset. Delete this entry when either something sets lightoff,
-      // or the daylight studio is dropped from parts/hero.css. It is the
+      // or the daylight studio is dropped from styles/bands/hero.css. It is the
       // largest carve-out in this file by far, worth 6.3 points of home.css on
       // its own, so it is also the first thing to re-examine if the threshold
       // below ever feels tight.

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Run every check, in parallel, and fail loudly.
 
-    bin/ci            all checks
-    bin/ci --quick    skip the slow rendering checks
+    make ci           all checks (the documented entry point)
+    scripts/ci        the same, without the container `make ci` brings up
+    scripts/ci --quick    skip the slow rendering checks
 
 Same shape as ../seanfloyd.dev/bin/ci and ../news-digest: steps run
 concurrently, output is printed per step in a stable order, exit is non-zero if
@@ -20,9 +21,6 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-def local(binary, *args):
-    """node_modules/.bin, so the lockfile decides the version."""
-    return [str(ROOT / "node_modules" / ".bin" / binary), *args]
 BOLD, PURPLE, GREEN, RED, DIM, RESET = "\033[1m", "\033[35m", "\033[32m", "\033[31m", "\033[2m", "\033[0m"
 
 QUICK = "--quick" in sys.argv
@@ -32,19 +30,20 @@ QUICK = "--quick" in sys.argv
 # there is nothing generated left in the working tree to be stale.
 BUILD = ["npx", "eleventy"]
 
-# html-validate is not here. It used to lint parts/*.html against a config that
-# switched off eight rules because fragments are not documents; the fragments
-# are Nunjucks now and the config is gone. Linting _site/**/*.html is the right
-# answer and is tracked separately: `npx html-validate '_site/*.html'` reports
-# 103 pre-existing errors today, 98 of them inline styles. That is a content
-# change, not a build change.
+# html-validate is not here. It used to lint the band fragments against a config
+# that switched off eight rules because fragments are not documents; the
+# fragments are Nunjucks now and the config is gone. Linting _site/**/*.html is
+# the right answer and is tracked separately: `npx html-validate '_site/*.html'`
+# reports 103 pre-existing errors today, 98 of them inline styles. That is a
+# content change, not a build change.
 STEPS = [
-    ("A11y: structural invariants", ["bin/a11y-check"], False),
-    # Globbed, not a file list: a hand-maintained list means the next sheet
-    # somebody adds is unlinted until they remember to edit this file, and the
-    # sheets are split per band precisely so new ones keep appearing.
+    ("A11y: structural invariants", ["scripts/a11y-check"], False),
+    # `make lint-css` rather than the stylelint command: the glob is a task
+    # definition and the Makefile owns those. It lived here, in package.json and
+    # in the deploy workflow at once, which is two copies too many for something
+    # that has to grow every time a sheet is added.
     ("CSS: duplicate selectors and dead declarations",
-     local("stylelint", "styles/*.css", "parts/*.css"), False),
+     ["make", "lint-css"], False),
     ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
     ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),
     ("Render: every band, 1440 and 375, no overflow", ["node", "scripts/shots.mjs", "--out", "scratch/shots/ci"], True),
@@ -53,7 +52,7 @@ STEPS = [
     # instead of needing a hand-maintained exemption list. The hand-rolled one
     # over-reported badly (18.6KB "dead" against PurgeCSS's 2%) and would have
     # deleted live styles if trusted.
-    ("CSS: unreachable rules", ["bin/purge-check"], True),
+    ("CSS: unreachable rules", ["scripts/purge-check"], True),
 ]
 
 

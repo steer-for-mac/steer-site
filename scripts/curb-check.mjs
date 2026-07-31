@@ -51,7 +51,7 @@ const cssIn = (dir, keep = () => true) =>
     .sort().map((f) => `${dir}/${f}`);
 const CSS_FILES = [
   ...cssIn("styles", (f) => !f.endsWith(".entry.css")),
-  ...cssIn("parts"),
+  ...cssIn("styles/bands"),
 ];
 
 // ---- the lists the curb enforces by eye (copy rules) ----------------------
@@ -80,7 +80,7 @@ const EMOJI_WARN = /[☀-➿⁉‼]/;
 // ---- value-drift lists (CSS rules) ----------------------------------------
 
 // Hexes the curb rejects on sight. Case-insensitive, compared after comments
-// are stripped so the cautionary comments in styles.css do not self-flag.
+// are stripped so the cautionary comments in site.css do not self-flag.
 const FORBIDDEN_HEX = [
   ["#0d6efd", "Bootstrap default blue"],
   ["#007aff", "the AA-failing blue the CSS comment says not to restore (use --blue #0071eb)"],

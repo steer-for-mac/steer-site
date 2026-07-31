@@ -2,12 +2,11 @@
   "name": "steer-site",
   "private": true,
   "type": "module",
-  "description": "Marketing site for Steer. Static output, but the toolchain is real: see eleventy.config.js, bin/ci.",
+  "description": "Marketing site for Steer. Static output, but the toolchain is real: see eleventy.config.js, scripts/ci.",
+  "//": "Tasks are defined in the Makefile, once. The header there says why (JSON cannot carry the reasoning, and half the toolchain is Python). These two forward so `npm run build` and `npm run ci` work for anyone who reaches for npm first; they must never grow a command of their own. Everything else is `make help`.",
   "scripts": {
-    "build": "eleventy",
-    "build:prod": "ELEVENTY_ENV=production eleventy",
-    "ci": "bin/ci",
-    "lint:css": "stylelint 'styles/*.css' 'parts/*.css'"
+    "build": "make build",
+    "ci": "make ci"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",

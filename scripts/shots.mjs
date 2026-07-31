@@ -223,7 +223,7 @@ try {
       const box = await s.eval(`(() => {
         const el = document.querySelector(${JSON.stringify(selector)});
         if (!el) return null;
-        /* instant, both of them: styles.css sets scroll-behavior:smooth, so the
+        /* instant, both of them: site.css sets scroll-behavior:smooth, so the
            scrollIntoView is animated and a scrollBy on the next line computes
            its target from the still-at-zero offset, retargets to -70, clamps to
            0 and cancels the scroll outright. Every frame was shot at the top of

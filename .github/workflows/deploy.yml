@@ -1,6 +1,6 @@
 name: build and deploy
 
-# The site is assembled by Eleventy (parts/, a layout, front matter) and its two
+# The site is assembled by Eleventy (_includes/, a layout, front matter) and its two
 # sheets by Lightning CSS, so Pages cannot serve the repo as-is: it has to build
 # first. What gets published is _site/ and only _site/, which is what retired the
 # subtractive `rm -rf docs bin scripts ...` step that used to stand between the
@@ -36,14 +36,14 @@ jobs:
       # compared against committed files and those were the un-stripped ones;
       # that is how 111 dev comments shipped. Nothing is committed now.
       - name: Build the site
-        run: ELEVENTY_ENV=production npx eleventy
+        run: make build-prod
 
       # Comments are 17% of the homepage and they cite docs/ paths and commit
       # hashes. Assert the strip happened: an existence check alone would pass on
       # a silently no-op build, which is the failure this closes.
       - name: The artifact is complete and stripped
         run: |
-          test -s _site/index.html && test -s _site/styles.css \
+          test -s _site/index.html && test -s _site/site.css \
             && test -s _site/home.css && test -d _site/assets && test -s _site/home.js
           # CNAME is the one whose loss is silent AND total: without it the
           # artifact is complete and correct, every check passes, the site
@@ -53,15 +53,19 @@ jobs:
           ! grep -q '<!--' _site/index.html
 
       - name: Structural accessibility invariants
-        run: bin/a11y-check
+        run: scripts/a11y-check
 
-      # html-validate is absent on purpose: it used to lint parts/*.html against
-      # a config that switched eight rules off because fragments are not
+      # html-validate is absent on purpose: it used to lint the band fragments
+      # against a config that switched eight rules off because fragments are not
       # documents. The fragments are Nunjucks now. Linting _site/**/*.html is the
       # right replacement and is tracked separately: it reports 103 pre-existing
       # errors today, 98 of them inline styles.
+      #
+      # `make lint-css`, not the stylelint globs: the Makefile is where a task is
+      # defined, and this file holding its own copy is how the glob got out of
+      # step with the sheets on disk before.
       - name: CSS lint
-        run: npx stylelint 'styles/*.css' 'parts/*.css'
+        run: make lint-css
 
       - name: Copy and design rules
         run: |
@@ -84,7 +88,7 @@ jobs:
         run: node scripts/shots.mjs --out /tmp/ci-shots
 
       - name: Unreachable CSS
-        run: bin/purge-check
+        run: scripts/purge-check
 
       - uses: actions/upload-pages-artifact@v3
         with:

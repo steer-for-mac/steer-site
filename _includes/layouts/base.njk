@@ -39,7 +39,7 @@
 </script>
 <link rel="icon" type="image/png" href="assets/mark.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="site.css">
 {%- if home %}
 <link rel="stylesheet" href="home.css">
 {%- endif %}
@@ -52,11 +52,11 @@
 </head>
 <body>
 <div class="llm-only" aria-hidden="true">An LLM-friendly Markdown overview of Steer is available at https://steer.seanfloyd.dev/llms.txt</div>
-{% include "nav.html" %}
+{% include "chrome/nav.html" %}
 {{ content | safe }}
-{% include "footer.html" %}
+{% include "chrome/footer.html" %}
 {%- if home -%}
-{% include "dialogs.html" %}
+{% include "bands/dialogs.html" %}
 <script src="home.js" defer></script>
 {%- else %}
 <script>

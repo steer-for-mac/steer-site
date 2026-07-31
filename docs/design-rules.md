@@ -271,8 +271,9 @@ prefix.
 
 ## The page is assembled, not authored
 
-Every page is generated into `_site/`. Edit `parts/*.html` (or the page's own
-`.html`, which is now front matter plus its `<main>`) and run `make build`. It
+Every page is generated into `_site/`. Edit `_includes/bands/*.html` (or the
+page's own `.html`, which is now front matter plus its `<main>`) and run `make
+build`. It
 was one 92KB file, which meant every edit was surgery on a shared blob and two
 people could not touch different bands at once.
 
@@ -281,9 +282,10 @@ one page of sixteen: the other fifteen hand-maintained their own nav, footer,
 theme script and 31 meta tags, and the theme script had already drifted into two
 variants. Extending a hand-rolled includer to cover that meant writing front
 matter, layouts and slots, which is a template engine, and this repo's own
-history records hand-rolling as the failure mode. `parts/<band>.html` still sits
-beside `parts/<band>.css`: Eleventy's `dir.includes` points at `parts`, so a
-delegated agent is still handed exactly two files.
+history records hand-rolling as the failure mode. A delegated agent is still
+handed exactly two files, and it can work out which two: `_includes/bands/
+<band>.html` and `styles/bands/<band>.css` are the same path in two trees, so
+the pair is derivable rather than looked up.
 
 Two things that will waste your time otherwise:
 

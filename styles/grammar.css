@@ -2,12 +2,12 @@
 
    This is the shared vocabulary the bands are assembled from: the .d-* ruled
    grammar (heads, folios, spec rows, figures, index cells, chain cells, pills,
-   notes, tables) that parts/uses, feel, capabilities, pricing and trust all
+   notes, tables) that the uses, feel, capabilities, pricing and trust bands all
    speak, the ruled-sheet structure that turns those bands into one drawn
    column, the .dgs plate container and its motion, and the type and tempo
    steps that override styles/shared.css.
 
-   Edit here to change how a band type looks everywhere. Edit parts/<band>.css
+   Edit here to change how a band type looks everywhere. Edit styles/bands/<band>.css
    to change one band.
 
    Three things sit here that read as if they belong elsewhere, each for a
@@ -17,15 +17,15 @@
    1. .shot cannot go to primitives.css. shared.css has `img{display:block}` in
       this same layer; in @layer base the frame's `display:none` theme swap
       would lose to it and both screenshots would paint.
-   2. html.nav-over-hero cannot go to parts/head-nav.css. shared.css undoes the
+   2. html.nav-over-hero cannot go to styles/bands/head-nav.css. shared.css undoes the
       light link colour with a MORE specific selector
       (html.nav-over-hero .nav-menu .nav-links a). In @layer bands these rules
       win anyway and the nav links stay hero-light once the hero has scrolled
       away. This was put in a band sheet and measured: 20+ computed properties
       changed on the nav links at 1440 and 375, in both themes. It is not an
       argument, it is a render.
-   3. .ml-* is the launch-list form, and parts/dialogs.html and
-      parts/pricing.html both use it. Two bands means it is not band-local.
+   3. .ml-* is the launch-list form, and _includes/bands/dialogs.html and
+      _includes/bands/pricing.html both use it. Two bands means it is not band-local.
 
    Known band-local strays still here: .lay-* (capabilities' layers figure) and
    .hconn / .vconn / .flow (capabilities' signal chain) are interleaved through
@@ -49,7 +49,7 @@
 .shot-cap{font-size:12px;color:var(--text-3);margin-top:12px;letter-spacing:-0.005em}
 
 /* FAQ. Unreachable from this sheet: the FAQ moved to support.html, which links
-   styles.css and not home.css. It cannot move to styles/shared.css either,
+   site.css and not home.css. It cannot move to styles/shared.css either,
    because that would change support.html, and this pass may only move rules,
    not alter a page. */
 @media(max-width:520px){

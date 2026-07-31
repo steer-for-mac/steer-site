@@ -4,12 +4,12 @@
 Serves a directory of self-contained HTML and Lighthouses each page, or (once the
 templates are ported) points at a running server with --url. A pre-deploy gate:
 slow (~10-20s/page) and needs headless Chrome, so it belongs in deploy-check, not
-per-commit CI (that's what bin/a11y-check is for).
+per-commit CI (that's what scripts/a11y-check is for).
 
 Usage:
-    bin/lighthouse                       # serve ., require 100
-    bin/lighthouse --dir DIR --min 95
-    bin/lighthouse --url http://localhost:8081/sources --url http://localhost:8081/stats
+    scripts/lighthouse                       # serve ., require 100
+    scripts/lighthouse --dir DIR --min 95
+    scripts/lighthouse --url http://localhost:8081/sources --url http://localhost:8081/stats
 
 Needs the Lighthouse CLI (`npx lighthouse` once installs it under ~/.npm/_npx).
 """

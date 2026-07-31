@@ -11,7 +11,7 @@
    surface any of this can land on: --text 13.83:1 light / 12.80:1 dark,
    --text-2 5.46 / 5.89, --blue-text 4.57 / 5.53. All clear AA 4.5:1
    (measured 2026-07-30; the sRGB relative-luminance formula against the
-   tokens in styles.css). No radius is set here at all: the only rounded thing
+   tokens in site.css). No radius is set here at all: the only rounded thing
    in the band is .shot, which is already --r-window.
 
    No motion: the band has none to gate. The screenshot is the static frame.

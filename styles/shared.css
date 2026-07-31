@@ -1,9 +1,9 @@
 /* Shared across every page: reset, layout, and the chrome that is not specific
    to one band. Homepage-only rules live in styles/grammar.css (the .d-* design
    system) and styles/primitives.css (the stroke language); per-band rules live
-   in parts/<band>.css.
+   in styles/bands/<band>.css.
 
-   This file and grammar.css are both @layer components, and styles.css is
+   This file and grammar.css are both @layer components, and site.css is
    linked before home.css, so a grammar rule beats a rule here at equal
    specificity. Two rules here deliberately out-specify grammar.css instead:
    `img{display:block}` (which is why the .shot theme swap cannot drop to
@@ -178,7 +178,7 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 
 /* spec grid */
 /* FAQ: moved out of the homepage sheet 2026-07-30. The requirements block
-   and its two FAQ rows now live on support.html, which links styles.css and
+   and its two FAQ rows now live on support.html, which links site.css and
    not home.css, so these rules were shipping to a page with no markup and the
    markup was rendering unstyled. Found by scripts/dead-css.mjs. */
 .faq{max-width:760px;margin:40px auto 0}
@@ -199,7 +199,7 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .specs>div>.spec-row:last-child{border-bottom:1px solid var(--sep)}
 
 /* The centred baseline row a price used to sit on. The pricing band was rebuilt
-   on the .pr-* grammar (parts/pricing.css) and the card, currency cap, numeral
+   on the .pr-* grammar (styles/bands/pricing.css) and the card, currency cap, numeral
    and inclusion list went with it; accessibility.html still sets its own type on
    .close .price-big and needs this row. */
 .price-big{display:flex;align-items:baseline;justify-content:center;gap:12px;line-height:1}

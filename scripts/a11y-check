@@ -3,7 +3,7 @@
 
 Catches the a11y regressions a per-commit check should catch instantly (this would
 have caught a missing <main> landmark at introduction instead of at deploy). It is
-NOT a substitute for Lighthouse (bin/lighthouse) — it asserts the cheap structural
+NOT a substitute for Lighthouse (scripts/lighthouse) — it asserts the cheap structural
 invariants that survive a static HTML parse:
 
   - exactly one <h1>
@@ -15,9 +15,9 @@ invariants that survive a static HTML parse:
   - no positive tabindex
 
 Usage:
-    bin/a11y-check                       # _site/*.html
-    bin/a11y-check path/to/file.html ...
-    bin/a11y-check --url http://localhost:8080/sources --url .../stats
+    scripts/a11y-check                       # _site/*.html
+    scripts/a11y-check path/to/file.html ...
+    scripts/a11y-check --url http://localhost:8080/sources --url .../stats
 
 --url checks what the server actually renders, which is the only form that
 speaks for production; the file mode still covers the design mockups.
