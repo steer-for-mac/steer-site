@@ -36,7 +36,7 @@ export default {
       // unreachable and would strip the site's whole keyboard focus ring.
       // `.btn:focus-visible` survives on its class; `:focus-visible` alone does not.
       /^:focus-visible$/,
-      // styles/bands/hero.css carries 42 rules under html[data-theme="lightoff"], the
+      // styles/bands/hero.css carries 9 rules under html[data-theme="lightoff"], the
       // "daylight studio" hero treatment: a designed, commented light-mode
       // variant of the pad plate. Nothing sets that value today — no markup, no
       // home.js — so PurgeCSS is right that it is unreachable, and it is kept
@@ -53,9 +53,11 @@ export default {
       // is, home.js and the head script both set light/dark. Only the lightoff
       // value is unset. Delete this entry when either something sets lightoff,
       // or the daylight studio is dropped from styles/bands/hero.css. It is the
-      // largest carve-out in this file by far, worth 6.3 points of home.css on
-      // its own, so it is also the first thing to re-examine if the threshold
-      // below ever feels tight.
+      // largest carve-out in this file by far, worth 3.8 points of home.css on
+      // its own (it was 6.3 and 42 rules until the pad art moved to var()-driven
+      // presentation attributes, which collapsed thirty of those selectors into
+      // one palette block), so it is also the first thing to re-examine if the
+      // threshold below ever feels tight.
       /^data-theme$/,
     ],
     // keep every :hover/::after/[aria-*] variant of a class that survives

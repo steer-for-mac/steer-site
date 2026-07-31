@@ -49,6 +49,36 @@
   --deviceF:none; --contactO:0;
   --mono:"SF Mono",ui-monospace,Menlo,monospace;
   --sans:-apple-system,"SF Pro Display","SF Pro Text","Helvetica Neue",sans-serif;
+  /* pad-art materials, night studio. The drawn controllers read these through
+     presentation attributes rather than through `.chero .ol-a{}` selectors;
+     the @property block further down says why, and is the only other place
+     these names appear. */
+  --pa-ol-a:rgba(233,237,246,0.08); --pa-ol-b:rgba(233,237,246,0.13);
+  --pa-rim:rgba(233,237,246,0.20); --pa-seam:rgba(0,0,0,0.28);
+  --pa-cast:rgba(0,0,0,0.45);
+  --pa-ic:rgba(233,237,246,0.38); --pa-ic-f:rgba(233,237,246,0.30);
+  --pa-btn:#10151F; --pa-small:#10141F; --pa-dpad:#151A27;
+  --pa-dish:#0C111C; --pa-well:#0E1220; --pa-nexus:#0D1119; --pa-off:#242B3B;
+  --pa-tri:#5FC9A4; --pa-cir:#E06A7E; --pa-cross:#7DA7E8; --pa-sq:#D98BC7;
+  --pa-y:#EFD37B; --pa-b:#E77D7D; --pa-a:#6FCF8F; --pa-x:#7DA7E8;
+  --pa-sw:#8E97AB;
+  --pa-nex:#EDF5F0; --pa-nex-hl:rgba(255,255,255,0.28);
+  --pa-body-1:#262E3F; --pa-body-2:#1A2030; --pa-body-3:#121724;
+  --pa-swbody-1:#212837; --pa-swbody-2:#161B29; --pa-swbody-3:#0F131F;
+  --pa-pad-1:#2B3346; --pa-pad-2:#1C2232;
+  --pa-stick-1:#323B4F; --pa-stick-2:#1E2534; --pa-stick-3:#161B28;
+  --pa-trig-1:#2A3244; --pa-trig-2:#1A2030; --pa-trig-3:#10141F;
+  --pa-bump-1:#333C52; --pa-bump-2:#20263A; --pa-bump-3:#151A28;
+  --pa-mf-o:rgba(233,237,246,0.36); --pa-mf-o2:rgba(233,237,246,0.22);
+  --pa-mf-body:rgba(233,237,246,0.02); --pa-mf-bl:rgba(233,237,246,0.34);
+  /* face-button letter type: the branded pads' A/B/X/Y, and the Switch's own
+     tier (its buttons are r=14 rather than r=15.5, so its letters are a step
+     down). Lengths, not colours, so they are the two materials with no
+     @property registration: nothing animates or validates them, and a <length>
+     registration would need an initial-value duplicating the number here for
+     no gain. The laptop-window media query further down re-points these two
+     rather than re-selecting the glyphs, so the size is not in the name. */
+  --pa-letter:13px; --pa-letter-sw:12px;
   position:relative;
   min-height:calc(100vh - 52px);  /* site nav above is 52px sticky */
   display:flex;flex-direction:column;align-items:center;
@@ -90,6 +120,29 @@ html[data-theme="lightoff"] .chero{
      a light-only drop shadow read as a pasted-on sticker (and was inconsistent). */
   --deviceF:none;
   --contactO:0;
+  /* pad-art materials, daylight studio. Thirty selectors collapsed to one
+     block: the daylight treatment is now a palette override, not a second copy
+     of the art's styling. */
+  --pa-ol-a:rgba(23,28,38,0.14); --pa-ol-b:rgba(23,28,38,0.19);
+  --pa-rim:rgba(255,255,255,0.95); --pa-seam:rgba(23,28,38,0.15);
+  --pa-cast:rgba(24,34,60,0.22);
+  --pa-ic:rgba(40,50,70,0.55); --pa-ic-f:rgba(40,50,70,0.40);
+  --pa-btn:#F3F5F9; --pa-small:#E2E7F0; --pa-dpad:#DFE5EF;
+  --pa-dish:#C5CCD9; --pa-well:#C9D0DC;
+  --pa-nexus:#1C2330;  /* stays dark, so the lit ring reads emissive */
+  --pa-off:#C2C9D6;
+  --pa-tri:#1F8A69; --pa-cir:#CE4459; --pa-cross:#3E76D6; --pa-sq:#B4539B;
+  --pa-y:#B08D1E; --pa-b:#C93F3F; --pa-a:#2E9E4F; --pa-x:#3E76D6;
+  --pa-sw:#5C6675;
+  --pa-nex:#F4FAF6; --pa-nex-hl:rgba(255,255,255,0.45);
+  --pa-body-1:#FEFEFF; --pa-body-2:#EBEFF5; --pa-body-3:#D9DFE9;
+  --pa-swbody-1:#F8FAFC; --pa-swbody-2:#E2E7EF; --pa-swbody-3:#CFD6E1;
+  --pa-pad-1:#F6F8FB; --pa-pad-2:#E1E6EE;
+  --pa-stick-1:#59637A; --pa-stick-2:#333B4C; --pa-stick-3:#262D3C;
+  --pa-trig-1:#E4E9F0; --pa-trig-2:#CBD2DE; --pa-trig-3:#B3BCCB;
+  --pa-bump-1:#F7F9FC; --pa-bump-2:#E0E5EE; --pa-bump-3:#C8CFDC;
+  --pa-mf-o:rgba(23,28,38,0.46); --pa-mf-o2:rgba(23,28,38,0.28);
+  --pa-mf-body:rgba(23,28,38,0.025); --pa-mf-bl:rgba(23,28,38,0.42);
 }
 /* each pad's accent drives the hero; --accent-ink darkens on light to hold contrast */
 .chero[data-pad="ps"]{--accent:var(--led);--accent-ink:var(--led);--washO:0.19;--poolO:0.15}
@@ -229,72 +282,86 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
 .chero .padwrap.active .lb-reflect{animation:chero-igniteSoft 1.0s 0.55s ease-out both}
 .chero .padwrap.active .bloom{animation:chero-igniteBloom 1.2s 0.55s ease-out both}
 .chero .glow{filter:var(--glowF)}
-.chero .pled{fill:var(--accent);filter:var(--pledF)}
-.chero .lb{stroke:var(--accent)}
-.chero .lb-reflect{fill:var(--accent)}
-.chero .bloom{fill:var(--accent)}
+/* The emissive family takes its colour from --accent through a presentation
+   attribute in the markup, like the rest of the art. What is left here is what
+   an attribute cannot carry: the halo filter, and the opacities the ignite and
+   breathe keyframes above animate. */
+.chero .pled{filter:var(--pledF)}
 
-/* SVG materials: night studio (default) */
-.chero .ol-a{stroke:rgba(233,237,246,0.08)}
-.chero .ol-b{stroke:rgba(233,237,246,0.13)}
-.chero .rim{stroke:rgba(233,237,246,0.20)}
-.chero .seam{stroke:rgba(0,0,0,0.28)}
-.chero .cast{fill:rgba(0,0,0,0.45)}
-.chero .ic{stroke:rgba(233,237,246,0.38)}
-.chero .ic-f{fill:rgba(233,237,246,0.30)}
-.chero .f-btn{fill:#10151F}
-.chero .f-small{fill:#10141F}
-.chero .f-dpad{fill:#151A27}
-.chero .f-dish{fill:#0C111C}
-.chero .f-well{fill:#0E1220}
-.chero .f-nexus{fill:#0D1119}
-.chero .f-off{fill:#242B3B}
-.chero .g-tri{stroke:#5FC9A4}
-.chero .g-cir{stroke:#E06A7E}
-.chero .g-cross{stroke:#7DA7E8}
-.chero .g-sq{stroke:#D98BC7}
-.chero .g-y{fill:#EFD37B} .chero .g-b{fill:#E77D7D}
-.chero .g-a{fill:#6FCF8F} .chero .g-x{fill:#7DA7E8}
-.chero .g-sw{fill:#8E97AB}
-.chero .g-nex{stroke:#EDF5F0}
-.chero .nex-hl{stroke:rgba(255,255,255,0.28)}
-.chero #bodyGrad .s1{stop-color:#262E3F} .chero #bodyGrad .s2{stop-color:#1A2030} .chero #bodyGrad .s3{stop-color:#121724}
-.chero #swBodyGrad .s1{stop-color:#212837} .chero #swBodyGrad .s2{stop-color:#161B29} .chero #swBodyGrad .s3{stop-color:#0F131F}
-.chero #padGrad .s1{stop-color:#2B3346} .chero #padGrad .s2{stop-color:#1C2232}
-.chero #stickGrad .s1{stop-color:#323B4F} .chero #stickGrad .s2{stop-color:#1E2534} .chero #stickGrad .s3{stop-color:#161B28}
-.chero #trigTopGrad .s1{stop-color:#2A3244} .chero #trigTopGrad .s2{stop-color:#1A2030} .chero #trigTopGrad .s3{stop-color:#10141F}
-.chero #bumpGrad .s1{stop-color:#333C52} .chero #bumpGrad .s2{stop-color:#20263A} .chero #bumpGrad .s3{stop-color:#151A28}
+/* ══ Pad-art materials ═══════════════════════════════════════════════════════
+   The four drawn controllers are painted by presentation attributes that read
+   the --pa-* properties on .chero, not by `.chero .ol-a{stroke:…}` selectors.
+   That is the whole of design-backlog #18, and it buys one thing: the art can
+   be lifted into assets/svg/ and pulled back in with <use> without being
+   repainted on the way.
 
-/* SVG materials: daylight studio */
-html[data-theme="lightoff"] .chero .ol-a{stroke:rgba(23,28,38,0.14)}
-html[data-theme="lightoff"] .chero .ol-b{stroke:rgba(23,28,38,0.19)}
-html[data-theme="lightoff"] .chero .rim{stroke:rgba(255,255,255,0.95)}
-html[data-theme="lightoff"] .chero .seam{stroke:rgba(23,28,38,0.15)}
-html[data-theme="lightoff"] .chero .cast{fill:rgba(24,34,60,0.22)}
-html[data-theme="lightoff"] .chero .ic{stroke:rgba(40,50,70,0.55)}
-html[data-theme="lightoff"] .chero .ic-f{fill:rgba(40,50,70,0.40)}
-html[data-theme="lightoff"] .chero .f-btn{fill:#F3F5F9}
-html[data-theme="lightoff"] .chero .f-small{fill:#E2E7F0}
-html[data-theme="lightoff"] .chero .f-dpad{fill:#DFE5EF}
-html[data-theme="lightoff"] .chero .f-dish{fill:#C5CCD9}
-html[data-theme="lightoff"] .chero .f-well{fill:#C9D0DC}
-html[data-theme="lightoff"] .chero .f-nexus{fill:#1C2330}  /* stays dark, so the lit ring reads emissive */
-html[data-theme="lightoff"] .chero .f-off{fill:#C2C9D6}
-html[data-theme="lightoff"] .chero .g-tri{stroke:#1F8A69}
-html[data-theme="lightoff"] .chero .g-cir{stroke:#CE4459}
-html[data-theme="lightoff"] .chero .g-cross{stroke:#3E76D6}
-html[data-theme="lightoff"] .chero .g-sq{stroke:#B4539B}
-html[data-theme="lightoff"] .chero .g-y{fill:#B08D1E} html[data-theme="lightoff"] .chero .g-b{fill:#C93F3F}
-html[data-theme="lightoff"] .chero .g-a{fill:#2E9E4F} html[data-theme="lightoff"] .chero .g-x{fill:#3E76D6}
-html[data-theme="lightoff"] .chero .g-sw{fill:#5C6675}
-html[data-theme="lightoff"] .chero .g-nex{stroke:#F4FAF6}
-html[data-theme="lightoff"] .chero .nex-hl{stroke:rgba(255,255,255,0.45)}
-html[data-theme="lightoff"] .chero #bodyGrad .s1{stop-color:#FEFEFF} html[data-theme="lightoff"] .chero #bodyGrad .s2{stop-color:#EBEFF5} html[data-theme="lightoff"] .chero #bodyGrad .s3{stop-color:#D9DFE9}
-html[data-theme="lightoff"] .chero #swBodyGrad .s1{stop-color:#F8FAFC} html[data-theme="lightoff"] .chero #swBodyGrad .s2{stop-color:#E2E7EF} html[data-theme="lightoff"] .chero #swBodyGrad .s3{stop-color:#CFD6E1}
-html[data-theme="lightoff"] .chero #padGrad .s1{stop-color:#F6F8FB} html[data-theme="lightoff"] .chero #padGrad .s2{stop-color:#E1E6EE}
-html[data-theme="lightoff"] .chero #stickGrad .s1{stop-color:#59637A} html[data-theme="lightoff"] .chero #stickGrad .s2{stop-color:#333B4C} html[data-theme="lightoff"] .chero #stickGrad .s3{stop-color:#262D3C}
-html[data-theme="lightoff"] .chero #trigTopGrad .s1{stop-color:#E4E9F0} html[data-theme="lightoff"] .chero #trigTopGrad .s2{stop-color:#CBD2DE} html[data-theme="lightoff"] .chero #trigTopGrad .s3{stop-color:#B3BCCB}
-html[data-theme="lightoff"] .chero #bumpGrad .s1{stop-color:#F7F9FC} html[data-theme="lightoff"] .chero #bumpGrad .s2{stop-color:#E0E5EE} html[data-theme="lightoff"] .chero #bumpGrad .s3{stop-color:#C8CFDC}
+   Measured, not assumed (Chrome headless, 2026-07-30). Through an external
+   <use href="file.svg#s">, a class rule left the clone UNPAINTED, while a
+   plain custom property, an @property-registered one, and a style="--x:…" set
+   on the <use> element itself all reached it. Through a same-document
+   <use href="#id"> Chrome does still apply class rules — which is why the
+   mirrored shoulders below render at all today — but that is Chrome's legacy
+   behaviour for internal references, not something to build a sprite on.
+
+   Registered rather than left plain, for the one thing a plain custom property
+   cannot do: validate. A malformed --pa-* would otherwise make the whole
+   fill/stroke declaration invalid at computed-value time, and on this markup
+   the property then falls back to what it inherits, which is black. Typed, it
+   falls back to the registration below instead, and becomes interpolable if
+   the studio is ever cross-faded.
+
+   initial-value is currentcolor on purpose. It is the only value that cannot
+   drift out of step with the palette on .chero (an initial-value copied from
+   the night studio would be a second copy of forty-six colours), and it
+   degrades a <use> dropped outside the studio to a legible silhouette rather
+   than a black slab. .chero and its daylight override supply the real values.
+   ═══════════════════════════════════════════════════════════════════════════ */
+@property --pa-ol-a{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-ol-b{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-rim{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-seam{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-cast{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-ic{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-ic-f{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-btn{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-small{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-dpad{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-dish{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-well{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-nexus{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-off{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-tri{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-cir{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-cross{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-sq{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-y{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-b{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-a{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-x{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-sw{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-nex{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-nex-hl{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-body-1{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-body-2{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-body-3{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-swbody-1{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-swbody-2{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-swbody-3{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-pad-1{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-pad-2{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-stick-1{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-stick-2{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-stick-3{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-trig-1{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-trig-2{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-trig-3{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-bump-1{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-bump-2{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-bump-3{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-mf-o{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-mf-o2{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-mf-body{syntax:"<color>";inherits:true;initial-value:currentcolor}
+@property --pa-mf-bl{syntax:"<color>";inherits:true;initial-value:currentcolor}
 
 /* annotations */
 .chero .ann text{font-family:var(--mono);font-size:14px;letter-spacing:0.05em;fill:var(--ann)}
@@ -302,9 +369,6 @@ html[data-theme="lightoff"] .chero #bumpGrad .s1{stop-color:#F7F9FC} html[data-t
 .chero .ann .t.x{fill:var(--accent-ink)}
 .chero .ann polyline{stroke:var(--line);stroke-width:1;fill:none}
 .chero .ann circle{fill:var(--ink-2)}
-.chero .bl{font-family:var(--sans)}
-.chero .bl13{font-size:13px;font-weight:700}
-.chero .bl12{font-size:12px;font-weight:600}
 .chero .padwrap .ann{opacity:0}
 .chero .padwrap.active .ann{animation:chero-fadeIn 0.7s ease-out forwards}
 .chero .padwrap.active .ann.d1{animation-delay:0.55s}
@@ -396,8 +460,9 @@ html.still .chero .pool{opacity:var(--poolO)}
 @media (min-width:900px) and (min-height:761px) and (max-height:990px){
   .chero .ann text{font-size:15px}
   .chero .ann .t{font-size:14.5px}
-  .chero .bl13{font-size:16px}
-  .chero .bl12{font-size:15px}
+  /* the face-button letters scale with them, but through the property the
+     glyphs already read rather than by re-selecting them */
+  .chero{--pa-letter:16px;--pa-letter-sw:15px}
 }
 @media (max-width:899px),(min-width:900px) and (max-height:760px){
   .chero .ann{display:none}
@@ -545,16 +610,10 @@ html.still .vg,html.still .vg *,html.still .vg *::before,html.still .vg *::after
 
 /* ── "& others" (MFi) hero state: a schematic outline pad — deliberately no
    brand, no extras. Line-art materials so it reads "whichever pad you own",
-   not a fourth product render. Letters use Apple's own A/B/X/Y naming. */
-.chero .mf-o{stroke:rgba(233,237,246,0.36);fill:none;stroke-width:1.5;stroke-linejoin:round}
-.chero .mf-o2{stroke:rgba(233,237,246,0.22);fill:none;stroke-width:1.5;stroke-linejoin:round}
-.chero .mf-body{fill:rgba(233,237,246,0.02)}
-.chero .mf-bl{font-family:var(--sans);font-size:12px;font-weight:600;fill:rgba(233,237,246,0.34)}
-.chero .mf-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;fill:var(--ann)}
-html[data-theme="lightoff"] .chero .mf-o{stroke:rgba(23,28,38,0.46)}
-html[data-theme="lightoff"] .chero .mf-o2{stroke:rgba(23,28,38,0.28)}
-html[data-theme="lightoff"] .chero .mf-body{fill:rgba(23,28,38,0.025)}
-html[data-theme="lightoff"] .chero .mf-bl{fill:rgba(23,28,38,0.42)}
+   not a fourth product render. Letters use Apple's own A/B/X/Y naming.
+   Its two stroke weights are --pa-mf-o / --pa-mf-o2 in the palette above; the
+   plate's own <g> carries the geometry (fill:none, 1.5, round) that every
+   shape in it shares, so only the weight varies per element. */
 
 /* ── Hero demo (.vg-glide): deflect the stick → the cursor glides across the
    room-sized screen on the shaped curve (slow start, fast middle, soft landing)
