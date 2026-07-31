@@ -159,10 +159,28 @@ function scanHtml(file, findings) {
   for (const m of src.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)) {
     cssChecks(file, m[1], lineOf(src, m.index) - 1, findings);
   }
+  // 4b. And so do style="" attributes, which were the one place a colour could
+  //     hide from every gate at once. html-validate DELIBERATELY allows a
+  //     style attribute that only declares custom properties (measured:
+  //     style="--zzz:red" reports nothing, style="color:red" reports two), and
+  //     that exemption is defensible — a custom property is data. But stylelint
+  //     never reads HTML and PurgeCSS does not look at values, so a forbidden
+  //     hex sat in an attribute passed clean. Verified before this existed by
+  //     putting #007aff, which is on FORBIDDEN_HEX, into one.
+  styleAttrChecks(file, masked, findings);
   // 5. And the HTML itself for smuggled web-font links.
   if (FONT_LINK.test(src)) {
     const mm = src.match(FONT_LINK);
     findings.push(err(file, lineOf(src, mm.index), `web font intrusion: ${mm[1]} (system fonts only)`));
+  }
+}
+
+// A style attribute is a declaration list with no braces. cssChecks reads
+// declarations rather than rules, so the same pass applies unchanged.
+// Leading \s rather than \b, because \b would also match data-style=.
+function styleAttrChecks(file, html, findings) {
+  for (const m of html.matchAll(/\sstyle\s*=\s*(["'])(.*?)\1/gi)) {
+    cssChecks(file, m[2], lineOf(html, m.index) - 1, findings);
   }
 }
 
@@ -267,6 +285,9 @@ function selfTest() {
     ["radius-svg-detail-ok", () => { const f = []; cssChecks("x", "a{border-radius:3px}", 0, f); return f.length === 0 ? 1 : 0; }],
     ["dash-marker-cell-ok", () => { const f = []; copyChecks("x", 1, "—", f, "text"); return f.length === 0 ? 1 : 0; }],
     ["clean-copy-ok", () => { const f = []; copyChecks("x", 1, "Plug in a controller and it works.", f, "text"); return f.length === 0 ? 1 : 0; }],
+    ["style-attr-hex", () => { const f = []; styleAttrChecks("x", `<b style="--c:#0d6efd">`, f); return f.length; }],
+    ["style-attr-token-ok", () => { const f = []; styleAttrChecks("x", `<b style="--c:var(--blue)">`, f); return f.length === 0 ? 1 : 0; }],
+    ["data-style-not-matched", () => { const f = []; styleAttrChecks("x", `<b data-style="#0d6efd">`, f); return f.length === 0 ? 1 : 0; }],
   ];
   let pass = 0;
   for (const [name, fn] of cases) {
