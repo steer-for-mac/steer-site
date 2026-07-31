@@ -84,7 +84,7 @@ class S {
 }
 
 const chrome = spawn(findChrome(), ["--headless", "--disable-gpu", "--hide-scrollbars",
-  "--no-first-run", "--remote-debugging-port=0", "about:blank"], { stdio: ["ignore", "ignore", "pipe"] });
+  "--no-first-run", "--no-sandbox", "--remote-debugging-port=0", "about:blank"], { stdio: ["ignore", "ignore", "pipe"] });
 const reap = () => { try { chrome.kill(); } catch {} };
 process.on("exit", reap);
 process.on("SIGINT", () => { reap(); process.exit(130); });

@@ -155,6 +155,7 @@ const chrome = spawn(findChrome(), [
   "--disable-gpu",
   "--hide-scrollbars",
   "--no-first-run",
+  "--no-sandbox",
   "--remote-debugging-port=0",
   "about:blank",
 ], { stdio: ["ignore", "ignore", "pipe"] });
