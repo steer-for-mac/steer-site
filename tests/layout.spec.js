@@ -15,10 +15,13 @@ for (const page of PAGES) {
     test(`${page} does not scroll sideways at ${width}px`, async ({ page: p }) => {
       await p.setViewportSize({ width, height: width < 500 ? 812 : 900 });
       await p.goto(`/${page}`);
-      /* documentElement, not body: body can be exactly viewport-wide while a
+      /* Polled, not read once: a single read races the stylesheet under a
+         parallel run and reports the unstyled width as an overflow. A page that
+         really does overflow still fails, it just takes the timeout to say so.
+         documentElement, not body: body can be exactly viewport-wide while a
          child sticks out of it and the page still scrolls. */
-      const overflow = await p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-      expect(overflow, `${overflow}px of horizontal overflow`).toBeLessThanOrEqual(0);
+      await expect.poll(() => p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth))
+        .toBeLessThanOrEqual(0);
     });
   }
 }

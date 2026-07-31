@@ -1,34 +1,11 @@
 #!/usr/bin/env node
-// contrast — the checker styles/tokens.css has been citing for every ratio it
-// records, and which did not exist in this repo. Nearly every colour there
-// carries a comment like "#626269 measures 4.97:1 on --bg-inset-2 (verified
-// via contrast.mjs)". Those measurements were real; the tool was lost. So the
-// audit trail behind docs/design-rules.md's AA rule could not be reproduced,
-// while the same doc rejects on sight "any colour pair whose contrast was never
-// measured".
-//
-//     node scripts/contrast.mjs           check every pair, exit 1 on a failure
-//     node scripts/contrast.mjs --table   print the full matrix
-//
-// The rule it enforces is the curb's, not WCAG's default reading: a text colour
-// must clear AA against the DARKEST surface it can land on, not against --bg.
-// Small print lands on inset cards, so measuring --text-3 on white flatters it
-// by more than a point (6.05 there, 4.97 on --bg-inset-2).
-//
-// The colour science is colorjs.io, the CSS WG editors' own implementation, and
-// not the twenty lines of hand-rolled sRGB-to-linear that used to sit here.
-// Those twenty lines were correct -- they reproduced every ratio tokens.css
-// records and the negative control bit -- which is exactly why they were worth
-// replacing rather than trusting: nothing about a hand-rolled luminance tells
-// you it is right, and the next person to touch a gamma exponent gets no
-// warning. Same numbers, from the reference implementation: verified 4.97,
-// 6.05, 4.60, 4.62, 4.52 and 4.54 to the digit against the comments in
-// styles/tokens.css, with #007aff still failing at 4.02.
-//
-// This does cost the one dependency the file used to boast about not having.
-// That trade is deliberate: a design gate that is wrong in the fourth decimal
-// and still exits 0 is worse than one that cannot run at all, and the second
-// failure is the loud one.
+// contrast — the checker src/styles/tokens.css cites for every ratio it records.
+// `--table` prints the full matrix.
+
+// The curb's rule, not WCAG's default reading: a text colour must clear AA
+// against the DARKEST surface it can land on, not against --bg. Small print
+// lands on inset cards, so measuring --text-3 on white flatters it by more
+// than a point: 6.05 there against 4.97 on --bg-inset-2.
 
 import Color from "colorjs.io";
 import { readFileSync } from "node:fs";
@@ -61,12 +38,9 @@ const ratio = (a, b) => Color.contrast(a, b, "WCAG21");
 // Parse the token blocks. Only literal hexes are checkable: rgba() over an
 // unknown backdrop and color-mix() taking var() have no fixed value, so they
 // are skipped rather than guessed at.
-// Comments come out FIRST. tokens.css opens with a block comment, and a
-// selector pattern of `[^{]*` will happily swallow it and report the whole
-// preamble as the selector name, so `:root` is never found and every light
-// token silently goes unchecked. Caught by a negative control: feeding the
-// checker #007aff, the blue tokens.css explicitly forbids, produced zero
-// failures. A checker that passes everything looks identical to a clean sheet.
+// Comments come out FIRST: tokens.css opens with a block comment and a selector
+// pattern of `[^{]*` swallows it, so `:root` is never found and every light
+// token goes unchecked while the run still exits 0.
 function blocks(css) {
   css = css.replace(/\/\*[\s\S]*?\*\//g, "");
   const out = [];
@@ -80,7 +54,7 @@ function blocks(css) {
   return out;
 }
 
-const css = readFileSync(join(ROOT, "styles/tokens.css"), "utf8");
+const css = readFileSync(join(ROOT, "src/styles/tokens.css"), "utf8");
 const all = blocks(css);
 const light = all.find((b) => b.selector === ":root")?.vars ?? {};
 const dark = all.find((b) => b.selector === '[data-theme="dark"]')?.vars ?? {};

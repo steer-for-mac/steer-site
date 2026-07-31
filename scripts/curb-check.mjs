@@ -30,13 +30,13 @@ const cssIn = (dir, /** @type {(f: string) => boolean} */ keep = () => true) =>
   readdirSync(join(ROOT, dir)).filter((f) => f.endsWith(".css") && keep(f))
     .sort().map((f) => `${dir}/${f}`);
 const CSS_FILES = [
-  ...cssIn("styles", (f) => !f.endsWith(".entry.css")),
-  ...cssIn("styles/bands"),
+  ...cssIn("src/styles", (f) => !f.endsWith(".entry.css")),
+  ...cssIn("src/styles/bands"),
   // styles/pages/<page>.css. Added the day the per-page sheets landed: without
   // it, moving a rule out of a page's front-matter <style> block and into its
   // sheet would have taken it out of the curb's reach, which is the same silent
   // gap the design-system.css/svg-strokes.css split opened.
-  ...cssIn("styles/pages"),
+  ...cssIn("src/styles/pages"),
 ];
 
 // ---- the lists the curb enforces by eye (copy rules) ----------------------

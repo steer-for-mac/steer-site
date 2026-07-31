@@ -28,7 +28,7 @@ ci-quick: ## Skip the rendering checks (no container needed)
 # Sources only. Lightning CSS compresses colours in dist/, so linting the
 # output flags values nobody wrote.
 lint-css: ## stylelint every hand-written sheet
-	npx stylelint 'styles/*.css' 'styles/bands/*.css' 'styles/pages/*.css'
+	npx stylelint 'src/styles/*.css' 'src/styles/bands/*.css' 'src/styles/pages/*.css'
 
 # No build prerequisite anywhere below: scripts/ci and the deploy workflow build
 # once, then run these against that one artifact, several at a time.
