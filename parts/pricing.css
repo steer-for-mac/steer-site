@@ -10,10 +10,9 @@
    frame to the section's own box, so the PNG height is the band height).
 
    Namespacing: every rule is scoped to #pricing and every class is pr-*.
-   The old markup borrowed .price-card / .price-inc from styles.css, but
-   .price-inc is shared with the Feel band and carries per-pad gating whose
-   specificity is hand-tuned (base.css ~933, ~958-965); touching it there would
-   silently break the Feel checklist. .ml-form / .ml-in / .ml-msg / .ml-hp keep
+   The old markup borrowed .price-card / .price-inc from styles.css. Namespacing
+   here rather than editing those was the right call: it left both families with
+   no markup anywhere, and both were deleted 2026-07-30. .ml-form / .ml-in / .ml-msg / .ml-hp keep
    their names because home.js and the dialog twin in parts/dialogs.html both
    depend on them, so the overrides below are scoped rather than global.
 

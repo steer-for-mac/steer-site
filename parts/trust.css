@@ -17,6 +17,20 @@
    No motion: the band has none to gate. The screenshot is the static frame.
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ── migrated from styles/base.css when that file was split ──────────────
+   The ruled-sheet treatment of the trust list. No markup in this band carries
+   .trust-list or .trust-row any more (the band was rebuilt on .d-*); the rules
+   are kept rather than deleted because that is a separate decision. */
+@media(max-width:520px){
+  .trust-list{padding:6px 18px}
+  .trust-row{padding:18px 0}
+}
+
+/* the same for the spec rows and the trust list */
+.trust-list{border:1px solid var(--hairline);border-inline:0}
+.trust-row{padding-inline:0}
+
+
 /* ── the head's spec line ────────────────────────────────────────────────── */
 /* "No account, no cloud, no tracking." was the headline's second sentence.
    Set as a mono rule it is the same object as .d-spec in the index: a
@@ -56,8 +70,9 @@
    a downscaled copy would buy nothing but a third file to keep in sync. */
 
 /* ── the short items, under the claim ────────────────────────────────────── */
-/* Ruled, not boxed: the gutter is the line. Same reason .uc-grid's gap became
-   a hairline. The first rule doubles as the divider from the lede. */
+/* Ruled, not boxed: the gutter is the line, the same move the (since deleted)
+   .uc-grid made when its gap became a hairline. The first rule doubles as the
+   divider from the lede. */
 #trust .t-item{border-top:1px solid var(--sep);padding:15px 0 16px}
 #trust .t-item h3{
   font-size:17px;font-weight:590;letter-spacing:-0.017em;line-height:1.25;

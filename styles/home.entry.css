@@ -4,8 +4,13 @@
 
 @layer tokens, base, components, bands;
 
-@import "base.css" layer(components);
+@import "primitives.css" layer(base);
+@import "grammar.css" layer(components);
 @import "../parts/capabilities.css" layer(bands);
+@import "../parts/dialogs.css" layer(bands);
 @import "../parts/feel.css" layer(bands);
+@import "../parts/hero.css" layer(bands);
+@import "../parts/numstrip.css" layer(bands);
+@import "../parts/padstrip.css" layer(bands);
 @import "../parts/pricing.css" layer(bands);
 @import "../parts/trust.css" layer(bands);

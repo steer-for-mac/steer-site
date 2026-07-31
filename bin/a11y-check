@@ -140,7 +140,7 @@ def main():
     if args.url:
         targets = [(u, check_url) for u in args.url]
     else:
-        NOT_PAGES = {"og.html", "store-cards.html", "_probe.html", "index.src.html"}
+        NOT_PAGES = {"og.html", "store-cards.html", "index.src.html"}
         files = args.files or [f for f in sorted(glob.glob("*.html")) if f not in NOT_PAGES]
         if not files:
             sys.exit("error: no HTML files to check")

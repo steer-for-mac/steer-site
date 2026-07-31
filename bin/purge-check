@@ -16,7 +16,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 import sys
 
-MAX = float(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else 15.0
+# Ratcheted 15 -> 2 once the gate became honest. 15 was set while _probe.html
+# sat in PurgeCSS's content glob reporting 1.9%, when the real figure was ~21%.
+# With that file gone, parts/*.html out of the glob (it was the same mistake:
+# a build input, not a page), and variables off so the number counts rules
+# rather than unused tokens, both sheets read 0.0%.
+#
+# 2 rather than 0 keeps the docstring's promise below, but the headroom is now
+# deliberate rather than inherited: the failure this exists to catch — a band
+# dropped from index.src.html while bin/build still globs its sheet — reads
+# 4.2%. Anything above 0 is worth a look.
+MAX = float(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else 2.0
 
 out = subprocess.run([str(ROOT / "node_modules" / ".bin" / "purgecss"), "--config", "purgecss.config.js"],
                      capture_output=True, text=True)

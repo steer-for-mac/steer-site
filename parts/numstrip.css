@@ -1,0 +1,26 @@
+/* ══ NUMSTRIP ═══════════════════════════════════════════════════════════════
+   The four counted facts on one hairline row, from styles/base.css.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* the numbers band: four counted facts, mono, tabular, on one hairline row.
+   romm gets a lot of its density from a stats band and this is the honest
+   version of it, since every figure here is countable from the bundle. */
+.numstrip{border-block:1px solid var(--hairline);background:var(--bg)}
+/* full bleed: a 1040 column inside a full-width band left an empty cell
+   hanging off each end. The outer cells take the gutter as padding so the
+   figures still line up with the page column. */
+.numstrip-in{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding-inline:var(--pad)}
+.numcell{display:flex;flex-direction:column;gap:5px;padding:17px 20px;
+  border-right:1px solid var(--hairline)}
+.numcell:last-child{border-right:0}
+.numval{font-family:var(--mono);font-size:21px;font-variant-numeric:tabular-nums;
+  letter-spacing:-0.01em;color:var(--text)}
+.numlab{font-family:var(--mono);font-size:11px;text-transform:uppercase;
+  letter-spacing:0.11em;color:var(--text-3)}
+@media(max-width:760px){
+  .numstrip-in{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .numcell{padding:14px 16px}
+  .numcell:nth-child(2){border-right:0}
+  .numcell:nth-child(-n+2){border-bottom:1px solid var(--hairline)}
+  .numval{font-size:18px}
+}

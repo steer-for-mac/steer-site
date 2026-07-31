@@ -30,10 +30,12 @@ jobs:
 
       - run: npm ci
 
-      # --prod strips the design-rationale comments, which are 17% of index.html
-      # and written for whoever edits parts/ next rather than for visitors.
+      # A plain build. Stripping happens in the last step before upload, because
+      # the --check below compares against the committed files and those are the
+      # un-stripped ones, so anything stripped here is overwritten seconds later.
+      # It used to say --prod and that is exactly how 111 dev comments shipped.
       - name: Assemble the page
-        run: bin/build --prod
+        run: bin/build
 
       # The generated files are committed, so a mismatch means someone edited
       # index.html directly or forgot to rebuild. Fail rather than quietly
@@ -95,6 +97,10 @@ jobs:
                 .stylelintrc.json .htmlvalidate.json
           test -f index.html && test -f styles.css && test -f home.css \
             && test -d assets && test -s home.js
+          # Assert the strip actually happened. Existence checks would pass on a
+          # silently no-op --prod, which is the failure this whole step exists
+          # to close.
+          ! grep -q '<!--' index.html
 
       - uses: actions/upload-pages-artifact@v3
         with:

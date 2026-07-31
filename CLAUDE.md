@@ -14,16 +14,25 @@ banner saying so, and `bin/build --check` fails a stale copy in CI.
 | `parts/<band>.html` | markup of one band |
 | `parts/<band>.css` | styling of one band |
 | `styles/tokens.css` | any colour, surface, radius, shadow, measure |
-| `styles/shared.css` | anything used by more than the homepage |
-| `styles/base.css` | homepage components |
+| `styles/primitives.css` | the SVG stroke language and other cross-page primitives |
+| `styles/grammar.css` | the `.d-*` design system every band speaks |
+| `styles/shared.css` | chrome used by more than the homepage |
 | `index.src.html` | which parts appear, and in what order |
 
 Then `bin/build`. Cascade order is `@layer tokens, base, components, bands`,
 declared in the two entry files under `styles/`, so a band rule beats a shared
-one without needing to out-specify it.
+one without needing to out-specify it. Each sheet above sits in exactly one
+layer: tokens, primitives in `base`, grammar and shared in `components`,
+`parts/*.css` in `bands`.
+
+**Moving a rule between those files moves it between layers, and layer order
+beats specificity outright.** A rule that drops to `base` now loses to anything
+in `components` however specific it is; a rule that rises to `bands` now wins.
+Nothing lints this. The headers of `primitives.css` and `grammar.css` name the
+three rules that had to stay where they are for exactly this reason.
 
 One band per file is what lets several people or agents work at once. Give a
-delegated agent its two files; keep it out of `styles/base.css`.
+delegated agent its two files; keep it out of `styles/grammar.css`.
 
 ## Commands
 

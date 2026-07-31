@@ -1,0 +1,39 @@
+/* ══ PADSTRIP ═══════════════════════════════════════════════════════════════
+   The page's one thin band: four drawn pad silhouettes as a tab strip, ruled
+   rather than boxed, from styles/base.css. Its .tab / .tabs are scoped under
+   .padstrip and never meet the hero's, which carry the same class names.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* the pad strip: the page's one thin band, full bleed, ruled rather than
+   boxed. Cells are equal-width so it reads as a set, and the drawn pads are
+   silhouettes of the four families rather than logos, since the trademarks
+   are not ours to print. */
+.padstrip{border-block:1px solid var(--hairline);background:var(--bg)}
+.padstrip-in{display:flex;align-items:stretch;max-width:var(--maxw);margin:0 auto;
+  border-inline:1px solid var(--hairline)}
+.padstrip-lead{flex:none;display:flex;align-items:center;padding:0 22px;
+  font-family:var(--mono);font-size:11px;line-height:1.5;text-transform:uppercase;
+  letter-spacing:0.12em;color:var(--text-3);border-right:1px solid var(--hairline)}
+.padstrip .tabs{display:flex;flex:1;min-width:0}
+.padstrip .tab{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:7px;padding:17px 6px;background:none;border:0;
+  border-right:1px solid var(--hairline);cursor:pointer;
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;
+  color:var(--text-3);transition:color .15s ease,background-color .15s ease}
+.padstrip .tab .padglyph{width:88px;height:60px;opacity:.5;transition:opacity .15s ease,color .15s ease}
+.padstrip .tab:hover{color:var(--text-2);background:var(--bg-sunken)}
+.padstrip .tab:hover .padglyph{opacity:.8}
+.padstrip .tab[aria-selected="true"]{color:var(--blue-text);background:var(--bg-sunken)}
+.padstrip .tab[aria-selected="true"] .padglyph{opacity:1;color:var(--blue)}
+.padstrip-more{flex:none;display:flex;align-items:center;padding:0 20px;
+  border-left:1px solid var(--hairline);font-size:13px;white-space:nowrap}
+@media(max-width:860px){
+  .padstrip-in{flex-wrap:wrap}
+  /* flex:1 means basis 0%, so on a wrapping row .tabs "fits" in no space at
+     all: it never wraps, collapses to zero wide, and lays its four tabs out
+     past the right edge. Give it the line. */
+  .padstrip .tabs{width:100%;flex:0 0 100%}
+  .padstrip-lead{width:100%;border-right:0;border-bottom:1px solid var(--hairline);padding:12px 20px}
+  .padstrip-more{width:100%;border-left:0;border-top:1px solid var(--hairline);padding:12px 20px}
+  .padstrip-lead br{display:none}
+}

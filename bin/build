@@ -59,6 +59,10 @@ def write_home_entry() -> None:
 
     Generated, so adding parts/<band>.css is the only step. Nobody has to
     remember to register it, which is the kind of bookkeeping that rots.
+
+    The two homepage sheets above the bands are named rather than globbed: the
+    layer each one lands in is a decision, not a filename convention, and
+    styles/ also holds the entry files themselves and the shared sheet.
     """
     bands = sorted(p.stem for p in (ROOT / "parts").glob("*.css"))
     (ROOT / "styles" / "home.entry.css").write_text(
@@ -66,7 +70,8 @@ def write_home_entry() -> None:
         "   parts/*.css, because @import takes no glob. Edit a band's own sheet,\n"
         "   or add a new parts/<band>.css and rebuild. */\n\n"
         "@layer tokens, base, components, bands;\n\n"
-        '@import "base.css" layer(components);\n'
+        '@import "primitives.css" layer(base);\n'
+        '@import "grammar.css" layer(components);\n'
         + "".join(f'@import "../parts/{b}.css" layer(bands);\n' for b in bands),
         encoding="utf-8")
 
@@ -79,8 +84,27 @@ def bundle(entry: str, out: str) -> str:
     understands @layer, so the cascade is declared in the entry files instead of
     being implied by the order a script pasted things together in.
     """
+    # --minify is safe to run always: both linters read styles/ and parts/, never
+    # the generated sheets, so compressed representations (rgba(0,122,255,.1) ->
+    # #007aff1a) never reach the curb's hex detector.
+    #
+    # --targets is not optional here, it is a bug fix. With no targets set,
+    # Lightning CSS rewrites every breakpoint into Media Queries Level 4 range
+    # syntax that nobody wrote: `@media (width<=899px)` in place of max-width.
+    # That is Safari 16.4+, and on anything older the query does not parse, so
+    # the whole responsive layout silently stops applying on a site whose
+    # audience is macOS. 28 of them were shipping. Targets lower all 28 back for
+    # 341 bytes.
+    #
+    # safari 15 is the floor because it is what the range syntax costs us;
+    # nothing else in the sheet downlevels at that target. color-mix() taking
+    # var() cannot resolve statically and is left alone, @layer is untouched,
+    # and corner-shape:squircle survives as the progressive enhancement it is.
+    # Verify with scripts/cssdiff.mjs if you move it.
     proc = subprocess.run(
-        [str(ROOT / "node_modules" / ".bin" / "lightningcss"), "--bundle", f"styles/{entry}", "-o", out],
+        [str(ROOT / "node_modules" / ".bin" / "lightningcss"), "--bundle", "--minify",
+         "--targets", "safari >= 15, chrome >= 100, firefox >= 100",
+         f"styles/{entry}", "-o", out],
         cwd=ROOT, capture_output=True, text=True)
     if proc.returncode:
         sys.exit(f"lightningcss failed on styles/{entry}:\n{proc.stderr.strip()}")
@@ -133,7 +157,7 @@ def main() -> int:
     tag = " [prod: comments stripped]" if prod else ""
     print(f"index.html <- index.src.html + {parts} parts ({len(built)//1024} KB){tag}")
     print(f"styles.css <- tokens + shared ({len(shared)//1024} KB)")
-    print(f"home.css   <- base + {bands} band sheets ({len(home)//1024} KB)")
+    print(f"home.css   <- primitives + grammar + {bands} band sheets ({len(home)//1024} KB)")
     return 0
 
 

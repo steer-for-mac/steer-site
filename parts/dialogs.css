@@ -1,0 +1,80 @@
+/* ══ DIALOGS ════════════════════════════════════════════════════════════════
+   The two native <dialog> elements, from styles/base.css.
+
+   dialog.shots is the screenshot lightbox: one shot at a time, arrows either
+   side, swipe on touch, click to zoom to the capture's native 1x width (the
+   assets are @2x, so 1000px is pixel-perfect on a 2x display). Images carry
+   data-light / data-dark only and home.js resolves src on first open, so
+   nothing is fetched until the visitor asks.
+
+   The launch-list form (.ml-*) that dialog.ml-dialog wraps is NOT here: it is
+   also used by parts/pricing.html, so it lives in styles/grammar.css.
+
+   The in-page invite (.gal-invite / .gal-panes) was deleted 2026-07-30: its
+   markup had already left the homepage, so the dialog is the only way in.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+dialog.shots{
+  /* the site's universal reset zeroes the UA's dialog margin:auto — restore it
+     or the panel pins to the top-left of the top layer */
+  margin:auto;
+  width:min(1080px,calc(100vw - 24px));
+  height:min(calc(100dvh - 48px),860px);
+  border:1px solid var(--sep-2);border-radius:var(--r-card);padding:0;
+  background:var(--bg);color:var(--text);
+  box-shadow:0 40px 120px -20px rgba(0,0,0,.55);
+}
+dialog.shots[open]{display:flex;flex-direction:column}
+dialog.shots::backdrop{background:rgba(7,10,18,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+/* subtle fade on open; frozen under reduced motion */
+dialog.shots[open]{animation:shots-in .2s ease}
+dialog.shots[open]::backdrop{animation:shots-in .2s ease}
+@keyframes shots-in{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+  dialog.shots[open],dialog.shots[open]::backdrop{animation:none}
+}
+.shots-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px 14px 22px;border-bottom:1px solid var(--sep)}
+.shots-head h2{font-size:16px;font-weight:600;letter-spacing:-0.015em}
+.shots-head .shots-note{font-size:12px;color:var(--text-3);margin-top:1px;letter-spacing:-0.005em}
+.shots-count{flex:none;font-family:var(--mono);font-size:12px;letter-spacing:.06em;font-variant-numeric:tabular-nums;color:var(--text-2);border:1px solid var(--sep);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.shots-close{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--sep);background:var(--bg-inset);color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
+.shots-close:hover{background:var(--bg-inset-2);color:var(--text)}
+.shots-close svg{width:14px;height:14px}
+
+/* lightbox: one shot at a time, arrows either side, swipe on touch.
+   Tap/click the shot to zoom; zoomed, the view pans by scroll/drag. */
+.shots-stage{position:relative;flex:1;min-height:0}
+.shots-view{position:absolute;inset:0;display:grid;overflow:hidden}
+.shots-view.zoomed{overflow:auto;overscroll-behavior:contain}
+.shots-item{grid-area:1/1;margin:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px 72px 16px;min-width:0;min-height:0}
+.shots-item.cur{display:flex}
+@keyframes shot-in{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:no-preference){.shots-item.cur{animation:shot-in .18s ease}}
+.shots-zoom{display:flex;align-items:center;justify-content:center;padding:0;border:0;background:none;font:inherit;min-width:0;min-height:0;max-width:100%;flex:0 1 auto;border-radius:10px;cursor:zoom-in}
+.shots-zoom:focus-visible{outline:2px solid #4D8DFF;outline-offset:3px}
+.shots-item img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:10px;border:1px solid var(--frame);background:var(--bg-inset);box-shadow:var(--shadow-rest)}
+.shots-item figcaption{flex:none;font-size:13px;color:var(--text-3);letter-spacing:-0.005em;line-height:1.45;text-align:center;max-width:64ch}
+.shots-view.zoomed .shots-item.cur{display:block;width:max-content;min-width:100%;padding:20px;text-align:center}
+.shots-view.zoomed .shots-zoom{display:block;width:max-content;max-width:none;margin:0 auto;cursor:zoom-out}
+/* zoomed width 1000px = the capture's native 1x size (assets are @2x), i.e.
+   exactly what the pane looks like on a Mac; pixel-perfect on 2x displays */
+.shots-view.zoomed .shots-item img{max-width:none;max-height:none;width:1000px}
+.shots-view.zoomed .shots-item figcaption{margin-top:12px}
+.shots-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid var(--sep-2);background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
+.shots-nav:hover{background:var(--bg-inset-2);color:var(--text)}
+.shots-nav:focus-visible{outline:2px solid #4D8DFF;outline-offset:2px}
+.shots-nav svg{width:16px;height:16px}
+.shots-prev{left:14px}
+.shots-next{right:14px}
+html.shots-open{overflow:hidden}
+@media(max-width:700px){
+  dialog.shots{width:calc(100vw - 12px);height:min(calc(100dvh - 12px),560px);border-radius:14px}
+  .shots-head{padding:12px 12px 12px 16px}
+  .shots-head .shots-note{display:none}
+  .shots-item{padding:12px 14px 14px}
+  .shots-view.zoomed .shots-item.cur{padding:12px}
+  .shots-item figcaption{font-size:12px}
+  .shots-nav{width:36px;height:36px}
+  .shots-prev{left:8px}
+  .shots-next{right:8px}
+}
