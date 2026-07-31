@@ -1,7 +1,11 @@
 # The input directory is the repo root, so the repo's own prose would otherwise
 # be published as pages. .gitignore already covers scratch/ and node_modules/.
 docs
-CLAUDE.md
+
+# Every root markdown, not a list of the ones that exist today: CLAUDE.md and
+# README.md were named individually, so a new one published silently. Verified
+# by dropping probe-doc.md at the root and finding dist/probe-doc.html.
+/*.md
 
 # Eleventy crawls dot-directories, and .claude/ is neither gitignored nor
 # ignored here, so the first agents/*.md or skills/*.md that lands in this repo
@@ -15,6 +19,3 @@ CLAUDE.md
 # Wildcarded rather than naming .claude, so the next tool that drops a
 # dot-directory here is covered without anyone remembering.
 .*/
-
-# Repo prose that is not a page. README.md would publish as /README.html.
-README.md
