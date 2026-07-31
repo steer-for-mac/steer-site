@@ -16,7 +16,7 @@ export default defineConfig([
                  "test-results/**", "playwright-report/**"]),
 
   {
-    files: ["**/*.js", "**/*.mjs"],
+    files: ["**/*.js"],
     extends: [js.configs.recommended],
     rules: {
       // An empty catch is the intended path here: localStorage throws in
@@ -40,7 +40,7 @@ export default defineConfig([
   },
 
   {
-    files: ["scripts/**/*.mjs", "*.config.js"],
+    files: ["scripts/**/*.js", "*.config.js"],
     languageOptions: { globals: globals.node, sourceType: "module" },
   },
 

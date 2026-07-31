@@ -3,7 +3,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 /* ── accent system: the hero light-bar picker recolours the page's emissive/
-   interactive layer. Every variant below is AA-verified (contrast.mjs 2026-07):
+   interactive layer. Every variant below is AA-verified (contrast.js 2026-07):
    white-on-fill >=4.5 for CTAs, text variants >=4.5 on the darkest surface of
    the theme (--bg-inset-2). Default (no data-accent / "blue") is the :root set. */
 

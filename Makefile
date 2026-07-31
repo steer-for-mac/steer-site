@@ -35,7 +35,7 @@ lint-css: ## stylelint every hand-written sheet
 lint-html: ## html-validate every page in dist/
 	npx html-validate 'dist/**/*.html'
 
-lint-js: ## eslint home.js and every .mjs tool
+lint-js: ## eslint every script and spec
 	npx eslint .
 
 # By shebang, not extension: four of the five gates have no .py, so `ruff check
@@ -49,7 +49,7 @@ a11y: build ## axe-core (WCAG 2 A/AA) over every page in dist/, both themes
 	npx playwright test tests/a11y.spec.js
 
 contrast: ## Every token colour pair clears AA on the darkest surface it can land on
-	node scripts/contrast.mjs
+	node scripts/contrast.js
 
 types: ## tsc --noEmit over every script and gate
 	npx tsc

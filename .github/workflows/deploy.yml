@@ -63,8 +63,8 @@ jobs:
 
       - name: Copy and design rules
         run: |
-          node scripts/curb-check.mjs
-          node scripts/curb-check.mjs --self-test
+          node scripts/curb-check.js
+          node scripts/curb-check.js --self-test
 
       - name: Install browsers
         run: npx playwright install --with-deps

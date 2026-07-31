@@ -15,13 +15,22 @@ for (const page of PAGES) {
     test(`${page} does not scroll sideways at ${width}px`, async ({ page: p }) => {
       await p.setViewportSize({ width, height: width < 500 ? 812 : 900 });
       await p.goto(`/${page}`);
-      /* Polled, not read once: a single read races the stylesheet under a
-         parallel run and reports the unstyled width as an overflow. A page that
-         really does overflow still fails, it just takes the timeout to say so.
-         documentElement, not body: body can be exactly viewport-wide while a
+      /* documentElement, not body: body can be exactly viewport-wide while a
          child sticks out of it and the page still scrolls. */
-      await expect.poll(() => p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth))
-        .toBeLessThanOrEqual(0);
+      const overflow = await p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      /* Read once, and if it is over, say what the page looked like. This fired
+         once in roughly twenty runs and did not reproduce in fourteen; a retry
+         would have buried it, so the next occurrence names the element and
+         whether the sheet was even applied. */
+      const why = overflow <= 0 ? "" : JSON.stringify(await p.evaluate(() => ({
+        sheets: document.styleSheets.length,
+        rules: [...document.styleSheets].reduce((n, s) => { try { return n + s.cssRules.length; } catch { return n; } }, 0),
+        widest: (() => { let el = "", max = 0;
+          for (const e of document.querySelectorAll("*")) { const r = e.getBoundingClientRect();
+            if (r.right > max) { max = r.right; el = `${e.tagName}.${e.className}`; } }
+          return `${el} @${Math.round(max)}px`; })(),
+      })));
+      expect(overflow, `${overflow}px over. ${why}`).toBeLessThanOrEqual(0);
     });
   }
 }

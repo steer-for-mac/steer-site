@@ -1,5 +1,5 @@
 /* The band's contrast floor was sampled per-pixel off the rendered gradient
-   plus blur; scripts/contrast.mjs reads fixed token hexes and cannot re-derive
+   plus blur; scripts/contrast.js reads fixed token hexes and cannot re-derive
    it. Re-sample rather than reason if these change. */
 
 /* ── migrated from styles/base.css when that file was split ──────────────

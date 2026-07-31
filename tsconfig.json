@@ -15,7 +15,7 @@
     "types": ["node"],
     "verbatimModuleSyntax": true
   },
-  "include": ["src/theme.ts", "scripts/**/*.mjs", "tests/**/*.js", "tools/**/*.js", "*.config.js"],
+  "include": ["src/theme.ts", "scripts/**/*.js", "tests/**/*.js", "tools/**/*.js", "*.config.js"],
   // home.js excluded until task #2 finishes rewriting it (72 errors, all null)
   "exclude": ["node_modules", "dist", "scratch", "test-results", "src/home.js"]
 }

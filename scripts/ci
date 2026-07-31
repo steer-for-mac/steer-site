@@ -52,7 +52,7 @@ STEPS = [
     ("CSS: duplicate selectors, dead declarations, off-token values",
      ["make", "lint-css"], False),
     # The other two languages. CSS and markup each had a linter and these two
-    # had nothing: home.js is 17.9KB and the six .mjs tools and five Python
+    # had nothing: home.js is 17.9KB and the gate scripts and Python
     # gates below are what every other check in this list is made of, so a
     # broken gate script was previously caught only by the gate failing oddly.
     # `make lint-js` / `make lint-py`, not the tools' own invocations, for the
@@ -60,7 +60,7 @@ STEPS = [
     # lint-py in particular carries a shebang-discovery step that must not get
     # a second copy here -- four of the five files are extensionless and a
     # directory walk silently skips them.
-    ("JS: home.js and every .mjs tool", ["make", "lint-js"], False),
+    ("JS: every script and spec", ["make", "lint-js"], False),
     ("Python: every gate script", ["make", "lint-py"], False),
     # Reads styles/tokens.css, no build and no browser, ~0.2s. It has been in
     # the repo since 2956f06 and in no runner, so the audit trail those token
@@ -79,9 +79,9 @@ STEPS = [
     # observed at zero length mid-write when this step was first added.
     #
     ("Types: tsc --noEmit over the scripts and gates", ["npx", "tsc"], False),
-    ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
-    ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),
-    # PurgeCSS rather than the hand-rolled scripts/dead-css.mjs: it scans home.js
+    ("Curb: copy and design rules", ["node", "scripts/curb-check.js"], False),
+    ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.js", "--self-test"], False),
+    # PurgeCSS rather than a hand-rolled reachability check: it scans home.js
     # as well as the markup, so a class the script applies at runtime is found
     # instead of needing a hand-maintained exemption list. The hand-rolled one
     # over-reported badly (18.6KB "dead" against PurgeCSS's 2%) and would have
