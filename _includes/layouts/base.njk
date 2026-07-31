@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light"{% if home %} data-home{% endif %}>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,15 +28,33 @@
 <meta name="twitter:description" content="{{ twitterDescription | default(ogDescription | default(description)) | safe }}" />
 <meta name="twitter:image" content="https://steer.seanfloyd.dev/assets/og.png" />
 <!-- theme init in <head> so the page paints in the right appearance on first frame (no light flash on a dark Mac) -->
-{#- The homepage reads one key more than the rest of the site: the accent picker
+{#- Authored as a real file, pasted in here, exactly like the SVG in
+    _includes/art/. It has to be INLINE in the output -- it must set data-theme
+    before the first frame or a dark Mac gets a white flash, and an external
+    file is a round trip in front of that frame -- but there is no reason for it
+    to be AUTHORED here. Living in this template meant nothing read it: eslint
+    globs home.js and every .mjs and cannot see JavaScript inside a .njk, so
+    this was the last unlinted script in the repo.
+
+    Nunjucks `include` does the pasting, the same mechanism the art files use.
+    No plugin: eleventy-plugin-bundle exists and is first-party, but it solves
+    collecting per-page JS into a bundle, which is not this.
+
+    The homepage reads one key more than the rest of the site: the accent picker
     in the Feel band writes steer-accent, and the [data-accent] token overrides
     it selects live in styles/tokens.css, which every page loads. Sub-pages
     deliberately do not restore it, so the accent stays a homepage treatment
-    rather than a sitewide preference. Before this file existed that split was
-    two hand-copied scripts, and they had already drifted. #}
-<script>
-(function(){var s=null{% if home %},a=null{% endif %};try{s=localStorage.getItem('steer-theme');{% if home %}a=localStorage.getItem('steer-accent');{% endif %}}catch(e){}s=(s==='light'||s==='dark')?s:null;var r=document.documentElement,d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;r.setAttribute('data-theme', s||(d?'dark':'light'));r.setAttribute('data-theme-pref', s||'system');r.setAttribute('data-js','');{% if home %}if(a&&a!=='blue'&&a!=='auto')r.setAttribute('data-accent',a);{% endif %}})();
-</script>
+    rather than a sitewide preference. That used to be a {% if home %} wrapped
+    around the JS itself, which is what stopped the script being a plain file;
+    the flag is `data-home` on <html> now and the script reads the DOM, so the
+    file is ordinary JavaScript a linter can parse.
+
+    It also validates the stored value against light|dark before using it.
+    Without that clause a stored "SYSTEM" became data-theme="SYSTEM" (matching
+    no rule), the label read "Theme: undefined", and the first pick wrote the
+    literal string "undefined" into storage, leaving the control that exists to
+    recover the state permanently dead. #}
+<script>{% include "scripts/theme-init.js" %}</script>
 <link rel="icon" type="image/png" href="assets/mark.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="site.css">

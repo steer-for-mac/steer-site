@@ -30,10 +30,12 @@
           says all three outright.
 
           Native popover, so open/close/light-dismiss/Escape and the top layer
-          are the browser's. Radios rather than role="menuitemradio" for the
-          same reason the controller picker uses them -- arrow keys come free
-          and :checked is a fact CSS can read -- and consistency with that
-          picker beats matching a different ARIA pattern in the same codebase. #}
+          are the browser's. Radios rather than role="menuitemradio" because
+          :checked is a fact CSS can read, the label association is free, and the
+          controller picker below already works this way. NOT because arrow keys
+          come free: WebKit's radio groups do not wrap, and moving the selection
+          is not the same as browsing a menu, so theme.js owns the keyboard
+          model. #}
       <button type="button" class="theme-toggle" id="themeToggle"
               popovertarget="themeMenu" aria-label="Appearance: System">
         {% include "art/nav-sun.svg" %}

@@ -1,0 +1,39 @@
+// Checking, not building: `noEmit` is the point. tsconfig.browser.json emits.
+//
+// checkJs over the existing .js/.mjs rather than renaming everything. Node 26
+// strips types and Playwright reads TS, so converting would be free -- and
+// pointless, since checkJs applies the same rules to the same code. theme.ts is
+// real TypeScript because its bug was a type bug: a localStorage value indexed
+// a lookup table, and anything outside light|dark produced undefined and wrote
+// the string "undefined" back. A union makes that unwriteable.
+//
+// noImplicitAny is off for now. On, 296 errors, mostly annotating parameters
+// whose type is obvious a line away; off, 119, and every one is a question
+// about null -- three servers dereferenced req.url unchecked, curb-check
+// indexed a .match() that can be null. Turn it on when the annotations are
+// worth writing.
+//
+// home.js is excluded, which is a debt: 72 errors, nearly all `possibly null`
+// around getElementById and the dialog. It is also the file task #2 is
+// rewriting, so annotating it now annotates code that is going away. Delete the
+// exclusion when that lands -- the gate is worth little while the biggest
+// browser file sits outside it.
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noImplicitAny": false,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "verbatimModuleSyntax": true
+  },
+  "include": ["theme.ts", "scripts/**/*.mjs", "tests/**/*.js", "*.config.js"],
+  "exclude": ["node_modules", "_site", "scratch", "test-results", "home.js"]
+}

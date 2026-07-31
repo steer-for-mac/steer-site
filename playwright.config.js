@@ -1,9 +1,4 @@
-// End-to-end config. These tests replaced ~410 lines of hand-rolled CDP
-// driving: scripts/theme-check.mjs, scripts/pad-check.mjs and the
-// scripts/lib/cdp.mjs harness they shared, plus scripts/pngdiff.mjs, which had
-// no callers at all. Every one of those was reimplementing something shipped
-// here -- browser discovery and lifecycle, a runner, assertions with retry,
-// prefers-color-scheme emulation, screenshot diffing.
+// End-to-end config.
 //
 // The one thing Playwright does not bring is a static server. `python3 -m
 // http.server` was the first choice, being stdlib and dependency-free, and it

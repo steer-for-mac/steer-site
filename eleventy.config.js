@@ -76,6 +76,17 @@ const pageSheets = () => (existsSync(resolve(ROOT, "styles/pages"))
  * a multi-line selector list in half the way a line filter can, and it
  * understands @layer, so the cascade is declared in the entry files instead of
  * being implied by the order a script pasted things together in. */
+/* theme.ts is the only source the browser gets that is not shippable as-is, so
+   it is compiled here rather than passed through. Its own tsconfig, because the
+   root one is a CHECKER (noEmit, and it covers the Node tools too) and this is a
+   BUILD: different target, different lib, and it must actually write a file.
+   Fails the build loudly -- execFileSync throws on a non-zero exit -- since a
+   silently missing theme.js leaves fourteen pages with a dead control. */
+function compileBrowserTs() {
+  execFileSync(resolve(ROOT, "node_modules/.bin/tsc"),
+    ["-p", resolve(ROOT, "tsconfig.browser.json")], { stdio: "inherit" });
+}
+
 function bundle(entry, out) {
   // --minify is safe to run always: both linters read the hand-written sheets
   // under styles/, never the generated ones, so compressed representations
@@ -142,12 +153,11 @@ export default function (eleventyConfig) {
    * and stay separate for that reason.
    *
    * Nunjucks renders what it includes, so an SVG containing {{ or {% would be
-   * interpreted. None does, and none should: these are art files. */
+   * interpreted. None does, and none should: these are art files. _includes/scripts/*.js is pasted the same way and is NOT art -- `{{` is plausible in JavaScript, and while a malformed one fails the build loudly, a well-formed `{{ name }}` renders to empty string and deletes code silently. */
 
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("screenshots");
   eleventyConfig.addPassthroughCopy("home.js");
-  eleventyConfig.addPassthroughCopy("theme.js");
   eleventyConfig.addPassthroughCopy("apple-touch-icon.png");
   eleventyConfig.addPassthroughCopy("icon.png");
   eleventyConfig.addPassthroughCopy("CNAME");
@@ -184,8 +194,8 @@ export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("footLegal",
     "macOS 14+ · Apple Silicon · Not affiliated with Sony, Microsoft, or Nintendo.");
 
-  eleventyConfig.addTransform("strip-dev-comments", function (content) {
-    if (!PROD || !this.page.outputPath?.endsWith(".html")) return content;
+  eleventyConfig.addTransform("strip-dev-comments", /** @this {{page?: {outputPath?: string}}} */ function (content) {
+    if (!PROD || !this.page?.outputPath?.endsWith(".html")) return content;
     return stripDev(content);
   });
 
@@ -199,6 +209,7 @@ export default function (eleventyConfig) {
     bundle("site.entry.css", "_site/site.css");
     bundle("home.entry.css", "_site/home.css");
     for (const p of pageSheets()) bundle(`pages/${p}.css`, `_site/${p}.css`);
+    compileBrowserTs();
   });
 
   return {

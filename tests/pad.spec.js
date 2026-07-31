@@ -35,7 +35,7 @@ const expectState = (page) => expect.poll(() => read(page), { timeout: 5000 });
    gate CSS, the visible plate, and the per-pad copy swap. */
 const read = (page) => page.evaluate(() => {
   const chk = (n) => {
-    const e = document.querySelector(`input[name="${n}"]:checked`);
+    const e = /** @type {HTMLInputElement|null} */ (document.querySelector(`input[name="${n}"]:checked`));
     return e && e.value;
   };
   const active = [...document.querySelectorAll(".chero .padwrap.active")]
@@ -100,10 +100,10 @@ test("arrow keys stay inside the strip and never reach the hero", async ({ page 
   await page.keyboard.press("ArrowRight");
   const st = await page.evaluate(() => ({
     focus: document.activeElement?.id,
-    strip: document.querySelector('input[name="strip-pad"]:checked')?.value,
-    hero: document.querySelector('input[name="hero-pad"]:checked')?.value,
+    strip: /** @type {HTMLInputElement|null} */ (document.querySelector('input[name="strip-pad"]:checked'))?.value,
+    hero: /** @type {HTMLInputElement|null} */ (document.querySelector('input[name="hero-pad"]:checked'))?.value,
   }));
-  expect(st.focus.startsWith("sp-")).toBe(true);
+  expect(st.focus?.startsWith("sp-")).toBe(true);
   expect(st.strip).toBe("xb");
   expect(st.hero).toBe("xb");   // synced by us, not by the browser walking groups
 });

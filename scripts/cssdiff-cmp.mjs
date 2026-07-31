@@ -4,6 +4,7 @@
  */
 import { readFileSync } from "node:fs";
 const [a, b] = process.argv.slice(2);
+if (!a || !b) { console.error("usage: cssdiff-cmp <before.json> <after.json>"); process.exit(2); }
 const A = JSON.parse(readFileSync(a, "utf8"));
 const B = JSON.parse(readFileSync(b, "utf8"));
 let diffs = 0;

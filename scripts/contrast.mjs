@@ -48,6 +48,7 @@ const TEXT = ["--text", "--text-2", "--text-3", "--blue-text", "--green-text", "
 const SURFACE = ["--bg", "--bg-sunken", "--bg-inset", "--bg-inset-2", "--card-bg"];
 // Filled buttons put white on the accent, which is why --blue is #0071eb and
 // not Apple's #007aff: the latter measures 4.02 and fails.
+/** @type {ReadonlyArray<readonly [string, string]>} */
 const ON_ACCENT = [["#ffffff", "--blue"]];
 
 // "WCAG21" names the algorithm explicitly rather than taking the library's
@@ -90,7 +91,7 @@ const dark = all.find((b) => b.selector === '[data-theme="dark"]')?.vars ?? {};
 const themes = [{ name: "light", vars: light }, { name: "dark", vars: { ...light, ...dark } }];
 for (const b of all) {
   if (!b.selector.includes("data-accent")) continue;
-  const base = b.selector.startsWith("[data-theme=\"dark\"]") ? themes[1].vars : light;
+  const base = b.selector.startsWith("[data-theme=\"dark\"]") ? (themes[1]?.vars ?? light) : light;
   themes.push({ name: b.selector, vars: { ...base, ...b.vars } });
 }
 
@@ -102,6 +103,7 @@ for (const { name, vars } of themes) {
     if (!vars[t]) continue;
     // Worst case only, unless --table: the curb's rule is about the darkest
     // surface, and reporting the other four passing is noise that hides it.
+    /** @type {{r:number,s:string}|null} */
     let worst = null;
     for (const s of SURFACE) {
       if (!vars[s]) continue;
@@ -117,13 +119,14 @@ for (const { name, vars } of themes) {
     }
   }
   for (const [fg, bgTok] of ON_ACCENT) {
-    if (!vars[bgTok]) continue;
-    const r = ratio(fg, vars[bgTok]);
+    const bg = vars[bgTok];
+    if (!bg) continue;
+    const r = ratio(fg, bg);
     checked++;
     if (table) console.log(`  ${name.padEnd(38)} ${fg.padEnd(13)} on ${bgTok.padEnd(13)} ${r.toFixed(2)}`);
     if (r < AA) {
       failures++;
-      console.log(`FAIL  ${name}  ${fg} on ${bgTok} ${vars[bgTok]} = ${r.toFixed(2)}, needs ${AA}`);
+      console.log(`FAIL  ${name}  ${fg} on ${bgTok} ${bg} = ${r.toFixed(2)}, needs ${AA}`);
     }
   }
 }

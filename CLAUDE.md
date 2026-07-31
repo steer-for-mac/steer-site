@@ -13,7 +13,9 @@ working tree to keep in step, and no `--check` gate any more.
 | edit this | to change |
 |---|---|
 | `<page>.html` | one sub-page: front matter (title, meta, extra head) plus its `<main>` |
-| `_includes/layouts/base.njk` | the document every page shares: head, meta, theme init, body frame |
+| `_includes/layouts/base.njk` | the document every page shares: head, meta, body frame |
+| `_includes/scripts/theme-init.js` | the pre-paint theme script, inlined into `<head>` |
+| `theme.ts` | the appearance control on all 14 pages (compiled to `_site/theme.js`) |
 | `_includes/chrome/nav.html`, `_includes/chrome/footer.html` | site chrome, on all 14 chrome pages at once |
 | `_includes/bands/<band>.html` | markup of one homepage band |
 | `_includes/art/<band>-<thing>.svg` | one piece of inline SVG that band draws |

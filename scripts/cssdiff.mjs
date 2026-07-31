@@ -57,7 +57,7 @@ const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript
   ".xml": "application/xml", ".txt": "text/plain", ".ico": "image/x-icon" };
 const serve = () => new Promise((res) => {
   const s = createServer((req, rs) => {
-    const rel = decodeURIComponent(req.url.split("?")[0]).replace(/^\/+/, "") || "index.html";
+    const rel = decodeURIComponent((req.url ?? "/").split("?")[0] ?? "/").replace(/^\/+/, "") || "index.html";
     const f = join(SITE, rel);
     if (!f.startsWith(SITE) || !existsSync(f)) { rs.writeHead(404).end(); return; }
     rs.writeHead(200, { "content-type": MIME[extname(f)] || "application/octet-stream" });

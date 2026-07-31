@@ -58,7 +58,7 @@ export default defineConfig([
   // `sourceType: "script"` is what it actually is, and declaring it is what
   // stops `no-undef` reporting every browser global in the file.
   {
-    files: ["home.js", "theme.js"],
+    files: ["home.js", "theme.js", "_includes/scripts/*.js"],
     languageOptions: { globals: globals.browser, sourceType: "script" },
   },
 

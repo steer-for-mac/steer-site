@@ -47,7 +47,7 @@ const HTML_FILES = existsSync(join(ROOT, "_site"))
 // Read through ROOT like every other path in this file. Globbing off the
 // process cwd broke `node scripts/curb-check.mjs` from anywhere but the repo
 // root, including the --self-test that exists to be portable.
-const cssIn = (dir, keep = () => true) =>
+const cssIn = (dir, /** @type {(f: string) => boolean} */ keep = () => true) =>
   readdirSync(join(ROOT, dir)).filter((f) => f.endsWith(".css") && keep(f))
     .sort().map((f) => `${dir}/${f}`);
 const CSS_FILES = [
@@ -171,7 +171,9 @@ function scanHtml(file, findings) {
   // 5. And the HTML itself for smuggled web-font links.
   if (FONT_LINK.test(src)) {
     const mm = src.match(FONT_LINK);
-    findings.push(err(file, lineOf(src, mm.index), `web font intrusion: ${mm[1]} (system fonts only)`));
+    // .test() passed a line earlier, so this cannot be null -- but the types
+    // cannot see that, and the guard costs nothing.
+    if (mm) findings.push(err(file, lineOf(src, mm.index), `web font intrusion: ${mm[1]} (system fonts only)`));
   }
 }
 
@@ -290,7 +292,7 @@ function selfTest() {
     ["data-style-not-matched", () => { const f = []; styleAttrChecks("x", `<b data-style="#0d6efd">`, f); return f.length === 0 ? 1 : 0; }],
   ];
   let pass = 0;
-  for (const [name, fn] of cases) {
+  for (const [name, fn] of /** @type {Array<[string, () => number]>} */ (cases)) {
     const ok = fn() > 0;
     console.log(`${ok ? "\x1b[32mPASS\x1b[0m" : "\x1b[31mFAIL\x1b[0m"} ${name}`);
     if (ok) pass++;

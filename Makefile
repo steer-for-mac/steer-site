@@ -21,7 +21,7 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast e2e shots dead lighthouse check
+.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast types e2e shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z][a-z-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
@@ -108,6 +108,12 @@ a11y: ## axe-core (WCAG 2 A/AA) over every page in _site/
 # stopped running.
 contrast: ## Every token colour pair clears AA on the darkest surface it can land on
 	node scripts/contrast.mjs
+
+# checkJs over the .js/.mjs, real TypeScript for theme.ts. No build: this is the
+# checker, and eleventy runs tsconfig.browser.json to emit the one file the
+# browser needs. tsconfig.json says why home.js is excluded.
+types: ## tsc --noEmit over every script and gate
+	npx tsc
 
 # The only gate here that presses a button. Everything else grades a document
 # that is already sitting still: html-validate parses it, axe walks it, purge

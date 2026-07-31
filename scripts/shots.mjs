@@ -112,7 +112,7 @@ const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript
   ".xml": "application/xml", ".txt": "text/plain", ".ico": "image/x-icon" };
 function serveRepo() {
   const server = createServer((req, res) => {
-    const rel = decodeURIComponent(req.url.split("?")[0]).replace(/^\/+/, "") || "index.html";
+    const rel = decodeURIComponent((req.url ?? "/").split("?")[0] ?? "/").replace(/^\/+/, "") || "index.html";
     const file = join(SITE, rel);
     if (!file.startsWith(SITE) || !existsSync(file)) { res.writeHead(404).end(); return; }
     res.writeHead(200, { "content-type": MIME[extname(file)] || "application/octet-stream" });
