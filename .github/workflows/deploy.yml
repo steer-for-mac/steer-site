@@ -74,6 +74,12 @@ jobs:
       - name: Install headless Chrome
         run: npx --yes @puppeteer/browsers install chrome-headless-shell@stable --path "$HOME/.cache/puppeteer"
 
+      # `make a11y`, not the node command: the Makefile is where a task is
+      # defined. Runs its own in-process server, so it goes above the Serve step
+      # rather than needing the container. axe-core over WCAG 2 A/AA, ~7s.
+      - name: Accessibility (axe-core)
+        run: make a11y
+
       # Serve with the same nginx config that runs locally, and drive it with a
       # browser on the runner. Chrome inside the image would be a 958MB build
       # for no gain: the checks need a browser, not a container, and pointing

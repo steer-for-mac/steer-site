@@ -97,6 +97,7 @@ work. Add a task by adding a target with a `##` comment, and it shows up in
     make ci          build, then lint and render in parallel
     make lint-css    stylelint every hand-written sheet
     make lint-html   html-validate every page in _site/
+    make a11y        axe-core, WCAG 2 A/AA, every page in _site/
     make shots       render every band at 1440 and 375 into scratch/shots/
 
 `scripts/` holds all the tooling, whatever language it is in: `scripts/ci` is
@@ -105,9 +106,19 @@ ones. `bin/` is gone; splitting by language put two halves of one toolchain in
 two directories.
 
 Tooling is adopted, not hand-rolled: Eleventy assembles, Lightning CSS bundles,
-stylelint lints, PurgeCSS answers reachability, `scripts/a11y-check` and
-`scripts/lighthouse` came from `../news-digest`. Three attempts at hand-rolling
-CSS edits broke the page; see `docs/lessons/`.
+stylelint lints, PurgeCSS answers reachability, axe-core grades accessibility,
+`scripts/a11y-check` and `scripts/lighthouse` came from `../news-digest`. Three
+attempts at hand-rolling CSS edits broke the page; see `docs/lessons/`.
+
+There are two accessibility gates and they are not redundant. `scripts/a11y-check`
+is a static HTML parse: instant, no browser, catches a missing `<main>` or an
+`<img>` with no `alt`. `make a11y` (`scripts/axe-check.mjs`) drives axe-core over
+the rendered page, which is the only way to see a heading that skips a level or a
+link told apart from its paragraph by colour alone. Both of those shipped live
+while the static check passed. It is axe-core rather than `scripts/lighthouse`
+because Lighthouse's accessibility category *is* axe-core plus a page load and a
+score: 2m15s over these 14 pages against 7s, and a two-minute step in `make ci`
+is one that stops being run.
 
 `make lint-html` runs html-validate over `_site/**/*.html`, and it is in CI. It
 used to read the band fragments against a config that switched eight rules off

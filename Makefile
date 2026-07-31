@@ -21,7 +21,7 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build build-prod up down ci ci-quick lint-css lint-html shots dead lighthouse check
+.PHONY: help build build-prod up down ci ci-quick lint-css lint-html a11y shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z][a-z-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
@@ -68,6 +68,17 @@ lint-css: ## stylelint every hand-written sheet
 # that one artifact, several of them at the same time.
 lint-html: ## html-validate every page in _site/
 	npx html-validate '_site/**/*.html'
+
+# axe-core, not Lighthouse. Lighthouse's accessibility category IS axe-core with
+# a page load, a trace and a score wrapped round it: 2m15s over these 14 pages
+# against 7s here, and a two-minute per-commit step is one that stops being run.
+# It grades WCAG 2 A/AA, a superset of what Lighthouse's category weights, so
+# this is the stricter of the two. scripts/lighthouse keeps its pre-deploy job,
+# where best-practices and SEO are graded too. No build prerequisite, same
+# reason as lint-css/lint-html: scripts/ci and the deploy workflow build once
+# and then run every gate against that one artifact.
+a11y: ## axe-core (WCAG 2 A/AA) over every page in _site/
+	node scripts/axe-check.mjs
 
 shots: build ## Render every band at 1440 and 375 into scratch/shots/
 	node scripts/shots.mjs

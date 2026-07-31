@@ -32,6 +32,13 @@ BUILD = ["npx", "eleventy"]
 
 STEPS = [
     ("A11y: structural invariants", ["scripts/a11y-check"], False),
+    # `make a11y`, not the node command, for the same reason as the two below:
+    # the Makefile is where a task is defined. This is the gate that reads the
+    # rendered page -- scripts/a11y-check above is a static parse and cannot see
+    # a heading that skips a level relative to the footer, or a link told apart
+    # from its paragraph by colour alone. Both of those were live on the shipped
+    # site while every check here passed.
+    ("A11y: axe-core, WCAG 2 A/AA, every page", ["make", "a11y"], False),
     # `make lint-html`, not the html-validate command, for the reason below.
     # It grades the BUILT pages, which is why the eight rules the old
     # fragment config had to switch off are on again.

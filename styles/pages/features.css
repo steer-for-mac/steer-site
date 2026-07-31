@@ -8,7 +8,10 @@
    copies, and those three are the only pages with a .faq. */
 
 .fgroup{max-width:74ch;margin:0 auto 52px}
-.fgroup h3{font-size:21px;letter-spacing:-0.02em;margin:0 0 6px}
+/* Group headings are <h2 class="h3">: the page's <h1> is the only thing above
+   them, so an <h3> skipped a level (axe heading-order). Same values as before --
+   h2 and h3 already share the h1,h2,h3 base rule, so nothing moved. */
+.fgroup .h3{font-size:21px;letter-spacing:-0.02em;margin:0 0 6px}
 .fgroup .fwhy{color:var(--text-2);font-size:15.5px;line-height:1.6;margin:0 0 18px;max-width:62ch}
 .frow{display:grid;grid-template-columns:186px 1fr;gap:18px;padding:13px 0;border-top:1px solid var(--sep)}
 .frow .fn{font-weight:500;color:var(--text);font-size:14.5px}

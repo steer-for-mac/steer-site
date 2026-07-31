@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
+    "axe-core": "^4.12.1",
     "html-validate": "^11.6.0",
     "lightningcss-cli": "^1.33.0",
     "purgecss": "^8.0.0",

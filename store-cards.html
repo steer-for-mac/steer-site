@@ -281,122 +281,130 @@
 <body>
   <div class="frame"></div>
 
-  <div class="stage" id="identity">
-    <img class="icon" src="icon.png" alt="" />
-    <div class="wordmark">Steer</div>
-    <div class="tagline">Your whole Mac, from a controller.</div>
-    <div class="pill"><span class="dot"></span>macOS 14+ &middot; Apple Silicon</div>
-  </div>
+  <!-- The <main> is for axe (landmark-one-main), not for layout: every .stage
+       is position:absolute/inset:0 and this wrapper is static, so the
+       containing block is still <body> and each card renders identically. -->
+  <main>
+    <div class="stage" id="identity">
+      <img class="icon" src="icon.png" alt="" />
+      <!-- The wordmark is this card's only heading, so it is the <h1>. Same
+           change as og.html: axe let this page away with having none, og.html it
+           did not, and one of the two was going to start failing. -->
+      <h1 class="wordmark">Steer</h1>
+      <div class="tagline">Your whole Mac, from a controller.</div>
+      <div class="pill"><span class="dot"></span>macOS 14+ &middot; Apple Silicon</div>
+    </div>
 
-  <div class="stage hide" id="grammar">
-    <div class="caption">Point, click, scroll. No desk.</div>
-    <div class="rows">
-      <div class="row">
-        <div class="chip">
-          <!-- Left stick pushed right. The cap sits where it was pushed TO and a
-               ghost cap marks where it came FROM, so the deflection reads without
-               an arrow. An arrow here pointed opposite the cap and inverted the
-               whole meaning of the card. -->
-          <svg width="92" height="92" viewBox="0 0 92 92" fill="none" aria-hidden="true">
-            <circle cx="46" cy="46" r="35" stroke="rgba(255,255,255,0.30)" stroke-width="4"/>
-            <circle cx="46" cy="46" r="16" fill="rgba(255,255,255,0.16)"/>
-            <path d="M30 33 a17 17 0 0 0 0 26" stroke="rgba(10,132,255,0.55)" stroke-width="3.5"
-                  stroke-linecap="round"/>
-            <circle cx="64" cy="46" r="17" fill="#FFFFFF"/>
+    <div class="stage hide" id="grammar">
+      <div class="caption">Point, click, scroll. No desk.</div>
+      <div class="rows">
+        <div class="row">
+          <div class="chip">
+            <!-- Left stick pushed right. The cap sits where it was pushed TO and a
+                 ghost cap marks where it came FROM, so the deflection reads without
+                 an arrow. An arrow here pointed opposite the cap and inverted the
+                 whole meaning of the card. -->
+            <svg width="92" height="92" viewBox="0 0 92 92" fill="none" aria-hidden="true">
+              <circle cx="46" cy="46" r="35" stroke="rgba(255,255,255,0.30)" stroke-width="4"/>
+              <circle cx="46" cy="46" r="16" fill="rgba(255,255,255,0.16)"/>
+              <path d="M30 33 a17 17 0 0 0 0 26" stroke="rgba(10,132,255,0.55)" stroke-width="3.5"
+                    stroke-linecap="round"/>
+              <circle cx="64" cy="46" r="17" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <svg class="arrow" width="52" height="30" viewBox="0 0 52 30" fill="none" aria-hidden="true">
+            <path d="M2 15h44M36 4l11 11-11 11" stroke="currentColor" stroke-width="4"
+                  stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <div class="result">Move the cursor</div>
         </div>
-        <svg class="arrow" width="52" height="30" viewBox="0 0 52 30" fill="none" aria-hidden="true">
-          <path d="M2 15h44M36 4l11 11-11 11" stroke="currentColor" stroke-width="4"
-                stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div class="result">Move the cursor</div>
-      </div>
 
-      <div class="row">
-        <div class="chip">
-          <!-- Right stick pulled down. Same ghost-cap grammar, rotated, so the two
-               stick chips are visibly different glyphs rather than the same circle
-               with a dot in it. -->
-          <svg width="92" height="92" viewBox="0 0 92 92" fill="none" aria-hidden="true">
-            <circle cx="46" cy="46" r="35" stroke="rgba(255,255,255,0.30)" stroke-width="4"/>
-            <circle cx="46" cy="46" r="16" fill="rgba(255,255,255,0.16)"/>
-            <path d="M33 30 a17 17 0 0 1 26 0" stroke="rgba(10,132,255,0.55)" stroke-width="3.5"
-                  stroke-linecap="round"/>
-            <circle cx="46" cy="64" r="17" fill="#FFFFFF"/>
+        <div class="row">
+          <div class="chip">
+            <!-- Right stick pulled down. Same ghost-cap grammar, rotated, so the two
+                 stick chips are visibly different glyphs rather than the same circle
+                 with a dot in it. -->
+            <svg width="92" height="92" viewBox="0 0 92 92" fill="none" aria-hidden="true">
+              <circle cx="46" cy="46" r="35" stroke="rgba(255,255,255,0.30)" stroke-width="4"/>
+              <circle cx="46" cy="46" r="16" fill="rgba(255,255,255,0.16)"/>
+              <path d="M33 30 a17 17 0 0 1 26 0" stroke="rgba(10,132,255,0.55)" stroke-width="3.5"
+                    stroke-linecap="round"/>
+              <circle cx="46" cy="64" r="17" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <svg class="arrow" width="52" height="30" viewBox="0 0 52 30" fill="none" aria-hidden="true">
+            <path d="M2 15h44M36 4l11 11-11 11" stroke="currentColor" stroke-width="4"
+                  stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <div class="result">Scroll the page</div>
         </div>
-        <svg class="arrow" width="52" height="30" viewBox="0 0 52 30" fill="none" aria-hidden="true">
-          <path d="M2 15h44M36 4l11 11-11 11" stroke="currentColor" stroke-width="4"
-                stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div class="result">Scroll the page</div>
-      </div>
 
-      <div class="row">
-        <div class="chip">
-          <!-- Cross. PS face-button blue, matching the app's own ButtonGlyph. Drawn
-               filled rather than outlined so it reads as a pressed face button and
-               not as the macOS dismiss affordance. -->
-          <svg width="92" height="92" viewBox="0 0 92 92" fill="none" aria-hidden="true">
-            <circle cx="46" cy="46" r="35" fill="rgba(76,155,232,0.20)" stroke="#4C9BE8" stroke-width="4"/>
-            <path d="M32 32l28 28M60 32L32 60" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+        <div class="row">
+          <div class="chip">
+            <!-- Cross. PS face-button blue, matching the app's own ButtonGlyph. Drawn
+                 filled rather than outlined so it reads as a pressed face button and
+                 not as the macOS dismiss affordance. -->
+            <svg width="92" height="92" viewBox="0 0 92 92" fill="none" aria-hidden="true">
+              <circle cx="46" cy="46" r="35" fill="rgba(76,155,232,0.20)" stroke="#4C9BE8" stroke-width="4"/>
+              <path d="M32 32l28 28M60 32L32 60" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <svg class="arrow" width="52" height="30" viewBox="0 0 52 30" fill="none" aria-hidden="true">
+            <path d="M2 15h44M36 4l11 11-11 11" stroke="currentColor" stroke-width="4"
+                  stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <div class="result">Click</div>
         </div>
-        <svg class="arrow" width="52" height="30" viewBox="0 0 52 30" fill="none" aria-hidden="true">
-          <path d="M2 15h44M36 4l11 11-11 11" stroke="currentColor" stroke-width="4"
-                stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div class="result">Click</div>
       </div>
     </div>
-  </div>
 
-  <!-- Live capture: the daisy wheel open over a real TextEdit document, driven
-       by injected frames while screencapture recorded. The lit cluster is a real
-       aim state, and the face-button colours on it are the app's real commit
-       mapping, not decoration. -->
-  <div class="stage hide" id="typing">
-    <div class="shotfill"></div>
-    <div class="caption low">Type without a keyboard.</div>
-  </div>
-
-  <!-- The coverage card. Both review passes landed on the same gap: nothing in
-       the set said what the money buys, and three cards read PlayStation with
-       no countervailing text, so an Xbox owner had no signal at all. Copy is
-       lifted from the live site (index.html: "14-day trial, no card, no
-       account") rather than written fresh, so the claims stay ones that have
-       already been checked. -->
-  <div class="stage hide" id="deal">
-    <div class="caption">Everything, from the pad in your hand.</div>
-    <!-- The grid carries only what EVERY supported pad can do. Checked against
-         SteerCore/ControllerCapabilities.swift: adaptive triggers are DualSense
-         alone, gyro is DualSense / DualShock 4 / Switch Pro, and MFi's base set
-         is battery only. Listing those beside the five families bound them
-         together and promised an Xbox buyer two things his pad does not have,
-         on the image the checkout renders. Hardware-conditional features get
-         their own qualified line, and it must stay qualified. -->
-    <div class="capgrid">
-      <span>Cursor</span><span>Scroll</span><span>Shortcuts</span>
-      <span>App launcher</span><span>Typing</span><span>Window snap</span>
+    <!-- Live capture: the daisy wheel open over a real TextEdit document, driven
+         by injected frames while screencapture recorded. The lit cluster is a real
+         aim state, and the face-button colours on it are the app's real commit
+         mapping, not decoration. -->
+    <div class="stage hide" id="typing">
+      <div class="shotfill"></div>
+      <div class="caption low">Type without a keyboard.</div>
     </div>
-    <div class="fine">DualSense &middot; DualShock 4 &middot; Xbox &middot; Switch Pro &middot; MFi</div>
-    <div class="fine quiet">Gyro aim, haptics and adaptive triggers on the pads that have them.</div>
-    <div class="fine quiet">One-time purchase. No subscription, no account.</div>
-  </div>
 
-  <div class="stage hide" id="menubar">
-    <div class="caption">Lives in the menu bar.</div>
-    <img class="shot menubar" src="assets/menubar-dropdown-dark.png" alt="" />
-  </div>
+    <!-- The coverage card. Both review passes landed on the same gap: nothing in
+         the set said what the money buys, and three cards read PlayStation with
+         no countervailing text, so an Xbox owner had no signal at all. Copy is
+         lifted from the live site (index.html: "14-day trial, no card, no
+         account") rather than written fresh, so the claims stay ones that have
+         already been checked. -->
+    <div class="stage hide" id="deal">
+      <div class="caption">Everything, from the pad in your hand.</div>
+      <!-- The grid carries only what EVERY supported pad can do. Checked against
+           SteerCore/ControllerCapabilities.swift: adaptive triggers are DualSense
+           alone, gyro is DualSense / DualShock 4 / Switch Pro, and MFi's base set
+           is battery only. Listing those beside the five families bound them
+           together and promised an Xbox buyer two things his pad does not have,
+           on the image the checkout renders. Hardware-conditional features get
+           their own qualified line, and it must stay qualified. -->
+      <div class="capgrid">
+        <span>Cursor</span><span>Scroll</span><span>Shortcuts</span>
+        <span>App launcher</span><span>Typing</span><span>Window snap</span>
+      </div>
+      <div class="fine">DualSense &middot; DualShock 4 &middot; Xbox &middot; Switch Pro &middot; MFi</div>
+      <div class="fine quiet">Gyro aim, haptics and adaptive triggers on the pads that have them.</div>
+      <div class="fine quiet">One-time purchase. No subscription, no account.</div>
+    </div>
 
-  <!-- Live capture, not a composite: the dev build was driven by injected
-       controller frames (steer://debug/inject) while screencapture recorded the
-       real screen, so the translucency, the lit selection, and the desktop
-       behind it are all genuine. See docs/store-assets.md for the recipe. -->
-  <div class="stage hide" id="radial">
-    <div class="shotfill"></div>
-    <div class="caption over">Aim the stick. Press to launch.</div>
-  </div>
+    <div class="stage hide" id="menubar">
+      <div class="caption">Lives in the menu bar.</div>
+      <img class="shot menubar" src="assets/menubar-dropdown-dark.png" alt="" />
+    </div>
+
+    <!-- Live capture, not a composite: the dev build was driven by injected
+         controller frames (steer://debug/inject) while screencapture recorded the
+         real screen, so the translucency, the lit selection, and the desktop
+         behind it are all genuine. See docs/store-assets.md for the recipe. -->
+    <div class="stage hide" id="radial">
+      <div class="shotfill"></div>
+      <div class="caption over">Aim the stick. Press to launch.</div>
+    </div>
+  </main>
 
   <script>
     // One source, one card visible per render, selected by URL hash.

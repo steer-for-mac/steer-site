@@ -85,7 +85,13 @@ bodyEnd: |-
     <p class="lead ag-lead-hooks">Merge this into the <span class="mono">"hooks"</span> key of <span class="mono">~/.claude/settings.json</span> (or a project's <span class="mono">.claude/settings.json</span>). Verified against Claude Code 2.1.x.</p>
     <div class="codewrap">
       <button type="button" class="copy-btn" id="copyHooks">Copy</button>
-      <pre class="code" id="hooksBlock">{
+      <!-- tabindex/role: .code is overflow-x:auto and this block is wider than
+           760px, so without a tab stop a keyboard-only reader cannot scroll it
+           and never sees the right-hand end of the commands (axe
+           scrollable-region-focusable, WCAG 2.1.1). role="group" and not
+           "region": region is a landmark, and html-validate's
+           prefer-native-element rightly says a landmark should be a <section>. -->
+      <pre class="code" id="hooksBlock" tabindex="0" role="group" aria-label="Claude Code hooks configuration">{
   <span class="k">"hooks"</span>: {
     <span class="k">"UserPromptSubmit"</span>: [
       { "hooks": [ { "type": "command", "command": "(open -g 'steer://leds/1' &amp;)" } ] }

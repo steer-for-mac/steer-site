@@ -151,14 +151,23 @@
 </head>
 <body class="bg-dark">
   <div class="frame"></div>
-  <div class="stage layout-row">
-    <img class="icon" src="icon.png" alt="" />
-    <div class="content">
-      <div class="wordmark">Steer</div>
-      <div class="tagline">Your whole Mac, from a controller.</div>
-      <div class="pill"><span class="dot"></span>macOS 14+ · Apple Silicon</div>
+  <!-- The <main> is for axe (landmark-one-main), not for layout: .stage is
+       position:absolute/inset:0 and this wrapper is static, so the containing
+       block is still <body> and the card renders identically. -->
+  <main>
+    <div class="stage layout-row">
+      <img class="icon" src="icon.png" alt="" />
+      <div class="content">
+        <!-- The wordmark is this card's only heading, so it is the <h1>. It was a
+           <div>, which left the page with no level-one heading at all (axe
+           page-has-heading-one). Every .wordmark rule is by class and the sheet
+           resets margin/padding, so nothing about the render changes. -->
+      <h1 class="wordmark">Steer</h1>
+        <div class="tagline">Your whole Mac, from a controller.</div>
+        <div class="pill"><span class="dot"></span>macOS 14+ · Apple Silicon</div>
+      </div>
     </div>
-  </div>
+  </main>
 
   <script>
     // Layout + theme selected by URL hash so each variant renders from one source.
