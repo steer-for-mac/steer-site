@@ -76,6 +76,32 @@ less than one revert. And if the format has no tool, parse it properly — brace
 counting with string and comment awareness is thirty lines and cannot make this
 class of mistake.
 
+## The same trap, one day later, in comments
+
+2026-07-31: a bulk pass to delete over-long comment blocks across the repo, twice.
+The first pass treated `#` as a comment delimiter in every language. In YAML and
+Python it is. In CSS and HTML it starts an id selector, so the pass deleted 26
+lines of `#hooksBlock{`-style rules from `pricing.css`, 22 from `trust.css`, and
+broke `store-cards.html` badly enough that html-validate caught it. Reverted. The
+second pass was language-aware and still had to be reverted, because bulk-editing
+prose is not the same operation as bulk-editing code and the result was
+half-arguments.
+
+Two additions to the claim above:
+
+- **A delimiter is not a delimiter.** The same token means different things per
+  language, so any cross-language text pass needs a per-extension table, and the
+  moment you are writing that table you are writing a parser again.
+- **There is usually a free oracle.** Comments do not survive the build: Lightning
+  CSS strips them and the HTML minifier removes them. So the built output must be
+  **byte-identical** after a comment-only edit. Snapshot `dist/`, edit, rebuild,
+  `diff -rq`. Any difference means real code was clipped. That check caught
+  nothing on the second pass and would have caught the first one instantly.
+
+The right scope was also wrong. Fifty pre-existing blocks are a backlog to burn
+down file by file; the gate that stops *new* ones is a different, safe change.
+Mixing them turned a five-minute lint into two reverts.
+
 ## Related
 
 - [[validate-the-oracle-before-you-trust-the-measurement]] — the same failure at
