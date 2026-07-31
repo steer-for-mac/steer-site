@@ -248,10 +248,19 @@ function report(findings) {
   return errs.length;
 }
 
-/* A comment this long is a defect report on the code. WARN, not error: the 47
-   that predate the rule are a backlog to burn down file by file, and two bulk
-   regex passes over them clipped real code both times. */
+/* A comment this long is a defect report on the code. */
 const MAX_COMMENT_LINES = 6;
+
+/* Boy scout: a file with uncommitted edits has to clear the bar, the backlog
+   only warns. Branch scope was tried and every violating file is in it. */
+const touched = () => {
+  try {
+    const git = (args) => execFileSync("git", args, { cwd: ROOT, encoding: "utf8" }).split("\n").filter(Boolean);
+    return new Set([...git(["diff", "--name-only", "HEAD"]),
+      ...git(["ls-files", "--others", "--exclude-standard"])]);
+  } catch { return new Set(); }
+};
+const TOUCHED = touched();
 
 export function commentLengthChecks(file, src, findings) {
   const runs = [
@@ -262,7 +271,8 @@ export function commentLengthChecks(file, src, findings) {
   for (const m of runs) {
     const lines = m[0].trimEnd().split("\n").length;
     if (lines > MAX_COMMENT_LINES) {
-      findings.push(warn(file, lineOf(src, m.index), `${lines}-line comment (max ${MAX_COMMENT_LINES}) -- say it in the code, the commit, or a check`));
+      findings.push((TOUCHED.has(file) ? err : warn)(file, lineOf(src, m.index),
+        `${lines}-line comment (max ${MAX_COMMENT_LINES}) -- say it in the code, the commit, or a check`));
     }
   }
 }
