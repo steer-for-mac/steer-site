@@ -22,8 +22,14 @@
      #0071eb is visually the same blue and clears 4.60. Don't restore #007aff. */
   --blue:#0071eb; --blue-text:#0066cc; --blue-fill:rgba(0,122,255,0.10);
   --green:#34c759; --red:#ff3b30; --yellow:#ff9f0a;
-  /* text-weight variants: the fills fail AA as small text, these clear 4.5:1 on white/inset */
-  --green-text:#177d33; --amber-text:#9a5b00;
+  /* text-weight variants: the fills fail AA as small text. The old values
+     (#177d33, #9a5b00) were checked against white and --bg-inset and the
+     comment here claimed they cleared 4.5 — true of those, false of
+     --bg-inset-2, the darkest surface either can land on, where they measured
+     4.29 and 4.46. Darkened to the smallest hue-preserving step that clears:
+     4.52 and 4.54, an rgb delta of 1/4/2 and 2/1/0 respectively, which is
+     imperceptible. Re-measure with scripts/contrast.mjs, not by eye. */
+  --green-text:#167931; --amber-text:#985a00;
   --ps-cross:#1e9bf0; --ps-circle:#ff3b30; --ps-triangle:#34c759; --ps-square:#ff375f;
   --pad-body:#e4e7ec; --pad-ink:#767c88; --pad-edge:rgba(0,0,0,0.24);
   --frame:rgba(0,0,0,0.10);
