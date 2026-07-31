@@ -25,46 +25,11 @@ jobs:
 
       - run: npm ci
 
-      # One build; every check below reads it.
-      - name: Build the site
-        run: make build
-
-      - name: The artifact is complete and stripped
-        run: |
-          test -s dist/index.html && test -s dist/site.css \
-            && test -s dist/home.css && test -d dist/assets && test -s dist/home.js
-          # Losing CNAME is silent and total: the site moves to github.io.
-          test -s dist/CNAME
-          ! grep -q '<!--' dist/index.html
-
-      - name: Structural accessibility invariants
-        run: scripts/a11y-check
-
-      - name: CSS lint
-        run: make lint-css
-
-      - name: Markup lint
-        run: make lint-html
-
-      - name: JS lint
-        run: make lint-js
-
       # Pinned to ruff.toml's required-version: the default rule set moves
       # between minors, and a gate that grades to a different standard is worse
       # than none.
       - name: Install ruff
         run: pipx install 'ruff>=0.16,<0.17'
-
-      - name: Python lint
-        run: make lint-py
-
-      - name: Token contrast (AA on the darkest surface)
-        run: make contrast
-
-      - name: Copy and design rules
-        run: |
-          node scripts/curb-check.js
-          node scripts/curb-check.js --self-test
 
       # Keyed on the lockfile, so the cache turns over exactly when the pinned
       # Playwright version does. --with-deps still runs: the OS packages are not
@@ -78,11 +43,20 @@ jobs:
       - name: Install browsers
         run: npx playwright install --with-deps
 
-      - name: Behaviour, accessibility and layout (Playwright)
-        run: npx playwright test
+      # `make ci`, not the steps one at a time. scripts/ci already lists every
+      # gate and runs them in a thread pool, so enumerating them here was a
+      # second copy of that list, kept in step by hand, running serially.
+      # It builds dist/ first, which is what the upload below publishes.
+      - name: Every gate
+        run: make ci
 
-      - name: Unreachable CSS
-        run: scripts/purge-check
+      - name: The artifact is complete and stripped
+        run: |
+          test -s dist/index.html && test -s dist/site.css \
+            && test -s dist/home.css && test -d dist/assets && test -s dist/home.js
+          # Losing CNAME is silent and total: the site moves to github.io.
+          test -s dist/CNAME
+          ! grep -q '<!--' dist/index.html
 
       - uses: actions/upload-pages-artifact@v5
         with:
