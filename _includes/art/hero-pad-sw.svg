@@ -1,0 +1,109 @@
+<svg viewBox="0 0 1200 440" aria-hidden="true">
+        <ellipse class="contact" cx="600" cy="418" rx="255" ry="14"/>
+        <g class="device">
+          <!-- shoulders: ZL trigger angled up behind, L bumper bar hugging the body edge -->
+          <g id="swShoL">
+            <path stroke="var(--pa-ol-a)" d="M440,92 C432,76 433,60 443,52 C453,45 472,43 487,46 C499,49 507,56 508,64 L505,80 Z" fill="url(#trigTopGrad)"/>
+            <path stroke="var(--pa-rim)" d="M445,54 C454,47 471,45 486,48" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <g clip-path="url(#swTrigClip)">
+              <path fill="var(--pa-cast)" transform="translate(0,-3)" d="M430,108 C425,100 426,92 431,86 C446,73 470,64 496,59 C509,56 520,57 524,61 C526,64 526,67 524,69 C499,72 474,79 455,89 C445,94 437,101 433,108 Z"/>
+            </g>
+            <path stroke="var(--pa-ol-a)" d="M430,108 C425,100 426,92 431,86 C446,73 470,64 496,59 C509,56 520,57 524,61 C526,64 526,67 524,69 C499,72 474,79 455,89 C445,94 437,101 433,108 Z" fill="url(#bumpGrad)"/>
+            <path stroke="var(--pa-rim)" d="M433,87 C448,74 471,66 495,61" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <use href="#swShoL" transform="matrix(-1 0 0 1 1200 0)"/>
+
+          <!-- body -->
+          <path stroke="var(--pa-ol-b)" d="M600,60 C658,60 706,66 740,82 C774,98 794,124 806,158 C822,202 842,258 850,308 C858,356 852,398 822,416 C796,430 770,424 754,398 C738,372 730,340 710,318 C690,296 652,288 600,288 C548,288 510,296 490,318 C470,340 462,372 446,398 C430,424 404,430 378,416 C348,398 342,356 350,308 C358,258 378,202 394,158 C406,124 426,98 460,82 C494,66 542,60 600,60 Z"
+                fill="url(#swBodyGrad)" stroke-width="1.5"/>
+          <path stroke="var(--pa-rim)" d="M486,74 C524,64 560,61 600,61 C640,61 676,64 714,74" fill="none" stroke-width="2" stroke-linecap="round"/>
+          <!-- grip seams -->
+          <path stroke="var(--pa-seam)" d="M492,294 C476,316 468,346 462,380" fill="none" stroke-width="2"/>
+          <path stroke="var(--pa-seam)" d="M708,294 C724,316 732,346 738,380" fill="none" stroke-width="2"/>
+
+          <!-- light spill from the player LED -->
+          <g clip-path="url(#swClip)">
+            <ellipse class="bloom" fill="var(--accent)" cx="600" cy="262" rx="110" ry="48" filter="url(#soften)"/>
+          </g>
+
+          <!-- minus · plus -->
+          <circle fill="var(--pa-small)" stroke="var(--pa-ol-a)" cx="556" cy="102" r="8"/>
+          <path stroke="var(--pa-ic)" d="M551.5,102 h9" stroke-width="1.6" stroke-linecap="round"/>
+          <circle fill="var(--pa-small)" stroke="var(--pa-ol-a)" cx="644" cy="102" r="8"/>
+          <path stroke="var(--pa-ic)" d="M639.5,102 h9 M644,97.5 v9" stroke-width="1.6" stroke-linecap="round"/>
+
+          <!-- capture · home -->
+          <rect fill="var(--pa-small)" stroke="var(--pa-ol-a)" x="552" y="160" width="16" height="16" rx="4.5"/>
+          <circle stroke="var(--pa-ic)" cx="560" cy="168" r="3.5" fill="none" stroke-width="1.2"/>
+          <circle fill="var(--pa-small)" stroke="var(--pa-ol-a)" cx="642" cy="168" r="9"/>
+          <circle stroke="var(--pa-ic)" cx="642" cy="168" r="5" fill="none" stroke-width="1.2"/>
+
+          <!-- left stick · upper left -->
+          <g>
+            <circle fill="var(--pa-well)" stroke="var(--pa-ol-a)" cx="474" cy="148" r="37"/>
+            <circle stroke="var(--pa-ol-b)" cx="474" cy="148" r="28" fill="url(#stickGrad)"/>
+            <circle cx="474" cy="148" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+          </g>
+
+          <!-- face buttons, Nintendo layout: A right, B bottom -->
+          <g>
+            <circle fill="var(--pa-btn)" stroke="var(--pa-ol-b)" cx="726" cy="112" r="14"/>
+            <circle fill="var(--pa-btn)" stroke="var(--pa-ol-b)" cx="762" cy="148" r="14"/>
+            <circle fill="var(--pa-btn)" stroke="var(--pa-ol-b)" cx="726" cy="184" r="14"/>
+            <circle fill="var(--pa-btn)" stroke="var(--pa-ol-b)" cx="690" cy="148" r="14"/>
+          </g>
+
+          <!-- d-pad: one-piece cross -->
+          <g fill="var(--pa-dpad)" stroke="var(--pa-ol-a)">
+            <rect x="520" y="216" width="17" height="48" rx="5"/>
+            <rect x="504.5" y="231.5" width="48" height="17" rx="5"/>
+          </g>
+
+          <!-- right stick · lower centre-right -->
+          <g>
+            <circle fill="var(--pa-well)" stroke="var(--pa-ol-a)" cx="668" cy="240" r="37"/>
+            <circle stroke="var(--pa-ol-b)" cx="668" cy="240" r="28" fill="url(#stickGrad)"/>
+            <circle cx="668" cy="240" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+          </g>
+
+          <!-- player LEDs: P1 lit -->
+          <g>
+            <rect class="pled" fill="var(--accent)" x="578" y="270" width="9" height="3.5" rx="1.75"/>
+            <rect fill="var(--pa-off)" x="592" y="270" width="9" height="3.5" rx="1.75"/>
+            <rect fill="var(--pa-off)" x="606" y="270" width="9" height="3.5" rx="1.75"/>
+            <rect fill="var(--pa-off)" x="620" y="270" width="9" height="3.5" rx="1.75"/>
+          </g>
+        </g>
+
+        <!-- annotation LEADERS ONLY; the strings are HTML from _data/pads.json.
+             Left column: leader ends on the x=312 guide, 4 rows (60/160/260/360) -->
+        <g class="ann d1">
+          <circle cx="446" cy="46" r="2.5"/>
+          <polyline points="446,46 334,64 320,64"/>
+        </g>
+        <g class="ann d2">
+          <circle cx="437" cy="140" r="2.5"/>
+          <polyline points="437,140 334,164 320,164"/>
+        </g>
+        <g class="ann d3">
+          <circle cx="500" cy="250" r="2.5"/>
+          <polyline points="500,250 334,264 320,264"/>
+        </g>
+        <g class="ann d4">
+          <circle cx="466" cy="322" r="2.5"/>
+          <polyline points="466,322 334,364 320,364"/>
+        </g>
+        <!-- right column: x=888 guide, 3 rows centered on the rhythm (110/210/310) -->
+        <g class="ann d5">
+          <circle cx="778" cy="132" r="2.5"/>
+          <polyline points="778,132 866,114 880,114"/>
+        </g>
+        <g class="ann d6">
+          <circle cx="705" cy="254" r="2.5"/>
+          <polyline points="705,254 866,214 880,214"/>
+        </g>
+        <g class="ann d7">
+          <circle cx="851" cy="368" r="2.5"/>
+          <polyline points="851,368 866,314 880,314"/>
+        </g>
+      </svg>

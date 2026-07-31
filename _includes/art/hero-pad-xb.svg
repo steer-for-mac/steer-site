@@ -1,0 +1,114 @@
+<svg viewBox="0 0 1200 440" aria-hidden="true">
+        <ellipse class="contact" cx="600" cy="424" rx="265" ry="14"/>
+        <g class="device">
+          <!-- shoulders: LT trigger angled up behind, LB bumper bar hugging the body edge -->
+          <g id="xbShoL">
+            <path stroke="var(--pa-ol-a)" d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z" fill="url(#trigTopGrad)"/>
+            <path stroke="var(--pa-rim)" d="M437,49 C446,42 464,40 479,43" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            <g clip-path="url(#xbTrigClip)">
+              <path fill="var(--pa-cast)" transform="translate(0,-3)" d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z"/>
+            </g>
+            <path stroke="var(--pa-ol-a)" d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z" fill="url(#bumpGrad)"/>
+            <path stroke="var(--pa-rim)" d="M423,85 C438,71 463,62 488,57" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <use href="#xbShoL" transform="matrix(-1 0 0 1 1200 0)"/>
+
+          <!-- body -->
+          <path stroke="var(--pa-ol-b)" d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"
+                fill="url(#bodyGrad)" stroke-width="1.5"/>
+          <path stroke="var(--pa-rim)" d="M478,72 C518,62 556,59 600,59 C644,59 682,62 722,72" fill="none" stroke-width="2" stroke-linecap="round"/>
+          <!-- grip seams -->
+          <path stroke="var(--pa-seam)" d="M486,296 C468,320 458,350 452,384" fill="none" stroke-width="2"/>
+          <path stroke="var(--pa-seam)" d="M714,296 C732,320 742,350 748,384" fill="none" stroke-width="2"/>
+
+          <!-- light spill from the nexus -->
+          <g clip-path="url(#xbClip)">
+            <ellipse class="bloom" fill="var(--accent)" cx="600" cy="104" rx="130" ry="72" filter="url(#soften)"/>
+          </g>
+
+          <!-- nexus pod + lit ring: the pod face stays dark in both rooms, so the ring reads emissive -->
+          <ellipse stroke="var(--pa-ol-a)" cx="600" cy="94" rx="32" ry="25" fill="url(#padGrad)"/>
+          <circle fill="var(--pa-nexus)" stroke="var(--pa-ol-a)" cx="600" cy="94" r="19"/>
+          <g class="glow">
+            <circle stroke="var(--pa-nex)" cx="600" cy="94" r="15" fill="none" stroke-width="2.6"/>
+          </g>
+          <path stroke="var(--pa-nex-hl)" d="M591,87 A13,13 0 0 1 609,87" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- view · share · menu, like the real thing: share carries the upload glyph -->
+          <circle fill="var(--pa-small)" stroke="var(--pa-ol-b)" cx="552" cy="142" r="8"/>
+          <g stroke="var(--pa-ic)" fill="none" stroke-width="1.2">
+            <rect x="548.5" y="138.5" width="5" height="5"/>
+            <rect x="551" y="141" width="5" height="5"/>
+          </g>
+          <circle fill="var(--pa-small)" stroke="var(--pa-ol-b)" cx="648" cy="142" r="8"/>
+          <g stroke="var(--pa-ic)" stroke-width="1.2">
+            <path d="M644,139.5 h8 M644,142.5 h8 M644,145.5 h8"/>
+          </g>
+          <rect fill="var(--pa-small)" stroke="var(--pa-ol-a)" x="593" y="152" width="14" height="14" rx="4.5"/>
+          <g stroke="var(--pa-ic)" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M600,162 V156.8 M597.6,158.8 L600,156.4 L602.4,158.8 M596.5,162.6 h7"/>
+          </g>
+
+          <!-- left stick · upper left -->
+          <g>
+            <circle fill="var(--pa-well)" stroke="var(--pa-ol-a)" cx="472" cy="150" r="37"/>
+            <circle stroke="var(--pa-ol-b)" cx="472" cy="150" r="28" fill="url(#stickGrad)"/>
+            <circle cx="472" cy="150" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+          </g>
+
+          <!-- face buttons with letters -->
+          <g>
+            <circle fill="var(--pa-btn)" stroke="var(--pa-ol-b)" cx="728" cy="114" r="15.5"/>
+            <circle fill="var(--pa-btn)" stroke="var(--pa-ol-b)" cx="764" cy="150" r="15.5"/>
+            <circle fill="var(--pa-btn)" stroke="var(--pa-ol-b)" cx="728" cy="186" r="15.5"/>
+            <circle fill="var(--pa-btn)" stroke="var(--pa-ol-b)" cx="692" cy="150" r="15.5"/>
+          </g>
+
+          <!-- d-pad dish -->
+          <circle fill="var(--pa-dish)" stroke="var(--pa-ol-b)" cx="528" cy="238" r="31"/>
+          <g fill="var(--pa-dpad)" stroke="var(--pa-ol-a)">
+            <rect x="520" y="216" width="16" height="44" rx="6"/>
+            <rect x="506" y="230" width="44" height="16" rx="6"/>
+          </g>
+
+          <!-- right stick · lower centre-right -->
+          <g>
+            <circle fill="var(--pa-well)" stroke="var(--pa-ol-a)" cx="668" cy="238" r="37"/>
+            <circle stroke="var(--pa-ol-b)" cx="668" cy="238" r="28" fill="url(#stickGrad)"/>
+            <circle cx="668" cy="238" r="19" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="3"/>
+          </g>
+        </g>
+
+        <!-- annotation LEADERS ONLY; the strings are HTML from _data/pads.json.
+             Left column: leader ends on the x=312 guide, 3 rows centered on
+             the rhythm (110/210/310) -->
+        <g class="ann d1">
+          <circle cx="430" cy="42" r="2.5"/>
+          <polyline points="430,42 334,114 320,114"/>
+        </g>
+        <g class="ann d2">
+          <circle cx="435" cy="142" r="2.5"/>
+          <polyline points="435,142 334,214 320,214"/>
+        </g>
+        <g class="ann d3">
+          <circle cx="496" cy="249" r="2.5"/>
+          <polyline points="496,249 334,314 320,314"/>
+        </g>
+        <!-- right column: x=888 guide, 4 rows (60/160/260/360) -->
+        <g class="ann d4">
+          <circle cx="782" cy="132" r="2.5"/>
+          <polyline points="782,132 866,64 880,64"/>
+        </g>
+        <g class="ann d5">
+          <circle cx="752" cy="200" r="2.5"/>
+          <polyline points="752,200 866,164 880,164"/>
+        </g>
+        <g class="ann d6">
+          <circle cx="705" cy="252" r="2.5"/>
+          <polyline points="705,252 866,264 880,264"/>
+        </g>
+        <g class="ann d7">
+          <circle cx="832" cy="408" r="2.5"/>
+          <polyline points="832,408 866,364 880,364"/>
+        </g>
+      </svg>

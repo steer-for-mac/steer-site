@@ -12,5 +12,9 @@ _site/
 
 # Throwaway QA artifacts (screenshots, PoC output)
 scratch/
-hero-*
+# Anchored. Unanchored, this matched _includes/art/hero-*.svg and silently
+# excluded nine required build inputs: a clean checkout of HEAD could not
+# build at all (nunjucks: template not found: art/hero-defs.svg). It is meant
+# for throwaway hero-*.png renders at the repo root, which now go to scratch/.
+/hero-*
 node_modules/

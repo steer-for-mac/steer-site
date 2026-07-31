@@ -1,0 +1,45 @@
+<svg class="hero-defs" width="0" height="0" aria-hidden="true">
+      <defs>
+        <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="var(--pa-body-1)"/><stop offset="0.55" stop-color="var(--pa-body-2)"/><stop offset="1" stop-color="var(--pa-body-3)"/>
+        </linearGradient>
+        <linearGradient id="swBodyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="var(--pa-swbody-1)"/><stop offset="0.55" stop-color="var(--pa-swbody-2)"/><stop offset="1" stop-color="var(--pa-swbody-3)"/>
+        </linearGradient>
+        <linearGradient id="padGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="var(--pa-pad-1)"/><stop offset="1" stop-color="var(--pa-pad-2)"/>
+        </linearGradient>
+        <radialGradient id="stickGrad" cx="0.5" cy="0.35" r="0.75">
+          <stop offset="0" stop-color="var(--pa-stick-1)"/><stop offset="0.7" stop-color="var(--pa-stick-2)"/><stop offset="1" stop-color="var(--pa-stick-3)"/>
+        </radialGradient>
+        <!-- shoulder materials: trigger sits deeper in shadow, bumper catches the key light -->
+        <linearGradient id="trigTopGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="var(--pa-trig-1)"/><stop offset="0.45" stop-color="var(--pa-trig-2)"/><stop offset="1" stop-color="var(--pa-trig-3)"/>
+        </linearGradient>
+        <linearGradient id="bumpGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="var(--pa-bump-1)"/><stop offset="0.5" stop-color="var(--pa-bump-2)"/><stop offset="1" stop-color="var(--pa-bump-3)"/>
+        </linearGradient>
+        <filter id="soften" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="26"/>
+        </filter>
+        <clipPath id="psClip">
+          <path d="M600,48 C670,48 725,56 765,74 C805,92 822,120 836,160 C852,208 872,268 880,320 C887,368 883,410 850,428 C826,441 796,436 778,410 C760,382 750,346 728,322 C706,299 660,290 600,290 C540,290 494,299 472,322 C450,346 440,382 422,410 C404,436 374,441 350,428 C317,410 313,368 320,320 C328,268 348,208 364,160 C378,120 395,92 435,74 C475,56 530,48 600,48 Z"/>
+        </clipPath>
+        <clipPath id="xbClip">
+          <path d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"/>
+        </clipPath>
+        <clipPath id="swClip">
+          <path d="M600,60 C658,60 706,66 740,82 C774,98 794,124 806,158 C822,202 842,258 850,308 C858,356 852,398 822,416 C796,430 770,424 754,398 C738,372 730,340 710,318 C690,296 652,288 600,288 C548,288 510,296 490,318 C470,340 462,372 446,398 C430,424 404,430 378,416 C348,398 342,356 350,308 C358,258 378,202 394,158 C406,124 426,98 460,82 C494,66 542,60 600,60 Z"/>
+        </clipPath>
+        <!-- trigger silhouettes, for clipping the bumper's cast shadow -->
+        <clipPath id="psTrigClip">
+          <path d="M420,82 C412,66 413,50 423,42 C433,35 452,33 467,36 C479,39 487,46 488,54 L485,70 Z"/>
+        </clipPath>
+        <clipPath id="xbTrigClip">
+          <path d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z"/>
+        </clipPath>
+        <clipPath id="swTrigClip">
+          <path d="M440,92 C432,76 433,60 443,52 C453,45 472,43 487,46 C499,49 507,56 508,64 L505,80 Z"/>
+        </clipPath>
+      </defs>
+    </svg>

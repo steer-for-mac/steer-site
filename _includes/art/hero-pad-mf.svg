@@ -1,0 +1,79 @@
+<svg viewBox="0 0 1200 440" aria-hidden="true">
+        <!-- every shape carries its own geometry rather than inheriting it from
+             this <g>: hanging fill/stroke-width/stroke-linejoin on the group
+             would also reach the two wrapper <g>s, which is a computed-style
+             change even where nothing paints differently. Self-describing
+             shapes are what a symbol wants anyway. -->
+        <g>
+          <!-- shoulders: same silhouette language, line-art -->
+          <!-- real mirrored copies, not <use>: this plate predates the
+               presentation-attribute conversion, when a class style was the
+               only paint these paths had and it would not have reached a
+               clone. They now carry their own stroke, so a <use> here would
+               work; collapsing the pair is extraction work, not this pass. -->
+          <g>
+            <path stroke="var(--pa-mf-o)" fill="none" stroke-width="1.5" stroke-linejoin="round" d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z"/>
+            <path stroke="var(--pa-mf-o)" fill="none" stroke-width="1.5" stroke-linejoin="round" d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z"/>
+          </g>
+          <g transform="matrix(-1 0 0 1 1200 0)">
+            <path stroke="var(--pa-mf-o)" fill="none" stroke-width="1.5" stroke-linejoin="round" d="M432,88 C424,72 425,55 435,47 C445,40 465,38 481,41 C493,44 501,51 502,59 L499,76 Z"/>
+            <path stroke="var(--pa-mf-o)" fill="none" stroke-width="1.5" stroke-linejoin="round" d="M420,106 C415,98 416,90 421,84 C436,70 462,61 488,56 C502,53 514,54 518,58 C520,61 520,64 518,66 C492,69 466,76 446,86 C436,91 428,98 425,106 Z"/>
+          </g>
+
+          <!-- body: the common asymmetric archetype, drawn as a blueprint -->
+          <path stroke="var(--pa-mf-o)" fill="var(--pa-mf-body)" stroke-width="1.5" stroke-linejoin="round" d="M600,58 C665,58 716,64 750,79 C786,95 806,122 820,158 C836,202 858,264 866,314 C874,362 868,404 836,422 C810,436 782,430 766,404 C749,377 741,342 720,320 C698,297 656,290 600,290 C544,290 502,297 480,320 C459,342 451,377 434,404 C418,430 390,436 364,422 C332,404 326,362 334,314 C342,264 364,202 380,158 C394,122 414,95 450,79 C484,64 535,58 600,58 Z"/>
+
+          <!-- home + two centre buttons -->
+          <circle stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="600" cy="94" r="19"/>
+          <circle stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="552" cy="142" r="8"/>
+          <circle stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="648" cy="142" r="8"/>
+
+          <!-- left stick -->
+          <circle stroke="var(--pa-mf-o)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="472" cy="150" r="37"/>
+          <circle stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="472" cy="150" r="26"/>
+
+          <!-- face buttons: the wells only. The A/B/X/Y caps are HTML, from
+               _data/pads.json, which is where Apple's GameController naming
+               and the no-brand-colours decision now live. -->
+          <circle stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="728" cy="114" r="15.5"/>
+          <circle stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="764" cy="150" r="15.5"/>
+          <circle stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="728" cy="186" r="15.5"/>
+          <circle stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="692" cy="150" r="15.5"/>
+
+          <!-- d-pad: one outline cross -->
+          <path stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" d="M521,217 H535 A2,2 0 0 1 537,219 V229 A2,2 0 0 0 539,231 H549 A2,2 0 0 1 551,233 V245 A2,2 0 0 1 549,247 H539 A2,2 0 0 0 537,249 V259 A2,2 0 0 1 535,261 H521 A2,2 0 0 1 519,259 V249 A2,2 0 0 0 517,247 H507 A2,2 0 0 1 505,245 V233 A2,2 0 0 1 507,231 H517 A2,2 0 0 0 519,229 V219 A2,2 0 0 1 521,217 Z"/>
+
+          <!-- right stick -->
+          <circle stroke="var(--pa-mf-o)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="668" cy="238" r="37"/>
+          <circle stroke="var(--pa-mf-o2)" fill="none" stroke-width="1.5" stroke-linejoin="round" cx="668" cy="238" r="26"/>
+        </g>
+
+        <!-- annotation LEADERS ONLY; the strings are HTML from _data/pads.json,
+             where the "Other" pick is given the honest hardware core plus the
+             software claims every pad gets (arrow buttons, tap-or-hold), so it
+             is not a thinner page than the branded ones. No Sony extras. -->
+        <g class="ann d1">
+          <circle cx="430" cy="42" r="2.5"/>
+          <polyline points="430,42 334,114 320,114"/>
+        </g>
+        <g class="ann d2">
+          <circle cx="435" cy="142" r="2.5"/>
+          <polyline points="435,142 334,214 320,214"/>
+        </g>
+        <g class="ann d5">
+          <circle cx="503" cy="241" r="2.5"/>
+          <polyline points="503,241 334,314 320,314"/>
+        </g>
+        <g class="ann d3">
+          <circle cx="782" cy="132" r="2.5"/>
+          <polyline points="782,132 866,114 880,114"/>
+        </g>
+        <g class="ann d6">
+          <circle cx="734" cy="206" r="2.5"/>
+          <polyline points="734,206 866,214 880,214"/>
+        </g>
+        <g class="ann d4">
+          <circle cx="705" cy="252" r="2.5"/>
+          <polyline points="705,252 866,314 880,314"/>
+        </g>
+      </svg>
