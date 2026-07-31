@@ -32,6 +32,10 @@
   --ink:#E9EDF6; --ink-2:#98A1B5; --ink-3:#5C6579;
   --line:rgba(233,237,246,0.18);
   --quiet:#6B7488; --ann:#7A8398; --grainO:0.05;
+  /* the contact ellipse under the pad, and the white core of the ripple. Both
+     were inline rgba() in the rules below, which the strict-value gate could not
+     see: it allows any function value, so only bare hexes ever failed. */
+  --contact-ink:rgba(24,34,60,0.13); --rb-core-ink:rgba(255,255,255,0.85);
   --chip-bg:rgba(233,237,246,0.03);
   --chip-on-bg:rgba(233,237,246,0.08);
   --chip-on-sh:inset 0 0 0 1px rgba(233,237,246,0.10);
@@ -285,7 +289,7 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
 .chero .padwrap.active{opacity:1;transform:none;visibility:visible}
 /* daylight product lighting: form shadow + contact ellipse; off in the dark */
 .chero .padwrap .device{filter:var(--deviceF)}
-.chero .contact{fill:rgba(24,34,60,0.13);filter:blur(16px);opacity:var(--contactO)}
+.chero .contact{fill:var(--contact-ink);filter:blur(16px);opacity:var(--contactO)}
 /* the pad's own light — ignites when its pad takes the stage */
 .chero .padwrap .glow,.chero .padwrap .pled{opacity:1}
 .chero .padwrap .bloom{opacity:var(--bloomO)}
@@ -554,7 +558,7 @@ html.still .chero .pool{opacity:var(--poolO)}
    ordinary accent bar takes back over. Reduced motion & webdriver stills:
    the stack stays dark and the single-colour accent bar shows instead. */
 .chero .rbl{fill:none;stroke:currentColor;stroke-width:6.5;stroke-linecap:round;opacity:0}
-.chero .rb-core{fill:none;stroke:rgba(255,255,255,0.85);stroke-width:2;stroke-linecap:round;opacity:0}
+.chero .rb-core{fill:none;stroke:var(--rb-core-ink);stroke-width:2;stroke-linecap:round;opacity:0}
 .chero .rbb{fill:currentColor;opacity:0}
 .chero .rbbs{opacity:var(--bloomO)}
 .chero .hu1{color:#4D8DFF}.chero .hu2{color:#A87CFF}.chero .hu3{color:#FF6FAE}

@@ -43,6 +43,22 @@ export default {
     "scale-unlimited/declaration-strict-value": [
       ["border-radius", "color", "fill", "stroke", "background-color", "border-color", "outline-color"],
       {
+        // The plugin ignores ANY function value by default, and its own message
+        // says so: "Expected variable, function or keyword". So the closed
+        // palette below was closed against bare hexes only -- rgba(), rgb(),
+        // hsl() and color-mix() all walked straight through, and
+        // `border-color:rgba(255,255,255,0.22)` sat in the chrome on all 14
+        // pages while `make lint-css` exited 0. Probed rather than assumed:
+        // a scratch sheet of one literal per notation reported the hex and the
+        // px and nothing else.
+        //
+        // Turning it off flags five real literals and two false ones, both of
+        // them color-mix() over a var(). The `var\(` pattern below is what keeps
+        // those: it means "a value that resolves through a token is a token",
+        // which is the rule anyone would state in words. Measured both ways
+        // before landing: 7 errors without it, 5 with, 0 after the five were
+        // tokenised.
+        ignoreFunctions: false,
         ignoreValues: {
           // The colour list is a CLOSED PALETTE, not a silence. Every hex is a
           // deliberate literal outside the theme ramp: the nav-over-hero dark
@@ -57,7 +73,27 @@ export default {
           // while appearing in tokens.css exactly zero times.
           "": [
             "currentColor", "inherit", "transparent", "none",
-            "/^#(fff|F4F7FC|C7CEDA|E9EDF6|8791A6|AEB6C6|7FB0FF|4D8DFF|A87CFF|FF6FAE|FFB454|5FD48D|3FE0C0)$/i",
+            // Values routed through a token. Required once ignoreFunctions is
+            // off, so that color-mix(in srgb,var(--blue) 32%,transparent) reads
+            // as the token use it is.
+            //
+            // BOTH ANCHORED, deliberately. An unanchored /var\(/ means "mentions
+            // a token somewhere", not "resolves through one", and
+            // color-mix(in srgb,#ff0000 50%,var(--bg)) walks through it -- as
+            // does rgb(255 0 0/var(--o)). Verified: with the loose pattern all
+            // four of those probe cases pass. curb-check does not cover the gap
+            // either; its FORBIDDEN_HEX is a five-entry denylist, not a palette.
+            //
+            // The color-mix pattern is narrow and will reject a form nobody has
+            // written yet. That is the failure direction to want: a new mix
+            // errors and someone widens this line, where the loose version would
+            // have let a literal in silently.
+            "/^var\\(/",
+            "/^color-mix\\(in [a-z-]+,\\s*(var\\(--[\\w-]+\\)|transparent|currentColor)(\\s+[\\d.]+%)?,\\s*(var\\(--[\\w-]+\\)|transparent|currentColor)(\\s+[\\d.]+%)?\\)$/i",
+            // C7CEDA left this list when the nav-over-hero glass became the
+            // --oh-* group: it now appears only as a custom-property value in
+            // tokens.css, which no property here covers.
+            "/^#(fff|F4F7FC|E9EDF6|8791A6|AEB6C6|7FB0FF|4D8DFF|A87CFF|FF6FAE|FFB454|5FD48D|3FE0C0)$/i",
           ],
           // 0 and 50% are resets and circles, not radius tiers. 1-7px is the
           // hand-built SVG vignette geometry, which curb-check also leaves

@@ -43,6 +43,28 @@
   --card-hi:inset 0 1px 0 rgba(255,255,255,.7);
   --maxw:1040px; --pad:24px;
   --r-card:14px; --r-inset:10px; --r-btn:980px; --r-window:12px; /* window: screenshot frames only */
+
+  /* nav-over-hero: the glass bar while the nav sits above the hero. Seven values
+     that were literals repeated across grammar.css and shared.css (the latter
+     twice, for the ::details-content fallback), so a tweak meant three edits and
+     one of them was always missed.
+
+     DELIBERATELY NOT DUPLICATED under [data-theme="dark"]. The hero is dark in
+     both themes, so this bar looks the same in both; a dark override would be a
+     second copy that never differs. That is why these read as constants rather
+     than as a theme ramp.
+
+     --oh-glass is the hero's own --bg-hi (#0B0F1A) at 86%. It was written as
+     rgba(11,15,26,.86), which hid the fact that it is the hero ground and not a
+     colour of its own -- change the hero's top ground and this must follow.
+
+     If html[data-theme="lightoff"] is ever wired up (hero.css has the rules,
+     nothing sets the value today), the hero turns light and this whole group
+     becomes wrong. That was already true before these were tokens; what changed
+     is that fixing it is now one edit here rather than three across two files. */
+  --oh-glass:rgba(11,15,26,0.86); --oh-edge:rgba(255,255,255,0.06);
+  --oh-brand:#F4F7FC; --oh-ink:#C7CEDA; --oh-ink-hi:#ffffff;
+  --oh-hairline:rgba(255,255,255,0.22); --oh-wash:rgba(255,255,255,0.12);
 }
 
 [data-theme="dark"]{

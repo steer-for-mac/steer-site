@@ -109,12 +109,12 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 @media(max-width:860px){
   html.nav-over-hero .nav-menu .nav-links a{color:var(--text)}
   html.nav-over-hero .nav-menu .nav-links a[aria-current="page"]{color:var(--blue-text)}
-  html.nav-over-hero .nav-toggle{color:#C7CEDA;border-color:rgba(255,255,255,0.22)}
+  html.nav-over-hero .nav-toggle{color:var(--oh-ink);border-color:var(--oh-hairline)}
 }
 @supports not selector(::details-content){
   html.nav-over-hero .nav-menu .nav-links a{color:var(--text)}
   html.nav-over-hero .nav-menu .nav-links a[aria-current="page"]{color:var(--blue-text)}
-  html.nav-over-hero .nav-toggle{color:#C7CEDA;border-color:rgba(255,255,255,0.22)}
+  html.nav-over-hero .nav-toggle{color:var(--oh-ink);border-color:var(--oh-hairline)}
 }
 /* desktop with support: dissolve the disclosure, links lay out inline */
 @supports selector(::details-content){

@@ -60,13 +60,15 @@
    scrolls under it, the nav returns to the normal theme-following bar. */
 header.nav{transition:background .25s ease,border-color .25s ease}
 /* dark glass matching the hero top (not fully transparent — keeps light text
-   audit-safe, since a transparent nav leaves contrast tools guessing the bg) */
-html.nav-over-hero header.nav{background:rgba(11,15,26,0.86);border-bottom-color:rgba(255,255,255,0.06)}
-html.nav-over-hero .brand{color:#F4F7FC}
-html.nav-over-hero .nav-links a{color:#C7CEDA}
-html.nav-over-hero .nav-links a:hover{color:#fff}
-html.nav-over-hero .theme-toggle{color:#C7CEDA;border-color:rgba(255,255,255,0.22)}
-html.nav-over-hero .theme-toggle:hover{background:rgba(255,255,255,0.12);color:#fff}
+   audit-safe, since a transparent nav leaves contrast tools guessing the bg).
+   The --oh-* group is defined once in tokens.css; see the comment there for why
+   it has no dark-theme counterpart. */
+html.nav-over-hero header.nav{background:var(--oh-glass);border-bottom-color:var(--oh-edge)}
+html.nav-over-hero .brand{color:var(--oh-brand)}
+html.nav-over-hero .nav-links a{color:var(--oh-ink)}
+html.nav-over-hero .nav-links a:hover{color:var(--oh-ink-hi)}
+html.nav-over-hero .theme-toggle{color:var(--oh-ink);border-color:var(--oh-hairline)}
+html.nav-over-hero .theme-toggle:hover{background:var(--oh-wash);color:var(--oh-ink-hi)}
 
 /* ── launch-list form (pricing card) + the small dialog the CTAs open ──── */
 .ml-form{margin-top:26px;display:flex;flex-direction:column;gap:10px}
