@@ -31,6 +31,9 @@ import { dirname, join, resolve } from "node:path";
 import { homedir } from "node:os";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+/* Built output, not the working tree: the page is assembled by Eleventy and
+   the sheets by Lightning CSS, so the repo root has no index.html to serve. */
+const SITE = resolve(ROOT, "_site");
 
 /* Selector per frame, in scroll order. */
 const SECTIONS = [
@@ -101,7 +104,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* The SVG symbols live in assets/svg/ and are pulled in with
    <use href="…svg#s">, which browsers refuse to resolve over file://. So the
-   renderer serves the repo in-process rather than pointing
+   renderer serves _site/ in-process rather than pointing
    Chrome at a path. Same reason a gate that rendered file:// would silently
    show every pad missing. */
 const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript",
@@ -110,8 +113,8 @@ const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript
 function serveRepo() {
   const server = createServer((req, res) => {
     const rel = decodeURIComponent(req.url.split("?")[0]).replace(/^\/+/, "") || "index.html";
-    const file = join(ROOT, rel);
-    if (!file.startsWith(ROOT) || !existsSync(file)) { res.writeHead(404).end(); return; }
+    const file = join(SITE, rel);
+    if (!file.startsWith(SITE) || !existsSync(file)) { res.writeHead(404).end(); return; }
     res.writeHead(200, { "content-type": MIME[extname(file)] || "application/octet-stream" });
     res.end(readFileSync(file));
   });

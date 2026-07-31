@@ -24,7 +24,7 @@ import sys
 #
 # 2 rather than 0 keeps the docstring's promise below, but the headroom is now
 # deliberate rather than inherited: the failure this exists to catch — a band
-# dropped from index.src.html while bin/build still globs its sheet — reads
+# dropped from index.src.html while eleventy.config.js still globs its sheet — reads
 # 4.2%. Anything above 0 is worth a look.
 MAX = float(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else 2.0
 

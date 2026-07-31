@@ -7,7 +7,8 @@
  *   node scratch/cssdiff.mjs scratch/css-before.json
  *
  * Same transport as scripts/shots.mjs: CDP over Node's own WebSocket, own
- * in-process static server (the <use href=...svg#s> symbols need one).
+ * in-process static server, rooted at _site/ (the <use href=...svg#s> symbols
+ * need one).
  *
  * s.eval below is CDP Runtime.evaluate, not JS eval: it runs string literals
  * written in this file inside a browser this process spawned, pointed at a
@@ -21,6 +22,8 @@ import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+/* the built site, not the working tree: index.html only exists in _site/ */
+const SITE = resolve(ROOT, "_site");
 const OUT = process.argv[2] || "scratch/css-dump.json";
 
 /* width x theme x pad. 861 sits either side of the nav breakpoint that
@@ -55,8 +58,8 @@ const MIME = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript
 const serve = () => new Promise((res) => {
   const s = createServer((req, rs) => {
     const rel = decodeURIComponent(req.url.split("?")[0]).replace(/^\/+/, "") || "index.html";
-    const f = join(ROOT, rel);
-    if (!f.startsWith(ROOT) || !existsSync(f)) { rs.writeHead(404).end(); return; }
+    const f = join(SITE, rel);
+    if (!f.startsWith(SITE) || !existsSync(f)) { rs.writeHead(404).end(); return; }
     rs.writeHead(200, { "content-type": MIME[extname(f)] || "application/octet-stream" });
     rs.end(readFileSync(f));
   });

@@ -1,9 +1,10 @@
 name: build and deploy
 
-# index.html and home.css are generated from parts/, so Pages cannot serve the
-# repo as-is: it has to build first. bin/build is stdlib python, and the checks
-# below are the repo's own dependency-free scripts, so this needs no lockfile
-# and nothing to install beyond a headless Chrome for the rendering gates.
+# The site is assembled by Eleventy (parts/, a layout, front matter) and its two
+# sheets by Lightning CSS, so Pages cannot serve the repo as-is: it has to build
+# first. What gets published is _site/ and only _site/, which is what retired the
+# subtractive `rm -rf docs bin scripts ...` step that used to stand between the
+# checkout and the artifact.
 on:
   push:
     branches: [main]
@@ -30,28 +31,37 @@ jobs:
 
       - run: npm ci
 
-      # A plain build. Stripping happens in the last step before upload, because
-      # the --check below compares against the committed files and those are the
-      # un-stripped ones, so anything stripped here is overwritten seconds later.
-      # It used to say --prod and that is exactly how 111 dev comments shipped.
-      - name: Assemble the page
-        run: bin/build
+      # One production build, and every check below runs against it. Stripping
+      # used to happen in a second pass after the checks, because the checks
+      # compared against committed files and those were the un-stripped ones;
+      # that is how 111 dev comments shipped. Nothing is committed now.
+      - name: Build the site
+        run: ELEVENTY_ENV=production npx eleventy
 
-      # The generated files are committed, so a mismatch means someone edited
-      # index.html directly or forgot to rebuild. Fail rather than quietly
-      # shipping something nobody reviewed.
-      # A dev build here, because --check compares against the committed files
-      # and those are the un-stripped ones.
-      - name: Generated files match parts/
-        run: bin/build && bin/build --check
+      # Comments are 17% of the homepage and they cite docs/ paths and commit
+      # hashes. Assert the strip happened: an existence check alone would pass on
+      # a silently no-op build, which is the failure this closes.
+      - name: The artifact is complete and stripped
+        run: |
+          test -s _site/index.html && test -s _site/styles.css \
+            && test -s _site/home.css && test -d _site/assets && test -s _site/home.js
+          # CNAME is the one whose loss is silent AND total: without it the
+          # artifact is complete and correct, every check passes, the site
+          # publishes to <user>.github.io, and steer.seanfloyd.dev simply stops
+          # resolving. It is one addPassthroughCopy line away at any time.
+          test -s _site/CNAME
+          ! grep -q '<!--' _site/index.html
 
       - name: Structural accessibility invariants
         run: bin/a11y-check
 
-      - name: HTML and CSS lint
-        run: |
-          npx html-validate 'parts/*.html'
-          npx stylelint 'styles/*.css' 'parts/*.css'
+      # html-validate is absent on purpose: it used to lint parts/*.html against
+      # a config that switched eight rules off because fragments are not
+      # documents. The fragments are Nunjucks now. Linting _site/**/*.html is the
+      # right replacement and is tracked separately: it reports 103 pre-existing
+      # errors today, 98 of them inline styles.
+      - name: CSS lint
+        run: npx stylelint 'styles/*.css' 'parts/*.css'
 
       - name: Copy and design rules
         run: |
@@ -76,35 +86,9 @@ jobs:
       - name: Unreachable CSS
         run: bin/purge-check
 
-      # `path: .` publishes the whole checkout, which put CLAUDE.md on the live
-      # site (200, not a 404). Subtractive rather than an allowlist on purpose:
-      # forgetting an entry here leaves a file published, which is the status
-      # quo, where forgetting one in an allowlist would silently 404 a real
-      # page. Task 7 replaces this with a dist/ directory that only ever holds
-      # shipped output, at which point this step goes away.
-      # The --prod build at the top of this job is overwritten by the plain
-      # `bin/build` that --check needs, and nothing put it back, so the
-      # published index.html shipped 111 dev comments citing docs/ paths and
-      # commit hashes. Re-strip here, after every check that wants the dev
-      # build has run, or the step below deletes docs/ while the largest quote
-      # of it sails past in the HTML.
-      - name: Strip dev comments and remove sources from the artifact
-        run: |
-          bin/build --prod
-          rm -rf docs bin scripts parts styles docker .github node_modules
-          rm -f CLAUDE.md AGENTS.md Makefile compose.yaml package.json \
-                package-lock.json purgecss.config.js index.src.html \
-                .stylelintrc.json .htmlvalidate.json
-          test -f index.html && test -f styles.css && test -f home.css \
-            && test -d assets && test -s home.js
-          # Assert the strip actually happened. Existence checks would pass on a
-          # silently no-op --prod, which is the failure this whole step exists
-          # to close.
-          ! grep -q '<!--' index.html
-
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
   deploy:
     needs: build

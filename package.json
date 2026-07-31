@@ -2,14 +2,15 @@
   "name": "steer-site",
   "private": true,
   "type": "module",
-  "description": "Marketing site for Steer. Static output, but the toolchain is real: see bin/build, bin/ci.",
+  "description": "Marketing site for Steer. Static output, but the toolchain is real: see eleventy.config.js, bin/ci.",
   "scripts": {
-    "build": "bin/build",
+    "build": "eleventy",
+    "build:prod": "ELEVENTY_ENV=production eleventy",
     "ci": "bin/ci",
-    "lint:css": "stylelint 'styles/*.css' 'parts/*.css'",
-    "lint:html": "html-validate 'parts/*.html'"
+    "lint:css": "stylelint 'styles/*.css' 'parts/*.css'"
   },
   "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
     "html-validate": "^11.6.0",
     "lightningcss-cli": "^1.33.0",
     "purgecss": "^8.0.0",

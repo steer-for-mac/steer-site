@@ -1,3 +1,13 @@
+# Build output. Eleventy writes _site/, Lightning CSS writes the two sheets
+# inside it. index.html, styles.css and home.css are listed because bin/build
+# used to write them into the repo root and commit them; nothing generates them
+# there any more, and a stray copy would shadow the real page in Eleventy's
+# input directory.
+_site/
+/index.html
+/styles.css
+/home.css
+
 # Throwaway QA artifacts (screenshots, PoC output)
 scratch/
 hero-*

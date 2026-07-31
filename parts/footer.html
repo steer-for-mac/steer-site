@@ -10,29 +10,31 @@
       </div>
       <div>
         <h4>Product</h4>
-        <a href="#feel">Feel</a>
-        <a href="features.html">Features</a>
-        <a href="compatibility.html">Controller support</a>
-        <a href="accessibility.html">Accessibility</a>
-        <a href="agents.html">For AI agents</a>
-        <a href="vs.html">Compare</a>
-        <a href="#pricing">Pricing</a>
+        <a href="{% if not home %}index.html{% endif %}#feel">Feel</a>
+        <a href="features.html"{% if pageName == "features" %} aria-current="page"{% endif %}>Features</a>
+        <a href="compatibility.html"{% if pageName == "compatibility" %} aria-current="page"{% endif %}>Controller support</a>
+        <a href="accessibility.html"{% if pageName == "accessibility" %} aria-current="page"{% endif %}>Accessibility</a>
+        <a href="agents.html"{% if pageName == "agents" %} aria-current="page"{% endif %}>For AI agents</a>
+        <a href="vs.html"{% if pageName == "vs" %} aria-current="page"{% endif %}>Compare</a>
+        <a href="{% if not home %}index.html{% endif %}#pricing">Pricing</a>
       </div>
       <div>
         <h4>Legal</h4>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
-        <a href="refund.html">Refunds</a>
+        <a href="privacy.html"{% if pageName == "privacy" %} aria-current="page"{% endif %}>Privacy</a>
+        <a href="terms.html"{% if pageName == "terms" %} aria-current="page"{% endif %}>Terms</a>
+        <a href="refund.html"{% if pageName == "refund" %} aria-current="page"{% endif %}>Refunds</a>
       </div>
       <div>
         <h4>Support</h4>
-        <a href="support.html">Help &amp; contact</a>
+        <a href="support.html"{% if pageName == "support" %} aria-current="page"{% endif %}>Help &amp; contact</a>
         <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a>
       </div>
     </div>
+    {%- if footBottom %}
     <div class="foot-bottom">
       <span>© 2026 Sean Floyd. All rights reserved.</span>
-      <span>macOS 14+ · Apple Silicon. PlayStation, Xbox, and Switch are trademarks of their owners; Steer is independent, not affiliated with Sony, Microsoft, or Nintendo.</span>
+      <span>{{ footLegal | safe }}</span>
     </div>
+    {%- endif %}
   </div>
 </footer>

@@ -271,15 +271,19 @@ prefix.
 
 ## The page is assembled, not authored
 
-`index.html` is generated. Edit `parts/*.html` and run `bin/build`; the file
-carries a banner saying so and `bin/build --check` fails a stale copy. It was
-one 92KB file, which meant every edit was surgery on a shared blob and two
+Every page is generated into `_site/`. Edit `parts/*.html` (or the page's own
+`.html`, which is now front matter plus its `<main>`) and run `make build`. It
+was one 92KB file, which meant every edit was surgery on a shared blob and two
 people could not touch different bands at once.
 
-Includes only, no template language: the tooling here is deliberately
-dependency-free (`curb-check.mjs`, `shots.mjs`, `bin/serve`, `bin/build` all run
-on what ships with the machine), and a pip install to concatenate files would
-not earn itself. Syntax is `<!-- include: parts/uses.html -->` on its own line.
+Eleventy, with Nunjucks. The include-only build this replaced covered exactly
+one page of sixteen: the other fifteen hand-maintained their own nav, footer,
+theme script and 31 meta tags, and the theme script had already drifted into two
+variants. Extending a hand-rolled includer to cover that meant writing front
+matter, layouts and slots, which is a template engine, and this repo's own
+history records hand-rolling as the failure mode. `parts/<band>.html` still sits
+beside `parts/<band>.css`: Eleventy's `dir.includes` points at `parts`, so a
+delegated agent is still handed exactly two files.
 
 Two things that will waste your time otherwise:
 
@@ -306,7 +310,7 @@ Two things that will waste your time otherwise:
   answers "is this rule reachable" by scanning `home.js` as well as the markup.
   A hand-written reachability check over-reported by an order of magnitude and
   would have deleted live styles if trusted.
-- Run `bin/build --check`, then `node scripts/shots.mjs`. It renders every section at 1440 and 375 into
+- Run `make build`, then `node scripts/shots.mjs`. It renders every section at 1440 and 375 into
   `scratch/shots/`, and reports horizontal overflow at 1440/768/375 on the way
   past, so the three by-eye checks below get looked at rather than remembered.
   `--pad xb` and `--theme dark` drive the gates the page hides behind an

@@ -8,13 +8,14 @@
 //   npx purgecss --config purgecss.config.js            # report
 //   npx purgecss --config purgecss.config.js --output . # rewrite (review the diff)
 export default {
-  // Shipped pages only. parts/*.html was in here and was the same mistake
+  // Shipped pages only, which since the Eleventy migration means the build
+  // output and nothing else. parts/*.html was in here and was the same mistake
   // _probe.html was: a build input, not a page. Its content is already inside
   // index.html, so listing it could only ever keep a band alive after the band
   // stopped being included. Measured: drop a band from index.src.html and the
   // gate still passed at 2.5% with parts/ in the glob, 4.5% without it.
-  content: ["*.html", "!index.src.html", "home.js"],
-  css: ["home.css", "styles.css"],
+  content: ["_site/*.html", "_site/home.js"],
+  css: ["_site/home.css", "_site/styles.css"],
   safelist: {
     standard: [
       // per-pad gates. pd-* IS written literally in the markup, so it is not
