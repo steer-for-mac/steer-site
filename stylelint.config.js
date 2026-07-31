@@ -8,7 +8,7 @@
 // stylelint-config-recommended is the baseline: it turns on every "possible
 // error" rule rather than whatever a person thought to list. The overrides are
 // this repo's own, each one earned. Sources only, never the generated sheets in
-// _site/: Lightning CSS compresses colours there and the output flags values
+// dist/: Lightning CSS compresses colours there and the output flags values
 // nobody wrote.
 
 export default {

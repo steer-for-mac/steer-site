@@ -17,5 +17,5 @@
   },
   "include": ["theme.ts", "scripts/**/*.mjs", "tests/**/*.js", "*.config.js"],
   // home.js excluded until task #2 finishes rewriting it (72 errors, all null)
-  "exclude": ["node_modules", "_site", "scratch", "test-results", "home.js"]
+  "exclude": ["node_modules", "dist", "scratch", "test-results", "home.js"]
 }

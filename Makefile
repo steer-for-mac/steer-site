@@ -5,18 +5,15 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast types e2e shots dead lighthouse check
+.PHONY: help build up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast types e2e shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z0-9][a-z0-9-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
 
-build: ## Assemble the whole site into _site/ (Eleventy, then Lightning CSS)
+build: ## Assemble the whole site into dist/ (Eleventy, then Lightning CSS)
 	npx eleventy
 
-build-prod: ## Same, with dev-only comments stripped
-	ELEVENTY_ENV=production npx eleventy
-
-up: build ## Serve _site/ on https://steer.seanfloyd.dev.local (nginx, matches production)
+up: build ## Serve dist/ on https://steer.seanfloyd.dev.local (nginx, matches production)
 	docker compose up -d --wait && echo "https://steer.seanfloyd.dev.local  (and http://127.0.0.1:$(SITE_PORT))"
 
 down: ## Stop the container
@@ -29,15 +26,15 @@ ci: build ## Every check, against the real nginx container
 ci-quick: ## Skip the rendering checks (no container needed)
 	scripts/ci --quick
 
-# Sources only. Lightning CSS compresses colours in _site/, so linting the
+# Sources only. Lightning CSS compresses colours in dist/, so linting the
 # output flags values nobody wrote.
 lint-css: ## stylelint every hand-written sheet
 	npx stylelint 'styles/*.css' 'styles/bands/*.css' 'styles/pages/*.css'
 
 # No build prerequisite anywhere below: scripts/ci and the deploy workflow build
 # once, then run these against that one artifact, several at a time.
-lint-html: ## html-validate every page in _site/
-	npx html-validate '_site/**/*.html'
+lint-html: ## html-validate every page in dist/
+	npx html-validate 'dist/**/*.html'
 
 lint-js: ## eslint home.js and every .mjs tool
 	npx eslint .
@@ -49,7 +46,7 @@ lint-py: ## ruff over every Python gate (found by shebang, not a hand-kept list)
 
 # axe-core, not Lighthouse: that category IS axe-core plus a page load, at
 # 2m15s against 7s. A two-minute per-commit step stops being run.
-a11y: ## axe-core (WCAG 2 A/AA) over every page in _site/
+a11y: ## axe-core (WCAG 2 A/AA) over every page in dist/
 	node scripts/axe-check.mjs
 
 contrast: ## Every token colour pair clears AA on the darkest surface it can land on

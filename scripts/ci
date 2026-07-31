@@ -25,7 +25,7 @@ BOLD, PURPLE, GREEN, RED, DIM, RESET = "\033[1m", "\033[35m", "\033[32m", "\033[
 
 QUICK = "--quick" in sys.argv
 
-# Serial, before the parallel block: every step below reads _site/, and Eleventy
+# Serial, before the parallel block: every step below reads dist/, and Eleventy
 # has to have written it. It also replaces the old `bin/build --check` gate --
 # there is nothing generated left in the working tree to be stale.
 BUILD = ["npx", "eleventy"]
@@ -42,7 +42,7 @@ STEPS = [
     # `make lint-html`, not the html-validate command, for the reason below.
     # It grades the BUILT pages, which is why the eight rules the old
     # fragment config had to switch off are on again.
-    ("Markup: every page in _site/ is a valid document",
+    ("Markup: every page in dist/ is a valid document",
      ["make", "lint-html"], False),
     # `make lint-css` rather than the stylelint command: the glob is a task
     # definition and the Makefile owns those. It lived here, in package.json and
@@ -74,7 +74,7 @@ STEPS = [
     # `npx playwright test`, NOT `make e2e`: that target carries a `build`
     # prerequisite, and everything in this list runs in the thread pool against
     # the single artifact built at line 31. Invoking it would fire a second
-    # eleventy concurrently with the gates reading _site/ -- home.css was
+    # eleventy concurrently with the gates reading dist/ -- home.css was
     # observed at zero length mid-write when this step was first added.
     #
     # Not marked slow: --quick means "skip the slow RENDERING checks", and the
@@ -105,7 +105,7 @@ def run(step):
 
 def main() -> int:
     build = subprocess.run(BUILD, cwd=ROOT, capture_output=True, text=True, check=False)
-    print(f"{BOLD}{PURPLE}=== Build: eleventy -> _site/ ==={RESET}")
+    print(f"{BOLD}{PURPLE}=== Build: eleventy -> dist/ ==={RESET}")
     print((build.stdout + build.stderr).strip())
     if build.returncode:
         print(f"{RED}CI failed: the build did not run{RESET}")

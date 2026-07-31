@@ -1,19 +1,6 @@
-/* ══ FEEL ═══════════════════════════════════════════════════════════════════
-   The band was the last one still shaped like the pre-graft page: centred
-   prose, a green tick per line (a second saturated accent the curb forbids),
-   and an empty right half for three pads out of four. Everything around it had
-   been redrawn as ruled cells and line-art plates, so it read as a hole in the
-   middle of the page rather than as the page's one dark moment.
-
-   What is kept: the dark treatment and its hard cut (styles/base.css explains
-   why a gradient bridge was wrong), the per-pad copy, the light-bar picker,
-   and every word.
-
-   What changed: the band now speaks the same language as #uses and
-   #capabilities (.d-head, .d-top, .d-spec, .d-fig, .dgs), so the only new
-   rules here are the dark-ground token remap, the two-cell stage, and the one
-   plate this band owns.
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* The band's contrast floor was sampled per-pixel off the rendered gradient
+   plus blur; scripts/contrast.mjs reads fixed token hexes and cannot re-derive
+   it. Re-sample rather than reason if these change. */
 
 /* ── migrated from styles/base.css when that file was split ──────────────
    The dark treatment itself, the light-bar picker (.lb-picker, which lives in
@@ -30,14 +17,6 @@
   overflow:hidden;position:relative;
   padding:104px 0 112px;   /* was declared twice; the later value won */
 }
-/* No gradient bridges. There were two 120px scrims dissolving the page into the
-   dark band; both a plain two-stop fade and a 12-stop eased ramp still read as a
-   grey smear across the full page width. The premise was wrong: the hero already
-   meets #uses with a hard cut and it looks confident, so a razor edge is this
-   page's established vocabulary for a dark/pale boundary, not a defect to hide.
-   A gradient also works against what this band is for, since softening an edge is
-   the opposite of "break the pale page rhythm". The band's generous 156/168
-   padding stays: it now reads as breathing room after a clean cut. */
 .feel-cinema::before{
   content:"";position:absolute;z-index:0;pointer-events:none;
   right:-4%;top:52%;transform:translateY(-50%);
@@ -50,8 +29,6 @@
 .feel-cinema .eyebrow::before{background:#4D8DFF;box-shadow:0 0 0 1px rgba(77,141,255,0.25),0 0 10px rgba(77,141,255,0.65)}
 .feel-cinema .h2{color:#F4F7FC}
 .feel-cinema .lead{color:#AEB6C6}
-/* the page's --blue-text is tuned for a pale surface; on the studio black it
-   would sit under AA. #7FB0FF measures 8.7:1 on #0a0e1a (the band's mid stop). */
 .feel-compat{margin:26px 0 0}
 .feel-cinema .arrow-link{color:#7FB0FF}
 .feel-cinema .shot{
@@ -64,8 +41,6 @@
 .feel-cinema .shot img.shot-light{display:none}
 .feel-cinema .shot img.shot-dark{display:block}
 
-/* light-bar picker — lives in the Feel band (always dark), beside the
-   light-bar claim it demonstrates. Still drives the hero bar + page accent. */
 .lb-picker{margin-top:26px;display:flex;flex-direction:column;align-items:flex-start;gap:11px}
 .lb-picker .label{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8791A6}
 .lb-picker .dots{display:flex;gap:10px}
@@ -85,19 +60,6 @@
 .lb-picker .dot-auto{--c:#98A1B5;background:conic-gradient(from 210deg,#4D8DFF,#A87CFF,#FF6FAE,#FFB454,#5FD48D,#3FE0C0,#4D8DFF)}
 @media(prefers-reduced-motion:reduce){.lb-picker .dot{transition:none}}
 
-/* ── per-pad capability gating, site-wide ────────────────────────────────
-   The hero picker mirrors its state onto html[data-pad]; every element that
-   claims a controller-specific capability carries .pd-<pad> classes and is
-   display-gated here — truly hidden (no paint, no AX, no focus), instant on
-   switch, no JS. Before the picker JS runs (or with JS off) html has no
-   data-pad, so :not([data-pad]) shows the ps (default-tab) content.
-   `revert` restores each element's UA display (span→inline, div→block), which
-   for an li is list-item; the li variants below force flex instead. They were
-   written at (0,1,1) to out-cascade `.price-inc li{display:flex}`, which was
-   deleted 2026-07-30 with the rest of the .price-* family. No li carries a
-   .pd-* class today; the pair is kept because the gate is safelisted (PurgeCSS
-   cannot see these classes at all) and an li gate is the shape the next
-   per-pad list item will need. */
 .pd-ps,.pd-xb,.pd-sw,.pd-mf,
 li.pd-ps,li.pd-xb,li.pd-sw,li.pd-mf{display:none}
 html:not([data-pad]) .pd-ps,
@@ -110,12 +72,6 @@ html[data-pad="ps"] li.pd-ps,
 html[data-pad="xb"] li.pd-xb,
 html[data-pad="sw"] li.pd-sw,
 html[data-pad="mf"] li.pd-mf{display:flex}
-/* Feel: only sw has a screenshot for the right half (Gyro). Every capture is
-   PlayStation-labelled, so the other three pads cannot borrow one without
-   showing an Xbox owner the wrong glyphs, and gating one back to a single pad
-   is what left this band empty in the first place. Until the capture script can
-   shoot per pad, the other three get the single centred column.
-   (:not([data-pad]) is the pre-JS default, which shows ps.) */
 html:not([data-pad]) #feel .hero-grid,
 html[data-pad="ps"] #feel .hero-grid,
 html[data-pad="xb"] #feel .hero-grid,
@@ -124,9 +80,6 @@ html:not([data-pad]) #feel .lead,
 html[data-pad="ps"] #feel .lead,
 html[data-pad="xb"] #feel .lead,
 html[data-pad="mf"] #feel .lead{margin-left:auto;margin-right:auto}
-/* The pd gate hides on .pd-ps and reveals with display:revert, which resolves a
-   div to block, so .lb-picker's own display:flex on line 451 was inert and its
-   flex-direction/align-items/gap were decorative lies. Reveal it as flex. */
 html:not([data-pad]) .lb-picker.pd-ps,
 html[data-pad="ps"] .lb-picker.pd-ps{display:flex;justify-content:center}
 
@@ -134,24 +87,6 @@ html[data-pad="ps"] .lb-picker.pd-ps{display:flex;justify-content:center}
 .feel-cinema > .wrap{border-inline-color:rgba(255,255,255,0.10)}
 
 
-/* ── the dark-ground token remap ──────────────────────────────────────────
-   The .d-* grammar is written against --text / --text-2 / --text-3 / --sep /
-   --blue-text, which follow the page theme. This band does not: it is dark in
-   both themes. Rebinding the tokens inside the band is what lets every shared
-   class come along unmodified, instead of a parallel .feel-cinema copy of each.
-
-   Contrast is measured, not derived. The band's ground is a radial gradient
-   plus a blurred accent glow, so the worst case is not a hex you can read off
-   a rule: the band was rendered with its own content hidden and every pixel
-   sampled. Lightest ground anywhere inside it is #1B2847 (the glow, at 1113,
-   418 in a 1440 frame); darkest is #080A12. Ratios against the lightest:
-     #F4F7FC  text     13.57:1   (18.41:1 on the darkest)
-     #AEB6C6  text-2    7.15:1   (9.70:1)
-     #9AA4B8  text-3    5.81:1   (7.88:1)  ← replaces the band's #8791A6, which
-                                   measures 4.60:1: passing, but with 0.1 of
-                                   headroom under every small mono label here.
-     #7FB0FF  accent    6.63:1   (8.99:1)  ← the band's existing link blue;
-                                   --blue-text is tuned for pale surfaces. */
 .feel-cinema{
   --text:#F4F7FC;
   --text-2:#AEB6C6;
@@ -161,30 +96,13 @@ html[data-pad="ps"] .lb-picker.pd-ps{display:flex;justify-content:center}
   --hairline:rgba(255,255,255,0.10);
   --blue-text:#7FB0FF;
   --blue-fill:rgba(127,176,255,0.13);
-  /* one tier under #uses (96) now that the band ends on ink rather than on the
-     168px of padding that used to stand in for content */
   padding:92px 0 96px;
 }
-/* .dw replaces .wrap here, which drops the two vertical column rules the band
-   inherited from `main > section > .wrap`. #uses and #capabilities do not
-   carry them either, and a ruled cell grid draws its own structure. */
 .feel-cinema .dw{position:relative;z-index:2}
-/* the band's small print was two greys: #8791A6 hardcoded on the eyebrow and
-   the picker label, --text-3 everywhere the shared classes reach. One grey. */
 .feel-cinema .eyebrow{color:var(--text-3)}
 #feel .d-display{color:var(--text);max-width:16ch}
-/* the pd- gate centres the band for ps/xb/mf via `html[data-pad] #feel .lead`
-   (1,2,1). Beaten on the cascade at equal specificity, not with !important. */
 html #feel .d-top .lead{margin-left:0;margin-right:0;max-width:48ch}
 
-/* ── the stage: rows against the plate ────────────────────────────────────
-   The row count swings 1 to 3 across the four pads, so the left cell cannot be
-   sized to its content. It is stretched to the plate instead and the compat
-   link is pinned to its floor: the rows start on the plate's spec rule and the
-   link lands on the plate's ground line, so both columns terminate on ink at
-   both ends and the pad-to-pad slack falls in the middle rather than opening a
-   hole at the top of the cell. #uses' rule, in a different direction: no
-   column may bottom out in white space. */
 .fl-stage{
   display:grid;grid-template-columns:minmax(0,5.6fr) minmax(0,6.4fr);
   gap:36px 60px;align-items:stretch;
@@ -194,14 +112,6 @@ html #feel .d-top .lead{margin-left:0;margin-right:0;max-width:48ch}
 .fl-say{min-width:0;display:flex;flex-direction:column}
 .fl-plate{min-width:0;display:flex;flex-direction:column;justify-content:flex-end}
 
-/* the checklist as spec rows: the thing in mono flush left, what it does in
-   the right column. Same split the sentences already carried at their first
-   comma or colon.
-
-   The pd- gate is (0,1,0) and this sheet is concatenated after base.css, so a
-   bare `.fl-row{display:grid}` would out-cascade `display:none` and show all
-   four pads' rows at once. base.css hit the same wall with `li.pd-*`; same
-   fix, one tier up. */
 .fl-row{grid-template-columns:150px minmax(0,1fr);gap:2px 24px;
   padding:13px 0 14px;border-bottom:1px solid var(--sep)}
 .fl-row.pd-ps,.fl-row.pd-xb,.fl-row.pd-sw,.fl-row.pd-mf{display:none}
@@ -218,25 +128,12 @@ html[data-pad="mf"] .fl-row.pd-mf{display:grid}
 .feel-cinema .lb-picker .label{color:var(--text-3)}
 .feel-cinema .feel-compat{margin-top:auto;padding-top:22px}
 
-/* ── the plate: d-pad up, and the volume ceiling ──────────────────────────
-   The one claim that is true on all four pads and needs no glyph: d-pad up is
-   bound to volumeUp out of the box, and the haptic at the top is a different
-   event from the nine steps below it. Cited in the markup with file and line.
-
-   Dead air below the ground line is 30 of 240 viewBox units; the crop margin
-   resolves against .d-fig's width, so the trim is 30/420. */
 .ff{--cb:-7.1%}
 .fl-up{fill:var(--blue-text);opacity:.2;stroke:var(--blue-text);stroke-opacity:.55;stroke-width:1}
-/* deliberately not .acc-t / .acc-s / .acc-h.knob: base.css hangs the #uses
-   plate loops off those class names, and a .dgs.on here would inherit them. */
 .fl-ring{transform-box:view-box;transform-origin:86px 140px}
 .fl-mark{transform-box:view-box}
 
 @media (prefers-reduced-motion:no-preference){
-  /* 6.2s, distinct from every other loop on the page (6 / 5.5 / 6.5 / 4.4) so
-     two plates in one viewport never sync. Transform and opacity only.
-     steps(1,end): volume is discrete, so the marker must jump a step at a
-     time, not glide. */
   .dgs.on .fl-mark{animation:flClimb 6.2s steps(1,end) infinite}
   .dgs.on .fl-ring{animation:flPulse 6.2s cubic-bezier(.4,.05,.2,1) infinite}
   .dgs.on .fl-ring.r2{animation-name:flPulse2}

@@ -21,7 +21,7 @@ were cut; requirements content moved to `support.html`.
 
 Infrastructure, as of the second session and superseding what this paragraph
 used to say: Eleventy assembles all 14 pages from `_includes/{bands,chrome,
-layouts}` into `_site/`, Lightning CSS bundles `site.css` and `home.css` with
+layouts}` into `dist/`, Lightning CSS bundles `site.css` and `home.css` with
 `--minify --targets`, the `Makefile` is the single place a task is defined, and
 `scripts/` holds every gate and instrument. `bin/build`, `parts/` and `bin/`
 are gone. Output is no longer committed.
@@ -82,7 +82,7 @@ is corrected and still open: the real figure is 98 inline styles, not the ~95
 guessed here, and it is now blocking something. html-validate is absent from CI
 entirely, because it used to lint band fragments against a config that switched
 eight rules off (fragments are not documents), and those fragments are Nunjucks
-now. Pointing it at `_site/**/*.html` restores validation *and* upgrades it to
+now. Pointing it at `dist/**/*.html` restores validation *and* upgrades it to
 whole documents, which is worth doing the moment the 98 are gone.
 
 Also open, discovered in the second session: `contrast.mjs` does not exist.

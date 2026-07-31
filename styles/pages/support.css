@@ -1,16 +1,8 @@
-/* support.html. Paired with the page by path: styles/pages/<page>.css.
-   Unlayered, like every page sheet.
-
-   The .faq block this page used to declare in its own front matter went to
-   styles/shared.css instead: features.html and compatibility.html had
-   byte-identical copies of it, and all three are the only pages with a .faq. */
 
 /* the two doc-body asides that close the top half, quieter than .doc p */
 .sup-aside{color:var(--text-3);margin-top:22px}
 .sup-aside-next{color:var(--text-3);margin-top:18px}
 
-/* the first FAQ pair sits above prose rather than at the end of the page, so it
-   closes its own gap instead of relying on the next heading's margin */
 .sup-faq-top{margin-bottom:26px}
 
 .sup-more{margin-top:20px}

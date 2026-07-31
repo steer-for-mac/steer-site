@@ -15,12 +15,12 @@ export default {
   // the band stopped being included. Measured: drop a band from index.src.html
   // and the gate still passed at 2.5% with the fragments in the glob, 4.5%
   // without them.
-  content: ["_site/*.html", "_site/home.js", "_site/theme.js"],
+  content: ["dist/*.html", "dist/home.js", "dist/theme.js"],
   // Every sheet the build emits, globbed rather than listed, so a new
   // styles/pages/<page>.css is graded the day it appears instead of the day
   // somebody remembers this line. A page sheet is small, so the percentage is
   // a sharp instrument on it: one dead rule in a 200-byte file is 20%.
-  css: ["_site/*.css"],
+  css: ["dist/*.css"],
   safelist: {
     standard: [
       // per-pad gates. pd-* IS written literally in the markup, so it is not

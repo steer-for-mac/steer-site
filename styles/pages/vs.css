@@ -1,10 +1,3 @@
-/* vs.html — the ControllerKeys comparison.
-   Paired with vs.html by the rule in eleventy.config.js: swap the directory,
-   swap the extension. Unlayered, like every page sheet, because it replaces
-   values that were inline style attributes and outranked everything.
-
-   The .cmp table itself is in styles/shared.css even though this is the only
-   page that uses it. That predates page sheets; it is noted, not moved. */
 
 /* centred head and the tail under the table */
 .vs-lead{margin:16px auto 0;max-width:60ch}

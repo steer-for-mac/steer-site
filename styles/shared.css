@@ -1,18 +1,4 @@
-/* Shared across every page: reset, layout, and the chrome that is not specific
-   to one band. Homepage-only rules live in styles/design-system.css (the .d-* design
-   system) and styles/svg-strokes.css (the stroke language); per-band rules live
-   in styles/bands/<band>.css.
 
-   This file and design-system.css are both @layer components, and site.css is
-   linked before home.css, so a design-system rule beats a rule here at equal
-   specificity. Two rules here deliberately out-specify design-system.css instead:
-   `img{display:block}` (which is why the .shot theme swap cannot drop to
-   @layer base) and the @media(max-width:860px) block that undoes the
-   over-hero nav link colour. Both are noted in design-system.css. */
-
-/* Steer — marketing site. Inherits the app's macOS Settings language.
-   System fonts only. System blue is the only interactive accent.
-   Measured against Linear / Vercel Geist / Raycast / apple.com. */
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -21,22 +7,11 @@
    white-on-fill >=4.5 for CTAs, text variants >=4.5 on the darkest surface of
    the theme (--bg-inset-2). Default (no data-accent / "blue") is the :root set. */
 
-/* ~400ms crossfade when the accent changes; the class is added per-switch by JS
-   and removed after the fade (skipped under prefers-reduced-motion). */
 html.accent-anim body *{transition:background-color .4s ease,border-color .4s ease,color .4s ease,box-shadow .4s ease,fill .4s ease,stroke .4s ease,outline-color .4s ease!important}
 html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;background:var(--bg)}
 body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.5;font-size:17px;letter-spacing:-0.01em;transition:background .3s ease,color .3s ease}
 a{color:var(--blue-text);text-decoration:none}
 a:hover{text-decoration:underline;text-underline-offset:2px}
-/* WCAG 1.4.1: a link sitting inside a run of text may not be told apart from
-   that text by colour alone. axe (link-in-text-block) measured --blue-text at
-   1.06:1 against --text-2 and 1.19:1 against --text-3, nowhere near the 3:1 that
-   would let colour carry it, and failed 22 nodes across nine pages. The fix has
-   to be a non-colour affordance, and a second accent is forbidden
-   (docs/design-rules.md), so: underline, which is the convention and which
-   .frow .fd a on features.html was already using. Scoped to running text --
-   nav, footer columns, buttons, arrow links and back links stand alone in their
-   block, are not "in a text block", and stay clean. */
 p a,li a,.faq-body a,.spec-row .v a{text-decoration:underline;text-decoration-thickness:from-font;text-underline-offset:2px}
 p a.btn,li a.btn,p a.arrow-link,li a.arrow-link{text-decoration:none}
 img{display:block;max-width:100%}
@@ -49,8 +24,6 @@ img{display:block;max-width:100%}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
 .wrap-wide{max-width:1200px;margin:0 auto;padding:0 var(--pad)}
 section{position:relative}
-/* section eyebrow = the hero's engineered-instrument signature, carried down:
-   SF Mono label + one emissive accent dot. Ties every section back to the pad. */
 .eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.13em;color:var(--text-3);margin-bottom:16px;display:inline-flex;align-items:center;gap:9px}
 .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;flex:none;background:var(--blue);box-shadow:0 0 0 1px color-mix(in srgb,var(--blue) 20%,transparent),0 0 9px color-mix(in srgb,var(--blue) 55%,transparent)}
 h1,h2,h3{letter-spacing:-0.022em;line-height:1.06;font-weight:600}
@@ -83,11 +56,6 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px;letter-spacing:-0.02em;color:var(--text)}
 .brand:hover{text-decoration:none}
 .brand .logo{width:22px;height:22px;flex:none}
-/* Dropdown-first: the labelled pill + sheet below are the base state at every
-   width, so engines without ::details-content (Safari <18.4, older iOS) get
-   the styled dropdown instead of a naked "Menu" in body text. Engines with
-   support dissolve the <details> into inline links on desktop (the gated
-   block below). No JS: navigation works with scripting off in both shapes. */
 .nav-menu{display:block;position:relative}
 .nav-menu::details-content{display:block}
 .nav-menu:not([open])::details-content{content-visibility:hidden}
@@ -102,10 +70,6 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .nav-links a{color:var(--text);font-size:15px;letter-spacing:-0.01em;padding:9px 12px;border-radius:var(--r-inset)}
 .nav-links a:hover{background:var(--bg-inset);color:var(--text);text-decoration:none}
 .nav-links a[aria-current="page"]{color:var(--blue-text)}
-/* the open sheet is opaque at any width, so undo the over-hero light link
-   colour (set in the hero's page-local <style>, which loads after this file)
-   wherever the dropdown is the active shape: below 861px, and at every width
-   in engines without ::details-content. Kept in sync, both blocks. */
 @media(max-width:860px){
   html.nav-over-hero .nav-menu .nav-links a{color:var(--text)}
   html.nav-over-hero .nav-menu .nav-links a[aria-current="page"]{color:var(--blue-text)}
@@ -132,10 +96,6 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .theme-toggle{width:30px;height:30px;border-radius:50%;border:1px solid var(--sep);background:transparent;color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
 .theme-toggle:hover{background:var(--bg-inset);color:var(--text)}
 .theme-toggle svg{width:15px;height:15px}
-/* The trigger carries ONE fact: the appearance in force. Which of the three
-   modes produced it is the menu's job, so there is no badge here -- an earlier
-   attempt put a dot on the trigger for "automatic" and it was inventing a
-   convention no icon set has. */
 .theme-toggle .sun,.theme-toggle .moon{display:none}
 html[data-theme="light"] .theme-toggle .sun{display:block}
 html[data-theme="dark"] .theme-toggle .moon{display:block}
@@ -146,42 +106,14 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
   background:var(--card-bg);box-shadow:var(--shadow-rest-lg);
   min-width:168px;flex-direction:column;gap:2px;
   position:fixed;
-  /* display MUST be split across these two rules. The UA sheet hides a closed
-     popover with `[popover]:not(:popover-open){display:none}`, and author origin
-     beats UA origin -- so a bare `display:flex` here painted the menu on all 14
-     pages permanently, a 168x129 card over the hero swallowing clicks, while
-     :popover-open stayed honestly false. Every gate passed: axe sees valid
-     visible content, PurgeCSS sees reachable rules, and the e2e suite asserts
-     :popover-open, which was never wrong. Only a human looking at the page
-     caught it. */
   display:none;
-  /* The UA sheet gives [popover] `inset:0; margin:auto`, which centres it. Set
-     margin:0 and only `top`/`right` and the box is over-constrained -- left:0
-     survives from that inset, and in LTR the loser is `right`, so the menu pins
-     itself to the far left of the viewport whatever the anchor says. Measured
-     it doing exactly that: right computed to a correct 139.7px and the box
-     still landed at x=0. These two undo the rest of the shorthand. */
-  left:auto;bottom:auto;
+  left:auto;bottom:auto;   /* undo the UA inset:0, which over-constrains and pins to x=0 */
 }
+/* split, not merged: author display beats the UA [popover]:not(:popover-open)
+   rule, and one display:flex paints the menu over every page permanently while
+   :popover-open stays false -- axe, PurgeCSS and the e2e suite all passed it. */
 .theme-menu:popover-open{display:flex}
-/* No script, no control. The head script sets data-js before first paint, so
-   its absence is a reliable signal. Without this the menu still OPENED -- the
-   popover is pure HTML -- and offered three choices that silently did nothing:
-   picking Dark left the page light, the menu stayed put and the label still
-   read "Appearance: System". The cycling button it replaced was inert too, but
-   it at least looked inert. */
 html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
-/* Fallback placement first, anchor positioning second, because anchor reached
-   Baseline only in 2026 (Chrome 125, Safari 26, Firefox 147) and ~9% of
-   browsers still lack it.
-
-   The fallback aligns to the NAV's right edge, not the trigger's. It cannot do
-   better without anchor(): the trigger is not the rightmost thing in the bar,
-   the CTA is, so the menu hangs 116px right of its own button at desktop widths
-   and 71px at 375. Measured at 1440/1000/768/375/320 -- it never overflows
-   (right edge inside the viewport at every one) and never covers the trigger,
-   so it degrades acceptably. Where anchor() is available the menu sits flush
-   under the button instead. */
 .theme-menu{
   top:52px;
   right:calc((100vw - min(1200px, 100vw)) / 2 + var(--pad));
@@ -223,14 +155,6 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 .arrow-link .a{transition:transform .15s}
 .arrow-link:hover .a{transform:translateX(3px)}
 
-/* Apple-continuous corners on the card/window surfaces. Progressive enhancement:
-   Chromium (Chrome/Edge 139+, ~70% of traffic) renders the superellipse; Safari
-   27 and Firefox ignore the property and keep the border-radius arc, i.e. today's
-   look with no regression (verified unsupported on Safari 27 / macOS 27 b4, so
-   even the author's own browser falls back — this is a bonus for Chromium, not a
-   dependency). Scoped to rectangular surfaces ONLY: the --r-btn pills and the
-   circular LED/eyebrow dots (50%) must stay round — a squircle of a circle is a
-   blob. Add a new card/window class here when one ships; do not go universal. */
 .shot,.shots,.nav-links,.trust-list,.cmp-card,.ml-dialog,.close{
   corner-shape: squircle;
 }
@@ -263,15 +187,6 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 .dash{color:var(--text-3)}
 
 /* spec grid */
-/* FAQ: moved out of the homepage sheet 2026-07-30. The requirements block
-   and its two FAQ rows now live on support.html, which links site.css and
-   not home.css, so these rules were shipping to a page with no markup and the
-   markup was rendering unstyled. Found by scripts/dead-css.mjs. */
-/* The three pages that have a .faq (features, support, compatibility) each
-   carried a hand-copied <style> block overriding this one, and all three copies
-   agreed: summary 16.5px / -0.015em, body 15px. Those are the values now, and
-   text-align:left came off the same three markup attributes. The 16px/16px
-   below them was never what shipped. */
 .faq{max-width:760px;margin:40px auto 0;text-align:left}
 .faq details{border-top:1px solid var(--sep);padding:2px 0}
 .faq details:last-child{border-bottom:1px solid var(--sep)}
@@ -289,21 +204,11 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 /* rows draw only a top rule; close each column so the table doesn't end mid-air */
 .specs>div>.spec-row:last-child{border-bottom:1px solid var(--sep)}
 
-/* The centred baseline row a price used to sit on. The pricing band was rebuilt
-   on the .pr-* grammar (styles/bands/pricing.css) and the card, currency cap, numeral
-   and inclusion list went with it; accessibility.html still sets its own type on
-   .close .price-big and needs this row. */
 .price-big{display:flex;align-items:baseline;justify-content:center;gap:12px;line-height:1}
 
 /* footer */
 footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-sunken);font-size:14px}
 .foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
-/* The column headings are <h2>, not <h4>. Every page reaches the footer from an
-   <h1> or an <h2>, so an <h4> skipped a level and axe (heading-order) failed all
-   eleven chrome pages on this one element. Level is semantics, class is looks --
-   the same split agents.html and accessibility.html already use. line-height is
-   restated because <h2> picks up the 1.06 from the h1,h2,h3 rule above and <h4>
-   did not: without it the footer columns shift ~6px. */
 .foot-grid .foot-h{font-size:13px;font-weight:590;line-height:1.5;color:var(--text-3);margin-bottom:14px;letter-spacing:0}
 /* column links only -- the brand lockup keeps its own flex/colour/size */
 .foot-grid a:not(.brand){display:block;color:var(--text-2);margin-bottom:9px;font-size:14px}
@@ -315,8 +220,6 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
 .tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 10px;border-radius:var(--r-btn);background:var(--bg-inset);color:var(--text-2);border:1px solid var(--sep)}
 .tag .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
 
-/* use-case section: the card layout it belonged to was rebuilt on the .d-*
-   grammar, and .uc-tag is the one survivor — the .d-folio rail's label. */
 .uc-tag{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--blue-text);margin-bottom:12px;display:inline-flex;align-items:center;gap:7px}
 .uc-tag::before{content:"";width:5px;height:5px;border-radius:50%;flex:none;background:var(--blue);box-shadow:0 0 7px color-mix(in srgb,var(--blue) 60%,transparent)}
 .note-callout{background:var(--bg-inset);border-radius:var(--r-inset);padding:18px 20px;font-size:14px;color:var(--text-2);line-height:1.55}
@@ -335,33 +238,20 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
 .doc .lede{font-size:18px;color:var(--text);margin-bottom:28px}
 .back-link{font-size:14px;color:var(--text-2);display:inline-flex;gap:6px;align-items:center;margin-bottom:28px}
 .back-link:hover{color:var(--text);text-decoration:none}
-/* Five of the eleven pages with a back link sit it 24px above the content, not
-   28: the two landers re-declared the whole rule in a <style> block to change
-   that one value, and the three centred index pages carried it as an inline
-   margin. One modifier instead of five copies. */
 .back-link.tight{margin-bottom:24px}
 
 @media(max-width:860px){
   .hero-grid{grid-template-columns:1fr;gap:36px}
   .specs{grid-template-columns:1fr}
   .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
-  /* Was a sideways-scrolling row with a hidden scrollbar, so most links were
-     invisible until you happened to drag: a tester had no idea other pages
-     existed. The labelled dropdown is now the base state (see the nav block);
-     nothing to switch here beyond spacing. */
   .nav-in{gap:12px}
   .brand,.nav-right{flex-shrink:0}
-  /* keep the whole tempo scale ordered at this width: tight < sec < loose
-     (sec used to drop to 72px while the retired .sec-snug stayed 84px,
-     inverting the scale) */
   .sec{padding:72px 0}
   .sec-loose{padding:88px 0}
   .sec-tight{padding:52px 0}
   .sec-head-split{grid-template-columns:1fr}
   .sec-head-split .lead{max-width:56ch}
 }
-/* compare table: below 640px the 3-column grid wraps into unreadable multi-line
-   cells — collapse each row into a stacked card with labelled value lines */
 @media(max-width:640px){
   .cmp thead{display:none}
   .cmp,.cmp tbody{display:block}
@@ -383,11 +273,6 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
   .sec-loose{padding:76px 0}
   .sec-tight{padding:48px 0}
 }
-/* The nav CTA carries two complete labels and shows one, so the visible text is
-   always a single string with normal spacing (a split label became two flex
-   items with the button's 8px gap wedged between them). Below ~520px the
-   labelled Menu button plus the full CTA overrun the bar, so it drops to just
-   "Join"; the hero repeats the full call to action. */
 .nav-cta-short{display:none}
 @media(max-width:520px){
   .nav-cta-full{display:none}
@@ -395,7 +280,4 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
-/* LLM-only pointer: removed from layout AND from the accessibility tree
-   (aria-hidden), so it reaches text-scraping AI clients without touching the
-   visual page or screen-reader output. Not a screen-reader helper. */
 .llm-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}

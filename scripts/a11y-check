@@ -15,7 +15,7 @@ invariants that survive a static HTML parse:
   - no positive tabindex
 
 Usage:
-    scripts/a11y-check                       # _site/*.html
+    scripts/a11y-check                       # dist/*.html
     scripts/a11y-check path/to/file.html ...
     scripts/a11y-check --url http://localhost:8080/sources --url .../stats
 
@@ -148,7 +148,7 @@ def main():
         # The built site, not the templates: a page is now a layout plus front
         # matter, and none of the pieces on its own has an <h1> or a <main>.
         NOT_PAGES = {"og.html", "store-cards.html"}
-        files = args.files or [f for f in sorted(glob.glob("_site/*.html"))
+        files = args.files or [f for f in sorted(glob.glob("dist/*.html"))
                                if Path(f).name not in NOT_PAGES]
         if not files:
             sys.exit("error: no HTML files to check (run `npx eleventy` first?)")

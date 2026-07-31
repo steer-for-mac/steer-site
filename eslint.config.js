@@ -23,7 +23,7 @@ export default defineConfig([
   // test-results/ is not tidiness: Playwright clears it mid-run while eslint is
   // globbing, and eslint dies with ENOENT on a directory that existed when the
   // walk began -- a flaky lint failure with no lint in it.
-  globalIgnores(["_site/**", "scratch/**", "node_modules/**", "screenshots/**",
+  globalIgnores(["dist/**", "scratch/**", "node_modules/**", "screenshots/**",
                  "test-results/**", "playwright-report/**"]),
 
   {

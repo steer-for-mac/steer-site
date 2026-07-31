@@ -28,13 +28,13 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // nav, a footer and (on the homepage) eight band files, and none of those is a
 // page. Globbed for the reason CSS_FILES is: the list this replaced still named
 // index.html, which stopped existing at the repo root the day the site moved to
-// _site/, and existsSync below would have skipped it without a word.
+// dist/, and existsSync below would have skipped it without a word.
 // og.html and store-cards.html are render sources for image assets, not pages.
 const NOT_PAGES = new Set(["og.html", "store-cards.html"]);
-const HTML_FILES = existsSync(join(ROOT, "_site"))
-  ? readdirSync(join(ROOT, "_site"))
+const HTML_FILES = existsSync(join(ROOT, "dist"))
+  ? readdirSync(join(ROOT, "dist"))
     .filter((f) => f.endsWith(".html") && !NOT_PAGES.has(f)).sort()
-    .map((f) => `_site/${f}`)
+    .map((f) => `dist/${f}`)
   : [];
 // Sources, never the generated sheets. Lightning CSS compresses colours, so
 // rgba(0,122,255,0.10) becomes #007aff1a in the output and the forbidden-hex
@@ -344,7 +344,7 @@ if (process.argv.includes("--self-test")) {
 }
 const findings = [];
 if (!HTML_FILES.length) {
-  console.error("no pages in _site/: run `npx eleventy` first");
+  console.error("no pages in dist/: run `npx eleventy` first");
   process.exit(2);
 }
 for (const f of HTML_FILES) if (existsSync(join(ROOT, f))) scanHtml(f, findings);

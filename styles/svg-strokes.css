@@ -1,28 +1,3 @@
-/* The SVG stroke language, in @layer base.
-
-   The layer nothing was ever imported into. These are the drawing and surface
-   vocabularies the bands are built from, not components: a rule here is meant
-   to be overridden by anything in components or bands without needing a
-   selector fight, which is exactly what a base layer buys.
-
-   One family lives here today. (.win, a second macOS window chrome, was
-   deleted 2026-07-30: no markup on any page had ever carried it, and
-   styles/shared.css shipped a near-duplicate .window family that no markup
-   carried either. --r-window and --shadow-window stay in the tokens; .shot
-   uses both.)
-
-   The stroke language: every line-art plate on the site
-   is drawn out of .o1 / .o1b / .o2 / .o3 / .ld / .ldot / .datum / .sig, plus
-   .fillsoft and the four .acc* accent strokes. One weight and opacity ramp,
-   applied at every scale, is what makes plates drawn months apart read as one
-   hand. Retune a value here and every plate moves together.
-
-   What is NOT here, and why: the screenshot frame (.shot) looks like a
-   primitive and is not allowed to be one. styles/shared.css sets
-   `img{display:block}` in @layer components, and the frame's theme swap turns
-   an image off with `.shot img.shot-dark{display:none}`. In base that loses to
-   components on layer alone, no matter how specific it is, and both the light
-   and the dark screenshot paint at once. It lives in styles/design-system.css. */
 
 .o1,.o2,.o3,.ld,.datum,.sig,.o1b{fill:none;stroke:currentColor;stroke-linejoin:round;stroke-linecap:round}
 .o1{stroke-width:1.4;opacity:.72}

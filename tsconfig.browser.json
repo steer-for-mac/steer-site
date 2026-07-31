@@ -7,7 +7,7 @@
     "strict": true,
     "noEmit": false,
     "removeComments": false,
-    "outDir": "_site"
+    "outDir": "dist"
   },
   "files": ["theme.ts"]
 }

@@ -1,29 +1,4 @@
-/* ══ HERO ═══════════════════════════════════════════════════════════════════
-   The controller-picker hero (.chero) and the .vg vignette family, split out
-   of styles/base.css where they were 60% of the file.
 
-   .chero is a namespaced port of hero-fable.html: every token is declared ON
-   .chero rather than :root so nothing leaks, the theme follows the site's
-   html[data-theme], and the keyframes carry a chero- prefix.
-
-   .vg is the vignette grammar (docs/design-rules.md, "The .vg vignette
-   family"). One is in the page: .vg-glide, the stick-drives-the-cursor demo in
-   the hero's bottom bar. .vg-edit, .vg-speak, .vg-layers, .vg-type and
-   .vg-launch have no markup left; the curb records the decision to keep their
-   CSS rather than re-derive it from the app repo if a card needs one again.
-   Do not delete them on a reachability report alone.
-
-   The hero pad animation and .vg-glide share one 6s timeline on purpose: the
-   stick leaves centre at 14% and the cursor arrives, Cross presses at 58% and
-   the tile clicks. Retime one and you retime both or the causality breaks.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* ───────────────── controller-picker hero (.chero) ─────────────────
-   Namespaced port of hero-fable.html. All tokens live ON .chero (not :root)
-   so nothing leaks; theme is driven by the site's html[data-theme] (dark
-   studio is the base, light overrides). The source's topbar + theme control
-   are dropped — the site nav and toggle own those jobs. Keyframes carry a
-   chero- prefix. Base --tc moved off inline styles so light overrides win. */
 .chero{
   color-scheme:dark;
   --led:#4D8DFF;               /* DualSense light bar, user-pickable */
@@ -32,9 +7,6 @@
   --ink:#E9EDF6; --ink-2:#98A1B5; --ink-3:#5C6579;
   --line:rgba(233,237,246,0.18);
   --quiet:#6B7488; --ann:#7A8398; --grainO:0.05;
-  /* the contact ellipse under the pad, and the white core of the ripple. Both
-     were inline rgba() in the rules below, which the strict-value gate could not
-     see: it allows any function value, so only bare hexes ever failed. */
   --contact-ink:rgba(24,34,60,0.13); --rb-core-ink:rgba(255,255,255,0.85);
   --chip-bg:rgba(233,237,246,0.03);
   --chip-on-bg:rgba(233,237,246,0.08);
@@ -53,10 +25,6 @@
   --deviceF:none; --contactO:0;
   --mono:"SF Mono",ui-monospace,Menlo,monospace;
   --sans:-apple-system,"SF Pro Display","SF Pro Text","Helvetica Neue",sans-serif;
-  /* pad-art materials, night studio. The drawn controllers read these through
-     presentation attributes rather than through `.chero .ol-a{}` selectors;
-     the @property block further down says why, and is the only other place
-     these names appear. */
   --pa-ol-a:rgba(233,237,246,0.08); --pa-ol-b:rgba(233,237,246,0.13);
   --pa-rim:rgba(233,237,246,0.20); --pa-seam:rgba(0,0,0,0.28);
   --pa-cast:rgba(0,0,0,0.45);
@@ -75,23 +43,8 @@
   --pa-bump-1:#333C52; --pa-bump-2:#20263A; --pa-bump-3:#151A28;
   --pa-mf-o:rgba(233,237,246,0.36); --pa-mf-o2:rgba(233,237,246,0.22);
   --pa-mf-body:rgba(233,237,246,0.02); --pa-mf-bl:rgba(233,237,246,0.34);
-  /* face-button letter type: the branded pads' A/B/X/Y, and the Switch's own
-     tier (its buttons are r=14 rather than r=15.5, so its letters are a step
-     down). Numbers, not colours, so they are the materials with no @property
-     registration: nothing animates or validates them, and a registration would
-     need an initial-value duplicating the number here for no gain. The
-     laptop-window media query further down re-points these rather than
-     re-selecting the glyphs, so the size is not in the name.
-
-     UNITLESS since the letters became HTML (they were `13px` as an SVG
-     font-size attribute, i.e. 13 viewBox units). A number can be turned into
-     both a viewBox unit and a container unit; a length can be turned into
-     neither, because CSS has no length-times-length. See the annotation
-     block below for the 1200-unit conversion.
-
-     -mf is deliberately not re-pointed by the laptop query, which is how the
-     plate was drawn: its letters were a fixed `12px` where xb and sw read the
-     property. Preserved rather than tidied; it predates this file. */
+  /* unitless on purpose: consumed as calc(N * 1cqw / 12), so adding px looks
+     like a fix and silently breaks every glyph size. */
   --pa-letter:13; --pa-letter-sw:12; --pa-letter-mf:12;
   position:relative;
   min-height:calc(100vh - 52px);  /* site nav above is 52px sticky */
@@ -103,10 +56,6 @@
 }
 html[data-theme="lightoff"] .chero{
   color-scheme:light;
-  /* daylight studio: Apple-product-shot, not "dark with the lights on".
-     Deepened again 2026-07 — the old #D6DDE9 floor still read "overcast sky";
-     this sweep + the extra floor-pool background layer below give the pad a
-     stage to sit in. --ann darkened to hold AA on the deeper mid-tones. */
   --bg-hi:#FAFCFE; --bg-lo:#C9D2E1;
   --ink:#171C26; --ink-2:#545D6E; --ink-3:#828B9B;
   --line:rgba(23,28,38,0.17);
@@ -129,14 +78,8 @@ html[data-theme="lightoff"] .chero{
   --pledF:drop-shadow(0 0 4px color-mix(in srgb,var(--accent) 85%,transparent));
   --bloomO:0.17; --reflO:0.11;
   --wash-blur:56px; --pool-blur:40px;
-  /* no device shadow — matches dark, where the pad floats on its glow alone.
-     the deepened studio sweep + light-bar bloom give it all the presence it needs;
-     a light-only drop shadow read as a pasted-on sticker (and was inconsistent). */
   --deviceF:none;
   --contactO:0;
-  /* pad-art materials, daylight studio. Thirty selectors collapsed to one
-     block: the daylight treatment is now a palette override, not a second copy
-     of the art's styling. */
   --pa-ol-a:rgba(23,28,38,0.14); --pa-ol-b:rgba(23,28,38,0.19);
   --pa-rim:rgba(255,255,255,0.95); --pa-seam:rgba(23,28,38,0.15);
   --pa-cast:rgba(24,34,60,0.22);
@@ -168,9 +111,6 @@ html[data-theme="lightoff"] .chero[data-pad="sw"]{--accent:#2FC272;--accent-ink:
 /* "& others": no branded light to own the room — a quiet neutral wash */
 .chero[data-pad="mf"]{--accent:#98A1B5;--accent-ink:#98A1B5;--washO:0.07;--poolO:0.05}
 html[data-theme="lightoff"] .chero[data-pad="mf"]{--accent:#7A8398;--accent-ink:#49525F;--washO:0.05;--poolO:0.04}
-/* brand dots on the picker tabs, per theme. Reached through the radio's value
-   rather than an id on the label: the id now exists only to pair label and
-   input, so hanging colour off it would make renaming one break the other. */
 .chero .tab-in[value="ps"] + .tab{--tc:#4D8DFF}
 .chero .tab-in[value="xb"] + .tab{--tc:#6FCF8F}
 .chero .tab-in[value="sw"] + .tab{--tc:#E86A6A}
@@ -220,11 +160,6 @@ html[data-theme="lightoff"] .chero .tab-in[value="mf"] + .tab{--tc:#5C6675}
   border:1px solid var(--line);border-radius:var(--r-btn);background:var(--chip-bg);
   position:relative;   /* anchors the absolutely-placed radios below */
 }
-/* The radio is out of flow rather than display:none, because display:none is
-   not focusable and would hand the keyboard nothing to arrow through -- the
-   whole reason for using radios. Taking it out of flow also keeps it from
-   claiming a flex slot beside its own label, and a grid cell in the mobile
-   two-column layout further down. */
 .chero .tab-in{position:absolute;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
 .chero .tab{
   cursor:pointer;   /* appearance:none;border:0 left with the <button> it reset */
@@ -241,9 +176,6 @@ html[data-theme="lightoff"] .chero .tab-in[value="mf"] + .tab{--tc:#5C6675}
   transition:opacity 0.2s ease,box-shadow 0.2s ease;
 }
 .chero .tab:hover{color:var(--ink-2)}
-/* :checked drives the selected look now, so nothing has to write aria-selected
-   back onto four elements on every pick. The focus ring moves to the label
-   because the input it belongs to is a 1px sliver nobody can see. */
 .chero .tab-in:checked + .tab{color:var(--ink);background:var(--chip-on-bg);box-shadow:var(--chip-on-sh)}
 .chero .tab-in:checked + .tab::before{opacity:1;box-shadow:var(--tab-dot-sh)}
 .chero .tab-in:focus-visible + .tab{outline:2px solid var(--accent-ink);outline-offset:2px}
@@ -280,16 +212,6 @@ html[data-theme="lightoff"] .chero .tab-in[value="mf"] + .tab{--tc:#5C6675}
 .chero .terms b{color:var(--ink-2);font-weight:500}
 
 /* stage: three pads, one studio */
-/* the pad scales with viewport HEIGHT too, so the whole hero (copy + pad +
-   swatches) fits a laptop screen instead of cropping below the fold. The pad's
-   rendered aspect is ~2.72:1; reserve ~512px for copy + nav + swatch row. */
-/* width scales with viewport height so the hero fits laptops, but never below
-   a legible floor (~620px) — on very short windows the hero scrolls instead of
-   shrinking the pad + callouts to unreadable. */
-/* container-type, because the annotation layer over each plate is HTML and has
-   to be sized in the plate's own units. The stage IS the plate's width (the
-   svg is width:100% of it), so 100cqw = the 1200-unit viewBox. It sits here
-   rather than on .padwrap so the four animated wraps take no containment. */
 .chero .stage{position:relative;z-index:4;width:min(960px,94vw,max(620px,calc((100dvh - 668px) * 2.72)));margin-top:0;display:grid;justify-self:center;container-type:inline-size}
 .chero .padwrap{grid-area:1 / 1;position:relative}
 .chero .padwrap svg{display:block;width:100%;height:auto;overflow:visible}
@@ -312,40 +234,8 @@ html[data-theme="lightoff"] .chero .tab-in[value="mf"] + .tab{--tc:#5C6675}
 .chero .padwrap.active .lb-reflect{animation:chero-igniteSoft 1.0s 0.55s ease-out both}
 .chero .padwrap.active .bloom{animation:chero-igniteBloom 1.2s 0.55s ease-out both}
 .chero .glow{filter:var(--glowF)}
-/* The emissive family takes its colour from --accent through a presentation
-   attribute in the markup, like the rest of the art. What is left here is what
-   an attribute cannot carry: the halo filter, and the opacities the ignite and
-   breathe keyframes above animate. */
 .chero .pled{filter:var(--pledF)}
 
-/* ══ Pad-art materials ═══════════════════════════════════════════════════════
-   The four drawn controllers are painted by presentation attributes that read
-   the --pa-* properties on .chero, not by `.chero .ol-a{stroke:…}` selectors.
-   That is the whole of design-backlog #18, and it buys one thing: the art can
-   be lifted into assets/svg/ and pulled back in with <use> without being
-   repainted on the way.
-
-   Measured, not assumed (Chrome headless, 2026-07-30). Through an external
-   <use href="file.svg#s">, a class rule left the clone UNPAINTED, while a
-   plain custom property, an @property-registered one, and a style="--x:…" set
-   on the <use> element itself all reached it. Through a same-document
-   <use href="#id"> Chrome does still apply class rules — which is why the
-   mirrored shoulders below render at all today — but that is Chrome's legacy
-   behaviour for internal references, not something to build a sprite on.
-
-   Registered rather than left plain, for the one thing a plain custom property
-   cannot do: validate. A malformed --pa-* would otherwise make the whole
-   fill/stroke declaration invalid at computed-value time, and on this markup
-   the property then falls back to what it inherits, which is black. Typed, it
-   falls back to the registration below instead, and becomes interpolable if
-   the studio is ever cross-faded.
-
-   initial-value is currentcolor on purpose. It is the only value that cannot
-   drift out of step with the palette on .chero (an initial-value copied from
-   the night studio would be a second copy of forty-six colours), and it
-   degrades a <use> dropped outside the studio to a legible silhouette rather
-   than a black slab. .chero and its daylight override supply the real values.
-   ═══════════════════════════════════════════════════════════════════════════ */
 @property --pa-ol-a{syntax:"<color>";inherits:true;initial-value:currentcolor}
 @property --pa-ol-b{syntax:"<color>";inherits:true;initial-value:currentcolor}
 @property --pa-rim{syntax:"<color>";inherits:true;initial-value:currentcolor}
@@ -393,38 +283,6 @@ html[data-theme="lightoff"] .chero .tab-in[value="mf"] + .tab{--tc:#5C6675}
 @property --pa-mf-body{syntax:"<color>";inherits:true;initial-value:currentcolor}
 @property --pa-mf-bl{syntax:"<color>";inherits:true;initial-value:currentcolor}
 
-/* ══ annotations ═════════════════════════════════════════════════════════════
-   An annotation is two halves in two languages. The LEADER (dot + polyline)
-   is geometry and stays in the plate, because it points at a control and has
-   to be redrawn whenever the silhouette is. The TEXT is copy and is HTML,
-   emitted by _includes/macros/pad.njk from _data/pads.json. They share the
-   `ann dN` class, so one set of delays below staggers both halves together.
-
-   REGISTRATION. The plate is a 1200x440 viewBox drawn at width:100% of
-   .stage, so one viewBox unit is exactly 1/1200 of the stage's inline size.
-   Two conversions follow from that and both are exact, not tuned:
-     position  x / 1200 -> `calc(var(--x) / 12 * 1%)`   (% of the padwrap)
-     type      s / 1200 -> `calc(s * 1cqw / 12)`        (.stage is the container)
-   --y is the LABEL BASELINE in viewBox units, the same number the <text> used
-   to carry as y=. The body line sits 18 units under it, which is the rhythm
-   all four plates were drawn to, so it is written here once instead of in
-   every row of the data.
-
-   --asc is the one MEASURED number, and the only inexact thing here. An HTML
-   box is positioned by its top edge and SVG text by its baseline, so the box
-   is lifted by the font's ascent, in em so it tracks the type through both
-   breakpoints. There is no value that is right at every size: Chrome rounds a
-   line box's ascent to whole pixels, and these render at 6-11px, so the ideal
-   ratio drifts about 0.03 between the smallest and largest window (the same
-   SF Mono cap wants 0.786 at a 7.6px render and 0.817 at 10.4px). Each number
-   below is the minimiser over 1440x{700,900,1200}, measured by asking
-   getScreenCTM where the plate puts (x,y) and a zero-height baseline-aligned
-   probe where the span puts its baseline. Residual: under 0.2px on the
-   annotation text, under 0.4px on the face-button caps (two pads land on a
-   9.6px render, where the rounding goes furthest the wrong way), against SVG
-   text that was exact. That residual is the price of the move and is recorded
-   rather than hidden; scratch/anndiff.mjs re-measures every string's rendered
-   rect if you touch this. */
 .chero .ann polyline{stroke:var(--line);stroke-width:1;fill:none}
 .chero .ann circle{fill:var(--ink-2)}
 
@@ -475,9 +333,6 @@ html[data-theme="lightoff"] .chero .tab-in[value="mf"] + .tab{--tc:#5C6675}
   display:flex;justify-content:center;
   align-items:end;gap:44px;padding:8px 52px 16px;
 }
-/* hero glide demo: the couch stick-glide beat, restaged in the studio, so a
-   first-timer SEES the stick drive the Mac cursor without scrolling. Local
-   token overrides keep it dark-studio in both site themes. */
 .chero .hero-demo{display:flex;flex-direction:column;align-items:stretch;width:100%;max-width:440px}
 .chero .hero-demo .vg{
   --bg:#0B0F1A;--bg-inset:rgba(233,237,246,0.045);--bg-inset-2:rgba(233,237,246,0.07);
@@ -523,10 +378,6 @@ html.still .chero .pool{opacity:var(--poolO)}
   .chero .cta,.chero .tab{transition:none}
 }
 
-/* responsive: the annotations yield to feature chips when they can't stay
-   legible. Two triggers: narrow (<900px) AND short-wide (content height
-   ~620-758px at desktop width — an un-maximized MacBook window — where the
-   620px pad floor renders the in-SVG annotation text at ~6-7px). */
 .chero .features{
   list-style:none;display:none;position:relative;z-index:5;
   margin:4px 0 18px;padding:0 20px;width:100%;max-width:620px;
@@ -537,9 +388,6 @@ html.still .chero .pool{opacity:var(--poolO)}
   border-radius:var(--r-btn);padding:7px 13px;
 }
 .chero .features li.x{color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent-ink) 40%,transparent)}
-/* the laptop window (dvh ~761-990): the pad is scaled down so the glide demo
-   fits the fold, which would render the 12px in-SVG annotations at ~6-7px —
-   scale the annotation type up to compensate (gutters have the room) */
 @media (min-width:900px) and (min-height:761px) and (max-height:990px){
   .chero .pad-ann .tb{font-size:calc(15cqw / 12)}
   .chero .pad-ann .t{font-size:calc(14.5cqw / 12)}
@@ -562,13 +410,6 @@ html.still .chero .pool{opacity:var(--poolO)}
   .chero .bottombar{margin-top:6px;padding:12px 24px 44px}
 }
 
-/* ── light bar: idle "bleeding rainbow" ─────────────────────────────────
-   Six pre-coloured copies of the bar (.rbl) + bloom (.rbb) crossfade on
-   OPACITY ONLY — each layer's halo is a static per-layer drop-shadow, so
-   the 12s loop is pure GPU compositing (no colour/filter animation).
-   Auto-cycle is the idle state; locking a swatch removes .lb-auto and the
-   ordinary accent bar takes back over. Reduced motion & webdriver stills:
-   the stack stays dark and the single-colour accent bar shows instead. */
 .chero .rbl{fill:none;stroke:currentColor;stroke-width:6.5;stroke-linecap:round;opacity:0}
 .chero .rb-core{fill:none;stroke:var(--rb-core-ink);stroke-width:2;stroke-linecap:round;opacity:0}
 .chero .rbb{fill:currentColor;opacity:0}
@@ -587,19 +428,11 @@ html.still .chero .pool{opacity:var(--poolO)}
     filter:drop-shadow(0 0 6px currentColor) drop-shadow(0 0 18px currentColor);
   }
   html:not(.still) .chero.lb-auto[data-pad="ps"] .padwrap.ps.active .rbb{animation:chero-hue 12s linear infinite}
-  /* off-screen / hidden-tab: hold the loop (IntersectionObserver + visibilitychange).
-     !important because the hue rule's animation shorthand would otherwise
-     reset play-state from a higher-specificity selector. */
   .chero.rb-halt .rbl,.chero.rb-halt .rbb,
   html.anim-halt .chero .rbl,html.anim-halt .chero .rbb{animation-play-state:paused!important}
 }
 @keyframes chero-hue{0%{opacity:0}16.667%{opacity:1}33.334%{opacity:0}100%{opacity:0}}
 
-/* ═══════════ input vignettes (.vg): press → the Mac reacts → the pad answers ═══
-   One grammar, three rules: transform/opacity only; the base (no .on)
-   state is a meaningful static frame — reduced motion and no-JS ship it;
-   JS adds .on only while the vignette is on-screen. Colour comes from the
-   pad's own palette (--ps-* face-button tokens), never from body text. */
 .vg{position:relative;display:flex;align-items:center;gap:13px;margin:2px 0 16px;padding:12px 13px;border-radius:var(--r-inset);background:var(--bg-inset);border:1px solid var(--sep);overflow:hidden}
 /* pad-side key/trigger chip */
 .vg-key{position:relative;flex:none;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.07em;color:var(--text-2);background:var(--card-bg);border:1px solid var(--sep-2);border-radius:7px;padding:6px 8px}
@@ -691,12 +524,6 @@ html.still .vg,html.still .vg *,html.still .vg *::before,html.still .vg *::after
 @keyframes vgL-b{0%,10%{opacity:0;transform:translateY(-3px)}16%,62%{opacity:1;transform:none}70%,100%{opacity:0;transform:translateY(-3px)}}
 @keyframes vgL-ring{0%,8%{transform:scale(.5);opacity:0}11%{opacity:.5;transform:scale(.85)}28%,100%{transform:scale(1.45);opacity:0}}
 
-/* ── "& others" (MFi) hero state: a schematic outline pad — deliberately no
-   brand, no extras. Line-art materials so it reads "whichever pad you own",
-   not a fourth product render. Letters use Apple's own A/B/X/Y naming.
-   Its two stroke weights are --pa-mf-o / --pa-mf-o2 in the palette above; the
-   plate's own <g> carries the geometry (fill:none, 1.5, round) that every
-   shape in it shares, so only the weight varies per element. */
 
 /* ── Hero demo (.vg-glide): deflect the stick → the cursor glides across the
    room-sized screen on the shaped curve (slow start, fast middle, soft landing)
@@ -710,9 +537,6 @@ html.still .vg,html.still .vg *,html.still .vg *::before,html.still .vg *::after
 .vg-tile .pi-play{opacity:0}
 .vg-tile .pi-pause{opacity:1}
 .vg-tile .tring{position:absolute;inset:-1px;border:1.5px solid var(--blue);border-radius:6px;opacity:.9}
-/* the pointer is the macOS arrow, traced from the system cursor asset
-   (HIServices cursors PDF): black fill, white halo, the bottom-left heel.
-   Literal colours on purpose — the real cursor doesn't theme. */
 .vg-cursor{position:absolute;right:10px;top:50%;margin-top:-1px;width:12px;height:16px;pointer-events:none}
 .vg-cursor svg{display:block;width:100%;height:100%}
 /* click ripple, centred on the cursor tip; hidden at rest (the frozen base
@@ -743,24 +567,6 @@ html.still .vg,html.still .vg *,html.still .vg *::before,html.still .vg *::after
 @keyframes vgG-tring{0%,56%{opacity:0}60%,86%{opacity:.9}93%,100%{opacity:0}}
 @keyframes vgG-tap{0%,55%{transform:none}58%{transform:scale(.88)}62%,100%{transform:none}}
 
-/* ── Hero pad, animated on the SAME 6s timeline as the .vg-glide demo below it.
-   The point is that the big controller and the small screen are one gesture
-   seen at two scales, not two loops running near each other: the stick leaves
-   centre at 14% and the cursor arrives, the Cross presses at 58% and the tile
-   clicks. Phases are copied from vgG-stick / vgG-tap deliberately; if you
-   retime one, retime both or the causality breaks.
-
-   Only the LEFT stick and Cross move. The caption underneath says "The stick is
-   the mouse. Press Cross to click", and that is all the motion is allowed to
-   claim; animating the right stick would assert a scroll that nothing on screen
-   is doing. Transform and opacity only, and the deflection (7px on a 28px cap
-   inside a 37px well) stays inside the travel real hardware has.
-
-   PLAYSTATION PAD ONLY, for now. The Xbox, Switch and "& others" pads carry no
-   .pad-stick-l / .pad-cross-* classes, so picking one of those tabs leaves a
-   static controller above a caption that still promises a click and a demo that
-   still loops. Porting the classes to the other three is the fix; until then
-   this is a known gap, not an oversight. */
 @media (prefers-reduced-motion: no-preference){
   .chero.on .padwrap.active .pad-stick-l{
     animation:chero-padGlide 6s cubic-bezier(.32,.72,.28,1) infinite;
@@ -775,8 +581,6 @@ html.still .vg,html.still .vg *,html.still .vg *::before,html.still .vg *::after
 }
 @keyframes chero-padGlide{0%,8%{transform:none}14%,44%{transform:translateX(7px)}52%,100%{transform:none}}
 @keyframes chero-padPress{0%,55%{transform:none}58%{transform:translateY(1.5px)}62%,100%{transform:none}}
-/* Accent, not white: at .22 over the light hero's #F3F5F9 button a white
-   tint measures 1.02:1 and the click beat simply vanishes. */
 @keyframes chero-padTint{0%,55%{opacity:0}58%{opacity:.3}64%,100%{opacity:0}}
 html.anim-halt .chero .padwrap .pad-stick-l,
 html.anim-halt .chero .padwrap .pad-cross-btn,
@@ -789,25 +593,9 @@ html.anim-halt .chero .padwrap .pad-cross-tint{animation-play-state:paused!impor
 @keyframes vgG-pause{0%,58%{opacity:0}60%,94%{opacity:1}97%,100%{opacity:0}}
 @keyframes vgG-click{0%,57%{opacity:0;transform:scale(.4)}60%{opacity:.8;transform:scale(.8)}70%,100%{opacity:0;transform:scale(1.5)}}
 
-/* ── Couch beat (.vg-type): the daisy-wheel keyboard types "cat" into a search
-   box. Aim the stick at a letter cluster, and the four face buttons type that
-   cluster's four letters by position. Mirrors the app's DaisyWheelLayout: on
-   the N cluster Circle is c and Square is a (two letters, one aim), then the
-   wheel swings S where Cross is t. Face glyphs are .face-slot spans, so the
-   diamond re-labels itself when the visitor picks another pad. Base = word
-   typed, caret ready, wheel still aimed at S: the claim, frozen mid-proof.
-   Word text is --text on --card-bg: 16.83:1 light / 14.91:1 dark; on the
-   worst surface --bg-inset-2 still 13.83 / 12.80 (contrast.mjs 2026-07). */
-/* No max-width: the search field is flex:1, so this fills whatever column it is
-   given (bounded on desktop by the couch card's two-column grid, full width once
-   that collapses). .vg-glide and .vg-layers cap at 430px because their animation
-   travel is a fixed distance; this one has no travel to protect. */
 .vg-type{--cw:7px}  /* --cw = one mono char cell; the caret steps by it */
 .vg-wheel{flex:none;width:44px;height:44px;display:block;overflow:visible}
 .vg-wheel .dw-rim{fill:var(--card-bg);stroke:var(--sep-2);stroke-width:1}
-/* lobes carry the app's real characters rather than abstract spokes: at the
-   size the couch cell now gives it, an eight-spoke circle read as a pie chart
-   and the wheel is the one thing on this page readers disbelieve. */
 .vg-wheel .dw-lobe{fill:var(--bg-inset-2);stroke:none}
 .vg-wheel .dw-ch{fill:var(--text-2);font-family:var(--mono);font-size:6.4px;
   text-anchor:middle;dominant-baseline:auto}
@@ -832,8 +620,6 @@ html.anim-halt .chero .padwrap .pad-cross-tint{animation-play-state:paused!impor
 .vg-dwf .face{width:14px;height:14px}
 .vg-dwf .fp-t{grid-area:1/2}.vg-dwf .fp-l{grid-area:2/1}.vg-dwf .fp-r{grid-area:2/3}.vg-dwf .fp-b{grid-area:3/2}
 @media (prefers-reduced-motion: no-preference){
-  /* 6s: aim N → Circle taps (c) → Square taps (a, no re-aim) → swing S →
-     Cross taps (t) → caret blinks on the finished word → reset in the dark */
   .vg-type.on .dw-sect{animation:vgT-aim 6s cubic-bezier(.55,.05,.25,1) infinite}
   .vg-type.on .vg-cap{animation:vgT-stick 6s ease infinite}
   .vg-type.on .w1{animation:vgT-c 6s ease infinite}
@@ -875,22 +661,6 @@ html.anim-halt .chero .padwrap .pad-cross-tint{animation-play-state:paused!impor
   92%,100%{opacity:1;transform:translateX(calc(var(--cw)*-3))}
 }
 
-/* ── Launcher beat (.vg-launch): click the stick, a ring of apps opens, aim,
-   Cross launches. Everything mirrors RadialMenu.swift: nine default items
-   clockwise from the top (Safari at N, Music at E), open bound to L3, aim on
-   the left stick, selection is a discrete jump (index change, never a sweep)
-   with an accent halo + grown tile + a label that exists only while selected,
-   a haptic tick per selection change, Cross to commit. The open is a straight
-   cut and only the close fades, because that is how the app ships (the HUD
-   answers the press with no perceptible delay; the close still fades). One
-   liberty: the app hangs the label under the selected icon, here it sits in
-   the disc hub so 10px type never crowds a 12px tile.
-   Rhymes with .vg-type's daisy wheel (same rim-and-disc language, blue
-   selection, face-slot commit) without repeating it: petals vs floating
-   tiles, rotating wedge vs jumping halo, typing vs launching.
-   Hub label --text-2 on --card-bg: 6.65:1 light / 6.86:1 dark (worst surface
-   --bg-inset-2: 5.46 / 5.89). L3 chip --text-3 on --bg-inset-2: 4.97 / 4.62
-   (contrast.mjs 2026-07). */
 .vg-launch{max-width:430px;justify-content:space-between}  /* fixed-geometry: the disc can't stretch, so cap and space the three instruments */
 .vg-stickcol{flex:none;display:flex;flex-direction:column;align-items:center;gap:5px}
 .vg-klab{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:0.07em;color:var(--text-3)}
@@ -916,8 +686,6 @@ html.anim-halt .chero .padwrap .pad-cross-tint{animation-play-state:paused!impor
 .vg-hub b{grid-area:1/1;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.03em;color:var(--text-2)}
 .vg-hub .hm{opacity:0}
 @media (prefers-reduced-motion: no-preference){
-  /* 6.5s (desynced from .vg-layers' 5.5s above it): L3 click → the ring cuts
-     in → aim E, Music ticks → aim N, Safari ticks → Cross → the ring fades */
   .vg-launch.on .vg-disc{animation:vgR-disc 6.5s linear infinite}
   .vg-launch.on .vg-cap{animation:vgR-cap 6.5s cubic-bezier(.5,.05,.25,1) infinite}
   .vg-launch.on .tm{animation:vgR-tselM 6.5s ease infinite}
@@ -951,7 +719,4 @@ html.anim-halt .chero .padwrap .pad-cross-tint{animation-play-state:paused!impor
 
 .vg-key b{font:inherit;color:inherit}
 
-/* The shared <defs> sheet: gradients and filters only, no ink. Taken out of
-   flow so its zero-sized box cannot open a gap above the stage. Was an inline
-   style attribute. */
 .hero-defs{position:absolute}

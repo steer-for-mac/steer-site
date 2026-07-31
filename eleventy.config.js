@@ -1,8 +1,7 @@
 /* Eleventy config. Replaces bin/build, which assembled one page out of sixteen.
  *
- *   npx eleventy              build to _site/
+ *   npx eleventy              build to dist/
  *   npx eleventy --serve      dev server with live reload
- *   ELEVENTY_ENV=production npx eleventy    strip dev comments
  *
  * Three things Eleventy does not do are kept here, because losing any of them
  * is silent rather than loud:
@@ -16,13 +15,13 @@
  *   3. --prod comment stripping, now a transform.
  */
 import { execFileSync } from "node:child_process";
+import { minify } from "html-minifier-next";
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const OUT = resolve(ROOT, "_site");
-const PROD = process.env.ELEVENTY_ENV === "production";
+const OUT = resolve(ROOT, "dist");
 
 /* home.entry.css lists the band sheets, because @import takes no glob.
  *
@@ -51,7 +50,7 @@ function writeHomeEntry() {
 /* A page's sheet is at the same path in the other tree, exactly like a band's.
  *
  * Swap the directory and the extension: vs.html is styled by
- * styles/pages/vs.css, which is bundled to _site/vs.css and linked by the
+ * styles/pages/vs.css, which is bundled to dist/vs.css and linked by the
  * layout for that page and no other. Derivable by rule, so there is no map to
  * go stale and no front matter to remember.
  *
@@ -82,6 +81,15 @@ const pageSheets = () => (existsSync(resolve(ROOT, "styles/pages"))
    BUILD: different target, different lib, and it must actually write a file.
    Fails the build loudly -- execFileSync throws on a non-zero exit -- since a
    silently missing theme.js leaves fourteen pages with a dead control. */
+/* JS was the one language the production build did not touch: Lightning CSS
+   minifies the sheets and the markup is minified too, while
+   home.js and theme.js shipped 6.2KB of comments to every visitor. */
+function minifyJs() {
+  execFileSync(resolve(ROOT, "node_modules/.bin/esbuild"),
+    [resolve(OUT, "home.js"), resolve(OUT, "theme.js"), "--minify", `--outdir=${OUT}`, "--allow-overwrite"],
+    { stdio: "inherit" });
+}
+
 function compileBrowserTs() {
   execFileSync(resolve(ROOT, "node_modules/.bin/tsc"),
     ["-p", resolve(ROOT, "tsconfig.browser.json")], { stdio: "inherit" });
@@ -117,10 +125,23 @@ function bundle(entry, out) {
  * 17% of index.html is comments, and they are design rationale written for
  * whoever edits _includes/ next: they cite app source files, name commits, and
  * explain decisions. That is exactly the material to keep in the repo and not
- * ship to strangers. Conditional comments are spared, though this site has
- * none. */
-const COMMENT = /[ \t]*<!--(?!\[if)[\s\S]*?-->[ \t]*\n?/g;
-const stripDev = (html) => html.replace(COMMENT, "").replace(/\n{3,}/g, "\n\n");
+ * ship to strangers. */
+/* conservativeCollapse never removes whitespace, only collapses runs to one
+   space: this page leans on inline-block rows where a removed space closes a
+   gap the design wants. minifyJS reaches the pre-paint <head> script, the one
+   file no other minifier can see because Nunjucks pastes it verbatim. */
+const MINIFY = {
+  removeComments: true,
+  collapseWhitespace: true,
+  conservativeCollapse: true,
+  minifyJS: true,
+  keepClosingSlash: true,
+  /* Without this the minifier EXPANDS bare booleans to defer=defer and
+     checked=checked -- unquoted, which html-validate rejects, and longer than
+     what it replaced. */
+  collapseBooleanAttributes: true,
+  removeAttributeQuotes: false,
+};
 
 export default function (eleventyConfig) {
   /* Inline SVG lives in _includes/art/, not in the band markup, and is pasted
@@ -194,9 +215,9 @@ export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("footLegal",
     "macOS 14+ · Apple Silicon · Not affiliated with Sony, Microsoft, or Nintendo.");
 
-  eleventyConfig.addTransform("strip-dev-comments", /** @this {{page?: {outputPath?: string}}} */ function (content) {
-    if (!PROD || !this.page?.outputPath?.endsWith(".html")) return content;
-    return stripDev(content);
+  eleventyConfig.addTransform("minify-html", /** @this {{page?: {outputPath?: string}}} */ async function (content) {
+    if (!this.page?.outputPath?.endsWith(".html")) return content;
+    return minify(content, MINIFY);
   });
 
   /* The layout links <page>.css only for a page that has one, so a page with no
@@ -206,16 +227,17 @@ export default function (eleventyConfig) {
   eleventyConfig.on("eleventy.before", writeHomeEntry);
   eleventyConfig.on("eleventy.after", () => {
     mkdirSync(OUT, { recursive: true });
-    bundle("site.entry.css", "_site/site.css");
-    bundle("home.entry.css", "_site/home.css");
-    for (const p of pageSheets()) bundle(`pages/${p}.css`, `_site/${p}.css`);
+    bundle("site.entry.css", "dist/site.css");
+    bundle("home.entry.css", "dist/home.css");
+    for (const p of pageSheets()) bundle(`pages/${p}.css`, `dist/${p}.css`);
     compileBrowserTs();
+    minifyJs();
   });
 
   return {
     dir: {
       input: ".",
-      output: "_site",
+      output: "dist",
       /* _includes/{bands,chrome,layouts}, mirrored by styles/{bands}. A band's
          two files are at the same path in each tree: swap _includes -> styles
          and .html -> .css and you have the sheet. Derivable by rule, so a

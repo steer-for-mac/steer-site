@@ -1,18 +1,3 @@
-/* ══ DIALOGS ════════════════════════════════════════════════════════════════
-   The two native <dialog> elements, from styles/base.css.
-
-   dialog.shots is the screenshot lightbox: one shot at a time, arrows either
-   side, swipe on touch, click to zoom to the capture's native 1x width (the
-   assets are @2x, so 1000px is pixel-perfect on a 2x display). Images carry
-   data-light / data-dark only and home.js resolves src on first open, so
-   nothing is fetched until the visitor asks.
-
-   The launch-list form (.ml-*) that dialog.ml-dialog wraps is NOT here: it is
-   also used by _includes/bands/pricing.html, so it lives in styles/design-system.css.
-
-   The in-page invite (.gal-invite / .gal-panes) was deleted 2026-07-30: its
-   markup had already left the homepage, so the dialog is the only way in.
-   ═══════════════════════════════════════════════════════════════════════════ */
 
 dialog.shots{
   /* the site's universal reset zeroes the UA's dialog margin:auto — restore it
@@ -56,8 +41,6 @@ dialog.shots[open]::backdrop{animation:shots-in .2s ease}
 .shots-item figcaption{flex:none;font-size:13px;color:var(--text-3);letter-spacing:-0.005em;line-height:1.45;text-align:center;max-width:64ch}
 .shots-view.zoomed .shots-item.cur{display:block;width:max-content;min-width:100%;padding:20px;text-align:center}
 .shots-view.zoomed .shots-zoom{display:block;width:max-content;max-width:none;margin:0 auto;cursor:zoom-out}
-/* zoomed width 1000px = the capture's native 1x size (assets are @2x), i.e.
-   exactly what the pane looks like on a Mac; pixel-perfect on 2x displays */
 .shots-view.zoomed .shots-item img{max-width:none;max-height:none;width:1000px}
 .shots-view.zoomed .shots-item figcaption{margin-top:12px}
 .shots-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid var(--sep-2);background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}

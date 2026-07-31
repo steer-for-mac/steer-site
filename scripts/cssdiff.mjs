@@ -7,7 +7,7 @@
  *   node scratch/cssdiff.mjs scratch/css-before.json
  *
  * Same transport as scripts/shots.mjs: CDP over Node's own WebSocket, own
- * in-process static server, rooted at _site/ (the <use href=...svg#s> symbols
+ * in-process static server, rooted at dist/ (the <use href=...svg#s> symbols
  * need one).
  *
  * s.eval below is CDP Runtime.evaluate, not JS eval: it runs string literals
@@ -22,8 +22,8 @@ import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-/* the built site, not the working tree: index.html only exists in _site/ */
-const SITE = resolve(ROOT, "_site");
+/* the built site, not the working tree: index.html only exists in dist/ */
+const SITE = resolve(ROOT, "dist");
 const OUT = process.argv[2] || "scratch/css-dump.json";
 
 /* width x theme x pad. 861 sits either side of the nav breakpoint that

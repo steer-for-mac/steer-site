@@ -1,10 +1,10 @@
-# Build output. Eleventy writes _site/, Lightning CSS writes the two sheets
+# Build output. Eleventy writes dist/, Lightning CSS writes the two sheets
 # inside it. index.html, site.css and home.css are listed because bin/build used
 # to write them into the repo root and commit them; nothing generates them there
 # any more, and a stray copy would shadow the real page in Eleventy's input
 # directory. styles.css is the pre-rename name of site.css, kept so an old
 # working copy's leftover cannot be committed back in.
-_site/
+dist/
 /index.html
 /site.css
 /styles.css

@@ -1,55 +1,6 @@
-/* ══ capabilities: the signal chain, running ═══════════════════════════════
-   The band opens on a three-cell block diagram captioned "Steer is the piece
-   in between", and until now the sentence was the only thing stating it: the
-   controller and the Mac were frozen drawings and a pair of accent dots
-   shuttled along the connectors on a 4.4s clock of their own. A diagram that
-   asserts a relationship and never performs it is a caption with decoration
-   under it.
 
-   So one press now travels the whole chain, once per loop: the pad dips, the
-   signal leaves it, crosses the cell rule, reaches Steer, Steer brightens
-   while it does the work, the signal leaves again, crosses into the Mac, and
-   the result lands there as a cursor moving, a click, and a live caret.
-
-   Same grammar as .vg and the plate loops in base.css (docs/design-rules.md,
-   "The .vg vignette family"):
-   - transform and opacity only, never a layout property
-   - one loop, 6.2s. The layers figure below shares this viewport on a 5.5s
-     clock and the uses band's plates run 6 / 5.5 / 6.5, so nothing syncs.
-   - the un-animated markup is the claim already proven: Steer lit, cursor
-     landed, caret at the end of the typed line. Reduced motion, JS off and
-     html.still ship exactly that frame; nothing that carries meaning is
-     hidden in it. The travelling dot is the one thing absent at rest, and a
-     signal in flight is by nature a thing that is not there between presses.
-   - scoped to .on, which home.js adds only while the figure is on screen.
-   - colour is the page's one accent (--blue-text, via the existing .acc /
-     .acc-h / .flow classes) and the pad's own palette inside pad-art-*.svg.
-     No new colour pair is introduced: every element here reuses a token pair
-     already shipping in this band or the uses band. --blue-text on --bg
-     measures 5.57:1 light and 7.18:1 dark, and 4.57 / 5.53 against the
-     darkest surface it could land on (--bg-inset-2); the accent variants sit
-     higher still (violet 7.22 / 7.93, teal 6.56 / 10.88, amber 6.39 / 10.25).
-     Every mark that has to be read carries the accent at 0.95 or 1: the flow
-     dots and the caret. The two elements drawn at .acc-h's 0.35, the lit
-     Steer outline and the two ripples, are hints over an outline the
-     currentColor stroke already draws, so nothing depends on reading them,
-     which is the same footing as the knob halo in the uses band.
-
-   Nothing here can mark a specific button: the face cluster sits at a
-   different place on every pad and pad-art-mf.svg draws none at all, so the
-   press is the whole pad dipping. Glyph-level presses stay in the vignettes
-   that can use .face-slot[data-b].
-   ═════════════════════════════════════════════════════════════════════════ */
-
-/* base.css:1374-1386 runs the two flow dots ungated, so they animate off
-   screen and on a clock unrelated to anything else in the band. Two classes
-   beat one, so this retires that rule without editing base.css; @keyframes
-   dflow is left there unused rather than reached across files to delete. */
 .dgs .flow{animation:none}
 
-/* transform-box is view-box by default in current Safari and Chrome, but the
-   plates that already animate declare it (base.css:1175-1176) because the
-   default changed under them once. Same here rather than trusting it. */
 .dgs .cp-pad,.dgs .cp-cursor,.dgs .cp-emit,.dgs .cp-click,.dgs .flow{transform-box:view-box}
 /* the two ripples are pure motion: they exist only while something is
    happening, so the static frame has no ring sitting on the drawing */
@@ -79,26 +30,6 @@
   .dgs.on .vcd{animation:cpVert 6.2s linear infinite}
 }
 
-/* The four dots are one signal crossing three viewBoxes. Each cell's figure
-   is pulled out to its own cell rule (base.css:1368), so a dot leaving plate
-   1 at x=330 is the same screen point as a dot entering plate 2 at x=0: the
-   hop is continuous and only the clipping box changes. Both hops are 127 user
-   units long, split 30/97 and 96/31 by the rules, and every dot runs at the
-   same 110 units per second, which is why these are linear rather than eased:
-   a signal that accelerated twice per hop would stutter at each rule. The
-   curb's ban is on keyword *easing* curves and bounce; base.css already uses
-   linear and steps() where the motion is mechanical.
-
-   The clock, in one place:
-     5-14%   the pad dips
-     8-26%   the emitted ring blooms at the pad's edge
-    10-28.6% hop A, pad to Steer (f0 then f1)
-    26-50%   Steer brightens, holds through the work, settles back
-    42-61%   hop B, Steer to the Mac (f2 then f3)
-    57-70%   the cursor glides to where the press landed
-    69-84%   the click
-    56-100%  the caret wakes and blinks
-    86-100%  the cursor drifts off again, ready for the next press */
 @keyframes cpPress{0%,5%{transform:none}9%,14%{transform:translateY(2.2px)}20%,100%{transform:none}}
 @keyframes cpEmit{0%,8%{transform:scale(.35);opacity:0}
   11%{transform:scale(.85);opacity:.7}
@@ -134,6 +65,4 @@
   46%{transform:translateY(30px);opacity:.95}
   50%,100%{transform:translateY(36px);opacity:0}}
 
-/* The gallery button's own icon, one size smaller than .btn's default svg so it
-   sits with the label rather than beside it. Was an inline style attribute. */
 .d-gal .btn svg{width:17px;height:17px}

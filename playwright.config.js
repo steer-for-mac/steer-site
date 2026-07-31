@@ -22,10 +22,10 @@ export default defineConfig({
     { name: "webkit", use: { ...devices["Desktop Safari"] } },
   ],
 
-  // Serves _site/, not the working tree: <use href="assets/svg/...#s"> is
+  // Serves dist/, not the working tree: <use href="assets/svg/...#s"> is
   // blocked over file://, and the built page is what ships.
   webServer: {
-    command: `npx serve --listen tcp://127.0.0.1:${PORT} --no-clipboard _site`,
+    command: `npx serve --listen tcp://127.0.0.1:${PORT} --no-clipboard dist`,
     url: `http://127.0.0.1:${PORT}/index.html`,
     reuseExistingServer: !process.env.CI,
     stdout: "ignore",

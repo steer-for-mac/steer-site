@@ -1,38 +1,3 @@
-/* ══════════════════════════════════════════════════════════════════════════
-   PRICING — the close.
-
-   The band was the last one the redesign never reached: a 520px centred card
-   in a .sec-loose band, 1,087px tall at 1440, while every band above it had
-   become ruled columns and drawn plates. It read as a panel lifted from
-   another site. This rebuilds it in the page's own grammar (.d-head rule,
-   .d-display headline, hairline-ruled columns) and drops the card entirely.
-   Measured 708px after, same content, same words (scripts/shots.mjs clips each
-   frame to the section's own box, so the PNG height is the band height).
-
-   Namespacing: every rule is scoped to #pricing and every class is pr-*.
-   The old markup borrowed .price-card / .price-inc from site.css. Namespacing
-   here rather than editing those was the right call: it left both families with
-   no markup anywhere, and both were deleted 2026-07-30. .ml-form / .ml-in / .ml-msg / .ml-hp keep
-   their names because home.js and the dialog twin in _includes/bands/dialogs.html both
-   depend on them, so the overrides below are scoped rather than global.
-
-   Surface: plain --bg. Trust above is sunken and the footer below is sunken;
-   the padstrip between draws its own border-block, so the alternation holds
-   without this band needing a card to be a surface.
-
-   Contrast (computed on the token hexes, both themes, against the surfaces the
-   text can actually land on here — --bg, and --bg-inset for the fields):
-     --text   on --bg 16.83 / 16.61   on --bg-inset 14.75 / 14.23
-     --text-2 on --bg  6.65 /  7.64
-     --text-3 on --bg  6.05 /  5.99   on --bg-inset 5.30 / 5.13  (placeholders)
-     --blue-text on --bg 5.57 / 7.18  (the mailto fallback link)
-     white on --blue     4.60 / 4.52  (the submit)
-   All clear 4.5:1, and all clear it on --bg-inset-2 too (the worst surface the
-   tokens are certified against: 4.97 / 4.62 for --text-3).
-   The check glyph moved from --green to --green-text: --green is 2.22:1 on
-   white, which fails the 3:1 floor for a meaningful graphic. --green-text is
-   5.23 light / 8.94 dark.
-   ══════════════════════════════════════════════════════════════════════════ */
 
 /* ── the head: display left, the price in the lead slot ──────────────────── */
 /* .d-top end-aligns its two columns, so the numeral's baseline sits with the
@@ -40,12 +5,7 @@
 #pricing .pr-price{align-self:end}
 #pricing .pr-fig{display:flex;align-items:baseline;gap:10px;line-height:1}
 #pricing .pr-cur{font-family:var(--mono);font-size:15px;font-weight:500;letter-spacing:0.12em;color:var(--text-3)}
-/* the one big number on the site that is doing real work. Mono tabular, same
-   figure as before at 1440; the lower floor is what stops it eating a phone. */
 #pricing .pr-num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(56px,7.4vw,84px);font-weight:600;letter-spacing:-0.045em;color:var(--text)}
-/* was a 15px sentence under the price, which made it look like a second claim.
-   Same words, demoted to the mono instrument label the rest of the page uses
-   for microcopy, so the price stays a figure and not a pitch. */
 #pricing .pr-once{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-3);margin-top:12px}
 
 /* ── the body: what it buys | how to get it ──────────────────────────────── */
@@ -54,9 +14,6 @@
 /* the vertical rule is the divider, so the columns pad against it rather than
    sitting in a gap. Same move .d-item makes in the use-case index. */
 #pricing .pr-inc{list-style:none;padding-right:48px}
-/* row height is tuned so the four rows land level with the form column beside
-   them: at 14px padding the list stopped 60px short and left a hole under it,
-   which is the failure the curb records against the shortened page. */
 #pricing .pr-inc li{display:flex;align-items:flex-start;gap:12px;padding:18px 0 19px;
   font-size:15.5px;line-height:1.45;letter-spacing:-0.005em;color:var(--text-2)}
 #pricing .pr-inc li+li{border-top:1px solid var(--sep)}
@@ -73,17 +30,11 @@
 #pricing .pr-note{font-size:13.5px;line-height:1.55;color:var(--text-2);margin-top:16px;max-width:62ch}
 
 /* ── the closing strip: the band ends on ink, not on padding ─────────────── */
-/* The mailto is the visible fallback, never the mechanism: it survives here as
-   text so a reader whose JS died still has a route, and a reader whose mail
-   client does not exist is never sent to one by a button. */
 #pricing .pr-fine{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 32px;
   border-top:1px solid var(--sep-2);margin-top:34px;padding-top:16px;
   font-size:12.5px;line-height:1.5;color:var(--text-3);letter-spacing:-0.005em}
 
 /* ── narrow ──────────────────────────────────────────────────────────────── */
-/* 900 is where .d-top already goes to one column, so the head and the body
-   fold on the same line rather than leaving a one-column head over a
-   two-column body. */
 @media(max-width:900px){
   #pricing .pr-price{align-self:start}
   #pricing .pr-once{margin-top:10px}
@@ -92,9 +43,6 @@
   /* stacked, nothing to stay level with, so the rows go back to table tempo */
   #pricing .pr-inc li{padding:11px 0 12px}
   #pricing .pr-act{border-left:0;border-top:1px solid var(--sep);padding:22px 0 0}
-  /* stacked, the column is the whole page: a 720px-wide email field and a blue
-     slab to match is what an average pricing page looks like, and the note ran
-     to 110 characters a line. Both stop at a measure instead. */
   #pricing .ml-form{max-width:520px}
   #pricing .pr-note{max-width:60ch}
   #pricing .pr-fine{margin-top:26px}

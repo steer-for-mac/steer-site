@@ -272,7 +272,7 @@ prefix.
 
 ## The page is assembled, not authored
 
-Every page is generated into `_site/`. Edit `_includes/bands/*.html` (or the
+Every page is generated into `dist/`. Edit `_includes/bands/*.html` (or the
 page's own `.html`, which is now front matter plus its `<main>`) and run `make
 build`. It
 was one 92KB file, which meant every edit was surgery on a shared blob and two

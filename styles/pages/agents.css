@@ -1,14 +1,3 @@
-/* agents.html — the coding-agent lander and the steer:// reference on it.
-   Paired with the page by path: styles/pages/<page>.css. Unlayered, like every
-   page sheet, which is where these rules already were (a <style> block in the
-   page's own front matter).
-
-   .lander-hero and .hero-cta are also on accessibility.html and nowhere else.
-   Two pages is under the bar for styles/shared.css (which ships on all 14), so
-   the pair is duplicated rather than promoted; a third lander is the signal to
-   promote it. The .back-link copy that used to sit here did go: it was the
-   shared.css rule verbatim with one value changed, and that value is now
-   .back-link.tight. */
 
 .lander-hero{padding:72px 0 40px}
 .lander-hero h1{font-size:clamp(34px,4.8vw,52px);line-height:1.04;letter-spacing:-0.03em;max-width:16ch}
@@ -29,10 +18,6 @@
 .prim thead th{border-top:0;font-size:12px;font-weight:590;color:var(--text-3);text-transform:uppercase;letter-spacing:0.05em}
 .prim td:first-child{white-space:nowrap;width:1%}
 .prim code{font-family:var(--mono);font-size:12.5px;background:var(--bg-inset);padding:2px 7px;border-radius:6px;color:var(--text)}
-/* On a phone the two-column form is unreadable: the command column is nowrap
-   and pushes Effect off-screen, leaving each row a tall empty block beside a
-   URL. Stack to command-over-effect instead of asking the reader to scroll a
-   table sideways to find the sentence that explains the thing they just read. */
 @media (max-width:640px){
   .prim,.prim tbody,.prim tr,.prim td{display:block;width:auto}
   .prim thead{display:none}
@@ -44,11 +29,8 @@
   .prim code{display:inline-block;max-width:100%;overflow-wrap:anywhere}
 }
 .codewrap{position:relative;margin-top:20px;max-width:760px}
-/* 12px stays a literal. The only 12px token is --r-window, and tokens.css
-   documents that tier as "screenshot frames only" (.window, .shot); a code
-   block is not a screenshot frame, so pointing at --r-window to satisfy the
-   linter would make the token lie about where it is used. The card tier (14px)
-   reads too soft at this size next to the inline <code> runs above it. */
+/* 12px stays a literal: the only 12px token is --r-window, "screenshot frames
+   only", so pointing at it to satisfy the linter would make the token lie. */
 /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
 .code{background:var(--bg-inset);border:1px solid var(--sep);border-radius:12px;padding:20px 22px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--text-2)}
 .code .k{color:var(--blue-text)}
@@ -57,9 +39,6 @@
 .callout{background:var(--bg-inset);border-radius:var(--r-card);padding:26px 28px;max-width:760px}
 .callout .big{font-size:30px;font-weight:600;letter-spacing:-0.02em}
 
-/* Measures, rhythm and the two emphasis tiers that were inline style
-   attributes on the markup. Long-form technical prose on this page runs to a
-   64ch measure and a tighter type size than .lead. */
 .ag-tag{margin-bottom:22px}
 .ag-led-last{margin-bottom:0}
 .ag-rule{border-top:1px solid var(--sep)}

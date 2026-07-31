@@ -1,7 +1,3 @@
-/* Entry for site.css, the sheet every page links.
-   Lightning CSS resolves these imports and flattens them into one file, so the
-   browser still gets a single request and the layer order below is what decides
-   the cascade rather than the order a build script happened to concatenate in. */
 
 @layer tokens, base, components, bands;
 

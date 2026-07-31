@@ -1,6 +1,6 @@
 # Serve the built site over HTTP, which the page now requires: the SVG symbols
 # in assets/svg/ are pulled in with <use href="…svg#s"> and browsers refuse to
-# resolve that over file://. The mount is _site/, so what nginx serves is the
+# resolve that over file://. The mount is dist/, so what nginx serves is the
 # same artifact Pages gets; `make up` builds before it starts the container.
 #
 #   docker compose up -d      -> https://steer.seanfloyd.dev.local
@@ -19,8 +19,8 @@ services:
       - dev.orbstack.domains=steer.seanfloyd.dev.local
     volumes:
       # read-only: the container serves the build output, it never writes to it.
-      # The repo is mounted rather than _site/ directly, and nginx's root points
-      # one level in: a bind mount of _site/ detaches the moment anything deletes
+      # The repo is mounted rather than dist/ directly, and nginx's root points
+      # one level in: a bind mount of dist/ detaches the moment anything deletes
       # and recreates that directory, and the container then serves an empty tree
       # that looks like a broken config rather than a stale mount.
       - ./:/usr/share/nginx/html:ro

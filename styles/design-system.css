@@ -1,68 +1,16 @@
-/* The homepage design system, in @layer components.
 
-   This is the shared vocabulary the bands are assembled from: the .d-* ruled
-   grammar (heads, folios, spec rows, figures, index cells, chain cells, pills,
-   notes, tables) that the uses, feel, capabilities, pricing and trust bands all
-   speak, the ruled-sheet structure that turns those bands into one drawn
-   column, the .dgs plate container and its motion, and the type and tempo
-   steps that override styles/shared.css.
-
-   Edit here to change how a band type looks everywhere. Edit styles/bands/<band>.css
-   to change one band.
-
-   Three things sit here that read as if they belong elsewhere, each for a
-   cascade reason worth keeping written down. Layer order is
-   tokens < base < components < bands, and it beats specificity outright.
-
-   1. .shot cannot go to svg-strokes.css. shared.css has `img{display:block}` in
-      this same layer; in @layer base the frame's `display:none` theme swap
-      would lose to it and both screenshots would paint.
-   2. html.nav-over-hero cannot go to styles/bands/head-nav.css. shared.css undoes the
-      light link colour with a MORE specific selector
-      (html.nav-over-hero .nav-menu .nav-links a). In @layer bands these rules
-      win anyway and the nav links stay hero-light once the hero has scrolled
-      away. This was put in a band sheet and measured: 20+ computed properties
-      changed on the nav links at 1440 and 375, in both themes. It is not an
-      argument, it is a render.
-   3. .ml-* is the launch-list form, and _includes/bands/dialogs.html and
-      _includes/bands/pricing.html both use it. Two bands means it is not band-local.
-
-   Known band-local strays still here: .lay-* (capabilities' layers figure) and
-   .hconn / .vconn / .flow (capabilities' signal chain) are interleaved through
-   six of the .d-* media blocks below. Lifting them means splitting those
-   blocks, which buys no cascade correctness and is its own pass. */
-
-/* the screenshot frame and its theme swap. See point 1 above for why this is
-   here and not in svg-strokes.css.
-   NOTE the shot selectors must out-specify `.shot img{display:block}` (0,1,1)
-   — hence `.shot img.shot-*` (0,2,1) — or both light/dark shots show at once. */
 .shot img.shot-dark{display:none}
 [data-theme="dark"] .shot img.shot-light{display:none}
 [data-theme="dark"] .shot img.shot-dark{display:block}
 
-/* real screenshots: a plain frame, NO synthetic title bar (the app window in the
-   PNG already carries its own traffic lights + title — a second bar was double chrome). */
 .shot{border-radius:var(--r-window);overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
-/* height:auto or the width/height attributes (which reserve the box and stop
-   the layout shifting) win as presentational hints and stretch the shot */
 .shot img{width:100%;height:auto;display:block}
 
-/* FAQ. Unreachable from this sheet: the FAQ moved to support.html, which links
-   site.css and not home.css. It cannot move to styles/shared.css either,
-   because that would change support.html, and this pass may only move rules,
-   not alter a page. */
 @media(max-width:520px){
   .faq summary{padding:15px 4px}
 }
 
-/* The hero is always the dark studio (see below). While the sticky nav
-   overlaps it, the nav floats transparent with light text; once the hero
-   scrolls under it, the nav returns to the normal theme-following bar. */
 header.nav{transition:background .25s ease,border-color .25s ease}
-/* dark glass matching the hero top (not fully transparent — keeps light text
-   audit-safe, since a transparent nav leaves contrast tools guessing the bg).
-   The --oh-* group is defined once in tokens.css; see the comment there for why
-   it has no dark-theme counterpart. */
 html.nav-over-hero header.nav{background:var(--oh-glass);border-bottom-color:var(--oh-edge)}
 html.nav-over-hero .brand{color:var(--oh-brand)}
 html.nav-over-hero .nav-links a{color:var(--oh-ink)}
@@ -84,21 +32,6 @@ dialog.ml-dialog::backdrop{background:rgba(7,10,18,.62);backdrop-filter:blur(5px
 .ml-dialog .ml-alt{margin-top:14px;font-size:12px;color:var(--text-3)}
 .ml-dialog .ml-close{position:absolute;top:16px;right:16px}
 
-/* ═══════════ the ruled sheet ═══════════════════════════════════════════
-   Below the hero this page was soft-shadowed rounded cards floating in a
-   1040px column on near-white. That pattern is what reads as generic, not
-   the system font or the single accent, and no amount of typography fixes
-   it while every element is a separate floating rectangle.
-
-   So: draw the structure. The column carries continuous side rules, every
-   band is separated by a rule, and card gutters become hairlines instead
-   of gaps, which is what turns four cards into one object. Monochrome, no
-   new radius tier, no second accent, no texture, no webfont. Both of the
-   references the curb names (Linear, Vercel) are built this way; so is the
-   macOS Settings sidebar, which is ruled rather than shadowed.
-
-   Everything here is one block on purpose: it is a direction, and a
-   direction should be revertible in one cut. */
 
 /* the column, drawn. Each section's .wrap segment abuts the next, so the
    side rules stack into two lines running the height of the page. */
@@ -106,17 +39,8 @@ main > section > .wrap{border-inline:1px solid var(--hairline)}
 
 /* bands separated by a rule that spans the viewport, not the column */
 main > section + section{border-top:1px solid var(--hairline)}
-/* the hero and the dark band already meet the page with a hard cut, which
-   the curb calls this page's vocabulary for that boundary. Don't rule it. */
 #uses,.feel-cinema,#capabilities{border-top:0}
 
-/* ═══════════ plate motion ══════════════════════════════════════════════
-   bad901e kept three loops on purpose: "the ones that show a cursor being
-   driven, text being typed and buttons changing job carry more than the
-   paragraphs beside them". The D graft replaced all three with frozen
-   drawings, which is why the plates read as grey static illustrations.
-   Same grammar as .vg: transform and opacity only, the un-animated markup is
-   the claim already proven, .on added only while on screen. */
 .dgs .acc-t{transform-box:view-box;transform-origin:124px 80px}
 .dgs .acc-s,.dgs .acc,.dgs .acc-h{transform-box:view-box}
 @media (prefers-reduced-motion: no-preference){
@@ -145,33 +69,10 @@ html.still .dgs *,html.still .lay-fig *{animation:none!important}
 @keyframes layJob{0%,10%{opacity:.25;transform:translateY(2px)}20%,76%{opacity:1;transform:none}88%,100%{opacity:.25;transform:translateY(2px)}}
 
 /* ── grafted from the D synthesis (scratch/alt/d-synthesis.html) ────────── */
-/* ══ DIRECTION D: SYNTHESIS ═══════════════════════════════════════════════════
-   C is the base. Its drawn plates stay, because a line-art diagram in the
-   hero's annotation language is the one thing on this page a competitor cannot
-   copy. What C got wrong was rank: four equal columns, so nothing won the
-   glance. B's answer was rank without restraint (a 112px headline over a page
-   whose hero sits at 66). A's answer was that no column may bottom out in
-   white space, wrapped in tick rulers that pretend to be data.
-
-   So: B's steepness at a step the hero still outranks (64 display / 41
-   sub-display / 19 index), A's folios, spec rows and terminated columns, and
-   none of A's rulers. Rules appear only where they divide: full bleed between
-   bands, inset between cells.
-
-   Narrow is a first-class target, not a reflow. At 375 each drawing is cropped
-   to its own ink with a negative margin inside an overflow box (--ct / --cb,
-   measured per plate from the viewBox), the leaders are dropped because the
-   label already sits directly above the drawing, and the vertical rhythm
-   compresses rather than merely stacking.
-   ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── measure ─────────────────────────────────────────────────────────────── */
-/* 1180: the width A and B independently landed on. --maxw (1040) is a reading
-   measure; a plate wants the extra 140px and the prose inside stays capped. */
 .dw{max-width:1180px;margin:0 auto;padding:0 var(--pad)}
 
-/* full-bleed hairline: a direct child of <section>, so it needs no 100vw trick
-   (100vw overflows by the scrollbar). These divide bands. Nothing else does. */
 /* the rule under the section head is gone: it divided the head from its own
    body, which the spacing already does, and it read as a stray line. */
 .d-hr{display:none}
@@ -181,14 +82,9 @@ html.still .dgs *,html.still .lay-fig *{animation:none!important}
 .d-head{display:flex;align-items:center;gap:20px;margin-bottom:30px}
 .d-head .eyebrow{margin-bottom:0}
 .d-head i{flex:1;height:1px;background:var(--sep)}
-/* end-aligned: the headline's last line and the lead's last line share a
-   baseline, so the shorter column's slack reads as placed, not as a hole. */
 .d-top{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,0.94fr);gap:14px 64px;align-items:end}
 .d-top .lead{margin:0;max-width:46ch}
 
-/* the display step. SF at 64, under the hero's 66, so the hero still owns the
-   top of the ramp. 640 rather than 600: at this size the system font needs the
-   extra weight to hold a dark ground. */
 .d-display{font-size:clamp(34px,4.5vw,64px);line-height:1.02;letter-spacing:-0.035em;font-weight:640;text-wrap:balance;max-width:15ch}
 /* sub-display: the one promoted use case, one clear step down */
 .d-sub{font-size:clamp(26px,2.9vw,41px);line-height:1.06;letter-spacing:-0.03em;font-weight:620;text-wrap:balance}
@@ -208,61 +104,32 @@ html.still .dgs *,html.still .lay-fig *{animation:none!important}
   font-family:var(--mono);font-size:11px;line-height:1.45}
 .d-spec .k{color:var(--text);font-weight:500;text-transform:uppercase;letter-spacing:0.12em}
 .d-spec .v{color:var(--text-3);letter-spacing:0.01em}
-/* A <b> that exists only to carry the per-pad data-ps/xb/sw/mf labels, not to
-   emphasise. Without this it takes the UA's `bolder`, which reads as a second
-   weight inside a key that already set its own (.d-spec .k is 500, .lay-key is
-   600). It was an inline style attribute on both until 2026-07-30. */
 .d-swap{font-weight:inherit}
 
 /* ── drawings ────────────────────────────────────────────────────────────── */
-/* The crop box. A viewBox is not ink: every plate carries dead air above and
-   below its drawing, and four of those stacked is most of what made C's band
-   3,342px tall at 375. --ct / --cb pull the svg up and in by its own measured
-   dead air inside an overflow box, so a plate contributes its drawing and
-   nothing else. Percentage margins resolve against .d-fig's width, which is
-   why .d-fig is what gets capped, never the svg. */
 .d-fig{overflow:hidden;line-height:0}
 .d-fig>svg{margin-top:var(--ct,0);margin-bottom:var(--cb,0)}
 /* every plate's ground line becomes the floor of its cell */
 .fc{--cb:-6.7%}
-/* one trim across the index, set by the deepest plate (02's speed scale hangs
-   9 units below the ground line), so the three spec rows land on one line */
 .fa,.fs,.fv{--cb:-7.7%}
-/* the chain shares one bottom trim: the plates are floor-aligned, so an equal
-   trim is what keeps the flow line level as it crosses the cell rules */
 .fp1,.fp2,.fp3{--cb:-16.7%}
 .fp1{--ct:-15.2%}
 .fp2{--ct:-9%}
 .fp3{--ct:-23%}
 .dgs{display:block;width:100%;height:auto;color:var(--text-2)}
-/* one stroke system across every plate regardless of the scale it is drawn at:
-   without this the promoted couch would render at 2.4x the line weight of the
-   index plates and stop looking like the same drawing. */
 .dgs *{vector-effect:non-scaling-stroke}
 
 .dgs .mono,.d-chain .mono{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;fill:currentColor}
 
 /* ── THE MOMENT: the couch, at roughly half the band ─────────────────────── */
-/* The couch owns the claim readers most disbelieve, so it is the one drawing
-   rendered big enough to study. Redrawn to a 420-wide plate (the same three
-   objects, translated apart on the same ground line) so a landscape figure
-   sits beside a column of type instead of towering over it. */
 .d-moment{display:grid;grid-template-columns:minmax(0,5.4fr) minmax(0,6.6fr);gap:40px 60px;align-items:center;padding:58px 0 62px}
 .d-mtext .d-lede{font-size:16.5px;color:var(--text-2);line-height:1.56;letter-spacing:-0.006em;max-width:44ch;margin-top:20px;text-wrap:pretty}
 
 /* ── THE INDEX: the other three, demoted, in ruled cells ─────────────────── */
-/* Cells are padded identically and the grid is pulled out by exactly that
-   padding, so the outer cells' type still lands on the container's own left
-   edge. Flushing the first and last cell instead made them 26px wider than the
-   middle one, which put the three plates at three sizes and knocked their spec
-   rows out of line by the same amount. */
 .d-index,.d-chain,.d-pills{--cx:var(--pad);margin-left:calc(var(--cx) * -1);margin-right:calc(var(--cx) * -1)}
 .d-index{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--sep)}
 .d-item{display:flex;flex-direction:column;min-width:0;padding:26px var(--cx) 28px}
 .d-item+.d-item{border-left:1px solid var(--sep)}
-/* Four in one row so the band is scannable at a glance, which is what C had and
-   the promoted-couch layout cost. The couch still leads, but on width and plate
-   size rather than by owning a band of its own. */
 .d-index{grid-template-columns:minmax(0,1.62fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)}
 .d-item-lead h3{font-size:clamp(21px,1.7vw,25px);letter-spacing:-0.022em}
 .d-item-lead .d-fig{max-width:none}
@@ -279,9 +146,6 @@ html.still .dgs *,html.still .lay-fig *{animation:none!important}
 .d-item p{font-size:14.5px;color:var(--text-2);line-height:1.55;letter-spacing:-0.005em}
 .d-item p+p{margin-top:9px}
 .d-item .arrow-link{font-size:14px;margin-top:11px;align-self:flex-start}
-/* A's rule, enforced: no column may bottom out in white space. The spec row
-   and its drawing are pushed to the floor, so all three plates stand on one
-   ground line and every slack pixel lands mid-cell between two rules. */
 .d-foot{margin-top:auto;padding-top:30px}
 
 /* ── the tail: recognition strip, then the two notes as key/value rows ───── */
@@ -299,9 +163,6 @@ a.d-pill:hover{background:var(--blue-fill);text-decoration:none}
 .d-chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--sep)}
 .d-st{display:flex;flex-direction:column;min-width:0;padding:26px var(--cx) 30px}
 .d-st+.d-st{border-left:1px solid var(--sep)}
-/* the plate runs to the cell rule on both sides: the flow line leaves one
-   viewBox at its right edge and enters the next at its left, so with the cell
-   padding cancelled the chain reads as one line crossing three rules */
 .d-st .d-fig{margin-top:auto;margin-left:calc(var(--cx) * -1);margin-right:calc(var(--cx) * -1)}
 .d-pin{margin-bottom:18px}
 .d-pin .k{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:var(--text);display:block}
@@ -334,10 +195,6 @@ a.d-pill:hover{background:var(--blue-fill);text-decoration:none}
 .lay-row::before{content:"";width:16px;height:1px;background:var(--sep-2);flex:none}
 .lay-row svg{width:21px;height:21px;flex:none;margin:0 11px 0 5px;color:var(--text-2)}
 .lay-a{font-family:var(--mono);font-size:12px;letter-spacing:0.01em;color:var(--text-3);flex:none;width:13ch}
-/* the same spec-row grammar as .d-spec: control left, what it becomes right,
-   so the figure fills its column instead of trailing off into a gutter. The
-   result column is fixed width, which is what keeps the four arrows in a line
-   once the pair is pushed right. */
 .lay-arrow{font-family:var(--mono);font-size:12px;color:var(--text-3);opacity:.6;margin:0 12px}
 .lay-b{font-family:var(--mono);font-size:12px;letter-spacing:0.01em;color:var(--blue-text);flex:none;width:11ch}
 
@@ -366,13 +223,6 @@ a.d-pill:hover{background:var(--blue-fill);text-decoration:none}
   .d-note{grid-template-columns:190px minmax(0,1fr)}
   .d-trow{grid-template-columns:48px 210px minmax(0,1fr)}
 }
-/* One column from 900, not from 760. Two columns for three entries strands the
-   third in a half-width row (the curb records this exact failure), and three
-   256px chain cells squeezed the middle plate until the STEER box was smaller
-   than its own label. Below this width every plate is cropped to its own ink
-   and the leaders go: the mono label already sits directly above the drawing,
-   so the leader was pointing at something already named. C shipped a 3,342px
-   band at 375 and most of it was viewBox. */
 @media(max-width:900px){
   .d-top{grid-template-columns:1fr;gap:18px;align-items:start}
   .d-display{max-width:20ch}
@@ -438,41 +288,17 @@ a.d-pill:hover{background:var(--blue-fill);text-decoration:none}
   .d-gal{gap:14px;padding-top:22px}
 }
 
-/* the section head as an object, not a line of small grey text: mono label,
-   then a hairline to the column edge. romm's device, and it is just a rule. */
 main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow{display:flex;width:100%}
 main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
   content:"";flex:1;height:1px;margin-left:16px;align-self:center;background:var(--hairline)}
 
-/* a real step at the top of the scale. The curb bans a display face, and is
-   right to, but nothing was doing the job that face does: the hero proves SF
-   carries a display tier at 60px, then everything below it stopped at 40. */
 .h2{font-size:clamp(30px,4.4vw,50px);letter-spacing:-0.03em}
 
-/* tempo: the 1,660px of section padding was scaled for the 2,900-word page
-   that bad901e cut. Same proportions, ~28% off, so the bands stop being a
-   screen of air each. */
 .sec{padding:76px 0}
 .sec-loose{padding:96px 0}
 
 .sec-tight{padding:52px 0}
 
-/* ══ .face-slot: the controller glyph, in the reader's own controller ═════════
-   Used by the hero's vignette and by the capabilities layers figure, which is
-   why it is here and not in either band's sheet.
-
-   All four variants ship as markup and the pad selection picks one. They used
-   to be built by home.js concatenating an SVG string per pad, which put four
-   letters and four colours in a second place (the plates held the first) and
-   hid the markup from html-validate, stylelint and PurgeCSS at the same time.
-   The letters and their colours now come from _data/pads.json through
-   _includes/macros/pad.njk, once.
-
-   The PlayStation glyph is a drawn shape, so it stays in its own art file and
-   is the no-JS default: with scripting off <html> carries no data-pad, and
-   what a reader gets is the pad the rest of the page defaults to. display is
-   set back to block rather than to `revert`, because block is what
-   shared.css's .face asks for. */
 .face-slot .fl{display:none}
 html[data-pad="xb"] .face-slot .f-xb,
 html[data-pad="sw"] .face-slot .f-sw,

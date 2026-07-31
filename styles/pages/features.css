@@ -1,16 +1,5 @@
-/* features.html — the full capability list, grouped by intent.
-   Paired with the page by path: styles/pages/<page>.css. Unlayered, like every
-   page sheet, which is where these rules already were (a <style> block in the
-   page's own front matter).
-
-   The .faq block that sat beside this one in that front matter went to
-   styles/shared.css: support.html and compatibility.html carried byte-identical
-   copies, and those three are the only pages with a .faq. */
 
 .fgroup{max-width:74ch;margin:0 auto 52px}
-/* Group headings are <h2 class="h3">: the page's <h1> is the only thing above
-   them, so an <h3> skipped a level (axe heading-order). Same values as before --
-   h2 and h3 already share the h1,h2,h3 base rule, so nothing moved. */
 .fgroup .h3{font-size:21px;letter-spacing:-0.02em;margin:0 0 6px}
 .fgroup .fwhy{color:var(--text-2);font-size:15.5px;line-height:1.6;margin:0 0 18px;max-width:62ch}
 .frow{display:grid;grid-template-columns:186px 1fr;gap:18px;padding:13px 0;border-top:1px solid var(--sep)}

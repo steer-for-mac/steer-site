@@ -1,11 +1,3 @@
-/* compatibility.html — the per-controller capability matrix.
-   Paired with the page by path: styles/pages/<page>.css. Unlayered, like every
-   page sheet, which is where these rules already were (a <style> block in the
-   page's own front matter).
-
-   The .faq block that sat beside this one in that front matter went to
-   styles/shared.css: features.html and support.html carried byte-identical
-   copies, and those three are the only pages with a .faq. */
 
 /* wide capability matrix: scrolls inside its own container on small screens */
 .matrix-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:36px;border-radius:var(--r-card)}

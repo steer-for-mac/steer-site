@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /* axe-core over every built page. The per-commit accessibility gate.
  *
- *   node scripts/axe-check.mjs              # every _site/*.html
+ *   node scripts/axe-check.mjs              # every dist/*.html
  *   node scripts/axe-check.mjs index vs     # just these
  *
  * WHY NOT scripts/lighthouse. Lighthouse's accessibility category IS axe-core,
  * plus a page load, a trace, a category score and a JSON report per page. Over
- * the 14 pages in _site/ that measured 2m15s; this measures ~4s, because it
+ * the 14 pages in dist/ that measured 2m15s; this measures ~4s, because it
  * loads axe once into one browser and navigates. `make ci` finishes in seconds
  * and a two-minute step would simply stop being run. scripts/lighthouse stays
  * as the pre-deploy gate, where best-practices and SEO are also graded.
@@ -25,7 +25,7 @@
  * broken heading level. The union is a superset of what Lighthouse's
  * accessibility category weights, so a page that passes here passes there.
  *
- * Runs against its own in-process server rooted at _site/, so it needs no
+ * Runs against its own in-process server rooted at dist/, so it needs no
  * container (the <use href="assets/svg/...#s"> symbols do need a server, which
  * is why file:// is not an option). BASE_URL points it at nginx instead.
  *
@@ -41,11 +41,11 @@ import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const SITE = resolve(ROOT, "_site");
+const SITE = resolve(ROOT, "dist");
 const AXE = readFileSync(resolve(ROOT, "node_modules/axe-core/axe.min.js"), "utf8");
 const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"];
 
-if (!existsSync(SITE)) { console.error("no _site/ — run `make build` first"); process.exit(2); }
+if (!existsSync(SITE)) { console.error("no dist/ — run `make build` first"); process.exit(2); }
 
 /* Globbed, not a hand-kept list: a page added to the repo is graded without
    anyone remembering to edit this file. Same rule as the Makefile's lint globs. */
