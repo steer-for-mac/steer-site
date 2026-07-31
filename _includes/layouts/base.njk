@@ -35,7 +35,7 @@
     rather than a sitewide preference. Before this file existed that split was
     two hand-copied scripts, and they had already drifted. #}
 <script>
-(function(){var s=null{% if home %},a=null{% endif %};try{s=localStorage.getItem('steer-theme');{% if home %}a=localStorage.getItem('steer-accent');{% endif %}}catch(e){}var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme', s||(d?'dark':'light'));{% if home %}if(a&&a!=='blue'&&a!=='auto')document.documentElement.setAttribute('data-accent',a);{% endif %}})();
+(function(){var s=null{% if home %},a=null{% endif %};try{s=localStorage.getItem('steer-theme');{% if home %}a=localStorage.getItem('steer-accent');{% endif %}}catch(e){}s=(s==='light'||s==='dark')?s:null;var r=document.documentElement,d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;r.setAttribute('data-theme', s||(d?'dark':'light'));r.setAttribute('data-theme-pref', s||'system');{% if home %}if(a&&a!=='blue'&&a!=='auto')r.setAttribute('data-accent',a);{% endif %}})();
 </script>
 <link rel="icon" type="image/png" href="assets/mark.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -66,14 +66,50 @@
 {%- if home -%}
 {% include "bands/dialogs.html" %}
 <script src="home.js" defer></script>
-{%- else %}
+{%- endif %}
+{#- The theme toggle, once, for all 14 pages. It used to be two copies that had
+    to agree: this block for sub-pages and the same logic again in home.js.
+    They agreed by luck.
+
+    Three states. The stored key holds "light" or "dark" only when the visitor
+    has FORCED one; System is the absence of the key, which is what makes the
+    choice reversible — a two-state toggle can never get back to "follow my Mac"
+    once clicked, and that, not the widget, was the actual defect. It is also why
+    the <head> script above needed no change: it already read a missing key as
+    system.
+
+    localStorage rather than a cookie deliberately. A theme preference is
+    strictly functional and never needs to reach the server, and a cookie would
+    invite a consent question for nothing.
+
+    The head script above validates the stored value against light|dark before
+    using it. Without that clause any junk in the key became the state: a stored
+    "SYSTEM" produced data-theme="SYSTEM" (matching no rule), a label reading
+    "Theme: undefined", and a first click that wrote the literal string
+    "undefined" into storage — leaving the control that exists to recover the
+    state permanently dead, recoverable only by clearing site data. Nothing in
+    this repo writes anything but light|dark, so it was unreachable rather than
+    live, and one clause is cheaper than trusting that it stays unreachable. #}
 <script>
 (function(){
   var root=document.documentElement,t=document.getElementById('themeToggle');
-  if(t)t.addEventListener('click',function(){var n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('steer-theme',n);}catch(e){}});
+  var mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)');
+  var NEXT={system:'light',light:'dark',dark:'system'},NAME={system:'System',light:'Light',dark:'Dark'};
+  function apply(p){
+    root.setAttribute('data-theme-pref',p);
+    root.setAttribute('data-theme',p==='system'?((mq&&mq.matches)?'dark':'light'):p);
+    try{p==='system'?localStorage.removeItem('steer-theme'):localStorage.setItem('steer-theme',p);}catch(e){}
+    if(t)t.setAttribute('aria-label','Theme: '+NAME[p]+', activate for '+NAME[NEXT[p]]);
+  }
+  apply(root.getAttribute('data-theme-pref')||'system');
+  if(t)t.addEventListener('click',function(){apply(NEXT[root.getAttribute('data-theme-pref')||'system']);});
+  /* keep following the OS while the visitor has not forced a side. Without this
+     a Mac switching to dark at sunset leaves the page light until reload. */
+  if(mq&&mq.addEventListener)mq.addEventListener('change',function(){
+    if((root.getAttribute('data-theme-pref')||'system')==='system')apply('system');
+  });
 })();
 </script>
-{%- endif %}
 {%- if bodyEnd %}
 {{ bodyEnd | safe }}
 {%- endif %}

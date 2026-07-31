@@ -21,7 +21,7 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast shots dead lighthouse check
+.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast theme shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z][a-z-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
@@ -106,6 +106,19 @@ a11y: ## axe-core (WCAG 2 A/AA) over every page in _site/
 # stopped running.
 contrast: ## Every token colour pair clears AA on the darkest surface it can land on
 	node scripts/contrast.mjs
+
+# The only gate here that presses a button. Everything else grades a document
+# that is already sitting still: html-validate parses it, axe walks it, purge
+# asks what it can reach. None of them can see that a control does the wrong
+# thing when clicked, which is how a two-state theme toggle shipped on 14 pages
+# with no way back to "follow my Mac" and every gate green.
+#
+# It drives prefers-color-scheme through CDP rather than trusting a stub,
+# because "keeps following the OS" is a claim about a live media-query change
+# and nothing else can make one happen. Negative control before it was trusted:
+# run against HEAD's two-state toggle it scores 0/18, not 18/18.
+theme: build ## Drive the theme toggle: three states, storage, live OS following
+	node scripts/theme-check.mjs
 
 shots: build ## Render every band at 1440 and 375 into scratch/shots/
 	node scripts/shots.mjs

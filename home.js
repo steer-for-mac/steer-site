@@ -1,17 +1,10 @@
 /* Homepage behaviour: pad picker, accent picker, gallery dialog, plate loops.
    The theme script stays inline in <head> because it must set data-theme
-   before first paint; everything else can wait for the parser. */
-// theme toggle (initial theme is already set by the <head> script)
-(function(){
-  var root=document.documentElement;
-  var t=document.getElementById('themeToggle');
-  if(!t) return;
-  t.addEventListener('click',function(){
-    var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
-    root.setAttribute('data-theme',next);
-    try{localStorage.setItem('steer-theme',next);}catch{}
-  });
-})();
+   before first paint; everything else can wait for the parser.
+
+   The theme TOGGLE is not here either, and used to be: this file carried a
+   two-state copy while the layout carried another for the other thirteen pages.
+   One implementation now, in the layout, three-state. */
 // nav floats transparent/light while it overlaps the always-dark hero
 (function(){
   var hero=document.querySelector('.chero');

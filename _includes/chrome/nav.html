@@ -15,8 +15,15 @@
       </nav>
     </details>
     <div class="nav-right">
-      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle appearance">
+      {#- Three states, not two: System -> Light -> Dark -> System. All three
+          glyphs ship in the button and CSS shows the one matching
+          html[data-theme-pref]; nothing swaps innerHTML, so the markup a gate
+          reads is the markup that renders. The aria-label is stateful because a
+          cycling glyph with a fixed label cannot say what pressing does next. #}
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Theme: System, activate for Light">
+        {% include "art/nav-auto.svg" %}
         {% include "art/nav-sun.svg" %}
+        {% include "art/nav-moon.svg" %}
       </button>
       {#- data-ml opens the launch-list dialog and home.js is the only page
           script that wires it, so off the homepage the CTA is a plain link to

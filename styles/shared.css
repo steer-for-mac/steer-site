@@ -132,6 +132,22 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .theme-toggle{width:30px;height:30px;border-radius:50%;border:1px solid var(--sep);background:transparent;color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
 .theme-toggle:hover{background:var(--bg-inset);color:var(--text)}
 .theme-toggle svg{width:15px;height:15px}
+/* One of three glyphs, chosen by the stored PREFERENCE rather than the resolved
+   appearance: on a dark Mac, System and Dark both paint the page dark, and a
+   button that looked identical in both would give the user no way to tell
+   whether their choice had taken.
+
+   The auto glyph is the unstyled default, so it is what shows with JS off. That
+   is the right glyph for a page whose appearance cannot be changed, but note it
+   is NOT true that the page then follows the OS: base.njk hard-codes
+   data-theme="light" and there is no prefers-color-scheme media query in any
+   sheet here, so a scriptless visit is light on a dark Mac. Making that claim
+   true means a CSS-level dark block, which is a separate piece of work. */
+.theme-toggle .sun,.theme-toggle .moon{display:none}
+html[data-theme-pref="light"] .theme-toggle .auto,
+html[data-theme-pref="dark"] .theme-toggle .auto{display:none}
+html[data-theme-pref="light"] .theme-toggle .sun{display:block}
+html[data-theme-pref="dark"] .theme-toggle .moon{display:block}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 22px;border-radius:var(--r-btn);font-size:15px;font-weight:500;letter-spacing:-0.01em;cursor:pointer;border:1px solid transparent;transition:transform .12s ease,background .15s,border-color .15s,opacity .15s;white-space:nowrap}
