@@ -251,13 +251,17 @@ function report(findings) {
 /* A comment this long is a defect report on the code. */
 const MAX_COMMENT_LINES = 6;
 
-/* Boy scout: a file with uncommitted edits has to clear the bar, the backlog
-   only warns. Branch scope was tried and every violating file is in it. */
+/* Boy scout: a file with uncommitted EDITS has to clear the bar, the backlog
+   only warns. Branch scope was tried and every violating file is in it.
+   R100 is excluded because a pure rename is not an edit: `git mv` of twenty
+   files would otherwise demand their comments be rewritten to move them. */
 const touched = () => {
   try {
     const git = (args) => execFileSync("git", args, { cwd: ROOT, encoding: "utf8" }).split("\n").filter(Boolean);
-    return new Set([...git(["diff", "--name-only", "HEAD"]),
-      ...git(["ls-files", "--others", "--exclude-standard"])]);
+    const changed = git(["diff", "--name-status", "-M", "HEAD"])
+      .filter((l) => l.split("\t")[0] !== "R100")
+      .map((l) => l.split("\t").pop());
+    return new Set([...changed, ...git(["ls-files", "--others", "--exclude-standard"])]);
   } catch { return new Set(); }
 };
 const TOUCHED = touched();
@@ -265,7 +269,10 @@ const TOUCHED = touched();
 export function commentLengthChecks(file, src, findings) {
   const runs = [
     ...src.matchAll(/(?:^[ \t]*(?:\/\/|#).*\n)+/gm),
-    ...src.matchAll(/\/\*[\s\S]*?\*\//g),
+    // Anchored to the line start, or a glob reads as a comment: a slash-star
+    // inside "dist/star-star" opened a block that closed on a star-slash 25
+    // lines later inside a test glob, and reported the span as one comment.
+    ...src.matchAll(/^[ \t]*\/\*[\s\S]*?\*\//gm),
     ...src.matchAll(/\{#[\s\S]*?#\}/g),
   ];
   for (const m of runs) {
@@ -362,7 +369,7 @@ for (const f of ["styles/site.entry.css", "styles/home.entry.css"])
 for (const f of execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8" }).split("\n"))
   if (/\.(css|js|mjs|ts|njk|html|yml|yaml|py)$/.test(f) && existsSync(join(ROOT, f)))
     commentLengthChecks(f, readFileSync(join(ROOT, f), "utf8"), findings);
-if (existsSync(join(ROOT, "_includes/scripts")))
-  for (const f of readdirSync(join(ROOT, "_includes/scripts")).filter((n) => n.endsWith(".js")))
-    includedJsChecks(`_includes/scripts/${f}`, readFileSync(join(ROOT, "_includes/scripts", f), "utf8"), findings);
+if (existsSync(join(ROOT, "src/_includes/scripts")))
+  for (const f of readdirSync(join(ROOT, "src/_includes/scripts")).filter((n) => n.endsWith(".js")))
+    includedJsChecks(`src/_includes/scripts/${f}`, readFileSync(join(ROOT, "src/_includes/scripts", f), "utf8"), findings);
 process.exit(report(findings) > 0 ? 1 : 0);
