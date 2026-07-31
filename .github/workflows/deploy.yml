@@ -66,6 +66,15 @@ jobs:
           node scripts/curb-check.js
           node scripts/curb-check.js --self-test
 
+      # Keyed on the lockfile, so the cache turns over exactly when the pinned
+      # Playwright version does. --with-deps still runs: the OS packages are not
+      # in this path and are cheap, the ~200MB of browsers are the slow half.
+      - name: Cache browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
       - name: Install browsers
         run: npx playwright install --with-deps
 
