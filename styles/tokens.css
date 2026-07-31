@@ -45,7 +45,7 @@
   --r-card:14px; --r-inset:10px; --r-btn:980px; --r-window:12px; /* window: screenshot frames only */
 
   /* nav-over-hero: the glass bar while the nav sits above the hero. Seven values
-     that were literals repeated across grammar.css and shared.css (the latter
+     that were literals repeated across design-system.css and shared.css (the latter
      twice, for the ::details-content fallback), so a tweak meant three edits and
      one of them was always missed.
 

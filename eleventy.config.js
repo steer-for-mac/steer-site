@@ -42,8 +42,8 @@ function writeHomeEntry() {
     "   from styles/bands/*.css, because @import takes no glob. Edit a band's own\n" +
     "   sheet, or add a new styles/bands/<band>.css and rebuild. */\n\n" +
     "@layer tokens, base, components, bands;\n\n" +
-    '@import "primitives.css" layer(base);\n' +
-    '@import "grammar.css" layer(components);\n' +
+    '@import "svg-strokes.css" layer(base);\n' +
+    '@import "design-system.css" layer(components);\n' +
     bands.map((b) => `@import "bands/${b}.css" layer(bands);\n`).join(""),
     "utf8");
 }

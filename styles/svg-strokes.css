@@ -1,4 +1,4 @@
-/* Cross-page primitives, in @layer base.
+/* The SVG stroke language, in @layer base.
 
    The layer nothing was ever imported into. These are the drawing and surface
    vocabularies the bands are built from, not components: a rule here is meant
@@ -22,7 +22,7 @@
    `img{display:block}` in @layer components, and the frame's theme swap turns
    an image off with `.shot img.shot-dark{display:none}`. In base that loses to
    components on layer alone, no matter how specific it is, and both the light
-   and the dark screenshot paint at once. It lives in styles/grammar.css. */
+   and the dark screenshot paint at once. It lives in styles/design-system.css. */
 
 .o1,.o2,.o3,.ld,.datum,.sig,.o1b{fill:none;stroke:currentColor;stroke-linejoin:round;stroke-linecap:round}
 .o1{stroke-width:1.4;opacity:.72}

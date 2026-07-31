@@ -8,7 +8,7 @@
    nothing is fetched until the visitor asks.
 
    The launch-list form (.ml-*) that dialog.ml-dialog wraps is NOT here: it is
-   also used by _includes/bands/pricing.html, so it lives in styles/grammar.css.
+   also used by _includes/bands/pricing.html, so it lives in styles/design-system.css.
 
    The in-page invite (.gal-invite / .gal-panes) was deleted 2026-07-30: its
    markup had already left the homepage, so the dialog is the only way in.

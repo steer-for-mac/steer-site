@@ -20,13 +20,9 @@ import globals from "globals";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  // _site/ is build output and scratch/ is throwaway; both hold copies of
-  // home.js that would be linted twice and reported at the wrong path.
-  // test-results/ and playwright-report/ are Playwright's output. Ignoring them
-  // is not tidiness: eslint globs the tree while the Playwright step runs
-  // alongside it in scripts/ci, and Playwright clears test-results/ as it
-  // starts, so eslint died with ENOENT scandir on a directory that existed when
-  // the walk began. It reads as a flaky lint failure with no lint in it.
+  // test-results/ is not tidiness: Playwright clears it mid-run while eslint is
+  // globbing, and eslint dies with ENOENT on a directory that existed when the
+  // walk began -- a flaky lint failure with no lint in it.
   globalIgnores(["_site/**", "scratch/**", "node_modules/**", "screenshots/**",
                  "test-results/**", "playwright-report/**"]),
 
@@ -67,12 +63,8 @@ export default defineConfig([
     languageOptions: { globals: globals.node, sourceType: "module" },
   },
 
-  // Playwright specs are the one place both environments are genuinely present
-  // in one file: the test body is a Node module, and the callbacks handed to
-  // page.evaluate() are serialised and run inside the browser, where `document`
-  // and `localStorage` are exactly right. eslint cannot tell the two apart --
-  // to it they are ordinary nested arrow functions -- so declaring both is the
-  // honest description of the file rather than a suppression.
+  // Specs really are both environments: the body is Node, and the callbacks
+  // passed to page.evaluate() run in the browser.
   {
     files: ["tests/**/*.spec.js"],
     languageOptions: {

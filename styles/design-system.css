@@ -14,7 +14,7 @@
    cascade reason worth keeping written down. Layer order is
    tokens < base < components < bands, and it beats specificity outright.
 
-   1. .shot cannot go to primitives.css. shared.css has `img{display:block}` in
+   1. .shot cannot go to svg-strokes.css. shared.css has `img{display:block}` in
       this same layer; in @layer base the frame's `display:none` theme swap
       would lose to it and both screenshots would paint.
    2. html.nav-over-hero cannot go to styles/bands/head-nav.css. shared.css undoes the
@@ -33,7 +33,7 @@
    blocks, which buys no cascade correctness and is its own pass. */
 
 /* the screenshot frame and its theme swap. See point 1 above for why this is
-   here and not in primitives.css.
+   here and not in svg-strokes.css.
    NOTE the shot selectors must out-specify `.shot img{display:block}` (0,1,1)
    — hence `.shot img.shot-*` (0,2,1) — or both light/dark shots show at once. */
 .shot img.shot-dark{display:none}

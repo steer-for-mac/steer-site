@@ -82,8 +82,6 @@ STEPS = [
     # gate at all, which is the one thing this list was missing.
     ("Behaviour: theme toggle and controller picker (Playwright)",
      ["npx", "playwright", "test"], False),
-    # No build prerequisite and no browser: reads the sources, ~2s. It cannot
-    # replace eslint -- different questions -- so both run.
     ("Types: tsc --noEmit over the scripts and gates", ["npx", "tsc"], False),
     ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
     ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),

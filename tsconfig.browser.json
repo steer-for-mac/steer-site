@@ -1,5 +1,5 @@
+// Emits. tsconfig.json is the checker.
 {
-  "//": "Build config for the one TypeScript file the browser loads. The root tsconfig.json is the checker (noEmit, and it spans the Node tooling too); this one emits. No bundler: theme.ts has no imports, so the emitted file is a plain script the page loads with defer, exactly as theme.js was. module is es2022 rather than none because tsc rejects none outright.",
   "compilerOptions": {
     "target": "ES2022",
     "module": "es2022",

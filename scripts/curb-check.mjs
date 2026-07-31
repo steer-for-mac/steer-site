@@ -40,7 +40,7 @@ const HTML_FILES = existsSync(join(ROOT, "_site"))
 // rgba(0,122,255,0.10) becomes #007aff1a in the output and the forbidden-hex
 // detector fires on a value the author never wrote. Check what a human edits.
 // Globbed, not listed. A hand-maintained list silently stopped covering
-// grammar.css and primitives.css the day base.css was split: the existsSync
+// design-system.css and svg-strokes.css the day base.css was split: the existsSync
 // guard below skips a missing file without a word, so 452 lines including the
 // whole .d-* system went unenforced while CI stayed green.
 // *.entry.css is excluded because those two ARE generated (eleventy.config.js).
@@ -56,7 +56,7 @@ const CSS_FILES = [
   // styles/pages/<page>.css. Added the day the per-page sheets landed: without
   // it, moving a rule out of a page's front-matter <style> block and into its
   // sheet would have taken it out of the curb's reach, which is the same silent
-  // gap the grammar.css/primitives.css split opened.
+  // gap the design-system.css/svg-strokes.css split opened.
   ...cssIn("styles/pages"),
 ];
 
@@ -271,6 +271,37 @@ function report(findings) {
   return errs.length;
 }
 
+/* Layer is a function of the directory, and this is what makes that true rather
+   than merely intended. Moving a sheet between directories moves it between
+   layers; layer order beats specificity outright, so a demoted rule loses to
+   anything in `components` however specific. Nothing else in the toolchain
+   notices. */
+const layerFor = (path) =>
+  path.startsWith("bands/") ? "bands"
+  : path.startsWith("pages/") ? null           // page sheets are linked unlayered
+  : path === "tokens.css" ? "tokens"
+  : path === "svg-strokes.css" ? "base"
+  : "components";
+
+export function layerChecks(file, src, findings) {
+  for (const m of src.matchAll(/@import\s+"([^"]+)"(?:\s+layer\(([^)]+)\))?/g)) {
+    const [, path, got] = m;
+    const want = layerFor(path);
+    if (got !== want) {
+      findings.push(err(file, lineOf(src, m.index), `${path} is imported at layer(${got ?? "none"}), but its directory says ${want ?? "none"}`));
+    }
+  }
+}
+
+/* Nunjucks renders what it includes, and _includes/scripts/ is JavaScript. A
+   malformed `{{` fails the build loudly; a well-formed `{{ name }}` renders to
+   empty string and deletes code silently. */
+export function includedJsChecks(file, src, findings) {
+  for (const m of src.matchAll(/\{\{|\{%/g)) {
+    findings.push(err(file, lineOf(src, m.index), `Nunjucks delimiter ${m[0]} in an included script -- it will be interpreted, not emitted`));
+  }
+}
+
 // ---- self-test: every detector must bite on a known-bad fixture ------------
 
 function selfTest() {
@@ -290,6 +321,11 @@ function selfTest() {
     ["style-attr-hex", () => { const f = []; styleAttrChecks("x", `<b style="--c:#0d6efd">`, f); return f.length; }],
     ["style-attr-token-ok", () => { const f = []; styleAttrChecks("x", `<b style="--c:var(--blue)">`, f); return f.length === 0 ? 1 : 0; }],
     ["data-style-not-matched", () => { const f = []; styleAttrChecks("x", `<b data-style="#0d6efd">`, f); return f.length === 0 ? 1 : 0; }],
+    ["layer-wrong", () => { const f = []; layerChecks("x", `@import "bands/feel.css" layer(components);`, f); return f.length; }],
+    ["layer-right-ok", () => { const f = []; layerChecks("x", `@import "bands/feel.css" layer(bands);`, f); return f.length === 0 ? 1 : 0; }],
+    ["layer-missing", () => { const f = []; layerChecks("x", `@import "tokens.css";`, f); return f.length; }],
+    ["nunjucks-in-js", () => { const f = []; includedJsChecks("x", `var a = {{b:1}};`, f); return f.length; }],
+    ["plain-js-ok", () => { const f = []; includedJsChecks("x", `var a = { b: 1 };`, f); return f.length === 0 ? 1 : 0; }],
   ];
   let pass = 0;
   for (const [name, fn] of /** @type {Array<[string, () => number]>} */ (cases)) {
@@ -313,4 +349,9 @@ if (!HTML_FILES.length) {
 }
 for (const f of HTML_FILES) if (existsSync(join(ROOT, f))) scanHtml(f, findings);
 for (const f of CSS_FILES) if (existsSync(join(ROOT, f))) scanCss(f, findings);
+for (const f of ["styles/site.entry.css", "styles/home.entry.css"])
+  if (existsSync(join(ROOT, f))) layerChecks(f, readFileSync(join(ROOT, f), "utf8"), findings);
+if (existsSync(join(ROOT, "_includes/scripts")))
+  for (const f of readdirSync(join(ROOT, "_includes/scripts")).filter((n) => n.endsWith(".js")))
+    includedJsChecks(`_includes/scripts/${f}`, readFileSync(join(ROOT, "_includes/scripts", f), "utf8"), findings);
 process.exit(report(findings) > 0 ? 1 : 0);

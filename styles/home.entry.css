@@ -4,8 +4,8 @@
 
 @layer tokens, base, components, bands;
 
-@import "primitives.css" layer(base);
-@import "grammar.css" layer(components);
+@import "svg-strokes.css" layer(base);
+@import "design-system.css" layer(components);
 @import "bands/capabilities.css" layer(bands);
 @import "bands/dialogs.css" layer(bands);
 @import "bands/feel.css" layer(bands);

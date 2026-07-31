@@ -1,14 +1,14 @@
 /* Shared across every page: reset, layout, and the chrome that is not specific
-   to one band. Homepage-only rules live in styles/grammar.css (the .d-* design
-   system) and styles/primitives.css (the stroke language); per-band rules live
+   to one band. Homepage-only rules live in styles/design-system.css (the .d-* design
+   system) and styles/svg-strokes.css (the stroke language); per-band rules live
    in styles/bands/<band>.css.
 
-   This file and grammar.css are both @layer components, and site.css is
-   linked before home.css, so a grammar rule beats a rule here at equal
-   specificity. Two rules here deliberately out-specify grammar.css instead:
+   This file and design-system.css are both @layer components, and site.css is
+   linked before home.css, so a design-system rule beats a rule here at equal
+   specificity. Two rules here deliberately out-specify design-system.css instead:
    `img{display:block}` (which is why the .shot theme swap cannot drop to
    @layer base) and the @media(max-width:860px) block that undoes the
-   over-hero nav link colour. Both are noted in grammar.css. */
+   over-hero nav link colour. Both are noted in design-system.css. */
 
 /* Steer — marketing site. Inherits the app's macOS Settings language.
    System fonts only. System blue is the only interactive accent.

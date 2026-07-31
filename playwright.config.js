@@ -1,26 +1,7 @@
-// End-to-end config.
-//
-// The one thing Playwright does not bring is a static server. `python3 -m
-// http.server` was the first choice, being stdlib and dependency-free, and it
-// is measurably not up to this: socketserver's listen backlog is 5, so six
-// parallel workers each pulling a 15MB homepage got ERR_CONNECTION_RESET on
-// site.css, home.css and home.js, and three of six loads never ran home.js at
-// all. That does not fail loudly -- it fails as a wrong assertion about the
-// page. Capping workers to 1 would have hidden it rather than fixed it.
-// `serve` is Vercel's, 4M downloads a week, and holds up.
-//
-// `make up` is not usable here: that serves through nginx in Docker, which is
-// right for a production-shaped check and wrong for a test that must start in a
-// second and run on a machine with no Docker.
-//
-// Chromium AND WebKit. The first version of this file argued Chromium alone was
-// enough, on the grounds that these tests assert behaviour the platform owns
-// rather than rendering, so a second engine would buy repetition. That was
-// exactly backwards: platform behaviour is the thing that differs between
-// engines, and the popover menu turned out to be unclosable in Safari while
-// every Chromium test stayed green. WebKit is the closest engine to Safari that
-// can be driven headlessly, so it is the gate. Firefox is still out -- no
-// reported issue and no Gecko-specific API in play here.
+// Do not swap `serve` for a stdlib server: a listen backlog of 5 drops requests
+// under parallel workers, and it surfaces as a wrong assertion, not an error.
+// Do not drop WebKit: the popover menu was unclosable in Safari while every
+// Chromium test passed.
 
 import { defineConfig, devices } from "@playwright/test";
 
