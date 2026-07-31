@@ -55,17 +55,16 @@ jobs:
       - name: Structural accessibility invariants
         run: scripts/a11y-check
 
-      # html-validate is absent on purpose: it used to lint the band fragments
-      # against a config that switched eight rules off because fragments are not
-      # documents. The fragments are Nunjucks now. Linting _site/**/*.html is the
-      # right replacement and is tracked separately: it reports 103 pre-existing
-      # errors today, 98 of them inline styles.
-      #
-      # `make lint-css`, not the stylelint globs: the Makefile is where a task is
-      # defined, and this file holding its own copy is how the glob got out of
-      # step with the sheets on disk before.
+      # `make lint-css` / `make lint-html`, not the tools' own globs: the
+      # Makefile is where a task is defined, and this file holding its own copy
+      # of the stylelint glob is how it got out of step with the sheets on disk
+      # before.
       - name: CSS lint
         run: make lint-css
+
+      # Reads _site/, which the production build above already wrote.
+      - name: Markup lint
+        run: make lint-html
 
       - name: Copy and design rules
         run: |

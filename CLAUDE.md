@@ -17,6 +17,7 @@ working tree to keep in step, and no `--check` gate any more.
 | `_includes/chrome/nav.html`, `_includes/chrome/footer.html` | site chrome, on all 14 chrome pages at once |
 | `_includes/bands/<band>.html` | markup of one homepage band |
 | `styles/bands/<band>.css` | styling of one homepage band |
+| `styles/pages/<page>.css` | styling used by one sub-page and no other |
 | `styles/tokens.css` | any colour, surface, radius, shadow, measure |
 | `styles/primitives.css` | the SVG stroke language and other cross-page primitives |
 | `styles/grammar.css` | the `.d-*` design system every band speaks |
@@ -45,6 +46,13 @@ is no map to go stale. Not every band has a sheet (`uses` has none, and neither
 does the chrome); an absent file means the band has no CSS of its own, not that
 it is somewhere else.
 
+**A page pairs the same way**: `vs.html` is styled by `styles/pages/vs.css`,
+bundled to `_site/vs.css` and linked by the layout for that page alone. Put a
+rule there when one page uses it; put it in `styles/shared.css` only when three
+or more do, because that sheet ships on all 14 pages. Page sheets are
+**unlayered**, unlike everything else here: they replaced `<style>` blocks that
+sat in each page's front matter, which outranked every layer in `site.css`.
+
 ## Three things Eleventy does not do, kept in `eleventy.config.js`
 
 Each fails silently rather than loudly if it goes missing, so read the comments
@@ -72,6 +80,7 @@ work. Add a task by adding a target with a `##` comment, and it shows up in
     make up          build, then nginx on https://steer.seanfloyd.dev.local (and :8391)
     make ci          build, then lint and render in parallel
     make lint-css    stylelint every hand-written sheet
+    make lint-html   html-validate every page in _site/
     make shots       render every band at 1440 and 375 into scratch/shots/
 
 `scripts/` holds all the tooling, whatever language it is in: `scripts/ci` is
@@ -84,12 +93,12 @@ stylelint lints, PurgeCSS answers reachability, `scripts/a11y-check` and
 `scripts/lighthouse` came from `../news-digest`. Three attempts at hand-rolling
 CSS edits broke the page; see `docs/lessons/`.
 
-html-validate is not in CI. It used to lint the band fragments against a config that
-switched off eight rules because fragments are not documents; the fragments are
-Nunjucks now. Pointing it at `_site/**/*.html` is the right replacement and is
-tracked separately: `npx html-validate '_site/*.html'` reports 103 pre-existing
-errors today, 98 of them inline styles. Fixing those is a content change, not a
-build one.
+`make lint-html` runs html-validate over `_site/**/*.html`, and it is in CI. It
+used to read the band fragments against a config that switched eight rules off
+because a fragment is not a document; the fragments became Nunjucks and the step
+was dropped rather than repointed. It grades complete documents now, so all
+eight are back on. The backlog that stood in the way (103 errors, 97 of them
+inline `style` attributes) is what `styles/pages/` exists to hold.
 
 ## Design: read before touching UI, CSS, or copy
 

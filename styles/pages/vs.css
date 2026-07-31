@@ -1,0 +1,21 @@
+/* vs.html — the ControllerKeys comparison.
+   Paired with vs.html by the rule in eleventy.config.js: swap the directory,
+   swap the extension. Unlayered, like every page sheet, because it replaces
+   values that were inline style attributes and outranked everything.
+
+   The .cmp table itself is in styles/shared.css even though this is the only
+   page that uses it. That predates page sheets; it is noted, not moved. */
+
+/* centred head and the tail under the table */
+.vs-lead{margin:16px auto 0;max-width:60ch}
+.vs-fn{max-width:60ch;margin:16px auto 0}
+.vs-fn-next{max-width:60ch;margin:10px auto 0}
+.vs-cta{margin-top:40px}
+
+/* the card re-establishes left alignment inside the centred wrap */
+.vs-table{text-align:left}
+
+/* two cell tiers beside .tick and .dash: a qualified yes, and a dependency
+   note that must read lighter than the capability it qualifies */
+.vs-sub{color:var(--text-2)}
+.vs-dep{color:var(--text-3)}

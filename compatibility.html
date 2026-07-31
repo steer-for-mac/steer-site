@@ -3,44 +3,18 @@ layout: layouts/base.njk
 title: "Steer: Controller support"
 description: "Exactly what Steer does on each controller: DualSense, DualSense Edge, DualShock 4, Xbox, Xbox Elite, Switch Pro, and MFi pads. Every controller does the core; here is what each one adds, caveats included."
 ogDescription: "Exactly what Steer does on each controller: every pad does the core, and here is what each one adds, caveats included."
-head: |-
-  <style>
-  /* wide capability matrix: scrolls inside its own container on small screens */
-  .matrix-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:36px;border-radius:var(--r-card)}
-  .matrix{width:100%;min-width:820px;border-collapse:collapse;font-size:14.5px}
-  .matrix th,.matrix td{padding:13px 14px;border-top:1px solid var(--sep);text-align:center;white-space:nowrap}
-  .matrix thead th{border-top:0;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-3);padding-bottom:12px;vertical-align:bottom}
-  .matrix .cap{text-align:left;color:var(--text);font-weight:450;white-space:normal;min-width:190px}
-  .matrix .flag-col{background:var(--bg-inset)}
-  .matrix tbody tr:hover td{background:color-mix(in srgb,var(--blue-fill) 40%,transparent)}
-  .matrix .y{color:var(--green-text);font-weight:600}
-  .matrix .n{color:var(--text-3)}
-  .matrix .b{color:var(--amber-text);font-family:var(--mono);font-size:11.5px;letter-spacing:0.02em}
-  .matrix .dep{color:var(--text-2);font-family:var(--mono);font-size:11.5px;letter-spacing:0.02em}
-  .notes{max-width:70ch;margin:28px auto 0;display:grid;gap:12px}
-  .notes li{list-style:none;display:flex;gap:11px;font-size:14.5px;color:var(--text-2);line-height:1.55}
-  .notes .k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--amber-text);flex:none;padding-top:3px;min-width:64px}
-  .notes .k.dep-k{color:var(--text-3)}
-  </style>
-  <style>
-  .faq details{border-top:1px solid var(--sep)}
-  .faq summary{list-style:none;cursor:pointer;padding:18px 4px;font-size:16.5px;font-weight:500;letter-spacing:-0.015em}
-  .faq summary::-webkit-details-marker{display:none}
-  .faq .faq-body{padding:0 4px 20px;font-size:15px;color:var(--text-2);line-height:1.6;max-width:64ch}
-  .faq .faq-body a{color:var(--blue-text)}
-  </style>
 ---
 <main>
   <section class="sec">
     <div class="wrap-wide">
-      <div style="text-align:center">
-        <div><a class="back-link" href="index.html" style="margin:0 0 24px"><span aria-hidden="true">←</span> Steer</a></div>
-        <div class="eyebrow" style="justify-content:center">Controller support</div>
+      <div class="center">
+        <div><a class="back-link tight" href="index.html"><span aria-hidden="true">←</span> Steer</a></div>
+        <div class="eyebrow">Controller support</div>
         <h1 class="h2">Every pad does the core. Here's what each one adds.</h1>
-        <p class="lead" style="margin:16px auto 0;max-width:62ch">Steer turns a game controller into a way to run your Mac. Cursor, scroll, typing, and every shortcut you map work on <strong>any</strong> supported controller. The extras (adaptive triggers, the light bar, the touchpad, tilt-to-aim) depend on what the hardware can actually do. Every gap and caveat is in the table.</p>
+        <p class="lead compat-lead">Steer turns a game controller into a way to run your Mac. Cursor, scroll, typing, and every shortcut you map work on <strong>any</strong> supported controller. The extras (adaptive triggers, the light bar, the touchpad, tilt-to-aim) depend on what the hardware can actually do. Every gap and caveat is in the table.</p>
       </div>
 
-      <div class="faq" style="max-width:70ch;margin:36px auto 0;text-align:left">
+      <div class="faq compat-faq">
       <details>
         <summary>Which controllers work?</summary>
         <div class="faq-body">DualSense and DualSense Edge, DualShock 4, Xbox Series, Xbox One, and Xbox Elite, Switch Pro, and most other controllers that pair with a Mac (anything Apple calls MFi, its label for made-for-Apple accessories). Moving the cursor and pressing shortcuts works the same on all of them. Pads outside those families are matched from a community database and are beta: nobody here owns one to confirm it, so treat it as untested. The things you feel (stiffening triggers, rumble, light bar) depend on what the hardware can do; a DualSense gets all of them. Elite rear-paddle reading is in beta. <a href="compatibility.html">See exactly what each controller does →</a></div>
@@ -58,7 +32,7 @@ head: |-
               <th>Xbox<br>Series/One</th>
               <th>Xbox&nbsp;Elite</th>
               <th>Switch&nbsp;Pro</th>
-              <th>MFi&nbsp;/&nbsp;other<br><span style="font-weight:400;text-transform:none;letter-spacing:0">Apple's controller standard</span></th>
+              <th>MFi&nbsp;/&nbsp;other<br><span class="gloss">Apple's controller standard</span></th>
             </tr>
           </thead>
           <tbody>
@@ -86,9 +60,9 @@ head: |-
         <li><span class="k">¶&nbsp;Elite</span><span>Xbox Elite paddles are fully wired up, but I don't own an Elite to verify on hardware, so they're marked beta until a tester confirms. Want to help? <a href="mailto:steer@seanfloyd.dev?subject=Steer%3A%20Elite%20paddle%20tester">Reach out</a>.</span></li>
       </ul>
 
-      <p style="max-width:62ch;margin:30px auto 0;text-align:center;color:var(--text-2);font-size:15.5px;line-height:1.6">Steer only advertises what it actually drives: where the hardware can't do something, the app hides it rather than pretending. That's the whole point.</p>
-      <p class="foot-note" style="max-width:62ch;margin:16px auto 0;text-align:center">Wondering why you would want this? <a href="accessibility.html">If a mouse hurts</a>, or <a href="agents.html">if you run coding agents</a>.</p>
-      <div style="margin-top:36px;text-align:center">
+      <p class="compat-close">Steer only advertises what it actually drives: where the hardware can't do something, the app hides it rather than pretending. That's the whole point.</p>
+      <p class="foot-note compat-fn">Wondering why you would want this? <a href="accessibility.html">If a mouse hurts</a>, or <a href="agents.html">if you run coding agents</a>.</p>
+      <div class="compat-cta">
         <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
       </div>
     </div>

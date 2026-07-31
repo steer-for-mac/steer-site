@@ -21,7 +21,7 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build build-prod up down ci ci-quick lint-css shots dead lighthouse check
+.PHONY: help build build-prod up down ci ci-quick lint-css lint-html shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z][a-z-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
@@ -55,7 +55,19 @@ ci-quick: ## Skip the rendering checks (no container needed)
 # output flags values nobody wrote. scripts/ci and the deploy workflow both call
 # this target rather than repeating the globs.
 lint-css: ## stylelint every hand-written sheet
-	npx stylelint 'styles/*.css' 'styles/bands/*.css'
+	npx stylelint 'styles/*.css' 'styles/bands/*.css' 'styles/pages/*.css'
+
+# The BUILT site, not the templates. html-validate used to read the band
+# fragments against a config that switched eight rules off because a fragment is
+# not a document (close-order, element-required-content, heading-level,
+# unique-landmark, no-implicit-close and three stylistic ones); the fragments
+# became Nunjucks in the Eleventy migration and the step was dropped rather than
+# repointed. Every one of those eight is back on, because _site/ holds complete
+# documents. No build prerequisite, for the same reason lint-css has none:
+# scripts/ci and the deploy workflow build once and then run every gate against
+# that one artifact, several of them at the same time.
+lint-html: ## html-validate every page in _site/
+	npx html-validate '_site/**/*.html'
 
 shots: build ## Render every band at 1440 and 375 into scratch/shots/
 	node scripts/shots.mjs

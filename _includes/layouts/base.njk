@@ -43,6 +43,14 @@
 {%- if home %}
 <link rel="stylesheet" href="home.css">
 {%- endif %}
+{#- A page's own sheet, styles/pages/<page>.css, bundled to _site/<page>.css.
+    Same derivable pairing a band has, and the same reason: five pages used to
+    carry a <style> block in their front matter and the rest pushed one-page
+    rules into shared.css, which ships on all 14. Linked last and unlayered,
+    exactly where those <style> blocks sat, so the cascade is unchanged. #}
+{%- if pageName in pageSheets %}
+<link rel="stylesheet" href="{{ pageName }}.css">
+{%- endif %}
 {%- if robots %}
 <meta name="robots" content="{{ robots }}">
 {%- endif %}

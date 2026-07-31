@@ -1,0 +1,41 @@
+/* accessibility.html — the "if a mouse hurts" lander.
+   Paired with the page by path: styles/pages/<page>.css. Unlayered, like every
+   page sheet, which is where these rules already were (a <style> block in the
+   page's own front matter).
+
+   .lander-hero and .hero-cta are also on agents.html and nowhere else. Two
+   pages is under the bar for styles/shared.css (which ships on all 14), so the
+   pair is duplicated rather than promoted. A third lander is the signal to
+   promote it. The .back-link copy that used to sit here did go: it was this
+   rule verbatim from shared.css with one value changed, and that value is now
+   .back-link.tight. */
+
+.lander-hero{padding:72px 0 44px}
+.lander-hero h1{font-size:clamp(34px,4.8vw,54px);line-height:1.04;letter-spacing:-0.03em;max-width:15ch}
+.lander-hero .lead{margin-top:22px;max-width:50ch}
+.lander-fine{margin-top:18px;font-size:13.5px;color:var(--text-3);max-width:52ch}
+.lander-fine b{color:var(--text-2);font-weight:500}
+.hero-cta{margin-top:30px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+
+/* the settings screenshot beside the hero copy; theme-swapped by two <img> */
+.shot{border-radius:12px;overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
+.shot img{width:100%;display:block}
+.shot img.shot-dark{display:none}
+[data-theme="dark"] .shot img.shot-light{display:none}
+[data-theme="dark"] .shot img.shot-dark{display:block}
+
+.close{background:var(--bg-inset);border-radius:var(--r-card);padding:44px;max-width:620px;margin:0 auto;text-align:center}
+.close .price-big{font-size:44px;font-weight:600;letter-spacing:-0.03em;line-height:1}
+.close .once{font-size:15px;color:var(--text-2);margin-top:6px}
+
+/* measures and rhythm that were inline style attributes on the markup */
+.ax-tag{margin-bottom:22px}
+.ax-rule{border-top:1px solid var(--sep)}
+.ax-h-22{max-width:22ch}
+.ax-h-24{max-width:24ch}
+.ax-trust{margin-top:40px;max-width:840px}
+.ax-lead{margin-top:16px;max-width:62ch}
+.ax-note{margin-top:32px;max-width:760px}
+.ax-cta{margin-top:26px;width:100%;justify-content:center}
+.ax-fine{font-size:13px;color:var(--text-2);margin-top:14px}
+.ax-fine-2{font-size:13.5px;color:var(--text-3);margin-top:16px;line-height:1.55}

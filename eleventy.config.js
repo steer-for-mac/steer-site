@@ -16,7 +16,7 @@
  *   3. --prod comment stripping, now a transform.
  */
 import { execFileSync } from "node:child_process";
-import { mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -47,6 +47,28 @@ function writeHomeEntry() {
     bands.map((b) => `@import "bands/${b}.css" layer(bands);\n`).join(""),
     "utf8");
 }
+
+/* A page's sheet is at the same path in the other tree, exactly like a band's.
+ *
+ * Swap the directory and the extension: vs.html is styled by
+ * styles/pages/vs.css, which is bundled to _site/vs.css and linked by the
+ * layout for that page and no other. Derivable by rule, so there is no map to
+ * go stale and no front matter to remember.
+ *
+ * This exists so styles/shared.css can stay shared. It ships on all 14 pages,
+ * and it was carrying rules one page used, while five pages carried a <style>
+ * block in their front matter instead. Both are the same mistake in opposite
+ * directions.
+ *
+ * Page sheets are UNLAYERED on purpose. They replace <style> blocks that sat in
+ * <head> after the site.css link, i.e. unlayered, which outranks every layer in
+ * site.css whatever the specificity. Putting them in a layer would quietly hand
+ * some of those rules back to shared.css. Nothing else on the site is unlayered:
+ * site.entry.css and home.entry.css import every sheet into a layer. */
+const pageSheets = () => (existsSync(resolve(ROOT, "styles/pages"))
+  ? readdirSync(resolve(ROOT, "styles/pages"))
+    .filter((f) => f.endsWith(".css")).map((f) => f.replace(/\.css$/, "")).sort()
+  : []);
 
 /* Flatten an entry's @imports into one sheet with Lightning CSS.
  *
@@ -134,11 +156,16 @@ export default function (eleventyConfig) {
     return stripDev(content);
   });
 
+  /* The layout links <page>.css only for a page that has one, so a page with no
+     sheet requests nothing. Read once at config time, like the band glob. */
+  eleventyConfig.addGlobalData("pageSheets", pageSheets());
+
   eleventyConfig.on("eleventy.before", writeHomeEntry);
   eleventyConfig.on("eleventy.after", () => {
     mkdirSync(OUT, { recursive: true });
     bundle("site.entry.css", "_site/site.css");
     bundle("home.entry.css", "_site/home.css");
+    for (const p of pageSheets()) bundle(`pages/${p}.css`, `_site/${p}.css`);
   });
 
   return {

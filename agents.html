@@ -3,47 +3,6 @@ layout: layouts/base.njk
 title: "Steer for AI agents: the agent peripheral you already own"
 description: "Your DualSense is a status light, a haptic engine, and an approve button for AI coding agents like Claude Code, wired through Steer's documented steer:// surface. No extra hardware."
 footLegal: "macOS 14+ · Apple Silicon · Not affiliated with Sony, Microsoft, Nintendo, or OpenAI."
-head: |-
-  <style>
-  .lander-hero{padding:72px 0 40px}
-  .lander-hero h1{font-size:clamp(34px,4.8vw,52px);line-height:1.04;letter-spacing:-0.03em;max-width:16ch}
-  .lander-hero .lead{margin-top:22px;max-width:52ch}
-  .led-demo{display:flex;gap:10px;align-items:center;margin-bottom:14px}
-  .led-dot{width:14px;height:14px;border-radius:50%;background:var(--sep-2)}
-  .led-dot.on{background:var(--green);box-shadow:0 0 12px 1px color-mix(in srgb,var(--green) 70%,transparent)}
-  .led-dot.warn{background:var(--yellow);box-shadow:0 0 12px 1px color-mix(in srgb,var(--yellow) 70%,transparent)}
-  .led-dot.red{background:var(--red);box-shadow:0 0 12px 1px color-mix(in srgb,var(--red) 70%,transparent)}
-  .led-legend{display:grid;gap:12px;background:var(--bg-inset);border-radius:14px;padding:26px 28px}
-  .led-legend .mono{font-size:13px;color:var(--text-2)}
-  .prim{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:8px}
-  .prim td,.prim th{text-align:left;padding:13px 16px;border-top:1px solid var(--sep);vertical-align:top}
-  .prim thead th{border-top:0;font-size:12px;font-weight:590;color:var(--text-3);text-transform:uppercase;letter-spacing:0.05em}
-  .prim td:first-child{white-space:nowrap;width:1%}
-  .prim code{font-family:var(--mono);font-size:12.5px;background:var(--bg-inset);padding:2px 7px;border-radius:6px;color:var(--text)}
-  /* On a phone the two-column form is unreadable: the command column is nowrap
-     and pushes Effect off-screen, leaving each row a tall empty block beside a
-     URL. Stack to command-over-effect instead of asking the reader to scroll a
-     table sideways to find the sentence that explains the thing they just read. */
-  @media (max-width:640px){
-    .prim,.prim tbody,.prim tr,.prim td{display:block;width:auto}
-    .prim thead{display:none}
-    .prim{margin-top:0}
-    .prim tr{border-top:1px solid var(--sep);padding:16px}
-    .prim tr:first-child{border-top:0}
-    .prim td{border-top:0;padding:0}
-    .prim td:first-child{white-space:normal;width:auto;padding-bottom:9px}
-    .prim code{display:inline-block;max-width:100%;overflow-wrap:anywhere}
-  }
-  .codewrap{position:relative;margin-top:20px;max-width:760px}
-  .code{background:var(--bg-inset);border:1px solid var(--sep);border-radius:12px;padding:20px 22px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--text-2)}
-  .code .k{color:var(--blue-text)}
-  .copy-btn{position:absolute;top:12px;right:12px;height:28px;padding:0 12px;font-size:12px;border-radius:var(--r-inset);border:1px solid var(--sep);background:var(--bg);color:var(--text-2);cursor:pointer}
-  .copy-btn:hover{color:var(--text);background:var(--bg-inset-2)}
-  .callout{background:var(--bg-inset);border-radius:14px;padding:26px 28px;max-width:760px}
-  .callout .big{font-size:30px;font-weight:600;letter-spacing:-0.02em}
-  .back-link{font-size:14px;color:var(--text-2);display:inline-flex;gap:6px;align-items:center;margin-bottom:24px}
-  .back-link:hover{color:var(--text);text-decoration:none}
-  </style>
 bodyEnd: |-
   <script>
   (function(){
@@ -58,13 +17,13 @@ bodyEnd: |-
 <main>
 <section class="lander-hero">
   <div class="wrap-wide">
-    <a class="back-link" href="index.html"><span>←</span> Steer</a>
-    <div class="hero-grid" style="align-items:center">
+    <a class="back-link tight" href="index.html"><span>←</span> Steer</a>
+    <div class="hero-grid">
       <div>
-        <div class="tag" style="margin-bottom:22px"><span class="dot"></span> For people who code with AI agents</div>
+        <div class="tag ag-tag"><span class="dot"></span> For people who code with AI agents</div>
         <h1>The agent peripheral you already own.</h1>
         <p class="lead">A DualSense on your desk is an RGB light, a haptic engine, and an approve button pointed at your hands. Steer routes all three to the shell, so the pad becomes a status light for a coding agent, a nudge when it needs you, and a trigger you squeeze to say yes. No window to watch. No extra hardware.</p>
-        <div class="hero-cta" style="margin-top:30px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+        <div class="hero-cta">
           <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
           <a class="arrow-link" href="#recipe">Jump to the recipe <span class="a">→</span></a>
         </div>
@@ -73,7 +32,7 @@ bodyEnd: |-
         <div class="led-demo"><span class="led-dot warn"></span><span class="mono">amber: agent is working</span></div>
         <div class="led-demo"><span class="led-dot red"></span><span class="mono">red + buzz: needs your approval</span></div>
         <div class="led-demo"><span class="led-dot on"></span><span class="mono">green + buzz: done, waiting on you</span></div>
-        <div class="led-demo" style="margin-bottom:0"><span class="led-dot"></span><span class="mono">palette restored when the session ends</span></div>
+        <div class="led-demo ag-led-last"><span class="led-dot"></span><span class="mono">palette restored when the session ends</span></div>
       </div>
     </div>
   </div>
@@ -84,18 +43,18 @@ bodyEnd: |-
   <div class="wrap">
     <div class="callout">
       <div class="eyebrow">Why this is a category now</div>
-      <p style="color:var(--text-2);font-size:16px;line-height:1.6;max-width:64ch">OpenAI sells hardware for this: the Codex Micro (with Work Louder) is <b style="color:var(--text)">six RGB keys, a joystick, and accept/reject buttons for AI coding</b>. A DualSense has all of that, plus haptics and adaptive triggers, and it is probably already in a drawer. Steer wires it to the same job.</p>
+      <p class="ag-callout-p">OpenAI sells hardware for this: the Codex Micro (with Work Louder) is <b class="ag-b">six RGB keys, a joystick, and accept/reject buttons for AI coding</b>. A DualSense has all of that, plus haptics and adaptive triggers, and it is probably already in a drawer. Steer wires it to the same job.</p>
     </div>
   </div>
 </section>
 
 <!-- THE PRIMITIVES -->
-<section class="sec" id="recipe" style="border-top:1px solid var(--sep)">
+<section class="sec ag-rule" id="recipe">
   <div class="wrap">
     <div class="eyebrow">The primitives</div>
     <h2 class="h2">Plain URLs. No SDK, no daemon.</h2>
-    <p class="lead" style="margin-top:16px;max-width:60ch">Everything runs on the documented <span class="mono">steer://</span> automation surface. Anything that can run a shell command can drive it: Claude Code hooks, git hooks, CI wrappers, Makefiles, Hammerspoon. Five commands cover the whole status-light recipe.</p>
-    <div style="margin-top:32px;max-width:820px;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px;border:1px solid var(--sep)">
+    <p class="lead ag-lead-60">Everything runs on the documented <span class="mono">steer://</span> automation surface. Anything that can run a shell command can drive it: Claude Code hooks, git hooks, CI wrappers, Makefiles, Hammerspoon. Five commands cover the whole status-light recipe.</p>
+    <div class="ag-tablewrap">
       <table class="prim">
         <thead><tr><th>Command</th><th>Effect</th></tr></thead>
         <tbody>
@@ -107,7 +66,7 @@ bodyEnd: |-
         </tbody>
       </table>
     </div>
-    <p class="foot-note" style="max-width:64ch;margin-top:16px">Always <span class="mono">-g</span> so <span class="mono">open</span> never steals focus from your terminal. Fire-and-forget: URLs never block and never return an error. If Steer isn't running, launching one starts it.</p>
+    <p class="foot-note ag-fn">Always <span class="mono">-g</span> so <span class="mono">open</span> never steals focus from your terminal. Fire-and-forget: URLs never block and never return an error. If Steer isn't running, launching one starts it.</p>
 
     <!-- Correctness, not decoration. LEDSystem.swift is explicit that the light
          bar is repainted every tick from layer / gyro / battery state, so a
@@ -116,20 +75,20 @@ bodyEnd: |-
          only surfaces that can hold an ambient status while the pad is still
          being used as a pad". A status-light recipe that ignores that reads
          fine and then fails on the reader's desk. -->
-    <div class="callout" style="margin-top:28px">
+    <div class="callout ag-callout-gap">
       <div class="eyebrow">Pick the right light</div>
-      <p style="color:var(--text-2);font-size:15.5px;line-height:1.62;max-width:64ch">The light bar is Steer's own display. It repaints from your profile's palette on every state change, and holding a shoulder button, toggling gyro, a low-battery warning, or the pad settling into idle five seconds after you last touched it are all state changes. Set a colour while the pad sits untouched and it stays; pick the pad up and the bar goes back to being a controller light. <b style="color:var(--text)">The five white player LEDs are a separate channel that Steer never writes to on its own</b>, which makes them the surface that holds a status while you keep using the pad as a pad. Drive those, and read them as a count rather than a colour. The mute-button LED is on the same untouched channel, but it is faint enough in a normally lit room that it only earns its place on a dim desk.</p>
-      <p class="foot-note" style="margin-top:14px;max-width:64ch">The player LEDs read as a count rather than a colour, so they stay legible with red-green colour blindness. <span class="mono">steer://leds/mask/&lt;hex&gt;</span> addresses the five individually, bit 0 leftmost, <span class="mono">00</span> to <span class="mono">1F</span>, if you want an alternating pattern rather than a fill.</p>
+      <p class="ag-callout-p2">The light bar is Steer's own display. It repaints from your profile's palette on every state change, and holding a shoulder button, toggling gyro, a low-battery warning, or the pad settling into idle five seconds after you last touched it are all state changes. Set a colour while the pad sits untouched and it stays; pick the pad up and the bar goes back to being a controller light. <b class="ag-b">The five white player LEDs are a separate channel that Steer never writes to on its own</b>, which makes them the surface that holds a status while you keep using the pad as a pad. Drive those, and read them as a count rather than a colour. The mute-button LED is on the same untouched channel, but it is faint enough in a normally lit room that it only earns its place on a dim desk.</p>
+      <p class="foot-note ag-fn-14">The player LEDs read as a count rather than a colour, so they stay legible with red-green colour blindness. <span class="mono">steer://leds/mask/&lt;hex&gt;</span> addresses the five individually, bit 0 leftmost, <span class="mono">00</span> to <span class="mono">1F</span>, if you want an alternating pattern rather than a fill.</p>
     </div>
 
-    <h3 class="h3" style="margin-top:56px">Wire it into Claude Code</h3>
-    <p class="lead" style="margin-top:12px;max-width:60ch;font-size:18px">Merge this into the <span class="mono">"hooks"</span> key of <span class="mono">~/.claude/settings.json</span> (or a project's <span class="mono">.claude/settings.json</span>). Verified against Claude Code 2.1.x.</p>
+    <h3 class="h3 ag-h3-56">Wire it into Claude Code</h3>
+    <p class="lead ag-lead-hooks">Merge this into the <span class="mono">"hooks"</span> key of <span class="mono">~/.claude/settings.json</span> (or a project's <span class="mono">.claude/settings.json</span>). Verified against Claude Code 2.1.x.</p>
     <div class="codewrap">
-      <button class="copy-btn" id="copyHooks">Copy</button>
+      <button type="button" class="copy-btn" id="copyHooks">Copy</button>
       <pre class="code" id="hooksBlock">{
   <span class="k">"hooks"</span>: {
     <span class="k">"UserPromptSubmit"</span>: [
-      { "hooks": [ { "type": "command", "command": "(open -g 'steer://leds/1' &)" } ] }
+      { "hooks": [ { "type": "command", "command": "(open -g 'steer://leds/1' &amp;)" } ] }
     ],
     <span class="k">"Notification"</span>: [
       { "matcher": "permission_prompt",
@@ -146,8 +105,8 @@ bodyEnd: |-
   }
 }</pre>
     </div>
-    <p class="foot-note" style="max-width:64ch;margin-top:16px">Read the LEDs as a gauge: one lit while it works, all five when something wants approval, three when the run lands, dark when the session ends. Change the numbers to taste. Nothing here touches the light bar, so the pad stays a controller while it is also a status display.</p>
-    <p class="foot-note" style="max-width:64ch;margin-top:12px"><b style="color:var(--text-2)">Why the first one is wrapped in <span class="mono">( &amp; )</span>.</b> Claude Code runs <span class="mono">UserPromptSubmit</span> hooks synchronously, before your prompt is processed, so anything that can block holds up the session. <span class="mono">open</span> goes through LaunchServices and can stall if an app is wedged. Detaching it costs nothing and means a stuck Steer can never cost you a prompt. The other hooks do not run on that path.</p>
+    <p class="foot-note ag-fn">Read the LEDs as a gauge: one lit while it works, all five when something wants approval, three when the run lands, dark when the session ends. Change the numbers to taste. Nothing here touches the light bar, so the pad stays a controller while it is also a status display.</p>
+    <p class="foot-note ag-fn-12"><b class="ag-b2">Why the first one is wrapped in <span class="mono">( &amp; )</span>.</b> Claude Code runs <span class="mono">UserPromptSubmit</span> hooks synchronously, before your prompt is processed, so anything that can block holds up the session. <span class="mono">open</span> goes through LaunchServices and can stall if an app is wedged. Detaching it costs nothing and means a stuck Steer can never cost you a prompt. The other hooks do not run on that path.</p>
   </div>
 </section>
 
@@ -160,10 +119,10 @@ bodyEnd: |-
 <section class="sec sunken">
   <div class="wrap">
     <div class="eyebrow">Which one wants you</div>
-    <h2 class="h2" style="max-width:24ch">The lights say how many. They cannot say which.</h2>
-    <p class="lead" style="margin-top:16px;max-width:62ch">Run more than one agent and the gauge tells you two are waiting, not which two. Session identifiers are throwaway, so no light on the pad can stand for a particular project for longer than a run.</p>
-    <p class="lead" style="margin-top:14px;max-width:62ch">A macOS notification can. It names the project, it survives being ignored, and it is the one channel here that carries identity. Pair it with the pad rather than replacing it: the LEDs and the buzz find you while you are looking somewhere else, and the banner tells you where to go.</p>
-    <div class="note-callout" style="margin-top:28px;max-width:64ch">
+    <h2 class="h2 ag-h-24">The lights say how many. They cannot say which.</h2>
+    <p class="lead ag-lead-62">Run more than one agent and the gauge tells you two are waiting, not which two. Session identifiers are throwaway, so no light on the pad can stand for a particular project for longer than a run.</p>
+    <p class="lead ag-lead-62-next">A macOS notification can. It names the project, it survives being ignored, and it is the one channel here that carries identity. Pair it with the pad rather than replacing it: the LEDs and the buzz find you while you are looking somewhere else, and the banner tells you where to go.</p>
+    <div class="note-callout ag-note">
       <strong>One part of this is terminal-specific.</strong> Clicking the banner to jump straight to the originating tab works in Ghostty, and needs <span class="mono">terminal-notifier</span> installed. Everything else on this page, the LED count, the buzz, and a banner naming the project, works the same wherever you run Claude Code.
     </div>
   </div>
@@ -174,18 +133,18 @@ bodyEnd: |-
      ~20 Shortcuts actions of which six are read-backs, and Steer broadcasts on
      the distributed notification centre. This is the one page whose reader wants
      that density; the homepage still owes the non-technical reader restraint. -->
-<section class="sec" style="border-top:1px solid var(--sep)">
+<section class="sec ag-rule">
   <div class="wrap">
     <div class="eyebrow">Both directions</div>
-    <h2 class="h2" style="max-width:20ch">Steer answers back.</h2>
-    <p class="lead" style="margin-top:16px;max-width:60ch">The URLs above push a state onto the pad. The other half of the surface reads state out, so a script can ask Steer what is going on instead of keeping its own copy in a temp file.</p>
+    <h2 class="h2 ag-h-20">Steer answers back.</h2>
+    <p class="lead ag-lead-60">The URLs above push a state onto the pad. The other half of the surface reads state out, so a script can ask Steer what is going on instead of keeping its own copy in a temp file.</p>
 
-    <h3 class="h3" style="margin-top:48px">Ask it</h3>
-    <p style="color:var(--text-2);font-size:16px;line-height:1.62;max-width:64ch;margin-top:12px">Steer ships around twenty Shortcuts actions, and six of them are questions: the current profile, the active layer, the connected controller, the battery level, what a given button is bound to, and one Get State that returns all of it in a single call. Anything that can run a Shortcut can read them. From a shell, <span class="mono">open -g "steer://query/state"</span> writes the same snapshot to the clipboard as JSON, with <span class="mono">query/profiles</span> and <span class="mono">query/macros</span> alongside it for the IDs and names the other URLs take.</p>
+    <h3 class="h3 ag-h3-48">Ask it</h3>
+    <p class="ag-p">Steer ships around twenty Shortcuts actions, and six of them are questions: the current profile, the active layer, the connected controller, the battery level, what a given button is bound to, and one Get State that returns all of it in a single call. Anything that can run a Shortcut can read them. From a shell, <span class="mono">open -g "steer://query/state"</span> writes the same snapshot to the clipboard as JSON, with <span class="mono">query/profiles</span> and <span class="mono">query/macros</span> alongside it for the IDs and names the other URLs take.</p>
 
-    <h3 class="h3" style="margin-top:44px">Listen to it</h3>
-    <p style="color:var(--text-2);font-size:16px;line-height:1.62;max-width:64ch;margin-top:12px">Steer posts to the macOS distributed notification centre whether or not anything is subscribed, so Hammerspoon, Alfred, Raycast, or a script of your own can watch it without an SDK on either side.</p>
-    <div style="margin-top:24px;max-width:820px;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px;border:1px solid var(--sep)">
+    <h3 class="h3 ag-h3-44">Listen to it</h3>
+    <p class="ag-p">Steer posts to the macOS distributed notification centre whether or not anything is subscribed, so Hammerspoon, Alfred, Raycast, or a script of your own can watch it without an SDK on either side.</p>
+    <div class="ag-tablewrap-tight">
       <table class="prim">
         <thead><tr><th>Notification</th><th>Payload</th></tr></thead>
         <tbody>
@@ -198,10 +157,10 @@ bodyEnd: |-
         </tbody>
       </table>
     </div>
-    <p class="foot-note" style="max-width:64ch;margin-top:16px">Delivery is forced through even when the subscribing app is backgrounded, so a sleeping Hammerspoon still gets the event. The controller tokens (<span class="mono">dualsense</span>, <span class="mono">ds4</span>, <span class="mono">xbox</span>, <span class="mono">switch</span>, <span class="mono">mfi</span>) are held stable across Steer releases so a pattern match keeps working.</p>
+    <p class="foot-note ag-fn">Delivery is forced through even when the subscribing app is backgrounded, so a sleeping Hammerspoon still gets the event. The controller tokens (<span class="mono">dualsense</span>, <span class="mono">ds4</span>, <span class="mono">xbox</span>, <span class="mono">switch</span>, <span class="mono">mfi</span>) are held stable across Steer releases so a pattern match keeps working.</p>
 
-    <h3 class="h3" style="margin-top:44px">The rest of the surface</h3>
-    <p style="color:var(--text-2);font-size:16px;line-height:1.62;max-width:64ch;margin-top:12px">Five commands cover the status light. The scheme has seventeen kinds of command in all. Most are fire-and-forget; a few read state back instead: switch profile by ID or by name, toggle a layer, play a saved macro, open the on-screen keyboard, the radial launcher or the menu palette, pause per-app profile switching, suspend pinned overlays, open a settings pane. It also runs the other way round without a script at all: Steer registers a macOS Focus filter, so entering a Focus mode switches the profile and leaving it puts the previous one back.</p>
+    <h3 class="h3 ag-h3-44">The rest of the surface</h3>
+    <p class="ag-p">Five commands cover the status light. The scheme has seventeen kinds of command in all. Most are fire-and-forget; a few read state back instead: switch profile by ID or by name, toggle a layer, play a saved macro, open the on-screen keyboard, the radial launcher or the menu palette, pause per-app profile switching, suspend pinned overlays, open a settings pane. It also runs the other way round without a script at all: Steer registers a macOS Focus filter, so entering a Focus mode switches the profile and leaving it puts the previous one back.</p>
   </div>
 </section>
 
@@ -209,8 +168,8 @@ bodyEnd: |-
 <section class="sec sunken">
   <div class="wrap">
     <div class="eyebrow">The edges</div>
-    <h2 class="h2" style="max-width:20ch">What it is, and what it isn't.</h2>
-    <div class="trust-list" style="margin-top:36px;max-width:820px">
+    <h2 class="h2 ag-h-20">What it is, and what it isn't.</h2>
+    <div class="trust-list ag-trust">
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
         <div><h3>Which pad you have decides how much you get</h3><p>The light bar is on the DualSense, DualSense Edge, and DualShock 4. The player LEDs and the mute LED are DualSense and DualSense Edge only. Xbox, Switch Pro, and MFi pads have no app-controllable light at all, so those URLs quietly do nothing there. The haptic half is the part that works nearly everywhere: every PlayStation, Xbox and Switch Pro pad, and most but not all MFi ones.</p></div>
@@ -224,7 +183,7 @@ bodyEnd: |-
         <div><h3>Optional, and built on the open surface</h3><p>None of this is a separate product. It's the same documented automation surface every Steer user has, you're just pointing it at your agent. Steer is a full controller-to-Mac input app first; this is one thing it happens to do beautifully.</p></div>
       </div>
     </div>
-    <div style="margin-top:44px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+    <div class="ag-cta">
       <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
       <a class="arrow-link" href="index.html">See everything Steer does <span class="a">→</span></a>
     </div>

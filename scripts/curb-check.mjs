@@ -53,6 +53,11 @@ const cssIn = (dir, keep = () => true) =>
 const CSS_FILES = [
   ...cssIn("styles", (f) => !f.endsWith(".entry.css")),
   ...cssIn("styles/bands"),
+  // styles/pages/<page>.css. Added the day the per-page sheets landed: without
+  // it, moving a rule out of a page's front-matter <style> block and into its
+  // sheet would have taken it out of the curb's reach, which is the same silent
+  // gap the grammar.css/primitives.css split opened.
+  ...cssIn("styles/pages"),
 ];
 
 // ---- the lists the curb enforces by eye (copy rules) ----------------------

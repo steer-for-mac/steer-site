@@ -30,14 +30,13 @@ QUICK = "--quick" in sys.argv
 # there is nothing generated left in the working tree to be stale.
 BUILD = ["npx", "eleventy"]
 
-# html-validate is not here. It used to lint the band fragments against a config
-# that switched off eight rules because fragments are not documents; the
-# fragments are Nunjucks now and the config is gone. Linting _site/**/*.html is
-# the right answer and is tracked separately: `npx html-validate '_site/*.html'`
-# reports 103 pre-existing errors today, 98 of them inline styles. That is a
-# content change, not a build change.
 STEPS = [
     ("A11y: structural invariants", ["scripts/a11y-check"], False),
+    # `make lint-html`, not the html-validate command, for the reason below.
+    # It grades the BUILT pages, which is why the eight rules the old
+    # fragment config had to switch off are on again.
+    ("Markup: every page in _site/ is a valid document",
+     ["make", "lint-html"], False),
     # `make lint-css` rather than the stylelint command: the glob is a task
     # definition and the Makefile owns those. It lived here, in package.json and
     # in the deploy workflow at once, which is two copies too many for something

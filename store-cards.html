@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-CA">
 <head>
 <meta charset="utf-8" />
@@ -223,6 +223,12 @@
     background-size: cover;
     background-position: center;
   }
+  /* One class per capture: the file is the only thing that differs, and an
+     inline style attribute is the one thing this page cannot carry (it is the
+     only .html here that is not built from the layout, so it is also the only
+     one whose markup is graded raw by html-validate). */
+  #typing .shotfill { background-image: url("assets/desk-typing.jpg"); }
+  #radial .shotfill { background-image: url("assets/desk-radial.jpg"); }
   .shotfill::after {
     content: "";
     position: absolute; inset: 0;
@@ -350,7 +356,7 @@
        aim state, and the face-button colours on it are the app's real commit
        mapping, not decoration. -->
   <div class="stage hide" id="typing">
-    <div class="shotfill" style="background-image:url('assets/desk-typing.jpg')"></div>
+    <div class="shotfill"></div>
     <div class="caption low">Type without a keyboard.</div>
   </div>
 
@@ -388,7 +394,7 @@
        real screen, so the translucency, the lit selection, and the desktop
        behind it are all genuine. See docs/store-assets.md for the recipe. -->
   <div class="stage hide" id="radial">
-    <div class="shotfill" style="background-image:url('assets/desk-radial.jpg')"></div>
+    <div class="shotfill"></div>
     <div class="caption over">Aim the stick. Press to launch.</div>
   </div>
 

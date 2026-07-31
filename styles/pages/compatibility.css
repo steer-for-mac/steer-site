@@ -1,0 +1,34 @@
+/* compatibility.html — the per-controller capability matrix.
+   Paired with the page by path: styles/pages/<page>.css. Unlayered, like every
+   page sheet, which is where these rules already were (a <style> block in the
+   page's own front matter).
+
+   The .faq block that sat beside this one in that front matter went to
+   styles/shared.css: features.html and support.html carried byte-identical
+   copies, and those three are the only pages with a .faq. */
+
+/* wide capability matrix: scrolls inside its own container on small screens */
+.matrix-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:36px;border-radius:var(--r-card)}
+.matrix{width:100%;min-width:820px;border-collapse:collapse;font-size:14.5px}
+.matrix th,.matrix td{padding:13px 14px;border-top:1px solid var(--sep);text-align:center;white-space:nowrap}
+.matrix thead th{border-top:0;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-3);padding-bottom:12px;vertical-align:bottom}
+/* the one column head that carries a plain-language gloss under the label */
+.matrix thead th .gloss{font-weight:400;text-transform:none;letter-spacing:0}
+.matrix .cap{text-align:left;color:var(--text);font-weight:450;white-space:normal;min-width:190px}
+.matrix .flag-col{background:var(--bg-inset)}
+.matrix tbody tr:hover td{background:color-mix(in srgb,var(--blue-fill) 40%,transparent)}
+.matrix .y{color:var(--green-text);font-weight:600}
+.matrix .n{color:var(--text-3)}
+.matrix .b{color:var(--amber-text);font-family:var(--mono);font-size:11.5px;letter-spacing:0.02em}
+.matrix .dep{color:var(--text-2);font-family:var(--mono);font-size:11.5px;letter-spacing:0.02em}
+.notes{max-width:70ch;margin:28px auto 0;display:grid;gap:12px}
+.notes li{list-style:none;display:flex;gap:11px;font-size:14.5px;color:var(--text-2);line-height:1.55}
+.notes .k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--amber-text);flex:none;padding-top:3px;min-width:64px}
+.notes .k.dep-k{color:var(--text-3)}
+
+/* the centred head, the FAQ row above the table, and the centred tail */
+.compat-lead{margin:16px auto 0;max-width:62ch}
+.compat-faq{max-width:70ch;margin:36px auto 0}
+.compat-close{max-width:62ch;margin:30px auto 0;text-align:center;color:var(--text-2);font-size:15.5px;line-height:1.6}
+.compat-fn{max-width:62ch;margin:16px auto 0;text-align:center}
+.compat-cta{margin-top:36px;text-align:center}

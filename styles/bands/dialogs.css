@@ -78,3 +78,7 @@ html.shots-open{overflow:hidden}
   .shots-prev{left:8px}
   .shots-next{right:8px}
 }
+
+/* The dialog's submit fills the sheet, where #pricing's twin (.pr-go) sits in a
+   card and does not. Was an inline style attribute. */
+.ml-go{width:100%;justify-content:center}

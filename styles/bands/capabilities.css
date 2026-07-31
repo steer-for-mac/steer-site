@@ -133,3 +133,7 @@
   16%{transform:translateY(4px);opacity:.95}
   46%{transform:translateY(30px);opacity:.95}
   50%,100%{transform:translateY(36px);opacity:0}}
+
+/* The gallery button's own icon, one size smaller than .btn's default svg so it
+   sits with the label rather than beside it. Was an inline style attribute. */
+.d-gal .btn svg{width:17px;height:17px}

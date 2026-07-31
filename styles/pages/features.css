@@ -1,0 +1,24 @@
+/* features.html — the full capability list, grouped by intent.
+   Paired with the page by path: styles/pages/<page>.css. Unlayered, like every
+   page sheet, which is where these rules already were (a <style> block in the
+   page's own front matter).
+
+   The .faq block that sat beside this one in that front matter went to
+   styles/shared.css: support.html and compatibility.html carried byte-identical
+   copies, and those three are the only pages with a .faq. */
+
+.fgroup{max-width:74ch;margin:0 auto 52px}
+.fgroup h3{font-size:21px;letter-spacing:-0.02em;margin:0 0 6px}
+.fgroup .fwhy{color:var(--text-2);font-size:15.5px;line-height:1.6;margin:0 0 18px;max-width:62ch}
+.frow{display:grid;grid-template-columns:186px 1fr;gap:18px;padding:13px 0;border-top:1px solid var(--sep)}
+.frow .fn{font-weight:500;color:var(--text);font-size:14.5px}
+.frow .fd{color:var(--text-2);font-size:14.5px;line-height:1.55}
+.frow .fd a{color:var(--text-2);text-decoration:underline;text-underline-offset:2px}
+.dep-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:var(--text-3)}
+@media(max-width:700px){.frow{grid-template-columns:1fr;gap:4px}}
+
+/* the centred head, the list band, and the closing CTA */
+.ft-lead{margin:16px auto 0;max-width:60ch}
+.ft-list{padding-top:56px}
+.ft-cta{max-width:74ch;margin:0 auto;text-align:center}
+.ft-fn{margin-top:14px}

@@ -2,36 +2,17 @@
 layout: layouts/base.njk
 title: "Steer for accessibility: run your Mac without reaching for the mouse"
 description: "If a mouse is tiring, painful, or out of reach, Steer turns a game controller into a complete Mac input device you can hold in relaxed hands: point, click, type, and scroll, with a cursor you can slow right down. One-handed friendly. 14-day free trial."
-head: |-
-  <style>
-  .lander-hero{padding:72px 0 44px}
-  .lander-hero h1{font-size:clamp(34px,4.8vw,54px);line-height:1.04;letter-spacing:-0.03em;max-width:15ch}
-  .lander-hero .lead{margin-top:22px;max-width:50ch}
-  .lander-fine{margin-top:18px;font-size:13.5px;color:var(--text-3);max-width:52ch}
-  .lander-fine b{color:var(--text-2);font-weight:500}
-  .shot{border-radius:12px;overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
-  .shot img{width:100%;display:block}
-  .shot img.shot-dark{display:none}
-  [data-theme="dark"] .shot img.shot-light{display:none}
-  [data-theme="dark"] .shot img.shot-dark{display:block}
-  .shot-cap{font-size:12.5px;color:var(--text-3);margin-top:12px}
-  .back-link{font-size:14px;color:var(--text-2);display:inline-flex;gap:6px;align-items:center;margin-bottom:24px}
-  .back-link:hover{color:var(--text);text-decoration:none}
-  .close{background:var(--bg-inset);border-radius:var(--r-card);padding:44px;max-width:620px;margin:0 auto;text-align:center}
-  .close .price-big{font-size:44px;font-weight:600;letter-spacing:-0.03em;line-height:1}
-  .close .once{font-size:15px;color:var(--text-2);margin-top:6px}
-  </style>
 ---
 <main>
 <section class="lander-hero">
   <div class="wrap-wide">
-    <a class="back-link" href="index.html"><span>←</span> Steer</a>
-    <div class="hero-grid" style="align-items:center">
+    <a class="back-link tight" href="index.html"><span>←</span> Steer</a>
+    <div class="hero-grid">
       <div>
-        <div class="tag" style="margin-bottom:22px"><span class="dot"></span> Accessibility</div>
+        <div class="tag ax-tag"><span class="dot"></span> Accessibility</div>
         <h1>When a mouse hurts, a controller doesn't.</h1>
         <p class="lead">A game controller rests in relaxed hands: no pinch grip, no fine wrist work, no reaching across the desk. If a mouse or trackpad is tiring, painful, or hard to reach, Steer turns the controller into a complete way to run your Mac: point, click, type, and scroll, with a cursor you can slow right down.</p>
-        <div class="hero-cta" style="margin-top:30px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+        <div class="hero-cta">
           <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
           <a class="arrow-link" href="#how">How it works <span class="a">→</span></a>
         </div>
@@ -46,11 +27,11 @@ head: |-
 </section>
 
 <!-- WHAT CHANGES -->
-<section class="sec sunken" id="how" style="border-top:1px solid var(--sep)">
+<section class="sec sunken ax-rule" id="how">
   <div class="wrap">
     <div class="eyebrow">What changes</div>
-    <h2 class="h2" style="max-width:22ch">Everything the mouse does, in a shape that's kinder to hold.</h2>
-    <div class="trust-list" style="margin-top:40px;max-width:840px">
+    <h2 class="h2 ax-h-22">Everything the mouse does, in a shape that's kinder to hold.</h2>
+    <div class="trust-list ax-trust">
       <div class="trust-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11V7a2 2 0 0 1 4 0v4M10 11V6a2 2 0 0 1 4 0v5M14 11V8a2 2 0 0 1 4 0v6a6 6 0 0 1-6 6h-1a6 6 0 0 1-5.2-3l-1.6-3a1.5 1.5 0 0 1 2.5-1.6L6 14"/></svg>
         <div><h3>Held in relaxed hands, not gripped</h3><p>Your hands stay loose around the controller instead of pinching a mouse or splaying over a trackpad. Nothing to grab, drag, or reach for across the desk.</p></div>
@@ -87,10 +68,10 @@ head: |-
 <section class="sec">
   <div class="wrap">
     <div class="eyebrow">Straight talk</div>
-    <h2 class="h2" style="max-width:24ch">A great input device, that happens to help.</h2>
-    <p class="lead" style="margin-top:16px;max-width:62ch">Steer isn't a medical device and this isn't medical advice. It just turns out that a controller you hold in relaxed hands is, for a lot of people, the most comfortable way to run a computer.</p>
-    <p class="lead" style="margin-top:16px;max-width:62ch">Comfort is personal, so the honest test is your own hands. The 14-day trial takes no card and no account. Try it on a good day and a hard one, and keep it only if it earns its place.</p>
-    <div class="note-callout" style="margin-top:32px;max-width:760px">
+    <h2 class="h2 ax-h-24">A great input device, that happens to help.</h2>
+    <p class="lead ax-lead">Steer isn't a medical device and this isn't medical advice. It just turns out that a controller you hold in relaxed hands is, for a lot of people, the most comfortable way to run a computer.</p>
+    <p class="lead ax-lead">Comfort is personal, so the honest test is your own hands. The 14-day trial takes no card and no account. Try it on a good day and a hard one, and keep it only if it earns its place.</p>
+    <div class="note-callout ax-note">
       <strong>You may already own the hardware.</strong> Steer works with the controller in the drawer, or with a second-hand one. Everything is included, there is no subscription, and your setup stays on your Mac.
     </div>
   </div>
@@ -102,9 +83,9 @@ head: |-
     <div class="close">
       <div class="price-big">Your hands decide.</div>
       <div class="once">EUR 19.99 at launch, paid once · 14-day free trial · no account</div>
-      <a class="btn btn-primary" href="index.html#pricing" style="margin-top:26px;width:100%;justify-content:center">Join the launch list</a>
-      <p style="font-size:13px;color:var(--text-2);margin-top:14px">Steer is finishing up. Join the list and I'll email you the day the trial is ready.</p>
-      <p style="font-size:13.5px;color:var(--text-3);margin-top:16px;line-height:1.55">Have a specific need, like a particular controller, a one-handed layout, or a question about your setup? Email <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a> and a real person answers.</p>
+      <a class="btn btn-primary ax-cta" href="index.html#pricing">Join the launch list</a>
+      <p class="ax-fine">Steer is finishing up. Join the list and I'll email you the day the trial is ready.</p>
+      <p class="ax-fine-2">Have a specific need, like a particular controller, a one-handed layout, or a question about your setup? Email <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a> and a real person answers.</p>
     </div>
   </div>
 </section>

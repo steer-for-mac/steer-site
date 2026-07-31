@@ -16,7 +16,11 @@ export default {
   // and the gate still passed at 2.5% with the fragments in the glob, 4.5%
   // without them.
   content: ["_site/*.html", "_site/home.js"],
-  css: ["_site/home.css", "_site/site.css"],
+  // Every sheet the build emits, globbed rather than listed, so a new
+  // styles/pages/<page>.css is graded the day it appears instead of the day
+  // somebody remembers this line. A page sheet is small, so the percentage is
+  // a sharp instrument on it: one dead rule in a 200-byte file is 20%.
+  css: ["_site/*.css"],
   safelist: {
     standard: [
       // per-pad gates. pd-* IS written literally in the markup, so it is not

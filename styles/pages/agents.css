@@ -1,0 +1,83 @@
+/* agents.html — the coding-agent lander and the steer:// reference on it.
+   Paired with the page by path: styles/pages/<page>.css. Unlayered, like every
+   page sheet, which is where these rules already were (a <style> block in the
+   page's own front matter).
+
+   .lander-hero and .hero-cta are also on accessibility.html and nowhere else.
+   Two pages is under the bar for styles/shared.css (which ships on all 14), so
+   the pair is duplicated rather than promoted; a third lander is the signal to
+   promote it. The .back-link copy that used to sit here did go: it was the
+   shared.css rule verbatim with one value changed, and that value is now
+   .back-link.tight. */
+
+.lander-hero{padding:72px 0 40px}
+.lander-hero h1{font-size:clamp(34px,4.8vw,52px);line-height:1.04;letter-spacing:-0.03em;max-width:16ch}
+.lander-hero .lead{margin-top:22px;max-width:52ch}
+.hero-cta{margin-top:30px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+
+/* the LED legend beside the hero copy: the three states the recipe drives */
+.led-demo{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.led-dot{width:14px;height:14px;border-radius:50%;background:var(--sep-2)}
+.led-dot.on{background:var(--green);box-shadow:0 0 12px 1px color-mix(in srgb,var(--green) 70%,transparent)}
+.led-dot.warn{background:var(--yellow);box-shadow:0 0 12px 1px color-mix(in srgb,var(--yellow) 70%,transparent)}
+.led-dot.red{background:var(--red);box-shadow:0 0 12px 1px color-mix(in srgb,var(--red) 70%,transparent)}
+.led-legend{display:grid;gap:12px;background:var(--bg-inset);border-radius:14px;padding:26px 28px}
+.led-legend .mono{font-size:13px;color:var(--text-2)}
+
+.prim{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:8px}
+.prim td,.prim th{text-align:left;padding:13px 16px;border-top:1px solid var(--sep);vertical-align:top}
+.prim thead th{border-top:0;font-size:12px;font-weight:590;color:var(--text-3);text-transform:uppercase;letter-spacing:0.05em}
+.prim td:first-child{white-space:nowrap;width:1%}
+.prim code{font-family:var(--mono);font-size:12.5px;background:var(--bg-inset);padding:2px 7px;border-radius:6px;color:var(--text)}
+/* On a phone the two-column form is unreadable: the command column is nowrap
+   and pushes Effect off-screen, leaving each row a tall empty block beside a
+   URL. Stack to command-over-effect instead of asking the reader to scroll a
+   table sideways to find the sentence that explains the thing they just read. */
+@media (max-width:640px){
+  .prim,.prim tbody,.prim tr,.prim td{display:block;width:auto}
+  .prim thead{display:none}
+  .prim{margin-top:0}
+  .prim tr{border-top:1px solid var(--sep);padding:16px}
+  .prim tr:first-child{border-top:0}
+  .prim td{border-top:0;padding:0}
+  .prim td:first-child{white-space:normal;width:auto;padding-bottom:9px}
+  .prim code{display:inline-block;max-width:100%;overflow-wrap:anywhere}
+}
+.codewrap{position:relative;margin-top:20px;max-width:760px}
+.code{background:var(--bg-inset);border:1px solid var(--sep);border-radius:12px;padding:20px 22px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--text-2)}
+.code .k{color:var(--blue-text)}
+.copy-btn{position:absolute;top:12px;right:12px;height:28px;padding:0 12px;font-size:12px;border-radius:var(--r-inset);border:1px solid var(--sep);background:var(--bg);color:var(--text-2);cursor:pointer}
+.copy-btn:hover{color:var(--text);background:var(--bg-inset-2)}
+.callout{background:var(--bg-inset);border-radius:14px;padding:26px 28px;max-width:760px}
+.callout .big{font-size:30px;font-weight:600;letter-spacing:-0.02em}
+
+/* Measures, rhythm and the two emphasis tiers that were inline style
+   attributes on the markup. Long-form technical prose on this page runs to a
+   64ch measure and a tighter type size than .lead. */
+.ag-tag{margin-bottom:22px}
+.ag-led-last{margin-bottom:0}
+.ag-rule{border-top:1px solid var(--sep)}
+.ag-b{color:var(--text)}
+.ag-b2{color:var(--text-2)}
+.ag-callout-p{color:var(--text-2);font-size:16px;line-height:1.6;max-width:64ch}
+.ag-callout-p2{color:var(--text-2);font-size:15.5px;line-height:1.62;max-width:64ch}
+.ag-callout-gap{margin-top:28px}
+.ag-p{color:var(--text-2);font-size:16px;line-height:1.62;max-width:64ch;margin-top:12px}
+.ag-lead-60{margin-top:16px;max-width:60ch}
+.ag-lead-62{margin-top:16px;max-width:62ch}
+.ag-lead-62-next{margin-top:14px;max-width:62ch}
+.ag-lead-hooks{margin-top:12px;max-width:60ch;font-size:18px}
+.ag-h-20{max-width:20ch}
+.ag-h-24{max-width:24ch}
+.ag-h3-44{margin-top:44px}
+.ag-h3-48{margin-top:48px}
+.ag-h3-56{margin-top:56px}
+.ag-fn{max-width:64ch;margin-top:16px}
+.ag-fn-12{max-width:64ch;margin-top:12px}
+.ag-fn-14{max-width:64ch;margin-top:14px}
+.ag-note{margin-top:28px;max-width:64ch}
+.ag-trust{margin-top:36px;max-width:820px}
+.ag-cta{margin-top:44px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.ag-tablewrap,.ag-tablewrap-tight{max-width:820px;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px;border:1px solid var(--sep)}
+.ag-tablewrap{margin-top:32px}
+.ag-tablewrap-tight{margin-top:24px}

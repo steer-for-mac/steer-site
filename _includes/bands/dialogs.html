@@ -3,7 +3,7 @@
      backdrop). Images hold data-light/data-dark only; JS sets src on first
      open per the current theme, so nothing downloads until asked. -->
 <dialog class="shots" id="shotsDialog" aria-labelledby="shotsTitle">
-  <header class="shots-head">
+  <div class="shots-head">
     <div>
       <h2 id="shotsTitle">Inside the app</h2>
       <p class="shots-note">Captured from the app; no renders, no touch-ups.</p>
@@ -12,7 +12,7 @@
     <button type="button" class="shots-close" id="shotsClose" aria-label="Close screenshots">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>
     </button>
-  </header>
+  </div>
   <div class="shots-stage">
     <button type="button" class="shots-nav shots-prev" id="shotsPrev" aria-label="Previous screenshot">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>
@@ -88,7 +88,7 @@
     <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
     <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address" autofocus>
     <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
-    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Join the launch list</button>
+    <button type="submit" class="btn btn-primary ml-go">Join the launch list</button>
     <p class="ml-msg" role="status" aria-live="polite"></p>
   </form>
   <p class="ml-alt">Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>

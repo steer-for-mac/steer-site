@@ -6,18 +6,18 @@ description: "A fair, side-by-side comparison of Steer and ControllerKeys for co
 <main>
   <section class="sec">
     <div class="wrap center">
-      <div><a class="back-link" href="index.html" style="margin:0 0 24px"><span aria-hidden="true">←</span> Steer</a></div>
-      <div class="eyebrow" style="justify-content:center">Side by side</div>
+      <div><a class="back-link tight" href="index.html"><span aria-hidden="true">←</span> Steer</a></div>
+      <div class="eyebrow">Side by side</div>
       <h1 class="h2">If you're choosing, choose with the facts.</h1>
-      <p class="lead" style="margin:16px auto 0;max-width:60ch">Both turn a game controller into a way to run your Mac: pointer, typing, shortcuts, windows. Both do the basics well. ControllerKeys works with more controllers. Steer does more with the ones it knows. Here is where each one is ahead.</p>
-      <div class="cmp-card sec-body" style="text-align:left">
+      <p class="lead vs-lead">Both turn a game controller into a way to run your Mac: pointer, typing, shortcuts, windows. Both do the basics well. ControllerKeys works with more controllers. Steer does more with the ones it knows. Here is where each one is ahead.</p>
+      <div class="cmp-card sec-body vs-table">
         <table class="cmp">
           <thead><tr><th class="feat">Capability</th><th class="col steer-col">Steer</th><th class="col">ControllerKeys</th></tr></thead>
           <tbody>
-            <tr><td class="feat">Off-brand and older controllers</td><td class="dot steer-col"><span style="color:var(--text-2)"><span class="num">300+</span>, in beta</span></td><td class="dot"><span style="color:var(--text-2)"><span class="num">300+</span> via a mapping database</span></td></tr>
-            <tr><td class="feat">On-screen keyboard</td><td class="dot steer-col"><span style="color:var(--text-2)">Stick-driven</span></td><td class="dot"><span style="color:var(--text-2)">Swipe typing</span></td></tr>
+            <tr><td class="feat">Off-brand and older controllers</td><td class="dot steer-col"><span class="vs-sub"><span class="num">300+</span>, in beta</span></td><td class="dot"><span class="vs-sub"><span class="num">300+</span> via a mapping database</span></td></tr>
+            <tr><td class="feat">On-screen keyboard</td><td class="dot steer-col"><span class="vs-sub">Stick-driven</span></td><td class="dot"><span class="vs-sub">Swipe typing</span></td></tr>
             <tr><td class="feat">Adaptive triggers you can feel</td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">—</span></td></tr>
-            <tr><td class="feat">Sets of mappings you can switch between</td><td class="dot steer-col"><span class="tick"><span class="num">6</span></span></td><td class="dot"><span style="color:var(--text-2)"><span class="num">3</span></span></td></tr>
+            <tr><td class="feat">Sets of mappings you can switch between</td><td class="dot steer-col"><span class="tick"><span class="num">6</span></span></td><td class="dot"><span class="vs-sub"><span class="num">3</span></span></td></tr>
             <!-- Researched 2026-07-19 and deliberately NOT turned into a claim.
                  The tempting line, that ControllerKeys runs untrusted shell code
                  without review, is false. They ship a real import-time consent
@@ -34,23 +34,23 @@ description: "A fair, side-by-side comparison of Steer and ControllerKeys for co
                  their own marketing overstates their sheet, so stating it invites
                  a fight over their copy rather than our product.
                  Do not add a security row here without re-reading that research. -->
-            <tr><td class="feat">Automation</td><td class="dot steer-col"><span style="color:var(--text-2)">Shortcuts, URLs,<br>AppleScript, shell</span></td><td class="dot"><span style="color:var(--text-2)">JavaScript,<br>webhooks, shell</span></td></tr>
+            <tr><td class="feat">Automation</td><td class="dot steer-col"><span class="vs-sub">Shortcuts, URLs,<br>AppleScript, shell</span></td><td class="dot"><span class="vs-sub">JavaScript,<br>webhooks, shell</span></td></tr>
             <tr><td class="feat">Walled off by macOS (sandboxed)</td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">No</span></td></tr>
             <tr><td class="feat">No usage analytics</td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">—</span></td></tr>
-            <tr><td class="feat">Languages</td><td class="dot steer-col"><span class="tick"><span class="num">35</span></span></td><td class="dot"><span style="color:var(--text-2)"><span class="num">5</span></span></td></tr>
+            <tr><td class="feat">Languages</td><td class="dot steer-col"><span class="tick"><span class="num">35</span></span></td><td class="dot"><span class="vs-sub"><span class="num">5</span></span></td></tr>
             <tr><td class="feat">Pinch and rotate as real gestures (on by default, some apps)</td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">—</span></td></tr>
             <tr><td class="feat">Native rumble on PlayStation and Switch Pro pads</td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">—</span></td></tr>
-            <tr><td class="feat">Snap windows by aiming the stick <span style="color:var(--text-3)">(needs Rectangle installed)</span></td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">—</span></td></tr>
+            <tr><td class="feat">Snap windows by aiming the stick <span class="vs-dep">(needs Rectangle installed)</span></td><td class="dot steer-col"><span class="tick">Yes</span></td><td class="dot"><span class="dash">—</span></td></tr>
             <tr><td class="feat">Use one Mac's controller on another</td><td class="dot steer-col"><span class="dash">—</span></td><td class="dot"><span class="tick">Yes</span></td></tr>
             <tr><td class="feat">Apple TV Siri Remote as an input</td><td class="dot steer-col"><span class="dash">—</span></td><td class="dot"><span class="tick">Yes</span></td></tr>
-            <tr><td class="feat">Xbox Elite rear paddles</td><td class="dot steer-col"><span style="color:var(--text-2)">Beta</span></td><td class="dot"><span class="tick">Yes</span></td></tr>
+            <tr><td class="feat">Xbox Elite rear paddles</td><td class="dot steer-col"><span class="vs-sub">Beta</span></td><td class="dot"><span class="tick">Yes</span></td></tr>
           </tbody>
         </table>
       </div>
-      <p class="foot-note" style="max-width:60ch;margin:16px auto 0">Both apps are notarized direct downloads. ControllerKeys documents that it runs outside Apple's sandbox because system-wide remapping needs broad permissions; Steer keeps the sandbox anyway.</p>
-      <p class="foot-note" style="max-width:60ch;margin:10px auto 0">Off-brand controller support and Elite rear-paddle reading are both written and in beta. Steer bundles <span class="num">300+</span> SDL controller mappings of its own, but none of them has been confirmed on real hardware yet, so it stays in beta rather than claiming parity. We're looking for testers.</p>
-      <p class="foot-note" style="max-width:60ch;margin:10px auto 0">Checked against ControllerKeys v2.6.0 on 19 July 2026. They ship often, so check their site too.</p>
-      <div style="margin-top:40px">
+      <p class="foot-note vs-fn">Both apps are notarized direct downloads. ControllerKeys documents that it runs outside Apple's sandbox because system-wide remapping needs broad permissions; Steer keeps the sandbox anyway.</p>
+      <p class="foot-note vs-fn-next">Off-brand controller support and Elite rear-paddle reading are both written and in beta. Steer bundles <span class="num">300+</span> SDL controller mappings of its own, but none of them has been confirmed on real hardware yet, so it stays in beta rather than claiming parity. We're looking for testers.</p>
+      <p class="foot-note vs-fn-next">Checked against ControllerKeys v2.6.0 on 19 July 2026. They ship often, so check their site too.</p>
+      <div class="vs-cta">
         <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
       </div>
     </div>

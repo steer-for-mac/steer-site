@@ -46,7 +46,6 @@
 /* height:auto or the width/height attributes (which reserve the box and stop
    the layout shifting) win as presentational hints and stretch the shot */
 .shot img{width:100%;height:auto;display:block}
-.shot-cap{font-size:12px;color:var(--text-3);margin-top:12px;letter-spacing:-0.005em}
 
 /* FAQ. Unreachable from this sheet: the FAQ moved to support.html, which links
    site.css and not home.css. It cannot move to styles/shared.css either,
@@ -207,6 +206,11 @@ html.still .dgs *,html.still .lay-fig *{animation:none!important}
   font-family:var(--mono);font-size:11px;line-height:1.45}
 .d-spec .k{color:var(--text);font-weight:500;text-transform:uppercase;letter-spacing:0.12em}
 .d-spec .v{color:var(--text-3);letter-spacing:0.01em}
+/* A <b> that exists only to carry the per-pad data-ps/xb/sw/mf labels, not to
+   emphasise. Without this it takes the UA's `bolder`, which reads as a second
+   weight inside a key that already set its own (.d-spec .k is 500, .lay-key is
+   600). It was an inline style attribute on both until 2026-07-30. */
+.d-swap{font-weight:inherit}
 
 /* ── drawings ────────────────────────────────────────────────────────────── */
 /* The crop box. A viewBox is not ink: every plate carries dead air above and

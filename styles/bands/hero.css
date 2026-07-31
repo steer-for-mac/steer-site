@@ -808,3 +808,8 @@ html.anim-halt .chero .padwrap .pad-cross-tint{animation-play-state:paused!impor
 }
 
 .vg-key b{font:inherit;color:inherit}
+
+/* The shared <defs> sheet: gradients and filters only, no ink. Taken out of
+   flow so its zero-sized box cannot open a gap above the stage. Was an inline
+   style attribute. */
+.hero-defs{position:absolute}
