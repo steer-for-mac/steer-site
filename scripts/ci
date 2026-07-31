@@ -86,6 +86,11 @@ STEPS = [
     # measures 4.2s. Excluding it would leave --quick with no behavioural gate
     # at all, which is the one thing this list was missing.
     ("Theme: three states, storage, live OS following", ["node", "scripts/theme-check.mjs"], False),
+    # The page's other control, on the same argument and with the same "node,
+    # not make" rule: `make pad` carries a build prerequisite that would race
+    # this list. It presses ArrowRight, which is the only way to see that the
+    # browser really owns the keyboard now that the roving-focus handler is gone.
+    ("Pad picker: sync, arrow keys, deep links", ["node", "scripts/pad-check.mjs"], False),
     ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
     ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),
     ("Render: every band, 1440 and 375, no overflow", ["node", "scripts/shots.mjs", "--out", "scratch/shots/ci"], True),

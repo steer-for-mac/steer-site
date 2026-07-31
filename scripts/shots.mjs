@@ -209,10 +209,17 @@ try {
     await s.send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: 1, mobile: width < 500 });
     await s.send("Page.navigate", { url });
     await sleep(900);
-    /* click the real tab: the label/glyph swap listens for the `steerpad` event
-       that setPad dispatches, so setting the attribute alone moves the CSS-only
-       .pd-* gates and leaves every [data-ps] label on PlayStation. */
-    if (pad) await s.eval(`(() => { const t = document.querySelector('.tab[data-pad="' + ${JSON.stringify(pad)} + '"]'); if (t) { t.click(); return true; } document.documentElement.setAttribute('data-pad', ${JSON.stringify(pad)}); return false; })()`);
+    /* click the real picker: the label/glyph swap listens for the `steerpad`
+       event that setPad dispatches, so setting the attribute alone moves the
+       CSS-only .pd-* gates and leaves every [data-ps] label on PlayStation.
+       label[for], not .tab[data-pad] -- the picker is native radios and .tab is
+       the <label>.
+       The attribute fallback is GONE on purpose. It set html[data-pad] while
+       leaving .chero[data-pad] alone, and the hero plate and .only-* swaps gate
+       on the latter, so a failed lookup rendered a frame that was half Xbox and
+       half PlayStation -- less useful than either, and it returned a false
+       nobody read. Fail loudly instead. */
+    if (pad) await s.eval(`(() => { const t = document.querySelector('label[for="hp-' + ${JSON.stringify(pad)} + '"]'); if (!t) throw new Error('no picker label for pad ' + ${JSON.stringify(pad)}); t.click(); })()`);
     if (theme) await s.eval(`document.documentElement.setAttribute('data-theme',${JSON.stringify(theme)})`);
     if (pad || theme) await sleep(200);
   };

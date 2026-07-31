@@ -10,19 +10,26 @@
 <section class="padstrip" aria-label="Supported controllers">
   <div class="padstrip-in">
     <div class="padstrip-lead">Works with the pad <br>you already own</div>
-    <div class="tabs" role="tablist" aria-label="Pick your controller">
-      <button type="button" class="tab" role="tab" data-pad="ps" aria-selected="true">
+    {#- Its own name= group, separate from the hero's. See the note there: one
+        shared name would make these eight radios a single group and arrow keys
+        would jump between two pickers seven screens apart. #}
+    <div class="tabs" role="radiogroup" aria-label="Pick your controller">
+      <input type="radio" class="tab-in" name="strip-pad" id="sp-ps" value="ps" checked>
+      <label class="tab" for="sp-ps">
         {% include "art/padstrip-ps.svg" %}
-        PlayStation</button>
-      <button type="button" class="tab" role="tab" data-pad="xb" aria-selected="false">
+        PlayStation</label>
+      <input type="radio" class="tab-in" name="strip-pad" id="sp-xb" value="xb">
+      <label class="tab" for="sp-xb">
         {% include "art/padstrip-xb.svg" %}
-        Xbox</button>
-      <button type="button" class="tab" role="tab" data-pad="sw" aria-selected="false">
+        Xbox</label>
+      <input type="radio" class="tab-in" name="strip-pad" id="sp-sw" value="sw">
+      <label class="tab" for="sp-sw">
         {% include "art/padstrip-sw.svg" %}
-        Nintendo</button>
-      <button type="button" class="tab" role="tab" data-pad="mf" aria-selected="false">
+        Nintendo</label>
+      <input type="radio" class="tab-in" name="strip-pad" id="sp-mf" value="mf">
+      <label class="tab" for="sp-mf">
         {% include "art/padstrip-mf.svg" %}
-        Other</button>
+        Other</label>
     </div>
     <a class="padstrip-more" href="compatibility.html">See what yours can do&nbsp;<span class="a">→</span></a>
   </div>

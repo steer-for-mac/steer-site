@@ -14,7 +14,13 @@
 .padstrip-lead{flex:none;display:flex;align-items:center;padding:0 22px;
   font-family:var(--mono);font-size:11px;line-height:1.5;text-transform:uppercase;
   letter-spacing:0.12em;color:var(--text-3);border-right:1px solid var(--hairline)}
-.padstrip .tabs{display:flex;flex:1;min-width:0}
+.padstrip .tabs{display:flex;flex:1;min-width:0;position:relative}
+/* out of flow, not display:none — see the note in styles/bands/hero.css: a
+   display:none radio is unfocusable, which would throw away the arrow-key
+   behaviour that is the reason these are radios at all. Here it also matters
+   for layout: .tab is flex:1, so four in-flow inputs would each claim a share
+   of the row. */
+.padstrip .tab-in{position:absolute;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
 .padstrip .tab{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:7px;padding:17px 6px;background:none;border:0;
   border-right:1px solid var(--hairline);cursor:pointer;
@@ -23,8 +29,10 @@
 .padstrip .tab .padglyph{width:88px;height:60px;opacity:.5;transition:opacity .15s ease,color .15s ease}
 .padstrip .tab:hover{color:var(--text-2);background:var(--bg-sunken)}
 .padstrip .tab:hover .padglyph{opacity:.8}
-.padstrip .tab[aria-selected="true"]{color:var(--blue-text);background:var(--bg-sunken)}
-.padstrip .tab[aria-selected="true"] .padglyph{opacity:1;color:var(--blue)}
+.padstrip .tab-in:checked + .tab{color:var(--blue-text);background:var(--bg-sunken)}
+.padstrip .tab-in:checked + .tab .padglyph{opacity:1;color:var(--blue)}
+/* the input is invisible, so its focus ring has to land on the label */
+.padstrip .tab-in:focus-visible + .tab{outline:2px solid var(--blue);outline-offset:-2px}
 .padstrip-more{flex:none;display:flex;align-items:center;padding:0 20px;
   border-left:1px solid var(--hairline);font-size:13px;white-space:nowrap}
 @media(max-width:860px){

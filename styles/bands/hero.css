@@ -168,15 +168,17 @@ html[data-theme="lightoff"] .chero[data-pad="sw"]{--accent:#2FC272;--accent-ink:
 /* "& others": no branded light to own the room — a quiet neutral wash */
 .chero[data-pad="mf"]{--accent:#98A1B5;--accent-ink:#98A1B5;--washO:0.07;--poolO:0.05}
 html[data-theme="lightoff"] .chero[data-pad="mf"]{--accent:#7A8398;--accent-ink:#49525F;--washO:0.05;--poolO:0.04}
-/* brand dots on the picker tabs, per theme */
-.chero #tab-ps{--tc:#4D8DFF}
-.chero #tab-xb{--tc:#6FCF8F}
-.chero #tab-sw{--tc:#E86A6A}
-.chero #tab-mf{--tc:#98A1B5}
-html[data-theme="lightoff"] .chero #tab-ps{--tc:#2E7CF6}
-html[data-theme="lightoff"] .chero #tab-xb{--tc:#2E9E4F}
-html[data-theme="lightoff"] .chero #tab-sw{--tc:#D64545}
-html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
+/* brand dots on the picker tabs, per theme. Reached through the radio's value
+   rather than an id on the label: the id now exists only to pair label and
+   input, so hanging colour off it would make renaming one break the other. */
+.chero .tab-in[value="ps"] + .tab{--tc:#4D8DFF}
+.chero .tab-in[value="xb"] + .tab{--tc:#6FCF8F}
+.chero .tab-in[value="sw"] + .tab{--tc:#E86A6A}
+.chero .tab-in[value="mf"] + .tab{--tc:#98A1B5}
+html[data-theme="lightoff"] .chero .tab-in[value="ps"] + .tab{--tc:#2E7CF6}
+html[data-theme="lightoff"] .chero .tab-in[value="xb"] + .tab{--tc:#2E9E4F}
+html[data-theme="lightoff"] .chero .tab-in[value="sw"] + .tab{--tc:#D64545}
+html[data-theme="lightoff"] .chero .tab-in[value="mf"] + .tab{--tc:#5C6675}
 
 /* grain */
 .chero .grain{
@@ -216,9 +218,16 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
 .chero .tabs{
   display:inline-flex;align-items:center;gap:2px;padding:4px;
   border:1px solid var(--line);border-radius:var(--r-btn);background:var(--chip-bg);
+  position:relative;   /* anchors the absolutely-placed radios below */
 }
+/* The radio is out of flow rather than display:none, because display:none is
+   not focusable and would hand the keyboard nothing to arrow through -- the
+   whole reason for using radios. Taking it out of flow also keeps it from
+   claiming a flex slot beside its own label, and a grid cell in the mobile
+   two-column layout further down. */
+.chero .tab-in{position:absolute;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
 .chero .tab{
-  appearance:none;border:0;cursor:pointer;
+  cursor:pointer;   /* appearance:none;border:0 left with the <button> it reset */
   display:inline-flex;align-items:center;gap:8px;
   font-family:var(--mono);
   font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
@@ -232,9 +241,12 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
   transition:opacity 0.2s ease,box-shadow 0.2s ease;
 }
 .chero .tab:hover{color:var(--ink-2)}
-.chero .tab[aria-selected="true"]{color:var(--ink);background:var(--chip-on-bg);box-shadow:var(--chip-on-sh)}
-.chero .tab[aria-selected="true"]::before{opacity:1;box-shadow:var(--tab-dot-sh)}
-.chero .tab:focus-visible{outline:2px solid var(--accent-ink);outline-offset:2px}
+/* :checked drives the selected look now, so nothing has to write aria-selected
+   back onto four elements on every pick. The focus ring moves to the label
+   because the input it belongs to is a 1px sliver nobody can see. */
+.chero .tab-in:checked + .tab{color:var(--ink);background:var(--chip-on-bg);box-shadow:var(--chip-on-sh)}
+.chero .tab-in:checked + .tab::before{opacity:1;box-shadow:var(--tab-dot-sh)}
+.chero .tab-in:focus-visible + .tab{outline:2px solid var(--accent-ink);outline-offset:2px}
 
 /* display tier: the one true display headline on the page — bigger and tighter
    than the .h2 ramp so the hero owns the type hierarchy */

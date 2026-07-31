@@ -74,10 +74,16 @@
 (function(){
   var hero=document.querySelector('.chero'); if(!hero) return;
   if(navigator.webdriver||/[?&]still/.test(location.search)) document.documentElement.classList.add('still');
-  // Every .tab on the page, not just the hero's: the pad strip under the hero
-  // is a second picker, so a reader who scrolled past the fold can still tell
-  // the page which controller they own instead of silently getting ps.
-  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  // Two radio groups: the hero's and the pad strip's, so a reader who scrolled
+  // past the fold can still tell the page which controller they own instead of
+  // silently getting ps. They are separate name= groups (see the note in
+  // _includes/bands/hero.html), so this keeps them agreeing.
+  //
+  // What used to be here and is now the browser's job: an ArrowLeft/ArrowRight
+  // keydown handler, and writing aria-selected and tabIndex onto four elements
+  // on every pick. A radio group does all three, and CSS reads :checked, so
+  // there is no selected-state bookkeeping left to drift.
+  var radios=[].slice.call(document.querySelectorAll('.tab-in'));
   var wraps={ps:hero.querySelector('.padwrap.ps'),xb:hero.querySelector('.padwrap.xb'),sw:hero.querySelector('.padwrap.sw'),mf:hero.querySelector('.padwrap.mf')};
   var hashNames={ps:'playstation',xb:'xbox',sw:'nintendo',mf:'others'};
   function setPad(pad,writeHash){
@@ -85,33 +91,17 @@
     // mirror on <html> + announce, so vignette glyphs/labels page-wide follow the pick
     document.documentElement.setAttribute('data-pad',pad);
     document.dispatchEvent(new CustomEvent('steerpad',{detail:pad}));
-    tabs.forEach(function(t){
-      var on=t.dataset.pad===pad;
-      t.setAttribute('aria-selected',on?'true':'false');
-      t.tabIndex=on?0:-1;
-    });
+    radios.forEach(function(r){ if(r.value===pad && !r.checked) r.checked=true; });
     Object.keys(wraps).forEach(function(k){
       var on=k===pad;
       wraps[k].classList.toggle('active',on);
       wraps[k].setAttribute('aria-hidden',on?'false':'true');
     });
-    hero.querySelectorAll('.only-ps, .only-xb, .only-sw, .only-mf').forEach(function(el){
-      el.hidden=!el.classList.contains('only-'+pad);
-    });
     if(writeHash!==false) history.replaceState(null,'','#'+hashNames[pad]);
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){setPad(t.dataset.pad);});});
-  // roving focus stays inside the tablist that was pressed: `tabs` spans both
-  // groups now, and cycling it moved focus from the strip up into the hero.
-  document.querySelectorAll('.tabs').forEach(function(g){
-    var group=[].slice.call(g.querySelectorAll('.tab'));
-    g.addEventListener('keydown',function(e){
-      if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;
-      var i=group.findIndex(function(t){return t.getAttribute('aria-selected')==='true';});
-      var n=(i+(e.key==='ArrowRight'?1:group.length-1))%group.length;
-      setPad(group[n].dataset.pad); group[n].focus(); e.preventDefault();
-    });
-  });
+  // 'change', not 'click': it fires for the keyboard too, so arrow keys move the
+  // page and not just the focus ring.
+  radios.forEach(function(r){r.addEventListener('change',function(){if(r.checked)setPad(r.value);});});
   // light bar colour swatches — the picker now lives in the Feel band, but
   // --led stays on .chero (it drives the hero bar) and the pick still
   // recolours the global accent: every emissive/interactive element (eyebrow

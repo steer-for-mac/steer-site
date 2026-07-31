@@ -21,7 +21,7 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast theme shots dead lighthouse check
+.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast theme pad shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z][a-z-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
@@ -119,6 +119,14 @@ contrast: ## Every token colour pair clears AA on the darkest surface it can lan
 # run against HEAD's two-state toggle it scores 0/18, not 18/18.
 theme: build ## Drive the theme toggle: three states, storage, live OS following
 	node scripts/theme-check.mjs
+
+# Same argument as `theme` above, for the other control on the page. The picker
+# stopped being four role="tab" buttons with a hand-written arrow-key handler
+# and became two native radio groups; nothing else here can press ArrowRight to
+# find out whether the browser really took over. Both gates share the CDP
+# harness in scripts/lib/cdp.mjs.
+pad: build ## Drive the controller picker: sync, arrow keys, deep links
+	node scripts/pad-check.mjs
 
 shots: build ## Render every band at 1440 and 375 into scratch/shots/
 	node scripts/shots.mjs

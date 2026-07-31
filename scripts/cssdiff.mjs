@@ -111,7 +111,14 @@ try {
     await s.send("Emulation.setDeviceMetricsOverride", { width, height: width < 500 ? 812 : 900, deviceScaleFactor: 1, mobile: width < 500 });
     await s.send("Page.navigate", { url });
     await sleep(900);
-    await s.eval(`(()=>{const t=document.querySelector('.tab[data-pad="${pad}"]');if(t)t.click();
+    /* label[for], not .tab[data-pad]: the picker is native radios now and .tab
+       is the <label>, which carries no data-pad. THROWS rather than guarding,
+       because the old `if(t)` swallowed exactly this -- every pad case silently
+       rendered PlayStation and all four dumps came back byte-identical, which
+       looks the same as a page with no pad-specific styling at all. */
+    await s.eval(`(()=>{const t=document.querySelector('label[for="hp-${pad}"]');
+                   if(!t)throw new Error('no picker label for pad ${pad}');
+                   t.click();
                    document.documentElement.setAttribute('data-theme',${JSON.stringify(theme)});})()`);
     /* the IntersectionObserver only adds .on to what has been scrolled past;
        force it everywhere so vignette rules are exercised in every case */

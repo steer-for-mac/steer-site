@@ -21,11 +21,22 @@
     </div>
     <div class="picker-wrap">
       <div class="picker-prompt">Pick your controller</div>
-      <div class="tabs" role="tablist" aria-label="See your controller">
-        <button type="button" class="tab" role="tab" id="tab-ps" aria-selected="true"  data-pad="ps">PlayStation</button>
-        <button type="button" class="tab" role="tab" id="tab-xb" aria-selected="false" data-pad="xb">Xbox</button>
-        <button type="button" class="tab" role="tab" id="tab-sw" aria-selected="false" data-pad="sw">Nintendo</button>
-        <button type="button" class="tab" role="tab" id="tab-mf" aria-selected="false" data-pad="mf">Other</button>
+      {#- Radios, not role="tab". A tab promises a tabpanel it controls; this
+          asks which controller you own, which is a radio question, and saying so
+          in the markup hands the arrow-key behaviour to the browser instead of
+          to a keydown handler. The two pickers carry different name= values on
+          purpose: same-name radios are ONE group document-wide, so arrow keys
+          would have walked from the strip seven screens up into the hero, which
+          is the exact bug the old roving-focus code was written to patch. #}
+      <div class="tabs" role="radiogroup" aria-label="See your controller">
+        <input type="radio" class="tab-in" name="hero-pad" id="hp-ps" value="ps" checked>
+        <label class="tab" for="hp-ps">PlayStation</label>
+        <input type="radio" class="tab-in" name="hero-pad" id="hp-xb" value="xb">
+        <label class="tab" for="hp-xb">Xbox</label>
+        <input type="radio" class="tab-in" name="hero-pad" id="hp-sw" value="sw">
+        <label class="tab" for="hp-sw">Nintendo</label>
+        <input type="radio" class="tab-in" name="hero-pad" id="hp-mf" value="mf">
+        <label class="tab" for="hp-mf">Other</label>
       </div>
     </div>
   </div>
