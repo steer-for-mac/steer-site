@@ -201,7 +201,7 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
 .chero .picker-prompt{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3)}
 .chero .tabs{
   display:inline-flex;align-items:center;gap:2px;padding:4px;
-  border:1px solid var(--line);border-radius:999px;background:var(--chip-bg);
+  border:1px solid var(--line);border-radius:var(--r-btn);background:var(--chip-bg);
 }
 .chero .tab{
   appearance:none;border:0;cursor:pointer;
@@ -209,7 +209,7 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
   font-family:var(--mono);
   font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
   color:var(--ink-3);background:transparent;
-  padding:8px 16px;border-radius:999px;
+  padding:8px 16px;border-radius:var(--r-btn);
   transition:color 0.2s ease,background 0.2s ease;
 }
 .chero .tab::before{
@@ -244,7 +244,7 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
   appearance:none;border:0;cursor:pointer;
   font:600 15px/1 var(--sans);letter-spacing:-0.01em;
   color:var(--cta-ink);background:var(--cta-bg);
-  padding:14px 26px;border-radius:999px;box-shadow:var(--cta-sh);
+  padding:14px 26px;border-radius:var(--r-btn);box-shadow:var(--cta-sh);
   text-decoration:none;
   transition:transform 0.15s ease,box-shadow 0.15s ease;
 }
@@ -451,7 +451,7 @@ html.still .chero .pool{opacity:var(--poolO)}
 .chero .features li{
   font-family:var(--mono);font-size:11px;letter-spacing:0.04em;
   color:var(--ink-2);border:1px solid var(--line);
-  border-radius:999px;padding:7px 13px;
+  border-radius:var(--r-btn);padding:7px 13px;
 }
 .chero .features li.x{color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent-ink) 40%,transparent)}
 /* the laptop window (dvh ~761-990): the pad is scaled down so the glide demo
@@ -517,7 +517,7 @@ html.still .chero .pool{opacity:var(--poolO)}
    state is a meaningful static frame — reduced motion and no-JS ship it;
    JS adds .on only while the vignette is on-screen. Colour comes from the
    pad's own palette (--ps-* face-button tokens), never from body text. */
-.vg{position:relative;display:flex;align-items:center;gap:13px;margin:2px 0 16px;padding:12px 13px;border-radius:10px;background:var(--bg-inset);border:1px solid var(--sep);overflow:hidden}
+.vg{position:relative;display:flex;align-items:center;gap:13px;margin:2px 0 16px;padding:12px 13px;border-radius:var(--r-inset);background:var(--bg-inset);border:1px solid var(--sep);overflow:hidden}
 /* pad-side key/trigger chip */
 .vg-key{position:relative;flex:none;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.07em;color:var(--text-2);background:var(--card-bg);border:1px solid var(--sep-2);border-radius:7px;padding:6px 8px}
 .vg-key::after{content:"";position:absolute;inset:0;border-radius:6px;background:var(--blue);opacity:0}

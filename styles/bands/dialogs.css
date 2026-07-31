@@ -36,7 +36,7 @@ dialog.shots[open]::backdrop{animation:shots-in .2s ease}
 .shots-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px 14px 22px;border-bottom:1px solid var(--sep)}
 .shots-head h2{font-size:16px;font-weight:600;letter-spacing:-0.015em}
 .shots-head .shots-note{font-size:12px;color:var(--text-3);margin-top:1px;letter-spacing:-0.005em}
-.shots-count{flex:none;font-family:var(--mono);font-size:12px;letter-spacing:.06em;font-variant-numeric:tabular-nums;color:var(--text-2);border:1px solid var(--sep);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.shots-count{flex:none;font-family:var(--mono);font-size:12px;letter-spacing:.06em;font-variant-numeric:tabular-nums;color:var(--text-2);border:1px solid var(--sep);border-radius:var(--r-btn);padding:5px 11px;white-space:nowrap}
 .shots-close{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--sep);background:var(--bg-inset);color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
 .shots-close:hover{background:var(--bg-inset-2);color:var(--text)}
 .shots-close svg{width:14px;height:14px}
@@ -50,9 +50,9 @@ dialog.shots[open]::backdrop{animation:shots-in .2s ease}
 .shots-item.cur{display:flex}
 @keyframes shot-in{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:no-preference){.shots-item.cur{animation:shot-in .18s ease}}
-.shots-zoom{display:flex;align-items:center;justify-content:center;padding:0;border:0;background:none;font:inherit;min-width:0;min-height:0;max-width:100%;flex:0 1 auto;border-radius:10px;cursor:zoom-in}
+.shots-zoom{display:flex;align-items:center;justify-content:center;padding:0;border:0;background:none;font:inherit;min-width:0;min-height:0;max-width:100%;flex:0 1 auto;border-radius:var(--r-inset);cursor:zoom-in}
 .shots-zoom:focus-visible{outline:2px solid #4D8DFF;outline-offset:3px}
-.shots-item img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:10px;border:1px solid var(--frame);background:var(--bg-inset);box-shadow:var(--shadow-rest)}
+.shots-item img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:var(--r-inset);border:1px solid var(--frame);background:var(--bg-inset);box-shadow:var(--shadow-rest)}
 .shots-item figcaption{flex:none;font-size:13px;color:var(--text-3);letter-spacing:-0.005em;line-height:1.45;text-align:center;max-width:64ch}
 .shots-view.zoomed .shots-item.cur{display:block;width:max-content;min-width:100%;padding:20px;text-align:center}
 .shots-view.zoomed .shots-zoom{display:block;width:max-content;max-width:none;margin:0 auto;cursor:zoom-out}
