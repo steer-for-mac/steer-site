@@ -22,3 +22,8 @@ node_modules/
 # runs; playwright-report/ is the HTML reporter's build.
 test-results/
 playwright-report/
+
+# Private planning: working notes. Public repo, so it
+# is kept beside the other docs but never tracked. Outside src/, so Eleventy
+# cannot publish it either.
+docs/private/
