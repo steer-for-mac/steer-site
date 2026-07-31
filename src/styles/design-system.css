@@ -1,10 +1,4 @@
 
-.shot img.shot-dark{display:none}
-[data-theme="dark"] .shot img.shot-light{display:none}
-[data-theme="dark"] .shot img.shot-dark{display:block}
-
-.shot{border-radius:var(--r-window);overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
-.shot img{width:100%;height:auto;display:block}
 
 @media(max-width:520px){
   .faq summary{padding:15px 4px}

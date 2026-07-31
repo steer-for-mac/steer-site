@@ -155,6 +155,16 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 .arrow-link .a{transition:transform .15s}
 .arrow-link:hover .a{transform:translateX(3px)}
 
+/* Screenshot frame. Site-wide because two pages use it and both had forked a
+   copy: design-system.css for the homepage, pages/accessibility.css for the
+   other, four of the five rules byte-identical. A change to the frame reached
+   one page and not the other. */
+.shot{border-radius:var(--r-window);overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
+.shot img{width:100%;height:auto;display:block}
+.shot img.shot-dark{display:none}
+[data-theme="dark"] .shot img.shot-light{display:none}
+[data-theme="dark"] .shot img.shot-dark{display:block}
+
 .shot,.shots,.nav-links,.trust-list,.cmp-card,.ml-dialog,.close{
   corner-shape: squircle;
 }

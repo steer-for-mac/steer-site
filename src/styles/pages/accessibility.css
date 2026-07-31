@@ -7,11 +7,6 @@
 .hero-cta{margin-top:30px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 
 /* the settings screenshot beside the hero copy; theme-swapped by two <img> */
-.shot{border-radius:var(--r-window);overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
-.shot img{width:100%;display:block}
-.shot img.shot-dark{display:none}
-[data-theme="dark"] .shot img.shot-light{display:none}
-[data-theme="dark"] .shot img.shot-dark{display:block}
 
 .close{background:var(--bg-inset);border-radius:var(--r-card);padding:44px;max-width:620px;margin:0 auto;text-align:center}
 .close .price-big{font-size:44px;font-weight:600;letter-spacing:-0.03em;line-height:1}
