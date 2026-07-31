@@ -126,11 +126,13 @@ def main():
     if not os.path.exists(HEADLESS):
         sys.exit(f"headless shell not found at {HEADLESS}")
 
-    html = open("index.html", encoding="utf-8").read()
+    with open("index.html", encoding="utf-8") as f:
+        html = f.read()
     headline = headline_from_site(html)
     print(f"headline: {headline}")
     harness = HARNESS.replace("__HEADLINE__", headline)
-    open(TEMP, "w", encoding="utf-8").write(html.replace("</body>", harness, 1))
+    with open(TEMP, "w", encoding="utf-8") as f:
+        f.write(html.replace("</body>", harness, 1))
 
     server = ThreadingHTTPServer(("127.0.0.1", PORT), SimpleHTTPRequestHandler)
     Thread(target=server.serve_forever, daemon=True).start()

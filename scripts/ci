@@ -48,8 +48,24 @@ STEPS = [
     # definition and the Makefile owns those. It lived here, in package.json and
     # in the deploy workflow at once, which is two copies too many for something
     # that has to grow every time a sheet is added.
-    ("CSS: duplicate selectors and dead declarations",
+    ("CSS: duplicate selectors, dead declarations, off-token values",
      ["make", "lint-css"], False),
+    # The other two languages. CSS and markup each had a linter and these two
+    # had nothing: home.js is 17.9KB and the six .mjs tools and five Python
+    # gates below are what every other check in this list is made of, so a
+    # broken gate script was previously caught only by the gate failing oddly.
+    # `make lint-js` / `make lint-py`, not the tools' own invocations, for the
+    # reason the three above give: the Makefile is where a task is defined.
+    # lint-py in particular carries a shebang-discovery step that must not get
+    # a second copy here -- four of the five files are extensionless and a
+    # directory walk silently skips them.
+    ("JS: home.js and every .mjs tool", ["make", "lint-js"], False),
+    ("Python: every gate script", ["make", "lint-py"], False),
+    # Reads styles/tokens.css, no build and no browser, ~0.2s. It has been in
+    # the repo since 2956f06 and in no runner, so the audit trail those token
+    # comments cite was only ever re-checked when somebody thought to.
+    ("Contrast: every token pair clears AA on its darkest surface",
+     ["make", "contrast"], False),
     ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
     ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),
     ("Render: every band, 1440 and 375, no overflow", ["node", "scripts/shots.mjs", "--out", "scratch/shots/ci"], True),
@@ -66,12 +82,12 @@ def run(step):
     name, cmd, slow = step
     if QUICK and slow:
         return name, None, ""
-    p = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    p = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, check=False)
     return name, p.returncode, (p.stdout + p.stderr).strip()
 
 
 def main() -> int:
-    build = subprocess.run(BUILD, cwd=ROOT, capture_output=True, text=True)
+    build = subprocess.run(BUILD, cwd=ROOT, capture_output=True, text=True, check=False)
     print(f"{BOLD}{PURPLE}=== Build: eleventy -> _site/ ==={RESET}")
     print((build.stdout + build.stderr).strip())
     if build.returncode:

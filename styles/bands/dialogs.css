@@ -68,7 +68,7 @@ dialog.shots[open]::backdrop{animation:shots-in .2s ease}
 .shots-next{right:14px}
 html.shots-open{overflow:hidden}
 @media(max-width:700px){
-  dialog.shots{width:calc(100vw - 12px);height:min(calc(100dvh - 12px),560px);border-radius:14px}
+  dialog.shots{width:calc(100vw - 12px);height:min(calc(100dvh - 12px),560px);border-radius:var(--r-card)}
   .shots-head{padding:12px 12px 12px 16px}
   .shots-head .shots-note{display:none}
   .shots-item{padding:12px 14px 14px}

@@ -13,9 +13,24 @@
 // The rule it enforces is the curb's, not WCAG's default reading: a text colour
 // must clear AA against the DARKEST surface it can land on, not against --bg.
 // Small print lands on inset cards, so measuring --text-3 on white flatters it
-// by more than a point (6.05 there, 4.97 on --bg-inset-2). Zero dependencies,
-// same as curb-check, so a broken toolchain cannot take the design gate down.
+// by more than a point (6.05 there, 4.97 on --bg-inset-2).
+//
+// The colour science is colorjs.io, the CSS WG editors' own implementation, and
+// not the twenty lines of hand-rolled sRGB-to-linear that used to sit here.
+// Those twenty lines were correct -- they reproduced every ratio tokens.css
+// records and the negative control bit -- which is exactly why they were worth
+// replacing rather than trusting: nothing about a hand-rolled luminance tells
+// you it is right, and the next person to touch a gamma exponent gets no
+// warning. Same numbers, from the reference implementation: verified 4.97,
+// 6.05, 4.60, 4.62, 4.52 and 4.54 to the digit against the comments in
+// styles/tokens.css, with #007aff still failing at 4.02.
+//
+// This does cost the one dependency the file used to boast about not having.
+// That trade is deliberate: a design gate that is wrong in the fourth decimal
+// and still exits 0 is worse than one that cannot run at all, and the second
+// failure is the loud one.
 
+import Color from "colorjs.io";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -35,20 +50,12 @@ const SURFACE = ["--bg", "--bg-sunken", "--bg-inset", "--bg-inset-2", "--card-bg
 // not Apple's #007aff: the latter measures 4.02 and fails.
 const ON_ACCENT = [["#ffffff", "--blue"]];
 
-function srgbToLinear(c) {
-  c /= 255;
-  return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
-}
-function luminance(hex) {
-  const h = hex.replace("#", "");
-  const full = h.length === 3 ? [...h].map((c) => c + c).join("") : h;
-  const [r, g, b] = [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16));
-  return 0.2126 * srgbToLinear(r) + 0.7152 * srgbToLinear(g) + 0.0722 * srgbToLinear(b);
-}
-function ratio(a, b) {
-  const [x, y] = [luminance(a), luminance(b)].sort((m, n) => n - m);
-  return (x + 0.05) / (y + 0.05);
-}
+// "WCAG21" names the algorithm explicitly rather than taking the library's
+// default, which is APCA-flavoured in some versions and would silently grade to
+// a different standard than the one every comment in tokens.css was measured
+// against. The ordering the old code did by hand (lighter over darker) is
+// inside this call; the result is symmetric.
+const ratio = (a, b) => Color.contrast(a, b, "WCAG21");
 
 // Parse the token blocks. Only literal hexes are checkable: rgba() over an
 // unknown backdrop and color-mix() taking var() have no fixed value, so they

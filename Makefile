@@ -21,7 +21,7 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build build-prod up down ci ci-quick lint-css lint-html a11y shots dead lighthouse check
+.PHONY: help build build-prod up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z][a-z-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
@@ -69,6 +69,25 @@ lint-css: ## stylelint every hand-written sheet
 lint-html: ## html-validate every page in _site/
 	npx html-validate '_site/**/*.html'
 
+# eslint's own flat-config discovery walks the tree and reads eslint.config.js,
+# so there is no glob to keep in step here the way lint-css has one. Covers
+# home.js (browser), scripts/*.mjs and the two root .config.js files.
+lint-js: ## eslint home.js and every .mjs tool
+	npx eslint .
+
+# The file list is DISCOVERED, not written down, and that is load-bearing:
+# four of the five Python files here (a11y-check, ci, lighthouse, purge-check)
+# have no .py extension, and ruff finds Python by extension. `ruff check
+# scripts/` therefore opens exactly one of the five and prints "All checks
+# passed" for a directory it has 80% not read -- verified with
+# `ruff check --show-files scripts/`, which listed make-pad-card.py alone.
+# Shebang is the thing that actually makes these files Python, so shebang is
+# what selects them, and a new gate is linted the day it is added rather than
+# when somebody remembers to edit a list. The pattern avoids a literal '#'
+# because make would take it for a comment.
+lint-py: ## ruff over every Python gate (found by shebang, not a hand-kept list)
+	ruff check $$(grep -lE '^.!.*python' scripts/*)
+
 # axe-core, not Lighthouse. Lighthouse's accessibility category IS axe-core with
 # a page load, a trace and a score wrapped round it: 2m15s over these 14 pages
 # against 7s here, and a two-minute per-commit step is one that stops being run.
@@ -79,6 +98,14 @@ lint-html: ## html-validate every page in _site/
 # and then run every gate against that one artifact.
 a11y: ## axe-core (WCAG 2 A/AA) over every page in _site/
 	node scripts/axe-check.mjs
+
+# Reads styles/tokens.css directly, so no build and no browser: ~0.2s. It was
+# restored in 2956f06 and then run by hand and by nobody else, which is the
+# same shape as the problem it exists to fix -- tokens.css cited a checker that
+# did not exist. A gate that only a human remembers to run is a gate that has
+# stopped running.
+contrast: ## Every token colour pair clears AA on the darkest surface it can land on
+	node scripts/contrast.mjs
 
 shots: build ## Render every band at 1440 and 375 into scratch/shots/
 	node scripts/shots.mjs

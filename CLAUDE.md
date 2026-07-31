@@ -97,7 +97,10 @@ work. Add a task by adding a target with a `##` comment, and it shows up in
     make ci          build, then lint and render in parallel
     make lint-css    stylelint every hand-written sheet
     make lint-html   html-validate every page in _site/
+    make lint-js     eslint home.js and every .mjs tool
+    make lint-py     ruff over every Python gate
     make a11y        axe-core, WCAG 2 A/AA, every page in _site/
+    make contrast    every token colour pair clears AA on its darkest surface
     make shots       render every band at 1440 and 375 into scratch/shots/
 
 `scripts/` holds all the tooling, whatever language it is in: `scripts/ci` is
@@ -106,9 +109,22 @@ ones. `bin/` is gone; splitting by language put two halves of one toolchain in
 two directories.
 
 Tooling is adopted, not hand-rolled: Eleventy assembles, Lightning CSS bundles,
-stylelint lints, PurgeCSS answers reachability, axe-core grades accessibility,
+stylelint / eslint / ruff lint the three languages, PurgeCSS answers
+reachability, axe-core grades accessibility, colorjs.io does the contrast maths,
 `scripts/a11y-check` and `scripts/lighthouse` came from `../news-digest`. Three
 attempts at hand-rolling CSS edits broke the page; see `docs/lessons/`.
+
+Each linter is its recommended preset and nothing else selected on top, so the
+configs hold environment facts and earned exceptions rather than taste. Two of
+them enforce something a preset cannot: `stylelint-declaration-strict-value`
+requires a *variable* for radius and colour properties, which is the inversion
+of what `curb-check.mjs` does (it validates that a literal is a blessed tier and
+can never ask whether the token was used, so `border-radius:14px` passed while
+`--r-card` is exactly 14px). Spacing is deliberately not enforced: there are 51
+distinct px values against one `--pad`, so there is no scale to enforce yet.
+`make lint-py` discovers its files by shebang because four of the five Python
+gates have no `.py` extension and `ruff check scripts/` silently reads only one
+of them.
 
 There are two accessibility gates and they are not redundant. `scripts/a11y-check`
 is a static HTML parse: instant, no browser, catches a missing `<main>` or an

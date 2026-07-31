@@ -9,7 +9,7 @@
   t.addEventListener('click',function(){
     var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
     root.setAttribute('data-theme',next);
-    try{localStorage.setItem('steer-theme',next);}catch(e){}
+    try{localStorage.setItem('steer-theme',next);}catch{}
   });
 })();
 // nav floats transparent/light while it overlaps the always-dark hero
@@ -162,7 +162,7 @@
       setAccent.t=setTimeout(function(){root.classList.remove('accent-anim');},450);
     }
     if(name==='blue') root.removeAttribute('data-accent'); else root.setAttribute('data-accent',name);
-    try{localStorage.setItem('steer-accent',name);}catch(e){}
+    try{localStorage.setItem('steer-accent',name);}catch{}
   }
   function press(el,on){el.setAttribute('aria-pressed',on?'true':'false');}
   function setAuto(){
@@ -171,7 +171,7 @@
     colourDots.forEach(function(x){press(x,false);});
     if(autoDot) press(autoDot,true);
     setAccent('blue');
-    try{localStorage.setItem('steer-accent','auto');}catch(e){}
+    try{localStorage.setItem('steer-accent','auto');}catch{}
   }
   function setLED(c){
     hero.classList.remove('lb-auto');
@@ -188,7 +188,7 @@
   if(autoDot) autoDot.addEventListener('click',setAuto);
   // restore: a locked colour comes back locked; absent or 'auto' → rainbow idle
   var savedAccent=null;
-  try{savedAccent=localStorage.getItem('steer-accent');}catch(e){}
+  try{savedAccent=localStorage.getItem('steer-accent');}catch{}
   if(savedAccent&&savedAccent!=='auto'){
     var savedHex=Object.keys(accentNames).find(function(k){return accentNames[k]===savedAccent;});
     if(savedHex) setLED(savedHex); else setAuto();

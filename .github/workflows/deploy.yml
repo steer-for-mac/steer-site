@@ -66,6 +66,25 @@ jobs:
       - name: Markup lint
         run: make lint-html
 
+      - name: JS lint
+        run: make lint-js
+
+      # ruff is not an npm package, so `npm ci` above does not bring it. Pinned
+      # to the range ruff.toml's `required-version` declares: ruff's default
+      # rule set moves between minor versions, and a gate that silently grades
+      # to a different standard than the one the files were burned down against
+      # is the failure this repo keeps finding. pipx is preinstalled on the
+      # runner image.
+      - name: Install ruff
+        run: pipx install 'ruff>=0.16,<0.17'
+
+      - name: Python lint
+        run: make lint-py
+
+      # Reads styles/tokens.css only: no build, no browser, ~0.2s.
+      - name: Token contrast (AA on the darkest surface)
+        run: make contrast
+
       - name: Copy and design rules
         run: |
           node scripts/curb-check.mjs

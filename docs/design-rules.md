@@ -332,10 +332,16 @@ Two things that will waste your time otherwise:
     fire ~100% false on this codebase: **AI-purple** (Steer's controller-LED and
     accent-picker swatches are legitimately violet/teal/amber) and **sub-8px
     radii** (the hand-built SVG vignettes). The script's comments record why.
-- Any new colour pair clears AA against the darkest surface it can sit on
-  (the `--blue`/text math has no checker: `contrast.mjs` is cited by
-  `styles/tokens.css` but does not exist in this repo, so every ratio recorded
-  in those comments was measured by a tool nobody can re-run).
+- Any new colour pair clears AA against the darkest surface it can sit on.
+  `make contrast` is that checker, it is in `make ci`, and it reproduces every
+  ratio recorded in `styles/tokens.css` to the digit. The maths is colorjs.io,
+  the CSS WG editors' implementation, rather than the hand-rolled luminance it
+  shipped with. Retune a colour and re-run it; do not update the comment by eye.
+- Radius and colour literals are enforced, not just reviewed. Anything in
+  `styles/` that sets `border-radius`, `color`, `fill`, `stroke` or a
+  `*-color` longhand must use a variable, or be one of the values
+  `stylelint.config.js` lists with its reason. Spacing is deliberately outside
+  this: there is no spacing scale to enforce yet.
 - The page renders with JavaScript disabled and under `prefers-reduced-motion`
   (static frames are present, nothing disappears).
 - No horizontal overflow at 375, 768, and 1440 px.

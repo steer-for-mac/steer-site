@@ -1,0 +1,36 @@
+# Python lint. Four of this repo's gates (scripts/a11y-check, ci, lighthouse,
+# purge-check) and scripts/make-pad-card.py are Python and had no linter at all,
+# while the CSS and the markup each had one.
+#
+# Ruff's own default rule set, with nothing selected on top. It is the
+# equivalent of stylelint-config-recommended next door: errors and real bug
+# classes, no taste. Adding a curated `select` list here would be this file
+# holding an opinion that has to be argued about at every review, and the
+# default already found eight genuine things in five files.
+#
+# ruff replaces both halves of what would otherwise be two tools: `ruff check`
+# is the linter (flake8 and friends), and `ruff format` is the black-compatible
+# formatter. Only the linter is a gate. `ruff format --check` wants to rewrite
+# 159 lines across these five files -- aligned constant blocks, hand-wrapped
+# argument lists that line up with the prose in the docstring above them -- and
+# that is a wholesale restyling of working code, not a defect being found. Run
+# `ruff format` by hand on a new file if you like; it does not gate CI.
+
+# Defaults move between ruff minor versions, and a gate whose rule set changed
+# under it is a gate that starts failing for reasons nobody chose. This makes
+# that loud instead of silent: ruff refuses to run rather than quietly grading
+# to a different standard than the one these files were burned down against.
+required-version = ">=0.16,<0.17"
+
+# The oldest interpreter these scripts have to run on. Only 3.9+ syntax is used
+# (f-strings, pathlib, ThreadPoolExecutor); this is what tells ruff not to
+# suggest rewrites that would break on the runner's Python.
+target-version = "py311"
+
+# scripts/*.py is found by the directory walk. The four extensionless gates are
+# NOT: ruff discovers Python by file extension, so `ruff check scripts/` sees
+# exactly one of the five files here and reports "All checks passed" for the
+# other four without ever opening them. Verified: `ruff check --show-files
+# scripts/` listed make-pad-card.py alone. That is why `make lint-py` passes the
+# file list in, discovered by shebang rather than hand-maintained -- see the
+# target for the reasoning.
