@@ -18,10 +18,8 @@ for (const page of PAGES) {
     test(`${page} has no axe violations (${theme})`, async ({ page: p }) => {
       await p.goto(`/${page}`);
       await p.waitForFunction(() => document.fonts.status === "loaded");
-      /* Freeze before flipping, or the flip is what gets graded: shared.css
-         transitions body's background over .3s and html's not at all, so for
-         300ms the text sits on a half-blended surface and axe read 1.1:1 on
-         eight nodes that pass at rest. */
+      /* Freeze before flipping: body's background transitions and html's does
+         not, so mid-flip the text sits on neither palette's surface. */
       await p.addStyleTag({ content: "*,*::before,*::after{transition:none!important;animation:none!important}" });
       await p.evaluate((t) => document.documentElement.setAttribute("data-theme", t), theme);
       const { violations } = await new AxeBuilder({ page: p }).withTags(TAGS).analyze();

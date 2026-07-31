@@ -28,21 +28,17 @@ for (const width of [1440, 375]) {
     for (const [name, selector] of Object.entries(SECTIONS)) {
       const el = page.locator(selector);
       if (!await el.count()) continue;
-      /* instant, both: site.css sets scroll-behavior:smooth, so an animated
-         scrollIntoView leaves the next scrollBy computing from a stale offset,
-         and every frame came out at the top of the page. The -70 drops the
-         section clear of the sticky nav, which paints where block:start parks. */
+      /* instant, both: scroll-behavior is smooth, so an animated scrollIntoView
+         leaves the scrollBy computing from a stale offset. -70 clears the nav. */
       const box = await el.evaluate((node) => {
         node.scrollIntoView({ block: "start", behavior: "instant" });
         window.scrollBy({ top: -70, behavior: "instant" });
         const r = node.getBoundingClientRect();
         return { x: 0, y: r.top + scrollY, width: innerWidth, height: r.height };
       });
-      /* fullPage is what the clip is measured against, not "shoot everything":
-         without it Playwright clips the viewport image and any section below
-         the fold throws. The vignettes are frozen whatever is asked for here --
-         home.js adds .still under navigator.webdriver, and every loop is
-         killed with !important. These frames show the static state. */
+      /* fullPage is what the clip is measured against, not "shoot everything".
+         animations is inert: home.js adds .still under webdriver, so these
+         frames are the static state whatever is asked for. */
       writeFileSync(join(OUT, `${name}-${width}.png`),
         await page.screenshot({ clip: box, fullPage: true, animations: "allow", scale: "css" }));
     }

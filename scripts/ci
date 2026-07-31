@@ -30,10 +30,7 @@ QUICK = "--quick" in sys.argv
 # there is nothing generated left in the working tree to be stale.
 BUILD = ["npx", "eleventy"]
 
-# Serial, after the pool: Playwright schedules its own workers across the
-# cores, so running it inside a thread pool nests two schedulers and
-# oversubscribes the machine. That surfaced as a different WebKit test failing
-# about one run in three, with nothing wrong in the test or the page.
+# Never fold these back into STEPS: Playwright schedules its own workers.
 SERIAL = [
     ("Behaviour, accessibility and layout (Playwright)",
      ["npx", "playwright", "test"], False),
