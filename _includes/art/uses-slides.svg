@@ -1,0 +1,22 @@
+<svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
+              <polyline class="ld" points="18,2 18,26 42,90"/>
+              <circle class="ldot" cx="42" cy="90" r="2.5"/>
+              <path class="datum" d="M0,210 H248"/>
+              <!-- the slides behind the slide -->
+              <rect class="o3" x="90" y="56" width="142" height="94" rx="6"/>
+              <rect class="o3" x="85" y="61" width="142" height="94" rx="6"/>
+              <rect class="o1" x="80" y="66" width="146" height="96" rx="6"/>
+              <path class="o3" d="M94,146 H212"/>
+              <rect class="o2" x="100" y="124" width="14" height="22" rx="2"/>
+              <rect class="o2" x="126" y="108" width="14" height="38" rx="2"/>
+              <rect class="o2" x="152" y="116" width="14" height="30" rx="2"/>
+              <rect class="o2" x="178" y="96" width="14" height="50" rx="2"/>
+              <path class="o1" d="M153,162 V210"/>
+              <path class="o1b" d="M133,210 H173"/>
+              <!-- the stick, top view, deflected -->
+              <circle class="o1" cx="44" cy="110" r="20"/>
+              <circle class="o2" cx="49" cy="105" r="13"/>
+              <path class="sig" d="M64,101 L172,96"/>
+              <circle class="acc-h" cx="185" cy="96" r="10"/>
+              <circle class="acc" cx="185" cy="96" r="4.5"/>
+            </svg>

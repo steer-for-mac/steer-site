@@ -16,6 +16,7 @@ working tree to keep in step, and no `--check` gate any more.
 | `_includes/layouts/base.njk` | the document every page shares: head, meta, theme init, body frame |
 | `_includes/chrome/nav.html`, `_includes/chrome/footer.html` | site chrome, on all 14 chrome pages at once |
 | `_includes/bands/<band>.html` | markup of one homepage band |
+| `_includes/art/<band>-<thing>.svg` | one piece of inline SVG that band draws |
 | `styles/bands/<band>.css` | styling of one homepage band |
 | `styles/pages/<page>.css` | styling used by one sub-page and no other |
 | `styles/tokens.css` | any colour, surface, radius, shadow, measure |
@@ -38,6 +39,21 @@ three rules that had to stay where they are for exactly this reason.
 
 One band per file is what lets several people or agents work at once. Give a
 delegated agent its two files; keep it out of `styles/grammar.css`.
+
+**Inline SVG is not in the markup.** It sits in `_includes/art/`, named for the
+band that draws it, and the build pastes it back:
+
+    {{ "/_includes/art/hero-pad-ps.svg" | svgContents | safe }}
+
+`eleventy-plugin-svg-contents` does the pasting; the leading slash is its API,
+not a URL. hero.html was 46KB, 39KB of it pad geometry, so an agent sent to
+change one line of copy read 46KB to find it; it is 7KB now. The built page is
+unchanged, deliberately: this buys reading, not bytes. Reasons for the directory,
+and the one place the plugin reformats, are in `eleventy.config.js`.
+
+`assets/svg/` is a different thing and must not be used for this. It holds
+`pad-art-{mf,ps,sw,xb}.svg`, which are **served**, and fetched at runtime by
+`home.js` rewriting `use.padart`'s href. `_includes/art/` is never served.
 
 **A band's two files are at the same path in each tree.** Swap `_includes` for
 `styles` and `.html` for `.css`: `_includes/bands/feel.html` is styled by

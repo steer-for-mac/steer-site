@@ -25,39 +25,7 @@
         <div class="d-foot">
           <div class="d-spec"><span class="k">Stick + face buttons</span><span class="v">type without getting up</span></div>
           <div class="d-fig fc">
-            <svg class="dgs" viewBox="0 0 420 240" aria-hidden="true">
-              <polyline class="ld" points="18,2 18,26 200,60"/>
-              <circle class="ldot" cx="200" cy="60" r="2.5"/>
-              <path class="datum" d="M0,210 H420"/>
-              <!-- couch, elevation, with the pad resting on it -->
-              <g transform="translate(10,0)">
-                <rect class="o2" x="22" y="146" width="68" height="32" rx="10"/>
-                <rect class="o1" x="14" y="170" width="84" height="16" rx="6"/>
-                <rect class="o2" x="8" y="158" width="12" height="28" rx="5"/>
-                <rect class="o2" x="92" y="158" width="12" height="28" rx="5"/>
-                <path class="o2" d="M22,186 V210 M90,186 V210"/>
-                <use class="padart" href="assets/svg/pad-art-ps.svg#s" transform="translate(16.58,148.91) scale(0.0657)"/>
-              </g>
-              <!-- the wheel: aim at a slice, tap a button -->
-              <g transform="translate(96,0)">
-                <circle class="o1" cx="124" cy="80" r="28"/>
-                <circle class="o2" cx="124" cy="80" r="12"/>
-                <path class="o3" d="M124,52 V68 M143.8,60.2 L132.49,71.51 M152,80 H136 M143.8,99.8 L132.49,88.49 M124,108 V92 M104.2,99.8 L115.51,88.49 M96,80 H112 M104.2,60.2 L115.51,71.51"/>
-                <path class="acc-t" d="M134.71,54.13 A28,28 0 0 1 149.87,69.29 L135.09,75.41 A12,12 0 0 0 128.59,68.91 Z"/>
-              </g>
-              <path class="sig" d="M86,152 L196,98"/>
-              <path class="sig" d="M244,92 L320,134"/>
-              <!-- the Mac, across the room -->
-              <g transform="translate(150,0)">
-                <rect class="o1" x="162" y="118" width="70" height="50" rx="6"/>
-                <rect class="o2" x="170" y="138" width="54" height="14" rx="5"/>
-                <circle class="o3" cx="178" cy="145" r="3.4"/>
-                <path class="o3" d="M180.4,147.4 L183,150"/>
-                <rect class="acc cx-caret" x="198" y="141" width="1.8" height="8"/>
-                <path class="o1" d="M197,168 V210"/>
-                <path class="o1b" d="M181,210 H213"/>
-              </g>
-            </svg>
+            {% include "art/uses-couch.svg" %}
           </div>
         </div>
       </div>
@@ -73,18 +41,7 @@
         <div class="d-foot">
           <div class="d-spec"><span class="k">Cursor speed</span><span class="v">slow it right down</span></div>
           <div class="d-fig fa">
-            <svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
-              <polyline class="ld" points="18,2 18,186 61,208"/>
-              <path class="datum" d="M0,210 H248"/>
-              <use class="padart" href="assets/svg/pad-art-ps.svg#s" transform="translate(-40.23,49.14) scale(0.27372)"/>
-              <!-- loose hands: the pad is carried, not gripped -->
-              <path class="o2" d="M42,170 Q59,190 76,170"/>
-              <path class="o2" d="M172,170 Q189,190 206,170"/>
-              <!-- the ground line does double duty as the speed scale -->
-              <path class="o3" d="M40,202 V210 M61,202 V210 M82,202 V210 M103,202 V210 M124,202 V210 M145,202 V210 M166,202 V210 M187,202 V210 M208,202 V210"/>
-              <circle class="acc-h knob" cx="61" cy="210" r="9"/>
-              <circle class="acc" cx="61" cy="210" r="4.5"/>
-            </svg>
+            {% include "art/uses-comfort.svg" %}
           </div>
         </div>
       </div>
@@ -97,28 +54,7 @@
         <div class="d-foot">
           <div class="d-spec"><span class="k">Right stick</span><span class="v">a dot on the screen</span></div>
           <div class="d-fig fs">
-            <svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
-              <polyline class="ld" points="18,2 18,26 42,90"/>
-              <circle class="ldot" cx="42" cy="90" r="2.5"/>
-              <path class="datum" d="M0,210 H248"/>
-              <!-- the slides behind the slide -->
-              <rect class="o3" x="90" y="56" width="142" height="94" rx="6"/>
-              <rect class="o3" x="85" y="61" width="142" height="94" rx="6"/>
-              <rect class="o1" x="80" y="66" width="146" height="96" rx="6"/>
-              <path class="o3" d="M94,146 H212"/>
-              <rect class="o2" x="100" y="124" width="14" height="22" rx="2"/>
-              <rect class="o2" x="126" y="108" width="14" height="38" rx="2"/>
-              <rect class="o2" x="152" y="116" width="14" height="30" rx="2"/>
-              <rect class="o2" x="178" y="96" width="14" height="50" rx="2"/>
-              <path class="o1" d="M153,162 V210"/>
-              <path class="o1b" d="M133,210 H173"/>
-              <!-- the stick, top view, deflected -->
-              <circle class="o1" cx="44" cy="110" r="20"/>
-              <circle class="o2" cx="49" cy="105" r="13"/>
-              <path class="sig" d="M64,101 L172,96"/>
-              <circle class="acc-h" cx="185" cy="96" r="10"/>
-              <circle class="acc" cx="185" cy="96" r="4.5"/>
-            </svg>
+            {% include "art/uses-slides.svg" %}
           </div>
         </div>
       </div>
@@ -131,22 +67,7 @@
         <div class="d-foot">
           <div class="d-spec"><span class="k"><b class="d-swap" data-ps="L2 / R2" data-xb="LT / RT" data-sw="ZL / ZR" data-mf="The triggers"><b data-ps="L2 / R2" data-xb="LT / RT" data-sw="ZL / ZR" data-mf="The triggers">L2 / R2</b></b></span><span class="v">scrub and cut</span></div>
           <div class="d-fig fv">
-            <svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
-              <polyline class="ld" points="18,2 18,26 118,110"/>
-              <circle class="ldot" cx="118" cy="110" r="2.5"/>
-              <path class="datum" d="M0,210 H248"/>
-              <rect class="o2" x="16" y="132" width="70" height="26" rx="4"/>
-              <rect class="o2" x="90" y="132" width="28" height="26" rx="4"/>
-              <rect class="o1" x="124" y="132" width="108" height="26" rx="4"/>
-              <path class="acc ph-tip" d="M114,112 L126,112 L120,119 Z"/>
-              <path class="acc-s" d="M120,118 V172"/>
-              <use href="assets/svg/trig.svg#s" transform="translate(-157.45,175.11) scale(0.421)"/>
-              <use href="assets/svg/trig.svg#s" transform="translate(405.45,175.11) scale(-0.421,0.421)"/>
-              <path class="o2" d="M96,200 H58"/>
-              <path class="fillsoft" d="M56,200 L65,195.5 L65,204.5 Z"/>
-              <path class="o2" d="M152,200 H190"/>
-              <path class="fillsoft" d="M192,200 L183,195.5 L183,204.5 Z"/>
-            </svg>
+            {% include "art/uses-scrub.svg" %}
           </div>
         </div>
       </div>

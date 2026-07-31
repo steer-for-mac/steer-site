@@ -1,0 +1,17 @@
+<svg class="dgs" viewBox="0 0 330 300" aria-hidden="true">
+            <path class="o2 hconn" d="M0,150 H31"/>
+            <path class="fillsoft hconn" d="M40,150 L31,145.5 L31,154.5 Z"/>
+            <circle class="flow f3 hconn" cx="0" cy="150" r="3"/>
+            <rect class="o1" x="40" y="80" width="250" height="140" rx="8"/>
+            <rect class="o3" x="70" y="104" width="190" height="84" rx="6"/>
+            <path class="o3" d="M70,120 H260"/>
+            <path class="o3" d="M86,140 H190 M86,156 H214 M86,172 H150"/>
+            <!-- the caret sits at the end of the last line rather than mid
+                 paragraph: it is the keystroke half of this cell's claim, and
+                 a caret only reads as typing where the text stopped -->
+            <rect class="acc cp-caret" x="153" y="166" width="2" height="12"/>
+            <path class="o1 cp-cursor" d="M120,132 L120,158 L126,152.5 L130,162 L134,160 L130,150.5 L138,150 Z"/>
+            <circle class="cp-click acc-h" cx="120" cy="132" r="7"/>
+            <path class="o1" d="M165,220 V240"/>
+            <path class="o1b" d="M132,240 H198"/>
+          </svg>

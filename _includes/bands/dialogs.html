@@ -10,12 +10,12 @@
     </div>
     <div class="shots-count" id="shotsCount" aria-live="polite">1 / 7</div>
     <button type="button" class="shots-close" id="shotsClose" aria-label="Close screenshots">
-      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>
+      {% include "art/dialogs-close.svg" %}
     </button>
   </div>
   <div class="shots-stage">
     <button type="button" class="shots-nav shots-prev" id="shotsPrev" aria-label="Previous screenshot">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>
+      {% include "art/dialogs-prev.svg" %}
     </button>
     <div class="shots-view" id="shotsView">
       <!-- DEMO VIDEO SLOT: when the demo ships, it becomes the first slide
@@ -71,7 +71,7 @@
       </figure>
     </div>
     <button type="button" class="shots-nav shots-next" id="shotsNext" aria-label="Next screenshot">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+      {% include "art/dialogs-next.svg" %}
     </button>
   </div>
 </dialog>
@@ -80,7 +80,7 @@
      falls back to #pricing, where the same form sits inline, when JS is off. -->
 <dialog class="ml-dialog" id="mlDialog" aria-labelledby="mlTitle">
   <button type="button" class="shots-close ml-close" id="mlClose" aria-label="Close">
-    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg>
+    {% include "art/dialogs-close.svg" %}
   </button>
   <h2 id="mlTitle">Join the launch list</h2>
   <p class="ml-sub">€19.99 once, when it ships. 14-day free trial: no card, no account. One email the day it opens, from me, and your address goes nowhere else.</p>

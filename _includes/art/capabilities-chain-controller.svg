@@ -1,0 +1,11 @@
+<svg class="dgs" viewBox="0 0 330 300" aria-hidden="true">
+            <!-- the press dips the whole pad: the button that moved is a
+                 different button on every pad, and pad-art-mf draws no face
+                 buttons at all, so nothing pad-specific may be marked here.
+                 The <use> keeps its own transform; the wrapper takes the CSS
+                 one, because a CSS transform would replace the attribute. -->
+            <g class="cp-pad"><use class="padart" href="assets/svg/pad-art-ps.svg#s" transform="translate(-108.72,39.86) scale(0.4562)"/></g>
+            <path class="o2 hconn" d="M300,150 H330"/>
+            <circle class="cp-emit acc-h hconn" cx="300" cy="150" r="6"/>
+            <circle class="flow f0 hconn" cx="300" cy="150" r="3"/>
+          </svg>

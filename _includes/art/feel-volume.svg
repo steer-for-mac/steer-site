@@ -1,0 +1,29 @@
+<svg class="dgs" viewBox="0 0 420 240" aria-hidden="true">
+            <polyline class="ld" points="18,2 18,26 300,72"/>
+            <circle class="ldot" cx="300" cy="72" r="2.5"/>
+            <path class="datum" d="M0,210 H420"/>
+            <!-- the pad's answer: two rings, because the ceiling event is a
+                 double pulse and the nine steps under it are single ticks -->
+            <circle class="acc-h fl-ring r2" cx="86" cy="140" r="66"/>
+            <circle class="acc-h fl-ring r1" cx="86" cy="140" r="50"/>
+            <!-- the d-pad, top view, up arm live -->
+            <path class="o1" d="M74,104 H98 V128 H122 V152 H98 V176 H74 V152 H50 V128 H74 Z"/>
+            <path class="fl-up" d="M74,104 H98 V128 H74 Z"/>
+            <path class="acc" d="M86,110 L93,121 H79 Z"/>
+            <path class="sig" d="M152,170 L190,188"/>
+            <!-- nine steps standing on the ground line, then the ceiling: one
+                 line, heavier and wider than any step, that the steps stop at -->
+            <g class="o2">
+              <rect x="196" y="194" width="14" height="16"/>
+              <rect x="218" y="180" width="14" height="30"/>
+              <rect x="240" y="166" width="14" height="44"/>
+              <rect x="262" y="152" width="14" height="58"/>
+              <rect x="284" y="138" width="14" height="72"/>
+              <rect x="306" y="124" width="14" height="86"/>
+              <rect x="328" y="110" width="14" height="100"/>
+              <rect x="350" y="96" width="14" height="114"/>
+              <rect x="372" y="82" width="14" height="128"/>
+            </g>
+            <path class="o1b" d="M186,88 V76 H396 V88"/>
+            <rect class="acc fl-mark" x="372" y="77.4" width="14" height="5"/>
+          </svg>

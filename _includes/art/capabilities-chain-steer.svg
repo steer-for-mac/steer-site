@@ -1,0 +1,21 @@
+<svg class="dgs" viewBox="0 0 332 300" aria-hidden="true">
+            <!-- work that belongs to another app is handed up and out -->
+            <rect class="o2" x="14" y="34" width="96" height="26" rx="8"/>
+            <text class="mono" x="62" y="51.5" text-anchor="middle" letter-spacing="0.08em">Dictation</text>
+            <rect class="o2" x="150" y="34" width="150" height="26" rx="8"/>
+            <text class="mono" x="225" y="51.5" text-anchor="middle" letter-spacing="0.08em">Moving a window</text>
+            <path class="o3" d="M62,84 H225 M62,84 V68 M225,84 V68 M166,84 V116"/>
+            <path class="fillsoft" d="M62,60 L57.5,69 L66.5,69 Z"/>
+            <path class="fillsoft" d="M225,60 L220.5,69 L229.5,69 Z"/>
+            <!-- the piece in between -->
+            <rect class="o1" x="106" y="116" width="120" height="68" rx="10"/>
+            <!-- the same box again in the accent, so the piece in between is
+                 the one lit object in the chain and can brighten as the press
+                 passes through it -->
+            <rect class="cp-lit acc-h" x="106" y="116" width="120" height="68" rx="10"/>
+            <image href="assets/mark.png" x="151.0" y="134.0" width="30" height="30" preserveAspectRatio="xMidYMid meet"/>
+            <path class="o2 hconn" d="M0,150 H97 M236,150 H332"/>
+            <path class="fillsoft hconn" d="M106,150 L97,145.5 L97,154.5 Z"/>
+            <circle class="flow f1 hconn" cx="0" cy="150" r="3"/>
+            <circle class="flow f2 hconn" cx="236" cy="150" r="3"/>
+          </svg>

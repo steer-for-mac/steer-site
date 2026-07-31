@@ -112,6 +112,38 @@ const COMMENT = /[ \t]*<!--(?!\[if)[\s\S]*?-->[ \t]*\n?/g;
 const stripDev = (html) => html.replace(COMMENT, "").replace(/\n{3,}/g, "\n\n");
 
 export default function (eleventyConfig) {
+  /* Inline SVG lives in _includes/art/, not in the band markup, and is pasted
+   * back by Nunjucks' own include:
+   *
+   *   {% include "art/hero-pad-ps.svg" %}
+   *
+   * hero.html was 46KB, 39KB of it pad geometry, so an agent sent to change one
+   * line of copy read 46KB to find it. It is 7KB now. The output is unchanged
+   * on purpose: this is a source-readability move, not a page-weight one.
+   *
+   * NO PLUGIN. eleventy-plugin-svg-contents does this and is in Eleventy's
+   * community list, so it was adopted first — then measured. It last published
+   * in 2022, pulls 31 packages for cheerio, and round-trips the file through a
+   * parse and re-serialize instead of pasting bytes, which silently rewrapped a
+   * <path> in three of the pad files. `{% include %}` is byte-identical to it,
+   * ships with the template engine, and cannot reformat anything. Verified by
+   * building both ways and diffing the output.
+   *
+   * WHY _includes/ AND NOT assets/svg/. These files are never served; the build
+   * pastes them into the page. assets/svg/ holds pad-art-{mf,ps,sw,xb}.svg,
+   * which ARE served and are fetched at runtime by home.js rewriting
+   * use.padart's href. One directory holding both is how the next person
+   * deletes the wrong one. _includes/ already means "things the build
+   * assembles", which is exactly what these are.
+   *
+   * NAMED <band>-<thing>.svg, like everything else here: a band's files are
+   * derivable from its name, so a delegated agent can be handed them without a
+   * map. capabilities-face-cross.svg and hero-face-cross.svg are byte-identical
+   * and stay separate for that reason.
+   *
+   * Nunjucks renders what it includes, so an SVG containing {{ or {% would be
+   * interpreted. None does, and none should: these are art files. */
+
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("screenshots");
   eleventyConfig.addPassthroughCopy("home.js");

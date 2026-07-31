@@ -1,0 +1,12 @@
+<svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
+              <polyline class="ld" points="18,2 18,186 61,208"/>
+              <path class="datum" d="M0,210 H248"/>
+              <use class="padart" href="assets/svg/pad-art-ps.svg#s" transform="translate(-40.23,49.14) scale(0.27372)"/>
+              <!-- loose hands: the pad is carried, not gripped -->
+              <path class="o2" d="M42,170 Q59,190 76,170"/>
+              <path class="o2" d="M172,170 Q189,190 206,170"/>
+              <!-- the ground line does double duty as the speed scale -->
+              <path class="o3" d="M40,202 V210 M61,202 V210 M82,202 V210 M103,202 V210 M124,202 V210 M145,202 V210 M166,202 V210 M187,202 V210 M208,202 V210"/>
+              <circle class="acc-h knob" cx="61" cy="210" r="9"/>
+              <circle class="acc" cx="61" cy="210" r="4.5"/>
+            </svg>

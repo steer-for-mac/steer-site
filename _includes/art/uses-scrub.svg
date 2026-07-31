@@ -1,0 +1,16 @@
+<svg class="dgs" viewBox="0 0 248 240" aria-hidden="true">
+              <polyline class="ld" points="18,2 18,26 118,110"/>
+              <circle class="ldot" cx="118" cy="110" r="2.5"/>
+              <path class="datum" d="M0,210 H248"/>
+              <rect class="o2" x="16" y="132" width="70" height="26" rx="4"/>
+              <rect class="o2" x="90" y="132" width="28" height="26" rx="4"/>
+              <rect class="o1" x="124" y="132" width="108" height="26" rx="4"/>
+              <path class="acc ph-tip" d="M114,112 L126,112 L120,119 Z"/>
+              <path class="acc-s" d="M120,118 V172"/>
+              <use href="assets/svg/trig.svg#s" transform="translate(-157.45,175.11) scale(0.421)"/>
+              <use href="assets/svg/trig.svg#s" transform="translate(405.45,175.11) scale(-0.421,0.421)"/>
+              <path class="o2" d="M96,200 H58"/>
+              <path class="fillsoft" d="M56,200 L65,195.5 L65,204.5 Z"/>
+              <path class="o2" d="M152,200 H190"/>
+              <path class="fillsoft" d="M192,200 L183,195.5 L183,204.5 Z"/>
+            </svg>
