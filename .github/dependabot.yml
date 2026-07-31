@@ -1,0 +1,45 @@
+# Dependabot. Adopted after looking at rommapp/marketing-site, whose dependency
+# bumps are one-line merges while this repo had no automated updates at all and
+# now carries eight devDependencies plus four pinned actions.
+#
+# Two ecosystems, because the second is the one people forget: actions/checkout,
+# setup-node, upload-pages-artifact and deploy-pages are pinned to major tags
+# here and nothing was watching them.
+#
+# Weekly, not daily. This is a marketing site with a 19-second CI; a daily PR
+# for a transitive bump is noise that trains you to merge without reading, which
+# is the opposite of what a dependency gate is for.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    # The build is the only consumer. A patch bump to a linter cannot reach the
+    # published site, so those can land in a batch; anything that renders or
+    # bundles gets its own PR and its own `make ci` run.
+    groups:
+      linters:
+        patterns:
+          - "eslint*"
+          - "@eslint/*"
+          - "stylelint*"
+          - "html-validate"
+          - "globals"
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: build
+      include: scope
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: ci
+      include: scope
