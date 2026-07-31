@@ -5,10 +5,12 @@ name: build and deploy
 # first. What gets published is dist/ and only dist/, which is what retired the
 # subtractive `rm -rf docs bin scripts ...` step that used to stand between the
 # checkout and the artifact.
+# Every push is checked; only main publishes (see the deploy job's `if`).
+# Not branches:[main] -- that meant a runner first saw this code at the moment
+# it published it. Not workflow_dispatch either: GitHub only offers that for
+# workflows already on the default branch, and main has none.
 on:
   push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
 
 permissions:
