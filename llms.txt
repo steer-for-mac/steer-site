@@ -105,7 +105,7 @@ Steer is drivable from outside on standard macOS primitives, so a shell line, an
 
 ### URL scheme
 
-Seventeen route families. Fire and forget: they never block and never return an error. Always use `open -g` so focus is not stolen.
+Nineteen route families. Almost all are fire and forget: they never block and never return an error. The one exception is `snapshot/restore`, which changes configuration and therefore requires an explicit `confirm=true`; without it Steer opens Settings at History and lets the person decide. Always use `open -g` so focus is not stolen.
 
 ```
 open -g "steer://profile/<id>"            switch profile by id
@@ -120,21 +120,25 @@ open -g "steer://leds/mask/<hex>"         player LEDs individually, 00-1F, bit 0
 open -g "steer://micled/<off|on|pulse>"   mute-button LED
 open -g "steer://autoswitch/<on|off|toggle>"   per-app profile switching
 open -g "steer://pins/<suspend|resume|toggle>" pinned bindings
+open -g "steer://gridsnap/<zone>"         snap the front window to a screen zone
+open -g "steer://gridsnap[/<show|hide|toggle>]" open the aiming grid instead
 open -g "steer://daisy[/<show|hide|toggle>]"   on-screen keyboard
 open -g "steer://radial"                  radial app launcher
 open -g "steer://palette"                 menu palette
 open -g "steer://help[/<show|hide>]"      help overlay
 open -g "steer://settings[/<section>]"    open Settings at a pane
+open -g "steer://snapshot/capture"        take a configuration restore point
+open -g "steer://snapshot/restore/<uuid>?confirm=true"  roll configuration back
 open -g "steer://wizard"                  onboarding wizard
 open -g "steer://suggest"                 open the suggestions page
-open -g "steer://query/<state|profiles|macros>"  read back as JSON
+open -g "steer://query/<state|profiles|macros|snapshots>"  read back as JSON
 ```
 
 A `steer://debug/*` family exists in DEBUG builds only and is not part of the shipping surface.
 
 ### Reading state back
 
-`steer://query/state`, `query/profiles` and `query/macros` return JSON. Steer also exposes about twenty App Intents to Shortcuts, Siri and Spotlight, six of which read rather than write: current profile, connected controller, active layer, battery level, the binding on a given button, and full state. A Focus filter switches profile with your macOS Focus mode and restores the previous one when it ends.
+`steer://query/state`, `query/profiles`, `query/macros` and `query/snapshots` return JSON. Steer also exposes about thirty App Intents to Shortcuts, Siri and Spotlight, six of which read rather than write: current profile, connected controller, active layer, battery level, the binding on a given button, and full state. A Focus filter switches profile with your macOS Focus mode and restores the previous one when it ends.
 
 ### Listening
 
