@@ -1,0 +1,44 @@
+name: dependency health
+
+# Reports, never blocks. still_active 3.0.0.rc5 matches advisories by package
+# name without applying fixed_versions, so it calls brace-expansion 1.1.18
+# vulnerable against a fix of 1.1.17 while `npm audit` reports zero.
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+
+      # npm audit answers "is it vulnerable"; still_active answers "is anyone
+      # still there", which no npm tool reports. Both, because neither covers
+      # the other: 3 dependencies here are archived with zero advisories.
+      - name: Known vulnerabilities
+        run: npm audit --audit-level=moderate || true
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+      - run: gem install still_active --pre
+
+      # An SBOM rather than the Gemfile path: this is an npm project, and
+      # --sbom is what makes still_active cross-ecosystem.
+      - name: Dependency maintenance status
+        run: |
+          npx --yes @cyclonedx/cyclonedx-npm --output-file bom.json
+          {
+            echo "## Dependency health"
+            still_active --sbom=bom.json --markdown --alternatives
+          } >> "$GITHUB_STEP_SUMMARY"
