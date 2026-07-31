@@ -73,12 +73,22 @@
   --pa-mf-body:rgba(233,237,246,0.02); --pa-mf-bl:rgba(233,237,246,0.34);
   /* face-button letter type: the branded pads' A/B/X/Y, and the Switch's own
      tier (its buttons are r=14 rather than r=15.5, so its letters are a step
-     down). Lengths, not colours, so they are the two materials with no
-     @property registration: nothing animates or validates them, and a <length>
-     registration would need an initial-value duplicating the number here for
-     no gain. The laptop-window media query further down re-points these two
-     rather than re-selecting the glyphs, so the size is not in the name. */
-  --pa-letter:13px; --pa-letter-sw:12px;
+     down). Numbers, not colours, so they are the materials with no @property
+     registration: nothing animates or validates them, and a registration would
+     need an initial-value duplicating the number here for no gain. The
+     laptop-window media query further down re-points these rather than
+     re-selecting the glyphs, so the size is not in the name.
+
+     UNITLESS since the letters became HTML (they were `13px` as an SVG
+     font-size attribute, i.e. 13 viewBox units). A number can be turned into
+     both a viewBox unit and a container unit; a length can be turned into
+     neither, because CSS has no length-times-length. See the annotation
+     block below for the 1200-unit conversion.
+
+     -mf is deliberately not re-pointed by the laptop query, which is how the
+     plate was drawn: its letters were a fixed `12px` where xb and sw read the
+     property. Preserved rather than tidied; it predates this file. */
+  --pa-letter:13; --pa-letter-sw:12; --pa-letter-mf:12;
   position:relative;
   min-height:calc(100vh - 52px);  /* site nav above is 52px sticky */
   display:flex;flex-direction:column;align-items:center;
@@ -260,8 +270,12 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
 /* width scales with viewport height so the hero fits laptops, but never below
    a legible floor (~620px) — on very short windows the hero scrolls instead of
    shrinking the pad + callouts to unreadable. */
-.chero .stage{position:relative;z-index:4;width:min(960px,94vw,max(620px,calc((100dvh - 668px) * 2.72)));margin-top:0;display:grid;justify-self:center}
-.chero .padwrap{grid-area:1 / 1}
+/* container-type, because the annotation layer over each plate is HTML and has
+   to be sized in the plate's own units. The stage IS the plate's width (the
+   svg is width:100% of it), so 100cqw = the 1200-unit viewBox. It sits here
+   rather than on .padwrap so the four animated wraps take no containment. */
+.chero .stage{position:relative;z-index:4;width:min(960px,94vw,max(620px,calc((100dvh - 668px) * 2.72)));margin-top:0;display:grid;justify-self:center;container-type:inline-size}
+.chero .padwrap{grid-area:1 / 1;position:relative}
 .chero .padwrap svg{display:block;width:100%;height:auto;overflow:visible}
 .chero .padwrap{
   opacity:0;transform:scale(0.985) translateY(6px);
@@ -363,12 +377,65 @@ html[data-theme="lightoff"] .chero #tab-mf{--tc:#5C6675}
 @property --pa-mf-body{syntax:"<color>";inherits:true;initial-value:currentcolor}
 @property --pa-mf-bl{syntax:"<color>";inherits:true;initial-value:currentcolor}
 
-/* annotations */
-.chero .ann text{font-family:var(--mono);font-size:14px;letter-spacing:0.05em;fill:var(--ann)}
-.chero .ann .t{fill:var(--ink);letter-spacing:0.15em;font-size:13px}
-.chero .ann .t.x{fill:var(--accent-ink)}
+/* ══ annotations ═════════════════════════════════════════════════════════════
+   An annotation is two halves in two languages. The LEADER (dot + polyline)
+   is geometry and stays in the plate, because it points at a control and has
+   to be redrawn whenever the silhouette is. The TEXT is copy and is HTML,
+   emitted by _includes/macros/pad.njk from _data/pads.json. They share the
+   `ann dN` class, so one set of delays below staggers both halves together.
+
+   REGISTRATION. The plate is a 1200x440 viewBox drawn at width:100% of
+   .stage, so one viewBox unit is exactly 1/1200 of the stage's inline size.
+   Two conversions follow from that and both are exact, not tuned:
+     position  x / 1200 -> `calc(var(--x) / 12 * 1%)`   (% of the padwrap)
+     type      s / 1200 -> `calc(s * 1cqw / 12)`        (.stage is the container)
+   --y is the LABEL BASELINE in viewBox units, the same number the <text> used
+   to carry as y=. The body line sits 18 units under it, which is the rhythm
+   all four plates were drawn to, so it is written here once instead of in
+   every row of the data.
+
+   --asc is the one MEASURED number, and the only inexact thing here. An HTML
+   box is positioned by its top edge and SVG text by its baseline, so the box
+   is lifted by the font's ascent, in em so it tracks the type through both
+   breakpoints. There is no value that is right at every size: Chrome rounds a
+   line box's ascent to whole pixels, and these render at 6-11px, so the ideal
+   ratio drifts about 0.03 between the smallest and largest window (the same
+   SF Mono cap wants 0.786 at a 7.6px render and 0.817 at 10.4px). Each number
+   below is the minimiser over 1440x{700,900,1200}, measured by asking
+   getScreenCTM where the plate puts (x,y) and a zero-height baseline-aligned
+   probe where the span puts its baseline. Residual: under 0.2px on the
+   annotation text, under 0.4px on the face-button caps (two pads land on a
+   9.6px render, where the rounding goes furthest the wrong way), against SVG
+   text that was exact. That residual is the price of the move and is recorded
+   rather than hidden; scratch/anndiff.mjs re-measures every string's rendered
+   rect if you touch this. */
 .chero .ann polyline{stroke:var(--line);stroke-width:1;fill:none}
 .chero .ann circle{fill:var(--ink-2)}
+
+.chero .pad-ann{position:absolute;inset:0;pointer-events:none}
+.chero .pad-ann .t,.chero .pad-ann .tb,.chero .pad-ann .pl,.chero .pad-ann .pcap{
+  position:absolute;white-space:nowrap;line-height:1;
+  transform:translate(var(--ax,0),calc(var(--asc) * -1em));
+}
+.chero .pad-ann .t{top:calc(var(--y) / 4.4 * 1%)}
+.chero .pad-ann .tb{top:calc((var(--y) + 18) / 4.4 * 1%)}
+.chero .ann.l>*{left:26%;--ax:-100%}   /* right-aligned to the x=312 guide */
+.chero .ann.r>*{left:74%}              /* left-aligned to the x=888 guide */
+
+.chero .pad-ann .t,.chero .pad-ann .tb,.chero .pad-ann .pcap{font-family:var(--mono)}
+.chero .pad-ann .tb{font-size:calc(14cqw / 12);letter-spacing:0.05em;color:var(--ann);--asc:0.836}
+.chero .pad-ann .t{font-size:calc(13cqw / 12);letter-spacing:0.15em;color:var(--ink);--asc:0.8}
+.chero .pad-ann .t.x{color:var(--accent-ink)}
+
+/* face-button caps and the mf plate's own label: part of the drawing, so they
+   do not fade in with the callouts and are out of the a11y tree. */
+.chero .pad-ann .pl,.chero .pad-ann .pcap{top:calc(var(--y) / 4.4 * 1%);left:calc(var(--x) / 12 * 1%);--ax:-50%}
+.chero .pad-ann .pcap{font-size:calc(11cqw / 12);letter-spacing:0.18em;color:var(--ann);--asc:0.787}
+.chero .pad-ann .pl{font-family:var(--sans);font-weight:600;color:var(--c);--asc:0.85}
+.chero .padwrap.xb .pad-glyph{font-size:calc(var(--pa-letter) * 1cqw / 12)}
+.chero .padwrap.xb .pad-glyph .pl{font-weight:700;opacity:0.95}
+.chero .padwrap.sw .pad-glyph{font-size:calc(var(--pa-letter-sw) * 1cqw / 12)}
+.chero .padwrap.mf .pad-glyph{font-size:calc(var(--pa-letter-mf) * 1cqw / 12)}
 .chero .padwrap .ann{opacity:0}
 .chero .padwrap.active .ann{animation:chero-fadeIn 0.7s ease-out forwards}
 .chero .padwrap.active .ann.d1{animation-delay:0.55s}
@@ -458,11 +525,11 @@ html.still .chero .pool{opacity:var(--poolO)}
    fits the fold, which would render the 12px in-SVG annotations at ~6-7px —
    scale the annotation type up to compensate (gutters have the room) */
 @media (min-width:900px) and (min-height:761px) and (max-height:990px){
-  .chero .ann text{font-size:15px}
-  .chero .ann .t{font-size:14.5px}
+  .chero .pad-ann .tb{font-size:calc(15cqw / 12)}
+  .chero .pad-ann .t{font-size:calc(14.5cqw / 12)}
   /* the face-button letters scale with them, but through the property the
      glyphs already read rather than by re-selecting them */
-  .chero{--pa-letter:16px;--pa-letter-sw:15px}
+  .chero{--pa-letter:16;--pa-letter-sw:15}
 }
 @media (max-width:899px),(min-width:900px) and (max-height:760px){
   .chero .ann{display:none}

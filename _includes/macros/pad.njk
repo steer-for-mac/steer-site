@@ -1,0 +1,42 @@
+{#- Every string the hero controller art used to carry inside its SVG.
+
+    _includes/art/hero-pad-*.svg is geometry now: silhouette, controls, and the
+    leader dot + polyline for each callout. The prose, the face-button caps and
+    the plate's alt text come from _data/pads.json through these two macros, so
+    redrawing a controller costs polylines and not a word of copy. The prose is
+    also written ONCE there rather than four times: a left stick moves the
+    cursor whichever pad it is on.
+
+    Registration with the drawing is exact, not eyeballed; styles/bands/hero.css
+    explains how (--x / --y are viewBox units, 1200x440).
+
+    face() emits NO whitespace between the .face-slot children. They are
+    display:block boxes and only one is shown at a time, but a text node between
+    two of them is still a rendered space. -#}
+
+{% macro overlay(id) %}{% set p = pads.pads[id] %}
+    <div class="pad-ann">
+      {%- for c in p.callouts %}{% set t = pads.copy[c.key] %}
+      <div class="ann d{{ c.seq }} {{ c.side }}" style="--y:{{ c.y }}"><span class="t{% if t.accent %} x{% endif %}">{{ t.label }}</span><span class="tb">{{ t.body }}</span></div>
+      {%- endfor %}
+    </div>
+    {%- if p.letters or p.plateLabel %}
+    <!-- part of the drawing, not of the reading: hidden from the a11y tree the
+         same way the SVG that used to hold these glyphs is. -->
+    <div class="pad-ann pad-glyph" aria-hidden="true">
+      {%- if p.plateLabel %}
+      <span class="pcap" style="--x:{{ p.plateLabel.x }};--y:{{ p.plateLabel.y }}">{{ p.plateLabel.text }}</span>
+      {%- endif %}
+      {%- for role, l in p.letters %}
+      <span class="pl" style="--x:{{ l.x }};--y:{{ l.y }};--c:var({{ l.plate }})">{{ l.letter }}</span>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+{% endmacro %}
+
+{#- The three lettered variants of one .face-slot glyph. The PlayStation glyph
+    is a drawn shape and stays in its own art file; the caller includes it, then
+    calls this for the rest. home.js used to build all four by concatenating SVG
+    strings, which put four letters and four colours in a second place and hid
+    them from html-validate, stylelint and PurgeCSS at once. -#}
+{% macro face(role) %}{% for id in ["xb", "sw", "mf"] %}{% set l = pads.pads[id].letters[role] %}<svg class="face fl f-{{ id }}" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="var({{ l.glyph }})" stroke-width="1.5" opacity="0.9"/><text x="13" y="17.2" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="var({{ l.glyph }})">{{ l.letter }}</text></svg>{% endfor %}{% endmacro %}

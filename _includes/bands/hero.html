@@ -1,3 +1,7 @@
+{# `with context`: Nunjucks macros are imported into an EMPTY context, so
+   without it _data/pads.json is not visible inside them and every loop below
+   renders nothing at all, silently. #}
+{% import "macros/pad.njk" as pad with context %}
 <!-- HERO — trimodal controller-picker (PS / Xbox / Switch Pro).
      Namespaced .chero: its CSS is styles/bands/hero.css, its JS the appended IIFE in
      the bottom <script>. Theme follows the site's html[data-theme]; deep links:
@@ -33,30 +37,51 @@
          markup is one a <use> clone still gets. -->
     {% include "art/hero-defs.svg" %}
 
+    <!-- ACCESSIBILITY. Each pad is a drawing plus a set of written callouts,
+         and they are now two different things to a screen reader, because the
+         callouts are real text.
+
+         .padwrap used to be role="img" with an aria-label that spelled out
+         every annotation, the SVG aria-hidden beneath it. That is the correct
+         pattern for a picture whose meaning is only in the picture, and it was
+         right while the words lived inside the SVG. It is wrong the moment the
+         words are in the DOM: the label and the text would each be announced,
+         so every callout would be read twice.
+
+         So the role and the label moved DOWN onto .plate, and shrank to what
+         only the drawing says (which controller this is). The annotations sit
+         outside it as text. The four pads are still swapped by the picker;
+         home.js keeps toggling aria-hidden on .padwrap, and the inactive three
+         are visibility:hidden, so only the chosen pad is ever in the tree.
+         Below 900px the annotations are display:none and the .features chips
+         take over, which is also the width where the old aria-label duplicated
+         those chips. Alt text is per pad, so it lives in _data/pads.json with
+         the rest of the per-pad copy. -->
+
     <!-- ═══════════ PLAYSTATION · DualSense ═══════════ -->
-    <div class="padwrap ps active" role="img"
-         aria-label="Stylized DualSense controller, its controls mapped to Mac inputs, light bar glowing, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, plus triggers that can push back once you turn them on, touchpad gestures, tilt to point, and a quiet buzz for the moments that earn it">
-      {% include "art/hero-pad-ps.svg" %}
+    <div class="padwrap ps active">
+      <div class="plate" role="img" aria-label="{{ pads.pads.ps.alt }}">{% include "art/hero-pad-ps.svg" %}</div>
+      {{ pad.overlay("ps") }}
     </div>
 
     <!-- ═══════════ XBOX ═══════════ -->
-    <div class="padwrap xb" role="img"
-         aria-label="Stylized Xbox controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, arrow buttons, and a quiet buzz">
-      {% include "art/hero-pad-xb.svg" %}
+    <div class="padwrap xb">
+      <div class="plate" role="img" aria-label="{{ pads.pads.xb.alt }}">{% include "art/hero-pad-xb.svg" %}</div>
+      {{ pad.overlay("xb") }}
     </div>
 
     <!-- ═══════════ NINTENDO · Switch Pro ═══════════ -->
-    <div class="padwrap sw" role="img"
-         aria-label="Stylized Switch Pro controller, its controls mapped to Mac inputs, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, plus tilt to point and a quiet buzz">
-      {% include "art/hero-pad-sw.svg" %}
+    <div class="padwrap sw">
+      <div class="plate" role="img" aria-label="{{ pads.pads.sw.alt }}">{% include "art/hero-pad-sw.svg" %}</div>
+      {{ pad.overlay("sw") }}
     </div>
 
     <!-- ═══════════ & OTHERS · any MFi-certified pad ═══════════
          A schematic outline, not a fourth product render: no brand, no extras,
          Apple's own A/B/X/Y naming. Callouts reduced to the honest core. -->
-    <div class="padwrap mf" role="img"
-         aria-label="Outline of a generic controller standing in for most other controllers that pair with a Mac, annotated: left stick moves the Mac cursor, right stick scrolls, every button takes any keyboard shortcut, hold one button and the others change, the arrow buttons take volume and skip, and a tap and a hold on the same button can do two different jobs">
-      {% include "art/hero-pad-mf.svg" %}
+    <div class="padwrap mf">
+      <div class="plate" role="img" aria-label="{{ pads.pads.mf.alt }}">{% include "art/hero-pad-mf.svg" %}</div>
+      {{ pad.overlay("mf") }}
     </div>
   </div>
 
@@ -107,7 +132,7 @@
           <span class="vg-tile">{% include "art/hero-play.svg" %}{% include "art/hero-pause.svg" %}<i class="tring"></i></span>
           <span class="vg-cursor">{% include "art/hero-cursor.svg" %}<i class="vg-click"></i></span>
         </div>
-        <span class="vg-facewrap"><span class="face-slot" data-b="cross">{% include "art/hero-face-cross.svg" %}</span></span>
+        <span class="vg-facewrap"><span class="face-slot" data-b="cross">{% include "art/hero-face-cross.svg" %}{{ pad.face("cross") }}</span></span>
       </div>
       <p class="cap">The stick is the mouse. Press <span class="only-ps">Cross</span><span class="only-xb">A</span><span class="only-sw">B</span><span class="only-mf">A</span> to click.</p>
     </div>

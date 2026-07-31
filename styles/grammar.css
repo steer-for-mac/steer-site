@@ -454,3 +454,27 @@ main > section:not(.feel-cinema) > .wrap:not(.center) > .eyebrow::after{
 .sec-loose{padding:96px 0}
 
 .sec-tight{padding:52px 0}
+
+/* ══ .face-slot: the controller glyph, in the reader's own controller ═════════
+   Used by the hero's vignette and by the capabilities layers figure, which is
+   why it is here and not in either band's sheet.
+
+   All four variants ship as markup and the pad selection picks one. They used
+   to be built by home.js concatenating an SVG string per pad, which put four
+   letters and four colours in a second place (the plates held the first) and
+   hid the markup from html-validate, stylelint and PurgeCSS at the same time.
+   The letters and their colours now come from _data/pads.json through
+   _includes/macros/pad.njk, once.
+
+   The PlayStation glyph is a drawn shape, so it stays in its own art file and
+   is the no-JS default: with scripting off <html> carries no data-pad, and
+   what a reader gets is the pad the rest of the page defaults to. display is
+   set back to block rather than to `revert`, because block is what
+   shared.css's .face asks for. */
+.face-slot .fl{display:none}
+html[data-pad="xb"] .face-slot .f-xb,
+html[data-pad="sw"] .face-slot .f-sw,
+html[data-pad="mf"] .face-slot .f-mf{display:block}
+html[data-pad="xb"] .face-slot > .face:not(.fl),
+html[data-pad="sw"] .face-slot > .face:not(.fl),
+html[data-pad="mf"] .face-slot > .face:not(.fl){display:none}

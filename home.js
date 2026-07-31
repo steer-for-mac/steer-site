@@ -51,41 +51,20 @@
     });
   });
 })();
-// face-button glyphs + pad-aware re-labelling. The markup ships the default
-// PlayStation glyph inline so the vignettes still state their claim with JS
-// disabled (a design-rules non-negotiable); render() overwrites it on load and
-// on every pad change, so the JS remains the single source of truth. The hero picker owns the pad
-// state (html[data-pad], via the 'steerpad' event); every vignette glyph and
-// key/mech label follows it, mapped by POSITION so the muscle-memory claim
-// stays true: bottom = Cross/A/B, right = Circle/B/A, etc. Switch and MFi
-// letters go neutral (Switch Pro caps are unlabelled grey; MFi uses Apple's
-// A/B/X/Y naming from the GameController framework). Mac-side surfaces
-// (timeline clips, scene thumbs) keep their palette — they're UI, not buttons.
+// pad-aware re-labelling. The hero picker owns the pad state (html[data-pad],
+// via the 'steerpad' event); every vignette label and drawn plate follows it.
+//
+// The face-button GLYPHS are no longer built here. This function used to
+// assemble an <svg> per slot by concatenating strings, which meant the four
+// letters and their four colours existed twice (the hero plates held the other
+// copy) and that none of the markup was visible to html-validate, stylelint or
+// PurgeCSS. All four variants are markup now, from _data/pads.json through
+// _includes/macros/pad.njk, and CSS in styles/grammar.css picks one. The
+// mapping they encode is unchanged and still by POSITION, so the muscle-memory
+// claim stays true: bottom = Cross/A/B, right = Circle/B/A, etc. Mac-side
+// surfaces (timeline clips, scene thumbs) keep their palette, they're UI.
 (function(){
-  var C={cross:'--ps-cross',circle:'--ps-circle',triangle:'--ps-triangle',square:'--ps-square'};
-  // per-pad letter + colour for each PS-role position
-  var LET={
-    xb:{cross:['A','var(--ps-triangle)'],circle:['B','var(--ps-circle)'],square:['X','var(--ps-cross)'],triangle:['Y','var(--yellow)']},
-    sw:{cross:['B','var(--text-2)'],circle:['A','var(--text-2)'],square:['Y','var(--text-2)'],triangle:['X','var(--text-2)']},
-    mf:{cross:['A','var(--text-2)'],circle:['B','var(--text-2)'],square:['X','var(--text-2)'],triangle:['Y','var(--text-2)']}
-  };
-  function glyph(kind,pad){
-    if(LET[pad]){
-      var l=LET[pad][kind];
-      return '<svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="'+l[1]+'" stroke-width="1.5" opacity="0.9"/>'+
-        '<text x="13" y="17.2" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11.5" font-weight="600" fill="'+l[1]+'">'+l[0]+'</text></svg>';
-    }
-    var c='var('+C[kind]+')';
-    var inner={
-      cross:'<path d="M9 9l8 8M17 9l-8 8" stroke="'+c+'" stroke-width="1.7" stroke-linecap="round"/>',
-      circle:'<circle cx="13" cy="13" r="4.6" stroke="'+c+'" stroke-width="1.7"/>',
-      triangle:'<path d="M13 7.6l5.4 9.4H7.6z" stroke="'+c+'" stroke-width="1.7" stroke-linejoin="round" fill="none"/>',
-      square:'<rect x="8.4" y="8.4" width="9.2" height="9.2" rx="1.4" stroke="'+c+'" stroke-width="1.7"/>'
-    }[kind];
-    return '<svg class="face" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11.7" stroke="'+c+'" stroke-width="1.5" opacity="0.9"/>'+inner+'</svg>';
-  }
   function render(pad){
-    document.querySelectorAll('.face-slot').forEach(function(s){s.innerHTML=glyph(s.dataset.b,pad);});
     // the drawn plates carry the pad too: a single fixed symbol meant every
     // pick rendered the same generic controller.
     document.querySelectorAll('use.padart').forEach(function(u){u.setAttribute('href','assets/svg/pad-art-'+pad+'.svg#s');});

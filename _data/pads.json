@@ -1,0 +1,112 @@
+{
+  "_readme": [
+    "Everything about a hero controller EXCEPT its silhouette. The four plates in",
+    "_includes/art/hero-pad-*.svg are geometry only; they carry no <text>, so the",
+    "art can be redrawn or swapped without re-embedding a word of copy.",
+    "Consumed by _includes/bands/hero.html (annotations, face-button letters,",
+    "plate alt text) and _includes/bands/capabilities.html (face-slot glyphs).",
+    "",
+    "copy   : the annotation prose, written ONCE. A left stick moves the cursor",
+    "         whichever controller it is on, so the same entry is cited by all",
+    "         four pads instead of being duplicated four times. accent:true is",
+    "         the '+ ' software-extra treatment (--accent-ink), and it belongs to",
+    "         the string, not to the pad that shows it.",
+    "callouts: side l|r picks the layout guide (x=312 right-aligned, x=888",
+    "         left-aligned); y is the LABEL baseline in viewBox units, the body",
+    "         line sits 18 below it. seq is the fade-in order, d1..d8, and it is",
+    "         not always the reading order (see mf).",
+    "letters: face-button caps, keyed by the PlayStation glyph in the same",
+    "         POSITION, which is how home.js maps them too. x/y are the baseline",
+    "         in viewBox units. plate is the tint on the drawn pad (muted studio",
+    "         paint); glyph is the tint on the 26px .face-slot icon (the site's",
+    "         saturated tokens). They are different colours on purpose: two",
+    "         surfaces, two palettes, one letter."
+  ],
+
+  "copy": {
+    "holdOne":      { "label": "HOLD ONE BUTTON", "body": "like Shift: every other button changes" },
+    "leftStick":    { "label": "LEFT STICK",      "body": "moves the cursor, smooth and steady" },
+    "rightStick":   { "label": "RIGHT STICK",     "body": "scrolls the page, at your speed" },
+    "everyButton":  { "label": "EVERY BUTTON",    "body": "any shortcut, app, or saved task" },
+    "arrowButtons": { "label": "ARROW BUTTONS",   "body": "volume, skip, anything you choose" },
+    "quietBuzz":    { "label": "A QUIET BUZZ",    "body": "at the volume ceiling, and as you flip through apps" },
+    "twoButtons":   { "label": "TWO BUTTONS",     "body": "press two at once: one more job" },
+    "tapOrHold":    { "label": "TAP OR HOLD",     "body": "two jobs on the same button" },
+    "firmTriggers": { "label": "+ FIRM TRIGGERS", "body": "turn them on and they push back", "accent": true },
+    "touchpad":     { "label": "+ TOUCHPAD",      "body": "taps and gestures, like a trackpad", "accent": true },
+    "tilt":         { "label": "+ TILT TO POINT", "body": "aim by moving your hands, not a stick", "accent": true }
+  },
+
+  "pads": {
+    "ps": {
+      "alt": "Stylized DualSense controller, its controls mapped to Mac inputs, light bar glowing",
+      "callouts": [
+        { "key": "firmTriggers", "seq": 1, "side": "l", "y": 60 },
+        { "key": "touchpad",     "seq": 2, "side": "l", "y": 160 },
+        { "key": "leftStick",    "seq": 3, "side": "l", "y": 260 },
+        { "key": "tilt",         "seq": 4, "side": "l", "y": 360 },
+        { "key": "holdOne",      "seq": 5, "side": "r", "y": 60 },
+        { "key": "everyButton",  "seq": 6, "side": "r", "y": 160 },
+        { "key": "rightStick",   "seq": 7, "side": "r", "y": 260 },
+        { "key": "quietBuzz",    "seq": 8, "side": "r", "y": 360 }
+      ]
+    },
+
+    "xb": {
+      "alt": "Stylized Xbox controller, its controls mapped to Mac inputs",
+      "callouts": [
+        { "key": "holdOne",      "seq": 1, "side": "l", "y": 110 },
+        { "key": "leftStick",    "seq": 2, "side": "l", "y": 210 },
+        { "key": "arrowButtons", "seq": 3, "side": "l", "y": 310 },
+        { "key": "everyButton",  "seq": 4, "side": "r", "y": 60 },
+        { "key": "twoButtons",   "seq": 5, "side": "r", "y": 160 },
+        { "key": "rightStick",   "seq": 6, "side": "r", "y": 260 },
+        { "key": "quietBuzz",    "seq": 7, "side": "r", "y": 360 }
+      ],
+      "letters": {
+        "triangle": { "letter": "Y", "x": 728, "y": 118.5, "plate": "--pa-y", "glyph": "--yellow" },
+        "circle": { "letter": "B", "x": 764, "y": 154.5, "plate": "--pa-b", "glyph": "--ps-circle" },
+        "cross": { "letter": "A", "x": 728, "y": 190.5, "plate": "--pa-a", "glyph": "--ps-triangle" },
+        "square": { "letter": "X", "x": 692, "y": 154.5, "plate": "--pa-x", "glyph": "--ps-cross" }
+      }
+    },
+
+    "sw": {
+      "alt": "Stylized Switch Pro controller, its controls mapped to Mac inputs",
+      "callouts": [
+        { "key": "holdOne",      "seq": 1, "side": "l", "y": 60 },
+        { "key": "leftStick",    "seq": 2, "side": "l", "y": 160 },
+        { "key": "arrowButtons", "seq": 3, "side": "l", "y": 260 },
+        { "key": "tilt",         "seq": 4, "side": "l", "y": 360 },
+        { "key": "everyButton",  "seq": 5, "side": "r", "y": 110 },
+        { "key": "rightStick",   "seq": 6, "side": "r", "y": 210 },
+        { "key": "quietBuzz",    "seq": 7, "side": "r", "y": 310 }
+      ],
+      "letters": {
+        "triangle": { "letter": "X", "x": 726, "y": 116.5, "plate": "--pa-sw", "glyph": "--text-2" },
+        "circle": { "letter": "A", "x": 762, "y": 152.5, "plate": "--pa-sw", "glyph": "--text-2" },
+        "cross": { "letter": "B", "x": 726, "y": 188.5, "plate": "--pa-sw", "glyph": "--text-2" },
+        "square": { "letter": "Y", "x": 690, "y": 152.5, "plate": "--pa-sw", "glyph": "--text-2" }
+      }
+    },
+
+    "mf": {
+      "alt": "Outline of a generic controller standing in for most other controllers that pair with a Mac",
+      "plateLabel": { "text": "OTHER CONTROLLERS", "x": 600, "y": 188 },
+      "callouts": [
+        { "key": "holdOne",      "seq": 1, "side": "l", "y": 110 },
+        { "key": "leftStick",    "seq": 2, "side": "l", "y": 210 },
+        { "key": "arrowButtons", "seq": 5, "side": "l", "y": 310 },
+        { "key": "everyButton",  "seq": 3, "side": "r", "y": 110 },
+        { "key": "tapOrHold",    "seq": 6, "side": "r", "y": 210 },
+        { "key": "rightStick",   "seq": 4, "side": "r", "y": 310 }
+      ],
+      "letters": {
+        "triangle": { "letter": "Y", "x": 728, "y": 118.5, "plate": "--pa-mf-bl", "glyph": "--text-2" },
+        "circle": { "letter": "B", "x": 764, "y": 154.5, "plate": "--pa-mf-bl", "glyph": "--text-2" },
+        "cross": { "letter": "A", "x": 728, "y": 190.5, "plate": "--pa-mf-bl", "glyph": "--text-2" },
+        "square": { "letter": "X", "x": 692, "y": 154.5, "plate": "--pa-mf-bl", "glyph": "--text-2" }
+      }
+    }
+  }
+}

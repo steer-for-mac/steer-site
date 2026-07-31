@@ -1,3 +1,7 @@
+{# `with context`: Nunjucks macros are imported into an EMPTY context, so
+   without it _data/pads.json is not visible inside them and every loop below
+   renders nothing at all, silently. #}
+{% import "macros/pad.njk" as pad with context %}
 <!-- CAPABILITIES — one tight summary list + the layers idea, stated once,
      illustrated by the desk layer-shift vignette. Screenshots are the proof. -->
 <section class="sec" id="capabilities">
@@ -66,19 +70,19 @@
         </div>
         <div class="lay-rows">
           <div class="lay-row">
-            <span class="face-slot" data-b="cross">{% include "art/capabilities-face-cross.svg" %}</span>
+            <span class="face-slot" data-b="cross">{% include "art/capabilities-face-cross.svg" %}{{ pad.face("cross") }}</span>
             <span class="lay-a">Click</span><span class="lay-arrow">→</span><span class="lay-b">Fullscreen</span>
           </div>
           <div class="lay-row">
-            <span class="face-slot" data-b="circle">{% include "art/capabilities-face-circle.svg" %}</span>
+            <span class="face-slot" data-b="circle">{% include "art/capabilities-face-circle.svg" %}{{ pad.face("circle") }}</span>
             <span class="lay-a">Right-click</span><span class="lay-arrow">→</span><span class="lay-b">Close tab</span>
           </div>
           <div class="lay-row">
-            <span class="face-slot" data-b="triangle">{% include "art/capabilities-face-triangle.svg" %}</span>
+            <span class="face-slot" data-b="triangle">{% include "art/capabilities-face-triangle.svg" %}{{ pad.face("triangle") }}</span>
             <span class="lay-a">Enter</span><span class="lay-arrow">→</span><span class="lay-b">Dictation</span>
           </div>
           <div class="lay-row">
-            <span class="face-slot" data-b="square">{% include "art/capabilities-face-square.svg" %}</span>
+            <span class="face-slot" data-b="square">{% include "art/capabilities-face-square.svg" %}{{ pad.face("square") }}</span>
             <span class="lay-a">Esc</span><span class="lay-arrow">→</span><span class="lay-b">Mute</span>
           </div>
         </div>
