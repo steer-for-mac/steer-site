@@ -66,35 +66,11 @@ jobs:
           node scripts/curb-check.mjs
           node scripts/curb-check.mjs --self-test
 
-      # CHROME_PATH lets shots/cssdiff/axe-check share this browser.
       - name: Install browsers
-        run: |
-          npx playwright install --with-deps
-          echo "CHROME_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())")" >> "$GITHUB_ENV"
+        run: npx playwright install --with-deps
 
-      # Behaviour, not markup: the only step here that presses a button. It
-      # starts its own static server (see playwright.config.js), so it belongs
-      # above the container step rather than depending on nginx.
-      - name: Behaviour (theme toggle, controller picker)
+      - name: Behaviour, accessibility and layout (Playwright)
         run: npx playwright test
-
-      # `make a11y`, not the node command: the Makefile is where a task is
-      # defined. Runs its own in-process server, so it goes above the Serve step
-      # rather than needing the container. axe-core over WCAG 2 A/AA, ~7s.
-      - name: Accessibility (axe-core)
-        run: make a11y
-
-      # Serve with the same nginx config that runs locally, and drive it with a
-      # browser on the runner. Chrome inside the image would be a 958MB build
-      # for no gain: the checks need a browser, not a container, and pointing
-      # them at nginx is what actually exercises try_files and the MIME types.
-      - name: Serve
-        run: docker compose up -d --wait
-
-      - name: Render every band
-        env:
-          BASE_URL: http://127.0.0.1:8391
-        run: node scripts/shots.mjs --out /tmp/ci-shots
 
       - name: Unreachable CSS
         run: scripts/purge-check

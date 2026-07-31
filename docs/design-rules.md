@@ -300,9 +300,9 @@ Two things that will waste your time otherwise:
   same `try_files` behaviour Pages gives you. A plain static server is not an
   equivalent fallback, which is why `bin/serve` was removed: it had no
   `try_files`, so `/buy` 404'd locally and worked everywhere else.
-  `scripts/shots.mjs` runs its own throwaway server in-process, which is the one
-  justified exception: a screenshot gate has to be self-contained rather than
-  needing a container up first.
+  The Playwright suite starts its own static server instead, which is the one
+  justified exception: a gate has to be self-contained rather than needing a
+  container up first. It is `serve`, not nginx, so it has no `try_files`.
 
 ## Before you call it done
 
@@ -313,13 +313,12 @@ Two things that will waste your time otherwise:
   answers "is this rule reachable" by scanning `home.js` as well as the markup.
   A hand-written reachability check over-reported by an order of magnitude and
   would have deleted live styles if trusted.
-- Run `make build`, then `node scripts/shots.mjs`. It renders every section at 1440 and 375 into
-  `scratch/shots/`, and reports horizontal overflow at 1440/768/375 on the way
-  past, so the three by-eye checks below get looked at rather than remembered.
-  `--pad xb` and `--theme dark` drive the gates the page hides behind an
-  attribute; `--only feel,pricing` while iterating. It drives Chrome's headless
-  shell over CDP with Node's own WebSocket, so it stays dependency-free like
-  curb-check.mjs.
+- Run `make shots`. It renders every section at 1440 and 375 into
+  `scratch/shots/`, so the by-eye checks below get looked at rather than
+  remembered. `SHOTS_PAD=xb` and `SHOTS_THEME=dark` drive the gates the page
+  hides behind an attribute; `SHOTS_PAGE` picks a page other than the homepage.
+  Horizontal overflow is not its job: `tests/layout.spec.js` gates that on every
+  page at 1440/768/375 in both engines, and `make ci` runs it.
 - Run `node scripts/curb-check.mjs`. It mechanizes the copy and value-drift
   rules that were enforced by eye: em/en-dashes, AI clichés, and emoji in
   *visible* copy (text nodes + alt/title/aria-label + meta descriptions, never

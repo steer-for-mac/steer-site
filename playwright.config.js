@@ -19,7 +19,9 @@ export default defineConfig({
   },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "webkit", use: { ...devices["Desktop Safari"] } },
+    // axe reads the computed cascade and the accessibility tree, so a second
+    // engine reports the same violation twice rather than finding new ones.
+    { name: "webkit", use: { ...devices["Desktop Safari"] }, testIgnore: /a11y\.spec\.js/ },
   ],
 
   // Serves dist/, not the working tree: <use href="assets/svg/...#s"> is

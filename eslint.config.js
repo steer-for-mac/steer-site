@@ -66,7 +66,7 @@ export default defineConfig([
   // Specs really are both environments: the body is Node, and the callbacks
   // passed to page.evaluate() run in the browser.
   {
-    files: ["tests/**/*.spec.js"],
+    files: ["tests/**/*.spec.js", "tools/**/*.spec.js"],
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
       sourceType: "module",

@@ -113,7 +113,7 @@ function bundle(entry, out) {
   // nothing else in the sheet downlevels at that target. color-mix() taking
   // var() cannot resolve statically and is left alone, @layer is untouched,
   // and corner-shape:squircle survives as the progressive enhancement it is.
-  // Verify with scripts/cssdiff.mjs if you move it.
+  // Diff the computed styles before and after if you move it.
   execFileSync(resolve(ROOT, "node_modules/.bin/lightningcss"),
     ["--bundle", "--minify", "--targets", "safari >= 15, chrome >= 100, firefox >= 100",
       `styles/${entry}`, "-o", out],

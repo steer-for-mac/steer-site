@@ -19,9 +19,8 @@ up: build ## Serve dist/ on https://steer.seanfloyd.dev.local (nginx, matches pr
 down: ## Stop the container
 	docker compose down
 
-ci: build ## Every check, against the real nginx container
-	docker compose up -d --wait
-	BASE_URL=http://127.0.0.1:$(SITE_PORT) scripts/ci
+ci: build ## Every check
+	scripts/ci
 
 ci-quick: ## Skip the rendering checks (no container needed)
 	scripts/ci --quick
@@ -46,8 +45,8 @@ lint-py: ## ruff over every Python gate (found by shebang, not a hand-kept list)
 
 # axe-core, not Lighthouse: that category IS axe-core plus a page load, at
 # 2m15s against 7s. A two-minute per-commit step stops being run.
-a11y: ## axe-core (WCAG 2 A/AA) over every page in dist/
-	node scripts/axe-check.mjs
+a11y: build ## axe-core (WCAG 2 A/AA) over every page in dist/, both themes
+	npx playwright test tests/a11y.spec.js
 
 contrast: ## Every token colour pair clears AA on the darkest surface it can land on
 	node scripts/contrast.mjs
@@ -60,8 +59,8 @@ types: ## tsc --noEmit over every script and gate
 e2e: build ## Playwright: drive the theme toggle and the controller picker
 	npx playwright test
 
-shots: build ## Render every band at 1440 and 375 into scratch/shots/
-	node scripts/shots.mjs
+shots: build ## Render every section at 1440 and 375 into scratch/shots/
+	npx playwright test -c playwright.tools.config.js
 
 lighthouse: up ## Lighthouse gate (slow, pre-deploy rather than per-commit)
 	scripts/lighthouse --url http://127.0.0.1:$(SITE_PORT)/ --url http://127.0.0.1:$(SITE_PORT)/features --min 95

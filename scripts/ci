@@ -3,17 +3,17 @@
 
     make ci           all checks (the documented entry point)
     scripts/ci        the same, without the container `make ci` brings up
-    scripts/ci --quick    skip the slow rendering checks
+    scripts/ci --quick    skip the slow checks
 
 Same shape as ../seanfloyd.dev/bin/ci and ../news-digest: steps run
 concurrently, output is printed per step in a stable order, exit is non-zero if
 any step fails. Nothing here needs installing; it is all stdlib plus the repo's
 own dependency-free scripts.
 
-The rendering checks are the ones that actually catch things. curb-check reads
-the source, but the shots gate is what notices a band overflowing at 375, and
-dead-css is what noticed the FAQ moving to a page that never loaded its
-stylesheet. A check that only reads source would have passed both.
+The checks that drive a browser are the ones that actually catch things.
+curb-check reads the source, but the Playwright step is what notices a band
+overflowing at 375, and dead-css is what noticed the FAQ moving to a page that
+never loaded its stylesheet. A check that only reads source passed both.
 """
 import subprocess
 import sys
@@ -31,14 +31,9 @@ QUICK = "--quick" in sys.argv
 BUILD = ["npx", "eleventy"]
 
 STEPS = [
+    # A static parse, no browser. It cannot see what axe sees in the Playwright
+    # step below, or the other way round, so both earn their place.
     ("A11y: structural invariants", ["scripts/a11y-check"], False),
-    # `make a11y`, not the node command, for the same reason as the two below:
-    # the Makefile is where a task is defined. This is the gate that reads the
-    # rendered page -- scripts/a11y-check above is a static parse and cannot see
-    # a heading that skips a level relative to the footer, or a link told apart
-    # from its paragraph by colour alone. Both of those were live on the shipped
-    # site while every check here passed.
-    ("A11y: axe-core, WCAG 2 A/AA, every page", ["make", "a11y"], False),
     # `make lint-html`, not the html-validate command, for the reason below.
     # It grades the BUILT pages, which is why the eight rules the old
     # fragment config had to switch off are on again.
@@ -77,15 +72,13 @@ STEPS = [
     # eleventy concurrently with the gates reading dist/ -- home.css was
     # observed at zero length mid-write when this step was first added.
     #
-    # Not marked slow: --quick means "skip the slow RENDERING checks", and the
-    # whole suite is 1.7s. Excluding it would leave --quick with no behavioural
-    # gate at all, which is the one thing this list was missing.
-    ("Behaviour: theme toggle and controller picker (Playwright)",
+    # Not marked slow: excluding it would leave --quick with no gate that opens
+    # a browser, which is the one thing this list was missing.
+    ("Behaviour, accessibility and layout (Playwright)",
      ["npx", "playwright", "test"], False),
     ("Types: tsc --noEmit over the scripts and gates", ["npx", "tsc"], False),
     ("Curb: copy and design rules", ["node", "scripts/curb-check.mjs"], False),
     ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.mjs", "--self-test"], False),
-    ("Render: every band, 1440 and 375, no overflow", ["node", "scripts/shots.mjs", "--out", "scratch/shots/ci"], True),
     # PurgeCSS rather than the hand-rolled scripts/dead-css.mjs: it scans home.js
     # as well as the markup, so a class the script applies at runtime is found
     # instead of needing a hand-maintained exemption list. The hand-rolled one
