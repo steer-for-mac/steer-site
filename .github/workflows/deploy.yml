@@ -95,15 +95,17 @@ jobs:
           node scripts/curb-check.mjs
           node scripts/curb-check.mjs --self-test
 
-      - name: Install headless Chrome
-        run: npx --yes @puppeteer/browsers install chrome-headless-shell@stable --path "$HOME/.cache/puppeteer"
-
-      # Playwright brings its own browser build and will not use the one above;
-      # scripts/shots.mjs and scripts/axe-check.mjs still use that one, so both
-      # installs are needed until those two move over too. `--with-deps` pulls
-      # the shared libraries the runner image lacks.
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium webkit
+      # One browser install, not two. No names: the config decides which engines
+      # exist, and a list here rots the moment a project is added -- which it
+      # just did, costing a run. CHROME_PATH then points the three CDP scripts
+      # at the same binary, so @puppeteer/browsers is gone: they each carried
+      # their own copy of the platform paths and had drifted, axe knowing about
+      # linux64 while shots knew only macOS, which is why shots died on the
+      # first Linux runner to execute it. Task #10 retires those copies.
+      - name: Install browsers
+        run: |
+          npx playwright install --with-deps
+          echo "CHROME_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())")" >> "$GITHUB_ENV"
 
       # Behaviour, not markup: the only step here that presses a button. It
       # starts its own static server (see playwright.config.js), so it belongs
