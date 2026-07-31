@@ -8,6 +8,7 @@ name: build and deploy
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -15,8 +16,10 @@ permissions:
   pages: write
   id-token: write
 
+# Keyed by ref so a PR check cannot cancel a deploy in flight, and two PRs do
+# not cancel each other.
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -131,7 +134,9 @@ jobs:
         with:
           path: dist
 
+  # Build and check run on every PR; only main publishes.
   deploy:
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment:
