@@ -18,10 +18,14 @@
 // right for a production-shaped check and wrong for a test that must start in a
 // second and run on a machine with no Docker.
 //
-// Chromium only, deliberately. These assert behaviour the platform owns
-// (radio-group arrow keys, prefers-color-scheme change events), not rendering,
-// so a second engine would buy repetition rather than coverage. The rendering
-// checks that WOULD justify one still live in scripts/shots.mjs.
+// Chromium AND WebKit. The first version of this file argued Chromium alone was
+// enough, on the grounds that these tests assert behaviour the platform owns
+// rather than rendering, so a second engine would buy repetition. That was
+// exactly backwards: platform behaviour is the thing that differs between
+// engines, and the popover menu turned out to be unclosable in Safari while
+// every Chromium test stayed green. WebKit is the closest engine to Safari that
+// can be driven headlessly, so it is the gate. Firefox is still out -- no
+// reported issue and no Gecko-specific API in play here.
 
 import { defineConfig, devices } from "@playwright/test";
 
@@ -37,7 +41,10 @@ export default defineConfig({
     baseURL: `http://127.0.0.1:${PORT}`,
     trace: "retain-on-failure",
   },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [
+    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+    { name: "webkit", use: { ...devices["Desktop Safari"] } },
+  ],
 
   // Serves _site/, not the working tree: <use href="assets/svg/...#s"> is
   // blocked over file://, and the built page is what ships.

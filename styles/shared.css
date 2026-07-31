@@ -132,22 +132,81 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .theme-toggle{width:30px;height:30px;border-radius:50%;border:1px solid var(--sep);background:transparent;color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
 .theme-toggle:hover{background:var(--bg-inset);color:var(--text)}
 .theme-toggle svg{width:15px;height:15px}
-/* One of three glyphs, chosen by the stored PREFERENCE rather than the resolved
-   appearance: on a dark Mac, System and Dark both paint the page dark, and a
-   button that looked identical in both would give the user no way to tell
-   whether their choice had taken.
-
-   The auto glyph is the unstyled default, so it is what shows with JS off. That
-   is the right glyph for a page whose appearance cannot be changed, but note it
-   is NOT true that the page then follows the OS: base.njk hard-codes
-   data-theme="light" and there is no prefers-color-scheme media query in any
-   sheet here, so a scriptless visit is light on a dark Mac. Making that claim
-   true means a CSS-level dark block, which is a separate piece of work. */
+/* The trigger carries ONE fact: the appearance in force. Which of the three
+   modes produced it is the menu's job, so there is no badge here -- an earlier
+   attempt put a dot on the trigger for "automatic" and it was inventing a
+   convention no icon set has. */
 .theme-toggle .sun,.theme-toggle .moon{display:none}
-html[data-theme-pref="light"] .theme-toggle .auto,
-html[data-theme-pref="dark"] .theme-toggle .auto{display:none}
-html[data-theme-pref="light"] .theme-toggle .sun{display:block}
-html[data-theme-pref="dark"] .theme-toggle .moon{display:block}
+html[data-theme="light"] .theme-toggle .sun{display:block}
+html[data-theme="dark"] .theme-toggle .moon{display:block}
+
+/* ── appearance menu (native popover) ─────────────────────────────────────── */
+.theme-menu{
+  margin:0;padding:6px;border:1px solid var(--sep);border-radius:var(--r-card);
+  background:var(--card-bg);box-shadow:var(--shadow-rest-lg);
+  min-width:168px;flex-direction:column;gap:2px;
+  position:fixed;
+  /* display MUST be split across these two rules. The UA sheet hides a closed
+     popover with `[popover]:not(:popover-open){display:none}`, and author origin
+     beats UA origin -- so a bare `display:flex` here painted the menu on all 14
+     pages permanently, a 168x129 card over the hero swallowing clicks, while
+     :popover-open stayed honestly false. Every gate passed: axe sees valid
+     visible content, PurgeCSS sees reachable rules, and the e2e suite asserts
+     :popover-open, which was never wrong. Only a human looking at the page
+     caught it. */
+  display:none;
+  /* The UA sheet gives [popover] `inset:0; margin:auto`, which centres it. Set
+     margin:0 and only `top`/`right` and the box is over-constrained -- left:0
+     survives from that inset, and in LTR the loser is `right`, so the menu pins
+     itself to the far left of the viewport whatever the anchor says. Measured
+     it doing exactly that: right computed to a correct 139.7px and the box
+     still landed at x=0. These two undo the rest of the shorthand. */
+  left:auto;bottom:auto;
+}
+.theme-menu:popover-open{display:flex}
+/* No script, no control. The head script sets data-js before first paint, so
+   its absence is a reliable signal. Without this the menu still OPENED -- the
+   popover is pure HTML -- and offered three choices that silently did nothing:
+   picking Dark left the page light, the menu stayed put and the label still
+   read "Appearance: System". The cycling button it replaced was inert too, but
+   it at least looked inert. */
+html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
+/* Fallback placement first, anchor positioning second, because anchor reached
+   Baseline only in 2026 (Chrome 125, Safari 26, Firefox 147) and ~9% of
+   browsers still lack it.
+
+   The fallback aligns to the NAV's right edge, not the trigger's. It cannot do
+   better without anchor(): the trigger is not the rightmost thing in the bar,
+   the CTA is, so the menu hangs 116px right of its own button at desktop widths
+   and 71px at 375. Measured at 1440/1000/768/375/320 -- it never overflows
+   (right edge inside the viewport at every one) and never covers the trigger,
+   so it degrades acceptably. Where anchor() is available the menu sits flush
+   under the button instead. */
+.theme-menu{
+  top:52px;
+  right:calc((100vw - min(1200px, 100vw)) / 2 + var(--pad));
+}
+@supports (anchor-name: --a){
+  .theme-toggle{anchor-name:--theme-anchor}
+  .theme-menu{
+    position-anchor:--theme-anchor;
+    top:anchor(bottom);right:anchor(right);margin-top:9px;
+    position-try-fallbacks:flip-block;
+  }
+}
+.tm-in{position:absolute;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
+.tm-opt{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+  padding:8px 10px;border-radius:var(--r-inset);
+  font-size:14px;color:var(--text-2);
+}
+.tm-opt svg{width:15px;height:15px;flex:none;opacity:.75}
+.tm-opt:hover{background:var(--bg-inset);color:var(--text)}
+/* The check is the selected row's own accent, not a tick glyph: at 14px a tick
+   competes with the mode glyph already sitting in the row. */
+.tm-in:checked + .tm-opt{color:var(--blue-text);background:var(--bg-inset)}
+.tm-in:checked + .tm-opt svg{opacity:1;color:var(--blue)}
+.tm-in:focus-visible + .tm-opt{outline:2px solid var(--blue);outline-offset:-2px}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 22px;border-radius:var(--r-btn);font-size:15px;font-weight:500;letter-spacing:-0.01em;cursor:pointer;border:1px solid transparent;transition:transform .12s ease,background .15s,border-color .15s,opacity .15s;white-space:nowrap}

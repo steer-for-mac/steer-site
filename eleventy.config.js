@@ -147,6 +147,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("screenshots");
   eleventyConfig.addPassthroughCopy("home.js");
+  eleventyConfig.addPassthroughCopy("theme.js");
   eleventyConfig.addPassthroughCopy("apple-touch-icon.png");
   eleventyConfig.addPassthroughCopy("icon.png");
   eleventyConfig.addPassthroughCopy("CNAME");

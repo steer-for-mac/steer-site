@@ -15,16 +15,38 @@
       </nav>
     </details>
     <div class="nav-right">
-      {#- Three states, not two: System -> Light -> Dark -> System. All three
-          glyphs ship in the button and CSS shows the one matching
-          html[data-theme-pref]; nothing swaps innerHTML, so the markup a gate
-          reads is the markup that renders. The aria-label is stateful because a
-          cycling glyph with a fixed label cannot say what pressing does next. #}
-      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Theme: System, activate for Light">
-        {% include "art/nav-auto.svg" %}
+      {#- Two affordances, not one overloaded glyph. The TRIGGER shows the
+          appearance in force (sun or moon, picked by CSS from the resolved
+          data-theme); the MENU shows which of the three was chosen. That split
+          is the settled pattern -- shadcn and most current implementations do
+          exactly this -- and it exists because no icon set has a glyph meaning
+          "automatic, and it landed on dark". Lucide's eclipse and sun-moon both
+          say "automatic" and stop there, which is what this button used to do:
+          on a dark Mac you could see the site was following the system and
+          still not know what the system had resolved to.
+
+          A cycling button was the other option and is a known usability
+          weakness: nothing on it can say what the next press will do. The menu
+          says all three outright.
+
+          Native popover, so open/close/light-dismiss/Escape and the top layer
+          are the browser's. Radios rather than role="menuitemradio" for the
+          same reason the controller picker uses them -- arrow keys come free
+          and :checked is a fact CSS can read -- and consistency with that
+          picker beats matching a different ARIA pattern in the same codebase. #}
+      <button type="button" class="theme-toggle" id="themeToggle"
+              popovertarget="themeMenu" aria-label="Appearance: System">
         {% include "art/nav-sun.svg" %}
         {% include "art/nav-moon.svg" %}
       </button>
+      <div popover id="themeMenu" class="theme-menu" role="radiogroup" aria-label="Appearance">
+        <input type="radio" class="tm-in" name="theme-pref" id="tm-light" value="light">
+        <label class="tm-opt" for="tm-light">{% include "art/nav-sun.svg" %}Light</label>
+        <input type="radio" class="tm-in" name="theme-pref" id="tm-dark" value="dark">
+        <label class="tm-opt" for="tm-dark">{% include "art/nav-moon.svg" %}Dark</label>
+        <input type="radio" class="tm-in" name="theme-pref" id="tm-system" value="system" checked>
+        <label class="tm-opt" for="tm-system">{% include "art/nav-monitor.svg" %}System</label>
+      </div>
       {#- data-ml opens the launch-list dialog and home.js is the only page
           script that wires it, so off the homepage the CTA is a plain link to
           the inline form. That, and the local #pricing anchor, is the whole of

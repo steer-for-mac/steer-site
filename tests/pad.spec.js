@@ -88,11 +88,24 @@ test("ArrowRight selects the next pad with no handler of ours", async ({ page })
   await expectState(page).toMatchObject({ html: "xb", heroPick: "xb", focus: "hp-xb" });
 });
 
-test("arrow keys wrap inside the strip and never reach the hero", async ({ page }) => {
+test("arrow keys stay inside the strip and never reach the hero", async ({ page }) => {
+  /* Asserted from the FIRST option moving forward, not from the last wrapping
+     round. Wrapping is not portable: WebKit's radio groups do not wrap, so
+     ArrowRight on the last option does nothing there while Chromium returns to
+     the first. Both engines agree on the thing this test is actually for --
+     that focus and selection stay within one picker -- and pinning the
+     unportable half made a browser difference look like a regression. */
   await page.goto("index.html");
-  await page.locator("#sp-mf").focus();
+  await page.locator("#sp-ps").focus();
   await page.keyboard.press("ArrowRight");
-  await expectState(page).toMatchObject({ focus: "sp-ps", stripPick: "ps", heroPick: "ps" });
+  const st = await page.evaluate(() => ({
+    focus: document.activeElement?.id,
+    strip: document.querySelector('input[name="strip-pad"]:checked')?.value,
+    hero: document.querySelector('input[name="hero-pad"]:checked')?.value,
+  }));
+  expect(st.focus.startsWith("sp-")).toBe(true);
+  expect(st.strip).toBe("xb");
+  expect(st.hero).toBe("xb");   // synced by us, not by the browser walking groups
 });
 
 test("#xbox deep link arrives on Xbox with both pickers agreeing", async ({ page }) => {

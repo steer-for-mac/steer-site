@@ -22,7 +22,13 @@ import { defineConfig, globalIgnores } from "eslint/config";
 export default defineConfig([
   // _site/ is build output and scratch/ is throwaway; both hold copies of
   // home.js that would be linted twice and reported at the wrong path.
-  globalIgnores(["_site/**", "scratch/**", "node_modules/**", "screenshots/**"]),
+  // test-results/ and playwright-report/ are Playwright's output. Ignoring them
+  // is not tidiness: eslint globs the tree while the Playwright step runs
+  // alongside it in scripts/ci, and Playwright clears test-results/ as it
+  // starts, so eslint died with ENOENT scandir on a directory that existed when
+  // the walk began. It reads as a flaky lint failure with no lint in it.
+  globalIgnores(["_site/**", "scratch/**", "node_modules/**", "screenshots/**",
+                 "test-results/**", "playwright-report/**"]),
 
   {
     files: ["**/*.js", "**/*.mjs"],
@@ -52,7 +58,7 @@ export default defineConfig([
   // `sourceType: "script"` is what it actually is, and declaring it is what
   // stops `no-undef` reporting every browser global in the file.
   {
-    files: ["home.js"],
+    files: ["home.js", "theme.js"],
     languageOptions: { globals: globals.browser, sourceType: "script" },
   },
 

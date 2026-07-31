@@ -1,6 +1,6 @@
 // PurgeCSS: report (and optionally strip) rules no page can reach.
 //
-// It scans the markup AND home.js, so a class the script adds at runtime is
+// It scans the markup AND the two page scripts, so a class either adds at runtime is
 // found without anyone maintaining a list of them. The safelist below is only
 // for states that appear nowhere as a literal: pseudo-elements, and the
 // attribute-driven gates whose values are built by string concatenation.
@@ -15,7 +15,7 @@ export default {
   // the band stopped being included. Measured: drop a band from index.src.html
   // and the gate still passed at 2.5% with the fragments in the glob, 4.5%
   // without them.
-  content: ["_site/*.html", "_site/home.js"],
+  content: ["_site/*.html", "_site/home.js", "_site/theme.js"],
   // Every sheet the build emits, globbed rather than listed, so a new
   // styles/pages/<page>.css is graded the day it appears instead of the day
   // somebody remembers this line. A page sheet is small, so the percentage is
