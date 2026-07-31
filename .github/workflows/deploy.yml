@@ -1,14 +1,5 @@
 name: build and deploy
 
-# The site is assembled by Eleventy (_includes/, a layout, front matter) and its two
-# sheets by Lightning CSS, so Pages cannot serve the repo as-is: it has to build
-# first. What gets published is dist/ and only dist/, which is what retired the
-# subtractive `rm -rf docs bin scripts ...` step that used to stand between the
-# checkout and the artifact.
-# Every push is checked; only main publishes (see the deploy job's `if`).
-# Not branches:[main] -- that meant a runner first saw this code at the moment
-# it published it. Not workflow_dispatch either: GitHub only offers that for
-# workflows already on the default branch, and main has none.
 on:
   push:
   workflow_dispatch:
@@ -18,8 +9,6 @@ permissions:
   pages: write
   id-token: write
 
-# Keyed by ref so a PR check cannot cancel a deploy in flight, and two PRs do
-# not cancel each other.
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
@@ -36,57 +25,39 @@ jobs:
 
       - run: npm ci
 
-      # One production build, and every check below runs against it. Stripping
-      # used to happen in a second pass after the checks, because the checks
-      # compared against committed files and those were the un-stripped ones;
-      # that is how 111 dev comments shipped. Nothing is committed now.
+      # One build; every check below reads it.
       - name: Build the site
         run: make build
 
-      # Comments are 17% of the homepage and they cite docs/ paths and commit
-      # hashes. Assert the strip happened: an existence check alone would pass on
-      # a silently no-op build, which is the failure this closes.
       - name: The artifact is complete and stripped
         run: |
           test -s dist/index.html && test -s dist/site.css \
             && test -s dist/home.css && test -d dist/assets && test -s dist/home.js
-          # CNAME is the one whose loss is silent AND total: without it the
-          # artifact is complete and correct, every check passes, the site
-          # publishes to <user>.github.io, and steer.seanfloyd.dev simply stops
-          # resolving. It is one addPassthroughCopy line away at any time.
+          # Losing CNAME is silent and total: the site moves to github.io.
           test -s dist/CNAME
           ! grep -q '<!--' dist/index.html
 
       - name: Structural accessibility invariants
         run: scripts/a11y-check
 
-      # `make lint-css` / `make lint-html`, not the tools' own globs: the
-      # Makefile is where a task is defined, and this file holding its own copy
-      # of the stylelint glob is how it got out of step with the sheets on disk
-      # before.
       - name: CSS lint
         run: make lint-css
 
-      # Reads dist/, which the production build above already wrote.
       - name: Markup lint
         run: make lint-html
 
       - name: JS lint
         run: make lint-js
 
-      # ruff is not an npm package, so `npm ci` above does not bring it. Pinned
-      # to the range ruff.toml's `required-version` declares: ruff's default
-      # rule set moves between minor versions, and a gate that silently grades
-      # to a different standard than the one the files were burned down against
-      # is the failure this repo keeps finding. pipx is preinstalled on the
-      # runner image.
+      # Pinned to ruff.toml's required-version: the default rule set moves
+      # between minors, and a gate that grades to a different standard is worse
+      # than none.
       - name: Install ruff
         run: pipx install 'ruff>=0.16,<0.17'
 
       - name: Python lint
         run: make lint-py
 
-      # Reads styles/tokens.css only: no build, no browser, ~0.2s.
       - name: Token contrast (AA on the darkest surface)
         run: make contrast
 
@@ -95,13 +66,7 @@ jobs:
           node scripts/curb-check.mjs
           node scripts/curb-check.mjs --self-test
 
-      # One browser install, not two. No names: the config decides which engines
-      # exist, and a list here rots the moment a project is added -- which it
-      # just did, costing a run. CHROME_PATH then points the three CDP scripts
-      # at the same binary, so @puppeteer/browsers is gone: they each carried
-      # their own copy of the platform paths and had drifted, axe knowing about
-      # linux64 while shots knew only macOS, which is why shots died on the
-      # first Linux runner to execute it. Task #10 retires those copies.
+      # CHROME_PATH lets shots/cssdiff/axe-check share this browser.
       - name: Install browsers
         run: |
           npx playwright install --with-deps

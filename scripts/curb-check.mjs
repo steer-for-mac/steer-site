@@ -3,21 +3,9 @@
 // by eye. It is the readable version of the curb's "grep the diff for em-dashes,
 // cliches, and emoji" line, plus the value-drift rules (web fonts, forbidden
 // hexes, invented radii, bootstrap shadow, AI-purple hues).
-//
-// Zero dependencies on purpose. That predates the build: there is an Eleventy
-// build and a package.json now, and this still runs straight from node so a
-// broken toolchain cannot take the design gate down with it.
-//
-//     node scripts/curb-check.mjs            # scan the committed pages + CSS
-//     node scripts/curb-check.mjs --self-test  # prove every detector still bites
-//
-// It is deliberately NOT a formatter and NOT a full HTML parser. It distinguishes
-// visible copy (text nodes + user-facing attributes) from the things the naive
-// grep in the curb trips over: CSS/JS blocks, HTML/CSS comments, and SVG path
-// data. Two severities: ERROR fails the run (exit 1); WARN is a review nudge
-// (exit 0). Tune the word lists below; they are meant to be edited, not frozen.
 
 import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -29,7 +17,6 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // page. Globbed for the reason CSS_FILES is: the list this replaced still named
 // index.html, which stopped existing at the repo root the day the site moved to
 // dist/, and existsSync below would have skipped it without a word.
-// og.html and store-cards.html are render sources for image assets, not pages.
 const NOT_PAGES = new Set(["og.html", "store-cards.html"]);
 const HTML_FILES = existsSync(join(ROOT, "dist"))
   ? readdirSync(join(ROOT, "dist"))
@@ -39,14 +26,6 @@ const HTML_FILES = existsSync(join(ROOT, "dist"))
 // Sources, never the generated sheets. Lightning CSS compresses colours, so
 // rgba(0,122,255,0.10) becomes #007aff1a in the output and the forbidden-hex
 // detector fires on a value the author never wrote. Check what a human edits.
-// Globbed, not listed. A hand-maintained list silently stopped covering
-// design-system.css and svg-strokes.css the day base.css was split: the existsSync
-// guard below skips a missing file without a word, so 452 lines including the
-// whole .d-* system went unenforced while CI stayed green.
-// *.entry.css is excluded because those two ARE generated (eleventy.config.js).
-// Read through ROOT like every other path in this file. Globbing off the
-// process cwd broke `node scripts/curb-check.mjs` from anywhere but the repo
-// root, including the --self-test that exists to be portable.
 const cssIn = (dir, /** @type {(f: string) => boolean} */ keep = () => true) =>
   readdirSync(join(ROOT, dir)).filter((f) => f.endsWith(".css") && keep(f))
     .sort().map((f) => `${dir}/${f}`);
@@ -165,8 +144,6 @@ function scanHtml(file, findings) {
   //     style="--zzz:red" reports nothing, style="color:red" reports two), and
   //     that exemption is defensible — a custom property is data. But stylelint
   //     never reads HTML and PurgeCSS does not look at values, so a forbidden
-  //     hex sat in an attribute passed clean. Verified before this existed by
-  //     putting #007aff, which is on FORBIDDEN_HEX, into one.
   styleAttrChecks(file, masked, findings);
   // 5. And the HTML itself for smuggled web-font links.
   if (FONT_LINK.test(src)) {
@@ -271,6 +248,25 @@ function report(findings) {
   return errs.length;
 }
 
+/* A comment this long is a defect report on the code. WARN, not error: the 47
+   that predate the rule are a backlog to burn down file by file, and two bulk
+   regex passes over them clipped real code both times. */
+const MAX_COMMENT_LINES = 6;
+
+export function commentLengthChecks(file, src, findings) {
+  const runs = [
+    ...src.matchAll(/(?:^[ \t]*(?:\/\/|#).*\n)+/gm),
+    ...src.matchAll(/\/\*[\s\S]*?\*\//g),
+    ...src.matchAll(/\{#[\s\S]*?#\}/g),
+  ];
+  for (const m of runs) {
+    const lines = m[0].trimEnd().split("\n").length;
+    if (lines > MAX_COMMENT_LINES) {
+      findings.push(warn(file, lineOf(src, m.index), `${lines}-line comment (max ${MAX_COMMENT_LINES}) -- say it in the code, the commit, or a check`));
+    }
+  }
+}
+
 /* Layer is a function of the directory, and this is what makes that true rather
    than merely intended. Moving a sheet between directories moves it between
    layers; layer order beats specificity outright, so a demoted rule loses to
@@ -325,6 +321,8 @@ function selfTest() {
     ["layer-right-ok", () => { const f = []; layerChecks("x", `@import "bands/feel.css" layer(bands);`, f); return f.length === 0 ? 1 : 0; }],
     ["layer-missing", () => { const f = []; layerChecks("x", `@import "tokens.css";`, f); return f.length; }],
     ["nunjucks-in-js", () => { const f = []; includedJsChecks("x", `var a = {{b:1}};`, f); return f.length; }],
+    ["comment-essay", () => { const f = []; commentLengthChecks("x", "// a\n// b\n// c\n// d\n// e\n// f\n// g\n", f); return f.length; }],
+    ["comment-short-ok", () => { const f = []; commentLengthChecks("x", "// a\n// b\n", f); return f.length === 0 ? 1 : 0; }],
     ["plain-js-ok", () => { const f = []; includedJsChecks("x", `var a = { b: 1 };`, f); return f.length === 0 ? 1 : 0; }],
   ];
   let pass = 0;
@@ -351,6 +349,9 @@ for (const f of HTML_FILES) if (existsSync(join(ROOT, f))) scanHtml(f, findings)
 for (const f of CSS_FILES) if (existsSync(join(ROOT, f))) scanCss(f, findings);
 for (const f of ["styles/site.entry.css", "styles/home.entry.css"])
   if (existsSync(join(ROOT, f))) layerChecks(f, readFileSync(join(ROOT, f), "utf8"), findings);
+for (const f of execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8" }).split("\n"))
+  if (/\.(css|js|mjs|ts|njk|html|yml|yaml|py)$/.test(f) && existsSync(join(ROOT, f)))
+    commentLengthChecks(f, readFileSync(join(ROOT, f), "utf8"), findings);
 if (existsSync(join(ROOT, "_includes/scripts")))
   for (const f of readdirSync(join(ROOT, "_includes/scripts")).filter((n) => n.endsWith(".js")))
     includedJsChecks(`_includes/scripts/${f}`, readFileSync(join(ROOT, "_includes/scripts", f), "utf8"), findings);
