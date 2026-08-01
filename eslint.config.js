@@ -35,8 +35,14 @@ export default defineConfig([
   // `sourceType: "script"` is what it actually is, and declaring it is what
   // stops `no-undef` reporting every browser global in the file.
   {
-    files: ["src/home.js", "src/theme.js", "src/_includes/scripts/*.js"],
+    files: ["src/_includes/scripts/*.js"],
     languageOptions: { globals: globals.browser, sourceType: "script" },
+  },
+
+  // home.js is an entry that imports one module per band; both are browser ESM.
+  {
+    files: ["src/home.js", "src/scripts/*.js"],
+    languageOptions: { globals: globals.browser, sourceType: "module" },
   },
 
   {

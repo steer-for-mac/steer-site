@@ -2,7 +2,7 @@
    extensions, which is what the docs prescribe for compiled assets; the build
    owns them, so they are watched, incremental, and never written in place. */
 import browserslist from "browserslist";
-import { transformSync } from "esbuild";
+import { build, transformSync } from "esbuild";
 import { minify } from "html-minifier-next";
 import { bundle, browserslistToTargets } from "lightningcss";
 import { existsSync, readdirSync, writeFileSync } from "node:fs";
@@ -21,6 +21,19 @@ const TARGETS = browserslistToTargets(browserslist("safari >= 15, chrome >= 100,
 // classic script, so this is a transform rather than a project build. tsc stays
 // the checker (tsconfig.json is noEmit and covers the Node tools too).
 const script = (code, loader) => transformSync(code, { loader, minify: true, target: "es2022" }).code;
+
+/* iife, because the page loads the result as a classic <script defer> rather
+   than a module. Throws on empty output: a silently missing home.js leaves the
+   pad picker, the gallery and the launch form inert with the page still valid. */
+async function bundleScript(entry) {
+  const out = await build({
+    entryPoints: [entry], bundle: true, write: false,
+    minify: true, target: "es2022", format: "iife", logLevel: "silent",
+  });
+  const file = out.outputFiles[0];
+  if (!file) throw new Error(`esbuild produced no output for ${entry}`);
+  return file.text;
+}
 
 /* Generated because @import takes no glob, so adding styles/bands/<band>.css is
    the only step. The two sheets above the bands are named rather than globbed:
@@ -115,9 +128,14 @@ export default function (eleventyConfig) {
       : async () => bundle({ filename: inputPath.replace(/^\.\//, ""), minify: true, targets: TARGETS }).code.toString()),
     compileOptions: { permalink: (content, inputPath) => () => cssPermalink(inputPath) },
   });
+  /* Bundled, not transformed: home.js is an entry that imports one module per
+     band from src/scripts/, so those are reached through the import graph and
+     must not each emit a file of their own. iife because the page loads it as a
+     classic <script defer>, not a module. */
   eleventyConfig.addExtension("js", {
     outputFileExtension: "js",
-    compile: (content) => async () => script(content, "js"),
+    compile: (content, inputPath) => (inputPath.includes("/scripts/") ? undefined
+      : async () => bundleScript(inputPath.replace(/^\.\//, ""))),
   });
   eleventyConfig.addExtension("ts", {
     outputFileExtension: "js",
