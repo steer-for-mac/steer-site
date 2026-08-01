@@ -33,7 +33,7 @@
    only", so pointing at it to satisfy the linter would make the token lie. */
 /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
 .code{background:var(--bg-inset);border:1px solid var(--sep);border-radius:12px;padding:20px 22px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--text-2)}
-.code .k{color:var(--blue-text)}
+.code .kw{color:var(--blue-text)}
 .copy-btn{position:absolute;top:12px;right:12px;height:28px;padding:0 12px;font-size:12px;border-radius:var(--r-inset);border:1px solid var(--sep);background:var(--bg);color:var(--text-2);cursor:pointer}
 .copy-btn:hover{color:var(--text);background:var(--bg-inset-2)}
 .callout{background:var(--bg-inset);border-radius:var(--r-card);padding:26px 28px;max-width:760px}

@@ -152,8 +152,8 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 .btn-nav:hover{background:color-mix(in srgb,var(--blue) 88%,#000);text-decoration:none}
 .arrow-link{color:var(--blue-text);font-size:15px;font-weight:450;display:inline-flex;align-items:center;gap:5px}
 .arrow-link:hover{text-decoration:none}
-.arrow-link .a{transition:transform .15s}
-.arrow-link:hover .a{transform:translateX(3px)}
+.arrow-link .arrow{transition:transform .15s}
+.arrow-link:hover .arrow{transform:translateX(3px)}
 
 /* Screenshot frame. Site-wide because two pages use it and both had forked a
    copy: design-system.css for the homepage, pages/accessibility.css for the
