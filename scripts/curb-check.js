@@ -273,7 +273,7 @@ export function commentLengthChecks(file, src, findings) {
     // inside "dist/star-star" opened a block that closed on a star-slash 25
     // lines later inside a test glob, and reported the span as one comment.
     ...src.matchAll(/^[ \t]*\/\*[\s\S]*?\*\//gm),
-    ...src.matchAll(/\{#[\s\S]*?#\}/g),
+    ...src.matchAll(/^[ \t]*\{#[\s\S]*?#\}/gm),
   ];
   for (const m of runs) {
     const lines = m[0].trimEnd().split("\n").length;
@@ -315,6 +315,19 @@ export function includedJsChecks(file, src, findings) {
   }
 }
 
+/* Nunjucks does not know what an HTML comment is, so a tag inside one still
+   runs: commenting out {% include %} renders it anyway, and {{ x }} resolves.
+   {# #} is the delimiter that actually comments a template out. */
+export function templateCommentChecks(file, src, findings) {
+  for (const m of src.matchAll(/<!--[\s\S]*?-->/g)) {
+    const tag = m[0].match(/\{\{|\{%/);
+    if (tag) {
+      findings.push(err(file, lineOf(src, m.index),
+        `${tag[0]} inside an HTML comment -- Nunjucks still evaluates it; use {# #} to comment out a template`));
+    }
+  }
+}
+
 // ---- self-test: every detector must bite on a known-bad fixture ------------
 
 function selfTest() {
@@ -341,6 +354,8 @@ function selfTest() {
     ["comment-essay", () => { const f = []; commentLengthChecks("x", "// a\n// b\n// c\n// d\n// e\n// f\n// g\n", f); return f.length; }],
     ["comment-short-ok", () => { const f = []; commentLengthChecks("x", "// a\n// b\n", f); return f.length === 0 ? 1 : 0; }],
     ["plain-js-ok", () => { const f = []; includedJsChecks("x", `var a = { b: 1 };`, f); return f.length === 0 ? 1 : 0; }],
+    ["nunjucks-in-html-comment", () => { const f = []; templateCommentChecks("x", `<!-- {% include "a.svg" %} -->`, f); return f.length; }],
+    ["plain-html-comment-ok", () => { const f = []; templateCommentChecks("x", `<!-- just prose about the markup -->`, f); return f.length === 0 ? 1 : 0; }],
   ];
   let pass = 0;
   for (const [name, fn] of /** @type {Array<[string, () => number]>} */ (cases)) {
@@ -372,4 +387,9 @@ for (const f of execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8" 
 if (existsSync(join(ROOT, "src/_includes/scripts")))
   for (const f of readdirSync(join(ROOT, "src/_includes/scripts")).filter((n) => n.endsWith(".js")))
     includedJsChecks(`src/_includes/scripts/${f}`, readFileSync(join(ROOT, "src/_includes/scripts", f), "utf8"), findings);
+/* Sources, not dist/: the minifier strips HTML comments from the output, so by
+   the time a page is built the evidence is gone. */
+for (const f of execFileSync("git", ["ls-files", "src"], { cwd: ROOT, encoding: "utf8" }).split("\n"))
+  if (/\.(html|njk)$/.test(f) && existsSync(join(ROOT, f)))
+    templateCommentChecks(f, readFileSync(join(ROOT, f), "utf8"), findings);
 process.exit(report(findings) > 0 ? 1 : 0);
