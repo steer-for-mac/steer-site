@@ -140,13 +140,9 @@
   .shot.menubar { width: 1200px; }
   .shot.radial  { width: 780px; }
 
-  /* ---- grammar card: physical input on the left, Mac result on the right ----
-     The one thing a static frame CAN prove is that a controller input is the
-     cause: a glyph in a keycap is a vocabulary every pad owner reads without
-     being taught, and it stays legible at keycap size, which is exactly the
-     scale it was designed for. Every chip here must match the SHIPPED default
-     binding (SteerCore/Defaults.swift, soloLayer) or the card is a lie:
-     Cross = left click, left stick = cursor, right stick = scroll. */
+  /* ---- grammar card: physical input left, Mac result right ----
+     Every chip must match the SHIPPED default binding
+     (SteerCore/Defaults.swift, soloLayer) or the card is a lie. */
   .rows {
     display: flex;
     flex-direction: column;
@@ -180,22 +176,9 @@
   }
 
   /* ---- desktop backdrop ----
-     The overlays are transparent always-on-top panels, so showing one on a
-     void depicts a state no user will ever see. Compositing over a real
-     desktop is a reconstruction of what the software genuinely draws, which
-     is the more honest image, not the less.
-
-     The backdrop is a clean region of screenshots/slot-10-radial.jpg (the
-     project's own marketing wallpaper, so the card matches the site and the
-     demo video). Source is 2880x1800. Careful: that frame has its OWN radial
-     centred at about x1440, and it extends to roughly x1900, so the obvious
-     right-hand quadrant (x1680..) still catches its edge. The genuinely clean
-     region is x1900..2880, y820..1555 (980x735, exactly 4:3).
-     Scaled by 1600/980 = 1.63265:
-       background-size:     2880*1.63265 x 1800*1.63265 = 4702 x 2939
-       background-position: -1900*1.63265, -820*1.63265 = -3102px, -1339px
-     Recompute these if the source frame is ever replaced, and LOOK at the
-     result: the intrusion is invisible in a thumbnail and obvious at size. */
+     Compositing the always-on-top overlays over a real desktop rather than a
+     void: that is what the software genuinely draws. The crop arithmetic and
+     the trap in the source frame are in docs/store-assets.md. */
   .backdrop {
     position: absolute; inset: 0; z-index: 0;
     background-image: url("screenshots/slot-10-radial.jpg");
@@ -286,7 +269,7 @@
        containing block is still <body> and each card renders identically. -->
   <main>
     <div class="stage" id="identity">
-      <img class="icon" src="icon.png" alt="" />
+      <img class="icon" src="icon.png" alt="" eleventy:ignore />
       <!-- The wordmark is this card's only heading, so it is the <h1>. Same
            change as og.html: axe let this page away with having none, og.html it
            did not, and one of the two was going to start failing. -->
@@ -393,7 +376,7 @@
 
     <div class="stage hide" id="menubar">
       <div class="caption">Lives in the menu bar.</div>
-      <img class="shot menubar" src="assets/menubar-dropdown-dark.png" alt="" />
+      <img class="shot menubar" src="assets/menubar-dropdown-dark.png" alt=""  eleventy:ignore />
     </div>
 
     <!-- Live capture, not a composite: the dev build was driven by injected

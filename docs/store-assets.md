@@ -194,3 +194,25 @@ pair needs a capture round with the appearance verified BEFORE shooting: reading
 a background pixel back from a throwaway `screencapture` is the check, because a
 restore issued moments earlier had not applied and produced a dark image sitting
 in a light-named file.
+
+## The store-card backdrop crop
+
+`src/store-cards.html` composites the overlays over a real desktop rather than a
+void, because that is the state the software actually draws.
+
+The backdrop is a clean region of `screenshots/slot-10-radial.jpg`, the
+project's own marketing wallpaper, so the card matches the site and the demo
+video. Source is 2880x1800.
+
+**The trap:** that frame has its own radial centred at about x1440, extending to
+roughly x1900, so the obvious right-hand quadrant (x1680 onward) still catches
+its edge. The genuinely clean region is x1900..2880, y820..1555 — 980x735,
+exactly 4:3.
+
+Scaled by 1600/980 = 1.63265:
+
+    background-size:     2880*1.63265 x 1800*1.63265 = 4702 x 2939
+    background-position: -1900*1.63265, -820*1.63265 = -3102px, -1339px
+
+Recompute these if the source frame is ever replaced, and *look* at the result:
+the intrusion is invisible in a thumbnail and obvious at full size.

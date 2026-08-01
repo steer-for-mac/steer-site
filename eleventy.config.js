@@ -1,6 +1,7 @@
 /* Eleventy config. CSS, client JS and TypeScript are custom template
    extensions, which is what the docs prescribe for compiled assets; the build
    owns them, so they are watched, incremental, and never written in place. */
+import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import browserslist from "browserslist";
 import { build, transformSync } from "esbuild";
 import { minify } from "html-minifier-next";
@@ -101,6 +102,22 @@ const MINIFY = {
 };
 
 export default function (eleventyConfig) {
+  /* Rewrites the <img> tags already in the markup, so no template changes and
+     no shortcode to remember. avif and webp ahead of the original: the 29
+     referenced rasters are 7.45MB of png and jpg with not one srcset.
+     "auto" keeps the source width as the last candidate, and the plugin never
+     upscales, so the 22px logo stays one file. */
+  eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+    formats: ["avif", "webp", "auto"],
+    widths: [480, 960, 1440, "auto"],
+    urlPath: "/img/",
+    outputDir: "dist/img/",
+    htmlOptions: {
+      imgAttributes: { decoding: "async" },
+      pictureAttributes: {},
+    },
+  });
+
   /* NO PLUGIN for the inline SVG in src/_includes/art/: eleventy-plugin-svg-
      contents was adopted first, then measured. It last published in 2022, pulls
      31 packages for cheerio, and re-serializes instead of pasting bytes, which
