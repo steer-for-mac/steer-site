@@ -41,7 +41,7 @@ export default defineConfig([
 
   // home.js is an entry that imports one module per band; both are browser ESM.
   {
-    files: ["src/home.js", "src/scripts/*.js"],
+    files: ["src/home.entry.js", "src/scripts/*.js"],
     languageOptions: { globals: globals.browser, sourceType: "module" },
   },
 

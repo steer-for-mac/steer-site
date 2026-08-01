@@ -184,6 +184,12 @@ export default function (eleventyConfig) {
     outputFileExtension: "js",
     compile: (content, inputPath) => (inputPath.includes("/scripts/") ? undefined
       : async () => bundleScript(inputPath.replace(/^\.\//, ""))),
+    /* home.entry.js -> /home.js, exactly as home.entry.css -> /home.css. The
+       .entry says "this imports the modules"; the output name is what the
+       layout asks for. */
+    compileOptions: {
+      permalink: (content, inputPath) => () => `/${basename(inputPath).replace(".entry.js", ".js")}`,
+    },
   });
   eleventyConfig.addExtension("ts", {
     outputFileExtension: "js",

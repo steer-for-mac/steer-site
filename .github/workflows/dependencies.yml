@@ -1,8 +1,7 @@
 name: dependency health
 
-# Reports, never blocks. still_active 3.0.0.rc5 matches advisories by package
-# name without applying fixed_versions, so it calls brace-expansion 1.1.18
-# vulnerable against a fix of 1.1.17 while `npm audit` reports zero.
+# Reports, never blocks: four dependencies here are archived, which is a thing
+# to know rather than a thing to fail a build on.
 on:
   schedule:
     - cron: "0 7 * * 1"
