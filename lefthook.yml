@@ -1,0 +1,22 @@
+# Pre-commit gates. Already installed via mise, so no devDependency and no
+# node_modules/.bin shim; it runs these in parallel and only on what is staged.
+#
+# The browser gates are NOT here. Playwright is 87s and belongs to CI; a hook
+# slow enough to be worth skipping gets skipped, and then it gates nothing.
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      glob: "*.js"
+      run: npx eslint {staged_files}
+    stylelint:
+      glob: "src/styles/**/*.css"
+      run: npx stylelint {staged_files}
+    ruff:
+      glob: "scripts/*"
+      run: make lint-py
+    # Unscoped and after a build: the copy and layer rules read dist/, and the
+    # comment rule errors on any file with uncommitted edits, which is the
+    # whole point of running it here rather than only in CI.
+    curb:
+      run: npx @11ty/eleventy > /dev/null && node scripts/curb-check.js
