@@ -1,12 +1,12 @@
 /* Eleventy config. CSS, client JS and TypeScript are custom template
    extensions, which is what the docs prescribe for compiled assets; the build
    owns them, so they are watched, incremental, and never written in place. */
-import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import Image, { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import browserslist from "browserslist";
 import { build, transformSync } from "esbuild";
 import { minify } from "html-minifier-next";
 import { bundle, browserslistToTargets } from "lightningcss";
-import { existsSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -34,6 +34,26 @@ async function bundleScript(entry) {
   const file = out.outputFiles[0];
   if (!file) throw new Error(`esbuild produced no output for ${entry}`);
   return file.text;
+}
+
+/* SYNCHRONOUS on purpose, so the generation happens before any template runs.
+   An async filter here rendered empty inside `{% include %}` and took the rest
+   of the enclosing `{% if home %}` with it -- gallery and the home.js script
+   tag both gone, build exit 0, no warning. */
+const SHOTS = new Map();
+const SHOT_SRC = /\{\{\s*'(assets\/[^']+\.png)'\s*\|\s*shot\s*\}\}/g;
+async function buildShots() {
+  const tpl = readFileSync(resolve(ROOT, "src/_includes/bands/dialogs.html"), "utf8");
+  for (const m of tpl.matchAll(SHOT_SRC)) {
+    const src = m[1];
+    if (!src || SHOTS.has(src)) continue;
+    const meta = await Image(resolve(ROOT, "src", src), {
+      formats: ["webp"], widths: [1440], urlPath: "/img/", outputDir: "dist/img/",
+    });
+    const out = meta.webp?.[0];
+    if (!out) throw new Error(`no webp generated for ${src}`);
+    SHOTS.set(src, out.url);
+  }
 }
 
 /* Generated because @import takes no glob, so adding styles/bands/<band>.css is
@@ -118,6 +138,17 @@ export default function (eleventyConfig) {
     },
   });
 
+  /* The gallery hydrates data-light/data-dark into src on first show, so the
+     img transform never sees those paths and the seven slides -- the largest
+     images on the site -- shipped as full-size png. This gives them a built
+     file instead. webp, not avif: JS sets ONE src with no format negotiation,
+     and avif excludes the Safari 15 this build still targets. */
+  eleventyConfig.addFilter("shot", (src) => {
+    const url = SHOTS.get(src);
+    if (!url) throw new Error(`no built shot for ${src}; buildShots did not see it`);
+    return url;
+  });
+
   /* NO PLUGIN for the inline SVG in src/_includes/art/: eleventy-plugin-svg-
      contents was adopted first, then measured. It last published in 2022, pulls
      31 packages for cheerio, and re-serializes instead of pasting bytes, which
@@ -196,7 +227,7 @@ export default function (eleventyConfig) {
      sheet requests nothing. Read once at config time, like the band glob. */
   eleventyConfig.addGlobalData("pageSheets", pageSheets());
 
-  eleventyConfig.on("eleventy.before", writeHomeEntry);
+  eleventyConfig.on("eleventy.before", async () => { writeHomeEntry(); await buildShots(); });
 
   return {
     dir: {
