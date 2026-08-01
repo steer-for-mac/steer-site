@@ -414,8 +414,14 @@ html.still .chero .pool{opacity:var(--poolO)}
 .chero .rb-core{fill:none;stroke:var(--rb-core-ink);stroke-width:2;stroke-linecap:round;opacity:0}
 .chero .rbb{fill:currentColor;opacity:0}
 .chero .rbbs{opacity:var(--bloomO)}
-.chero .hu1{color:#4D8DFF}.chero .hu2{color:#A87CFF}.chero .hu3{color:#FF6FAE}
-.chero .hu4{color:#FFB454}.chero .hu5{color:#5FD48D}.chero .hu6{color:#3FE0C0}
+/* --hued is the hue's offset into the shared 12s cycle, and it has to ride the
+   class rather than a style="" on each of the twelve <use> elements in
+   hero-pad-ps.svg: that markup is inlined into the page, so every copy is paid
+   for on every view. It is a variable and not animation-delay because the rules
+   below set the `animation` shorthand, which resets delay to 0 and would put
+   all six hues in phase. */
+.chero .hu1{color:#4D8DFF}.chero .hu2{color:#A87CFF;--hued:-2s}.chero .hu3{color:#FF6FAE;--hued:-4s}
+.chero .hu4{color:#FFB454;--hued:-6s}.chero .hu5{color:#5FD48D;--hued:-8s}.chero .hu6{color:#3FE0C0;--hued:-10s}
 @media (prefers-reduced-motion: no-preference){
   html:not(.still) .chero.lb-auto[data-pad="ps"] .padwrap.ps .glow,
   html:not(.still) .chero.lb-auto[data-pad="ps"] .padwrap.ps .bloom,
@@ -424,10 +430,10 @@ html.still .chero .pool{opacity:var(--poolO)}
   html:not(.still) .chero.lb-auto[data-pad="ps"] .padwrap.ps.active .rbbs{animation:chero-igniteBloom 1.2s 0.55s ease-out both}
   html:not(.still) .chero.lb-auto[data-pad="ps"] .padwrap.ps.active .rb-core{opacity:1;transition:opacity .8s ease .6s}
   html:not(.still) .chero.lb-auto[data-pad="ps"] .padwrap.ps.active .rbl{
-    animation:chero-hue 12s linear infinite;
+    animation:chero-hue 12s linear var(--hued,0s) infinite;
     filter:drop-shadow(0 0 6px currentColor) drop-shadow(0 0 18px currentColor);
   }
-  html:not(.still) .chero.lb-auto[data-pad="ps"] .padwrap.ps.active .rbb{animation:chero-hue 12s linear infinite}
+  html:not(.still) .chero.lb-auto[data-pad="ps"] .padwrap.ps.active .rbb{animation:chero-hue 12s linear var(--hued,0s) infinite}
   .chero.rb-halt .rbl,.chero.rb-halt .rbb,
   html.anim-halt .chero .rbl,html.anim-halt .chero .rbb{animation-play-state:paused!important}
 }
