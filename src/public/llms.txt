@@ -18,7 +18,7 @@ That is the lane. Steer is not a gamepad remapper that happens to move a cursor.
 
 Steer is an input layer. It does not rebuild what macOS or the tools you already run do perfectly well; it puts a controller in front of them. That is a design rule, not modesty, and it is why the app stays small and predictable.
 
-- **Dictation** is your Shortcut, run by a button. You make it once and name it as Steer asks. A synthetic keystroke cannot trigger the system dictation key reliably, so Steer asks Shortcuts to do it rather than shipping something fragile.
+- **Dictation** is macOS Dictation, started by a button, with nothing to build in Shortcuts. The system dictation shortcut is a symbolic hotkey a synthetic keystroke cannot reach, so Steer presses the frontmost app's own Dictation menu item instead, matched on its identifier rather than its translated title. It needs the Automation grant, an app that offers the item, and a text field ready for it; each of those failing is a message, not a silent no-op.
 - **Window management** is Rectangle, installed separately and driven through its documented URL commands rather than by faking its keyboard shortcuts. Steer sends an instruction to a window manager that is better at this than Steer would be.
 - **Automation** is Shortcuts, AppleScript, shell scripts, or the tool you already use. There are ready-made setups for Raycast and Handy, and starting points for Keyboard Maestro and Hammerspoon. Steer supplies the button; your existing automation does the work.
 - **Focus and search** are the system's. A Focus filter switches profile with your Focus mode. Profiles are indexed for Spotlight and reachable by Siri; macros are indexed too on macOS 15 and later.
@@ -89,10 +89,12 @@ Optional, and none of it is needed to start:
 
 ## Privacy and permissions
 
-- **Accessibility** is required. It is mostly how Steer posts the cursor, scroll and keyboard events your controller stands in for. Three optional features also reach into the frontmost app while you use them: the menu palette reads its menu bar and activates the item you pick, cursor magnetism reads the position and size of the control under the pointer, and window snap sets a window's position.
-- **Input Monitoring** is needed for DualSense Edge rear paddles, for tilt-to-aim on a DualShock 4, and for the generic-pad bridge. Everything else works with Accessibility alone.
+- **Accessibility** is required. It is mostly how Steer posts the cursor, scroll and keyboard events your controller stands in for. Some features also reach into the frontmost app. The ones you turn on only do it while you use them: the menu palette reads its menu bar and activates the item you pick, and the Dictation binding presses that app's own Dictation menu item. One reach is not something you turn on: macOS never brings an app forward for a synthesized click, so after a click that lands in an app which was not already frontmost, Steer asks for its window to be raised. All of that goes through System Events.
+- **Automation** is permission to control System Events, which is how a sandboxed app reaches another app's menu bar. The first-run wizard asks for it, and so does the first use of the menu palette, Dictation, or a click that fronts another app.
+- **Input Monitoring** is asked for on a DualSense Edge connect, and never otherwise. Measured 2026-08-06: gamepad HID input reports do not consult the grant, so no controller here has ever needed it. It stays because an Edge's rear paddles are untested, nobody on the project owning one. Declining it breaks nothing that has been measured.
 - Steer never watches your keystrokes and never reads the contents of your documents or screen. It reads the pasteboard in two places: the Services item "Bind to Steer", and copy and paste of a binding inside the bindings editor.
-- **No sync.** Nothing is synced between machines. If a Mac App Store build ever adds iCloud sync it will be opt-in and off by default.
+- Recording a macro writes controller input to disk: full per-frame state (buttons, sticks, triggers, touchpad, motion, battery) for up to 30s, in a file on the Mac. User-initiated from Settings and deletable there. In the direct build it is not transmitted; under the App Store flag the same iCloud setting that syncs profiles syncs macros, and it defaults to off.
+- **No sync in the direct build.** Nothing is synced between machines. Profile and macro sync via CloudKit is built but compiled in only under the App Store flag, where it is a setting that defaults to off.
 - Sold through Lemon Squeezy as merchant of record; refunds go through them.
 
 ## Platform
