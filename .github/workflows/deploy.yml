@@ -23,6 +23,15 @@ jobs:
           node-version: "22"
           cache: npm
 
+      # `bun x` launches the gates; each bin's node shebang means they still
+      # run under the Node above, so the artifact is the same one as before.
+      # Bun IS the runtime for scripts/serve.js, and 1.4 is where `Bun.serve`
+      # learned to serve a directory -- that route is the whole reason for the
+      # pin. npm still installs: dependencies.yml reads package-lock.json.
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.x"
+
       - run: npm ci
 
       # Pinned to ruff.toml's required-version: the default rule set moves
@@ -41,7 +50,7 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install browsers
-        run: npx playwright install --with-deps
+        run: bun x playwright install --with-deps
 
       # `make ci`, not the steps one at a time. scripts/ci already lists every
       # gate and runs them in a thread pool, so enumerating them here was a

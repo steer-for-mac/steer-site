@@ -302,7 +302,9 @@ Two things that will waste your time otherwise:
   `try_files`, so `/buy` 404'd locally and worked everywhere else.
   The Playwright suite starts its own static server instead, which is the one
   justified exception: a gate has to be self-contained rather than needing a
-  container up first. It is `serve`, not nginx, so it has no `try_files`.
+  container up first. It is `scripts/serve.js` -- Bun's `dir` route, not nginx --
+  so it has no `try_files` and no extensionless rewriting: `index.html` on a
+  directory, 404 on anything else. Every `goto` in the suite ends in `.html`.
 
 ## Before you call it done
 

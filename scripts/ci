@@ -15,6 +15,7 @@ curb-check reads the source, but the Playwright step is what notices a band
 overflowing at 375, and dead-css is what noticed the FAQ moving to a page that
 never loaded its stylesheet. A check that only reads source passed both.
 """
+import shutil
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -28,12 +29,12 @@ QUICK = "--quick" in sys.argv
 # Serial, before the parallel block: every step below reads dist/, and Eleventy
 # has to have written it. It also replaces the old `bin/build --check` gate --
 # there is nothing generated left in the working tree to be stale.
-BUILD = ["npx", "eleventy"]
+BUILD = ["bun", "x", "eleventy"]
 
 # Never fold these back into STEPS: Playwright schedules its own workers.
 SERIAL = [
     ("Behaviour, accessibility and layout (Playwright)",
-     ["npx", "playwright", "test"], False),
+     ["bun", "x", "playwright", "test"], False),
 ]
 
 STEPS = [
@@ -72,13 +73,13 @@ STEPS = [
     # the theme toggle had two states and no route back to "follow my Mac", or
     # that the picker's arrow keys were a hand-written handler.
     #
-    # `npx playwright test`, NOT `make e2e`: that target carries a `build`
+    # `bun x playwright test`, NOT `make e2e`: that target carries a `build`
     # prerequisite, and everything in this list runs in the thread pool against
     # the single artifact built at line 31. Invoking it would fire a second
     # eleventy concurrently with the gates reading dist/ -- home.css was
     # observed at zero length mid-write when this step was first added.
     #
-    ("Types: tsc --noEmit over the scripts and gates", ["npx", "tsc"], False),
+    ("Types: tsc --noEmit over the scripts and gates", ["bun", "x", "tsc"], False),
     ("Curb: copy and design rules", ["node", "scripts/curb-check.js"], False),
     ("Curb: the checker's own detectors still bite", ["node", "scripts/curb-check.js", "--self-test"], False),
     # PurgeCSS rather than a hand-rolled reachability check: it scans home.js
@@ -99,6 +100,16 @@ def run(step):
 
 
 def main() -> int:
+    # Named, not inferred from a traceback: without this, a missing bun surfaces
+    # as FileNotFoundError out of the subprocess call below. The Makefile header
+    # says which tools are needed; this is the copy that fails when they are not.
+    # `make` included: five STEPS below invoke it rather than the tool directly,
+    # and scripts/ci is a documented entry point that does not presuppose it.
+    missing = [t for t in ("bun", "make", "node", "ruff") if shutil.which(t) is None]
+    if missing:
+        print(f"{RED}CI failed: not on PATH: {', '.join(missing)}{RESET}")
+        return 1
+
     build = subprocess.run(BUILD, cwd=ROOT, capture_output=True, text=True, check=False)
     print(f"{BOLD}{PURPLE}=== Build: eleventy -> dist/ ==={RESET}")
     print((build.stdout + build.stderr).strip())

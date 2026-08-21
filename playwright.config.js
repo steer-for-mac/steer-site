@@ -1,7 +1,6 @@
-// Do not swap `serve` for a stdlib server: a listen backlog of 5 drops requests
-// under parallel workers, and it surfaces as a wrong assertion, not an error.
-// Do not drop WebKit: the popover menu was unclosable in Safari while every
-// Chromium test passed.
+// The server is scripts/serve.js; the backlog scar that used to live here
+// moved with it. Do not drop WebKit: the popover menu was unclosable in Safari
+// while every Chromium test passed.
 
 import { defineConfig, devices } from "@playwright/test";
 
@@ -24,10 +23,8 @@ export default defineConfig({
     { name: "webkit", use: { ...devices["Desktop Safari"] }, testIgnore: /a11y\.spec\.js/ },
   ],
 
-  // Serves dist/, not the working tree: <use href="assets/svg/...#s"> is
-  // blocked over file://, and the built page is what ships.
   webServer: {
-    command: `npx serve --listen tcp://127.0.0.1:${PORT} --no-clipboard dist`,
+    command: `bun scripts/serve.js dist ${PORT}`,
     url: `http://127.0.0.1:${PORT}/index.html`,
     reuseExistingServer: !process.env.CI,
     stdout: "ignore",

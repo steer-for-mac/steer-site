@@ -50,6 +50,13 @@ export default defineConfig([
     languageOptions: { globals: globals.node, sourceType: "module" },
   },
 
+  // serve.js runs under Bun rather than Node -- it is the only file here that
+  // does, so `Bun` is declared for it alone and stays undefined everywhere else.
+  {
+    files: ["scripts/serve.js"],
+    languageOptions: { globals: { ...globals.node, Bun: "readonly" } },
+  },
+
   // Specs really are both environments: the body is Node, and the callbacks
   // passed to page.evaluate() run in the browser.
   {

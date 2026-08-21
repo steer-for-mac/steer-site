@@ -12,7 +12,10 @@
     "allowJs": true,
     "checkJs": true,
     "skipLibCheck": true,
-    "types": ["node"],
+    // "bun" for scripts/serve.js. Project-wide: `types` cannot be scoped per
+    // file. eslint.config.js fences the `Bun` GLOBAL out of the Node gates, but
+    // not `import ... from "bun"`, which passes both gates and dies at runtime.
+    "types": ["node", "bun"],
     "verbatimModuleSyntax": true
   },
   "include": ["src/theme.ts", "scripts/**/*.js", "tests/**/*.js", "tools/**/*.js", "*.config.js"],

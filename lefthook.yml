@@ -6,6 +6,10 @@
 pre-commit:
   parallel: true
   commands:
+    # npx, though the Makefile now runs these through `bun x`: node comes from
+    # mise and is on every PATH a hook inherits, bun's own installer reaches
+    # only an interactive shell. mise does have bun 1.4, held back by the global
+    # minimum_release_age; pinning it here once it ages in retires this note.
     eslint:
       glob: "*.js"
       run: npx eslint {staged_files}
