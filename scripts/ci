@@ -2,7 +2,7 @@
 """Run every check, in parallel, and fail loudly.
 
     make ci           all checks (the documented entry point)
-    scripts/ci        the same, skipping the build `make ci` does first
+    scripts/ci        the same; the build below is the only one either runs
     scripts/ci --quick    skip the slow checks
 
 Same shape as ../seanfloyd.dev/bin/ci and ../news-digest: steps run

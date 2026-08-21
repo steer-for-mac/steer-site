@@ -27,7 +27,12 @@ up: build ## Serve dist/ on https://steer.seanfloyd.dev.local (nginx, matches pr
 down: ## Stop the container
 	docker compose down
 
-ci: build ## Every check
+# No `build` prerequisite: scripts/ci builds dist/ itself, serially, before the
+# gates that read it -- which is why ci-quick has never needed one either.
+# Both meant eleventy ran twice. The second overwrote the first and cost only
+# ~0.3s -- eleventy-img caches into dist/img/, so the duplicate was always the
+# warm one. One build rather than two is the point; the time is not.
+ci: ## Every check
 	scripts/ci
 
 ci-quick: ## Skip the rendering checks (no container needed)

@@ -318,7 +318,9 @@ Two things that will waste your time otherwise:
 - Run `make shots`. It renders every section at 1440 and 375 into
   `scratch/shots/`, so the by-eye checks below get looked at rather than
   remembered. `SHOTS_PAD=xb` and `SHOTS_THEME=dark` drive the gates the page
-  hides behind an attribute; `SHOTS_PAGE` picks a page other than the homepage.
+  hides behind an attribute. `SHOTS_PAGE` names the page, but only the homepage
+  carries the sections it shoots, so anything else fails rather than writing
+  nothing and exiting 0, which is what it used to do.
   Horizontal overflow is not its job: `tests/layout.spec.js` gates that on every
   page at 1440/768/375 in both engines, and `make ci` runs it.
 - Run `node scripts/curb-check.mjs`. It mechanizes the copy and value-drift
