@@ -39,6 +39,17 @@ should never try to be one.
   (`--bg-inset-2`), not against `--bg`. The measured ratios are recorded inline
   in `styles/tokens.css`; if you retune a colour, re-measure and update the comment.
   All small print rides `--text-3`.
+- **No reading text below 11px.** 11px is the smallest type the site sets on
+  purpose (`.eyebrow`, on nine pages), so it is the floor, and
+  `tests/legibility.spec.js` gates it on every page at 1440 and 375. Text inside
+  an `aria-hidden` subtree is exempt because it is drawing, not reading: the
+  face-button letters and plate caption are printed on the controller at the
+  drawing's scale, exactly as they are on the real hardware. Watch for type
+  sized in container units: the hero's annotations were set in `cqw` against a
+  stage whose width is capped by the hero's height, which rendered them at
+  7.62px on a 900px-tall laptop and could never exceed 10.5px on any monitor.
+  Four hero rewrites named that as the reason they were failing and none of them
+  measured it.
 - **Radius tiers are fixed:** 14 card / 10 inset / 980 pill / 12 window
   (`--r-card`, `--r-inset`, `--r-btn`, `--r-window`). The window tier is for
   screenshot frames only (`.window`, `.shot`). Do not invent a new radius.
@@ -97,6 +108,9 @@ should never try to be one.
   shortcuts into Shortcuts, macros, and scripts). Half of Capabilities used to be
   a second reading of the hero, and a reader who learns nothing for the scroll
   starts skimming, which costs Feel and Trust further down.
+- A pane named on the homepage carries the app's own sidebar name (Bindings,
+  Presets, Radial Menu): the page and the app share one vocabulary, which is
+  the half of Logitech's page the comp called transferable. Elsewhere:
 - Plain words beat product jargon in visible copy. "Chords", "MFi", "radial
   launcher", "app ring", and `steer://` belong in the FAQ and the spec tables,
   not in hero annotations or feature chips. A non-technical reader is the
@@ -288,7 +302,14 @@ handed exactly two files, and it can work out which two: `src/_includes/bands/
 <band>.html` and `styles/bands/<band>.css` are the same path in two trees, so
 the pair is derivable rather than looked up.
 
-Two things that will waste your time otherwise:
+Three things that will waste your time otherwise:
+
+- **`home: true` in front matter does nothing.** `home` is an `eleventyComputed`
+  (`eleventy.config.js`), it is true only for `/index.src`, and computed data
+  overrides front matter, so setting it is silently ignored and `home.css` never
+  loads. A comp page that wants the band styles imports them into its own
+  `styles/heroes/<name>.css`, which is what `hero-lab.css` does and why it does
+  it. Cost three agents a detour before it was written down.
 
 - **The page freezes its own animations under automation.** `home.js` adds
   `.still` when `navigator.webdriver` is true, which is deliberate (deterministic
@@ -323,13 +344,13 @@ Two things that will waste your time otherwise:
   nothing and exiting 0, which is what it used to do.
   Horizontal overflow is not its job: `tests/layout.spec.js` gates that on every
   page at 1440/768/375 in both engines, and `make ci` runs it.
-- Run `node scripts/curb-check.mjs`. It mechanizes the copy and value-drift
+- Run `node scripts/curb-check.js`. It mechanizes the copy and value-drift
   rules that were enforced by eye: em/en-dashes, AI clichés, and emoji in
   *visible* copy (text nodes + alt/title/aria-label + meta descriptions, never
   code comments or SVG path data); web/display fonts; forbidden hexes
   (`#0d6efd`, `#007aff`, warm creams); the Bootstrap shadow; and off-token
   component radii (8-40px). ERROR fails the run; WARN is a review nudge. It is
-  dependency-free and self-verifying: `node scripts/curb-check.mjs --self-test`
+  dependency-free and self-verifying: `node scripts/curb-check.js --self-test`
   proves every detector still bites before you trust a clean run.
   - Two curb rules deliberately stay human-judged, not mechanized, because they
     fire ~100% false on this codebase: **AI-purple** (Steer's controller-LED and

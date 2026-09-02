@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { test } from "@playwright/test";
 
 const SECTIONS = { hero: ".chero", padstrip: ".padstrip", numstrip: ".numstrip",
-  uses: "#uses", feel: "#feel", capabilities: "#capabilities",
+  gap: "#gap", uses: "#uses", feel: "#feel", capabilities: "#capabilities",
   trust: "#trust", pricing: "#pricing" };
 
 const OUT = process.env.SHOTS_OUT || "scratch/shots";

@@ -34,9 +34,18 @@ out = subprocess.run([str(ROOT / "node_modules" / ".bin" / "purgecss"), "--confi
 if out.returncode:
     sys.exit(f"purgecss failed:\n{out.stderr.strip()}")
 
+# The unlinked hero-*.html comps are explorations, not shipped surfaces: they
+# are noindex, reachable from nothing, and their sheets keep rules for markup
+# that was pruned while comparing directions. Gating them would make the number
+# a report on scratch work rather than on the site, and the failure this gate
+# exists to catch lives in home.css.
+SKIP = lambda n: Path(n).name.startswith("hero-")
+
 worst = 0.0
 for entry in json.loads(out.stdout):
     name = entry.get("file", "?")
+    if SKIP(name):
+        continue
     before = os.path.getsize(name) if os.path.exists(name) else 0
     after = len(entry.get("css", ""))
     pct = 100 * (before - after) / before if before else 0

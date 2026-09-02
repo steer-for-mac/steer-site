@@ -7,7 +7,7 @@
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+import { dirname, join, relative } from "node:path";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -26,18 +26,15 @@ const HTML_FILES = existsSync(join(ROOT, "dist"))
 // Sources, never the generated sheets. Lightning CSS compresses colours, so
 // rgba(0,122,255,0.10) becomes #007aff1a in the output and the forbidden-hex
 // detector fires on a value the author never wrote. Check what a human edits.
-const cssIn = (dir, /** @type {(f: string) => boolean} */ keep = () => true) =>
-  readdirSync(join(ROOT, dir)).filter((f) => f.endsWith(".css") && keep(f))
+// Found, not listed. The hand-kept list this replaces named three directories
+// and warned that a fourth would reopen "the same silent gap". styles/heroes/
+// then did exactly that, unscanned, for five sheets.
+const cssUnder = (dir) =>
+  readdirSync(join(ROOT, dir), { withFileTypes: true, recursive: true })
+    .filter((d) => d.isFile() && d.name.endsWith(".css") && !d.name.endsWith(".entry.css"))
+    .map((d) => relative(join(ROOT, dir), join(d.parentPath, d.name)))
     .sort().map((f) => `${dir}/${f}`);
-const CSS_FILES = [
-  ...cssIn("src/styles", (f) => !f.endsWith(".entry.css")),
-  ...cssIn("src/styles/bands"),
-  // styles/pages/<page>.css. Added the day the per-page sheets landed: without
-  // it, moving a rule out of a page's front-matter <style> block and into its
-  // sheet would have taken it out of the curb's reach, which is the same silent
-  // gap the design-system.css/svg-strokes.css split opened.
-  ...cssIn("src/styles/pages"),
-];
+const CSS_FILES = cssUnder("src/styles");
 
 // ---- the lists the curb enforces by eye (copy rules) ----------------------
 
