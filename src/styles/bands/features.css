@@ -26,6 +26,8 @@
 
 @media (max-width: 860px) {
   .lg-grid { grid-template-columns: 1fr; }
+  .lg-grid article { border-right: 0; border-bottom: 1px solid var(--sep); }
+  .lg-grid article:last-child { border-bottom: 0; }
 }
 
 /* The gallery trigger and the feature-count link, one row under the grid. */
