@@ -1,4 +1,4 @@
-/* NAMED FEATURE GRID. Markup and layout carried over from the hero-logi comp, which
+/* THE APP IN USE. Markup and layout carried over from the hero-logi comp, which
    poured Steer's content into logitech.com/software/mx-software section by
    section. The .lg-* names travel with it so the comp and the shipped band
    stay diffable; renaming them would lose that. */
@@ -14,15 +14,29 @@
   border-radius: var(--r-inset); background: var(--bg-inset);
   border: 1px solid var(--sep);
 }
-/* A whole 2000px settings window shrunk into a 330px card is a grey smudge:
-   that is the "blurry" every earlier grid was rejected for. This shows the
-   top of the content pane at close to 1x, sidebar cropped away, so the pane's
-   own heading and its first rows are readable. The capture is 2x, the sidebar
-   is the left 22% of it, and 200% puts the remaining text at about 0.65x. */
+/* Every capture is 2x. A whole window shrunk into a 340px cell is a grey
+   smudge, the "blurry" every earlier grid was rejected for, so each one shows
+   a detail at close to 1x instead: --w is the image's width as a share of the
+   cell (200% puts a 2x capture at 1x on a cell half its pixel width), --x and
+   --y slide the frame onto the part that carries the claim. */
 .lg-thumb img {
-  position: absolute; left: -44%; top: -1%;
-  width: 200%; height: auto; max-width: none;
+  position: absolute; left: var(--x, 0); top: var(--y, 0);
+  width: var(--w, 100%); height: auto; max-width: none;
 }
+/* The wheel: the title bar and the top slices; the poster above already shows
+   it mid-word. 450pt wide, so 132% is 1x in the 340px cell. */
+.lg-thumb[data-cap="keyboard"] { --w: 132%; --x: -3%; --y: -2%; }
+/* The ring, whole, at 0.65x: the disc reads as a disc, the legend is cropped. */
+.lg-thumb[data-cap="ring"] { --w: 60%; --x: 20%; --y: -4%; }
+/* The overlay at 1x, starting at the status row (the title bar names the dev
+   build's synthetic pad) and slid onto the lit L1 column. 880pt wide. */
+.lg-thumb[data-cap="help"] { --w: 259%; --x: -10%; --y: -30%; }
+/* The dropdown at 1x, 360pt wide: the whole menu but its last row. */
+.lg-thumb[data-cap="menubar"] { --w: 106%; --x: -3%; --y: -2%; }
+/* The review dialog at 0.8x: the title and the first two flagged rows. */
+.lg-thumb[data-cap="review"] { --w: 122%; --x: -4%; --y: -3%; }
+/* The one pane: sidebar cropped, the list of layouts at about 0.65x. */
+.lg-thumb[data-cap="presets"] { --w: 200%; --x: -44%; --y: -1%; }
 
 @media (max-width: 860px) {
   .lg-grid { grid-template-columns: 1fr; }

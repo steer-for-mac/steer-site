@@ -1,5 +1,5 @@
-/* BANNER, PERSONA ROW, INTRO, PANEL, SUBSCRIBE: the hero-logi sequence in the
-   ruled editorial system (styles/bands/logi.css). */
+/* BANNER, PERSONA ROW, INTRO, PANEL: the hero-logi sequence in the ruled
+   editorial system (styles/bands/logi.css). The close is bands/subscribe.css. */
 
 /* The product strip: four ruled cells, a render on a flat field in each. */
 .lg-banner { border-bottom: 1px solid var(--sep); }
@@ -46,17 +46,6 @@
 .lg-pause:hover { color: var(--text); background: var(--bg-inset); }
 .lg-stagecap { margin: 14px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--text-2); }
 .lg-stagecap .lg-k { margin-right: 12px; }
-
-/* Subscribe: the closing rule. */
-.lg-sub { padding: 56px 0 48px; border-top: 1px solid var(--sep); }
-.lg-sub-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; }
-.lg-sub p { margin: 0; font-size: 15px; color: var(--text-2); max-width: 40ch; }
-.lg-sub p b { color: var(--text); }
-.lg-sub .lg-subrow { flex: 1 1 640px; display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin: 0; }
-.lg-subrow .ml-in { margin: 0; flex: 1 1 200px; max-width: 280px; background: var(--bg-sunken); }
-.lg-subrow .ml-msg { flex-basis: 100%; margin: 0; }
-.lg-subalt { flex-basis: 100%; margin: 4px 0 0; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--text-3); }
-.lg-subalt a { color: var(--blue-text); }
 
 @media (max-width: 900px) {
   .lg-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }

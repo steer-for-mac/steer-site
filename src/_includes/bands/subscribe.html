@@ -1,16 +1,55 @@
-<!-- The comp's subscribe strip, carrying the real launch-list form: a mailto
+<!-- THE CLOSE. The comp's subscribe strip, grown into the buying decision: the
+     price as a display figure, what it buys and what you need as two ruled
+     lists, and the launch-list form beside them. The copy is the parked
+     pricing band's (src/_includes/parked/pricing.html), which was the card
+     this page used to close on; the form is the same real endpoint. A mailto
      dies silently on a machine with no mail client at the moment of highest
-     intent. Without JS the native POST still works. -->
+     intent, so it stays as the visible fallback only. Without JS the native
+     POST still works.
+
+     Every row is a claim. Trial length: TrialCalculator.trialDays == 14 in
+     ~/Developer/steer. "Checked by Apple" is notarization (vs.html carries the
+     same fact). Rectangle is the free window manager the Snap Windows action
+     drives, named on trust.html and compatibility.html. -->
 <section class="lg-sub" id="pricing">
-  <div class="lg-wrap lg-sub-in">
-  <p>Hear the day the free trial opens. <b>&#8364;19.99</b> once, no subscription. No account, no tracking.</p>
-  <form class="ml-form lg-subrow" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
-    <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
-    <input class="ml-in" type="text" name="controller" placeholder="Your controller (optional)" aria-label="Which controller do you have (optional)">
-    <button type="submit" class="btn btn-primary">Join the launch list</button>
-    <p class="ml-msg" role="status" aria-live="polite"></p>
-  </form>
-    <p class="lg-subalt">Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
+  <div class="lg-wrap">
+    <div class="lg-sub-head">
+      <h2 class="lg-h2">One price. Yours to keep.</h2>
+      <p class="lg-sub-price"><span class="lg-cur">&euro;</span><span class="lg-num">19.99</span><span class="lg-k">paid once, no subscription</span></p>
+    </div>
+    <div class="lg-sub-grid">
+      <div class="lg-sub-col">
+        <h3 class="lg-k">Included</h3>
+        <ul class="lg-sub-list">
+          <li>14-day free trial at launch: no card, no account</li>
+          <li>Every feature your controller supports</li>
+          <li>Free updates as macOS changes</li>
+          <li>Direct from the developer, checked by Apple</li>
+        </ul>
+      </div>
+      <div class="lg-sub-col">
+        <h3 class="lg-k">What you need</h3>
+        <ul class="lg-sub-list">
+          <li>A controller you already own: PlayStation, Xbox or Switch Pro</li>
+          <li>A Mac with Apple Silicon, on macOS 14 or later</li>
+          <li>To snap windows into place, the free Rectangle app</li>
+        </ul>
+      </div>
+      <div class="lg-sub-act">
+        <h3 class="lg-k">Launch list</h3>
+        <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
+          <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
+          <input class="ml-in" type="text" name="controller" placeholder="Your controller (optional)" aria-label="Which controller do you have (optional)">
+          <button type="submit" class="btn btn-primary lg-sub-go">Join the launch list</button>
+          <p class="ml-msg" role="status" aria-live="polite"></p>
+        </form>
+        <p class="lg-sub-note">Steer is in final testing. One email the day the free trial opens: one message, from me, and your address goes nowhere else. Name your controller and you hear first when a pad needs a tester.</p>
+      </div>
+    </div>
+    <div class="lg-sub-fine">
+      <p>Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
+      <p>Built for myself. I use it daily. Sean Floyd</p>
+    </div>
   </div>
 </section>

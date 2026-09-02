@@ -1,0 +1,38 @@
+/* THE CLOSE: the price as a display figure on the head rule, three ruled
+   columns (included, needed, the form), and a fine strip the band ends on.
+   Ink draws the structure; nothing floats in a card. */
+.lg-sub { padding: 64px 0 40px; border-top: 1px solid var(--sep); }
+.lg-sub-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 40px; }
+.lg-sub-head .lg-h2 { margin: 0; }
+.lg-sub-price { margin: 0; display: flex; align-items: baseline; gap: 8px 12px; line-height: 1; }
+.lg-cur { font-family: var(--mono); font-size: 15px; font-weight: 500; letter-spacing: 0.12em; color: var(--text-3); }
+.lg-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: clamp(44px, 5vw, 64px); font-weight: 600; letter-spacing: -0.045em; color: var(--text); }
+.lg-sub-price .lg-k { margin-left: 6px; }
+
+.lg-sub-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); border: 1px solid var(--sep); margin-top: 28px; }
+.lg-sub-col, .lg-sub-act { padding: 18px 22px 22px; border-right: 1px solid var(--sep); }
+.lg-sub-act { border-right: 0; }
+.lg-sub-grid h3 { margin: 0 0 6px; }
+.lg-sub-list { list-style: none; margin: 0; padding: 0; }
+.lg-sub-list li { padding: 11px 0 12px; border-top: 1px solid var(--sep); font-size: 14px; line-height: 1.45; color: var(--text-2); }
+.lg-sub-list li:first-child { border-top: 0; padding-top: 8px; }
+
+/* .ml-form carries a top margin for the dialog, where it follows a paragraph;
+   here the column's heading places it. Fields on the plain band take a fill,
+   or the border alone is the whole field. */
+.lg-sub-act .ml-form { margin-top: 8px; }
+.lg-sub-act .ml-in { background: var(--bg-sunken); }
+.lg-sub-go { width: 100%; justify-content: center; }
+.lg-sub-note { margin: 14px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--text-2); }
+
+.lg-sub-fine { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 32px; margin-top: 18px; }
+.lg-sub-fine p { margin: 0; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--text-3); }
+.lg-sub-fine a { color: var(--blue-text); }
+
+@media (max-width: 900px) {
+  .lg-sub { padding: 48px 0 36px; }
+  .lg-sub-grid { grid-template-columns: 1fr; }
+  .lg-sub-col, .lg-sub-act { border-right: 0; border-bottom: 1px solid var(--sep); }
+  .lg-sub-act { border-bottom: 0; }
+  .lg-sub-fine { flex-direction: column; }
+}

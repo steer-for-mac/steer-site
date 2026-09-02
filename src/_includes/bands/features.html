@@ -1,77 +1,85 @@
-<!-- NAMED FEATURE GRID — six features, each with a name, each with a real shot of
-     the pane that configures it.
+<!-- THE APP IN USE. Six surfaces a buyer meets, each a capture of the app doing
+     its job rather than the pane that configures it: docs/screenshots.md
+     records why a grid of settings panes argued against the page ("it works
+     the moment you plug in" over six preference windows). The one pane kept,
+     Presets, is the one that says "it comes with layouts".
 
-     Naming is the half of Logitech's page the hero-logi comp called transferable:
-     their settings app and their marketing page share one vocabulary, which is
-     why "Actions Ring" is discussable while "the radial launcher" is jargon the
-     curb banishes to the FAQ. These six names are Steer's own sidebar sections,
-     so the page and the app agree.
+     Names are the app's own (window title, menu item, sidebar entry), which
+     is the half of Logitech's page the hero-logi comp called transferable:
+     the page and the app share one vocabulary.
 
-     The comp had "UI SHOT" placeholders here. They are real captures now, and
-     they swap with the theme through .shot from shared.css. -->
+     Framing: each capture shows at close to 1x inside a fixed 16:10 field, so
+     the app's own type stays readable; a whole window shrunk into a cell is
+     the "blurry" every earlier grid was rejected for. The offsets live in
+     styles/bands/features.css beside the reason for each.
+
+     help-overlay.png was captured 2026-09-02 from the dev build with L1 held
+     through steer://debug/inject, so the lit column is the app's live state,
+     not a mock. Its title bar names the synthetic pad, so the frame starts at
+     the status row. -->
 <section class="lg-sec lg-sec-rule" id="features">
   <div class="lg-wrap">
-    <h2 class="lg-h2">Get more out of your controller.</h2>
-    <p class="lg-lede">Six of the panes inside Steer, named the way the app names them, each one a real capture.</p>
+    <h2 class="lg-h2">What else you get.</h2>
+    <p class="lg-lede">Six more surfaces, captured from the app and named the way the app names them. No renders, no touch-ups.</p>
   <div class="lg-grid">
     <article>
-      <div class="lg-thumb shot">
-        <img class="shot-light" src="assets/light/settings-radialMenu.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Radial Menu pane: a list of menu items with app icons, and a preview of the ring they appear in.">
-        <img class="shot-dark" src="assets/dark/settings-radialMenu.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
+      <div class="lg-thumb shot" data-cap="keyboard">
+        <img class="shot-light" src="assets/daisy-wheel.png" width="900" height="1012" loading="lazy" decoding="async" alt="Steer's On-Screen Keyboard: eight slices of letters around a wheel, with the caption left stick aims, face button commits.">
+        <img class="shot-dark" src="assets/daisy-wheel-dark.png" width="900" height="1012" loading="lazy" decoding="async" alt="">
+      </div>
+      <h3>On-Screen Keyboard</h3>
+      <p>Aim the stick at a slice of letters and press the face button under the one you want. It types into whatever has the cursor.</p>
+    </article>
+    <article>
+      <div class="lg-thumb shot" data-cap="ring">
+        <img class="shot-light" src="assets/radial-menu.png" width="620" height="780" loading="lazy" decoding="async" alt="Steer's Radial Menu: nine app icons in a circle, with a bar underneath naming the button for Aim, Select and Cancel.">
+        <img class="shot-dark" src="assets/radial-menu-dark.png" width="620" height="780" loading="lazy" decoding="async" alt="">
       </div>
       <h3>Radial Menu</h3>
-      <p>A ring of your apps on screen at the tip of your thumb: aim with the stick, press to open.</p>
+      <p>Your apps in a ring at the tip of your thumb. Aim, press, and you are in the next one.</p>
     </article>
     <article>
-      <div class="lg-thumb shot">
-        <img class="shot-light" src="assets/light/settings-buttons.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Bindings pane: a row of layers above a list pairing each button with a Mac action.">
-        <img class="shot-dark" src="assets/dark/settings-buttons.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
+      <div class="lg-thumb shot" data-cap="help">
+        <img class="shot-light" src="assets/help-overlay.png" width="1760" height="1742" loading="lazy" decoding="async" alt="Steer's Help Overlay: a table of every button against six layers, the L1 column highlighted and a status line reading Active now, L1, 12 bindings available.">
+        <img class="shot-dark" src="assets/help-overlay-dark.png" width="1760" height="1742" loading="lazy" decoding="async" alt="">
       </div>
-      <h3>Bindings</h3>
-      <p>Every button, tap or hold. Hold one of five shoulder or trigger buttons and every other button takes a second job.</p>
+      <h3>Help Overlay</h3>
+      <p>Every button's job for the app you are in, on one card. Hold a shoulder button and its column lights up.</p>
     </article>
     <article>
-      <div class="lg-thumb shot">
+      <div class="lg-thumb shot" data-cap="menubar">
+        <img class="shot-light" src="assets/menubar-dropdown.png" width="720" height="530" loading="lazy" decoding="async" alt="Steer's menu bar menu: the connected DualSense with its battery level, then Profile, Show Help Overlay, Run Setup Wizard, Preferences and Quit.">
+        <img class="shot-dark" src="assets/menubar-dropdown-dark.png" width="720" height="530" loading="lazy" decoding="async" alt="">
+      </div>
+      <h3>Menu bar</h3>
+      <p>Steer lives in the menu bar: which controller is on, its battery, the layout in use, and the setup wizard if you ever want it.</p>
+    </article>
+    <article>
+      <div class="lg-thumb shot" data-cap="review">
+        <img class="shot-light" src="assets/import-review.png" width="1040" height="960" loading="lazy" decoding="async" alt="Steer's import review: three imported bindings, each tagged Opens URL beside the address it would open, with Cancel and Import buttons at the foot.">
+        <img class="shot-dark" src="assets/import-review-dark.png" width="1040" height="960" loading="lazy" decoding="async" alt="">
+      </div>
+      <h3>Import review</h3>
+      <p>Bring in someone else's setup, and anything that opens a page or runs a script is shown to you first. You approve it, or it does not run.</p>
+    </article>
+    <article>
+      <div class="lg-thumb shot" data-cap="presets">
         <img class="shot-light" src="assets/light/settings-presets.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Presets pane: a list of ready-made layouts for Browser, Cursor, DaVinci Resolve, Figma, Final Cut Pro and Mail, each with an Add button.">
         <img class="shot-dark" src="assets/dark/settings-presets.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
       </div>
       <h3>Presets</h3>
-      <p>Ready-made layouts for your browser, the video editors Final Cut Pro and DaVinci Resolve, the Figma design app, and more. Add one, then change what you like.</p>
-    </article>
-    <article>
-      <div class="lg-thumb shot">
-        <img class="shot-light" src="assets/light/settings-haptics.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Haptics and Triggers pane: a switch and an intensity slider for each event that can buzz.">
-        <img class="shot-dark" src="assets/dark/settings-haptics.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
-      </div>
-      <h3>Haptics &amp; Triggers</h3>
-      <p>A switch and a strength for every event that can buzz, and five trigger presets to start from.</p>
-    </article>
-    <article>
-      <div class="lg-thumb shot">
-        <img class="shot-light" src="assets/light/settings-led.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's LED pane: colour swatches for the light bar in each layer.">
-        <img class="shot-dark" src="assets/dark/settings-led.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
-      </div>
-      <h3>LED</h3>
-      <p>The light strip tells you which layer you are holding, in any colour you pick.</p>
-    </article>
-    <article>
-      <div class="lg-thumb shot">
-        <img class="shot-light" src="assets/light/settings-sticks.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Sticks pane: which stick does what, plus cursor speed, acceleration and dead-zone curves.">
-        <img class="shot-dark" src="assets/dark/settings-sticks.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
-      </div>
-      <h3>Sticks</h3>
-      <p>Cursor speed, stick curves and dead zones, tuned until it feels like yours.</p>
+      <p>Ready-made layouts for your browser, Mail, Final Cut Pro, DaVinci Resolve, the Figma design app and the Cursor code editor. Add one, then change what you like.</p>
     </article>
   </div>
   <!-- The gallery dialog (layouts/base.njk includes it on every page) is the
        pad-neutral evidence surface the curb keeps; its trigger moved here from
-       the cut capabilities band, because this is now where the panes are. -->
+       the cut capabilities band, because this is now where the captures are. -->
   <div class="lg-gal">
     <button type="button" class="btn btn-secondary" id="shotsOpen" aria-haspopup="dialog">
       {% include "art/capabilities-camera.svg" %}
       Look inside the app: eight screens
     </button>
-    <p>Captured from the app; no renders, no touch-ups. Everything else: <a href="features.html">See all 38, in plain language</a>.</p>
+    <p>Captured on a DualSense; in the app the button names follow the controller you plug in. Everything else: <a href="features.html">See all 38, in plain language</a>.</p>
   </div>
   </div>
 </section>
