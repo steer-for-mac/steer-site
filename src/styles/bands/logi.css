@@ -1,8 +1,15 @@
-/* The section language below the panel, from the comp: a left-aligned compact
-   head, one lede, then cards. No display heads, no dark bands. */
-.lg-sec { padding: 44px 0 40px; }
-.lg-sec-in { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-.lg-h2 { margin: 0 0 12px; font-size: 26px; font-weight: 600; letter-spacing: -0.015em; color: var(--text); }
-.lg-lede { max-width: 62ch; margin: 0 0 26px; font-size: 14px; line-height: 1.6; color: var(--text-2); }
+/* The homepage's system: a ruled editorial grid. Hairlines draw the structure,
+   SF Mono uppercase labels name every cell (the site's instrument signature),
+   display type carries the statements, real captures sit on flat neutral
+   fields. No card shadows, no decoration that encodes nothing. */
+.lg-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.lg-sec { padding: 72px 0 80px; }
+.lg-sec-rule { border-top: 1px solid var(--sep); }
+.lg-h2 { margin: 0 0 14px; font-size: clamp(30px, 3.4vw, 44px); font-weight: 650; letter-spacing: -0.03em; line-height: 1.05; color: var(--text); max-width: 20ch; text-wrap: balance; }
+.lg-lede { max-width: 58ch; margin: 0 0 36px; font-size: 15.5px; line-height: 1.6; color: var(--text-2); }
 .lg-lede a { color: var(--blue-text); }
-@media (max-width: 860px) { .lg-sec { padding: 36px 0 32px; } }
+.lg-k { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
+.lg-v { font-size: 13px; color: var(--text-2); }
+p.lg-fine, .lg-wrap .lg-fine { font-family: var(--mono); font-size: 11.5px; line-height: 1.6; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+.lg-n { display: inline-block; min-width: 2.4em; font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: var(--text-3); }
+@media (max-width: 860px) { .lg-sec { padding: 52px 0 56px; } .lg-lede { margin-bottom: 28px; } }

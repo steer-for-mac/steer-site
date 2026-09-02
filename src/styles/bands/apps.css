@@ -5,9 +5,10 @@
 
 /* Four cards that fit the column. The comp scrolled them sideways, which at
    1440px cut the fourth card in half and read as a defect, not a carousel. */
-.lg-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
-.lg-card { background: var(--card-bg); border: 1px solid var(--sep); border-radius: var(--r-card); padding: 16px; box-shadow: var(--shadow-rest); }
-@media (max-width: 900px) { .lg-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.lg-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--sep); }
+.lg-card { padding: 22px 22px 24px; border-right: 1px solid var(--sep); background: var(--bg); }
+.lg-card:last-child { border-right: 0; }
+@media (max-width: 900px) { .lg-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lg-card:nth-child(2) { border-right: 0; } .lg-card:nth-child(-n+2) { border-bottom: 1px solid var(--sep); } }
 @media (max-width: 520px) { .lg-cards { grid-template-columns: 1fr; } }
 .lg-dev { position: relative; }
 .lg-dev img {
@@ -16,7 +17,7 @@
   --ps-cross: var(--blue); --ps-circle: var(--sep-2);
   --ps-triangle: var(--sep-2); --ps-square: var(--sep-2);
 }
-.lg-card h3 { margin: 10px 0 8px; font-size: 15px; font-weight: 600; color: var(--text); }
+.lg-card h3 { margin: 16px 0 10px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
 
 /* NUMBERED CHIPS ------------------------------------------------------------
    The reference puts a numbered chip on each control and repeats the number in
@@ -93,4 +94,4 @@
 .lg-key > li:last-child { margin-bottom: 0; }
 .lg-key > li::before { content: counter(lg-n); }
 
-.lg-cardsnote { margin: 14px 0 0; }
+.lg-cardsnote { margin: 16px 0 0; }

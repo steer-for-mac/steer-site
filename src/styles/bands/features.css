@@ -3,13 +3,16 @@
    section. The .lg-* names travel with it so the comp and the shipped band
    stay diffable; renaming them would lose that. */
 
-.lg-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
-.lg-grid article h3 { margin: 12px 0 6px; font-size: 15px; font-weight: 600; color: var(--text); }
+.lg-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--sep); }
+.lg-grid article { padding: 20px 22px 24px; border-right: 1px solid var(--sep); border-bottom: 1px solid var(--sep); }
+.lg-grid article:nth-child(3n) { border-right: 0; }
+.lg-grid article:nth-last-child(-n+3) { border-bottom: 0; }
+.lg-grid article h3 { margin: 14px 0 6px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
 .lg-grid article p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--text-2); }
 .lg-thumb {
   position: relative; aspect-ratio: 16 / 10; overflow: hidden;
   border-radius: var(--r-inset); background: var(--bg-inset);
-  border: 1px solid var(--sep-2);
+  border: 1px solid var(--sep);
 }
 /* A whole 2000px settings window shrunk into a 330px card is a grey smudge:
    that is the "blurry" every earlier grid was rejected for. This shows the
@@ -22,10 +25,10 @@
 }
 
 @media (max-width: 860px) {
-  .lg-grid { grid-template-columns: 1fr; }
+  .lg-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--sep); }
 }
 
 /* The gallery trigger and the feature-count link, one row under the grid. */
-.lg-gal { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 14px 20px; margin-top: 26px; }
+.lg-gal { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 14px 20px; margin-top: 28px; }
 .lg-gal p { margin: 0; font-size: 12.5px; color: var(--text-3); }
 .lg-gal a { color: var(--blue-text); }

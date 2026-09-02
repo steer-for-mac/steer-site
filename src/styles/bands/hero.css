@@ -1,76 +1,66 @@
-/* The comp's sheet (styles/pages/hero-logi.css), carried over with its
-   proportions. The .lg-* names stay so the comp and the page diff cleanly. */
-.lg-banner { position: relative; background: var(--bg-inset-2); overflow: hidden; }
-/* The product strip is the picker: four silhouettes, the chosen one in ink. */
-/* Two silhouettes each side, the middle left clear for the copy. */
-.lg-strip { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr minmax(560px, 2fr) 1fr 1fr; align-items: center; gap: 24px; padding: 0 40px; }
-.lg-strip .lg-padtab:nth-of-type(3) { grid-column: 4; }
-.lg-padtab { min-width: 0; max-width: 220px; justify-self: center; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; border-radius: var(--r-inset); }
-.lg-padtab svg {
-  width: 100%; height: auto; display: block; opacity: 0.28; transition: opacity .2s ease;
-  --pad-body: var(--text-3); --pad-ink: var(--text-3); --pad-edge: transparent;
-  --ps-cross: var(--text-3); --ps-circle: var(--text-3); --ps-triangle: var(--text-3); --ps-square: var(--text-3);
-}
-.lg-padtab span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
-.lg-padtab:hover svg { opacity: 0.6; }
-.lg-padtab:hover span { color: var(--text); }
-.lg-padtab:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
-.lg-banner-in { position: relative; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 46px 24px 40px; text-align: center; }
-.lg-banner-in h1 { margin: 0; max-width: 22ch; font-size: 34px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; color: var(--text); text-wrap: balance; }
-.lg-btns a, .lg-banner-in p { pointer-events: auto; }
-.lg-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
-.lg-btn {
-  display: inline-block; padding: 13px 26px; border-radius: var(--r-btn); border: 0; cursor: pointer;
-  background: var(--blue); color: #fff; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; font-weight: 600; text-decoration: none; text-transform: uppercase;
-}
-.lg-btn:hover { background: color-mix(in srgb, var(--blue) 88%, #000); text-decoration: none; }
-.lg-btn-2 { background: transparent; color: var(--blue-text); box-shadow: inset 0 0 0 1.5px var(--blue); }
-.lg-btn-2:hover { background: var(--blue-fill); }
-.lg-terms { margin: 0; font-family: var(--mono); font-size: 12px; color: var(--text-3); }
-.lg-terms b { color: var(--text-2); font-weight: 600; }
+/* BANNER, PERSONA ROW, INTRO, PANEL, SUBSCRIBE: the hero-logi sequence in the
+   ruled editorial system (styles/bands/logi.css). */
 
-.lg-personas { display: flex; flex-wrap: wrap; justify-content: center; gap: 26px 34px; max-width: var(--maxw); margin: 0 auto; padding: 34px 24px 10px; }
-.lg-personas a { display: flex; flex-direction: column; align-items: center; gap: 9px; font-size: 12px; color: var(--text-2); text-decoration: none; text-align: center; max-width: 92px; }
-.lg-personas a:hover { color: var(--text); }
-.lg-circle { display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%; background: var(--bg-inset); border: 1px solid var(--sep); color: var(--text-2); transition: border-color .15s ease, color .15s ease; }
-.lg-circle svg { width: 30px; height: 30px; }
-.lg-personas a:hover .lg-circle { border-color: var(--sep-2); color: var(--text); }
+/* The product strip: four ruled cells, a render on a flat field in each. */
+.lg-banner { border-bottom: 1px solid var(--sep); }
+.lg-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--sep); border-bottom: 0; margin-top: 28px; }
+.lg-cell { display: flex; flex-direction: column; gap: 4px; padding: 22px 22px 20px; text-decoration: none; background: var(--bg-sunken); border-right: 1px solid var(--sep); transition: background-color .15s ease; }
+.lg-cell:last-child { border-right: 0; }
+.lg-cell:hover { background: var(--bg-inset); text-decoration: none; }
+.lg-cell img { width: auto; max-width: 100%; height: 150px; object-fit: contain; align-self: center; margin: 4px 0 18px; filter: drop-shadow(0 8px 12px rgba(0, 0, 0, .16)); }
+.lg-cell .lg-k { color: var(--text); }
+.lg-cell-more { justify-content: flex-end; }
+.lg-big { font-size: clamp(56px, 6vw, 84px); font-weight: 650; letter-spacing: -0.04em; line-height: 150px; color: var(--text); margin: 4px 0 18px; }
 
-.lg-intro { max-width: 640px; margin: 0 auto; padding: 40px 24px 8px; text-align: center; }
-.lg-eyebrow { margin: 0; font-size: 13px; color: var(--text-3); }
-.lg-intro h2 { margin: 6px 0 14px; font-size: 30px; font-weight: 600; color: var(--text); }
-.lg-intro p { margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--text-2); }
-.lg-fine { font-family: var(--mono); font-size: 11.5px; color: var(--text-3); }
-.lg-intro .lg-fine { margin-top: 12px; }
+/* The statement. Display tier at full size, left on the grid. */
+.lg-banner-in { border: 1px solid var(--sep); padding: 56px 40px 52px; display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 28px 48px; align-items: end; }
+.lg-banner-in h1 { grid-column: 1; margin: 0; font-size: clamp(38px, 4.4vw, 60px); font-weight: 700; letter-spacing: -0.04em; line-height: 1.0; color: var(--text); }
+.lg-lede-mono { grid-column: 2; margin: 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.65; letter-spacing: 0.02em; text-transform: uppercase; color: var(--text-2); max-width: 44ch; }
+.lg-btns { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 12px; padding-top: 8px; }
 
-/* The centrepiece panel: their photograph with one overlay. The recording sits
-   in the panel at its own ratio; the arcs read button, line, what it did. */
-.lg-stage { max-width: var(--maxw); margin: 0 auto; padding: 34px 24px 8px; }
-.lg-photo { position: relative; margin: 0; overflow: hidden; border-radius: var(--r-card); border: 1px solid var(--sep); background: var(--bg-inset); }
+/* Persona row: one ruled line of places, each a link. */
+.lg-personas { display: flex; flex-wrap: wrap; border: 1px solid var(--sep); border-top: 0; }
+.lg-personas a { flex: 1 1 auto; padding: 14px 18px; border-right: 1px solid var(--sep); font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-2); text-decoration: none; text-align: center; }
+.lg-personas a:last-child { border-right: 0; }
+.lg-personas a:hover { color: var(--text); background: var(--bg-sunken); text-decoration: none; }
+
+/* Intro: statement left, the paragraph right, on one rule. */
+.lg-intro { padding: 72px 0 40px; }
+.lg-intro-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 56px; align-items: start; }
+.lg-intro h2 { margin: 0; font-size: clamp(34px, 4.2vw, 56px); font-weight: 650; letter-spacing: -0.035em; line-height: 1; color: var(--text); }
+.lg-intro p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--text-2); max-width: 46ch; }
+.lg-intro p.lg-fine { margin-top: 16px; font-family: var(--mono); font-size: 11.5px; line-height: 1.6; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+
+/* The panel: the recording in a ruled frame with the button legend under it. */
+.lg-stage { padding: 24px 0 8px; }
+.lg-photo { margin: 0; overflow: hidden; border: 1px solid var(--sep); background: var(--bg-sunken); }
 .lg-video { display: block; width: 100%; height: auto; }
-.lg-arcs { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; padding: 16px 20px; border-top: 1px solid var(--sep); background: var(--card-bg); }
-.lg-arc { display: inline-flex; align-items: center; gap: 10px; }
-.lg-pill { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); background: var(--bg-inset); border: 1px solid var(--sep-2); border-radius: var(--r-inset); padding: 6px 10px; }
-.lg-line { width: 56px; height: 1.5px; background: var(--blue); }
-.lg-pause { margin-left: 8px; padding: 6px 12px; border-radius: var(--r-btn); border: 1px solid var(--sep-2); background: var(--bg); color: var(--text-2); font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
-.lg-pause:hover { color: var(--text); }
-.lg-stagecap { margin: 12px 0 0; text-align: center; }
+.lg-arcs { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding: 14px 20px; border-top: 1px solid var(--sep); }
+.lg-how { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--text-2); }
+.lg-how b { color: var(--text); font-weight: 600; }
+.lg-pause { padding: 6px 12px; border-radius: var(--r-btn); border: 1px solid var(--sep); background: var(--bg); color: var(--text-2); font: inherit; font-size: 12.5px; cursor: pointer; }
+.lg-pause:hover { color: var(--text); background: var(--bg-inset); }
+.lg-stagecap { margin: 14px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--text-2); }
+.lg-stagecap .lg-k { margin-right: 12px; }
 
-.lg-sub { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 22px; padding: 26px 24px; background: var(--bg-inset-2); }
-.lg-sub p { margin: 0; font-size: 14px; color: var(--text-2); }
+/* Subscribe: the closing rule. */
+.lg-sub { padding: 56px 0 48px; border-top: 1px solid var(--sep); }
+.lg-sub-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; }
+.lg-sub p { margin: 0; font-size: 15px; color: var(--text-2); max-width: 40ch; }
 .lg-sub p b { color: var(--text); }
-.lg-sub .lg-subrow { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; }
-.lg-subrow .ml-in { margin: 0; min-width: 220px; background: var(--bg); }
+.lg-sub .lg-subrow { flex: 1 1 640px; display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin: 0; }
+.lg-subrow .ml-in { margin: 0; flex: 1 1 200px; max-width: 280px; background: var(--bg-sunken); }
 .lg-subrow .ml-msg { flex-basis: 100%; margin: 0; }
-.lg-subalt { flex-basis: 100%; text-align: center; font-size: 12px; color: var(--text-3); }
+.lg-subalt { flex-basis: 100%; margin: 4px 0 0; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--text-3); }
 .lg-subalt a { color: var(--blue-text); }
 
-@media (max-width: 860px) {
-  .lg-strip { display: none; }
-  .lg-banner-in { padding: 34px 20px 30px; }
-  .lg-banner-in h1 { font-size: 28px; }
-  .lg-personas { gap: 18px 16px; padding: 26px 16px 6px; }
-  .lg-circle { width: 64px; height: 64px; }
-  .lg-arcs { gap: 10px 18px; }
-  .lg-line { width: 28px; }
+@media (max-width: 900px) {
+  .lg-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lg-cell:nth-child(2) { border-right: 0; }
+  .lg-cell:nth-child(-n+2) { border-bottom: 1px solid var(--sep); }
+  .lg-banner-in { grid-template-columns: 1fr; padding: 36px 22px 32px; }
+  .lg-banner-in h1, .lg-lede-mono, .lg-btns { grid-column: 1; }
+  .lg-intro-in { grid-template-columns: 1fr; }
+  .lg-personas a { flex-basis: 50%; border-bottom: 1px solid var(--sep); }
+  .lg-personas a:nth-child(even) { border-right: 0; }
 }
