@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# dependencies = ["pillow"]
+# ///
 """One continuous session for the homepage panel, driven through the dev build's
 synthetic pad and recorded from the screen. Every input is logged with its time
 since the recording started, so overlay.py can draw the pad frame-accurately.
@@ -104,6 +107,12 @@ def frame_of(handle, app):
     if len(out) < 4: return None
     x, y, w, h = map(int, out[:4]); return (x + w // 2, y + h // 2)
 
+def staged():
+    """setup(), and if it refuses partway, everything it had already opened is closed first."""
+    try: setup()
+    except BaseException:
+        teardown(); raise
+
 def stage_diff(png):
     """Mean absolute grey difference, 0 to 255, between a stage frame and the reference thumbnail."""
     from PIL import Image, ImageChops, ImageStat
@@ -136,7 +145,7 @@ def session(out):
 if __name__ == "__main__":
     out = sys.argv[1]
     if "--stage" in sys.argv:      # stage, screenshot the frame for a human look, leave everything up
-        setup(); sh("screencapture", "-x", "-R", REGION, out + ".stage.png")
+        staged(); sh("screencapture", "-x", "-R", REGION, out + ".stage.png")
         # The TV app reopens on whatever it showed last, and one stage went
         # out on its Monarch page. The frame has to look like the good one.
         d = stage_diff(out + ".stage.png")
@@ -147,6 +156,6 @@ if __name__ == "__main__":
         try: session(out)          # the frame was staged and verified by the caller
         finally: teardown()
         sys.exit()
-    setup()
+    staged()
     try: session(out)
     finally: teardown()
