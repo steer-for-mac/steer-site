@@ -23,9 +23,11 @@ capture() {
   u "steer://help/show"; sleep 1.2
   u "steer://debug/inject?file=$C/help-l1.json"; sleep 1.6
   local pid; pid=$(pgrep -f "$DEV/Contents/MacOS" | head -1)
-  local found; found=$("$HERE/winid" "$pid" panel)   # exits 1 with nothing printed when no panel is up
+  local found
+  if ! found=$("$HERE/winid" "$pid" panel); then   # exits 1 with nothing printed when no panel is up
+    echo "no Help Overlay panel found for pid $pid" >&2; return 1
+  fi
   local id=${found%% *}
-  [ -n "$id" ] || { echo "no Help Overlay panel found for pid $pid" >&2; return 1; }
   screencapture -l "$id" -o -x "$1"
   u "steer://help/hide"; u "steer://debug/disconnect"; sleep 0.4
 }
