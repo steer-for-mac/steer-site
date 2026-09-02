@@ -22,12 +22,12 @@ description: "Get help with Steer: email support, the in-app help guide, and com
       </details>
       <details>
         <summary>What permissions does it need, and why?</summary>
-        <div class="faq-body">Accessibility, so Steer can move the cursor and type: the app can't do its job without it. Input Monitoring for three things: the DualSense Edge back buttons, tilt-to-aim on a DualShock 4, and off-brand pads macOS does not recognise on its own. No tracking, no analytics, and your setup stays on your Mac. The full picture is in the <a href="#trust">trust section</a> and the <a href="privacy.html">privacy page</a>.</div>
+        <div class="faq-body">Accessibility, so Steer can move the cursor and type: the app can't do its job without it. Input Monitoring gets asked for once, when a DualSense Edge is plugged in, in case its rear paddles need it. No controller that has been tested needed it, and turning it down has never stopped anything working. No tracking, no analytics, and your setup stays on your Mac. The full picture is in the <a href="trust.html">trust section</a> and the <a href="privacy.html">privacy page</a>.</div>
       </details>
     </div>
 
     <h2>Controller not detected</h2>
-    <p>Connect via USB first to confirm the controller is working, then try Bluetooth. Use &ldquo;Scan for controller&rdquo; in the menu bar. If Steer was recently updated, macOS may have revoked Accessibility. Check System Settings → Privacy &amp; Security → Accessibility. Input Monitoring is a separate permission and is not needed for detection: it applies only to a DualSense Edge's rear paddles, tilt-to-aim on a DualShock 4, and off-brand pads.</p>
+    <p>Connect via USB first to confirm the controller is working, then try Bluetooth. Use &ldquo;Scan for controller&rdquo; in the menu bar. If Steer was recently updated, macOS may have revoked Accessibility. Check System Settings → Privacy &amp; Security → Accessibility. Input Monitoring is a separate permission and is not needed for detection: Steer only asks for it when a DualSense Edge is plugged in.</p>
 
     <h2>Restoring a purchase</h2>
     <p>The exact activation flow is being finalised ahead of launch. If you've purchased and need to restore access, email <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a> with your order details and I'll sort it out.</p>
@@ -58,7 +58,7 @@ description: "Get help with Steer: email support, the in-app help guide, and com
       </div>
       <div>
         <div class="spec-row"><span class="k">Accessibility permission</span><span class="v">A Mac setting you switch on once</span></div>
-        <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">For three cases: Edge back buttons, DualShock 4 tilt-to-aim, off-brand pads</span></div>
+        <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">Asked once, when a DualSense Edge is plugged in. No pad tested has needed it</span></div>
         <div class="spec-row"><span class="k">Window snapping</span><span class="v">Needs the <a href="https://rectangleapp.com">Rectangle</a> app, installed separately</span></div>
         <!-- 35 .lproj bundles and 35 help-docs-*.md in the app repo, at string
              parity with English. Kept here rather than anywhere prominent: it is
@@ -90,7 +90,7 @@ description: "Get help with Steer: email support, the in-app help guide, and com
         <div class="faq-body">For clicking a menu item, hitting a link, dragging a file, yes, once the speed suits your hands: the cursor crawls when you nudge the stick and sweeps when you push it, and you set that yourself. For pixel work in Photoshop, no. Most people set the cursor speed once on the first day and stop thinking about it. This is the part you have to feel, which is what the trial is for.</div>
       </details>
 
-      <p class="foot-note sup-more">More questions: <a href="features.html">what it does</a>, <a href="compatibility.html">your controller</a>, <a href="support.html">buying and permissions</a>.</p>
+      <p class="foot-note sup-more">More questions: <a href="features.html">what it does</a>, <a href="compatibility.html">your controller</a>, <a href="privacy.html">what leaves your Mac</a>.</p>
     </div>
   </div>
 </main>
