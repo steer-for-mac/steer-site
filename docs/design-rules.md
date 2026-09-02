@@ -30,6 +30,15 @@ should never try to be one.
   selected pad's LED colour; the accent picker swaps it. Every accent variant
   is AA-verified. Never introduce a second saturated accent, a gradient accent,
   or a rainbow. One interactive colour, period.
+  Two exceptions, both of which encode a fact rather than decorate (2026-09-02,
+  after "seems very grey"): the accent also carries the numbering and the
+  mono labels that name a cell (`.lg-n`, `.lg-k` on cells, the price figure),
+  so the grid's structure reads in one colour; and the banner's three family
+  cells sit on a wash of their own brand colour (`--blue-fill`, `--green-fill`,
+  `--red-fill`), the way kynth.studio's tiles carry a product's colour. The
+  washes go under a render and its label only, never under reading text, and
+  the Others cell stays neutral because 315 mappings have no one colour. A
+  fourth tint, or a wash under a paragraph, is drift.
 - **Cool neutral surfaces, never warm.** Use the surface ramp
   (`--bg` to `--bg-inset-2`) and the elevation ramp (`--shadow-rest` <
   `--shadow-rest-lg` < `--shadow-window`). No warm cream (`#FAFAF9`), no warm

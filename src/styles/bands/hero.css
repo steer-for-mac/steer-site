@@ -6,11 +6,21 @@
 .lg-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--sep); border-bottom: 0; margin-top: 28px; }
 .lg-cell { display: flex; flex-direction: column; gap: 4px; padding: 22px 22px 20px; text-decoration: none; background: var(--bg-sunken); border-right: 1px solid var(--sep); transition: background-color .15s ease; }
 .lg-cell:last-child { border-right: 0; }
-.lg-cell:hover { background: var(--bg-inset); text-decoration: none; }
+.lg-cell:hover { text-decoration: none; }
+.lg-cell-more:hover { background: var(--bg-inset); }
 .lg-cell img { width: auto; max-width: 100%; height: 150px; object-fit: contain; align-self: center; margin: 4px 0 18px; filter: drop-shadow(0 8px 12px rgba(0, 0, 0, .16)); }
-.lg-cell .lg-k { color: var(--text); }
+.lg-cell .lg-k { color: var(--blue-text); }
+/* The three families sit on a wash of their own colour: PlayStation's light
+   bar blue, Xbox green, Nintendo red. The wash names the family, the way
+   kynth.studio's tiles name a product; the Others cell stays neutral because
+   315 mappings have no one colour. Text on these fields is the cell label
+   and the render's caption only. */
+.lg-cell:nth-child(1) { background: var(--blue-fill); }
+.lg-cell:nth-child(2) { background: var(--green-fill); }
+.lg-cell:nth-child(3) { background: var(--red-fill); }
+.lg-cell:nth-child(-n+3):hover { filter: brightness(0.97); }
 .lg-cell-more { justify-content: flex-end; }
-.lg-big { font-size: clamp(56px, 6vw, 84px); font-weight: 650; letter-spacing: -0.04em; line-height: 150px; color: var(--text); margin: 4px 0 18px; }
+.lg-big { font-size: clamp(56px, 6vw, 84px); font-weight: 650; letter-spacing: -0.04em; line-height: 150px; color: var(--blue-text); margin: 4px 0 18px; }
 
 /* The statement. Display tier at full size, left on the grid. */
 .lg-banner-in { border: 1px solid var(--sep); padding: 56px 40px 52px; display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 28px 48px; align-items: end; }
@@ -23,7 +33,7 @@
 .lg-personas { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border: 1px solid var(--sep); border-top: 0; }
 .lg-personas a { display: flex; flex-direction: column; gap: 5px; padding: 14px 18px 15px; border-right: 1px solid var(--sep); text-decoration: none; }
 .lg-personas a:last-child { border-right: 0; }
-.lg-personas a .lg-k { color: var(--text); }
+.lg-personas a .lg-k { color: var(--blue-text); }
 .lg-personas a .lg-v { line-height: 1.4; text-wrap: pretty; }
 .lg-personas a:hover { background: var(--bg-sunken); text-decoration: none; }
 .lg-personas a:hover .lg-v { color: var(--text); }
@@ -49,7 +59,7 @@
 .lg-pause { padding: 6px 12px; border-radius: var(--r-btn); border: 1px solid var(--sep); background: var(--bg); color: var(--text-2); font: inherit; font-size: 12.5px; cursor: pointer; }
 .lg-pause:hover { color: var(--text); background: var(--bg-inset); }
 .lg-stagecap { margin: 14px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--text-2); }
-.lg-stagecap .lg-k { margin-right: 12px; }
+.lg-stagecap .lg-k { margin-right: 12px; color: var(--blue-text); }
 
 @media (max-width: 900px) {
   .lg-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }

@@ -1,7 +1,9 @@
 /* The homepage's system: a ruled editorial grid. Hairlines draw the structure,
    SF Mono uppercase labels name every cell (the site's instrument signature),
    display type carries the statements, real captures sit on flat neutral
-   fields. No card shadows, no decoration that encodes nothing. */
+   fields. The one accent carries the numbering and the labels that name a
+   cell; the banner's three family fields carry each pad's own colour. No
+   card shadows, no decoration that encodes nothing. */
 .lg-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 .lg-sec { padding: 72px 0 80px; }
 .lg-sec-rule { border-top: 1px solid var(--sep); }
@@ -11,5 +13,5 @@
 .lg-k { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
 .lg-v { font-size: 13px; color: var(--text-2); }
 p.lg-fine, .lg-wrap .lg-fine { font-family: var(--mono); font-size: 11.5px; line-height: 1.6; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
-.lg-n { display: inline-block; min-width: 2.4em; font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: var(--text-3); }
+.lg-n { display: inline-block; min-width: 2.4em; font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: var(--blue-text); }
 @media (max-width: 860px) { .lg-sec { padding: 52px 0 56px; } .lg-lede { margin-bottom: 28px; } }

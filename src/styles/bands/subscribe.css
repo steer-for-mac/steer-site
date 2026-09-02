@@ -6,13 +6,13 @@
 .lg-sub-head .lg-h2 { margin: 0; }
 .lg-sub-price { margin: 0; display: flex; align-items: baseline; gap: 8px 12px; line-height: 1; }
 .lg-cur { font-family: var(--mono); font-size: 15px; font-weight: 500; letter-spacing: 0.12em; color: var(--text-3); }
-.lg-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: clamp(44px, 5vw, 64px); font-weight: 600; letter-spacing: -0.045em; color: var(--text); }
+.lg-num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: clamp(44px, 5vw, 64px); font-weight: 600; letter-spacing: -0.045em; color: var(--blue-text); }
 .lg-sub-price .lg-k { margin-left: 6px; }
 
 .lg-sub-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); border: 1px solid var(--sep); margin-top: 28px; }
 .lg-sub-col, .lg-sub-act { padding: 18px 22px 22px; border-right: 1px solid var(--sep); }
 .lg-sub-act { border-right: 0; }
-.lg-sub-grid h3 { margin: 0 0 6px; }
+.lg-sub-grid h3 { margin: 0 0 6px; color: var(--blue-text); }
 .lg-sub-list { list-style: none; margin: 0; padding: 0; }
 .lg-sub-list li { padding: 11px 0 12px; border-top: 1px solid var(--sep); font-size: 14px; line-height: 1.45; color: var(--text-2); }
 .lg-sub-list li:first-child { border-top: 0; padding-top: 8px; }

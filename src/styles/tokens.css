@@ -9,6 +9,9 @@
   --sep:rgba(0,0,0,0.09); --sep-2:rgba(0,0,0,0.14); --hairline:rgba(0,0,0,0.08);
   --blue:#0071eb; --blue-text:#0066cc; --blue-fill:rgba(0,122,255,0.10);
   --green:#34c759; --red:#ff3b30; --yellow:#ff9f0a;
+  /* the pad families' fields on the homepage banner: a wash of each brand's
+     colour under its render, never behind text smaller than the cell label */
+  --green-fill:rgba(52,199,89,0.13); --red-fill:rgba(255,59,48,0.10);
   --green-text:#167931; --amber-text:#985a00;
   --ps-cross:#1e9bf0; --ps-circle:#ff3b30; --ps-triangle:#34c759; --ps-square:#ff375f;
   --pad-body:#e4e7ec; --pad-ink:#767c88; --pad-edge:rgba(0,0,0,0.24);
@@ -33,6 +36,7 @@
   --sep:rgba(255,255,255,0.10); --sep-2:rgba(255,255,255,0.16); --hairline:rgba(255,255,255,0.09);
   --blue:#0b76dd; --blue-text:#4aa8ff; --blue-fill:rgba(10,132,255,0.16);
   --green:#30d158; --red:#ff453a; --yellow:#ffd60a;
+  --green-fill:rgba(48,209,88,0.14); --red-fill:rgba(255,69,58,0.13);
   /* on the dark surface the bright fills already clear 4.5:1 as text */
   --green-text:#30d158; --amber-text:#ffd60a;
   --ps-cross:#3aa0f0; --ps-circle:#ff453a; --ps-triangle:#30d158; --ps-square:#ff4f7d;
