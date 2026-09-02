@@ -36,7 +36,8 @@ should never try to be one.
   so the grid's structure reads in one colour; and the banner's three family
   cells sit on a wash of their own brand colour (`--blue-fill`, `--green-fill`,
   `--red-fill`), the way kynth.studio's tiles carry a product's colour. The
-  washes go under a render and its label only, never under reading text, and
+  washes go under a render, its label and its one-line caption only, never
+  under reading text, and
   the Others cell stays neutral because 315 mappings have no one colour. A
   fourth tint, or a wash under a paragraph, is drift.
 - **Cool neutral surfaces, never warm.** Use the surface ramp

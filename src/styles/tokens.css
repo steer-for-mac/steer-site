@@ -12,6 +12,7 @@
   /* the pad families' fields on the homepage banner: a wash of each brand's
      colour under its render, never behind text smaller than the cell label */
   --green-fill:rgba(52,199,89,0.13); --red-fill:rgba(255,59,48,0.10);
+  /* on the three washes over #fff: --blue-text 4.91 / 5.02 / 4.86, --text-2 5.86 / 5.99 / 5.80 (blue / green / red) */
   --green-text:#167931; --amber-text:#985a00;
   --ps-cross:#1e9bf0; --ps-circle:#ff3b30; --ps-triangle:#34c759; --ps-square:#ff375f;
   --pad-body:#e4e7ec; --pad-ink:#767c88; --pad-edge:rgba(0,0,0,0.24);
@@ -37,6 +38,7 @@
   --blue:#0b76dd; --blue-text:#4aa8ff; --blue-fill:rgba(10,132,255,0.16);
   --green:#30d158; --red:#ff453a; --yellow:#ffd60a;
   --green-fill:rgba(48,209,88,0.14); --red-fill:rgba(255,69,58,0.13);
+  /* on the three washes over #161617: --blue-text 5.57 / 5.22 / 5.87, --text-2 5.93 / 5.56 / 6.24 (blue / green / red) */
   /* on the dark surface the bright fills already clear 4.5:1 as text */
   --green-text:#30d158; --amber-text:#ffd60a;
   --ps-cross:#3aa0f0; --ps-circle:#ff453a; --ps-triangle:#30d158; --ps-square:#ff4f7d;

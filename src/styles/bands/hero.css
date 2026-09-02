@@ -55,7 +55,6 @@
 .lg-chapter:last-child { border-right: 0; }
 .lg-chapter:hover { color: var(--text); }
 .lg-chapter[aria-current="true"] { color: var(--text); }
-.lg-chapter[aria-current="true"] .lg-n { color: var(--blue-text); }
 .lg-pause { padding: 6px 12px; border-radius: var(--r-btn); border: 1px solid var(--sep); background: var(--bg); color: var(--text-2); font: inherit; font-size: 12.5px; cursor: pointer; }
 .lg-pause:hover { color: var(--text); background: var(--bg-inset); }
 .lg-stagecap { margin: 14px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--text-2); }
