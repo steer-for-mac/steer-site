@@ -1,0 +1,223 @@
+@layer tokens, base, components, bands;
+@import "../svg-strokes.css" layer(base);
+@import "../bands/hero.css" layer(bands);
+
+/* HYBRID. Steer's hero, Logitech's middle, Steer's tail. */
+
+.hy-hero { background: var(--bg); }
+
+.hy-hero-in {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 52px 24px 34px;
+  text-align: center;
+}
+
+.hy-eyebrow {
+  margin: 0; font-family: var(--mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3);
+}
+
+.hy-h {
+  margin: 14px 0 0; font-size: clamp(27px, 2.9vw, 38px); font-weight: 700;
+  letter-spacing: -0.028em; line-height: 1.05; color: var(--text);
+}
+
+.hy-sub { max-width: 58ch; margin: 14px auto 0; font-size: 15.5px; line-height: 1.6; color: var(--text-2); }
+
+.hy-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; margin: 22px 0 0; }
+
+.hy-btn {
+  display: inline-block; padding: 14px 26px; border-radius: var(--r-btn);
+  background: var(--blue); color: #fff; font-size: 15px; font-weight: 600;
+  text-decoration: none;
+}
+
+.hy-terms { font-family: var(--mono); font-size: 12.5px; color: var(--text-3); }
+
+.hy-terms b { color: var(--text-2); font-weight: 600; }
+
+/* The requirements line rides in the first screen rather than in the numstrip
+   seven down, which is where Logitech puts the OS: in or beside the button. */
+.hy-req { margin: 14px 0 0; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; color: var(--text-3); }
+
+/* .chero carries an opaque background and a viewport-height minimum. Both have
+   to be neutralised: this instance exists only to host .padwrap. */
+.hy-chero { background: none; min-height: 0; display: block; }
+
+.hy-figure { overflow: hidden; }
+
+.hy-stage { width: 122%; margin: 0 -11%; }
+
+/* Numbers and a legend, not eight sentences at 9px. This is the whole reason
+   the hero art stopped being readable, and it is the pattern Logitech uses on
+   every device shot. */
+.hy-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 22px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hy-legend li { display: flex; gap: 9px; font-size: 13.5px; line-height: 1.45; color: var(--text-2); }
+
+.hy-legend b {
+  flex: none; display: grid; place-items: center;
+  width: 19px; height: 19px; border-radius: 50%;
+  background: var(--blue); color: #fff;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 600;
+}
+
+.hy-personas {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 22px 40px;
+  max-width: var(--maxw); margin: 0 auto; padding: 0 24px 40px;
+}
+
+.hy-personas a {
+  display: flex; flex-direction: column; align-items: center; gap: 9px;
+  max-width: 108px; text-align: center;
+  font-size: 12px; color: var(--text-2); text-decoration: none;
+}
+
+/* Real drawings, not empty rings. Four circles with pictures in them beat six
+   without: the placeholder version was the main reason this page read as a
+   wireframe next to Logitech's. */
+.hy-circle {
+  display: grid; place-items: center; overflow: hidden;
+  width: 104px; height: 104px; border-radius: 50%;
+  background: var(--bg-inset); border: 1px solid var(--sep);
+  color: var(--text);
+}
+
+.hy-circle svg { width: 82%; height: 82%; }
+
+/* The uses-* plates are drawn for a third of a page. At circle size their
+   1.1-1.4px strokes and 0.28 opacities vanish, so both are lifted here. */
+.hy-circle .o1, .hy-circle .o2, .hy-circle .o3 { stroke-width: 2.6; }
+
+.hy-circle .o2 { opacity: 0.66; }
+
+.hy-circle .o3 { opacity: 0.48; }
+
+.hy-circle .datum, .hy-circle .ld { opacity: 0.3; }
+
+.hy-stagey { max-width: var(--maxw); margin: 0 auto; padding: 0 24px 44px; }
+
+.hy-photo {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  min-height: 280px; padding: 34px 24px;
+  border: 1.5px dashed var(--sep-2); border-radius: var(--r-card);
+  background: var(--bg-inset); text-align: center;
+}
+
+.hy-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--blue-text); }
+
+.hy-photo p { max-width: 58ch; margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--text-2); }
+
+.hy-arc { display: flex; align-items: center; gap: 14px; margin-top: auto; flex-wrap: wrap; justify-content: center; }
+
+.hy-pill {
+  font-family: var(--mono); font-size: 11px; color: var(--text-2);
+  background: var(--card-bg); border: 1px solid var(--sep-2);
+  border-radius: var(--r-inset); padding: 6px 12px;
+}
+
+.hy-line { width: 110px; height: 1.5px; background: var(--blue); }
+
+.hy-apps, .hy-grid-wrap { max-width: var(--maxw); margin: 0 auto; padding: 8px 24px 48px; }
+
+.hy-apps h2, .hy-grid-wrap h2, .hy-trust h2 {
+  margin: 0 0 12px; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--text);
+}
+
+.hy-lede { max-width: 62ch; margin: 0 0 26px; font-size: 15px; line-height: 1.6; color: var(--text-2); }
+
+.hy-cards { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 18px; overflow-x: auto; padding-bottom: 6px; }
+
+.hy-cards:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+.hy-card { background: var(--bg-inset); border: 1px solid var(--sep); border-radius: var(--r-card); padding: 18px; }
+
+.hy-card h3 { margin: 0 0 10px; font-size: 15px; font-weight: 600; color: var(--text); }
+
+.hy-card ol { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.8; color: var(--text-2); }
+
+.hy-ok, .hy-todo { margin: 12px 0 0; font-family: var(--mono); font-size: 10.5px; line-height: 1.5; color: var(--text-3); }
+
+/* An unverified card must look unverified. The comp's biggest risk was a
+   plausible profile list nobody had checked against a shipped profile. */
+.hy-card-todo { border-style: dashed; }
+
+.hy-todo { color: var(--blue-text); }
+
+.hy-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+
+.hy-grid h3 { margin: 12px 0 6px; font-size: 15px; font-weight: 600; color: var(--text); }
+
+.hy-grid p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--text-2); }
+
+.hy-thumb {
+  display: grid; place-items: center; overflow: hidden;
+  aspect-ratio: 16 / 10; border-radius: var(--r-inset);
+  background: var(--bg-inset); border: 1px solid var(--sep);
+}
+
+/* height:auto or the width/height attributes win as presentational hints and
+   stretch the shot. docs/design-rules.md records this one already. */
+.hy-thumb img { width: 100%; height: auto; display: block; }
+
+.hy-thumb span { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--text-3); }
+
+.hy-trust { max-width: var(--maxw); margin: 0 auto; padding: 8px 24px 64px; }
+
+.hy-trust p { max-width: 62ch; margin: 0 0 10px; font-size: 15px; line-height: 1.6; color: var(--text-2); }
+
+@media (max-width: 900px) {
+  .hy-hero-in { grid-template-columns: 1fr; gap: 30px; padding: 56px 20px 44px; }
+  .hy-sub { max-width: none; }
+  .hy-legend { grid-template-columns: 1fr; }
+  .hy-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ---------- the outcome strip, in place of a device shot ---------- */
+
+.hy-strip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px 40px;
+  list-style: none;
+}
+
+.hy-strip li {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 20px 0 0;
+  border-top: 1px solid var(--sep);
+}
+
+.hy-strip b {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.hy-strip span { font-size: 14.5px; line-height: 1.35; color: var(--text); }
+
+@media (max-width: 900px) {
+  .hy-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-bottom: 44px; }
+  .hy-strip li { padding-right: 14px; }
+}

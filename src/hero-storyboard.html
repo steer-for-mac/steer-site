@@ -1,0 +1,204 @@
+---
+layout: layouts/base.njk
+title: "Steer: page storyboard"
+description: "The homepage as a sequence of frames: what each one shows and what it says."
+robots: "noindex, nofollow"
+---
+<!-- STORYBOARD. Low fidelity on purpose. Every hero this session was polished
+     before it was chosen, which made each one expensive to kill; this is the
+     cheap-volume step done properly. Judge the ORDER and the WORDS here, then
+     build only the frames that survive.
+
+     Shot notes describe the picture. Copy is real and curb-checked, not lorem:
+     the point is to argue about sentences now rather than after the CSS. -->
+<main>
+  <h1 class="llm-only">Steer homepage storyboard</h1>
+
+  <div class="sb-head">
+    <p class="sb-kicker">Storyboard v1</p>
+    <p class="sb-note">Frames, not comps. Grey blocks are shots that need a camera
+      or a capture. Everything in quotes is proposed final copy.</p>
+  </div>
+
+  <ol class="sb">
+    <li class="sb-f">
+      <div class="sb-n">01</div>
+      <div class="sb-shot sb-photo">
+        <span class="sb-tag">PHOTO</span>
+        <span class="sb-desc">A real room. Controller resting in the foreground, in
+          hands or on a sofa arm. The Mac across the room, awake and lit. One graphic
+          overlay only: the face button, a hairline, and the pointer it moved.
+          Logitech's CMD+C / CTRL+V desk shot is the reference.</span>
+      </div>
+      <div class="sb-copy">
+        <p class="sb-lab">Hero</p>
+        <p class="sb-eyebrow">A Mac app for the controller you already own</p>
+        <h2>A mouse needs a desk.<br>Your controller doesn't.</h2>
+        <p class="sb-sub">Steer turns a game controller into a mouse and keyboard for
+          your Mac. It works the moment you plug it in, and nothing you type ever
+          leaves your computer.</p>
+        <p class="sb-cta">Join the launch list &nbsp;·&nbsp; €19.99 once, when it ships
+          &nbsp;·&nbsp; macOS 14+</p>
+        <p class="sb-why">Why: the teacher passes every word. The trust clause moves
+          into the hero because the permission prompt is the biggest drop-off and it
+          is the one line a competitor with analytics cannot copy.</p>
+      </div>
+    </li>
+
+    <li class="sb-f">
+      <div class="sb-n">02</div>
+      <div class="sb-shot sb-row">
+        <span class="sb-tag">PHOTO ROW</span>
+        <span class="sb-desc">Six circles, real situations, not stock smiles.
+          Logitech puts this at the very top as navigation.</span>
+        <span class="sb-chips"><i>On the sofa</i><i>Presenting</i><i>Editing</i><i>Reading in bed</i><i>Coding</i><i>When a mouse is uncomfortable</i></span>
+      </div>
+      <div class="sb-copy">
+        <p class="sb-lab">Where people use it</p>
+        <h2>Not a gaming thing.</h2>
+        <p class="sb-sub">Six ordinary situations, each one a link into the use case.</p>
+        <p class="sb-why">Why: breadth beat the single wedge twice on the record, so
+          the page shows the set rather than picking one. This is also the fastest
+          answer to the non-gamer's silent first question.</p>
+      </div>
+    </li>
+
+    <li class="sb-f">
+      <div class="sb-n">03</div>
+      <div class="sb-shot sb-built"><span class="sb-tag">BUILT</span>
+        <span class="sb-desc">Two columns: macOS on its own / With Steer. Already
+          rendering in the gap band.</span></div>
+      <div class="sb-copy">
+        <p class="sb-lab">The gap</p>
+        <h2>Your Mac can remap a controller.<br>It cannot be run by one.</h2>
+        <p class="sb-sub">macOS has a Game Controllers pane, and it does one job: swap
+          a button for another button, inside games. Nothing in it points, types, or
+          opens an app.</p>
+        <p class="sb-why">Why: this is the story a blogger would actually run, which
+          matters more than usual because the site is the entire funnel.</p>
+      </div>
+    </li>
+
+    <li class="sb-f">
+      <div class="sb-n">04</div>
+      <div class="sb-shot sb-legend"><span class="sb-tag">EXISTING ART + NUMBERS</span>
+        <span class="sb-desc">The hero pad art, big, with six numbered dots. The
+          legend sits underneath as a list. Replaces eight callouts set at 9px.</span>
+        <ol class="sb-leg">
+          <li>Left stick moves the pointer</li>
+          <li>Right stick scrolls</li>
+          <li>Cross clicks</li>
+          <li>R1 opens Spotlight</li>
+          <li>L2 switches apps</li>
+          <li>Options opens Mission Control</li>
+        </ol>
+      </div>
+      <div class="sb-copy">
+        <p class="sb-lab">What it does</p>
+        <h2>Every button already does something useful.</h2>
+        <p class="sb-sub">Nothing to set up. Change any of it later, or don't.</p>
+        <p class="sb-why">Why: Logitech numbers the device and lists the meanings
+          below. It is legible at any size and it survives translation into 35
+          languages, which prose callouts at 9px do not. Every line above is a
+          shipped default from Defaults.swift.</p>
+      </div>
+    </li>
+
+    <li class="sb-f">
+      <div class="sb-n">05</div>
+      <div class="sb-shot sb-loop"><span class="sb-tag">CSS LOOP</span>
+        <span class="sb-desc">A .vg vignette: hold the shoulder button, four face
+          labels flip to their second job. Per-pad by construction.</span></div>
+      <div class="sb-copy">
+        <p class="sb-lab">Layers</p>
+        <h2>Hold one button and the rest change job.</h2>
+        <p class="sb-sub">Like Shift on a keyboard. Five holds, so a handful of buttons
+          covers a whole day.</p>
+        <p class="sb-why">Why: this is the first thing that is not a mouse, and the
+          first thing a €4.99 app cannot match.</p>
+      </div>
+    </li>
+
+    <li class="sb-f">
+      <div class="sb-n">06</div>
+      <div class="sb-shot sb-apps"><span class="sb-tag">CARD STRIP</span>
+        <span class="sb-desc">Same pad, repeated, once per app, with the app's name
+          and a short legend beneath each. Logitech's credibility engine.</span>
+        <span class="sb-chips"><i>Safari</i><i>Final Cut Pro</i><i>DaVinci Resolve</i><i>Keynote</i></span></div>
+      <div class="sb-copy">
+        <p class="sb-lab">Per-app</p>
+        <h2>It knows which app you are in.</h2>
+        <p class="sb-sub">The same buttons do different jobs in a browser, a video
+          editor, and a slide deck.</p>
+        <p class="sb-why">Why: named third-party software is how this category buys
+          credibility, and the curb already requires each name to carry its category.
+          Check every app named here is really shipped as a profile first.</p>
+      </div>
+    </li>
+
+    <li class="sb-f">
+      <div class="sb-n">07</div>
+      <div class="sb-shot sb-loop"><span class="sb-tag">CSS LOOP</span>
+        <span class="sb-desc">The daisy wheel, mid-word, over a text field.</span></div>
+      <div class="sb-copy">
+        <p class="sb-lab">Typing</p>
+        <h2>Type without a keyboard.</h2>
+        <p class="sb-sub">Good for a search, an address, a short reply. Not for writing
+          an essay.</p>
+        <p class="sb-why">Why: the second sentence is the churn fix. The user who quit
+          after a week quit because the first sentence promised keyboard speed.</p>
+      </div>
+    </li>
+
+    <li class="sb-f">
+      <div class="sb-n">08</div>
+      <div class="sb-shot sb-built"><span class="sb-tag">BUILT</span>
+        <span class="sb-desc">The Feel band, with the accent picker that already
+          works.</span></div>
+      <div class="sb-copy">
+        <p class="sb-lab">Feel</p>
+        <h2>The part you feel.</h2>
+        <p class="sb-sub">The trigger stiffens before it clicks. A quiet buzz for the
+          moments that earn it.</p>
+        <p class="sb-why">Why: the only claim on the page that no screenshot and no
+          competitor page can carry at all.</p>
+      </div>
+    </li>
+
+    <li class="sb-f">
+      <div class="sb-n">09</div>
+      <div class="sb-shot sb-built"><span class="sb-tag">BUILT</span>
+        <span class="sb-desc">Trust band, four cards.</span></div>
+      <div class="sb-copy">
+        <p class="sb-lab">Trust</p>
+        <h2>Nothing you type ever leaves your Mac.</h2>
+        <p class="sb-sub">No account. No tracking. No analytics, crash reporting or
+          telemetry of any kind.</p>
+        <p class="sb-why">Why: verbatim from the app's own Strings.swift. FIX FIRST:
+          the live band says "no cloud" while the app ships optional iCloud profile
+          sync, which is the overstatement the curb forbids.</p>
+      </div>
+    </li>
+
+    <li class="sb-f">
+      <div class="sb-n">10</div>
+      <div class="sb-shot sb-built"><span class="sb-tag">BUILT</span>
+        <span class="sb-desc">Pricing card with the inline launch-list form.</span></div>
+      <div class="sb-copy">
+        <p class="sb-lab">Price</p>
+        <h2>One price. Yours to keep.</h2>
+        <p class="sb-sub">€19.99 once, when it ships. 14-day trial, no card, no account.</p>
+        <p class="sb-why">Why: unchanged. The single primary CTA in the page flow.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="sb-head sb-foot">
+    <p class="sb-kicker">Off the storyboard, deliberately</p>
+    <p class="sb-note">The radial launcher: nobody has seen it, so it cannot teach
+      itself in a hero. Logitech's equivalent, the Actions Ring, is one small card
+      deep in their page. It belongs on the features page, not here.
+      The compatibility checker is the top of the funnel and is a separate page, not
+      a frame in this scroll.</p>
+  </div>
+</main>

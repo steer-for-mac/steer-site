@@ -1,0 +1,152 @@
+---
+layout: layouts/base.njk
+title: "Steer: hybrid page"
+description: "Steer's hero, Logitech's middle, Steer's tail."
+robots: "noindex, nofollow"
+---
+<!-- HYBRID. The conclusion from the hero-logi comp, built.
+
+     Their skeleton front-loads download buttons because their traffic arrives
+     with intent. Ours does not, so the promise has to come first. Their MIDDLE
+     is the proven part and is taken wholesale: persona row as navigation, a
+     photo-and-overlay centrepiece, per-app cards with numbered legends, and a
+     named feature grid.
+
+     The hero also fixes the thing every direction this session tripped over:
+     the current hero's eight callouts render near 9px. Logitech's answer is
+     numbers on the device and a legend underneath, which is legible at any
+     size and survives 35 translations. That is what is here. -->
+<main>
+  <h1 class="llm-only">Steer hybrid page</h1>
+
+  <!-- NO DEVICE IN THE HERO.
+
+       Every pad-led hero this session was rejected, and the reason is
+       consistent rather than six separate taste calls: a large glossy DualSense
+       reads as GAMING before a word of copy is read, which fights the non-gamer
+       position, and it reads as HARDWARE, which fights "this is a Mac app".
+       The controller is the mechanism, not the promise.
+
+       So the hero carries the promise and the outcomes, and the hardware turns
+       up later, small, in the per-app cards where it is doing work. The six
+       outcomes are the same shipped soloLayer defaults, stated as results with
+       no button names and no macOS feature names, so the whole strip is
+       readable by someone who dislikes computers. -->
+  <section class="hy-hero">
+    <div class="hy-hero-in">
+      <div class="hy-copy">
+        <p class="hy-eyebrow">A Mac app for the controller you already own</p>
+        <h2 class="hy-h">A mouse needs a desk.<br>Your controller doesn't.</h2>
+        <p class="hy-sub">Steer turns a game controller into a mouse and keyboard for
+          your Mac. It works the moment you plug it in, and nothing you type ever
+          leaves your computer.</p>
+        <p class="hy-cta">
+          <a class="hy-btn" href="#pricing">Join the launch list</a>
+          <span class="hy-terms"><b>&#8364;19.99</b> once, when it ships</span>
+        </p>
+        <p class="hy-req">macOS 14+ &middot; Apple Silicon &middot; 315 controllers</p>
+      </div>
+    </div>
+
+    <!-- Ordered and finite, which is what separates this from the word-cloud
+         version: six numbered outcomes read as a spec strip, fifty-three
+         unordered pills read as "and so much more". -->
+    <ol class="hy-strip">
+      <li><b>1</b><span>Move the pointer</span></li>
+      <li><b>2</b><span>Scroll</span></li>
+      <li><b>3</b><span>Click</span></li>
+      <li><b>4</b><span>Search your Mac</span></li>
+      <li><b>5</b><span>Switch between apps</span></li>
+      <li><b>6</b><span>See all your windows</span></li>
+    </ol>
+  </section>
+
+  <div class="hy-personas">
+    <a href="#"><span class="hy-circle">{% include "art/uses-couch.svg" %}</span>On the sofa</a>
+    <a href="#"><span class="hy-circle">{% include "art/uses-slides.svg" %}</span>Presenting</a>
+    <a href="#"><span class="hy-circle">{% include "art/uses-scrub.svg" %}</span>Editing video</a>
+    <a href="#"><span class="hy-circle">{% include "art/uses-comfort.svg" %}</span>When a mouse is uncomfortable</a>
+  </div>
+
+  <section class="hy-stagey">
+    <div class="hy-photo">
+      <span class="hy-tag">PHOTO + OVERLAY</span>
+      <p>A real room. Controller in the foreground, Mac across the room, awake.
+        One arc between them, labelled at each end. Logitech's CMD+C / CTRL+V desk
+        shot is the reference, and it is the only slot on this page that needs a
+        camera.</p>
+      <div class="hy-arc" aria-hidden="true">
+        <span class="hy-pill">Press Cross</span><span class="hy-line"></span><span class="hy-pill">Click, across the room</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="hy-apps">
+    <h2>It knows which app you are in</h2>
+    <p class="hy-lede">The same buttons take different jobs in a browser, a video
+      editor and a slide deck. Steer ships with layouts for the apps people use it
+      in most, and you can build your own.</p>
+    <div class="hy-cards" tabindex="0" role="group" aria-label="Per-app layouts">
+      <article class="hy-card">
+        <h3>Default</h3>
+        <ol><li>Left stick: pointer</li><li>Right stick: scroll</li><li>Cross: click</li><li>R1: Spotlight</li></ol>
+        <p class="hy-ok">Verified in Defaults.swift</p>
+      </article>
+      <article class="hy-card">
+        <h3>Browsing</h3>
+        <ol><li>D-pad left: back</li><li>D-pad right: forward</li><li>R1: next tab</li><li>D-pad up: page up</li></ol>
+        <p class="hy-ok">Verified in Defaults.swift</p>
+      </article>
+      <article class="hy-card">
+        <h3>Writing</h3>
+        <ol><li>Cross: select all</li><li>Circle: extend to line end</li><li>L1+R1 Cross: copy</li><li>L1+R1 Circle: paste</li></ol>
+        <p class="hy-ok">Verified in Defaults.swift</p>
+      </article>
+      <article class="hy-card hy-card-todo">
+        <h3>Video editing</h3>
+        <ol><li>L2 and R2: scrub</li><li>Cross: cut</li><li>Square: undo</li></ol>
+        <p class="hy-todo">UNVERIFIED. Inferred from the use-case card, not read out
+          of a shipped profile. Check before this ships.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="hy-grid-wrap">
+    <h2>Named, so you can ask for them</h2>
+    <p class="hy-lede">Every shot below is a real pane of the shipped app. Two
+      caveats before any of this leaves the lab: these are PlayStation captures, and
+      the page re-labels itself per controller, which docs/design-rules.md is
+      explicit about; and only some have dark-mode twins.</p>
+    <div class="hy-grid">
+      <article><div class="hy-thumb"><img src="assets/radial-menu.png" alt="" eleventy:ignore /></div>
+        <h3>App Ring</h3>
+        <p>A ring of your apps at the tip of your thumb. Aim, press, done.</p></article>
+      <article><div class="hy-thumb"><img src="assets/daisy-wheel.png" alt="" eleventy:ignore /></div>
+        <h3>On-screen keyboard</h3>
+        <p>Type where you can already type. A search, an address, a short reply.</p></article>
+      <article><div class="hy-thumb"><img src="assets/settings-buttons.png" alt="" eleventy:ignore /></div>
+        <h3>Layers</h3>
+        <p>Hold one button and every other button takes a second job, the way Shift
+          turns 1 into an exclamation mark.</p></article>
+      <article><div class="hy-thumb"><img src="assets/settings-haptics.png" alt="" eleventy:ignore /></div>
+        <h3>Haptics</h3>
+        <p>A pulse for each app you flip past, a tap at the volume ceiling, at a
+          strength you set.</p></article>
+      <article><div class="hy-thumb"><img src="assets/settings-led.png" alt="" eleventy:ignore /></div>
+        <h3>Light bar</h3>
+        <p>Any colour you like, or wired to tell you what your Mac is doing.</p></article>
+      <article><div class="hy-thumb"><img src="assets/settings-sticks.png" alt="" eleventy:ignore /></div>
+        <h3>Fine Controls</h3>
+        <p>Cursor speed, stick curves and dead zones, tuned until it feels like
+          yours.</p></article>
+    </div>
+  </section>
+
+  <section class="hy-trust">
+    <h2>Nothing you type ever leaves your Mac</h2>
+    <p>No account. No tracking. No analytics, crash reporting or telemetry of any
+      kind. Your mappings live in a file you can open and read.</p>
+    <p class="hy-todo">FIX FIRST: the live trust band says "no cloud" while the app
+      ships optional iCloud profile sync. That is the overstatement the curb forbids.</p>
+  </section>
+</main>

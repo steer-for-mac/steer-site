@@ -258,6 +258,157 @@
   }
   .fine.quiet { color: rgba(255,255,255,0.48); margin-bottom: 0; }
 
+  /* ================= DIRECTIONS (proposals, not in the upload order) =======
+     docs/private/marketing-roadmap.md: the subject missing from every asset
+     this project owns is the Mac being driven. Every existing card frames the
+     controller or Steer's own overlay. These three put the machine, the
+     audience, and the guarantee in the frame instead.
+     Not in docs/store-assets.md's numbered list until one is chosen. */
+
+  /* ---- A: #room. The Mac is the subject, the pad is the point of view ----
+     Shot from where the buyer actually sits: pad in the hands and cropped by
+     the frame edge, machine across the room. The screen is a MARKED SLOT, not
+     a mock: no footage of a Mac being driven exists yet, and store-assets.md's
+     causation section is explicit that a still frame cannot prove one anyway.
+     Drawing a plausible desktop in there would be inventing evidence. */
+  #room .mac {
+    position: absolute;
+    left: 50%; top: 250px;
+    transform: translateX(-50%);
+    /* 1240 of 1600, not 1040: at the 440px checkout size the first pass put a
+       screen 286px wide in a 440px frame with air on all four sides, which is
+       the "small window adrift in wallpaper" store-assets.md rejected the demo
+       frames for. The subject has to reach the edges. */
+    width: 1240px; height: 775px;
+    padding: 16px;
+    border-radius: 22px;
+    background: #14181F;
+    box-shadow:
+      inset 0 0 0 1.5px rgba(255,255,255,0.13),
+      0 46px 96px rgba(0,0,0,0.62);
+  }
+  #room .screen {
+    width: 100%; height: 100%;
+    border-radius: 10px;
+    background: #0B0E14;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 30px;
+  }
+  /* Dashed and labelled on purpose. A reviewer must never have to guess
+     whether this is the design or a missing asset. */
+  #room .slot {
+    position: absolute; inset: 44px;
+    border: 2px dashed rgba(255,255,255,0.26);
+    border-radius: 12px;
+  }
+  #room .slot-tag {
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+    font-size: 30px;
+    letter-spacing: 0.16em;
+    color: rgba(255,255,255,0.62);
+  }
+  #room .slot-note {
+    font-size: 44px;
+    line-height: 1.35;
+    color: rgba(255,255,255,0.56);
+    max-width: 760px;
+  }
+  /* Cropped by the frame bottom: the pad is nearest the viewer, so it is the
+     one object allowed to leave the card. Darkened rather than tinted, so at
+     440px it reads as a foreground mass and never competes with the screen. */
+  #room .padfg {
+    position: absolute;
+    left: 50%; bottom: -170px;
+    transform: translateX(-50%);
+    width: 1240px;
+    /* Every pad token collapsed to one dark mass, face buttons included. The
+       first pass left the four PlayStation face colours lit, and they became
+       the most saturated thing in the frame: the eye went to the bottom-right
+       corner of a card whose whole argument is that the MAC is the subject.
+       A silhouette also keeps the card pad-neutral, which the per-pad
+       re-labelling problem in docs/design-rules.md wants anyway. */
+    --pad-body: #262B34;
+    --pad-ink: #262B34;
+    --pad-edge: rgba(255,255,255,0.16);
+    --ps-cross: #2F343E; --ps-circle: #2F343E;
+    --ps-triangle: #2F343E; --ps-square: #2F343E;
+    filter: drop-shadow(0 -22px 52px rgba(0,0,0,0.62));
+  }
+
+  /* ---- B: #anyone. The audience swap ----
+     Every competitor sells to someone who already owns a controller for
+     playing games. This card refuses the category noun: not "mapper", not
+     "gamepad", a remote. The mark runs at 520px against #identity's 260,
+     which is the note that card was failing: at 440px the old icon is 72px
+     of a 440px frame and floats rather than anchors. */
+  #anyone {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    gap: 92px;
+  }
+  #anyone .mark {
+    flex: none;
+    width: 520px; height: 520px;
+    border-radius: 26%;
+    box-shadow: 0 30px 72px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.06) inset;
+  }
+  #anyone .say {
+    font-size: 92px;
+    font-weight: 600;
+    letter-spacing: -0.024em;
+    line-height: 1.1;
+    color: #FFFFFF;
+  }
+  #anyone .sub {
+    margin-top: 34px;
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 1.34;
+    color: rgba(255,255,255,0.72);
+  }
+
+  /* ---- C: #promise. The guarantee, as a ledger ----
+     Left-aligned and ruled, so it is not #deal's centred grid a second time.
+     Every line is lifted from the shipped trust band in
+     src/_includes/bands/trust.html rather than written fresh: those claims
+     have already been through the curb's verification ladder. */
+  #promise { align-items: flex-start; text-align: left; }
+  /* 980px, so "your Mac." wraps as a unit instead of stranding "Mac." alone
+     on the second line, which is what a 1180px measure did here. */
+  #promise .caption { max-width: 980px; }
+  /* Full width, not 1160: the rules are the only ink on this card, so they are
+     what draws the frame's structure. Held to 1160 they left the right third
+     of the card reading as the empty rectangle docs/design-rules.md calls out
+     under "Length is a word budget". */
+  #promise .ledger {
+    list-style: none;
+    width: 100%;
+    margin-bottom: 54px;
+    box-shadow: inset 0 -1.5px 0 rgba(255,255,255,0.13);
+  }
+  #promise .ledger li {
+    font-size: 46px;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: rgba(255,255,255,0.90);
+    padding: 30px 0;
+    box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.13);
+  }
+  #promise .ledger li:first-child { box-shadow: none; padding-top: 0; }
+  /* 36px, not .fine's 30: at the 440px checkout size 30px lands near 8px and
+     turns to mush, which is exactly what #deal's two quiet lines do today. */
+  #promise .close {
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+    font-size: 36px;
+    color: rgba(255,255,255,0.62);
+  }
+
   .hide { display: none !important; }
 </style>
 </head>
@@ -386,6 +537,41 @@
     <div class="stage hide" id="radial">
       <div class="shotfill"></div>
       <div class="caption over">Aim the stick. Press to launch.</div>
+    </div>
+    <!-- ===== DIRECTIONS ===== -->
+
+    <div class="stage hide" id="room">
+      <div class="caption over">Your Mac, from across the room.</div>
+      <div class="mac">
+        <div class="screen">
+          <div class="slot"></div>
+          <span class="slot-tag">FOOTAGE</span>
+          <span class="slot-note">the cursor crossing a real desktop, driven from the sofa</span>
+        </div>
+      </div>
+      <!-- Silhouette only. The hero's full pad art carries per-pad detail this
+           card must not show: it is the object in your hands, out of focus. -->
+      <svg class="padfg" viewBox="0 0 1200 440" aria-hidden="true">
+        <use href="assets/svg/pad-art-ps.svg#s" />
+      </svg>
+    </div>
+
+    <div class="stage hide" id="anyone">
+      <img class="mark" src="icon.png" alt="" eleventy:ignore />
+      <div>
+        <div class="say">A controller is a remote for your Mac.</div>
+        <div class="sub">Point, click, type and switch apps from wherever you are sitting.</div>
+      </div>
+    </div>
+
+    <div class="stage hide" id="promise">
+      <div class="caption">What you type stays on your Mac.</div>
+      <ul class="ledger">
+        <li>Mappings live in a file you can open and read.</li>
+        <li>No sign-in, no cloud, nothing synced.</li>
+        <li>No tracking and no telemetry.</li>
+      </ul>
+      <div class="close">One-time purchase. No subscription, no account.</div>
     </div>
   </main>
 

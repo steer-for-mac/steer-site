@@ -1,0 +1,157 @@
+---
+layout: layouts/base.njk
+title: "Steer: Logitech-structure comp"
+description: "Steer's content poured into the Logi Options+ page skeleton, as a diagnostic."
+robots: "noindex, nofollow"
+---
+<!-- DIAGNOSTIC COMP. Steer's content poured into the structure of
+     logitech.com/en-us/software/mx-software, section for section, to find out
+     whether a proven page skeleton from this exact category fits.
+
+     Not shippable: the layout and copy patterns are Logitech's. This exists to
+     answer "does their sequence work for us", and the answer belongs in the
+     storyboard, not in dist/. Wording is ADAPTED rather than lifted, partly
+     because their body copy opens with "Effortlessly", which scripts/curb-check
+     rejects as an AI cliche and which grades this page like any other.
+
+     Verdict once rendered: their skeleton front-loads DOWNLOAD, not persuasion,
+     because their traffic arrives having searched the product by name. Ours
+     does not. Keep their middle (persona row, photo-plus-overlay, per-app
+     cards, named feature grid); replace their banner with a hero that makes a
+     promise. -->
+<main>
+  <h1 class="llm-only">Steer in the Logitech page structure</h1>
+
+  <!-- 1. Their hero is a thin banner, not a stage: a product strip, the name,
+          and the download buttons immediately. It works on intent traffic. -->
+  <section class="lg-banner">
+    <div class="lg-strip" aria-hidden="true">
+      <svg viewBox="0 0 1200 440"><use href="assets/svg/pad-art-ps.svg#s" /></svg>
+      <svg viewBox="0 0 1200 440"><use href="assets/svg/pad-art-xb.svg#s" /></svg>
+      <svg viewBox="0 0 1200 440"><use href="assets/svg/pad-art-sw.svg#s" /></svg>
+      <svg viewBox="0 0 1200 440"><use href="assets/svg/pad-art-mf.svg#s" /></svg>
+    </div>
+    <div class="lg-banner-in">
+      <h2>Steer Software</h2>
+      <div class="lg-btns">
+        <a class="lg-btn" href="#pricing">JOIN THE LAUNCH LIST</a>
+        <a class="lg-btn lg-btn-2" href="#pricing">SEE IF YOUR CONTROLLER WORKS</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Their segment row, at the very top, as navigation. A <div>, not a
+          <nav>: a second unlabelled landmark fails html-validate's
+          unique-landmark rule, and these are links, not a landmark. -->
+  <div class="lg-personas">
+    <a href="#"><span class="lg-circle" aria-hidden="true"></span>On the sofa</a>
+    <a href="#"><span class="lg-circle" aria-hidden="true"></span>Steer for Creatives</a>
+    <a href="#"><span class="lg-circle" aria-hidden="true"></span>Steer for Coders</a>
+    <a href="#"><span class="lg-circle" aria-hidden="true"></span>Presenting</a>
+    <a href="#"><span class="lg-circle" aria-hidden="true"></span>Reading and browsing</a>
+    <a href="#"><span class="lg-circle" aria-hidden="true"></span>Comfort</a>
+  </div>
+
+  <!-- 3. Centred eyebrow, punning headline, one explanatory paragraph. -->
+  <section class="lg-intro">
+    <p class="lg-eyebrow">Get off the desk</p>
+    <h2>Take the wheel</h2>
+    <p>Take control of your Mac from wherever you are sitting, with the controller
+      you already own. Point and click, scroll, type, switch apps and run saved
+      tasks. Steer comes with a working layout, so it does something useful the
+      moment you plug in, and you can change any of it later.</p>
+    <p class="lg-fine">macOS 14+ and Apple Silicon. Works with 315 controllers.</p>
+  </section>
+
+  <!-- 4. Their centrepiece: a real desk photograph with one graphic overlay.
+          This is the single most transferable thing on their page. -->
+  <section class="lg-stage">
+    <div class="lg-photo">
+      <span class="lg-tag">PHOTO + OVERLAY</span>
+      <p>A real room. Controller in the foreground, Mac across the room. One arc
+        drawn between them, labelled with the button at one end and what it did at
+        the other, exactly as Logitech labels theirs CMD+C and CTRL+V.</p>
+      <div class="lg-arc" aria-hidden="true">
+        <span class="lg-pill">CROSS</span>
+        <span class="lg-line"></span>
+        <span class="lg-pill">CLICK</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. App-specific customizations: the same device repeated per app, each
+          with a numbered legend. Their credibility engine. -->
+  <section class="lg-apps">
+    <h2>App specific customizations</h2>
+    <p class="lg-lede">Steer is customizable in every app you use. Work faster with
+      ready-made layouts, or create your own for your favourite apps such as Safari,
+      Final Cut Pro, DaVinci Resolve, Keynote and Xcode.</p>
+    <!-- tabindex + label: a horizontally scrolling region that cannot be reached
+         by keyboard hides its own content from anyone without a mouse. -->
+    <div class="lg-cards" tabindex="0" role="group" aria-label="Per-app layouts">
+      <article class="lg-card">
+        <div class="lg-dev"><svg viewBox="0 0 1200 440"><use href="assets/svg/pad-art-ps.svg#s" /></svg></div>
+        <h3>Default</h3>
+        <ol><li>Left stick: move the pointer</li><li>Right stick: scroll</li>
+          <li>Cross: click</li><li>R1: Spotlight</li></ol>
+      </article>
+      <article class="lg-card">
+        <div class="lg-dev"><svg viewBox="0 0 1200 440"><use href="assets/svg/pad-art-ps.svg#s" /></svg></div>
+        <h3>Safari</h3>
+        <ol><li>Right stick: scroll the page</li><li>D-pad left: back</li>
+          <li>D-pad right: forward</li><li>R1: next tab</li></ol>
+      </article>
+      <article class="lg-card">
+        <div class="lg-dev"><svg viewBox="0 0 1200 440"><use href="assets/svg/pad-art-ps.svg#s" /></svg></div>
+        <h3>Video editing</h3>
+        <ol><li>L2 and R2: scrub</li><li>Cross: cut</li>
+          <li>Square: undo</li><li>Right stick: timeline</li></ol>
+      </article>
+      <article class="lg-card">
+        <div class="lg-dev"><svg viewBox="0 0 1200 440"><use href="assets/svg/pad-art-ps.svg#s" /></svg></div>
+        <h3>Slides</h3>
+        <ol><li>R1: next slide</li><li>L1: previous slide</li>
+          <li>Right stick: pointer dot</li><li>Circle: exit</li></ol>
+      </article>
+    </div>
+    <p class="lg-fine">CHECK BEFORE SHIPPING: every profile named here has to exist
+      in the app. Only Default is read out of Defaults.swift; the other three are
+      inferred from the use-case cards.</p>
+  </section>
+
+  <!-- 6. Their six-card feature grid, with each feature NAMED. Naming is the
+          transferable half: Logitech's settings app and marketing page share one
+          vocabulary, which is why "Actions Ring" is discussable and "the radial
+          launcher" is jargon the curb has to banish to the FAQ. -->
+  <section class="lg-grid-wrap">
+    <h2>Get more out of your controller</h2>
+    <div class="lg-grid">
+      <article><div class="lg-thumb"><span>UI SHOT</span></div><h3>App Ring</h3>
+        <p>A ring of your apps, on screen at the tip of your thumb. Aim, press, done.</p></article>
+      <article><div class="lg-thumb"><span>UI SHOT</span></div><h3>Layers</h3>
+        <p>Hold one button and every other button takes a second job, the way Shift
+          turns 1 into an exclamation mark.</p></article>
+      <article><div class="lg-thumb"><span>UI SHOT</span></div><h3>Saved Tasks</h3>
+        <p>Put a Shortcut, a script or a chain of steps on a single button.</p></article>
+      <article><div class="lg-thumb"><span>UI SHOT</span></div><h3>Haptics</h3>
+        <p>A pulse for each app you flip past, a tap at the volume ceiling, at a
+          strength you set.</p></article>
+      <article><div class="lg-thumb"><span>UI SHOT</span></div><h3>Adaptive Triggers</h3>
+        <p>The trigger stiffens before it clicks, so you feel the step before you
+          see it. DualSense only, and a card Logitech cannot write.</p></article>
+      <article><div class="lg-thumb"><span>UI SHOT</span></div><h3>Fine Controls</h3>
+        <p>Cursor speed, stick curves and dead zones, tuned until it feels like
+          yours.</p></article>
+    </div>
+  </section>
+
+  <section class="lg-sub">
+    <p>Subscribe to hear when Steer ships.</p>
+    <div class="lg-subrow"><span class="lg-input">Email address</span>
+      <a class="lg-btn lg-btn-3" href="#pricing">SIGN UP</a></div>
+  </section>
+
+  <p class="lg-legal">Trademark statement. PlayStation, Xbox and Switch are
+    trademarks of their owners. Steer is independent and not affiliated with Sony,
+    Microsoft or Nintendo.</p>
+</main>

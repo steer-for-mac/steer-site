@@ -1,0 +1,45 @@
+<!-- HERO DIRECTION: REAL CAPTURE.
+
+     A partial, not another block appended to hero-lab.html: that page reached
+     seven variants and ~500 lines, and CLAUDE.md's "one band per file" rule
+     exists precisely because a shared blob makes every edit surgery. This is
+     included by BOTH /hero-capture.html (work on it alone) and /hero-lab.html
+     (compare it against the others), so nothing is lost either way.
+
+     This is direction B ("screen first"), which I rejected earlier for the
+     wrong reason: I filled it with a dashed grey placeholder and then judged
+     the placeholder. The asset it needed already existed. assets/desk-radial.jpg
+     is a REAL 1600x1200 screen capture, made by driving a dev build with
+     injected controller frames while screencapture recorded (docs/store-assets.md):
+     real translucency, real desktop, real lit selection.
+
+     It answers the two objections the depth hero could not:
+       "not clear this is an app" -> the whole frame is macOS, sharp, with
+                                     Steer's own overlay open on it.
+       "screen is blurred"        -> nothing here is blurred. Depth of field was
+                                     hiding the very evidence it needed to show.
+                                     Presence replaces distance.
+
+     Needs tokens only. No home.css, no hero.css. -->
+<section class="hc" aria-label="Hero direction: real capture">
+  <!-- role="img" + a label, because this carries meaning rather than decorating:
+       it is the only place on the page that shows what the app draws. -->
+  <div class="hc-shot" role="img"
+       aria-label="Steer's radial launcher open over a real Mac desktop"></div>
+  <div class="hc-scrim" aria-hidden="true"></div>
+
+  <div class="hc-copy">
+    <div class="hc-eyebrow">A Mac app for the controller you already own</div>
+    <h2 class="hc-h">A mouse needs a desk.<br>Your controller doesn't.</h2>
+    <p class="hc-sub">Point and click, type, scroll, switch apps and open anything,
+      from wherever you are sitting.</p>
+    <div class="hc-cta">
+      <a class="hc-btn" href="#pricing">Join the launch list</a>
+      <span class="hc-terms"><b>&#8364;19.99</b> once, when it ships.</span>
+    </div>
+    <!-- The requirements line earns a place in the first screen rather than in
+         the numstrip seven down: the word "macOS" is the cheapest unambiguous
+         signal that this is software for a Mac. -->
+    <p class="hc-req">macOS 14+ &middot; Apple Silicon &middot; one-time purchase</p>
+  </div>
+</section>

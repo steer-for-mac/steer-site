@@ -1,0 +1,134 @@
+/* Storyboard. Intentionally plain: this page is for judging sequence and words,
+   so any craft here would be the thing that made the last seven directions
+   expensive to kill. Frames, not comps. */
+
+.sb-head { max-width: var(--maxw); margin: 0 auto; padding: 56px 24px 8px; }
+.sb-foot { padding-top: 24px; padding-bottom: 72px; }
+
+.sb-kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blue-text);
+  margin: 0;
+}
+
+.sb-note { max-width: 62ch; margin: 10px 0 0; font-size: 15px; line-height: 1.55; color: var(--text-2); }
+
+.sb { list-style: none; max-width: var(--maxw); margin: 0 auto; padding: 24px 24px 40px; }
+
+.sb-f {
+  display: grid;
+  grid-template-columns: 60px 1.05fr 1fr;
+  gap: 26px;
+  align-items: start;
+  padding: 30px 0;
+  border-top: 1px solid var(--sep);
+}
+
+/* --text-3, not --sep-2: a border token used as text fails AA in both themes,
+   which axe caught. All small print on this site rides --text-3. */
+.sb-n {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+/* Every shot block states what has to be photographed, captured or reused, so
+   the storyboard doubles as the asset list. */
+.sb-shot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 190px;
+  padding: 18px;
+  border-radius: var(--r-card);
+  background: var(--bg-inset);
+  border: 1px solid var(--sep);
+}
+
+.sb-photo, .sb-row { border-style: dashed; }
+
+.sb-tag {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+}
+
+.sb-photo .sb-tag, .sb-row .sb-tag { color: var(--blue-text); }
+
+.sb-desc { font-size: 13.5px; line-height: 1.5; color: var(--text-2); }
+
+.sb-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+
+.sb-chips i {
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  background: var(--card-bg);
+  border: 1px solid var(--sep-2);
+  border-radius: var(--r-inset);
+  padding: 4px 8px;
+}
+
+.sb-leg { margin: auto 0 0; padding-left: 18px; font-size: 13px; line-height: 1.7; color: var(--text-2); }
+
+.sb-lab {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 10px;
+}
+
+.sb-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 8px;
+}
+
+.sb-copy h2 {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.sb-sub { max-width: 46ch; margin: 12px 0 0; font-size: 15.5px; line-height: 1.55; color: var(--text-2); }
+
+.sb-cta {
+  margin: 14px 0 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* The rationale rides with the frame rather than in a separate doc: a
+   storyboard whose reasons live elsewhere gets re-argued from scratch. */
+.sb-why {
+  max-width: 52ch;
+  margin: 16px 0 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--blue);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-3);
+}
+
+@media (max-width: 900px) {
+  .sb-f { grid-template-columns: 40px 1fr; gap: 16px; }
+  .sb-copy { grid-column: 2; }
+  .sb-shot { grid-column: 2; min-height: 0; }
+}

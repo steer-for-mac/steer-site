@@ -1,0 +1,4 @@
+/* The direction's styles live in styles/heroes/ so hero-lab.css can import the
+   same file. This sheet exists only to make styles/pages/*.css pick the page up
+   (eleventy.config.js derives pageSheets from that glob). */
+@import "../heroes/capture.css";

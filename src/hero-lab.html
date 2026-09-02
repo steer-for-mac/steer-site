@@ -1,0 +1,559 @@
+---
+layout: layouts/base.njk
+title: "Steer: hero directions"
+description: "Three candidate replacements for the homepage hero, rendered against the real design system."
+robots: "noindex, nofollow"
+home: true
+---
+<!-- HERO LAB. Not linked from anywhere and noindex: this exists so three hero
+     directions can be compared at 1440 and 375 against the REAL tokens and the
+     real CTA, instead of being argued about in prose. index.html is untouched
+     until one wins, which is also what keeps tools/cssdiff.spec.js clean.
+
+     The diagnosis every variant below is answering, read off the current hero
+     rendered at 1440:
+       1. It is a centred stack. Eyebrow, headline, two paragraphs, CTA,
+          picker prompt, picker, pad. Nine centred rows is the shape of the
+          average website, which docs/design-rules.md exists to prevent.
+       2. The subject is a controller. The Mac never appears, and
+          docs/private/marketing-roadmap.md names that as the missing subject.
+       3. Eight annotations render at roughly 9px. They are decoration at that
+          size, not information.
+       4. Above the 900px fold there is no product, only prose. -->
+<main>
+  <!-- Each variant heads at h2 so none of them outranks another in the outline,
+       which leaves the page with no h1. scripts/a11y-check requires exactly one
+       and axe flags the resulting h2-before-h1 order, so the page's own title
+       becomes it, hidden with the existing .llm-only utility rather than a new
+       visually-hidden class. -->
+  <h1 class="llm-only">Steer hero directions</h1>
+
+  <div class="hl-tag">I / real capture</div>
+  {% include "heroes/capture.html" %}
+
+  <!-- ============ H: ACROSS THE DARK ============
+       G had the right idea and the wrong execution. Dimension lines and flat
+       line art read as an assembly manual, and docs/design-rules.md measures
+       this site against Linear, Raycast and apple.com, none of which opens on
+       a technical drawing. The drafting style earns its place on the plates
+       deep in the page; as the hero it makes the product look flat-packed.
+
+       Same claim, photographic instead of drafted. Distance is carried by
+       DEPTH, not by a measurement: the pad is near, large, sharp and lit; the
+       Mac is far, small, dim and soft. That is how a camera says "across the
+       room", and it is how Apple shoots a room.
+
+       It also finally uses the crown jewel. docs/design-rules.md lists the
+       hand-built per-pad hero SVG under load-bearing craft, and every direction
+       before this one either redrew it badly or replaced it with a silhouette.
+       Here it is the real .padwrap, with the real LED, in the real night
+       studio, minus the eight 9px callouts that were decorating it. -->
+  <section class="hl hl-depth" aria-label="Direction H: across the dark">
+    <div class="hl-tag">H / across the dark</div>
+    <div class="chero hl-chero" data-pad="ps">
+      <div class="wash" aria-hidden="true"></div>
+      <div class="pool" aria-hidden="true"></div>
+
+      <div class="hl-depth-in">
+        <div class="hl-depth-copy">
+          <div class="app-eyebrow">A Mac app for the controller you already own</div>
+          <h2 class="hl-h hl-h-depth">A mouse needs a desk.<br>Your controller doesn't.</h2>
+          <div class="hl-cta">
+            <a class="hl-btn hl-btn-dark" href="#pricing">Join the launch list</a>
+            <span class="hl-terms hl-terms-dark"><b>&#8364;19.99</b> once, when it ships.</span>
+          </div>
+        </div>
+
+        <!-- The far end of the room. Small, dim and blurred, because that is
+             what distance does to a lit screen; a crisp Mac here would sit at
+             the same depth as the pad and the whole illusion collapses. It is
+             a shape and a glow, not a fake desktop, so it claims nothing. -->
+        <div class="hl-far" aria-hidden="true">
+          <div class="hl-far-screen">
+            <!-- The menu bar is the whole "this is an APP" signal, and it is a
+                 product truth rather than dressing: Steer is a menu-bar app, so
+                 the one place it is visible on a Mac is exactly here. A window
+                 full of mapping UI would have said "settings utility", which
+                 docs/store-assets.md records as the competitor's mistake. -->
+            <div class="hl-mb">
+              <img class="hl-mb-mark" src="assets/mark.png" alt="" eleventy:ignore />
+              <i class="hl-mb-i w1"></i><i class="hl-mb-i w2"></i><i class="hl-mb-i w3"></i>
+            </div>
+            <!-- The macOS pointer: the most widely readable glyph for "someone
+                 is using this computer". H had a lit rectangle and no evidence
+                 anyone was driving it. -->
+            <!-- Steer's real radial launcher, the shipped alpha PNG. This is
+                 the one piece of the app's own UI that is not a settings pane,
+                 so it says "software is running on that Mac" without walking
+                 into the competitor mistake. It is also the only thing out
+                 there that could not be produced by hardware alone. -->
+            <img class="hl-far-radial" src="assets/radial-menu-dark.png" alt="" eleventy:ignore />
+            <div class="hl-far-cursor">{% include "art/hero-cursor.svg" %}</div>
+          </div>
+          <div class="hl-far-stand"></div>
+        </div>
+      </div>
+
+      <div class="stage hl-depth-stage">
+        {% include "art/hero-defs.svg" %}
+        <div class="padwrap ps active">
+          <div class="plate" role="img" aria-label="A DualSense controller, its light bar lit">
+            {% include "art/hero-pad-ps.svg" %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ G: THE DIMENSION ============
+       The headline this site already has is "A mouse needs a desk. Your
+       controller doesn't." Nobody has ever drawn it. Every asset in the repo,
+       and every competitor's, shows the DEVICE; this shows the DISTANCE, which
+       is the thing actually being sold. A mouse's reach is a desk. A
+       controller's reach is the room. Two dimension lines, and the gap between
+       them is the entire product.
+
+       Why this and not another device shot:
+       - It sells desire rather than mechanism. F proved a controller can move a
+         pointer, which nobody doubted. This shows the reader a room they
+         recognise and where they are not sitting.
+       - It works for every visitor. F is a dead panel for anyone without a pad
+         paired to the Mac they are browsing on, which is nearly everyone, and
+         is dead on every phone. This is one drawing.
+       - It needs no footage, no capture session and no hardware.
+       - It is already this site's own visual language: .datum, .ld, .o1/.o2/.o3
+         and the pad <use> are the same drafting vocabulary as uses-couch.svg
+         and the capabilities plates, promoted from band four to the hero.
+
+       The dimension lines carry no number on purpose. A metre figure would be a
+       hardware claim about Bluetooth range that docs/design-rules.md would
+       require confirming on hardware, and the drawing does not need one: the
+       comparison IS the measurement. -->
+  <section class="hl hl-dim" aria-label="Direction G: the dimension">
+    <div class="hl-tag">G / the dimension</div>
+    <div class="hl-in">
+      <div class="hl-dim-top">
+        <div class="eyebrow">A Mac app for the controller you already own</div>
+        <h2 class="hl-h hl-h-dim">A mouse needs a desk.<br>Your controller doesn't.</h2>
+      </div>
+
+      <!-- Cropped to y=104, not 0: the tallest object starts at y=120, so a
+           viewBox from 0 shipped 100 units of empty sky and pushed the drawing
+           away from the headline it illustrates. -->
+      <svg class="dgs hl-plan" viewBox="0 104 1200 326" aria-hidden="true">
+        <!-- floor -->
+        <path class="datum" d="M0,300 H1200"/>
+
+        <!-- desk, with the Mac on it and a mouse beside it -->
+        <path class="o1" d="M96,212 H360"/>
+        <path class="o2" d="M108,212 V300 M348,212 V300"/>
+        <rect class="o1" x="150" y="120" width="130" height="82" rx="6"/>
+        <rect class="o3" x="162" y="132" width="106" height="58" rx="4"/>
+        <path class="o1" d="M215,202 V212"/>
+        <rect class="o2" x="300" y="196" width="26" height="16" rx="8"/>
+
+        <!-- sofa, with the pad resting on it -->
+        <rect class="o2" x="900" y="188" width="176" height="50" rx="12"/>
+        <rect class="o1" x="888" y="232" width="200" height="26" rx="9"/>
+        <rect class="o2" x="876" y="206" width="18" height="52" rx="7"/>
+        <rect class="o2" x="1082" y="206" width="18" height="52" rx="7"/>
+        <path class="o2" d="M900,258 V300 M1076,258 V300"/>
+        <use class="padart" href="assets/svg/pad-art-ps.svg#s"
+             transform="translate(920,206) scale(0.115)"/>
+
+        <!-- extension lines, drafting convention: the witness lines drop from
+             the thing being measured, not from the dimension line -->
+        <path class="datum" d="M215,212 V400 M360,212 V352 M985,258 V400"/>
+
+        <!-- what a mouse reaches: the desk, and that is all -->
+        <path class="o2" d="M215,345 H360"/>
+        <path class="fillsoft" d="M215,345 L224,341 L224,349 Z"/>
+        <path class="fillsoft" d="M360,345 L351,341 L351,349 Z"/>
+        <text class="mono hl-dim-lab" x="287" y="333" text-anchor="middle">A MOUSE</text>
+
+        <!-- what a controller reaches: the room. Accent, because this is the
+             one measurement the page is selling. -->
+        <path class="acc-s" d="M215,393 H985"/>
+        <path class="acc" d="M215,393 L225,388 L225,398 Z"/>
+        <path class="acc" d="M985,393 L975,388 L975,398 Z"/>
+        <text class="mono hl-dim-lab hl-dim-lab-on" x="600" y="381" text-anchor="middle">YOUR CONTROLLER</text>
+      </svg>
+
+      <!-- The same drawing, re-proportioned rather than scaled. A 1200-wide
+           viewBox at 375px renders the whole elevation 90px tall and both
+           dimension labels as smudges, which is the one thing this direction
+           cannot afford: the labels ARE the argument. Squeezing the horizontal
+           extents into a 360 viewBox keeps the objects and the type at a size
+           that reads. Two SVGs, one per breakpoint, because viewBox cannot be
+           set from CSS. -->
+      <svg class="dgs hl-plan hl-plan-sm" viewBox="0 88 360 232" aria-hidden="true">
+        <path class="datum" d="M0,210 H360"/>
+
+        <path class="o1" d="M24,150 H132"/>
+        <path class="o2" d="M32,150 V210 M122,150 V210"/>
+        <rect class="o1" x="52" y="96" width="62" height="42" rx="4"/>
+        <rect class="o3" x="58" y="102" width="50" height="30" rx="3"/>
+        <path class="o1" d="M83,138 V150"/>
+        <rect class="o2" x="116" y="141" width="14" height="9" rx="4"/>
+
+        <rect class="o2" x="252" y="130" width="86" height="28" rx="8"/>
+        <rect class="o1" x="244" y="156" width="102" height="15" rx="6"/>
+        <rect class="o2" x="236" y="142" width="10" height="29" rx="4"/>
+        <rect class="o2" x="344" y="142" width="10" height="29" rx="4"/>
+        <path class="o2" d="M252,171 V210 M338,171 V210"/>
+        <use class="padart" href="assets/svg/pad-art-ps.svg#s"
+             transform="translate(262,142) scale(0.058)"/>
+
+        <path class="datum" d="M83,150 V300 M132,150 V262 M295,171 V300"/>
+
+        <path class="o2" d="M83,254 H132"/>
+        <path class="fillsoft" d="M83,254 L89,251 L89,257 Z"/>
+        <path class="fillsoft" d="M132,254 L126,251 L126,257 Z"/>
+        <text class="mono hl-dim-lab" x="107" y="245" text-anchor="middle">A MOUSE</text>
+
+        <path class="acc-s" d="M83,292 H295"/>
+        <path class="acc" d="M83,292 L90,288 L90,296 Z"/>
+        <path class="acc" d="M295,292 L288,288 L288,296 Z"/>
+        <text class="mono hl-dim-lab hl-dim-lab-on" x="189" y="283" text-anchor="middle">YOUR CONTROLLER</text>
+      </svg>
+
+      <div class="hl-cta hl-dim-cta">
+        <a class="hl-btn" href="#pricing">Join the launch list</a>
+        <span class="hl-terms"><b>&#8364;19.99</b> once, when it ships. 14-day trial, no card, no account.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ F: THE PLAYABLE HERO ============
+       Every other direction on this page, and every asset this project owns,
+       is a picture ABOUT the product. docs/store-assets.md already concluded
+       that no still frame can prove causation and that the demo video is where
+       causation actually lives. There is a third option it does not consider,
+       because nothing in src/scripts/ uses it: the Gamepad API. The browser can
+       read the visitor's own controller.
+
+       So the hero stops demonstrating and hands over the sticks. Connect a pad,
+       press a button, and the cursor in the panel below is yours. It is not
+       footage, not a mock, and not a claim: it is the reader's own hardware
+       moving a pointer, which is the strongest evidence this page could carry
+       and the only kind that costs nothing to produce.
+
+       It also answers the question a non-gamer actually has, the one
+       docs/private/marketing-roadmap.md says nobody is serving: "will my
+       controller even work?" Two seconds, no download.
+
+       And it closes the argument the gap band opens. The panel is a box on a
+       web page; the whole point of the product is that Steer removes the box.
+       Pain, solution and unlock in one interaction:
+         pain     you are not at the desk
+         solution your controller already moves this pointer
+         unlock   now imagine it everywhere, not just in this panel
+
+       Progressive enhancement, per docs/design-rules.md: the markup below is a
+       complete static frame. No JS, no controller, or reduced motion all leave
+       a parked cursor, a real sentence and a working CTA. -->
+  <section class="hl hl-live" aria-label="Direction F: the playable hero">
+    <div class="hl-tag">F / playable</div>
+    <div class="hl-in">
+      <div class="hl-live-top">
+        <div class="eyebrow">A Mac app for the controller you already own</div>
+        <h2 class="hl-h hl-h-live">A mouse needs a desk.<br>Your controller doesn't.</h2>
+        <p class="hl-sub hl-sub-live">Connect a controller and move the left stick.
+          That pointer is yours, right now, in this page.</p>
+      </div>
+
+      <div class="hl-live-rig">
+        <div class="hl-screen2" id="lv-screen">
+          <div class="hl-screen-bar"><i></i><i></i><i></i></div>
+          <div class="hl-tiles">
+            <span class="hl-tile">Mail</span>
+            <span class="hl-tile">Safari</span>
+            <span class="hl-tile">Notes</span>
+            <span class="hl-tile">Music</span>
+          </div>
+          <div class="hl-pointer" id="lv-cursor">{% include "art/hero-cursor.svg" %}</div>
+        </div>
+
+        <div class="hl-live-side">
+          <svg class="hl-livepad" id="lv-pad" viewBox="0 0 1200 440" aria-hidden="true">
+            <use href="assets/svg/pad-art-ps.svg#s" />
+          </svg>
+          <p class="hl-status" id="lv-status">No controller yet. Connect one and press any button.</p>
+          <p class="hl-unlock">That is one panel on one web page. Steer does the same thing
+            everywhere: every app, every menu, every text field.</p>
+          <div class="hl-cta">
+            <a class="hl-btn" href="#pricing">Join the launch list</a>
+            <span class="hl-terms"><b>&#8364;19.99</b> once, when it ships.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* Lab-scoped on purpose. If this direction wins it belongs in
+         src/scripts/ as a module behind home.entry.js, like every other
+         behaviour on the site. */
+      (function () {
+        var screenEl = document.getElementById("lv-screen");
+        var cur = document.getElementById("lv-cursor");
+        var statusEl = document.getElementById("lv-status");
+        var padEl = document.getElementById("lv-pad");
+        if (!screenEl || !cur || !navigator.getGamepads) return;
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        var x = 0.5, y = 0.55, running = false;
+
+        function firstPad() {
+          var list = navigator.getGamepads() || [];
+          for (var i = 0; i < list.length; i++) if (list[i]) return list[i];
+          return null;
+        }
+
+        function frame() {
+          var gp = firstPad();
+          if (!gp) { running = false; screenEl.classList.remove("lv-on"); return; }
+
+          /* Deadzone before scaling, not after: a resting stick reports a small
+             non-zero value on every pad worth supporting, and without this the
+             pointer drifts on its own and the demo looks broken. */
+          var ax = gp.axes[0] || 0, ay = gp.axes[1] || 0;
+          if (Math.abs(ax) < 0.14) ax = 0;
+          if (Math.abs(ay) < 0.14) ay = 0;
+          x = Math.max(0, Math.min(1, x + ax * 0.014));
+          y = Math.max(0, Math.min(1, y + ay * 0.014));
+          cur.style.left = (x * 100) + "%";
+          cur.style.top = (y * 100) + "%";
+
+          var down = gp.buttons[0] && gp.buttons[0].pressed;
+          screenEl.classList.toggle("lv-click", !!down);
+
+          /* Hit-test in viewport pixels rather than by tracking tile indices:
+             the tiles wrap at narrow widths, so an index would point at the
+             wrong tile exactly where the layout changed. */
+          var cr = cur.getBoundingClientRect();
+          var px = cr.left + cr.width / 2, py = cr.top + cr.height / 2;
+          var tiles = screenEl.querySelectorAll(".hl-tile");
+          for (var i = 0; i < tiles.length; i++) {
+            var b = tiles[i].getBoundingClientRect();
+            var over = px >= b.left && px <= b.right && py >= b.top && py <= b.bottom;
+            tiles[i].classList.toggle("is-over", over);
+            tiles[i].classList.toggle("is-down", over && !!down);
+          }
+          requestAnimationFrame(frame);
+        }
+
+        function start(gp) {
+          /* gp.id is "DualSense Wireless Controller (STANDARD GAMEPAD Vendor:
+             054c Product: 0ce6)". The parenthetical is for developers. */
+          var name = (gp.id || "Controller").split(" (")[0];
+          statusEl.textContent = name + " connected. Move the left stick.";
+          screenEl.classList.add("lv-on");
+          if (padEl) padEl.classList.add("is-live");
+          if (!running) { running = true; requestAnimationFrame(frame); }
+        }
+
+        addEventListener("gamepadconnected", function (e) { start(e.gamepad); });
+        addEventListener("gamepaddisconnected", function () {
+          statusEl.textContent = "Controller disconnected. Press any button to reconnect.";
+          screenEl.classList.remove("lv-on", "lv-click");
+          if (padEl) padEl.classList.remove("is-live");
+        });
+        /* Chrome exposes nothing until a button is pressed, so a pad that was
+           already connected when the page loaded fires no event. Poll once. */
+        var seed = firstPad();
+        if (seed) start(seed);
+      })();
+    </script>
+  </section>
+
+  <!-- ============ A: SPLIT ============
+       The claim stops being centred. Copy holds the left column at a 46ch
+       measure, the machine holds the right. One sentence instead of two
+       paragraphs: the second one ("plug it in, nothing to configure") is the
+       "it already works" pairing docs/design-rules.md requires, so it survives
+       as a single line under the CTA rather than as a second paragraph above
+       it. -->
+  <section class="hl hl-split" aria-label="Direction A: split">
+    <div class="hl-tag">A / split</div>
+    <div class="hl-in">
+      <div class="hl-copy">
+        <div class="eyebrow">A Mac app for the controller you already own</div>
+        <h2 class="hl-h">A mouse needs a desk.<br>Your controller doesn't.</h2>
+        <p class="hl-sub">Steer turns it into a mouse and keyboard for the whole Mac:
+          point and click, type, scroll, arrange windows.</p>
+        <div class="hl-cta">
+          <a class="hl-btn" href="#pricing">Join the launch list</a>
+          <span class="hl-terms"><b>&#8364;19.99</b> once, when it ships.</span>
+        </div>
+        <p class="hl-own">Plug it in, grant one Mac permission, and it already works.</p>
+      </div>
+
+      <div class="hl-proof">
+        <div class="hl-win">
+          <div class="hl-bar"><i></i><i></i><i></i></div>
+          <div class="hl-slot">
+            <span class="hl-slot-tag">FOOTAGE</span>
+            <span class="hl-slot-note">the cursor crossing a real desktop, driven from the sofa</span>
+          </div>
+        </div>
+        <div class="hl-under">
+          <span class="hl-pill">Left stick</span>
+          <span class="hl-arrow" aria-hidden="true"></span>
+          <span class="hl-res">moves the pointer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ D: THE MECHANISM IS THE HERO ============
+       The radical one, and the only variant that invents nothing.
+
+       Everything here already exists in this repo and is already true:
+       capabilities-chain-{controller,steer,mac}.svg, plus the 6.2s causation
+       loop in styles/bands/capabilities.css. That loop presses a button, sends
+       the signal through Steer, moves a cursor on a drawn Mac, fires a click
+       ripple and blinks a typing caret. It IS the thing every other direction
+       needed footage to fake, and it is currently in band SIX, where a reader
+       who bounced at the hero never reaches it.
+
+       So the inversion: the hero stops being a portrait of a controller and
+       becomes the mechanism, running. The pad art survives inside cell one at
+       the size it is actually legible. The Mac finally appears above the fold,
+       which docs/private/marketing-roadmap.md names as the missing subject.
+
+       Nothing is redrawn. The band is a re-scale and a re-placement. -->
+  <section class="hl hl-chain" aria-label="Direction D: the mechanism is the hero">
+    <div class="hl-tag">D / the mechanism is the hero</div>
+    <div class="hl-in">
+      <div class="hl-chain-top">
+        <div class="eyebrow">A Mac app for the controller you already own</div>
+        <h2 class="hl-h hl-h-chain">A mouse needs a desk.<br>Your controller doesn't.</h2>
+        <div class="hl-cta hl-cta-c">
+          <a class="hl-btn" href="#pricing">Join the launch list</a>
+          <span class="hl-terms"><b>&#8364;19.99</b> once, when it ships. 14-day trial, no card, no account.</span>
+        </div>
+      </div>
+
+      <!-- .d-chain / .d-st / .d-pin / .d-fig are the design system's own chain
+           classes, reused verbatim so this inherits the dividers and the
+           stacking behaviour instead of re-implementing them. -->
+      <div class="d-chain hl-chain-rig">
+        <div class="d-st">
+          <div class="d-pin"><span class="k">You press</span></div>
+          <div class="d-fig">{% include "art/capabilities-chain-controller.svg" %}</div>
+        </div>
+        <div class="d-st">
+          <div class="d-pin"><span class="k">Steer translates</span></div>
+          <div class="d-fig">{% include "art/capabilities-chain-steer.svg" %}</div>
+        </div>
+        <div class="d-st">
+          <div class="d-pin"><span class="k">Your Mac reacts</span></div>
+          <div class="d-fig">{% include "art/capabilities-chain-mac.svg" %}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ E: JUST A REMAPPER ============
+       Built on the thing Sean's own screenshots proved: the macOS Game
+       Controllers pane maps a pad button to another PAD button, scoped to "All
+       Games". Steer maps the pad to the MAC. Two rows of the same grammar, and
+       the difference between them is the entire product.
+
+       Radical because it opens on the category instead of on a promise, which
+       is the one move no competitor can copy: on Windows the top row is false.
+       Reuses the pad silhouette and the chain's Mac, no new art. -->
+  <section class="hl hl-vs" aria-label="Direction E: just a remapper">
+    <div class="hl-tag">E / just a remapper</div>
+    <div class="hl-in">
+      <div class="eyebrow">A Mac app for the controller you already own</div>
+      <h2 class="hl-h hl-h-vs">Your Mac can remap a controller.<br>It cannot be run by one.</h2>
+
+      <div class="hl-rows">
+        <div class="hl-row-vs">
+          <div class="hl-row-k">macOS on its own</div>
+          <svg class="hl-mini" viewBox="0 0 1200 440" aria-hidden="true"><use href="assets/svg/pad-art-ps.svg#s" /></svg>
+          <span class="hl-arrow" aria-hidden="true"></span>
+          <svg class="hl-mini" viewBox="0 0 1200 440" aria-hidden="true"><use href="assets/svg/pad-art-ps.svg#s" /></svg>
+          <div class="hl-row-note">a button becomes another button, inside games</div>
+        </div>
+        <div class="hl-row-vs hl-row-on">
+          <div class="hl-row-k hl-row-k-on">With Steer</div>
+          <svg class="hl-mini" viewBox="0 0 1200 440" aria-hidden="true"><use href="assets/svg/pad-art-ps.svg#s" /></svg>
+          <span class="hl-arrow hl-arrow-on" aria-hidden="true"></span>
+          <div class="hl-macmini">{% include "art/capabilities-chain-mac.svg" %}</div>
+          <div class="hl-row-note">point, click, type, launch, anywhere on the Mac</div>
+        </div>
+      </div>
+
+      <div class="hl-cta">
+        <a class="hl-btn" href="#pricing">Join the launch list</a>
+        <span class="hl-terms"><b>&#8364;19.99</b> once, when it ships.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ B: SCREEN FIRST ============
+       The most radical of the three: the Mac IS the hero and the copy sits on
+       it. The controller appears once, as a prompt chip, which is the causation
+       token docs/store-assets.md argues is the only thing that reads at small
+       size. Costs the most, because it cannot ship without the capture. -->
+  <section class="hl hl-screen" aria-label="Direction B: screen first">
+    <div class="hl-tag">B / screen first</div>
+    <div class="hl-fill">
+      <div class="hl-slot hl-slot-big">
+        <span class="hl-slot-tag">FOOTAGE</span>
+        <span class="hl-slot-note">full-bleed Mac desktop, Steer's radial open, a real app launching</span>
+      </div>
+      <div class="hl-over">
+        <div class="eyebrow">A Mac app for the controller you already own</div>
+        <h2 class="hl-h hl-h-big">Your whole Mac,<br>from the sofa.</h2>
+        <div class="hl-cta">
+          <a class="hl-btn" href="#pricing">Join the launch list</a>
+          <span class="hl-terms"><b>&#8364;19.99</b> once, when it ships.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ C: ONE CLAIM, ONE PROOF ============
+       Reduction. No sub-paragraph at all, and the eight 9px annotations are
+       replaced by three instruments at a size a person can actually read.
+       The only one of the three that is drawn rather than captured, so it is
+       the only one that can ship before the footage exists. -->
+  <section class="hl hl-min" aria-label="Direction C: one claim, one proof">
+    <div class="hl-tag">C / one claim, one proof</div>
+    <div class="hl-in hl-in-col">
+      <div class="eyebrow">A Mac app for the controller you already own</div>
+      <h2 class="hl-h hl-h-huge">Your controller<br>is now the mouse.</h2>
+      <div class="hl-cta hl-cta-c">
+        <a class="hl-btn" href="#pricing">Join the launch list</a>
+        <span class="hl-terms"><b>&#8364;19.99</b> once, when it ships. 14-day trial, no card, no account.</span>
+      </div>
+
+      <!-- Three instruments, hero-sized: a controller-side control, a Mac-side
+           surface, and the pad's answer. Same grammar as the .vg family, drawn
+           at a size that carries instead of at 9px. -->
+      <div class="hl-rig">
+        <div class="hl-cell">
+          <div class="hl-cell-k">Left stick</div>
+          <div class="hl-stick"><i class="hl-cap"></i></div>
+        </div>
+        <div class="hl-cell hl-cell-wide">
+          <div class="hl-cell-k">Your Mac</div>
+          <div class="hl-surface">
+            <i class="hl-row r1"></i><i class="hl-row r2"></i><i class="hl-row r3"></i>
+            <svg class="hl-cursor" viewBox="0 0 12 18" aria-hidden="true">
+              <path d="M1 1l10 9.5-4.6.4 2.6 5.4-2.2 1-2.6-5.4L1 15.4Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="hl-cell">
+          <div class="hl-cell-k">The pad answers</div>
+          <div class="hl-echo"><i></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
