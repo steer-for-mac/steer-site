@@ -1,0 +1,7 @@
+/* Parked 2026-09-02 with the feel band's light-bar picker: the violet and teal
+   accent variants (AA ratios recorded in tokens.css history) and the crossfade. */
+:root[data-accent="violet"]{--blue:#6a3fd8;--blue-text:#6633cc;--blue-fill:rgba(122,82,232,0.12)}
+:root[data-accent="teal"]{--blue:#0a7561;--blue-text:#056a56;--blue-fill:rgba(63,224,192,0.15)}
+[data-theme="dark"][data-accent="violet"]{--blue:#754ce6;--blue-text:#b79cff;--blue-fill:rgba(122,82,232,0.22)}
+[data-theme="dark"][data-accent="teal"]{--blue:#0b7a66;--blue-text:#3fe0c0;--blue-fill:rgba(63,224,192,0.16)}
+html.accent-anim body *{transition:background-color .4s ease,border-color .4s ease,color .4s ease,box-shadow .4s ease,fill .4s ease,stroke .4s ease,outline-color .4s ease!important}

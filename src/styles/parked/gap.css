@@ -1,28 +1,3 @@
-
-/* centred head and the tail under the table */
-.vs-lead{margin:16px auto 0;max-width:60ch}
-.vs-fn{max-width:60ch;margin:16px auto 0}
-.vs-fn-next{max-width:60ch;margin:10px auto 0}
-.vs-cta{margin-top:40px}
-
-/* the card re-establishes left alignment inside the centred wrap */
-.vs-table{text-align:left}
-
-/* two cell tiers beside .tick and .dash: a qualified yes, and a dependency
-   note that must read lighter than the capability it qualifies */
-.vs-sub{color:var(--text-2)}
-.vs-dep{color:var(--text-3)}
-
-/* The gap band, moved here from the homepage 2026-09-02: the comparison page
-   is where the fact about macOS's own pane belongs. */
-/* The section language below the panel, from the comp: a left-aligned compact
-   head, one lede, then cards. No display heads, no dark bands. */
-.lg-sec { padding: 44px 0 40px; }
-.lg-sec-in { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-.lg-h2 { margin: 0 0 12px; font-size: 26px; font-weight: 600; letter-spacing: -0.015em; color: var(--text); }
-.lg-lede { max-width: 62ch; margin: 0 0 26px; font-size: 14px; line-height: 1.6; color: var(--text-2); }
-.lg-lede a { color: var(--blue-text); }
-@media (max-width: 860px) { .lg-sec { padding: 36px 0 32px; } }
 /* GAP band. Two columns that are deliberately NOT symmetrical: the macOS
    column is short because the pane really is that small, and letting the Steer
    column run longer is the argument. Do not pad the left one to match. */
@@ -100,7 +75,3 @@
   .gap-grid { grid-template-columns: 1fr; }
   .gap-col-b { border-left: 0; border-top: 1px solid var(--sep); }
 }
-
-/* vs.html centres its column; the gap head follows it here. */
-#gap .lg-h2, #gap .lg-lede, #gap .gap-src { text-align: center; margin-left: auto; margin-right: auto; }
-#gap .lg-sec-in { max-width: 880px; }

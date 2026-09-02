@@ -3,23 +3,12 @@
      card floating in 132px of padding, which read as a panel lifted from
      another site and cost the band 1,088px. Nothing here is new copy; the
      words are the card's words in different typographic roles. -->
-<section class="sec" id="pricing">
-  <div class="dw">
-    <div class="d-head">
-      <div class="eyebrow">Pricing</div>
-      <i aria-hidden="true"></i>
-    </div>
-
-    <!-- the page's own head grammar: display left, the figure in the lead slot.
-         The price is the one big number on the site that does real work, so it
-         keeps the display tier while staying microcopy in role: no button, no
-         second price, no comparison. -->
-    <div class="d-top pr-top">
-      <h2 class="d-display">One price. Yours to keep.</h2>
-      <div class="pr-price">
-        <div class="pr-fig"><span class="pr-cur">€</span><span class="pr-num">19.99</span></div>
-        <div class="pr-once">paid once, no subscription</div>
-      </div>
+<section class="lg-sec sunken" id="pricing">
+  <div class="lg-sec-in">
+    <h2 class="lg-h2">One price. Yours to keep.</h2>
+    <div class="pr-price">
+      <div class="pr-fig"><span class="pr-cur">&euro;</span><span class="pr-num">19.99</span></div>
+      <div class="pr-once">paid once, no subscription</div>
     </div>
 
     <div class="pr-body">
@@ -42,6 +31,12 @@
           <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
           <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
           <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
+          <select class="ml-in" name="audience" aria-label="Who is Steer for (optional)">
+            <option value="">Who's it for? (optional)</option>
+            <option value="personal">Just me</option>
+            <option value="work">Me, and my employer or school might pay</option>
+            <option value="org">A team or organisation</option>
+          </select>
           <button type="submit" class="btn btn-primary pr-go">Join the launch list</button>
           <p class="ml-msg" role="status" aria-live="polite"></p>
         </form>

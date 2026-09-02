@@ -7,7 +7,6 @@
    white-on-fill >=4.5 for CTAs, text variants >=4.5 on the darkest surface of
    the theme (--bg-inset-2). Default (no data-accent / "blue") is the :root set. */
 
-html.accent-anim body *{transition:background-color .4s ease,border-color .4s ease,color .4s ease,box-shadow .4s ease,fill .4s ease,stroke .4s ease,outline-color .4s ease!important}
 html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;background:var(--bg)}
 body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.5;font-size:17px;letter-spacing:-0.01em;transition:background .3s ease,color .3s ease}
 a{color:var(--blue-text);text-decoration:none}
@@ -32,12 +31,10 @@ h1,h2,h3{letter-spacing:-0.022em;line-height:1.06;font-weight:600}
 .lead{font-size:clamp(18px,2vw,21px);color:var(--text-2);line-height:1.5;font-weight:400;letter-spacing:-0.014em;text-wrap:pretty}
 /* section rhythm: three deliberate tempos instead of one uniform 104px */
 .sec{padding:104px 0}
-.sec-loose{padding:132px 0}
 .sec-tight{padding:72px 0}
 /* head-to-first-surface gap inside a section: one value, not a per-section
    guess (it had drifted 36/40/44/48 as inline styles) */
 .sec-body{margin-top:40px}
-.sec-loose .sec-body{margin-top:44px}
 .center .eyebrow{justify-content:center}
 /* split section header: h2 left, lead right — fills the wide right void the
    single-column template stranded on text-heavy sections */
@@ -70,16 +67,6 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .nav-links a{color:var(--text);font-size:15px;letter-spacing:-0.01em;padding:9px 12px;border-radius:var(--r-inset)}
 .nav-links a:hover{background:var(--bg-inset);color:var(--text);text-decoration:none}
 .nav-links a[aria-current="page"]{color:var(--blue-text)}
-@media(max-width:860px){
-  html.nav-over-hero .nav-menu .nav-links a{color:var(--text)}
-  html.nav-over-hero .nav-menu .nav-links a[aria-current="page"]{color:var(--blue-text)}
-  html.nav-over-hero .nav-toggle{color:var(--oh-ink);border-color:var(--oh-hairline)}
-}
-@supports not selector(::details-content){
-  html.nav-over-hero .nav-menu .nav-links a{color:var(--text)}
-  html.nav-over-hero .nav-menu .nav-links a[aria-current="page"]{color:var(--blue-text)}
-  html.nav-over-hero .nav-toggle{color:var(--oh-ink);border-color:var(--oh-hairline)}
-}
 /* desktop with support: dissolve the disclosure, links lay out inline */
 @supports selector(::details-content){
   @media(min-width:861px){
@@ -230,8 +217,6 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
 .tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 10px;border-radius:var(--r-btn);background:var(--bg-inset);color:var(--text-2);border:1px solid var(--sep)}
 .tag .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
 
-.uc-tag{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--blue-text);margin-bottom:12px;display:inline-flex;align-items:center;gap:7px}
-.uc-tag::before{content:"";width:5px;height:5px;border-radius:50%;flex:none;background:var(--blue);box-shadow:0 0 7px color-mix(in srgb,var(--blue) 60%,transparent)}
 .note-callout{background:var(--bg-inset);border-radius:var(--r-inset);padding:18px 20px;font-size:14px;color:var(--text-2);line-height:1.55}
 .note-callout strong{color:var(--text);font-weight:590}
 
@@ -257,7 +242,6 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
   .nav-in{gap:12px}
   .brand,.nav-right{flex-shrink:0}
   .sec{padding:72px 0}
-  .sec-loose{padding:88px 0}
   .sec-tight{padding:52px 0}
   .sec-head-split{grid-template-columns:1fr}
   .sec-head-split .lead{max-width:56ch}
@@ -280,7 +264,6 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
      on phones, and the link labels fit half-width comfortably */
   body{font-size:16px}
   .sec{padding:60px 0}
-  .sec-loose{padding:76px 0}
   .sec-tight{padding:48px 0}
 }
 .nav-cta-short{display:none}

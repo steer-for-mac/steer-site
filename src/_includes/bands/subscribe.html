@@ -1,0 +1,14 @@
+<!-- The comp's subscribe strip, carrying the real launch-list form: a mailto
+     dies silently on a machine with no mail client at the moment of highest
+     intent. Without JS the native POST still works. -->
+<section class="lg-sub" id="pricing">
+  <p>Hear the day the free trial opens. <b>&#8364;19.99</b> once, no subscription. No account, no tracking.</p>
+  <form class="ml-form lg-subrow" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
+    <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
+    <input class="ml-in" type="text" name="controller" placeholder="Your controller (optional)" aria-label="Which controller do you have (optional)">
+    <button type="submit" class="lg-btn">Join the launch list</button>
+    <p class="ml-msg" role="status" aria-live="polite"></p>
+  </form>
+  <p class="lg-subalt">Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
+</section>

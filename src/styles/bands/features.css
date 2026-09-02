@@ -1,0 +1,31 @@
+/* NAMED FEATURE GRID. Markup and layout carried over from the hero-logi comp, which
+   poured Steer's content into logitech.com/software/mx-software section by
+   section. The .lg-* names travel with it so the comp and the shipped band
+   stay diffable; renaming them would lose that. */
+
+.lg-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+.lg-grid article h3 { margin: 12px 0 6px; font-size: 15px; font-weight: 600; color: var(--text); }
+.lg-grid article p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--text-2); }
+.lg-thumb {
+  position: relative; aspect-ratio: 16 / 10; overflow: hidden;
+  border-radius: var(--r-inset); background: var(--bg-inset);
+  border: 1px solid var(--sep-2);
+}
+/* A whole 2000px settings window shrunk into a 330px card is a grey smudge:
+   that is the "blurry" every earlier grid was rejected for. This shows the
+   top of the content pane at close to 1x, sidebar cropped away, so the pane's
+   own heading and its first rows are readable. The capture is 2x, the sidebar
+   is the left 22% of it, and 200% puts the remaining text at about 0.65x. */
+.lg-thumb img {
+  position: absolute; left: -44%; top: -1%;
+  width: 200%; height: auto; max-width: none;
+}
+
+@media (max-width: 860px) {
+  .lg-grid { grid-template-columns: 1fr; }
+}
+
+/* The gallery trigger and the feature-count link, one row under the grid. */
+.lg-gal { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 14px 20px; margin-top: 26px; }
+.lg-gal p { margin: 0; font-size: 12.5px; color: var(--text-3); }
+.lg-gal a { color: var(--blue-text); }

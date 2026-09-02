@@ -16,6 +16,11 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://steer.seanfloyd.dev/trust.html</loc>
+    <lastmod>2026-07-17</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://steer.seanfloyd.dev/terms.html</loc>
     <lastmod>2026-07-17</lastmod>
     <priority>0.5</priority>

@@ -1,3 +1,14 @@
+/* trust.html: the trust band, moved off the homepage 2026-09-02 with the
+   comp's anatomy; its rules travel with it. */
+/* The section language below the panel, from the comp: a left-aligned compact
+   head, one lede, then cards. No display heads, no dark bands. */
+.lg-sec { padding: 44px 0 40px; }
+.lg-sec-in { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+.lg-h2 { margin: 0 0 12px; font-size: 26px; font-weight: 600; letter-spacing: -0.015em; color: var(--text); }
+.lg-lede { max-width: 62ch; margin: 0 0 26px; font-size: 14px; line-height: 1.6; color: var(--text-2); }
+.lg-lede a { color: var(--blue-text); }
+@media (max-width: 860px) { .lg-sec { padding: 36px 0 32px; } }
+.tr-back { padding-top: 28px; }
 
 /* ── migrated from styles/base.css when that file was split ──────────────
    The ruled-sheet treatment of the trust list. No markup in this band carries
@@ -15,7 +26,7 @@
 
 /* ── the head's spec line ────────────────────────────────────────────────── */
 #trust .t-strap{
-  margin-top:34px;border-top:1px solid var(--sep);padding-top:12px;
+  margin-top:0;border-top:1px solid var(--sep);padding-top:12px;text-align:center;
   font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.45;
   text-transform:uppercase;letter-spacing:0.12em;color:var(--text);
 }
@@ -49,24 +60,31 @@
 
 /* ── the two disclosures ─────────────────────────────────────────────────── */
 #trust .t-disc{
-  --cx:var(--pad);
-  margin-left:calc(var(--cx) * -1);margin-right:calc(var(--cx) * -1);
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  margin-top:28px;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;
 }
-#trust .t-disc .d-item h3{font-size:17px;font-weight:590;letter-spacing:-0.017em}
+#trust .t-h3{font-size:clamp(20px,1.8vw,24px);font-weight:620;letter-spacing:-0.022em;line-height:1.18;text-wrap:balance}
+#trust .t-cell{padding:22px 24px 24px;border:1px solid var(--sep);border-radius:var(--r-card);background:var(--card-bg)}
+#trust .t-cell p{font-size:14.5px;color:var(--text-2);line-height:1.5;margin-top:6px}
+#trust .t-cell a{color:var(--blue-text)}
+#trust .t-cell h3{font-size:17px;font-weight:590;letter-spacing:-0.017em}
+
+#trust .t-h3{font-size:clamp(20px,1.8vw,24px);font-weight:620;letter-spacing:-0.022em;line-height:1.18;text-wrap:balance}
+#trust .t-cell{padding:22px 24px 24px;border:1px solid var(--sep);border-radius:var(--r-card);background:var(--card-bg)}
+#trust .t-cell h3{font-size:17px;font-weight:590;letter-spacing:-0.017em}
+#trust .t-cell p{font-size:14.5px;color:var(--text-2);line-height:1.5;margin-top:6px}
+#trust .t-cell a{color:var(--blue-text)}
 
 /* ── narrow ──────────────────────────────────────────────────────────────── */
 @media(max-width:1040px){
   #trust .t-proof{column-gap:40px}
-  #trust .t-disc{--cx:20px}
 }
 @media(max-width:900px){
   #trust .t-proof{grid-template-columns:1fr;padding-bottom:28px}
   #trust .t-lede,#trust .t-fig,#trust .t-list{grid-column:1;grid-row:auto}
   #trust .t-fig{margin:20px 0 4px;max-width:560px}
-  #trust .t-lede p,#trust .t-item p,#trust .t-disc .d-item p{max-width:60ch}
-  #trust .t-disc .d-item h3{max-width:none}
-  #trust .t-disc{--cx:0px;grid-template-columns:1fr}
+  #trust .t-lede p,#trust .t-item p,#trust .t-cell p{max-width:60ch}
+  #trust .t-disc{grid-template-columns:1fr}
 }
 @media(max-width:600px){
   #trust .t-strap{margin-top:26px}

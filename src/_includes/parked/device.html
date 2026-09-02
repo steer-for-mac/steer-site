@@ -1,0 +1,142 @@
+{# `with context`: Nunjucks macros are imported into an EMPTY context, so
+   without it _data/pads.json is not visible inside them and every loop below
+   renders nothing at all, silently. #}
+{% import "macros/pad.njk" as pad with context %}
+<!-- DEVICE — the annotated controller, one section below the hero.
+
+     It kept the class .chero when it moved out of the hero band: pad-picker.js,
+     pad-labels.js, nav-over-hero's successor and the six tests in
+     tests/pad.spec.js all key off `.chero`, `.tab-in` and `.padwrap`, so the
+     machinery travels intact and only the surroundings changed.
+
+     Why it is here and not in the hero: a large glossy controller reads as
+     GAMING and as HARDWARE before a word is read, which fights both the
+     non-gamer position and "this is a Mac app". Recorded 2026-08-01, and both
+     references measured on 2026-08-19 agree -- openlogi and Logitech each open
+     with software or a scene and put the annotated device in the section below.
+
+     Its CSS is styles/bands/device.css. Theme follows html[data-theme]; deep
+     links: #playstation / #xbox / #nintendo / #led=RRGGBB. -->
+<section class="chero" id="device" data-pad="ps">
+  <div class="wash" aria-hidden="true"></div>
+  <div class="pool" aria-hidden="true"></div>
+
+  <div class="copy">
+    <div class="app-eyebrow">Your controller, labelled</div>
+    <h2>Every control has a job.</h2>
+    <p class="sub">Pick the one you own. The labels change with it, because what a
+      pad can do depends on what is under your thumbs.</p>
+    <div class="picker-wrap">
+      <div class="picker-prompt">Pick your controller</div>
+      {#- Radios, not role="tab". A tab promises a tabpanel it controls; this
+          asks which controller you own, which is a radio question, and saying so
+          in the markup hands the arrow-key behaviour to the browser instead of
+          to a keydown handler. The two pickers carry different name= values on
+          purpose: same-name radios are ONE group document-wide, so arrow keys
+          would have walked from the strip near the price up into this band, -->
+    {% include "art/hero-defs.svg" %}
+
+    <!-- ACCESSIBILITY. Each pad is a drawing plus a set of written callouts,
+         and they are now two different things to a screen reader, because the
+         callouts are real text.
+
+         .padwrap used to be role="img" with an aria-label that spelled out
+         every annotation, the SVG aria-hidden beneath it. That is the correct
+         pattern for a picture whose meaning is only in the picture, and it was
+         right while the words lived inside the SVG. It is wrong the moment the
+         words are in the DOM: the label and the text would each be announced,
+         so every callout would be read twice.
+
+         So the role and the label moved DOWN onto .plate, and shrank to what
+         only the drawing says (which controller this is). The annotations sit
+         outside it as text. The four pads are still swapped by the picker;
+         home.js keeps toggling aria-hidden on .padwrap, and the inactive three
+         are visibility:hidden, so only the chosen pad is ever in the tree.
+         Below 900px the annotations are display:none and the .features chips
+         take over, which is also the width where the old aria-label duplicated
+         those chips. Alt text is per pad, so it lives in _data/pads.json with
+         the rest of the per-pad copy. -->
+
+    <!-- ═══════════ PLAYSTATION · DualSense ═══════════ -->
+    <div class="padwrap ps active">
+      <div class="plate" role="img" aria-label="{{ pads.pads.ps.alt }}">{% include "art/hero-pad-ps.svg" %}</div>
+      {{ pad.overlay("ps") }}
+    </div>
+
+    <!-- ═══════════ XBOX ═══════════ -->
+    <div class="padwrap xb">
+      <div class="plate" role="img" aria-label="{{ pads.pads.xb.alt }}">{% include "art/hero-pad-xb.svg" %}</div>
+      {{ pad.overlay("xb") }}
+    </div>
+
+    <!-- ═══════════ NINTENDO · Switch Pro ═══════════ -->
+    <div class="padwrap sw">
+      <div class="plate" role="img" aria-label="{{ pads.pads.sw.alt }}">{% include "art/hero-pad-sw.svg" %}</div>
+      {{ pad.overlay("sw") }}
+    </div>
+
+    <!-- ═══════════ & OTHERS · any MFi-certified pad ═══════════
+         A schematic outline, not a fourth product render: no brand, no extras,
+         Apple's own A/B/X/Y naming. Callouts reduced to the honest core. -->
+    <div class="padwrap mf">
+      <div class="plate" role="img" aria-label="{{ pads.pads.mf.alt }}">{% include "art/hero-pad-mf.svg" %}</div>
+      {{ pad.overlay("mf") }}
+    </div>
+  </div>
+
+  <!-- mobile feature chips -->
+  <!-- The SVG annotations are unreadable on a phone, so these chips stand in for
+       them. Keep each list as long as its pad's annotation set: a DualSense owner
+       must not see fewer features here than an Xbox owner does. -->
+  <!-- Keep every chip at or under ~36 mono characters: at 375px the pill has
+       ~335px of room and longer strings push the hero into horizontal overflow. -->
+  <ul class="features feat-ps">
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Triggers can push back before the click</li>
+    <li>A quiet buzz for the moments that earn it</li>
+    <li>The light strip, any colour you like</li>
+  </ul>
+  <ul class="features feat-xb">
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Two buttons at once: one more job</li>
+    <li>A quiet buzz for the moments that earn it</li>
+    <li>Tap or hold: two jobs per button</li>
+  </ul>
+  <ul class="features feat-sw">
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Tilt it and the cursor follows</li>
+    <li>A quiet buzz for the moments that earn it</li>
+    <li>Tap or hold: two jobs per button</li>
+  </ul>
+  <ul class="features feat-mf">
+    <li>One stick points, the other scrolls</li>
+    <li>Any shortcut, app, or saved task</li>
+    <li>Hold one button: the others change</li>
+    <li>Tap or hold: two jobs per button</li>
+    <li>Two buttons at once: one more job</li>
+    <li>A buzz, if your pad supports it</li>
+  </ul>
+
+  <div class="bottombar">
+    <div class="hero-demo">
+      <div class="vg vg-glide" aria-hidden="true">
+        <span class="vg-stick"><i class="vg-cap"></i><i class="vg-ring gr"></i></span>
+        <div class="vg-screen">
+          <span class="vg-tile">{% include "art/hero-play.svg" %}{% include "art/hero-pause.svg" %}<i class="tring"></i></span>
+          <span class="vg-cursor">{% include "art/hero-cursor.svg" %}<i class="vg-click"></i></span>
+        </div>
+        <span class="vg-facewrap"><span class="face-slot" data-b="cross">{% include "art/hero-face-cross.svg" %}{{ pad.face("cross") }}</span></span>
+      </div>
+      <p class="cap">The stick is the mouse. Press <span class="only-ps">Cross</span><span class="only-xb">A</span><span class="only-sw">B</span><span class="only-mf">A</span> to click.</p>
+    </div>
+  </div>
+
+  <div class="grain"></div>
+</section>
+

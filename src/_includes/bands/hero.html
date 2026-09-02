@@ -1,154 +1,60 @@
-{# `with context`: Nunjucks macros are imported into an EMPTY context, so
-   without it _data/pads.json is not visible inside them and every loop below
-   renders nothing at all, silently. #}
-{% import "macros/pad.njk" as pad with context %}
-<!-- HERO — trimodal controller-picker (PS / Xbox / Switch Pro).
-     Namespaced .chero: its CSS is styles/bands/hero.css, its JS the appended IIFE in
-     the bottom <script>. Theme follows the site's html[data-theme]; deep links:
-     #playstation / #xbox / #nintendo / #led=RRGGBB. -->
-<section class="chero" data-pad="ps">
-  <div class="wash" aria-hidden="true"></div>
-  <div class="pool" aria-hidden="true"></div>
+<!-- The homepage in the anatomy of src/hero-logi.html, the comp that won the
+     Aug 1 tournament: banner, persona row, intro, one wide panel with one
+     overlay, per-app cards, the named grid, a subscribe strip. Their
+     proportions, kept on purpose; the comp's own notes explain each slot.
 
-  <div class="copy">
-    <div class="app-eyebrow">A Mac app for the controller you already own</div>
-    <h1>A mouse needs a desk.<br>Your controller doesn't.</h1>
-    <p class="sub">Steer turns it into a mouse and keyboard: point and click, type, scroll, arrange windows, reach an app's own menus. You stop getting up.</p>
-    <p class="sub sub-own">Plug it in, grant one Mac permission, and it already works. Nothing to configure.</p>
-    <div class="cta-row">
-      <a class="cta" href="#pricing" data-ml>Join the launch list</a>
-      <span class="terms"><b>€19.99</b> once, when it ships. 14-day trial, no card, no account.</span>
-    </div>
-    <div class="picker-wrap">
-      <div class="picker-prompt">Pick your controller</div>
-      {#- Radios, not role="tab". A tab promises a tabpanel it controls; this
-          asks which controller you own, which is a radio question, and saying so
-          in the markup hands the arrow-key behaviour to the browser instead of
-          to a keydown handler. The two pickers carry different name= values on
-          purpose: same-name radios are ONE group document-wide, so arrow keys
-          would have walked from the strip seven screens up into the hero, which
-          is the exact bug the old roving-focus code was written to patch. #}
-      <div class="tabs" role="radiogroup" aria-label="See your controller">
-        <input type="radio" class="tab-in" name="hero-pad" id="hp-ps" value="ps" checked>
-        <label class="tab" for="hp-ps">PlayStation</label>
-        <input type="radio" class="tab-in" name="hero-pad" id="hp-xb" value="xb">
-        <label class="tab" for="hp-xb">Xbox</label>
-        <input type="radio" class="tab-in" name="hero-pad" id="hp-sw" value="sw">
-        <label class="tab" for="hp-sw">Nintendo</label>
-        <input type="radio" class="tab-in" name="hero-pad" id="hp-mf" value="mf">
-        <label class="tab" for="hp-mf">Other</label>
-      </div>
-    </div>
+     Banner: their product strip is the four pads. Each is a link into the
+     controller page, the way theirs link to product pages; nothing on this
+     page changes per pad any more, so a picker here would move nothing.
+     Panel: their desk photograph is our screen recording, the thing a sceptic
+     doubts most (typing), driven through Steer's own input path in one take. -->
+<section class="lg-banner">
+  <div class="lg-strip" role="group" aria-label="Controllers Steer works with">
+    <a class="lg-padtab" href="compatibility.html#playstation"><svg viewBox="0 0 1200 440" aria-hidden="true"><use href="assets/svg/pad-art-ps.svg#s"/></svg><span>PlayStation</span></a>
+    <a class="lg-padtab" href="compatibility.html#xbox"><svg viewBox="0 0 1200 440" aria-hidden="true"><use href="assets/svg/pad-art-xb.svg#s"/></svg><span>Xbox</span></a>
+    <a class="lg-padtab" href="compatibility.html#nintendo"><svg viewBox="0 0 1200 440" aria-hidden="true"><use href="assets/svg/pad-art-sw.svg#s"/></svg><span>Nintendo</span></a>
+    <a class="lg-padtab" href="compatibility.html#others"><svg viewBox="0 0 1200 440" aria-hidden="true"><use href="assets/svg/pad-art-mf.svg#s"/></svg><span>Other</span></a>
   </div>
-
-  <div class="stage">
-    <!-- shared studio materials. Each stop names its own colour through a
-         --pa-* property (styles/bands/hero.css) instead of being reached by a
-         `.chero #bodyGrad .s1` selector: a stop-color that travels with the
-         markup is one a <use> clone still gets. -->
-    {% include "art/hero-defs.svg" %}
-
-    <!-- ACCESSIBILITY. Each pad is a drawing plus a set of written callouts,
-         and they are now two different things to a screen reader, because the
-         callouts are real text.
-
-         .padwrap used to be role="img" with an aria-label that spelled out
-         every annotation, the SVG aria-hidden beneath it. That is the correct
-         pattern for a picture whose meaning is only in the picture, and it was
-         right while the words lived inside the SVG. It is wrong the moment the
-         words are in the DOM: the label and the text would each be announced,
-         so every callout would be read twice.
-
-         So the role and the label moved DOWN onto .plate, and shrank to what
-         only the drawing says (which controller this is). The annotations sit
-         outside it as text. The four pads are still swapped by the picker;
-         home.js keeps toggling aria-hidden on .padwrap, and the inactive three
-         are visibility:hidden, so only the chosen pad is ever in the tree.
-         Below 900px the annotations are display:none and the .features chips
-         take over, which is also the width where the old aria-label duplicated
-         those chips. Alt text is per pad, so it lives in _data/pads.json with
-         the rest of the per-pad copy. -->
-
-    <!-- ═══════════ PLAYSTATION · DualSense ═══════════ -->
-    <div class="padwrap ps active">
-      <div class="plate" role="img" aria-label="{{ pads.pads.ps.alt }}">{% include "art/hero-pad-ps.svg" %}</div>
-      {{ pad.overlay("ps") }}
+  <div class="lg-banner-in">
+    <h1>A mouse needs a desk. Your controller doesn't.</h1>
+    <div class="lg-btns">
+      <a class="lg-btn" href="#pricing" data-ml>Join the launch list</a>
+      <a class="lg-btn lg-btn-2" href="compatibility.html">See what your controller can do</a>
     </div>
-
-    <!-- ═══════════ XBOX ═══════════ -->
-    <div class="padwrap xb">
-      <div class="plate" role="img" aria-label="{{ pads.pads.xb.alt }}">{% include "art/hero-pad-xb.svg" %}</div>
-      {{ pad.overlay("xb") }}
-    </div>
-
-    <!-- ═══════════ NINTENDO · Switch Pro ═══════════ -->
-    <div class="padwrap sw">
-      <div class="plate" role="img" aria-label="{{ pads.pads.sw.alt }}">{% include "art/hero-pad-sw.svg" %}</div>
-      {{ pad.overlay("sw") }}
-    </div>
-
-    <!-- ═══════════ & OTHERS · any MFi-certified pad ═══════════
-         A schematic outline, not a fourth product render: no brand, no extras,
-         Apple's own A/B/X/Y naming. Callouts reduced to the honest core. -->
-    <div class="padwrap mf">
-      <div class="plate" role="img" aria-label="{{ pads.pads.mf.alt }}">{% include "art/hero-pad-mf.svg" %}</div>
-      {{ pad.overlay("mf") }}
-    </div>
+    <p class="lg-terms"><b>&#8364;19.99</b> once, when it ships. 14-day trial, no card, no account.</p>
   </div>
-
-  <!-- mobile feature chips -->
-  <!-- The SVG annotations are unreadable on a phone, so these chips stand in for
-       them. Keep each list as long as its pad's annotation set: a DualSense owner
-       must not see fewer features here than an Xbox owner does. -->
-  <!-- Keep every chip at or under ~36 mono characters: at 375px the pill has
-       ~335px of room and longer strings push the hero into horizontal overflow. -->
-  <ul class="features feat-ps">
-    <li>One stick points, the other scrolls</li>
-    <li>Any shortcut, app, or saved task</li>
-    <li>Hold one button: the others change</li>
-    <li>Triggers can push back before the click</li>
-    <li>A quiet buzz for the moments that earn it</li>
-    <li>The light strip, any colour you like</li>
-  </ul>
-  <ul class="features feat-xb">
-    <li>One stick points, the other scrolls</li>
-    <li>Any shortcut, app, or saved task</li>
-    <li>Hold one button: the others change</li>
-    <li>Two buttons at once: one more job</li>
-    <li>A quiet buzz for the moments that earn it</li>
-    <li>Tap or hold: two jobs per button</li>
-  </ul>
-  <ul class="features feat-sw">
-    <li>One stick points, the other scrolls</li>
-    <li>Any shortcut, app, or saved task</li>
-    <li>Hold one button: the others change</li>
-    <li>Tilt it and the cursor follows</li>
-    <li>A quiet buzz for the moments that earn it</li>
-    <li>Tap or hold: two jobs per button</li>
-  </ul>
-  <ul class="features feat-mf">
-    <li>One stick points, the other scrolls</li>
-    <li>Any shortcut, app, or saved task</li>
-    <li>Hold one button: the others change</li>
-    <li>Tap or hold: two jobs per button</li>
-    <li>Two buttons at once: one more job</li>
-    <li>A buzz, if your pad supports it</li>
-  </ul>
-
-  <div class="bottombar">
-    <div class="hero-demo">
-      <div class="vg vg-glide" aria-hidden="true">
-        <span class="vg-stick"><i class="vg-cap"></i><i class="vg-ring gr"></i></span>
-        <div class="vg-screen">
-          <span class="vg-tile">{% include "art/hero-play.svg" %}{% include "art/hero-pause.svg" %}<i class="tring"></i></span>
-          <span class="vg-cursor">{% include "art/hero-cursor.svg" %}<i class="vg-click"></i></span>
-        </div>
-        <span class="vg-facewrap"><span class="face-slot" data-b="cross">{% include "art/hero-face-cross.svg" %}{{ pad.face("cross") }}</span></span>
-      </div>
-      <p class="cap">The stick is the mouse. Press <span class="only-ps">Cross</span><span class="only-xb">A</span><span class="only-sw">B</span><span class="only-mf">A</span> to click.</p>
-    </div>
-  </div>
-
-  <div class="grain"></div>
 </section>
 
+<div class="lg-personas">
+  <a href="#couch"><span class="lg-circle">{% include "art/persona-sofa.svg" %}</span>On the sofa</a>
+  <a href="features.html"><span class="lg-circle">{% include "art/persona-slides.svg" %}</span>Presenting</a>
+  <a href="#apps"><span class="lg-circle">{% include "art/persona-film.svg" %}</span>Editing</a>
+  <a href="#couch"><span class="lg-circle">{% include "art/persona-bed.svg" %}</span>Reading in bed</a>
+  <a href="agents.html"><span class="lg-circle">{% include "art/persona-code.svg" %}</span>Coding</a>
+  <a href="accessibility.html"><span class="lg-circle">{% include "art/persona-hand.svg" %}</span>When a mouse hurts</a>
+</div>
+
+<section class="lg-intro">
+  <p class="lg-eyebrow">Get off the desk</p>
+  <h2>Take the wheel</h2>
+  <p>Steer turns a PlayStation, Xbox or Switch controller into a mouse and keyboard for your Mac. Point and click, scroll, type, switch apps, run saved tasks. It works the moment you plug in, and nothing you type leaves your Mac.</p>
+  <p class="lg-fine">macOS 14+ and Apple Silicon. 315 controller mappings bundled.</p>
+</section>
+
+<section class="lg-stage" id="couch">
+  <figure class="lg-photo">
+    <video class="lg-video" muted loop playsinline controls preload="metadata" poster="assets/video/couch-search-poster.jpg" width="1640" height="1010">
+      <source src="assets/video/couch-search.webm" type="video/webm">
+      <source src="assets/video/couch-search.mp4" type="video/mp4">
+    </video>
+    <div class="lg-arcs">
+      <span class="lg-arc"><span class="lg-pill">L1 + R3</span><span class="lg-line"></span><span class="lg-pill">Keyboard</span></span>
+      <span class="lg-arc"><span class="lg-pill">Left stick</span><span class="lg-line"></span><span class="lg-pill">Aim</span></span>
+      <span class="lg-arc"><span class="lg-pill">Face button</span><span class="lg-line"></span><span class="lg-pill">Type</span></span>
+      <span class="lg-arc"><span class="lg-pill">R3, Return</span><span class="lg-line"></span><span class="lg-pill">Search</span></span>
+      <button type="button" class="lg-pause" aria-pressed="false" hidden>Pause</button>
+    </div>
+    <figcaption class="llm-only">Screen recording of the TV app on a Mac. One letter sits in the search field. Steer's on-screen keyboard opens, and as the left stick aims at a slice of letters and a face button presses each one, the field fills in and the results rebuild live. Return runs the search, the keyboard closes, and the pointer moves onto the first result.</figcaption>
+  </figure>
+  <p class="lg-fine lg-stagecap">Pick something to watch without getting up for the keyboard. One take, every input sent through Steer, no cuts.</p>
+</section>

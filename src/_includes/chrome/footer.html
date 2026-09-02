@@ -10,7 +10,6 @@
       </div>
       <div>
         <h2 class="foot-h">Product</h2>
-        <a href="{% if not home %}index.html{% endif %}#feel">Feel</a>
         <a href="features.html"{% if pageName == "features" %} aria-current="page"{% endif %}>Features</a>
         <a href="compatibility.html"{% if pageName == "compatibility" %} aria-current="page"{% endif %}>Controller support</a>
         <a href="accessibility.html"{% if pageName == "accessibility" %} aria-current="page"{% endif %}>Accessibility</a>
@@ -21,6 +20,7 @@
       <div>
         <h2 class="foot-h">Legal</h2>
         <a href="privacy.html"{% if pageName == "privacy" %} aria-current="page"{% endif %}>Privacy</a>
+        <a href="trust.html"{% if pageName == "trust" %} aria-current="page"{% endif %}>Trust</a>
         <a href="terms.html"{% if pageName == "terms" %} aria-current="page"{% endif %}>Terms</a>
         <a href="refund.html"{% if pageName == "refund" %} aria-current="page"{% endif %}>Refunds</a>
       </div>

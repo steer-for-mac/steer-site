@@ -8,7 +8,7 @@
       <h2 id="shotsTitle">Inside the app</h2>
       <p class="shots-note">Captured from the app; no renders, no touch-ups.</p>
     </div>
-    <div class="shots-count" id="shotsCount" aria-live="polite">1 / 7</div>
+    <div class="shots-count" id="shotsCount" aria-live="polite">1 / 8</div>
     <button type="button" class="shots-close" id="shotsClose" aria-label="Close screenshots">
       {% include "art/dialogs-close.svg" %}
     </button>
@@ -29,15 +29,27 @@
       -->
       <figure class="shots-item cur">
         <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
-          <img data-light="{{ 'assets/light/settings-sticks.png' | shot }}" data-dark="{{ 'assets/dark/settings-sticks.png' | shot }}" alt="Steer's Sticks pane: per-layer stick modes and a cursor speed curve you can dial in" width="2000" height="1760" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          <img data-light="{{ 'assets/menubar-dropdown.png' | shot }}" data-dark="{{ 'assets/menubar-dropdown-dark.png' | shot }}" alt="Steer's menu bar menu: the connected DualSense with its battery level, then Profile, Show Help Overlay, Run Setup Wizard, Preferences and Quit." width="720" height="530" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
         </button>
-        <figcaption>Sticks: per-layer modes and a cursor speed you shape yourself.</figcaption>
+        <figcaption>A menu bar app. The controller, its battery, your profile, and the wizard if you want it.</figcaption>
       </figure>
       <figure class="shots-item">
         <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
-          <img data-light="{{ 'assets/light/settings-buttons.png' | shot }}" data-dark="{{ 'assets/dark/settings-buttons.png' | shot }}" alt="Steer's Buttons pane: every control mapped to a shortcut, tap or hold" width="2000" height="1760" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          <img data-light="{{ 'assets/daisy-wheel.png' | shot }}" data-dark="{{ 'assets/daisy-wheel-dark.png' | shot }}" alt="Steer's on-screen keyboard: eight slices of letters around a wheel, with the app's own caption, left stick aims, face button commits, and the shoulder buttons labelled Shift, Delete, Space, Symbols and Return." width="900" height="1012" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
         </button>
-        <figcaption>Buttons: a shortcut, an app, or a saved task on any button, tap or hold.</figcaption>
+        <figcaption>Typing: aim a slice with the stick, press the face button under the letter.</figcaption>
+      </figure>
+      <figure class="shots-item">
+        <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="{{ 'assets/radial-menu.png' | shot }}" data-dark="{{ 'assets/radial-menu-dark.png' | shot }}" alt="Steer's app ring: nine app icons in a circle, with a bar underneath naming the controller button for Aim, Select and Cancel." width="620" height="780" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        </button>
+        <figcaption>A ring of your apps: aim, press, done.</figcaption>
+      </figure>
+      <figure class="shots-item">
+        <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="{{ 'assets/light/settings-buttons.png' | shot }}" data-dark="{{ 'assets/dark/settings-buttons.png' | shot }}" alt="Steer's Bindings pane: every control mapped to a shortcut, tap or hold" width="2000" height="1760" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        </button>
+        <figcaption>Bindings: a shortcut, an app, or a saved task on any button, tap or hold.</figcaption>
       </figure>
       <figure class="shots-item">
         <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
@@ -53,15 +65,9 @@
       </figure>
       <figure class="shots-item">
         <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
-          <img data-light="{{ 'assets/light/settings-led.png' | shot }}" data-dark="{{ 'assets/dark/settings-led.png' | shot }}" alt="Steer's Light Bar pane: colour, battery cues, and workflow signals" width="2000" height="1760" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          <img data-light="{{ 'assets/import-review.png' | shot }}" data-dark="{{ 'assets/import-review-dark.png' | shot }}" alt="Steer's import review: three imported bindings, each tagged Opens URL beside the address it would open, with Cancel and Import buttons at the foot." width="1040" height="960" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
         </button>
-        <figcaption>Light bar: set a colour, or wire it to signal your workflow (DualSense).</figcaption>
-      </figure>
-      <figure class="shots-item">
-        <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
-          <img data-light="{{ 'assets/light/settings-gyro.png' | shot }}" data-dark="{{ 'assets/dark/settings-gyro.png' | shot }}" alt="Steer's Gyro pane: aim speed curve, sensitivity tuning, and tilt-to-aim activation" width="2000" height="1760" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
-        </button>
-        <figcaption>Gyro: tilt to aim, with a speed curve you tune.</figcaption>
+        <figcaption>Anything risky is shown to you first: an import that opens URLs waits for your OK.</figcaption>
       </figure>
       <figure class="shots-item">
         <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
@@ -88,6 +94,15 @@
     <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
     <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address" autofocus>
     <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
+    {#- asks who pays, never anything personal: the organisation signal is a
+        purchasing fact, and "do you have a disability" is neither ours to ask
+        nor needed to answer it. -#}
+    <select class="ml-in" name="audience" aria-label="Who is Steer for (optional)">
+      <option value="">Who's it for? (optional)</option>
+      <option value="personal">Just me</option>
+      <option value="work">Me, and my employer or school might pay</option>
+      <option value="org">A team or organisation</option>
+    </select>
     <button type="submit" class="btn btn-primary ml-go">Join the launch list</button>
     <p class="ml-msg" role="status" aria-live="polite"></p>
   </form>

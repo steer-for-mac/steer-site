@@ -1,0 +1,96 @@
+/* PER-APP CARDS. Markup and layout carried over from the hero-logi comp, which
+   poured Steer's content into logitech.com/software/mx-software section by
+   section. The .lg-* names travel with it so the comp and the shipped band
+   stay diffable; renaming them would lose that. */
+
+/* Four cards that fit the column. The comp scrolled them sideways, which at
+   1440px cut the fourth card in half and read as a defect, not a carousel. */
+.lg-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.lg-card { background: var(--card-bg); border: 1px solid var(--sep); border-radius: var(--r-card); padding: 16px; box-shadow: var(--shadow-rest); }
+@media (max-width: 900px) { .lg-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .lg-cards { grid-template-columns: 1fr; } }
+.lg-dev { position: relative; }
+.lg-dev img {
+  display: block; width: 100%; height: auto;
+  --pad-body: var(--sep-2); --pad-ink: var(--sep-2); --pad-edge: transparent;
+  --ps-cross: var(--blue); --ps-circle: var(--sep-2);
+  --ps-triangle: var(--sep-2); --ps-square: var(--sep-2);
+}
+.lg-card h3 { margin: 10px 0 8px; font-size: 15px; font-weight: 600; color: var(--text); }
+
+/* NUMBERED CHIPS ------------------------------------------------------------
+   The reference puts a numbered chip on each control and repeats the number in
+   the legend beneath. That correspondence is the section: four sentences stop
+   being a list and become a map of the device, which is the one thing this band
+   can show that the hero's annotations do not (they label a drawing of one pad; */
+.lg-b,
+.lg-key > li::before {
+  box-sizing: border-box;
+  width: 18px; height: 18px;
+  font: 600 11px/17px var(--mono);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  border-radius: var(--r-btn);
+  background-color: var(--blue);
+  color: #fff;
+}
+
+/* --x/--y are the control centres of assets/pads/pad-ps.png as percentages of
+   the image box. --dx/--dy then push the chip clear of the control it names:
+   a chip parked on the glyph hides exactly the thing it is pointing at, so
+   every one of these sits tangent to its control, never over it. Both halves
+   are geometry, so both live here rather than in the markup, which is also what
+   keeps .htmlvalidate's no-inline-style rule satisfied. */
+.lg-b {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  translate: calc(-50% + var(--dx, 0px)) calc(-50% + var(--dy, 0px));
+  /* A white halo, not a second accent: the chips land on white shells, black
+     stick dishes and the dark centre plate in the same card, and the accent is
+     user-swappable down to amber. #fff on the accent is the pair contrast.js
+     already checks by name. */
+  box-shadow: 0 0 0 2px #fff, var(--shadow-rest);
+}
+
+/* Anchors are the control centres read off a 5% grid laid over the render
+   (scratch/apps/_grid.png), not eyeballed: the first pass used a supplied table
+   whose y values were uniformly ~11 points low, which parked every chip on the
+   plastic below its control. --dx/--dy are the px push that makes each chip
+   tangent to its control instead of sitting on top of it, and they are px */
+.lg-b[data-c="lstick"] { --x: 34%; --y: 49%; --dx: -15px; --dy: 15px; }
+.lg-b[data-c="rstick"] { --x: 66%; --y: 49%; --dx: 15px; --dy: 15px; }
+.lg-b[data-c="dpad"] { --x: 19%; --y: 28%; }
+.lg-b[data-c="dpad-l"] { --x: 13%; --y: 27%; --dx: -13px; }
+.lg-b[data-c="dpad-r"] { --x: 25%; --y: 27%; --dx: 13px; --dy: -11px; }
+/* Two rows of the Browser card press the same arm under different modifiers,
+   so its arm carries two chips. They flank the arm rather than stack on it;
+   24px apart is the 18px chip plus both 2px haloes plus room to read as two. */
+.lg-b[data-c="dpad-r"][data-alt] { --dy: 13px; }
+.lg-b[data-c="triangle"] { --x: 81%; --y: 17.5%; --dx: -16px; --dy: -4px; }
+.lg-b[data-c="square"] { --x: 73.5%; --y: 28%; --dx: -16px; --dy: 4px; }
+.lg-b[data-c="cross"] { --x: 81%; --y: 39.5%; --dx: 16px; --dy: 5px; }
+.lg-b[data-c="circle"] { --x: 88.5%; --y: 28.5%; --dx: 9px; --dy: 14px; }
+.lg-b[data-c="l1"] { --x: 22%; --y: 10%; }
+.lg-b[data-c="r1"] { --x: 78%; --y: 10%; }
+.lg-b[data-c="l2"] { --x: 16%; --y: 5%; --dx: -6px; --dy: 10px; }
+.lg-b[data-c="r2"] { --x: 84%; --y: 5%; --dx: 6px; --dy: 10px; }
+
+/* The legend keeps <ol>, so the reading order and the numbers are the element's
+   own. list-style:none costs VoiceOver's list announcement in Safari; the
+   role="list" that would restore it is one html-validate rejects as redundant,
+   so the four-item legends go unannounced as lists there. */
+.lg-key {
+  margin: 0; padding: 0; list-style: none;
+  counter-reset: lg-n;
+  font-size: 12.5px; line-height: 1.55; color: var(--text-2);
+}
+.lg-key > li {
+  counter-increment: lg-n;
+  display: grid; grid-template-columns: 18px 1fr; gap: 8px;
+  align-items: start;
+  margin-bottom: 6px;
+}
+.lg-key > li:last-child { margin-bottom: 0; }
+.lg-key > li::before { content: counter(lg-n); }
+
+.lg-cardsnote { margin: 14px 0 0; }

@@ -2,10 +2,16 @@
      counted from the app bundle rather than inferred from a feature list, which
      is the bar docs/design-rules.md sets for printing a number: 315 entries in
      gamecontrollerdb.txt (all platform:Mac OS X), 35 .lproj directories, and the
-     two facts from the requirements table. Re-count before editing any of them. -->
+     two facts from the requirements table. Re-count before editing any of them.
+
+     The noun is "mappings", not "controllers", and the difference is not
+     pedantry: 315 rows are 219 distinct products, and the database is the
+     fallback for pads outside the named families, not the support list. Say
+     mappings here, as vs.html and compatibility.html already do. -->
+<!-- grep -c 'platform:Mac OS X' Steer/Sources/Steer/Resources/gamecontrollerdb.txt -->
 <section class="numstrip" aria-label="Steer by the numbers">
   <div class="numstrip-in">
-    <div class="numcell"><span class="numval">315</span><span class="numlab">controllers recognised</span></div>
+    <div class="numcell"><span class="numval">315</span><span class="numlab">controller mappings bundled</span></div>
     <div class="numcell"><span class="numval">35</span><span class="numlab">languages, help included</span></div>
     <div class="numcell"><span class="numval">macOS 14+</span><span class="numlab">Apple Silicon</span></div>
     <div class="numcell"><span class="numval">&#8364;19.99</span><span class="numlab">once, no subscription</span></div>

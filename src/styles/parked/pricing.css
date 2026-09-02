@@ -2,8 +2,8 @@
 /* ── the head: display left, the price in the lead slot ──────────────────── */
 /* .d-top end-aligns its two columns, so the numeral's baseline sits with the
    headline's last line instead of floating above it. */
-#pricing .pr-price{align-self:end}
-#pricing .pr-fig{display:flex;align-items:baseline;gap:10px;line-height:1}
+#pricing .pr-price{text-align:center;margin-top:18px}
+#pricing .pr-fig{display:flex;justify-content:center;align-items:baseline;gap:10px;line-height:1}
 #pricing .pr-cur{font-family:var(--mono);font-size:15px;font-weight:500;letter-spacing:0.12em;color:var(--text-3)}
 #pricing .pr-num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(56px,7.4vw,84px);font-weight:600;letter-spacing:-0.045em;color:var(--text)}
 #pricing .pr-once{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-3);margin-top:12px}
@@ -26,6 +26,7 @@
 /* on a card the fields sat on --card-bg and read as inset. On the plain band
    they need their own fill or the border alone is the whole field. */
 #pricing .ml-in{background:var(--bg-inset)}
+#pricing select.ml-in{background-color:var(--bg-inset)}
 #pricing .pr-go{width:100%;justify-content:center}
 #pricing .pr-note{font-size:13.5px;line-height:1.55;color:var(--text-2);margin-top:16px;max-width:62ch}
 
@@ -36,7 +37,6 @@
 
 /* ── narrow ──────────────────────────────────────────────────────────────── */
 @media(max-width:900px){
-  #pricing .pr-price{align-self:start}
   #pricing .pr-once{margin-top:10px}
   #pricing .pr-body{grid-template-columns:1fr;margin-top:28px}
   #pricing .pr-inc{padding-right:0}

@@ -1,0 +1,82 @@
+
+/* ── migrated from styles/base.css when that file was split ──────────────
+   The ruled-sheet treatment of the trust list. No markup in this band carries
+   .trust-list or .trust-row any more (the band was rebuilt on .d-*); the rules
+   are kept rather than deleted because that is a separate decision. */
+@media(max-width:520px){
+  .trust-list{padding:6px 18px}
+  .trust-row{padding:18px 0}
+}
+
+/* the same for the spec rows and the trust list */
+.trust-list{border:1px solid var(--hairline);border-inline:0}
+.trust-row{padding-inline:0}
+
+
+/* ── the head's spec line ────────────────────────────────────────────────── */
+#trust .t-strap{
+  margin-top:0;border-top:1px solid var(--sep);padding-top:12px;text-align:center;
+  font-family:var(--mono);font-size:11px;font-weight:500;line-height:1.45;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--text);
+}
+
+/* ── the proof block ─────────────────────────────────────────────────────── */
+#trust .t-proof{
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+  column-gap:56px;align-items:start;
+  padding:30px 0 34px;border-bottom:1px solid var(--sep);
+}
+#trust .t-lede{grid-column:1;grid-row:1}
+#trust .t-fig{grid-column:2;grid-row:1 / span 2}
+#trust .t-list{grid-column:1;grid-row:2}
+
+#trust .t-lede p{
+  font-size:15.5px;color:var(--text-2);line-height:1.56;
+  letter-spacing:-0.006em;max-width:62ch;margin-top:12px;text-wrap:pretty;
+}
+
+
+/* ── the short items, under the claim ────────────────────────────────────── */
+#trust .t-item{border-top:1px solid var(--sep);padding:15px 0 16px}
+#trust .t-item h3{
+  font-size:17px;font-weight:590;letter-spacing:-0.017em;line-height:1.25;
+  margin-bottom:5px;text-wrap:balance;
+}
+#trust .t-item p{
+  font-size:14.5px;color:var(--text-2);line-height:1.5;
+  letter-spacing:-0.005em;max-width:66ch;
+}
+
+/* ── the two disclosures ─────────────────────────────────────────────────── */
+#trust .t-disc{
+  margin-top:28px;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;
+}
+#trust .t-h3{font-size:clamp(20px,1.8vw,24px);font-weight:620;letter-spacing:-0.022em;line-height:1.18;text-wrap:balance}
+#trust .t-cell{padding:22px 24px 24px;border:1px solid var(--sep);border-radius:var(--r-card);background:var(--card-bg)}
+#trust .t-cell p{font-size:14.5px;color:var(--text-2);line-height:1.5;margin-top:6px}
+#trust .t-cell a{color:var(--blue-text)}
+#trust .t-cell h3{font-size:17px;font-weight:590;letter-spacing:-0.017em}
+
+#trust .t-h3{font-size:clamp(20px,1.8vw,24px);font-weight:620;letter-spacing:-0.022em;line-height:1.18;text-wrap:balance}
+#trust .t-cell{padding:22px 24px 24px;border:1px solid var(--sep);border-radius:var(--r-card);background:var(--card-bg)}
+#trust .t-cell h3{font-size:17px;font-weight:590;letter-spacing:-0.017em}
+#trust .t-cell p{font-size:14.5px;color:var(--text-2);line-height:1.5;margin-top:6px}
+#trust .t-cell a{color:var(--blue-text)}
+
+/* ── narrow ──────────────────────────────────────────────────────────────── */
+@media(max-width:1040px){
+  #trust .t-proof{column-gap:40px}
+}
+@media(max-width:900px){
+  #trust .t-proof{grid-template-columns:1fr;padding-bottom:28px}
+  #trust .t-lede,#trust .t-fig,#trust .t-list{grid-column:1;grid-row:auto}
+  #trust .t-fig{margin:20px 0 4px;max-width:560px}
+  #trust .t-lede p,#trust .t-item p,#trust .t-cell p{max-width:60ch}
+  #trust .t-disc{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  #trust .t-strap{margin-top:26px}
+  #trust .t-proof{padding-top:24px}
+  #trust .t-item{padding:13px 0 14px}
+}

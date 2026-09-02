@@ -1,0 +1,77 @@
+<!-- NAMED FEATURE GRID — six features, each with a name, each with a real shot of
+     the pane that configures it.
+
+     Naming is the half of Logitech's page the hero-logi comp called transferable:
+     their settings app and their marketing page share one vocabulary, which is
+     why "Actions Ring" is discussable while "the radial launcher" is jargon the
+     curb banishes to the FAQ. These six names are Steer's own sidebar sections,
+     so the page and the app agree.
+
+     The comp had "UI SHOT" placeholders here. They are real captures now, and
+     they swap with the theme through .shot from shared.css. -->
+<section class="lg-sec" id="features">
+  <div class="lg-sec-in">
+    <h2 class="lg-h2">Get more out of your controller</h2>
+    <p class="lg-lede">Six of the panes inside Steer, named the way the app names them, each one a real capture.</p>
+  <div class="lg-grid">
+    <article>
+      <div class="lg-thumb shot">
+        <img class="shot-light" src="assets/light/settings-radialMenu.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Radial Menu pane: a list of menu items with app icons, and a preview of the ring they appear in.">
+        <img class="shot-dark" src="assets/dark/settings-radialMenu.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
+      </div>
+      <h3>Radial Menu</h3>
+      <p>A ring of your apps on screen at the tip of your thumb: aim with the stick, press to open.</p>
+    </article>
+    <article>
+      <div class="lg-thumb shot">
+        <img class="shot-light" src="assets/light/settings-buttons.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Bindings pane: a row of layers above a list pairing each button with a Mac action.">
+        <img class="shot-dark" src="assets/dark/settings-buttons.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
+      </div>
+      <h3>Bindings</h3>
+      <p>Every button, tap or hold. Hold one of five shoulder or trigger buttons and every other button takes a second job.</p>
+    </article>
+    <article>
+      <div class="lg-thumb shot">
+        <img class="shot-light" src="assets/light/settings-presets.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Presets pane: a list of ready-made layouts for Browser, Cursor, DaVinci Resolve, Figma, Final Cut Pro and Mail, each with an Add button.">
+        <img class="shot-dark" src="assets/dark/settings-presets.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
+      </div>
+      <h3>Presets</h3>
+      <p>Ready-made layouts for your browser, the video editors Final Cut Pro and DaVinci Resolve, the Figma design app, and more. Add one, then change what you like.</p>
+    </article>
+    <article>
+      <div class="lg-thumb shot">
+        <img class="shot-light" src="assets/light/settings-haptics.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Haptics and Triggers pane: a switch and an intensity slider for each event that can buzz.">
+        <img class="shot-dark" src="assets/dark/settings-haptics.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
+      </div>
+      <h3>Haptics &amp; Triggers</h3>
+      <p>A switch and a strength for every event that can buzz, and five trigger presets to start from.</p>
+    </article>
+    <article>
+      <div class="lg-thumb shot">
+        <img class="shot-light" src="assets/light/settings-led.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's LED pane: colour swatches for the light bar in each layer.">
+        <img class="shot-dark" src="assets/dark/settings-led.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
+      </div>
+      <h3>LED</h3>
+      <p>The light strip tells you which layer you are holding, in any colour you pick.</p>
+    </article>
+    <article>
+      <div class="lg-thumb shot">
+        <img class="shot-light" src="assets/light/settings-sticks.png" width="2000" height="1760" loading="lazy" decoding="async" alt="Steer's Sticks pane: which stick does what, plus cursor speed, acceleration and dead-zone curves.">
+        <img class="shot-dark" src="assets/dark/settings-sticks.png" width="2000" height="1760" loading="lazy" decoding="async" alt="">
+      </div>
+      <h3>Sticks</h3>
+      <p>Cursor speed, stick curves and dead zones, tuned until it feels like yours.</p>
+    </article>
+  </div>
+  <!-- The gallery dialog (layouts/base.njk includes it on every page) is the
+       pad-neutral evidence surface the curb keeps; its trigger moved here from
+       the cut capabilities band, because this is now where the panes are. -->
+  <div class="lg-gal">
+    <button type="button" class="btn btn-secondary" id="shotsOpen" aria-haspopup="dialog">
+      {% include "art/capabilities-camera.svg" %}
+      Look inside the app: eight screens
+    </button>
+    <p>Captured from the app; no renders, no touch-ups. Everything else: <a href="features.html">See all 38, in plain language</a>.</p>
+  </div>
+  </div>
+</section>

@@ -10,7 +10,7 @@
 .padstrip .tab{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:7px;padding:17px 6px;background:none;border:0;
   border-right:1px solid var(--hairline);cursor:pointer;
-  font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;
+  font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.14em;
   color:var(--text-3);transition:color .15s ease,background-color .15s ease}
 .padstrip .tab .padglyph{width:88px;height:60px;opacity:.5;transition:opacity .15s ease,color .15s ease}
 .padstrip .tab:hover{color:var(--text-2);background:var(--bg-sunken)}
