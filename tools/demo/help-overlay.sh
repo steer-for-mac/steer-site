@@ -23,14 +23,18 @@ capture() {
   u "steer://help/show"; sleep 1.2
   u "steer://debug/inject?file=$C/help-l1.json"; sleep 1.6
   local pid; pid=$(pgrep -f "$DEV/Contents/MacOS" | head -1)
-  read -r id rect <<< "$("$HERE/winid" "$pid" panel)"
+  local found; found=$("$HERE/winid" "$pid" panel)   # exits 1 with nothing printed when no panel is up
+  local id=${found%% *}
+  [ -n "$id" ] || { echo "no Help Overlay panel found for pid $pid" >&2; return 1; }
   screencapture -l "$id" -o -x "$1"
   u "steer://help/hide"; u "steer://debug/disconnect"; sleep 0.4
 }
 pgrep -f "$DEV/Contents/MacOS" >/dev/null || { open -g -a "$DEV"; sleep 3; }
 capture "$OUT/help-overlay.png"
 WAS=$(defaults read -g AppleInterfaceStyle 2>/dev/null || echo Light)
+# whatever fails from here on, the owner's appearance goes back to what it was
+restore() { [ "$WAS" = Dark ] || osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to false'; }
+trap restore EXIT
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'; sleep 1.2
 capture "$OUT/help-overlay-dark.png"
-[ "$WAS" = Dark ] || osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to false'
 sips -g pixelWidth -g pixelHeight "$OUT/help-overlay.png" "$OUT/help-overlay-dark.png" | rg -v '^/' 

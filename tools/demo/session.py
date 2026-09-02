@@ -71,9 +71,13 @@ def setup():
     osa('tell application "System Events" to tell process "TV" to set position of window 1 to {0, 25}'); osa('tell application "System Events" to tell process "TV" to set size of window 1 to {1728, 1092}'); time.sleep(0.6)
     tv = sh("pgrep", "-x", "TV").stdout.split()[0]; sh("swift", f"{STEER}/tools/ax/ax.swift", "click", "Search", "--pid", tv, cwd=STEER); time.sleep(1.2)
     osa('tell application "System Events" to keystroke "a" using {command down}'); osa('tell application "System Events" to keystroke "m"'); time.sleep(1.0)
+def staged_window():
+    """Our Safari window's id: from this process, or from the file --stage left for a later one."""
+    if SAFARI_WIN: return SAFARI_WIN
+    return open(WIN_FILE).read().strip() if os.path.exists(WIN_FILE) else None
 def teardown():
     url("steer://daisy/hide"); url("steer://radial/hide"); url("steer://debug/disconnect"); time.sleep(0.4)
-    win = SAFARI_WIN or (open(WIN_FILE).read().strip() if os.path.exists(WIN_FILE) else None)
+    win = staged_window()
     if win: osa(f'tell application "Safari" to close window id {win}')   # ours only, by id
     if os.path.exists(WIN_FILE): os.remove(WIN_FILE)
     sh("defaults", "delete", "com.apple.finder", "CreateDesktop"); sh("killall", "Finder")
@@ -94,7 +98,8 @@ def frame_of(handle, app):
 def session(out):
     global T0
     # the ring's Safari pick raises Safari's front window: make sure that is ours
-    if SAFARI_WIN: osa(f'tell application "Safari" to set index of window id {SAFARI_WIN} to 1')
+    win = staged_window()
+    if win: osa(f'tell application "Safari" to set index of window id {win} to 1')
     front = osa('tell application "System Events" to get name of first application process whose frontmost is true')
     if front != "TV": raise SystemExit(f"not rolling: frontmost is {front!r}, expected the TV app")
     rec = subprocess.Popen(["screencapture", "-v", "-C", "-V", "34", "-R", REGION, "-x", out]); T0 = time.monotonic(); time.sleep(1.2)

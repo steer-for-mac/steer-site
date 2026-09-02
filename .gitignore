@@ -26,3 +26,6 @@ playwright-report/
 # Working notes that are not published. Kept beside the docs they relate to;
 # outside src/, so Eleventy cannot render them either.
 docs/private/
+
+# compiled by tools/demo/help-overlay.sh from winid.swift
+tools/demo/winid

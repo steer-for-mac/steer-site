@@ -22,4 +22,4 @@ for w in windows {
     guard let id = w[kCGWindowNumber as String] as? Int else { continue }
     if best == nil || area > best!.area { best = (area, id, b) }
 }
-if let b = best { print("\(b.id) \(Int(b.b["X"] ?? 0)),\(Int(b.b["Y"] ?? 0)),\(Int(b.b["Width"] ?? 0)),\(Int(b.b["Height"] ?? 0))") }
+if let b = best { print("\(b.id) \(Int(b.b["X"] ?? 0)),\(Int(b.b["Y"] ?? 0)),\(Int(b.b["Width"] ?? 0)),\(Int(b.b["Height"] ?? 0))")} else { exit(1) }
