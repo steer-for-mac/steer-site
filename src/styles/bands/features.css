@@ -31,7 +31,7 @@
 /* The overlay at 1x, starting at the status row (the title bar names the dev
    build's synthetic pad) and slid onto the lit L1 column. 880pt wide. */
 .lg-thumb[data-cap="help"] { --w: 259%; --x: -10%; --y: -30%; }
-/* The dropdown at 1x, 360pt wide: the whole menu but its last row. */
+/* The dropdown at 1x, 360pt wide: the whole menu but its last two rows. */
 .lg-thumb[data-cap="menubar"] { --w: 106%; --x: -3%; --y: -2%; }
 /* The review dialog at 0.8x: the title and the first two flagged rows. */
 .lg-thumb[data-cap="review"] { --w: 122%; --x: -4%; --y: -3%; }

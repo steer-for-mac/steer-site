@@ -29,7 +29,7 @@ def typing(field=(832, 165), start=(1010, 760)):
     move_to(*start); time.sleep(0.6)
     p = move_to(*field); print("at field", p, flush=True); time.sleep(0.4)
     press("cross"); time.sleep(0.9)
-    inject([["stick", "l1", None, 0] if False else ["chord", ["l1", "r3"], 0.12]]); time.sleep(1.4)   # L1+R3 = on-screen keyboard
+    inject([["chord", ["l1", "r3"], 0.12]]); time.sleep(1.4)   # L1+R3 = on-screen keyboard
     for sec, btn in [(SE, "cross"), (SE, "circle"), (S, "triangle"), (S, "cross"), (SE, "circle")]:  # p o r t o
         letter(sec, btn); time.sleep(0.15)
     time.sleep(0.6); press("r3"); time.sleep(3.5)   # Return

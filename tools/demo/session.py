@@ -3,7 +3,7 @@
 synthetic pad and recorded from the screen. Every input is logged with its time
 since the recording started, so overlay.py can draw the pad frame-accurately.
 
-  session.py <out.mov> [--dry]
+  session.py <out.mov> [--stage | --roll | --teardown]
 
 Preconditions, all checked before rolling: no other session driving the screen
 (ListAgents on the caller's side), Steer Dev.app launched by path, the handler
@@ -17,6 +17,7 @@ DEV = os.path.expanduser("~/Developer/steer/Steer Dev.app"); BID = "dev.seanfloy
 C = os.path.expanduser("~/Library/Containers/dev.seanfloyd.steer.dev/Data/tmp"); STEER = os.path.expanduser("~/Developer/steer")
 REGION = "0,25,1728,1092"     # the display below the menu bar, cropped in post
 LOG = []; T0 = None; SAFARI_WIN = None
+WIN_FILE = os.path.join(C, "session-safari-window")   # the staged Safari window id, so --teardown in a later process still closes it
 def sh(*a, **k): return subprocess.run(a, capture_output=True, text=True, **k)
 def osa(script): return sh("osascript", "-e", script).stdout.strip()
 def ax(*a): return sh("swift", f"{STEER}/tools/ax/ax.swift", *a, cwd=STEER).stdout.split()
@@ -62,6 +63,7 @@ def setup():
     # our own window, addressed by its id from here on; the owner's windows are never touched
     global SAFARI_WIN
     SAFARI_WIN = osa('tell application "Safari"\nset d to make new document with properties {URL:"https://www.youtube.com/results?search_query=monarch+legacy+of+monsters+official+trailer"}\nreturn id of front window\nend tell')
+    open(WIN_FILE, "w").write(SAFARI_WIN)
     time.sleep(6); osa(f'tell application "Safari" to set bounds of window id {SAFARI_WIN} to {{0, 25, 1728, 1117}}'); time.sleep(0.5)
     # the TV app in front, full screen, on its search with one letter typed: the
     # session opens on the evening's first question, what to watch
@@ -71,7 +73,9 @@ def setup():
     osa('tell application "System Events" to keystroke "a" using {command down}'); osa('tell application "System Events" to keystroke "m"'); time.sleep(1.0)
 def teardown():
     url("steer://daisy/hide"); url("steer://radial/hide"); url("steer://debug/disconnect"); time.sleep(0.4)
-    if SAFARI_WIN: osa(f'tell application "Safari" to close window id {SAFARI_WIN}')   # ours only, by id
+    win = SAFARI_WIN or (open(WIN_FILE).read().strip() if os.path.exists(WIN_FILE) else None)
+    if win: osa(f'tell application "Safari" to close window id {win}')   # ours only, by id
+    if os.path.exists(WIN_FILE): os.remove(WIN_FILE)
     sh("defaults", "delete", "com.apple.finder", "CreateDesktop"); sh("killall", "Finder")
     if sh("pgrep", "-f", "/Applications/Steer.app").stdout.strip(): osa('quit app "Steer"')
 

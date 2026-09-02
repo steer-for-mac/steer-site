@@ -60,6 +60,19 @@ and that dialog is the only possible evidence for it. It is also the one capture
 with no controller glyphs in it, so it is the only one shippable today. Note it
 carries an em-dash in the app's own title string.
 
+## What went in the page (2026-09-02)
+
+The homepage grid now shows the app in use rather than the panes that
+configure it: the on-screen keyboard, the radial menu, the help overlay with
+L1 held (new capture, `assets/help-overlay*.png`, made by
+`tools/demo/help-overlay.sh` from the dev build with the synthetic pad), the
+menu bar dropdown, the import review, and one pane, Presets, because it is the
+one that says "it comes with layouts". Each shows at close to 1x inside a
+fixed field, which is what keeps them from reading as the blurry smudge every
+earlier grid was rejected for. The page no longer re-labels per pad, so the
+PlayStation-labelled captures ship with a "captured on a DualSense" line, the
+same disclosure the per-app cards carry.
+
 ## What exists today
 
 Current matched set, `assets/light/` and `assets/dark/`, 2026-07-18,
