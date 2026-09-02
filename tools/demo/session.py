@@ -15,7 +15,7 @@ import json, math, os, subprocess, sys, time
 sys.path.insert(0, os.path.dirname(__file__)); from scene import build
 DEV = os.path.expanduser("~/Developer/steer/Steer Dev.app"); BID = "dev.seanfloyd.steer.dev"
 C = os.path.expanduser("~/Library/Containers/dev.seanfloyd.steer.dev/Data/tmp"); STEER = os.path.expanduser("~/Developer/steer")
-REGION = "0,25,1728,1092"     # the display below the menu bar, cropped in post
+REGION = "0,0,1728,1117"      # the whole display, menu bar included; the bottom window corners are cropped in post
 LOG = []; T0 = None; SAFARI_WIN = None
 WIN_FILE = os.path.join(C, "session-safari-window")   # the staged Safari window id, so --teardown in a later process still closes it
 def sh(*a, **k): return subprocess.run(a, capture_output=True, text=True, **k)
@@ -62,8 +62,16 @@ def setup():
     # the owner's normal Safari, a normal window, the evening's real errand: the show's trailer
     # our own window, addressed by its id from here on; the owner's windows are never touched
     global SAFARI_WIN
-    SAFARI_WIN = osa('tell application "Safari"\nset d to make new document with properties {URL:"https://www.youtube.com/results?search_query=monarch+legacy+of+monsters+official+trailer"}\nreturn id of front window\nend tell')
-    open(WIN_FILE, "w").write(SAFARI_WIN)
+    # Ours is the window that did not exist before the call. "front window"
+    # after the call named the owner's window once (2026-09-02: it was raised,
+    # scrolled and recorded), so the id comes from the difference, and a stage
+    # with no new window refuses rather than proceed on someone else's.
+    before = set(osa('tell application "Safari" to get id of every window').split(", "))
+    osa('tell application "Safari" to make new document with properties {URL:"https://www.youtube.com/results?search_query=monarch+legacy+of+monsters+official+trailer"}')
+    time.sleep(1.0)
+    new = set(osa('tell application "Safari" to get id of every window').split(", ")) - before
+    if len(new) != 1: raise SystemExit(f"not staging: Safari made {len(new)} new windows, expected one; nothing else is touched")
+    SAFARI_WIN = new.pop(); open(WIN_FILE, "w").write(SAFARI_WIN)
     time.sleep(6); osa(f'tell application "Safari" to set bounds of window id {SAFARI_WIN} to {{0, 25, 1728, 1117}}'); time.sleep(0.5)
     # the TV app in front, full screen, on its search with one letter typed: the
     # session opens on the evening's first question, what to watch
@@ -71,6 +79,7 @@ def setup():
     osa('tell application "System Events" to tell process "TV" to set position of window 1 to {0, 25}'); osa('tell application "System Events" to tell process "TV" to set size of window 1 to {1728, 1092}'); time.sleep(0.6)
     tv = sh("pgrep", "-x", "TV").stdout.split()[0]; sh("swift", f"{STEER}/tools/ax/ax.swift", "click", "Search", "--pid", tv, cwd=STEER); time.sleep(1.2)
     osa('tell application "System Events" to keystroke "a" using {command down}'); osa('tell application "System Events" to keystroke "m"'); time.sleep(1.0)
+
 def staged_window():
     """Our Safari window's id: from this process, or from the file --stage left for a later one."""
     if SAFARI_WIN: return SAFARI_WIN
@@ -94,6 +103,13 @@ def frame_of(handle, app):
     pid = sh("pgrep", "-x", app).stdout.split()[0]; out = ax("frame", handle, "--pid", pid)
     if len(out) < 4: return None
     x, y, w, h = map(int, out[:4]); return (x + w // 2, y + h // 2)
+
+def stage_diff(png):
+    """Mean absolute grey difference, 0 to 255, between a stage frame and the reference thumbnail."""
+    from PIL import Image, ImageChops, ImageStat
+    ref = Image.open(os.path.join(os.path.dirname(__file__), "stage-reference.png")).convert("L")
+    got = Image.open(png).convert("L").resize(ref.size)
+    return ImageStat.Stat(ImageChops.difference(ref, got)).mean[0]
 
 def session(out):
     global T0
@@ -120,7 +136,12 @@ def session(out):
 if __name__ == "__main__":
     out = sys.argv[1]
     if "--stage" in sys.argv:      # stage, screenshot the frame for a human look, leave everything up
-        setup(); sh("screencapture", "-x", "-R", REGION, out + ".stage.png"); print("staged:", out + ".stage.png"); sys.exit()
+        setup(); sh("screencapture", "-x", "-R", REGION, out + ".stage.png")
+        # The TV app reopens on whatever it showed last, and one stage went
+        # out on its Monarch page. The frame has to look like the good one.
+        d = stage_diff(out + ".stage.png")
+        if d > 14: teardown(); raise SystemExit(f"not staged: the frame differs from stage-reference.png by {d:.1f} (limit 14); torn down")
+        print(f"staged: {out}.stage.png (differs from the reference by {d:.1f})"); sys.exit()
     if "--teardown" in sys.argv: teardown(); sys.exit()
     if "--roll" in sys.argv:
         try: session(out)          # the frame was staged and verified by the caller
