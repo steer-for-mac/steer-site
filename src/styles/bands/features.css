@@ -25,7 +25,7 @@
 }
 
 @media (max-width: 860px) {
-  .lg-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--sep); }
+  .lg-grid { grid-template-columns: 1fr; }
 }
 
 /* The gallery trigger and the feature-count link, one row under the grid. */
