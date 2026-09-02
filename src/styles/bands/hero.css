@@ -18,11 +18,15 @@
 .lg-lede-mono { grid-column: 2; margin: 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.65; letter-spacing: 0.02em; text-transform: uppercase; color: var(--text-2); max-width: 44ch; }
 .lg-btns { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 12px; padding-top: 8px; }
 
-/* Persona row: one ruled line of places, each a link. */
-.lg-personas { display: flex; flex-wrap: wrap; border: 1px solid var(--sep); border-top: 0; }
-.lg-personas a { flex: 1 1 auto; padding: 14px 18px; border-right: 1px solid var(--sep); font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-2); text-decoration: none; text-align: center; }
+/* Persona row: six ruled cells under the banner, each a place and the one
+   thing you do there, in the same label-and-line form as the product strip. */
+.lg-personas { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border: 1px solid var(--sep); border-top: 0; }
+.lg-personas a { display: flex; flex-direction: column; gap: 5px; padding: 14px 18px 15px; border-right: 1px solid var(--sep); text-decoration: none; }
 .lg-personas a:last-child { border-right: 0; }
-.lg-personas a:hover { color: var(--text); background: var(--bg-sunken); text-decoration: none; }
+.lg-personas a .lg-k { color: var(--text); }
+.lg-personas a .lg-v { line-height: 1.4; text-wrap: pretty; }
+.lg-personas a:hover { background: var(--bg-sunken); text-decoration: none; }
+.lg-personas a:hover .lg-v { color: var(--text); }
 
 /* Intro: statement left, the paragraph right, on one rule. */
 .lg-intro { padding: 72px 0 40px; }
@@ -54,6 +58,8 @@
   .lg-banner-in { grid-template-columns: 1fr; padding: 36px 22px 32px; }
   .lg-banner-in h1, .lg-lede-mono, .lg-btns { grid-column: 1; }
   .lg-intro-in { grid-template-columns: 1fr; }
-  .lg-personas a { flex-basis: 50%; border-bottom: 1px solid var(--sep); }
+  .lg-personas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lg-personas a { border-bottom: 1px solid var(--sep); }
   .lg-personas a:nth-child(even) { border-right: 0; }
+  .lg-personas a:nth-last-child(-n+2) { border-bottom: 0; }
 }

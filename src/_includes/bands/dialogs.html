@@ -8,7 +8,7 @@
       <h2 id="shotsTitle">Inside the app</h2>
       <p class="shots-note">Captured from the app; no renders, no touch-ups.</p>
     </div>
-    <div class="shots-count" id="shotsCount" aria-live="polite">1 / 8</div>
+    <div class="shots-count" id="shotsCount" aria-live="polite">1 / 9</div>
     <button type="button" class="shots-close" id="shotsClose" aria-label="Close screenshots">
       {% include "art/dialogs-close.svg" %}
     </button>
@@ -44,6 +44,12 @@
           <img data-light="{{ 'assets/radial-menu.png' | shot }}" data-dark="{{ 'assets/radial-menu-dark.png' | shot }}" alt="Steer's app ring: nine app icons in a circle, with a bar underneath naming the controller button for Aim, Select and Cancel." width="620" height="780" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
         </button>
         <figcaption>A ring of your apps: aim, press, done.</figcaption>
+      </figure>
+      <figure class="shots-item">
+        <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
+          <img data-light="{{ 'assets/help-overlay.png' | shot }}" data-dark="{{ 'assets/help-overlay-dark.png' | shot }}" alt="Steer's Help Overlay: a table of every button against six layers, the L1 column highlighted and a status line reading Active now, L1, 12 bindings available." width="1760" height="1742" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        </button>
+        <figcaption>The help card, L1 held: every button's job in the app you are in, the lit column live.</figcaption>
       </figure>
       <figure class="shots-item">
         <button type="button" class="shots-zoom" aria-pressed="false" aria-label="Zoom screenshot">
