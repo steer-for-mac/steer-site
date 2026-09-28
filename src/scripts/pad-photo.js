@@ -13,10 +13,17 @@ const LAYER = { solo: "0,91,255", l1: "255,165,0", r1: "255,220,0", l1r1: "0,200
 const TILT = 0.5;           // a stick past halfway lights, as a click does
 const THROW = 0.7;          // how far a cap slides at full tilt, in radii
 /* What a pointer on an outline presses, in the demo's button names. */
-const PRESS = { ls: ["l3"], rs: ["r3"], capture: ["touchpad"], "up-left": ["up", "left"], "up-right": ["up", "right"],
+export const PRESS = { ls: ["l3"], rs: ["r3"], capture: ["touchpad"], "up-left": ["up", "left"], "up-right": ["up", "right"],
   "down-left": ["down", "left"], "down-right": ["down", "right"] };
-const INERT = new Set(["dpad", "lightbar", "mute"]);
+export const INERT = new Set(["dpad", "lightbar", "mute"]);
 const DRAG = 6;             // CSS px a stick moves under the pointer before it is a tilt, not a click
+
+/* The layer a set of held shoulders selects, in the demo's order (pad-demo.js layerNow). */
+function layerOf(held) {
+  if (held.has("l1") && held.has("r1")) return "l1r1";
+  for (const m of ["l1", "l2", "r2", "r1"]) if (held.has(m)) return m;
+  return "solo";
+}
 
 /** A frame's worth of nothing held. */
 export const REST = Object.freeze({ held: new Set(), axes: [0, 0, 0, 0], trig: [0, 0], layer: "solo" });
@@ -90,8 +97,9 @@ export function padPhoto(root, opts = {}) {
 
     /** @param {{held: Set<string>, axes?: number[], trig?: number[], layer?: string}} s */
     render(s) {
-      const axes = s.axes || REST.axes, trig = s.trig || REST.trig;
-      const lb = LAYER[s.layer || "solo"] || LAYER.solo;
+      const axes = s.axes || REST.axes;
+      const trig = s.trig || [s.held.has("l2") ? 1 : 0, s.held.has("r2") ? 1 : 0];
+      const lb = LAYER[s.layer || layerOf(s.held)] || LAYER.solo;
       const key = `${[...s.held].sort()}|${axes.map((a) => a.toFixed(2))}|${trig.map((t) => t.toFixed(2))}|${lb}`;
       if (key === shown) return;
       shown = key;
@@ -131,6 +139,7 @@ export function padPhoto(root, opts = {}) {
 function pointer(root, onInput) {
   /** @type {null | {id: number, names: string[], stick: number, x: number, y: number, r: number, moved: boolean}} */
   let press = null;
+  let release = 0;          // a stick click's pending release, cancelled by the next press
   const emit = (held, axes) => onInput({ held: new Set(held), axes });
   root.classList.add("is-live");
   root.addEventListener("pointerdown", (e) => {
@@ -138,10 +147,11 @@ function pointer(root, onInput) {
     const c = p && /** @type {SVGPathElement} */ (p).dataset.c;
     if (!p || !c || INERT.has(c) || press) return;
     e.preventDefault();
+    clearTimeout(release);
     const box = p.getBoundingClientRect();
     const stick = c === "ls" ? 0 : c === "rs" ? 2 : -1;
     press = { id: e.pointerId, names: PRESS[c] || [c], stick, x: e.clientX, y: e.clientY, r: box.width / 2, moved: false };
-    /** @type {Element} */ (e.target).setPointerCapture?.(e.pointerId);
+    try { /** @type {Element} */ (e.target).setPointerCapture(e.pointerId); } catch { /* a pointer already gone */ }
     emit(stick < 0 ? press.names : [], [0, 0, 0, 0]);
   });
   root.addEventListener("pointermove", (e) => {
@@ -162,7 +172,7 @@ function pointer(root, onInput) {
     if (!click) return emit([], [0, 0, 0, 0]);
     /* A tap on a cap is a stick click: held for a beat, so the demo's frame sees it. */
     emit(click, [0, 0, 0, 0]);
-    setTimeout(() => emit([], [0, 0, 0, 0]), 120);
+    release = setTimeout(() => emit([], [0, 0, 0, 0]), 120);
   };
   root.addEventListener("pointerup", up);
   root.addEventListener("pointercancel", up);

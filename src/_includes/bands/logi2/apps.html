@@ -7,11 +7,10 @@
      ChordChip.swift): each binding is the buttons as chips, then what they do,
      and a held shoulder heads its group as a chip. That header is the one
      place the hold is said: the rows under it do not repeat the shoulder, and
-     the pad only names it, as it names every control it marks. The chips are the live
-     demo's (.py-g, from scripts/pad-family.js through _data/padGlyphs.js), so
-     one table names every button on the page. The dots carry no numbers: the
-     chip already names the button, so a number was a second lookup. Pointing
-     at a row lights its dot and dims the rest (logi2-tabs.js).
+     the photo lights the shoulder. The chips are the live demo's (.py-g, from
+     scripts/pad-family.js through _data/padGlyphs.js), so one table names
+     every button on the page. Pointing at a row lights its part on the photo;
+     left alone in view, the band walks its rows by itself (logi2-tabs.js).
 
      THE CONTROLLER. One radio group swaps the photo, the dots and every chip
      for PlayStation, Xbox or Switch. Every variant is markup, and CSS shows
@@ -24,11 +23,9 @@
      <label for> onto them, aria-hidden, and each radio names itself with
      aria-labelledby, so a screen reader hears each name once, not five times. The focus ring lands on the visible label.
 
-     Everything comes from _data/perapp.json: dot positions per family, the
-     hold tags and every binding, each checked against the app's own layouts
-     (its _readme names the source for each). The dots are an SVG with no
-     viewBox, so a nested <svg x="34%"> places a dot by percentage while its
-     radius stays in CSS px at every width.
+     Everything comes from _data/perapp.json: the hold tags and every binding,
+     each checked against the app's own layouts (its _readme names the source
+     for each).
 
      Without script every panel shows, stacked, each with its own stage. With
      script the tab list appears and the panels share one grid cell, the
@@ -92,22 +89,9 @@
     {%- for app in pa.apps %}
     <div class="pa-panel" id="pa-{{ app.id }}" data-tab="pa-tab-{{ app.id }}">
       <div class="pa-stage" data-theme="dark">
-        <!-- RENDER SLOT, 3:2. The photos are stand-ins until the Blender
-             renders from tools/pads/ land. Swap an
-             <img>; if the render frames the pad differently, regenerate
-             perapp.json `controls` from its params, not by eye. -->
         <div class="pa-slot" data-render-slot="3:2">
           {%- for f in pg.families %}{% set s = pa.slot[f] %}
-          <img class="pa-f pa-f-{{ f }}" src="{{ s.src }}" width="{{ s.w }}" height="{{ s.h }}" loading="lazy" decoding="async" alt="">
-          <div class="pa-pins pa-f pa-f-{{ f }}" aria-hidden="true">
-            {%- set seen = [] %}
-            {%- for g in app.groups %}{% for it in g.items %}{% if (not it.fam or f in it.fam) and it.c not in seen %}{% set _ = seen.push(it.c) %}{% set at = pa.controls[f][it.c] %}
-            <span class="pa-pin" data-c="{{ it.c }}" style="--x:{{ at.x }}%;--y:{{ at.y }}%">{% for b in it.b %}{{ pg.glyph(f, b) | safe }}{% endfor %}</span>
-            {%- endif %}{% endfor %}{% endfor %}
-            {%- for g in app.groups %}{% if g.hold and g.hold not in seen %}{% set _ = seen.push(g.hold) %}{% set at = pa.controls[f][g.hold] %}
-            <span class="pa-pin" data-c="{{ g.hold }}" style="--x:{{ at.x }}%;--y:{{ at.y }}%">{{ pg.glyph(f, g.hold) | safe }}</span>
-            {%- endif %}{% endfor %}
-          </div>
+          <img class="pa-f pa-f-{{ f }}" src="{{ s.unlit or s.src }}" width="{{ s.w }}" height="{{ s.h }}" loading="lazy" decoding="async" alt="">
           {%- endfor %}
         </div>
         <div class="pa-pick" aria-hidden="true">

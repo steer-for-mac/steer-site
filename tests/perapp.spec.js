@@ -29,48 +29,64 @@ for (const [fam, want] of Object.entries(FAM)) {
     const face = row.locator(".py-g-face").filter({ visible: true });
     if (fam === "ps") await expect(face).toHaveText("Cross");     // the shape, named for a screen reader
     else await expect(face).toHaveText(want.cross);
-    /* the hold is said once, by the header: the pad names the shoulder, the rows do not repeat it */
-    await expect(page.locator(`${panel} .pa-pins:visible .pa-pin[data-c="l1"]`)).toHaveText(want.hold);
+    /* the hold is said once, by the header: the rows do not repeat it */
     await expect(page.locator(`${panel} .pa-key li .py-g[data-b="l1"]`).filter({ visible: true })).toHaveCount(0);
   });
 }
 
 test("an Xbox pad's default layout puts the ring on the right stick", async ({ page }) => {
   await page.locator('label[for="pa-pad-xb"]').filter({ visible: true }).click();
-  const ring = page.locator("#pa-default .pa-key li", { hasText: "your apps in a ring" }).filter({ visible: true });
+  const ring = page.locator("#pa-default .pa-key li", { hasText: "app launcher" }).filter({ visible: true });
   await expect(ring).toHaveCount(1);
   await expect(ring).toHaveAttribute("data-c", "r3");
 });
 
-/* The pad names its controls at rest: every legend row has its chip on the
-   pad, printing the same label, beside the control rather than on it. */
-test("every row's chip is on the pad, with the same label, on every pad", async ({ page }) => {
+/* Every row lights a part of the photo, on every pad: a button's outline, or
+   a trigger's pill filled, so no binding points at nothing. */
+test("every row lights its part of the pad, on every pad", async ({ page }) => {
   for (const fam of ["ps", "xb", "sw"]) {
     await page.locator(`label[for="pa-pad-${fam}"]`).filter({ visible: true }).click();
     for (const id of ["default", "media", "browser", "finalcut", "mail"]) {
       await page.locator(`#pa-tab-${id}`).click();
-      const rows = await page.$$eval(`#pa-${id} .pa-key li`, (lis) => lis.filter((li) => (/** @type {HTMLElement} */ (li)).offsetParent)
-        .map((li) => [li.getAttribute("data-c"), [...li.querySelectorAll(".pa-combo > .py-g, .pa-combo > .pa-f > .py-g")].filter((g) => (/** @type {HTMLElement} */ (g)).offsetParent).map((g) => g.textContent)]));
-      for (const [c, labels] of rows) {
-        const pin = page.locator(`#pa-${id} .pa-pins:visible .pa-pin[data-c="${c}"]`);
-        await expect(pin, `${fam} ${id} ${c}`).toHaveCount(1);
-        await expect(pin.locator(".py-g")).toHaveText(/** @type {string[]} */ (labels));
+      const rows = page.locator(`#pa-${id} .pa-key li`).filter({ visible: true });
+      for (let i = 0; i < await rows.count(); i++) {
+        const row = rows.nth(i);
+        await row.hover();
+        const lit = page.locator(`#pa-${id} .pa-lights .pa-f-${fam} :is(path.is-on, .pp-t[style*="--v: 1"], .pp-t[style*="--v:1"])`);
+        await expect(lit, `${fam} ${id} ${await row.getAttribute("data-b")}`).not.toHaveCount(0);
       }
     }
   }
 });
 
-test("pointing at or focusing a row lights its chip on the pad and dims the rest", async ({ page }) => {
-  const pins = page.locator("#pa-default .pa-pins:visible .pa-pin");
+test("pointing at or focusing a row lights its part and marks the row", async ({ page }) => {
+  const on = page.locator("#pa-default .pa-lights .pa-f-ps path.is-on");
   await page.locator("#pa-default .pa-key li[data-c='circle']").hover();
-  await expect(pins.and(page.locator(".is-hot"))).toHaveCount(1);
-  await expect(page.locator("#pa-default .pa-pins:visible .pa-pin.is-hot")).toHaveAttribute("data-c", "circle");
-  await expect(page.locator("#pa-default")).toHaveAttribute("data-hot", "");
-  expect(await pins.filter({ hasNot: page.locator(".is-hot") }).first().evaluate((el) => getComputedStyle(el).opacity)).not.toBe("1");
+  await expect(on).toHaveAttribute("data-c", "circle");
+  await expect(page.locator("#pa-default .pa-key li.is-hot")).toHaveAttribute("data-c", "circle");
 
   await page.mouse.move(0, 0);
   await page.locator("#pa-default .pa-key li[data-c='r1']").focus();
-  await expect(page.locator("#pa-default .pa-pins:visible .pa-pin.is-hot")).toHaveAttribute("data-c", "r1");
+  await expect(on).toHaveAttribute("data-c", "r1");
+});
+
+test("pointing at a part of the photo marks every row that uses it", async ({ page }) => {
+  const stick = page.locator('#pa-default .pa-lights .pa-f-ps path[data-c="ls"]');
+  await stick.scrollIntoViewIfNeeded();
+  await stick.hover();
+  await expect(page.locator("#pa-default .pa-key li.is-hot")).toHaveCount(2);   // move the pointer, and the app launcher
+  await expect(page.locator("#pa-default .pa-key li.is-hot").first()).toContainText("Move the pointer");
+});
+
+/* Captures freeze the page (html.still); a visitor does not. */
+test("left alone in view, the band walks its rows", async ({ page }) => {
+  await page.evaluate(() => document.documentElement.classList.remove("still"));
+  await page.locator("#apps").scrollIntoViewIfNeeded();
+  await page.mouse.move(0, 0);
+  const hot = page.locator("#pa-default .pa-key li.is-hot");
+  await expect(hot).toHaveCount(1);
+  const first = await hot.getAttribute("data-b");
+  await expect.poll(() => hot.getAttribute("data-b"), { timeout: 5000 }).not.toBe(first);
 });
 
 test("the switcher defaults to the pad the demo saw", async ({ page }) => {
@@ -161,4 +177,14 @@ test("the controller picker is the three pads, driven by the arrow keys", async 
   expect(await pick.locator(".pa-pick-xb").evaluate((el) => getComputedStyle(el).outlineStyle)).toBe("solid");
   await expect(page.locator(".pa-slot img").filter({ visible: true }).first()).toHaveAttribute("height", "758");
   await expect(page.getByRole("radiogroup", { name: "Your controller" }).getByRole("radio")).toHaveCount(3);
+});
+
+test("a row under a held shoulder gives the light bar that layer's colour", async ({ page }) => {
+  await page.locator("#pa-tab-finalcut").click();
+  const lights = page.locator("#pa-finalcut .pa-lights");
+  const lb = () => lights.evaluate((e) => /** @type {HTMLElement} */ (e).style.getPropertyValue("--pp-lb"));
+  await page.locator("#pa-finalcut .pa-key li[data-hold='r2']").first().hover();
+  await expect.poll(lb).toBe("rgb(160,80,255)");
+  await page.locator("#pa-finalcut .pa-key li[data-hold='l1']").first().hover();
+  await expect.poll(lb).toBe("rgb(255,165,0)");
 });

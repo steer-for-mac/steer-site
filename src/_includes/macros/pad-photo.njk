@@ -33,20 +33,25 @@
 </svg>
 {% endmacro %}
 
-{#- One family's outlines, for a band that brings its own photo. -#}
-{% macro outlines(f) %}<div class="pp-o" data-pp-fam="{{ f }}">{% include "art/controls-" + f + ".svg" %}</div>{% endmacro %}
+{#- A pill over each shoulder for its trigger, which the photo hides. -#}
+{% macro trigs(f) %}{% set c = perapp.controls[f] %}
+<div class="pp-trigs" aria-hidden="true">
+  <span class="pp-t" data-t="l2" style="--x:{{ c.l1.x }}%"><i></i><b>{{ padGlyphs.name(f, "l2") }}</b></span>
+  <span class="pp-t" data-t="r2" style="--x:{{ c.r1.x }}%"><i></i><b>{{ padGlyphs.name(f, "r2") }}</b></span>
+</div>
+{% endmacro %}
+
+{#- One family's outlines and trigger pills, for a band that brings its own photo. -#}
+{% macro outlines(f) %}<div class="pp-o" data-pp-fam="{{ f }}">{{ trigs(f) }}{% include "art/controls-" + f + ".svg" %}</div>{% endmacro %}
 
 {#- The whole controller: photo, outlines, a trigger pill over each shoulder,
     and a picker of the three pads. -#}
 {% macro stage(key, first = "ps") %}
 <div class="pp pp-stage" data-fam="{{ first }}" style="{{ vars(key) }}">
   {{ defs(key) }}
-  {%- for f in padGlyphs.families %}{% set s = perapp.slot[f] %}{% set c = perapp.controls[f] %}
+  {%- for f in padGlyphs.families %}{% set s = perapp.slot[f] %}
   <div class="pp-f" data-pp-fam="{{ f }}" aria-hidden="true">
-    <div class="pp-trigs">
-      <span class="pp-t" data-t="l2" style="--x:{{ c.l1.x }}%"><i></i><b>{{ padGlyphs.name(f, "l2") }}</b></span>
-      <span class="pp-t" data-t="r2" style="--x:{{ c.r1.x }}%"><i></i><b>{{ padGlyphs.name(f, "r2") }}</b></span>
-    </div>
+    {{ trigs(f) }}
     <div class="pp-pad">
       <img src="{{ s.unlit or s.src }}" width="{{ s.w }}" height="{{ s.h }}" loading="lazy" decoding="async" alt="">
       {% include "art/controls-" + f + ".svg" %}

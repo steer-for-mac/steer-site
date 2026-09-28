@@ -22,8 +22,7 @@
 .pp-stage[data-fam="sw"] .pp-f[data-pp-fam="sw"] { display: block; }
 .pp-pad { position: relative; }
 .pp-pad img { display: block; width: 100%; height: auto; }
-.pp-stage .pad-controls path[data-c="lightbar"] { fill: var(--pp-lb-core); fill-opacity: 1; filter: var(--pp-lb-f); }
-.pp-stage .pad-controls path[data-c="lightbar"]:hover { fill: var(--pp-lb-core); fill-opacity: 1; }
+.pp .pad-controls path[data-c="lightbar"] { fill: var(--pp-lb-core); fill-opacity: 1; filter: var(--pp-lb-f); }
 
 /* Triggers sit behind the pad in the photo, so each gets a pill over its
    shoulder that fills as far as it is pulled. */
@@ -46,7 +45,7 @@
   transform: scaleX(var(--v, 0));
   transform-origin: left;
 }
-.pp-t b { position: relative; display: block; font: 600 11px/18px var(--mono); text-align: center; }
+.pp-t b { position: relative; display: block; font: 600 11px/18px var(--mono); color: var(--text); text-align: center; }
 
 .pp-pick { display: flex; justify-content: center; gap: 4px; margin: 10px 0 0; padding: 0; border: 0; }
 .pp-pick-l {

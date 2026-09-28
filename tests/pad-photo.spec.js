@@ -129,3 +129,14 @@ test("on the homepage, the demo's picker moves the per-app band to the same pad,
   await page.locator('#pa-default .pa-key li[data-c="circle"]').hover();
   await expect(lights.locator('[data-pp-fam="sw"] path.is-on')).toHaveAttribute("data-c", "circle");
 });
+
+test("a stick tap's release does not let go of the next press", async ({ page }) => {
+  await page.goto("/play.html");
+  const part = (c) => page.locator(`.py-side .pp-f[data-pp-fam="ps"] path[data-c="${c}"]`);
+  await expect(page.locator('.py-side .pp-f[data-pp-fam="ps"] g:has(> path[data-c="ls"])')).toHaveCount(1);
+  await part("ls").dispatchEvent("pointerdown", { pointerId: 1, clientX: 0, clientY: 0 });
+  await page.locator(".py-side .pp-stage").dispatchEvent("pointerup", { pointerId: 1 });
+  await part("cross").dispatchEvent("pointerdown", { pointerId: 2, clientX: 0, clientY: 0 });
+  await page.waitForTimeout(300);
+  await expect(part("cross")).toHaveClass(/is-on/);
+});

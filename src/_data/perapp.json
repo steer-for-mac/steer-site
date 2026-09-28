@@ -56,13 +56,13 @@
           {"c": "rstick", "b": ["rs"], "v": "Scroll"},
           {"c": "cross", "b": ["cross"], "v": "Click"},
           {"c": "circle", "b": ["circle"], "v": "Right-click"},
-          {"c": "l3", "b": ["l3"], "v": "Push the stick in: your apps in a ring", "fam": ["ps", "sw"]},
-          {"c": "r3", "b": ["r3"], "v": "Push the stick in: your apps in a ring", "fam": ["xb"]},
-          {"c": "r1", "b": ["r1"], "v": "Spotlight, to find any app or file"},
+          {"c": "l3", "b": ["l3"], "v": "Press the stick: open the app launcher", "fam": ["ps", "sw"]},
+          {"c": "r3", "b": ["r3"], "v": "Press the stick: open the app launcher", "fam": ["xb"]},
+          {"c": "r1", "b": ["r1"], "v": "Open Spotlight search"},
           {"c": "l2", "b": ["l2"], "v": "Switch apps"}
         ]},
         { "hold": "l1", "items": [
-          {"c": "r3", "b": ["r3"], "v": "Push the stick in: the On-Screen Keyboard"}
+          {"c": "r3", "b": ["r3"], "v": "Press the stick: open the on-screen keyboard"}
         ]}
       ]
     },

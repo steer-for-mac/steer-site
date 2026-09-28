@@ -136,28 +136,9 @@ html[data-kbd] .l2-apps:has(#pa-pad-sw:focus) .pa-pick-sw { outline: 2px solid v
 .pa-slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
 /* The photo's parts, over the picture and framed the way it is (contain). */
 .pa-lights, .pa-lights > .pa-f, .pa-lights .pp-o { position: absolute; inset: 0; }
+/* The trigger pills sit in the room over the picture that the stage's top padding leaves. */
+.pa-lights .pp-trigs { position: absolute; top: -34px; right: 0; left: 0; margin: 0; }
 
-/* The marks are the legend's own chips, set beside the control they name
-   (perapp.json `controls`), so the pad reads at rest: a dot said "something
-   here" and sent you to the legend to learn what. Lifted off the shell by a
-   shadow so a chip reads on the white DualSense and the black Elite alike.
-   Pointing at or focusing a row lights its chip in the accent (.is-hot) and
-   dims the others. */
-.pa-pins { position: absolute; inset: 0; }
-.pa-pin {
-  position: absolute;
-  top: var(--y);
-  left: var(--x);
-  display: flex;
-  gap: 3px;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.2s cubic-bezier(0.2, 0.7, 0.3, 1);
-}
-.pa-pin .py-g { height: 26px; min-width: 26px; font-size: 12px; border-color: var(--oh-hairline); box-shadow: var(--shadow-rest); }
-.pa-pin .py-g-face { width: 26px; }
-.pa-pin .py-g-face svg { width: 22px; height: 22px; }
-.pa-pin.is-hot .py-g { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue), var(--shadow-rest); }
-.pa-panel[data-hot] .pa-pin:not(.is-hot) { opacity: 0.25; }
 
 .pa-legend h3 { margin: 0; font-size: 26px; font-weight: 650; letter-spacing: -0.02em; color: var(--text); }
 .pa-for { margin: 6px 0 22px; font-size: 14px; line-height: 1.5; color: var(--text-3); }
@@ -204,7 +185,14 @@ html[data-kbd] .l2-apps:has(#pa-pad-sw:focus) .pa-pick-sw { outline: 2px solid v
 .pa-key .py-g-face, .pa-hold .py-g-face { width: 26px; min-width: 26px; }
 .pa-key .py-g-face svg { width: 22px; height: 22px; }
 .pa-op { font-family: var(--mono); font-size: 12px; color: var(--text-3); }
-.pa-key li:hover .pa-act, .pa-key li:focus-visible .pa-act { color: var(--blue-text); }
+/* The row being shown: a wash over it, its chips ringed like the part lit on
+   the photo, the job in weight rather than a thin blue. The wash reaches past
+   the column by the padding it adds, so nothing in the row moves. */
+.pa-key li { margin: 0 -10px; padding-inline: 10px; border-radius: var(--r-inset); }
+.pa-key li:is(:hover, .is-hot) { border-top-color: transparent; background-color: var(--blue-fill); }
+.pa-key li:is(:hover, .is-hot) + li { border-top-color: transparent; }
+.pa-key li:is(:hover, .is-hot) .py-g { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+.pa-key li:is(:hover, .is-hot, :focus-visible) .pa-act { font-weight: 600; }
 .pa-key li:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
 
 @media (max-width: 960px) {
@@ -217,8 +205,6 @@ html[data-kbd] .l2-apps:has(#pa-pad-sw:focus) .pa-pick-sw { outline: 2px solid v
   .l2-apps { padding: 72px 0 80px; }
   .pa-stage { padding: 52px 18px 12px; }
   .pa-pick { gap: 2px; margin-top: 16px; }
-  /* Drawn at the stage's scale: a 26px chip on a 300px pad covers controls. */
-  .pa-pin { transform: translate(-50%, -50%) scale(0.72); }
   .pa-pick-l { padding: 6px 8px 8px; }
   .pa-pick-l img { width: 60px; height: 44px; }
   .pa-tabs { gap: 4px 18px; }
