@@ -4,6 +4,7 @@
 @import "../design-system.css" layer(components);
 @import "../bands/dialogs.css" layer(bands);
 @import "../bands/play/demo.css";
+@import "../bands/play/pad.css";
 
 /* ---------- head ---------- */
 

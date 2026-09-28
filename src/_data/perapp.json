@@ -37,7 +37,7 @@
 
   "slot": {
     "ps": {"src": "assets/pads/cut-ps.png", "w": 1202, "h": 778, "alt": "DualSense", "thumb": "assets/pads/thumb-ps.png", "tw": 224, "th": 145},
-    "xb": {"src": "assets/pads/cut-xb.png", "w": 1142, "h": 757, "alt": "Xbox Elite Series 2", "thumb": "assets/pads/thumb-xb.png", "tw": 224, "th": 148},
+    "xb": {"src": "assets/pads/cut-xb.png", "w": 1142, "h": 758, "alt": "Xbox Elite Series 2", "thumb": "assets/pads/thumb-xb.png", "tw": 224, "th": 149},
     "sw": {"src": "assets/pads/cut-sw.png", "w": 1126, "h": 732, "alt": "Switch Pro Controller", "thumb": "assets/pads/thumb-sw.png", "tw": 224, "th": 146}
   },
 

@@ -4,6 +4,7 @@
    the presses resolve against. Sources: play.html's header comment. */
 
 import { familyOf, glyphOf, nameOf, padNameOf } from "./pad-family.js";
+import { padPhoto } from "./pad-photo.js";
 
 const $ = (id) => document.getElementById(id);
 const stage = $("pyStage");
@@ -18,7 +19,7 @@ function init() {
   const modeEl = $("pyMode"), modeText = $("pyModeText"), layerEl = $("pyLayer"), lastEl = $("pyLast");
   const stateEl = $("pyState"), legend = $("pyLegend"), toast = $("pyToast"), cta = $("pyCta"), ctaText = $("pyCtaText");
   const helpLive = $("pyHelpLive"), helpSub = $("pyHelpSub"), hubEl = $("pyHub"), aimDot = $("pyAimDot");
-  const padHud = $("pyPad"), stickL = $("pyStickL"), stickR = $("pyStickR");
+  const photo = padPhoto(/** @type {HTMLElement} */ (document.querySelector(".pp")));
 
   /* Standard-mapping indices (w3c.github.io/gamepad/#remapping). Positional,
      and so is Steer: `cross` is the SOUTH button on every family
@@ -101,7 +102,9 @@ function init() {
   let last = performance.now();
   let toastTimer = 0;
 
-  function blank() { return { axes: [0, 0, 0, 0], b: IDX.map(() => false) }; }
+  /* t: L2 and R2 from 0 to 1. Only a real pad has the analog value; the replay
+     and the keyboard pull a trigger all the way or not at all. */
+  function blank() { return { axes: [0, 0, 0, 0], b: IDX.map(() => false), t: null }; }
   const on = (v, b) => v.b[IDX.indexOf(b)];
 
   /* ---------- sources ---------- */
@@ -117,6 +120,7 @@ function init() {
       const v = blank();
       gp.axes.slice(0, 4).forEach((a, i) => { v.axes[i] = a || 0; });
       IDX.forEach((_, i) => { const btn = gp.buttons[i]; v.b[i] = !!btn && (btn.pressed || btn.value > 0.5); });
+      v.t = [gp.buttons[6]?.value ?? 0, gp.buttons[7]?.value ?? 0];
       return { gp, v };
     }
     return null;
@@ -461,6 +465,7 @@ function init() {
 
   const glyph = (b) => glyphOf(fam, b);
   function relabel() {
+    photo.show(fam);
     document.querySelectorAll(".py-osk .py-g, .py-ring .py-g").forEach((el) => {
       const b = el.getAttribute("data-b");
       if (b) el.outerHTML = glyph(b);
@@ -545,12 +550,12 @@ function init() {
     el.classList.add("is-hit");
   }
   function renderHud(v) {
-    padHud.querySelectorAll("[data-p]").forEach((el) => {
-      const p = el.getAttribute("data-p");
-      el.classList.toggle("is-on", !!p && IDX.includes(p) && on(v, p));
+    photo.render({
+      held: new Set(IDX.filter((_, i) => v.b[i])),
+      axes: v.axes,
+      trig: v.t || [on(v, "l2") ? 1 : 0, on(v, "r2") ? 1 : 0],
+      layer: layerNow(v),
     });
-    stickL.style.transform = `translate(${(v.axes[0] ?? 0) * 9}px, ${(v.axes[1] ?? 0) * 9}px)`;
-    stickR.style.transform = `translate(${(v.axes[2] ?? 0) * 9}px, ${(v.axes[3] ?? 0) * 9}px)`;
   }
 
   function setMode(m, detail) {

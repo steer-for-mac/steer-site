@@ -1,3 +1,4 @@
+{% import "macros/pad-photo.njk" as padPhoto with context %}
 <div class="py-win">
   <!-- The status bar. Mode is the one thing a visitor must never have to
        guess: a replay that looks live is the dishonest version of this page. -->
@@ -107,16 +108,9 @@
       </div>
 
       <!-- The controller half of the vignette sentence: what the pad is
-           doing right now, whoever is holding it. Drawing, not reading. -->
-      <div class="py-pad" id="pyPad" aria-hidden="true">
-        <div class="py-pad-sh"><i data-p="l2">L2</i><i data-p="l1">L1</i><i data-p="create">Cr</i><i data-p="options">Op</i><i data-p="r1">R1</i><i data-p="r2">R2</i></div>
-        <div class="py-pad-row">
-          <span class="py-stick" data-p="l3"><i id="pyStickL"></i></span>
-          <span class="py-dpad"><i data-p="up"></i><i data-p="left"></i><i data-p="right"></i><i data-p="down"></i></span>
-          <span class="py-face"><i data-p="triangle"></i><i data-p="square"></i><i data-p="circle"></i><i data-p="cross"></i></span>
-          <span class="py-stick" data-p="r3"><i id="pyStickR"></i></span>
-        </div>
-      </div>
+           doing right now, whoever is holding it, on a photo of the pad they
+           hold. Drawing, not reading. -->
+      {{ padPhoto.stage() }}
 
       <div class="py-cta" id="pyCta">
         <div class="py-slot"><p class="py-cta-t" id="pyCtaText">Steer does this in every app on your Mac, not only in this box.</p></div>

@@ -17,9 +17,6 @@
 .l2-demo-head p { margin: 0; max-width: 36em; font-size: 16px; line-height: 1.6; color: var(--l2-ink-2); }
 .l2-demo { color-scheme: dark; }
 .l2-demo .py-win { color: var(--text); box-shadow: var(--shadow-window); }
-/* The pressed button, lit: on the night the pad readout's accent is the one
-   bright thing in the pane, and it is bright only while a button is down. */
-.l2-demo .py-pad .is-on { box-shadow: 0 0 0 1px var(--blue), 0 0 12px 1px var(--blue); }
 .l2-demo .py-keys { max-width: none; color: var(--l2-ink-2); }
 .l2-demo .py-keys kbd { border-color: var(--oh-hairline); color: var(--l2-ink); }
 

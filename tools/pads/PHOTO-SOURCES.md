@@ -23,10 +23,14 @@ rejected candidates and why.
   No grey fringe from the backdrop survives on the site's `#222325` stage,
   checked at 500% on all four edges of each cutout. Cut pads: DualSense
   1202x778, Xbox 1142x757, Switch Pro 1126x732.
-  The generated Xbox pad shows a share button (the small upload-arrow glyph
-  between the View and Menu buttons) that the real Elite Series 2 does not
-  have. It is left undrawn in the render's chip legend: no `perapp.json`
-  control targets it, and no chip mark was placed on or near it.
+  The Xbox source was corrected on 2026-09-28 by a second Codex image edit of
+  the first one, which had a Share button the real Elite Series 2 lacks and
+  only four ticks round the d-pad. The edit, given the image and a text list
+  of the real details (no manufacturer photo), swapped Share for the blank
+  profile button, added the pairing pinhole between View and Menu, sixteen
+  ticks round the disc, and the three profile lights. Everything else moved
+  less than a pixel (phase correlation, <= 0.6 px per part), so the control
+  outlines carried over.
   The Switch Pro image is the original 2017 controller (opaque black shell,
   correct face-button glyphs), unlike the Switch 2 Pro stand-in it replaces.
 

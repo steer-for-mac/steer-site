@@ -1,0 +1,46 @@
+{#- The controller as a photo that lights, driven by scripts/pad-photo.js.
+    Import `with context`: it reads perapp and padGlyphs. One stage per page,
+    since the filters are addressed by id. The DualSense cut is unlit, so the
+    light bar is drawn on top in the layer's colour. -#}
+
+{% macro stage(first = "ps") %}
+<div class="pp" data-fam="{{ first }}" aria-hidden="true">
+  <svg class="pp-defs">
+    <filter id="pp-glow" x="-250%" y="-250%" width="600%" height="600%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="6" result="near"/>
+      <!-- twice: one wide blur ends in a visible ring on a pale pad -->
+      <feGaussianBlur in="d" stdDeviation="26" result="f0"/>
+      <feGaussianBlur in="f0" stdDeviation="14" result="far"/>
+      <feFlood class="pp-glow-c" result="c"/>
+      <feComposite in="c" in2="near" operator="in" result="n"/>
+      <feComposite in="c" in2="far" operator="in" result="f"/>
+      <!-- outside the part only, so its own fill stays see-through -->
+      <feComposite in="n" in2="SourceAlpha" operator="out" result="g1"/>
+      <feComposite in="f" in2="SourceAlpha" operator="out" result="g2"/>
+      <feMerge><feMergeNode in="g2"/><feMergeNode in="g2"/><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="pp-lb-glow" x="-400%" y="-30%" width="900%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="near"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="26" result="far"/>
+      <feFlood class="pp-lb-c" result="c"/>
+      <feComposite in="c" in2="near" operator="in" result="g1"/>
+      <feComposite in="c" in2="far" operator="in" result="g2"/>
+      <feMerge><feMergeNode in="g2"/><feMergeNode in="g2"/><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="pp-hole-soft"><feGaussianBlur stdDeviation="3"/></filter>
+  </svg>
+  {%- for f in padGlyphs.families %}{% set s = perapp.slot[f] %}{% set c = perapp.controls[f] %}
+  <div class="pp-f" data-fam="{{ f }}">
+    <div class="pp-trigs">
+      <span class="pp-t" data-t="l2" style="--x:{{ c.l1.x }}%"><i></i><b>{{ padGlyphs.name(f, "l2") }}</b></span>
+      <span class="pp-t" data-t="r2" style="--x:{{ c.r1.x }}%"><i></i><b>{{ padGlyphs.name(f, "r2") }}</b></span>
+    </div>
+    <div class="pp-pad">
+      <img src="{{ s.src | replace('cut-ps.png', 'cut-ps-unlit.png') }}" width="{{ s.w }}" height="{{ s.h }}" loading="lazy" decoding="async" alt="">
+      {% include "art/controls-" + f + ".svg" %}
+    </div>
+  </div>
+  {%- endfor %}
+</div>
+{% endmacro %}

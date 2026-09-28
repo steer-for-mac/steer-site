@@ -9,10 +9,10 @@ test.beforeEach(async ({ page }) => { await page.goto("/index.html"); });
 
 const panel = "#pa-browser";
 /* The image transform renames every src, so a photo is known by its height:
-   cut-ps.png 778, cut-xb.png 757, cut-sw.png 732. */
+   cut-ps.png 778, cut-xb.png 758, cut-sw.png 732. */
 const FAM = {
   ps: { h: "778", hold: "L1", cross: "Cross" },
-  xb: { h: "757", hold: "LB", cross: "A" },
+  xb: { h: "758", hold: "LB", cross: "A" },
   sw: { h: "732", hold: "L", cross: "B" },
 };
 
@@ -159,6 +159,6 @@ test("the controller picker is the three pads, driven by the arrow keys", async 
   await expect(page.locator("#pa-pad-xb")).toBeChecked();
   await expect(page.locator("#pa-pad-xb")).toBeFocused();
   expect(await pick.locator(".pa-pick-xb").evaluate((el) => getComputedStyle(el).outlineStyle)).toBe("solid");
-  await expect(page.locator(".pa-slot img").filter({ visible: true }).first()).toHaveAttribute("height", "757");
+  await expect(page.locator(".pa-slot img").filter({ visible: true }).first()).toHaveAttribute("height", "758");
   await expect(page.getByRole("radiogroup", { name: "Your controller" }).getByRole("radio")).toHaveCount(3);
 });
