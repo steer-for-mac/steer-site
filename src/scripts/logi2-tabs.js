@@ -75,4 +75,8 @@
     var r = document.getElementById("pa-pad-" + e.detail);
     if (r && !chose) r.checked = true;
   });
+
+  var root = document.documentElement;
+  document.addEventListener("keydown", function () { root.dataset.kbd = ""; }, true);
+  document.addEventListener("pointerdown", function () { delete root.dataset.kbd; }, true);
 })();

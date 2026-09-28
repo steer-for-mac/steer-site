@@ -15,7 +15,11 @@ export const stubPad = (page) => page.addInitScript(() => {
     axes: [0, 0, 0, 0],
     buttons: Array.from({ length: 18 }, () => ({ pressed: false, touched: false, value: 0 })),
   };
-  navigator.getGamepads = () => [w.__pad, null, null, null];
+  /* defineProperty, not assignment: Linux WebKit's getGamepads is read-only,
+     so a plain assignment silently left the real, empty API in place. */
+  const fake = () => [w.__pad, null, null, null];
+  Object.defineProperty(Navigator.prototype, "getGamepads", { value: fake, configurable: true, writable: true });
+  Object.defineProperty(navigator, "getGamepads", { value: fake, configurable: true, writable: true });
 });
 
 /** @param {Page} page @param {string} name @param {boolean} down */

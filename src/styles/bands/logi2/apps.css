@@ -127,14 +127,12 @@
 .l2-apps:has(#pa-pad-ps:focus-visible) .pa-pick-ps,
 .l2-apps:has(#pa-pad-xb:focus-visible) .pa-pick-xb,
 .l2-apps:has(#pa-pad-sw:focus-visible) .pa-pick-sw { outline: 2px solid var(--blue); outline-offset: 2px; }
-/* WebKit drops :focus-visible when an arrow key moves a radio group, but never
-   focuses a radio on click, so plain :focus is keyboard-only there. The
-   -apple-system-body font keyword is WebKit-only; Chromium would ring on click. */
-@supports (font: -apple-system-body) {
-  .l2-apps:has(#pa-pad-ps:focus) .pa-pick-ps,
-  .l2-apps:has(#pa-pad-xb:focus) .pa-pick-xb,
-  .l2-apps:has(#pa-pad-sw:focus) .pa-pick-sw { outline: 2px solid var(--blue); outline-offset: 2px; }
-}
+/* WebKit drops :focus-visible when an arrow key moves a radio group, so
+   plain :focus rings too while the keyboard is in use (data-kbd, set by
+   logi2-tabs.js); without that gate Chromium rings on a click. */
+html[data-kbd] .l2-apps:has(#pa-pad-ps:focus) .pa-pick-ps,
+html[data-kbd] .l2-apps:has(#pa-pad-xb:focus) .pa-pick-xb,
+html[data-kbd] .l2-apps:has(#pa-pad-sw:focus) .pa-pick-sw { outline: 2px solid var(--blue); outline-offset: 2px; }
 .pa-slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
 /* The marks are the legend's own chips, set beside the control they name
