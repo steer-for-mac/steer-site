@@ -2,9 +2,9 @@
 # /// script
 # dependencies = ["pillow", "numpy", "scipy"]
 # ///
-"""Re-cut the three per-app pads from the manufacturer renders.
+"""Re-cut the three per-app pads from the generated sources (PHOTO-SOURCES.md).
 
-Vision's foreground mask (scratch/trace/subject.swift) at the source's native
+Vision's foreground mask (scripts/subject.swift) at the source's native
 resolution, its soft ramp tightened to ~2px so the edge is crisp, and the
 background un-mixed from the edge pixels (the renders sit on near-white, which
 otherwise haloes on the night stage). Nothing inside the pad is touched.
@@ -13,13 +13,15 @@ the build's image transform emits the AVIF and WebP and keeps the PNG as the
 fallback. Usage: scripts/pad-cut.py
 """
 import os
+import subprocess
 import sys
+
 import numpy as np
 from PIL import Image
 from scipy.ndimage import binary_fill_holes
 
-G = os.environ.get("PAD_SRC", "scratch/given/")  # the deskewed renders (pad-art-brief.md §1)
-V = os.environ.get("PAD_MASKS", "scratch/cut/")  # swift scratch/trace/subject.swift <src> <V><fam>-vmask.png
+G = os.environ.get("PAD_SRC", "tools/pads/given/")  # tools/pads/PHOTO-SOURCES.md
+V = os.environ.get("PAD_MASKS", "scratch/cut/")  # remade by subject.swift when missing or stale
 OUT = "src/assets/pads/"
 # fam: source, 2x the width it is drawn at in the 601x401 stage slot
 PADS = {
@@ -30,8 +32,12 @@ PADS = {
 THUMB = 224  # 2x a 112px picker thumbnail
 
 for fam, (src, want) in PADS.items():
+    m = V + fam + "-vmask.png"
+    if not os.path.exists(m) or os.path.getmtime(m) < os.path.getmtime(G + src):
+        os.makedirs(V, exist_ok=True)
+        subprocess.run(["swift", "scripts/subject.swift", G + src, m], check=True)
     rgb = np.asarray(Image.open(G + src).convert("RGB")).astype(np.float64) / 255
-    a = np.asarray(Image.open(V + fam + "-vmask.png").convert("L")).astype(np.float64) / 255
+    a = np.asarray(Image.open(m).convert("L")).astype(np.float64) / 255
     # Vision drops a grey part on a grey backdrop (the Elite's metal d-pad dish
     # came out as a hole); anything fully enclosed by the pad is the pad.
     a = np.maximum(a, binary_fill_holes(a > 0.5).astype(np.float64))

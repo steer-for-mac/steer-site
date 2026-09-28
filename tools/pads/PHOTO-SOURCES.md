@@ -1,8 +1,9 @@
 # Photo sources for the per-app band's controller cutouts
 
-Replacing the low-resolution web-scrape sources in `scratch/given/` (gitignored)
-that `scripts/pad-cut.py` reads. Recorded here per the brief: source, licence,
-resolution, date, for each image actually installed, plus superseded and
+The sources `scripts/pad-cut.py` reads live in `tools/pads/given/`. They were
+generated, so nothing can re-download them. The script remakes their Vision
+masks when missing (byte-identical on macOS 27). Recorded here per the brief:
+source, licence, resolution, date, for each image actually installed, plus superseded and
 rejected candidates and why.
 
 ## Installed

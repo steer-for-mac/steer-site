@@ -3,7 +3,7 @@
 # dependencies = ["opencv-python-headless", "numpy"]
 # ///
 """Score a render against the reference, bbox-registered (the colourways
-register by bbox, per pad-art-brief §5).
+register by bbox).
 
     score.py RENDER.png REF_IMAGE REF_MASK OUT_OVERLAY.png [--shift N]
 
