@@ -28,14 +28,15 @@
 
     <div class="t-proof">
       <div class="t-lede">
-        <h3 class="t-h3">Anything risky is shown to you first.</h3>
-        <p>Import someone else's setup and, if a button does more than press a key (opens a web page, runs a script), Steer shows you each one before it applies. You approve it, or it does not run. Scripts run from your own macOS scripts folder: an import can name one you already installed, not bring its own.</p>
+        <!-- RESTORE when the app's import-auditor fix ships (audits every step of a chain and both radial menus, with tests; ~/Developer/steer). Until then the review only sees each binding's first action on the layers, so no page may say an import is reviewed or approved. Was: the heading "Anything risky is shown to you first." and the lines "Steer shows you each one before it applies. You approve it, or it does not run." -->
+        <h3 class="t-h3">An import cannot bring its own scripts.</h3>
+        <p>Someone else's setup can give a button a web page to open or a script to run. Scripts run only from your own macOS scripts folder, so an import can name one you already installed, never bring its own.</p>
       </div>
 
       <div class="t-fig">
         <div class="shot">
-          <img class="shot-light" src="assets/import-review.png" width="1040" height="960" loading="lazy" decoding="async" alt="Steer's import review: three imported bindings, each tagged Opens URL beside the address it would open, with Cancel and Import buttons at the foot.">
-          <img class="shot-dark" src="assets/import-review-dark.png" width="1040" height="960" loading="lazy" decoding="async" alt="Steer's import review: three imported bindings, each tagged Opens URL beside the address it would open, with Cancel and Import buttons at the foot.">
+          <img class="shot-light" src="assets/import-review.png" width="1040" height="960" loading="lazy" decoding="async" alt="Three imported Steer bindings, each tagged Opens URL beside the address it opens.">
+          <img class="shot-dark" src="assets/import-review-dark.png" width="1040" height="960" loading="lazy" decoding="async" alt="Three imported Steer bindings, each tagged Opens URL beside the address it opens.">
         </div>
       </div>
 

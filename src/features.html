@@ -79,7 +79,8 @@ footBottom: false
         <div class="frow"><div class="fn">Always-on bindings</div><div class="fd">Pin a few buttons that stay available no matter which app you are in, with one button to suspend them.</div></div>
         <div class="frow"><div class="fn">Clash warnings</div><div class="fd">Steer warns you when a mapping collides with one of the system shortcuts it knows: Spotlight, the screenshot keys, app switching, Command-Q and Command-W.</div></div>
         <div class="frow"><div class="fn">Undo</div><div class="fd">Steer saves a restore point as you edit each settings pane, so a change you regret is one step away. Command-Z from anywhere in Steer steps back.</div></div>
-        <div class="frow"><div class="fn">Sharing setups</div><div class="fd">Export a profile as a file, or import someone else's. Anything in it that does more than press keys is shown to you for review before it applies.</div></div>
+        <div class="frow"><div class="fn">Sharing setups</div><div class="fd">Export a profile as a file, or import someone else's. An import can name a script you already installed, never bring its own.</div></div>
+        <!-- RESTORE when the app's import-auditor fix ships (audits every step of a chain and both radial menus, with tests; ~/Developer/steer). Until then the review only sees each binding's first action on the layers, so no page may say an import is reviewed or approved. Was: "Export a profile as a file, or import someone else's. Anything in it that does more than press keys is shown to you for review before it applies." -->
         <div class="frow"><div class="fn">Your language</div><div class="fd">35 languages, including the built-in help.</div></div>
       </div>
 
@@ -134,7 +135,8 @@ footBottom: false
       </details>
       <details>
         <summary>Does Steer rely on undocumented behaviour?</summary>
-        <div class="faq-body">Yes, and it's disclosed rather than hidden. The adaptive triggers, PlayStation and Switch Pro rumble, and the light bar speak each controller's own wire language, worked out from scratch without borrowing anyone's code; the native pinch and rotate gestures, both on by default (pinch can be switched to a keyboard-shortcut form in Settings for apps that ignore the gesture), recreate an event format Apple uses but has not documented. All of it is built with Apple's published developer tools, and no private Apple code is linked in. Scripts and automation you import stay contained and are shown for review before they apply.</div>
+        <div class="faq-body">Yes, and it's disclosed rather than hidden. The adaptive triggers, PlayStation and Switch Pro rumble, and the light bar speak each controller's own wire language, worked out from scratch without borrowing anyone's code; the native pinch and rotate gestures, both on by default (pinch can be switched to a keyboard-shortcut form in Settings for apps that ignore the gesture), recreate an event format Apple uses but has not documented. All of it is built with Apple's published developer tools, and no private Apple code is linked in. An imported setup can name a script you already installed, never bring its own.</div>
+        <!-- RESTORE when the app's import-auditor fix ships (audits every step of a chain and both radial menus, with tests; ~/Developer/steer). Until then the review only sees each binding's first action on the layers, so no page may say an import is reviewed or approved. Was: "Scripts and automation you import stay contained and are shown for review before they apply." -->
       </details>
       <details>
         <summary>Can I get a refund?</summary>
