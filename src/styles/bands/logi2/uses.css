@@ -30,6 +30,16 @@
 
 .l2-use h3 { margin: 20px 0 6px; font-size: 20px; font-weight: 650; letter-spacing: -0.015em; color: var(--text); }
 .l2-use p { margin: 0; max-width: 30em; font-size: 15.5px; line-height: 1.55; color: var(--text-2); }
+/* The seventh card has no picture: it says the six are a sample, across the
+   row's full width on a desktop and as the swipe's last card on a phone. */
+.l2-use-more {
+  padding: 28px 32px;
+  border: 1px dashed var(--sep-2);
+  border-radius: var(--r-card);
+}
+.l2-use-row .l2-use-more { grid-column: 1 / -1; }
+.l2-use-more h3 { margin-top: 0; font-size: 26px; letter-spacing: -0.02em; }
+.l2-use-more p { max-width: 40em; font-size: 16px; }
 .l2-use-row:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
 
 @media (max-width: 860px) {
@@ -50,5 +60,6 @@
     scrollbar-width: none;
   }
   .l2-use { flex: 0 0 84%; scroll-snap-align: start; }
+  .l2-use-more { display: flex; flex-direction: column; justify-content: center; padding: 24px; }
   .l2-use p { font-size: 15px; }
 }
