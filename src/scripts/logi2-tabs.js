@@ -32,6 +32,7 @@ import { INERT, PRESS, padPhoto } from "./pad-photo.js";
       panels[j].inert = !on;
     });
     if (focus) tabs[i].focus();
+    walkI = 0;
     var slot = panels[i].querySelector(".pa-slot");
     if (lightsEl && slot) { slot.appendChild(lightsEl); lightsEl.hidden = false; }
   }
@@ -82,9 +83,11 @@ import { INERT, PRESS, padPhoto } from "./pad-photo.js";
     var p = panels.find(function (q) { return !q.inert; }) || panels[0];
     return Array.prototype.filter.call(p.querySelectorAll(".pa-key li"), function (li) { return li.offsetParent; });
   }
+  var ticking = false;
   function walk(now) {
+    if (!inView) { ticking = false; return; }
     requestAnimationFrame(walk);
-    if (!inView || reduced.matches || root.classList.contains("still") || now < busyUntil || now < walkAt) return;
+    if ( reduced.matches || root.classList.contains("still") || now < busyUntil || now < walkAt) return;
     var rows = shown();
     if (!rows.length) return;
     hot(rows[walkI++ % rows.length]);
@@ -95,11 +98,10 @@ import { INERT, PRESS, padPhoto } from "./pad-photo.js";
     new IntersectionObserver(function (es) {
       inView = es[0].isIntersecting;
       if (!inView) { walkI = 0; hot(null); }
+      else if (!ticking) { ticking = true; requestAnimationFrame(walk); }
     }, { threshold: 0.4 }).observe(band);
-    requestAnimationFrame(walk);
   }
   document.addEventListener("change", function (e) { if (e.target.name === "pa-pad") walkI = 0; });
-  tabs.forEach(function (t) { t.addEventListener("click", function () { walkI = 0; }); });
 
   /* The other way round: pointing at a part of the photo marks every row of
      the shown layout that uses it, and lights just that part. A stick is both
