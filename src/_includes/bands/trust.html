@@ -29,8 +29,13 @@
     <div class="t-proof">
       <div class="t-lede">
         <!-- RESTORE when the app's import-auditor fix ships (audits every step of a chain and both radial menus, with tests; ~/Developer/steer). Until then the review only sees each binding's first action on the layers, so no page may say an import is reviewed or approved. Was: the heading "Anything risky is shown to you first." and the lines "Steer shows you each one before it applies. You approve it, or it does not run." -->
-        <h3 class="t-h3">An import cannot bring its own scripts.</h3>
-        <p>Someone else's setup can give a button a web page to open or a script to run. Scripts run only from your own macOS scripts folder, so an import can name one you already installed, never bring its own.</p>
+        <!-- Checked on steer main, 2026-09-28: runScript and runShellScript
+             resolve inside the Application Scripts container and refuse a
+             path that escapes it (OutputDispatcher.swift:313-400), and nothing
+             in an import writes there. openURL, typeText and runShortcut have
+             no such fence, so the heading is about script files only. -->
+        <h3 class="t-h3">An import cannot install a script file; it can only name one already in your scripts folder.</h3>
+        <p>Someone else's setup can give a button a link to open, text to type, a Shortcut to run or a script to run. Scripts run only from Steer's scripts folder on your Mac, so an import can name one you already put there, never add its own.</p>
       </div>
 
       <div class="t-fig">
