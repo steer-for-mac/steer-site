@@ -36,13 +36,13 @@
      longest legend and the page under it never moves. -->
 {%- set pa = perapp -%}
 {%- set pg = padGlyphs -%}
-{%- set famName = {ps: "PlayStation", xb: "Xbox", sw: "Switch"} -%}
 {%- macro chip(pg, b) -%}
 {%- set g0 = pg.glyph("ps", b) -%}{%- set g1 = pg.glyph("xb", b) -%}{%- set g2 = pg.glyph("sw", b) -%}
 {%- if g0 == g1 and g1 == g2 -%}{{ g0 | safe }}
 {%- else -%}<span class="pa-f pa-f-ps">{{ g0 | safe }}</span><span class="pa-f pa-f-xb">{{ g1 | safe }}</span><span class="pa-f pa-f-sw">{{ g2 | safe }}</span>
 {%- endif -%}
 {%- endmacro -%}
+{%- import "macros/pad-photo.njk" as padPhoto with context -%}
 <section class="l2-apps" id="apps" aria-labelledby="l2-apps-h">
   <div class="l2-wrap">
     <!-- THE PAID DEPTH, first half: layouts that switch themselves, and
@@ -76,11 +76,18 @@
       </div>
       <div class="pa-fam" role="radiogroup" aria-label="Your controller">
         {%- for f in pg.families %}
-        <input type="radio" class="pa-fam-in" name="pa-pad" id="pa-pad-{{ f }}" value="{{ f }}" aria-labelledby="pa-pad-{{ f }}-n"{% if loop.first %} checked{% endif %}><span id="pa-pad-{{ f }}-n">{{ famName[f] }}</span>
+        <input type="radio" class="pa-fam-in" name="pa-pad" id="pa-pad-{{ f }}" value="{{ f }}" aria-labelledby="pa-pad-{{ f }}-n"{% if loop.first %} checked{% endif %}><span id="pa-pad-{{ f }}-n">{{ pa.slot[f].family }}</span>
         {%- endfor %}
       </div>
     </div>
 
+    <!-- The photo's own parts, lit with the chip a row names: one set of
+         outlines for the band, which logi2-tabs.js moves into the shown tab's
+         slot. Without script it stays here, hidden, and the chips do the work. -->
+    <div class="pp pa-lights" style="{{ padPhoto.vars('apps') }}" hidden>
+      {{ padPhoto.defs("apps") }}
+      {%- for f in pg.families %}<div class="pa-f pa-f-{{ f }}">{{ padPhoto.outlines(f) }}</div>{% endfor %}
+    </div>
     <div class="pa-panels">
     {%- for app in pa.apps %}
     <div class="pa-panel" id="pa-{{ app.id }}" data-tab="pa-tab-{{ app.id }}">
@@ -105,7 +112,7 @@
         </div>
         <div class="pa-pick" aria-hidden="true">
           {%- for f in pg.families %}{% set s = pa.slot[f] %}
-          <label class="pa-pick-l pa-pick-{{ f }}" for="pa-pad-{{ f }}"><img src="{{ s.thumb }}" width="{{ s.tw }}" height="{{ s.th }}" loading="lazy" decoding="async" alt=""><span>{{ famName[f] }}</span></label>
+          <label class="pa-pick-l pa-pick-{{ f }}" for="pa-pad-{{ f }}"><img src="{{ s.thumb }}" width="{{ s.tw }}" height="{{ s.th }}" loading="lazy" decoding="async" alt=""><span>{{ pa.slot[f].family }}</span></label>
           {%- endfor %}
         </div>
       </div>
@@ -116,7 +123,7 @@
         {%- if g.hold %}<p class="pa-hold" data-c="{{ g.hold }}"><span class="pa-hold-k">Hold</span>{{ chip(pg, g.hold) }}</p>{% endif %}
         <ul class="pa-key">
           {%- for it in g.items %}
-          <li{% if it.fam %} class="pa-f{% for f in it.fam %} pa-f-{{ f }}{% endfor %}"{% endif %} data-c="{{ it.c }}"{% if g.hold %} data-hold="{{ g.hold }}"{% endif %}>
+          <li{% if it.fam %} class="pa-f{% for f in it.fam %} pa-f-{{ f }}{% endfor %}"{% endif %} data-c="{{ it.c }}" data-b="{{ it.b | join(' ') }}"{% if g.hold %} data-hold="{{ g.hold }}"{% endif %}>
             <span class="pa-combo">
               {%- for b in it.b %}{% if not loop.first %}<span class="pa-op" aria-hidden="true">/</span><span class="py-vh"> or </span>{% endif %}{{ chip(pg, b) }}{% endfor -%}
             </span>

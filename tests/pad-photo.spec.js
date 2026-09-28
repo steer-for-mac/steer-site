@@ -14,20 +14,20 @@ async function open(page, id) {
   await page.goto("/play.html");
 }
 const XBOX = "Xbox Wireless Controller (STANDARD GAMEPAD Vendor: 045e Product: 0b13)";
-const lit = (page, fam) => page.locator(`.pp-f[data-fam="${fam}"] path.is-on`);
+const lit = (page, fam) => page.locator(`.pp-f[data-pp-fam="${fam}"] path.is-on`);
 
 test("every family has an outline for each control Steer binds", async ({ page }) => {
   await open(page);
   for (const c of ["cross", "circle", "square", "triangle", "l1", "r1", "ls", "rs",
     "up", "down", "left", "right", "create", "options", "home"]) {
-    await expect(page.locator(`.pp .pad-controls path[data-c="${c}"]`)).toHaveCount(3);
+    await expect(page.locator(`.pp-stage .pad-controls path[data-c="${c}"]`)).toHaveCount(3);
   }
 });
 
 test("a held button lights on the pad shown and goes out on release", async ({ page }) => {
   await open(page);
   await hold(page, "cross", true);
-  await expect(page.locator(".pp")).toHaveAttribute("data-fam", "ps");
+  await expect(page.locator(".py-side .pp-stage")).toHaveAttribute("data-fam", "ps");
   await expect(lit(page, "ps")).toHaveAttribute("data-c", "cross");
   await hold(page, "cross", false);
   await expect(lit(page, "ps")).toHaveCount(0);
@@ -36,9 +36,9 @@ test("a held button lights on the pad shown and goes out on release", async ({ p
 test("the photo follows the pad that takes over", async ({ page }) => {
   await open(page, XBOX);
   await hold(page, "cross", true);
-  await expect(page.locator(".pp")).toHaveAttribute("data-fam", "xb");
-  await expect(page.locator('.pp-f[data-fam="xb"] img')).toBeVisible();
-  await expect(page.locator('.pp-f[data-fam="ps"] img')).toBeHidden();
+  await expect(page.locator(".py-side .pp-stage")).toHaveAttribute("data-fam", "xb");
+  await expect(page.locator('.pp-f[data-pp-fam="xb"] img')).toBeVisible();
+  await expect(page.locator('.pp-f[data-pp-fam="ps"] img')).toBeHidden();
 });
 
 test("a trigger fills its pill as far as it is pulled, and its layer colours the light bar", async ({ page }) => {
@@ -46,8 +46,8 @@ test("a trigger fills its pill as far as it is pulled, and its layer colours the
   await hold(page, "cross", true);
   await hold(page, "cross", false);
   await page.evaluate(() => { /** @type {any} */ (window).__pad.buttons[7] = { pressed: true, touched: true, value: 0.6 }; });
-  await expect(page.locator('.pp-f[data-fam="ps"] .pp-t[data-t="r2"]')).toHaveAttribute("style", /--v: ?0\.6/);
-  const lb = () => page.locator(".pp").evaluate((e) => /** @type {HTMLElement} */ (e).style.getPropertyValue("--pp-lb"));
+  await expect(page.locator('.pp-f[data-pp-fam="ps"] .pp-t[data-t="r2"]')).toHaveAttribute("style", /--v: ?0\.6/);
+  const lb = () => page.locator(".py-side .pp-stage").evaluate((e) => /** @type {HTMLElement} */ (e).style.getPropertyValue("--pp-lb"));
   await expect.poll(lb).toBe("rgb(160,80,255)");
   await page.evaluate(() => { /** @type {any} */ (window).__pad.buttons[7] = { pressed: false, touched: false, value: 0 }; });
   await hold(page, "l1", true);
@@ -60,8 +60,8 @@ test("a tilted stick slides its cap over a black hole, and centring it brings th
   await open(page);
   await hold(page, "cross", true);
   await hold(page, "cross", false);
-  const cap = page.locator('.pp-f[data-fam="ps"] g:has(> path[data-c="rs"])');
-  const hole = page.locator('.pp-f[data-fam="ps"] .pp-hole').nth(1);
+  const cap = page.locator('.pp-f[data-pp-fam="ps"] g:has(> path[data-c="rs"])');
+  const hole = page.locator('.pp-f[data-pp-fam="ps"] .pp-hole').nth(1);
   await stick(page, [0, 0, 1, 0]);
   await expect(cap).toHaveAttribute("transform", /^translate\([1-9]/);
   await expect(hole).toHaveCSS("opacity", "1");
@@ -85,4 +85,47 @@ test("a diagonal lights both arms of a cross d-pad", async ({ page }) => {
   await hold(page, "up", true);
   await hold(page, "right", true);
   await expect(lit(page, "ps")).toHaveCount(2);
+});
+
+test("pressing a part of the photo presses that button on the demo", async ({ page }) => {
+  await page.goto("/play.html");
+  await page.locator('.py-side .pp-f[data-pp-fam="ps"] path[data-c="create"]').dispatchEvent("pointerdown", { pointerId: 1, clientX: 0, clientY: 0 });
+  await expect(page.locator("#pyHelp")).toBeVisible();
+  await expect(lit(page, "ps")).toHaveAttribute("data-c", "create");
+  await page.locator(".py-side .pp-stage").dispatchEvent("pointerup", { pointerId: 1 });
+  await expect(lit(page, "ps")).toHaveCount(0);
+});
+
+test("dragging a stick's cap tilts it", async ({ page }) => {
+  await page.goto("/play.html");
+  const cap = page.locator('.py-side .pp-f[data-pp-fam="ps"] path[data-c="rs"]');
+  await expect(page.locator('.py-side .pp-f[data-pp-fam="ps"] g:has(> path[data-c="rs"])')).toHaveCount(1);
+  await cap.scrollIntoViewIfNeeded();
+  const b = /** @type {{x: number, y: number, width: number, height: number}} */ (await cap.boundingBox());
+  const [x, y] = [b.x + b.width / 2, b.y + b.height / 2];
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  await page.mouse.move(x + b.width, y, { steps: 4 });
+  await expect(page.locator('.py-side .pp-f[data-pp-fam="ps"] g:has(> path[data-c="rs"])')).toHaveAttribute("transform", /^translate\([1-9]/);
+  await page.mouse.up();
+  await expect(page.locator('.py-side .pp-f[data-pp-fam="ps"] g:has(> path[data-c="rs"])')).toHaveAttribute("transform", "translate(0 0)");
+});
+
+test("the picker changes the pad the demo shows and names", async ({ page }) => {
+  await page.goto("/play.html");
+  await page.locator(".py-side .pp-pick-l", { hasText: "Xbox" }).click();
+  await expect(page.locator(".py-side .pp-stage")).toHaveAttribute("data-fam", "xb");
+  await expect(page.locator('.py-side .pp-f[data-pp-fam="xb"] img')).toBeVisible();
+  /* The still frame's legend is the keyboard's, which names the shoulders. */
+  await expect(page.locator("#pyLegend")).toContainText("LB");
+});
+
+test("on the homepage, the demo's picker moves the per-app band to the same pad, and a row lights its part", async ({ page }) => {
+  await page.goto("/index.html");
+  await page.locator(".py-side .pp-pick-l", { hasText: "Switch" }).click();
+  await expect(page.locator("#pa-pad-sw")).toBeChecked();
+  const lights = page.locator("#pa-default .pa-lights");
+  await expect(lights).toHaveCount(1);
+  await page.locator('#pa-default .pa-key li[data-c="circle"]').hover();
+  await expect(lights.locator('[data-pp-fam="sw"] path.is-on')).toHaveAttribute("data-c", "circle");
 });

@@ -19,7 +19,27 @@ function init() {
   const modeEl = $("pyMode"), modeText = $("pyModeText"), layerEl = $("pyLayer"), lastEl = $("pyLast");
   const stateEl = $("pyState"), legend = $("pyLegend"), toast = $("pyToast"), cta = $("pyCta"), ctaText = $("pyCtaText");
   const helpLive = $("pyHelpLive"), helpSub = $("pyHelpSub"), hubEl = $("pyHub"), aimDot = $("pyAimDot");
-  const photo = padPhoto(/** @type {HTMLElement} */ (document.querySelector(".pp")));
+  /* The photo pad is a fourth source beside the keyboard: pressing a part of it
+     holds that button, dragging a stick's cap tilts it. */
+  const mousePad = { held: new Set(), axes: [0, 0, 0, 0] };
+  const photoEl = /** @type {HTMLElement} */ (document.querySelector(".py-side .pp-stage"));
+  const photo = padPhoto(photoEl, {
+    onInput(s) {
+      Object.assign(mousePad, s);
+      if (mode !== "pad" && mode !== "keys") take("keys");
+      if (s.held.size) markActed();
+    },
+  });
+  /* The picker names the pad the demo labels its buttons for, until a real pad
+     takes over and names itself. The page's pad event tells the other bands. */
+  photoEl.querySelectorAll(".pp-pick input").forEach((r) => r.addEventListener("change", () => {
+    const f = /** @type {HTMLInputElement} */ (r).value;
+    if (mode === "pad") { relabel(); return; }
+    if (f === fam) return;
+    fam = f;
+    relabel();
+    document.dispatchEvent(new CustomEvent("steerpad", { detail: fam }));
+  }));
 
   /* Standard-mapping indices (w3c.github.io/gamepad/#remapping). Positional,
      and so is Steer: `cross` is the SOUTH button on every family
@@ -104,6 +124,9 @@ function init() {
 
   /* t: L2 and R2 from 0 to 1. Only a real pad has the analog value; the replay
      and the keyboard pull a trigger all the way or not at all. */
+  function merged(k, m) {
+    return { axes: k.axes.map((a, i) => a || m.axes[i]), b: k.b.map((d, i) => d || m.held.has(IDX[i])), t: null };
+  }
   function blank() { return { axes: [0, 0, 0, 0], b: IDX.map(() => false), t: null }; }
   const on = (v, b) => v.b[IDX.indexOf(b)];
 
@@ -466,6 +489,7 @@ function init() {
   const glyph = (b) => glyphOf(fam, b);
   function relabel() {
     photo.show(fam);
+    photoEl.querySelectorAll(".pp-pick input").forEach((r) => { /** @type {HTMLInputElement} */ (r).checked = /** @type {HTMLInputElement} */ (r).value === fam; });
     document.querySelectorAll(".py-osk .py-g, .py-ring .py-g").forEach((el) => {
       const b = el.getAttribute("data-b");
       if (b) el.outerHTML = glyph(b);
@@ -800,7 +824,7 @@ function init() {
       }
       if (mode === "pad") v = real.v;
     }
-    if (!v && mode === "keys") v = keyPad;
+    if (!v && mode === "keys") v = merged(keyPad, mousePad);
     if (!v && mode === "ghost") { advanceGhost(dt * 1000); v = ghostPad; }
     if (v) { step(v, dt, now); prev = { axes: v.axes.slice(), b: v.b.slice() }; }
     requestAnimationFrame(frame);

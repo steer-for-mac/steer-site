@@ -1,18 +1,29 @@
 /* The photo controller: macros/pad-photo.njk, driven by scripts/pad-photo.js.
-   Imported beside bands/play/demo.css by the pages that carry the demo. */
-/* Solo's light bar until the script sets the layer's, so no-JS and the still
-   frame show it lit. The script's values are pad-photo.js LAYER. */
+   Imported by every page that places one. Solo's light bar until the script
+   sets the layer's, so no-JS and the still frame show it lit. */
 .pp { --stick-hole: #000; --pp-lb: rgb(0 91 255); --pp-lb-core: rgb(71 137 255); }
 .pp-defs { position: absolute; width: 0; height: 0; }
 .pp-glow-c { flood-color: var(--blue); flood-opacity: 1; }
-.pp-lb-c { flood-color: var(--pp-lb, var(--blue)); flood-opacity: 1; }
+.pp-lb-c { flood-color: var(--pp-lb); flood-opacity: 1; }
 
+.pad-controls { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.pad-controls path { fill: var(--blue); fill-opacity: 0; }
+.pad-controls path.is-on { fill-opacity: 0.32; filter: var(--pp-glow-f); }
+.pad-controls .pp-hole { fill: var(--stick-hole); fill-opacity: 1; filter: var(--pp-hole-f); opacity: 0; }
+.pp.is-live .pad-controls path:not([data-c="dpad"], [data-c="lightbar"], [data-c="mute"]) { cursor: pointer; }
+@media (hover: hover) {
+  .pp .pad-controls path:not([data-c="dpad"], [data-c="lightbar"], [data-c="mute"]):hover { fill-opacity: 0.2; filter: var(--pp-glow-f); }
+}
+
+/* ---------- the whole stage ---------- */
 .pp-f { display: none; }
-.pp[data-fam="ps"] .pp-f[data-fam="ps"],
-.pp[data-fam="xb"] .pp-f[data-fam="xb"],
-.pp[data-fam="sw"] .pp-f[data-fam="sw"] { display: block; }
+.pp-stage[data-fam="ps"] .pp-f[data-pp-fam="ps"],
+.pp-stage[data-fam="xb"] .pp-f[data-pp-fam="xb"],
+.pp-stage[data-fam="sw"] .pp-f[data-pp-fam="sw"] { display: block; }
 .pp-pad { position: relative; }
 .pp-pad img { display: block; width: 100%; height: auto; }
+.pp-stage .pad-controls path[data-c="lightbar"] { fill: var(--pp-lb-core); fill-opacity: 1; filter: var(--pp-lb-f); }
+.pp-stage .pad-controls path[data-c="lightbar"]:hover { fill: var(--pp-lb-core); fill-opacity: 1; }
 
 /* Triggers sit behind the pad in the photo, so each gets a pill over its
    shoulder that fills as far as it is pulled. */
@@ -37,8 +48,25 @@
 }
 .pp-t b { position: relative; display: block; font: 600 11px/18px var(--mono); text-align: center; }
 
-.pad-controls { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.pad-controls path { fill: var(--blue); fill-opacity: 0; }
-.pad-controls path.is-on { fill-opacity: 0.32; filter: url(#pp-glow); }
-.pad-controls path[data-c="lightbar"] { fill: var(--pp-lb-core); fill-opacity: 1; filter: url(#pp-lb-glow); }
-.pad-controls .pp-hole { fill: var(--stick-hole); fill-opacity: 1; filter: url(#pp-hole-soft); opacity: 0; }
+.pp-pick { display: flex; justify-content: center; gap: 4px; margin: 10px 0 0; padding: 0; border: 0; }
+.pp-pick-l {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 8px 5px;
+  border-radius: var(--r-inset);
+  color: var(--text-3);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.pp-pick-l input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.pp-pick-l img { width: 48px; height: 32px; object-fit: contain; opacity: 0.55; }
+.pp-pick-l span { padding-bottom: 2px; border-bottom: 2px solid transparent; }
+.pp-pick-l:hover { color: var(--text-2); }
+.pp-pick-l:has(input:checked) { color: var(--text); }
+.pp-pick-l:has(input:checked) img { opacity: 1; }
+.pp-pick-l:has(input:checked) span { border-bottom-color: var(--blue); }
+.pp-pick-l:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }

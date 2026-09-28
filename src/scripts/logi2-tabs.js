@@ -3,12 +3,17 @@
 // band's height. The markup ships every panel visible, so without script the
 // page still shows every layout. ARIA tabs with manual activation; arrow keys,
 // Home and End move between tabs, per the APG tabs pattern.
+import { padPhoto } from "./pad-photo.js";
+
 (function () {
   var list = document.querySelector(".pa-tabs");
   if (!list) return;
   var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
   var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute("aria-controls")); });
   var stack = document.querySelector(".pa-panels");
+  /* One set of the photo's outlines, carried into whichever tab is shown. */
+  var lightsEl = document.querySelector(".pa-lights");
+  var lights = lightsEl && padPhoto(lightsEl);
 
   panels.forEach(function (p, i) {
     p.setAttribute("role", "tabpanel");
@@ -27,6 +32,8 @@
       panels[j].inert = !on;
     });
     if (focus) tabs[i].focus();
+    var slot = panels[i].querySelector(".pa-slot");
+    if (lightsEl && slot) { slot.appendChild(lightsEl); lightsEl.hidden = false; }
   }
 
   tabs.forEach(function (t, i) {
@@ -60,6 +67,13 @@
         var on = !!c && (dc === c || (!!h && dc === h));
         d.classList.toggle("is-hot", on);
       });
+      if (lights) {
+        var b = c ? (el.getAttribute("data-b") || "").split(" ").filter(Boolean) : [];
+        if (h) b.push(h);
+        /* A hold header names only its shoulder; its rows add their own buttons. */
+        if (c && el.classList.contains("pa-hold")) b = [c];
+        lights.render({ held: new Set(b) });
+      }
     }
     p.addEventListener("pointerover", function (e) { hot(e.target.closest(".pa-key li, .pa-hold")); });
     p.addEventListener("pointerleave", function () { hot(null); });
