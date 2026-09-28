@@ -1,11 +1,11 @@
-/* home-logi2's per-app band: the controller switcher swaps the photo and
+/* The homepage's per-app band: the controller switcher swaps the photo and
    relabels every chip to that family's names, and the default follows the
    pad the demo saw. The names are pad-family.js's; these are the few that
    differ by family, checked against ButtonDefs.swift's schemes. */
 import { expect, test } from "@playwright/test";
 import { press, stubPad } from "./pad.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/home-logi2.html"); });
+test.beforeEach(async ({ page }) => { await page.goto("/index.html"); });
 
 const panel = "#pa-browser";
 /* The image transform renames every src, so a photo is known by its height:
@@ -78,7 +78,7 @@ test("the switcher defaults to the pad the demo saw", async ({ page }) => {
   await page.addInitScript(() => {
     /** @type {any} */ (window).__pad.id = "Xbox Wireless Controller (STANDARD GAMEPAD Vendor: 045e Product: 0b13)";
   });
-  await page.goto("/home-logi2.html");
+  await page.goto("/index.html");
   await press(page, "options");
   await expect(page.locator("#pa-pad-xb")).toBeChecked();
 });

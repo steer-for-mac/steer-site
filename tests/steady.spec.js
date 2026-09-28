@@ -1,4 +1,4 @@
-/* home-logi2's two stateful bands must hold one height whatever state they
+/* The homepage's two stateful bands must hold one height whatever state they
    are in, or the page below them jumps while a visitor scrolls past. The demo
    changes its side pane with every mode and overlay; the per-app band swaps
    panels with legends of different lengths, and relabels them for three
@@ -19,7 +19,7 @@ for (const width of [1440, 375]) {
          runs for a browser that does not announce itself. */
       await page.addInitScript(() => Object.defineProperty(Navigator.prototype, "webdriver", { get: () => false }));
       await stubPad(page);
-      await page.goto("/home-logi2.html");
+      await page.goto("/index.html");
     });
 
     test("the demo band holds its height through replay, desk, ring, keyboard and help", async ({ page }) => {

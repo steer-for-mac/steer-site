@@ -1,6 +1,6 @@
 {
   "_readme": [
-    "The per-app band of home-logi2.html: one controller, a dot on each control",
+    "The per-app band of the homepage: one controller, a dot on each control",
     "the chosen layout uses, and a legend that prints each binding as the app's",
     "own button chips. Logitech's 'App specific customizations' band, with the",
     "marks drawn over the device from data instead of burned into it.",

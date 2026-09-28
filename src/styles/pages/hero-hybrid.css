@@ -1,6 +1,6 @@
 @layer tokens, base, components, bands;
 @import "../svg-strokes.css" layer(base);
-@import "../bands/hero.css" layer(bands);
+@import "../heroes/logi.css" layer(bands);
 
 /* HYBRID. Steer's hero, Logitech's middle, Steer's tail. */
 

@@ -1,4 +1,4 @@
-// Per-app layouts on home-logi2.html. Tabs: turns the stacked panels into one stage
+// Per-app layouts on the homepage. Tabs: turns the stacked panels into one stage
 // with a tab list, every panel in one grid cell so a tab never changes the
 // band's height. The markup ships every panel visible, so without script the
 // page still shows every layout. ARIA tabs with manual activation; arrow keys,

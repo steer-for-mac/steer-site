@@ -6,9 +6,4 @@
 
 @import "svg-strokes.css" layer(base);
 @import "design-system.css" layer(components);
-@import "bands/apps.css" layer(bands);
 @import "bands/dialogs.css" layer(bands);
-@import "bands/features.css" layer(bands);
-@import "bands/hero.css" layer(bands);
-@import "bands/logi.css" layer(bands);
-@import "bands/subscribe.css" layer(bands);

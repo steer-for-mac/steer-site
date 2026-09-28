@@ -17,7 +17,7 @@ const pad = padArg || (basename(svgPath).match(/hero-pad-(\w+)/)?.[1] ?? "ps");
 const ROOT = resolve(dirname(new URL(import.meta.url).pathname), "..");
 const svg = readFileSync(svgPath, "utf8");
 const defs = readFileSync(`${ROOT}/src/_includes/art/hero-defs.svg`, "utf8");
-const heroCss = readFileSync(`${ROOT}/src/styles/bands/hero.css`, "utf8");
+const heroCss = readFileSync(`${ROOT}/src/styles/heroes/logi.css`, "utf8");
 
 /* The token block lives in the .chero rule and its per-pad overrides. Lifting
    the declarations verbatim keeps this viewer honest: it cannot drift into a

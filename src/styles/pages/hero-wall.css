@@ -2,5 +2,5 @@
    real pad art needs), then the direction's own sheet. */
 @layer tokens, base, components, bands;
 @import "../svg-strokes.css" layer(base);
-@import "../bands/hero.css" layer(bands);
+@import "../heroes/logi.css" layer(bands);
 @import "../heroes/wall.css";

@@ -1,4 +1,4 @@
-// home-logi2 on a phone: the demo is a loop to watch, and one line offers to
+// The homepage on a phone: the demo is a loop to watch, and one line offers to
 // send the page to a Mac (bands/logi2/demo.html says why).
 (function () {
   var phone = matchMedia("(pointer: coarse), (max-width: 600px)");

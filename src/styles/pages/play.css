@@ -1,5 +1,5 @@
 /* play.html's own chrome: the head and the honesty band. The demo itself is
-   bands/play/demo.css, shared with home-logi2. The launch dialog's sheets are
+   bands/play/demo.css, shared with the homepage. The launch dialog's sheets are
    imported here because home.css never links on this page. */
 @import "../design-system.css" layer(components);
 @import "../bands/dialogs.css" layer(bands);

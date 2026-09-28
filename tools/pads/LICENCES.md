@@ -3,9 +3,9 @@
 2026-09-27. Every file was downloaded anonymously. The sha256 values are for the files in `dl/`;
 `fetch.py` holds the same pins with each file's URL and downloads them again.
 
-The site treats the Xbox and DualSense shells as CC BY-SA (below), so the renders made from them,
-`src/assets/pads/cut-{ps,xb}.png` and their thumbnails, are shared under CC BY-SA too, and
-`src/home-logi2.html` credits the authors in its footer small print.
+The site treats the Xbox and DualSense shells as CC BY-SA (below), so a render made from them is
+shared under CC BY-SA too and must credit the authors wherever it ships. None ships today: the
+per-app band's `src/assets/pads/cut-*.png` are generated studio images (510dbae), not renders.
 
 ## Used
 

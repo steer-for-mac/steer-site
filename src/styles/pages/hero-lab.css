@@ -7,7 +7,7 @@
 @import "../svg-strokes.css" layer(base);
 @import "../design-system.css" layer(components);
 /* The night studio, the LED system and the real .padwrap live here. */
-@import "../bands/hero.css" layer(bands);
+@import "../heroes/logi.css" layer(bands);
 /* Directions that live as partials now import their sheet here, so the lab
    and the direction's own page render from one source. */
 @import "../heroes/capture.css";

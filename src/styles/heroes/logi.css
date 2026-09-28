@@ -1,5 +1,5 @@
-/* BANNER, PERSONA ROW, INTRO, PANEL: the hero-logi sequence in the ruled
-   editorial system (styles/bands/logi.css). The close is bands/subscribe.css. */
+/* The old homepage's banner sequence (hero-logi), kept for the hero-* lab pages
+   that import it. Out of styles/bands/ so it no longer globs into home.css. */
 
 /* The product strip: four ruled cells, a render on a flat field in each. */
 .lg-banner { border-bottom: 1px solid var(--sep); }

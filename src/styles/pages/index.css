@@ -1,0 +1,14 @@
+/* The homepage. Its bands live one per file under styles/bands/logi2/, beside
+   their markup in _includes/bands/logi2/, and are imported here rather than
+   globbed into home.css: this sheet is unlayered, which is the cascade the
+   bands were built and judged against. home.css still links on this page for
+   the launch dialog. frame.css is first so every band can override the frame. */
+@import "../bands/logi2/frame.css";
+@import "../bands/logi2/hero.css";
+@import "../bands/play/demo.css";
+@import "../bands/logi2/demo.css";
+@import "../bands/logi2/uses.css";
+@import "../bands/logi2/gap.css";
+@import "../bands/logi2/apps.css";
+@import "../bands/logi2/more.css";
+@import "../bands/logi2/close.css";

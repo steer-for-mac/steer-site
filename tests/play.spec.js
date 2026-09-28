@@ -60,9 +60,9 @@ test("L1 + R3 opens the keyboard and a face button types its letter", async ({ p
 });
 });
 
-/* The same markup and script, embedded as a band of the homepage comp. */
-test("home-logi2's demo band opens the ring and types a letter", async ({ page }) => {
-  await page.goto("/home-logi2.html");
+/* The same markup and script, embedded as a band of the homepage. */
+test("the homepage's demo band opens the ring and types a letter", async ({ page }) => {
+  await page.goto("/index.html");
   const ring = page.locator(".l2-demo #pyRing");
   await press(page, "l3");
   await expect(ring).toBeVisible();
