@@ -40,6 +40,7 @@
 #trust .t-lede{grid-column:1;grid-row:1}
 #trust .t-fig{grid-column:2;grid-row:1 / span 2}
 #trust .t-list{grid-column:1;grid-row:2}
+#trust .t-cap{margin:12px 0 0;font-size:13px;color:var(--text-3)}
 
 #trust .t-lede p{
   font-size:15.5px;color:var(--text-2);line-height:1.56;

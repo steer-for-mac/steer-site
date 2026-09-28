@@ -105,7 +105,7 @@ test("on a desktop the share line stays out of the way", async ({ page }) => {
    The count guards the list itself, so a tile added later fails here until
    it is named. */
 test("feature captures follow the page theme", async ({ page }) => {
-  const tiles = [".l2-tile-help", ".l2-tile-review"];
+  const tiles = [".l2-tile-help", ".l2-tile-auto"];
   await expect(page.locator(".l2-more .l2-tile")).toHaveCount(tiles.length);
   for (const theme of ["light", "dark"]) {
     await page.evaluate((t) => document.documentElement.setAttribute("data-theme", t), theme);

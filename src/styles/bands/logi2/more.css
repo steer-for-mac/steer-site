@@ -37,7 +37,7 @@
 [data-theme="dark"] .l2-crop .l2-dark { display: block; }
 
 .l2-tile-help .l2-crop img { width: 880px; }
-.l2-tile-review .l2-crop img { width: 520px; }
+.l2-tile-auto .l2-crop img { width: 1000px; }
 
 @media (max-width: 960px) {
   .l2-cards { grid-template-columns: 1fr; max-width: 560px; }
