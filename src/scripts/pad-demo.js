@@ -567,8 +567,8 @@ function init() {
   }
   function stateFor(m, detail, f) {
     return {
-      ghost: "A scripted replay, not a live controller: the presses you would make, played back through the same layout. " +
-        "Press any button on your controller to take over. Browsers only show a page your controller after its first press.",
+      ghost: "A replay of Steer at work: the controller clicks into the note, types “Hello, Mac.” on the on-screen keyboard, " +
+        "then opens the app ring and the help card. Your browser can't see your controller until you press a button on it.",
       pad: `Your ${detail || "controller"} is driving this page with Steer's default layout.` +
         (f === "xb" ? " Xbox controllers have no motion sensor, so Steer puts the app ring on the right stick click instead." : ""),
       keys: "You're using the keyboard as a stand-in controller. The layout is the one Steer puts on a pad.",

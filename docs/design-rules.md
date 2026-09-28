@@ -127,6 +127,15 @@ should never try to be one.
   default reader. A fresh reader met "each step of the ring" three screens
   before anything said what the ring was; on the homepage it is "flip through
   your apps".
+- Shipped pages say "the app you're using", never "the app in front" or "the app
+  you are in".
+  "Frontmost" is developer shorthand: two non-Mac readers stopped on it in the
+  hero, the intro and the Help Overlay card (2026-09-28). Source comments
+  citing `ProfileManager` may keep it.
+- The homepage never names a macOS settings pane to contrast with. A reader
+  who has never opened System Settings > Game Controllers reads the comparison
+  as noise, and the same readers circled it with a question mark. The Compare
+  page, whose reader came for comparisons, keeps it.
 - Named third-party software carries its category at point of use. "Resolve
   and Final Cut" read as random words to a non-editor; "DaVinci Resolve and
   Final Cut Pro" under a "Video editors" tag read as products. Same rule made

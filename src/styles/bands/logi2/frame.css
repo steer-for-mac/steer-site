@@ -30,11 +30,3 @@ main h2 {
   text-wrap: balance;
   color: var(--text);
 }
-
-.l2-fine {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 0.04em;
-  line-height: 1.6;
-  color: var(--text-3);
-}

@@ -5,16 +5,15 @@
 .l2-gap-in { max-width: 760px; text-align: center; }
 .l2-gap .eyebrow { justify-content: center; }
 .l2-gap h2 { margin-bottom: 28px; }
-.l2-gap-in > p:not(.eyebrow, .l2-fine) {
+.l2-gap-in > p:not(.eyebrow) {
   max-width: 36em;
   margin: 0 auto 14px;
   font-size: 18px;
   line-height: 1.6;
   color: var(--text-2);
 }
-.l2-gap .l2-fine { margin: 24px 0 0; }
 
 @media (max-width: 600px) {
   .l2-gap { padding: 72px 0 80px; }
-  .l2-gap-in > p:not(.eyebrow, .l2-fine) { font-size: 16.5px; }
+  .l2-gap-in > p:not(.eyebrow) { font-size: 16.5px; }
 }
