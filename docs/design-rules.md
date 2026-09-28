@@ -229,13 +229,18 @@ card that spans, a rule that draws the structure, a measure that stops at 64
 characters. Prose added to fill space puts the page straight back over the
 budget the cut bought.
 
-- **Screenshots are not available as that ink yet.** Every capture in `src/assets/`
-  is PlayStation-shot, and the page re-labels itself per pad, so an in-flow pane
-  shows an Xbox owner the wrong glyphs. Gating one back to a single pad is what
-  left the Feel band empty to begin with. In-flow screenshots wait for the
-  capture script to shoot per pad; the gallery `<dialog>` is pad-neutral
-  evidence and stays. The `.vg` vignettes re-label by construction, which is why
-  they, not screenshots, are this page's per-pad proof.
+- **A PlayStation-shot capture ships in flow only with a caption that says
+  so** (2026-09-28). Every capture in `src/assets/` is PlayStation-shot, and
+  the page re-labels itself per pad, so an uncaptioned in-flow pane shows an
+  Xbox owner the wrong glyphs; gating one to a single pad is what left the
+  Feel band empty once. The gallery `<dialog>` that used to hold them is gone.
+  The homepage now runs two in flow in the "More than a mouse" band:
+  `help-overlay.png`, captioned "Shown with a DualSense; button names follow
+  your controller" (true because the overlay takes the connected pad's naming
+  scheme), and the Shortcut Templates pane, which carries no glyphs. A new
+  glyph-bearing capture needs the same caption, or a per-pad shot gated by
+  `pa-f-<family>` once the capture script shoots them. The `.vg` vignettes and
+  the pad renders re-label by construction and need neither.
 - **`ch` is not a character.** It is the advance of a zero, about 1.4x an
   average SF lowercase glyph, so `56ch` renders as a 78-character line. Measure
   the resulting line, do not trust the unit.

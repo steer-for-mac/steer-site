@@ -22,6 +22,9 @@
      Claims, steer Steer/Sources/:
      - Help Overlay: SteerCore/Defaults.swift:69, create = .helpOverlay;
        handled at Steer/EventLoop.swift:1057.
+       The capture is PlayStation-labelled; the overlay names buttons in the
+       connected pad's scheme (EventLoop+HelpOverlay.swift:7,
+       effectiveNamingScheme(for: controllerType)), which the caption says.
      - Automation: SteerCore/Action.swift:48 (typeText), :53 (runShortcut),
        :58 (runScript), :72 (openURL), each dispatched in Steer/
        OutputDispatcher.swift:114-184.
@@ -49,6 +52,7 @@
         </div>
         <h3>Help Overlay</h3>
         <p>Every button's job in the app you are in, on one card. Hold a shoulder button and its column lights up, so a layout is there to glance at, not to learn by heart.</p>
+        <p class="l2-cap">Shown with a DualSense; button names follow your controller.</p>
       </article>
       <article>
         <div class="l2-tile l2-tile-auto">
