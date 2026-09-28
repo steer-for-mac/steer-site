@@ -7,6 +7,9 @@
 import { expect, test } from "@playwright/test";
 import { chordKeyboard, press, stubPad } from "./pad.js";
 
+/* Each pad step waits a real frame; Linux WebKit runs about one a second. */
+test.describe.configure({ timeout: 120_000 });
+
 /** @param {import("@playwright/test").Page} page @param {string} sel */
 const height = (page, sel) => page.$eval(sel, (el) => el.getBoundingClientRect().height);
 

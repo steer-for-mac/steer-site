@@ -15,11 +15,7 @@ export const stubPad = (page) => page.addInitScript(() => {
     axes: [0, 0, 0, 0],
     buttons: Array.from({ length: 18 }, () => ({ pressed: false, touched: false, value: 0 })),
   };
-  /* defineProperty, not assignment: Linux WebKit's getGamepads is read-only,
-     so a plain assignment silently left the real, empty API in place. */
-  const fake = () => [w.__pad, null, null, null];
-  Object.defineProperty(Navigator.prototype, "getGamepads", { value: fake, configurable: true, writable: true });
-  Object.defineProperty(navigator, "getGamepads", { value: fake, configurable: true, writable: true });
+  navigator.getGamepads = () => [w.__pad, null, null, null];
 });
 
 /** @param {Page} page @param {string} name @param {boolean} down */
@@ -27,23 +23,32 @@ export const hold = (page, name, down) => page.evaluate(([i, d]) => {
   /** @type {any} */ (window).__pad.buttons[i] = { pressed: d, touched: d, value: d ? 1 : 0 };
 }, /** @type {[number, boolean]} */ ([IDX.indexOf(name), down]));
 
-/* Held across several animation frames so the page's poll cannot miss it. */
+/* Waits for the page's next animation frame, where its poll reads the pad.
+   Synced to frames, not wall time: headless WebKit on Linux runs about one
+   frame a second, so a fixed 100ms hold fell between frames there. */
+/** @param {Page} page */
+export const frame = (page) => page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r(undefined))));
+
 /** @param {Page} page @param {string} name */
 export async function press(page, name) {
   await hold(page, name, true);
-  await page.waitForTimeout(100);
+  await frame(page);
   await hold(page, name, false);
-  await page.waitForTimeout(100);
+  await frame(page);
 }
 
 /** @param {Page} page @param {number[]} axes */
-export const stick = (page, axes) => page.evaluate((a) => { /** @type {any} */ (window).__pad.axes = a; }, axes);
+export async function stick(page, axes) {
+  await page.evaluate((a) => { /** @type {any} */ (window).__pad.axes = a; }, axes);
+  await frame(page);
+}
 
 /* L1 held, R3 pressed: Steer's default chord for the on-screen keyboard. */
 /** @param {Page} page */
 export async function chordKeyboard(page) {
   await hold(page, "l1", true);
-  await page.waitForTimeout(80);
+  await frame(page);
   await press(page, "r3");
   await hold(page, "l1", false);
+  await frame(page);
 }

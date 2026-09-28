@@ -7,6 +7,9 @@
 import { expect, test } from "@playwright/test";
 import { chordKeyboard, press, stick, stubPad } from "./pad.js";
 
+/* Each pad step waits a real frame; Linux WebKit runs about one a second. */
+test.describe.configure({ timeout: 120_000 });
+
 test.beforeEach(({ page }) => stubPad(page));
 
 test.describe("play.html", () => {
