@@ -136,3 +136,17 @@ band, uses, feel, gap, trust and pricing left the homepage (gap to vs.html,
 trust to trust.html, the rest parked under src/_includes/parked and
 src/styles/parked). The peer table above stands as measurement; the page is
 now shorter than every peer in it but romm, by decision, not by drift.
+
+## Shipped, 2026-09-27
+
+Superseded by the logi2 comp, promoted to the homepage on the
+`release/homepage-redesign` branch; the paragraph above describes a page that no
+longer ships. `src/index.src.html` now includes seven bands from
+`src/_includes/bands/logi2/`, in this order, and its top comment records why:
+hero (the redrawn controller and the launch-list CTA), demo (the live pad demo),
+gap (why an app is needed at all), uses (rooms from sofa to desk), apps (one
+stage per app, render slots holding photos until the pad renders land), more
+(two cards: Help Overlay and Shortcut Templates) and close (trial, one price,
+what it covers). The persona circles, the screen-recording panel, the named
+grid, the gallery and the subscribe strip are gone from the homepage; play.html
+is the standalone demo, noindex and linked from nothing.
