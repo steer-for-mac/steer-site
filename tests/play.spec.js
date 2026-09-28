@@ -43,18 +43,15 @@ test("L1 + R3 opens the keyboard and a face button types its letter", async ({ p
   await expect(page.locator("#pyOsk")).toBeVisible();
 
   await stick(page, [0, -0.95, 0, 0]);      // north: b c d a
-  await page.waitForTimeout(80);
   await press(page, "square");
   await expect(text).toHaveValue("a");
 
   await stick(page, [0.7, -0.7, 0, 0]);     // north-east: f g h e, Cross is south
-  await page.waitForTimeout(80);
   await press(page, "cross");
   await expect(text).toHaveValue("ah");
 
   /* In the dead zone a face press types nothing (DaisyWheel.commitKey). */
   await stick(page, [0, 0, 0, 0]);
-  await page.waitForTimeout(80);
   await press(page, "cross");
   await expect(text).toHaveValue("ah");
 
@@ -79,7 +76,6 @@ test("the homepage's demo band opens the ring and types a letter", async ({ page
   await chordKeyboard(page);
   await expect(page.locator(".l2-demo #pyOsk")).toBeVisible();
   await stick(page, [0, -0.95, 0, 0]);
-  await page.waitForTimeout(80);
   await press(page, "square");
   await expect(page.locator("#pyText")).toHaveValue("a");
 });
