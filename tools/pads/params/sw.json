@@ -1,0 +1,485 @@
+{
+ "name": "sw",
+ "about": "Nintendo Switch Pro Controller (original, 2017). Shell: Andrei Azoitei, Printables 531537, CC0 (front and back housings). Controls authored here.",
+ "default_colourway": "black",
+ "shell": [
+  {
+   "name": "shell-front",
+   "file": "../dl/pr-531537/Front.stl",
+   "rot": [
+    0,
+    0,
+    180
+   ],
+   "material": "shell",
+   "clean": {
+    "voxel": 0.3,
+    "passes": [
+     [
+      40,
+      1.0
+     ]
+    ],
+    "cage": {
+     "faces": 15000,
+     "symmetry": true,
+     "levels": 2
+    }
+   }
+  },
+  {
+   "name": "shell-back",
+   "file": "../dl/pr-531537/Back.stl",
+   "rot": [
+    0,
+    0,
+    0
+   ],
+   "offset": [
+    0,
+    0,
+    -15
+   ],
+   "material": "back",
+   "clean": {
+    "voxel": 0.3,
+    "passes": [
+     [
+      40,
+      1.0
+     ]
+    ],
+    "cage": {
+     "faces": 15000,
+     "symmetry": true,
+     "levels": 2
+    }
+   }
+  },
+  {
+   "name": "shell-cover",
+   "file": "../dl/pr-531537/Back Cover.stl",
+   "rot": [
+    0,
+    0,
+    0
+   ],
+   "anchor": "zmin",
+   "offset": [
+    0,
+    16.25,
+    -52.8
+   ],
+   "material": "back"
+  },
+  {
+   "name": "grip-l",
+   "file": "../dl/pr-531537/Grip.stl",
+   "rot": [
+    180,
+    0,
+    -10
+   ],
+   "anchor": "zmax",
+   "offset": [
+    -44,
+    -17,
+    -19
+   ],
+   "material": "grip",
+   "clean": {
+    "voxel": 0.3,
+    "passes": [
+     [
+      40,
+      1.0
+     ]
+    ],
+    "cage": {
+     "faces": 6000,
+     "levels": 2
+    }
+   }
+  },
+  {
+   "name": "grip-r",
+   "file": "../dl/pr-531537/Grip.stl",
+   "rot": [
+    180,
+    0,
+    -10
+   ],
+   "mirror_x": true,
+   "anchor": "zmax",
+   "offset": [
+    44,
+    -17,
+    -19
+   ],
+   "material": "grip",
+   "clean": {
+    "voxel": 0.3,
+    "passes": [
+     [
+      40,
+      1.0
+     ]
+    ],
+    "cage": {
+     "faces": 6000,
+     "levels": 2
+    }
+   }
+  }
+ ],
+ "parts": [
+  {
+   "name": "face-up",
+   "type": "button",
+   "x": 40.028,
+   "y": 36.212,
+   "ring": 7.0,
+   "r": 5.108,
+   "h": 2.6,
+   "sink": 4,
+   "bevel": 1.831,
+   "glyph": "text:X",
+   "glyph_size": 5.012,
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "face-left",
+   "type": "button",
+   "x": 28.276,
+   "y": 25.364,
+   "ring": 7.0,
+   "r": 5.177,
+   "h": 2.6,
+   "sink": 4,
+   "bevel": 1.856,
+   "glyph": "text:Y",
+   "glyph_size": 5.079,
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "face-right",
+   "type": "button",
+   "x": 51.827,
+   "y": 25.13,
+   "ring": 7.0,
+   "r": 5.179,
+   "h": 2.6,
+   "sink": 4,
+   "bevel": 1.856,
+   "glyph": "text:A",
+   "glyph_size": 5.08,
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "face-down",
+   "type": "button",
+   "x": 41.059,
+   "y": 14.705,
+   "ring": 7.0,
+   "r": 5.167,
+   "h": 2.6,
+   "sink": 4,
+   "bevel": 1.852,
+   "glyph": "text:B",
+   "glyph_size": 5.069,
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "minus",
+   "type": "button",
+   "x": -19.037,
+   "y": 35.514,
+   "ring": 5,
+   "r": 3.12,
+   "h": 1.4,
+   "sink": 4,
+   "bevel": 0.974,
+   "glyph": "minus",
+   "glyph_size": 2.924,
+   "stroke": 0.55,
+   "gap": 0.3
+  },
+  {
+   "name": "plus",
+   "type": "button",
+   "x": 18.219,
+   "y": 35.703,
+   "ring": 5,
+   "r": 3.137,
+   "h": 1.4,
+   "sink": 4,
+   "bevel": 0.98,
+   "glyph": "plus",
+   "glyph_size": 2.941,
+   "stroke": 0.55,
+   "gap": 0.3
+  },
+  {
+   "name": "home",
+   "type": "button",
+   "x": 10.204,
+   "y": 24.819,
+   "ring": 6.5,
+   "r": 3.719,
+   "h": 1.0,
+   "sink": 4,
+   "bevel": 0.76,
+   "glyph": "house",
+   "glyph_size": 2.874,
+   "material": "home",
+   "gap": 0.3
+  },
+  {
+   "name": "home-ring",
+   "type": "torus",
+   "x": 10.204,
+   "y": 24.819,
+   "ring": 6.5,
+   "R": 4.5,
+   "r": 0.35,
+   "h": 0.1,
+   "material": "homering"
+  },
+  {
+   "name": "capture",
+   "type": "rrect",
+   "x": -11.654,
+   "y": 24.496,
+   "ring": 5,
+   "w": 5.219,
+   "hh": 5.33,
+   "h": 1.0,
+   "sink": 4,
+   "radius": 0.9,
+   "bevel": 0.5,
+   "glyph": "circle",
+   "glyph_size": 3.0,
+   "gap": 0.3,
+   "dz": 0.2
+  },
+  {
+   "name": "stick-l",
+   "type": "stick",
+   "x": -43.218,
+   "y": 25.908,
+   "ring": 11.5,
+   "collar_r": 10.759,
+   "collar_dz": -3.0,
+   "collar_flat": 0.5,
+   "neck_r": 4.858,
+   "cap_r": 8.792,
+   "cap_h": 3.4,
+   "cap_z": 9.0,
+   "dish": 1.0,
+   "rim_r": 8.099,
+   "rim_w": 1.76,
+   "rim_dz": 0.5,
+   "material": "stick",
+   "collar_material": "stick",
+   "cap_material": "stickcap",
+   "lathe": true,
+   "edge": 0.9
+  },
+  {
+   "name": "stick-r",
+   "type": "stick",
+   "x": 21.367,
+   "y": 5.321,
+   "ring": 11.5,
+   "collar_r": 11.229,
+   "collar_dz": -3.0,
+   "collar_flat": 0.5,
+   "neck_r": 5.071,
+   "cap_r": 9.177,
+   "cap_h": 3.4,
+   "cap_z": 9.0,
+   "dish": 1.0,
+   "rim_r": 8.453,
+   "rim_w": 1.84,
+   "rim_dz": 0.5,
+   "material": "stick",
+   "collar_material": "stick",
+   "cap_material": "stickcap",
+   "lathe": true,
+   "edge": 0.9
+  },
+  {
+   "name": "dpad",
+   "type": "cross",
+   "x": -24.091,
+   "y": 4.139,
+   "ring": 14,
+   "dz": -1.2,
+   "arm": 11.4,
+   "width": 8.0,
+   "h": 2.8,
+   "bevel": 0.9,
+   "arrows": 1.8,
+   "material": "btn",
+   "gap": 0.3
+  },
+  {
+   "name": "bumper-l",
+   "type": "box",
+   "x": -40.152,
+   "y": 42.462,
+   "z": -22,
+   "w": 20.448,
+   "hh": 9,
+   "d": 10,
+   "radius": 4,
+   "bevel": 2.0,
+   "rot": 13,
+   "material": "btn"
+  },
+  {
+   "name": "bumper-r",
+   "type": "box",
+   "x": 41.784,
+   "y": 43.49,
+   "z": -22,
+   "w": 22.465,
+   "hh": 9,
+   "d": 10,
+   "radius": 4,
+   "bevel": 2.0,
+   "rot": -13,
+   "material": "btn"
+  }
+ ],
+ "rig": {
+  "tilt": 0.0,
+  "margin": 0.01,
+  "lights": {
+   "key": 45,
+   "fill": 6,
+   "world": 0.05
+  },
+  "view_transform": "Khronos PBR Neutral"
+ },
+ "colourways": {
+  "black": {
+   "shell": {
+    "rgb": [
+     0.0293,
+     0.0293,
+     0.0293
+    ],
+    "rough": 0.5,
+    "coat": 0.0,
+    "coat_rough": 0.3
+   },
+   "back": {
+    "rgb": [
+     0.0465,
+     0.0464,
+     0.0465
+    ],
+    "rough": 0.32,
+    "coat": 0.15,
+    "coat_rough": 0.25
+   },
+   "btn": {
+    "rgb": [
+     0.0765,
+     0.0765,
+     0.0783
+    ],
+    "rough": 0.3,
+    "coat": 0.3
+   },
+   "glyph": {
+    "rgb": [
+     0.55,
+     0.55,
+     0.57
+    ],
+    "rough": 0.4
+   },
+   "home": {
+    "rgb": [
+     0.035,
+     0.035,
+     0.038
+    ],
+    "rough": 0.3,
+    "coat": 0.3
+   },
+   "homering": {
+    "rgb": [
+     0.25,
+     0.25,
+     0.26
+    ],
+    "rough": 0.3
+   },
+   "stick": {
+    "rgb": [
+     0.0565,
+     0.0563,
+     0.0567
+    ],
+    "rough": 0.7,
+    "bump": 12,
+    "bump_strength": 0.1
+   },
+   "grip": {
+    "rgb": [
+     0.1649,
+     0.165,
+     0.1715
+    ],
+    "rough": 0.75,
+    "spec": 0.3,
+    "stipple": [
+     1.6,
+     0.25,
+     1.1,
+     0.9
+    ]
+   },
+   "stickcap": {
+    "rgb": [
+     0.0565,
+     0.0563,
+     0.0567
+    ],
+    "rough": 0.6,
+    "bump_strength": 0.1
+   }
+  }
+ },
+ "flatten": [
+  {
+   "name": "back-logo",
+   "object": "shell-cover",
+   "x": 0,
+   "y": 26.9,
+   "w": 34,
+   "h": 10,
+   "dir": -1,
+   "plane": true,
+   "blend": 1.5,
+   "sink": 0.1
+  }
+ ],
+ "mask_regions": [
+  {
+   "object": "shell-front",
+   "image": "../masks/sw-grip.png",
+   "soft": "../masks/sw-grip-hd-soft.png",
+   "material": "grip",
+   "front_min": -0.95,
+   "note": "the matte grip covers, below the diagonal seam traced on the CC0 reference (masks/sw-grip-mm.json)"
+  }
+ ]
+}

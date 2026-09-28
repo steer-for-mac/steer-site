@@ -1,0 +1,129 @@
+{
+  "_readme": [
+    "The per-app band of home-logi2.html: one controller, a dot on each control",
+    "the chosen layout uses, and a legend that prints each binding as the app's",
+    "own button chips. Logitech's 'App specific customizations' band, with the",
+    "marks drawn over the device from data instead of burned into it.",
+    "",
+    "slot   : the RENDER SLOT per family, a fixed 3:2 box. The pictures inside are",
+    "         stand-ins (manufacturer photos, cut by scripts/pad-cut.py) until the",
+    "         Blender renders land; a render dropped in must be framed 3:2 with",
+    "         the controls where `controls` says, or `controls` regenerated.",
+    "controls: per family, the centre of each control's mark, as % of the slot",
+    "         box, set beside the control it names, never on it (a mark on the",
+    "         glyph hides the glyph). A stick's move and its click are two marks",
+    "         on two sides of it. `dpad-up` marks the up/down pair, `dpad-left`",
+    "         and `dpad-right` the left/right pair. Read off a 5% grid",
+    "         over each pad contained in the 3:2 box (scripts/pad-grid.py",
+    "         draws them; redraw and re-read if a picture changes). y below 0 is",
+    "         above the picture. The triggers are behind the bumpers in a front",
+    "         view, so L2/R2 take the top outer corners, beside the bumpers.",
+    "apps   : `groups` in legend order. `hold` is the button kept down for that",
+    "         group (a ButtonDefs key), null for a plain press; it heads the",
+    "         group in the legend and is marked at its own `controls` spot. An",
+    "         item's `c` is its mark, `b` the buttons its chips print (two are",
+    "         alternatives: up OR down), `fam` limits it to those families. Chip labels come",
+    "         from scripts/pad-family.js, never from this file.",
+    "",
+    "EVERY LINE IS A CLAIM. Checked 2026-09-27 against ~/Developer/steer:",
+    "Default <- SteerCore/Defaults.swift (solo, l1 layers; StickConfig leftMode",
+    ".mouse, rightMode .scroll), then Config/ProfileDefaults.swift makeDefault:",
+    "a pad with no gyroscope (Xbox) gets the ring on R3 and Mission Control on",
+    "L3. Media, Browser <- SteerCore/BundledPresets.swift (BundledPresets.media",
+    "/ .browser). Final Cut Pro, Mail <- the same file, BundledAppPresets",
+    ".finalCutPro (editorTransportL1, editorEditR2) and .mail. Re-read those",
+    "before changing a line; the app's layouts move."
+  ],
+
+  "slot": {
+    "ps": {"src": "assets/pads/cut-ps.png", "w": 1202, "h": 778, "alt": "DualSense", "thumb": "assets/pads/thumb-ps.png", "tw": 224, "th": 145},
+    "xb": {"src": "assets/pads/cut-xb.png", "w": 1142, "h": 757, "alt": "Xbox Elite Series 2", "thumb": "assets/pads/thumb-xb.png", "tw": 224, "th": 148},
+    "sw": {"src": "assets/pads/cut-sw.png", "w": 1126, "h": 732, "alt": "Switch Pro Controller", "thumb": "assets/pads/thumb-sw.png", "tw": 224, "th": 146}
+  },
+
+  "controls": {
+    "ps": {"lstick": {"x": 33, "y": 64}, "rstick": {"x": 66.8, "y": 64}, "l3": {"x": 22, "y": 58}, "r3": {"x": 78, "y": 58}, "cross": {"x": 81.8, "y": 47}, "circle": {"x": 95, "y": 27.8}, "triangle": {"x": 81.8, "y": 8.5}, "square": {"x": 69.5, "y": 38}, "dpad-up": {"x": 18.2, "y": 11}, "dpad-left": {"x": 6, "y": 27.8}, "dpad-right": {"x": 27.5, "y": 38}, "l1": {"x": 19.5, "y": -5}, "r1": {"x": 80.5, "y": -5}, "l2": {"x": 7.5, "y": -5}, "r2": {"x": 92.5, "y": -5}},
+    "xb": {"lstick": {"x": 23.4, "y": 12}, "rstick": {"x": 62.9, "y": 65.7}, "l3": {"x": 13, "y": 26.5}, "r3": {"x": 72.5, "y": 60}, "cross": {"x": 76.8, "y": 47}, "circle": {"x": 90, "y": 27.7}, "triangle": {"x": 76.8, "y": 8.3}, "square": {"x": 65.5, "y": 19.5}, "dpad-up": {"x": 36.7, "y": 35.4}, "dpad-left": {"x": 25.5, "y": 51}, "dpad-right": {"x": 47.9, "y": 51}, "l1": {"x": 30.5, "y": -5}, "r1": {"x": 69.5, "y": -5}, "l2": {"x": 18.5, "y": -5}, "r2": {"x": 81.5, "y": -5}},
+    "sw": {"lstick": {"x": 21, "y": 11.5}, "rstick": {"x": 64.9, "y": 66}, "l3": {"x": 10.4, "y": 26.4}, "r3": {"x": 74, "y": 59}, "cross": {"x": 77.6, "y": 49.8}, "circle": {"x": 91.3, "y": 30.2}, "triangle": {"x": 77.6, "y": 10}, "square": {"x": 64, "y": 30.2}, "dpad-up": {"x": 34.5, "y": 33.5}, "dpad-left": {"x": 23.7, "y": 48.8}, "dpad-right": {"x": 45.3, "y": 48.8}, "l1": {"x": 28.5, "y": -5}, "r1": {"x": 72.5, "y": -5}, "l2": {"x": 16.5, "y": -5}, "r2": {"x": 84.5, "y": -5}}
+  },
+
+  "apps": [
+    {
+      "id": "default", "name": "Default", "for": "Every app",
+      "groups": [
+        { "hold": null, "items": [
+          {"c": "lstick", "b": ["ls"], "v": "Move the pointer"},
+          {"c": "rstick", "b": ["rs"], "v": "Scroll"},
+          {"c": "cross", "b": ["cross"], "v": "Click"},
+          {"c": "circle", "b": ["circle"], "v": "Right-click"},
+          {"c": "l3", "b": ["l3"], "v": "Push the stick in: your apps in a ring", "fam": ["ps", "sw"]},
+          {"c": "r3", "b": ["r3"], "v": "Push the stick in: your apps in a ring", "fam": ["xb"]},
+          {"c": "r1", "b": ["r1"], "v": "Spotlight, to find any app or file"},
+          {"c": "l2", "b": ["l2"], "v": "Switch apps"}
+        ]},
+        { "hold": "l1", "items": [
+          {"c": "r3", "b": ["r3"], "v": "Push the stick in: the On-Screen Keyboard"}
+        ]}
+      ]
+    },
+    {
+      "id": "media", "name": "Media", "for": "TV, Music, QuickTime, VLC, IINA, Plex, Spotify",
+      "groups": [
+        { "hold": "l1", "items": [
+          {"c": "cross", "b": ["cross"], "v": "Play or pause"},
+          {"c": "triangle", "b": ["triangle"], "v": "Full screen"},
+          {"c": "circle", "b": ["circle"], "v": "Mute"},
+          {"c": "dpad-up", "b": ["up", "down"], "v": "Volume"},
+          {"c": "dpad-right", "b": ["left", "right"], "v": "Previous and next track"}
+        ]}
+      ]
+    },
+    {
+      "id": "browser", "name": "Browser", "for": "Safari, Chrome, Firefox, Edge, Brave, Arc",
+      "groups": [
+        { "hold": "l1", "items": [
+          {"c": "dpad-right", "b": ["left", "right"], "v": "Previous and next tab"},
+          {"c": "triangle", "b": ["triangle"], "v": "New tab"},
+          {"c": "cross", "b": ["cross"], "v": "Close the tab"},
+          {"c": "circle", "b": ["circle"], "v": "Jump to the address bar"},
+          {"c": "square", "b": ["square"], "v": "Reload"}
+        ]},
+        { "hold": "r1", "items": [
+          {"c": "dpad-up", "b": ["up", "down"], "v": "A web video's volume"}
+        ]}
+      ]
+    },
+    {
+      "id": "finalcut", "name": "Final Cut Pro", "for": "The same layout ships for DaVinci Resolve",
+      "groups": [
+        { "hold": "l1", "items": [
+          {"c": "l2", "b": ["l2"], "v": "Play backwards, faster with each press"},
+          {"c": "r2", "b": ["r2"], "v": "Play forwards, faster with each press"},
+          {"c": "cross", "b": ["cross"], "v": "Stop"},
+          {"c": "dpad-left", "b": ["left", "right"], "v": "Mark in and out"}
+        ]},
+        { "hold": "r2", "items": [
+          {"c": "triangle", "b": ["triangle"], "v": "Cut the clip at the playhead"},
+          {"c": "circle", "b": ["circle"], "v": "Undo"},
+          {"c": "dpad-up", "b": ["up", "down"], "v": "Zoom the timeline"}
+        ]}
+      ]
+    },
+    {
+      "id": "mail", "name": "Mail", "for": "Apple Mail",
+      "groups": [
+        { "hold": null, "items": [
+          {"c": "dpad-up", "b": ["up", "down"], "v": "Move through your messages"}
+        ]},
+        { "hold": "l1", "items": [
+          {"c": "cross", "b": ["cross"], "v": "New message"},
+          {"c": "circle", "b": ["circle"], "v": "Delete the message"}
+        ]},
+        { "hold": "r2", "items": [
+          {"c": "triangle", "b": ["triangle"], "v": "Reply"},
+          {"c": "square", "b": ["square"], "v": "Reply to all"}
+        ]}
+      ]
+    }
+  ]
+}

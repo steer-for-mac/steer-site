@@ -40,8 +40,9 @@ export default defineConfig([
   },
 
   // home.js is an entry that imports one module per band; both are browser ESM.
+  // play.entry.js is the same shape for the one page that carries its own.
   {
-    files: ["src/home.entry.js", "src/scripts/*.js"],
+    files: ["src/home.entry.js", "src/play.entry.js", "src/scripts/*.js"],
     languageOptions: { globals: globals.browser, sourceType: "module" },
   },
 
@@ -60,7 +61,7 @@ export default defineConfig([
   // Specs really are both environments: the body is Node, and the callbacks
   // passed to page.evaluate() run in the browser.
   {
-    files: ["tests/**/*.spec.js", "tools/**/*.spec.js"],
+    files: ["tests/**/*.js", "tools/**/*.spec.js"],
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
       sourceType: "module",

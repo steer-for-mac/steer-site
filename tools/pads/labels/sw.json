@@ -1,0 +1,424 @@
+{
+ "pad": "sw",
+ "colourway": "black",
+ "refs": [
+  {
+   "name": "commons-black",
+   "source": "Commons 'Nintendo.Swtich.Pro.Controller.Black.jpg' (LordBirdWord, CC0), rotated upright: the original 2017 Pro Controller, front-on (a phone shot, so perspective)",
+   "use": [
+    "geometry"
+   ],
+   "image": "../ref/sw-black.png",
+   "anchors": [
+    "stick-l",
+    "stick-r",
+    [
+     "face-up",
+     "face-left",
+     "face-right",
+     "face-down"
+    ],
+    "dpad"
+   ],
+   "features": {
+    "stick-l": {
+     "kind": "circle",
+     "xy": [
+      252,
+      424
+     ],
+     "r": 99,
+     "id": "stick-l",
+     "note": "cap"
+    },
+    "stick-r": {
+     "kind": "circle",
+     "xy": [
+      962,
+      641
+     ],
+     "r": 106,
+     "id": "stick-r",
+     "note": "cap"
+    },
+    "face-up": {
+     "kind": "circle",
+     "xy": [
+      1177,
+      302
+     ],
+     "r": 57,
+     "id": "face-up",
+     "note": "X"
+    },
+    "face-left": {
+     "kind": "circle",
+     "xy": [
+      1048,
+      421
+     ],
+     "r": 58,
+     "id": "face-left",
+     "note": "Y"
+    },
+    "face-right": {
+     "kind": "circle",
+     "xy": [
+      1309,
+      419
+     ],
+     "r": 58,
+     "id": "face-right",
+     "note": "A"
+    },
+    "face-down": {
+     "kind": "circle",
+     "xy": [
+      1190,
+      535
+     ],
+     "r": 58,
+     "id": "face-down",
+     "note": "B"
+    },
+    "dpad": {
+     "kind": "cross",
+     "xy": [
+      472,
+      662
+     ],
+     "arm": 127,
+     "id": "dpad",
+     "note": "centre to arm tip"
+    },
+    "minus": {
+     "kind": "circle",
+     "xy": [
+      539,
+      324
+     ],
+     "r": 35,
+     "id": "minus"
+    },
+    "plus": {
+     "kind": "circle",
+     "xy": [
+      939,
+      313
+     ],
+     "r": 35,
+     "id": "plus"
+    },
+    "home": {
+     "kind": "circle",
+     "xy": [
+      850,
+      431
+     ],
+     "r": 42,
+     "id": "home"
+    },
+    "capture": {
+     "kind": "box",
+     "box": [
+      584,
+      410,
+      647,
+      469
+     ],
+     "id": "capture"
+    },
+    "bumper-l": {
+     "kind": "hump",
+     "win": [
+      41,
+      140,
+      620,
+      360
+     ],
+     "band": 0.035
+    },
+    "bumper-r": {
+     "kind": "hump",
+     "win": [
+      980,
+      140,
+      1559,
+      360
+     ],
+     "band": 0.035
+    },
+    "grip-l tip": {
+     "kind": "extreme",
+     "win": [
+      -19,
+      704,
+      800,
+      1304
+     ],
+     "dir": "down",
+     "size": false,
+     "note": "outline: lowest point (outline landmark, reported, not gated)",
+     "gate": false
+    },
+    "grip-r tip": {
+     "kind": "extreme",
+     "win": [
+      800,
+      704,
+      1619,
+      1304
+     ],
+     "dir": "down",
+     "size": false,
+     "note": "outline: lowest point (outline landmark, reported, not gated)",
+     "gate": false
+    },
+    "flank-l": {
+     "kind": "extreme",
+     "win": [
+      -19,
+      165,
+      800,
+      1304
+     ],
+     "dir": "left",
+     "size": false,
+     "note": "outline: leftmost/rightmost x (outline landmark, reported, not gated)",
+     "axis": "x",
+     "gate": false
+    },
+    "flank-r": {
+     "kind": "extreme",
+     "win": [
+      800,
+      165,
+      1619,
+      1304
+     ],
+     "dir": "right",
+     "size": false,
+     "note": "outline: leftmost/rightmost x (outline landmark, reported, not gated)",
+     "axis": "x",
+     "gate": false
+    }
+   },
+   "sil_weight": 0.25,
+   "sil_note": "the phone photo's outline disagrees with the scan assembly under every camera tried (IoU <= 0.92, sweeps of distance, offset, yaw); features lead this fit, and the outline is reported through its landmarks"
+  },
+  {
+   "name": "evan-amos",
+   "source": "Commons 'Nintendo-Switch-Pro-Controller-FL.jpg' (Evan-Amos, public domain): a studio shot on white, for colour; three-quarter view, so not registered",
+   "use": [
+    "colour"
+   ],
+   "register": false,
+   "image": "../ref/commons/sw-fl.jpg",
+   "features": {
+    "stick-l": {
+     "kind": "circle",
+     "xy": [
+      614,
+      291
+     ],
+     "r": 60,
+     "id": "stick-l"
+    },
+    "stick-r": {
+     "kind": "circle",
+     "xy": [
+      1159,
+      569
+     ],
+     "r": 62,
+     "id": "stick-r"
+    },
+    "face-up": {
+     "kind": "circle",
+     "xy": [
+      1445,
+      391
+     ],
+     "r": 42,
+     "id": "face-up"
+    },
+    "face-left": {
+     "kind": "circle",
+     "xy": [
+      1299,
+      451
+     ],
+     "r": 42,
+     "id": "face-left"
+    },
+    "face-right": {
+     "kind": "circle",
+     "xy": [
+      1535,
+      500
+     ],
+     "r": 42,
+     "id": "face-right"
+    },
+    "face-down": {
+     "kind": "circle",
+     "xy": [
+      1392,
+      558
+     ],
+     "r": 42,
+     "id": "face-down"
+    },
+    "dpad": {
+     "kind": "circle",
+     "xy": [
+      732,
+      533
+     ],
+     "r": 30,
+     "id": "dpad"
+    }
+   },
+   "colour": [
+    {
+     "name": "front shell",
+     "kind": "poly",
+     "polys": [
+      [
+       [
+        841,
+        627
+       ],
+       [
+        1005,
+        627
+       ],
+       [
+        1005,
+        700
+       ],
+       [
+        841,
+        700
+       ]
+      ],
+      [
+       [
+        560,
+        600
+       ],
+       [
+        640,
+        600
+       ],
+       [
+        640,
+        650
+       ],
+       [
+        560,
+        650
+       ]
+      ]
+     ],
+     "ren_id": [
+      "shell-front"
+     ],
+     "materials": [
+      "shell"
+     ]
+    },
+    {
+     "name": "grips",
+     "kind": "poly",
+     "polys": [
+      [
+       [
+        259,
+        864
+       ],
+       [
+        459,
+        864
+       ],
+       [
+        459,
+        1009
+       ],
+       [
+        259,
+        1009
+       ]
+      ],
+      [
+       [
+        1423,
+        918
+       ],
+       [
+        1605,
+        918
+       ],
+       [
+        1605,
+        1191
+       ],
+       [
+        1423,
+        1191
+       ]
+      ]
+     ],
+     "ren_id": [
+      "grip-l",
+      "grip-r"
+     ],
+     "materials": [
+      "grip"
+     ]
+    },
+    {
+     "name": "face buttons",
+     "kind": "discs",
+     "of": [
+      "face-up",
+      "face-left",
+      "face-right",
+      "face-down"
+     ],
+     "frac": 0.6,
+     "materials": [
+      "btn"
+     ]
+    },
+    {
+     "name": "sticks",
+     "kind": "discs",
+     "of": [
+      "stick-l",
+      "stick-r"
+     ],
+     "frac": 0.55,
+     "materials": [
+      "stick"
+     ]
+    },
+    {
+     "name": "d-pad",
+     "kind": "discs",
+     "of": [
+      "dpad"
+     ],
+     "frac": 0.5
+    }
+   ]
+  }
+ ],
+ "camera": {
+  "ortho": false,
+  "dist_mm": 400,
+  "tilt": 0.0,
+  "yaw": 8.0,
+  "note": "fitted to the CC0 phone photo (its right side wall shows, so the phone sat right of centre): distance 250-550 mm, yaw -8..20 deg, lateral offset -60..140 mm swept; 400 mm, yaw 8 gave the best outline (IoU 0.916, flanks within 0.4%)"
+ }
+}

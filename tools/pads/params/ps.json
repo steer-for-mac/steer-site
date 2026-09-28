@@ -1,0 +1,770 @@
+{
+ "name": "ps",
+ "about": "DualSense. Shell: Pprk31, Printables 1508424, CC0 (unverified: same extents as Thingiverse 6978614). Controls authored here.",
+ "default_colourway": "white",
+ "shell": [
+  {
+   "name": "shell",
+   "file": "../dl/pr-1508424/dualsense.stl",
+   "rot": [
+    90,
+    0,
+    180
+   ],
+   "material": "shell",
+   "clean": {
+    "voxel": 0.35,
+    "passes": [
+     [
+      40,
+      1.0
+     ]
+    ],
+    "cage": {
+     "faces": 15000,
+     "symmetry": true,
+     "levels": 2
+    }
+   }
+  }
+ ],
+ "flatten": [
+  {
+   "name": "dpad",
+   "x": -49.305,
+   "y": 22.408,
+   "blend": 1.5,
+   "gap": 0.6,
+   "r": 14.952,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "face-up",
+   "x": 49.461,
+   "y": 33.982,
+   "blend": 1.5,
+   "r": 4.981,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "face-left",
+   "x": 37.837,
+   "y": 22.307,
+   "blend": 1.5,
+   "r": 4.968,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "face-right",
+   "x": 60.971,
+   "y": 22.307,
+   "blend": 1.5,
+   "r": 4.979,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "face-down",
+   "x": 49.451,
+   "y": 10.664,
+   "blend": 1.5,
+   "r": 4.973,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "stick-l",
+   "x": -25.25,
+   "y": 1.0,
+   "blend": 1.5,
+   "gap": 0.6,
+   "r": 9.6,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "stick-r",
+   "x": 24.95,
+   "y": 1.0,
+   "blend": 1.5,
+   "gap": 0.6,
+   "r": 9.6,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "ps",
+   "x": 0,
+   "y": 1.7,
+   "blend": 1.5,
+   "w": 10.5,
+   "h": 7.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "mute",
+   "x": 0.024,
+   "y": -7.869,
+   "blend": 1.5,
+   "w": 9.2,
+   "h": 3.4,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "create",
+   "x": -36.891,
+   "y": 39.666,
+   "blend": 1.5,
+   "w": 5.378,
+   "h": 9.0,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "options",
+   "x": 37.29,
+   "y": 39.709,
+   "blend": 1.5,
+   "w": 5.378,
+   "h": 9.0,
+   "quad": true,
+   "fill": 2.0
+  }
+ ],
+ "mask_regions": [
+  {
+   "object": "shell",
+   "image": "../masks/ps-dark.png",
+   "material": "panel",
+   "back": "panel",
+   "soft": "../masks/ps-dark-hd-soft.png",
+   "side": "../masks/ps-dark-side.png",
+   "side_band": [
+    0.3,
+    0.6
+   ],
+   "inward": {
+    "nx": 0.3,
+    "nz_max": 0.8,
+    "y_max": 0.0,
+    "blend": 0.1
+   }
+  },
+  {
+   "object": "shell",
+   "image": "../masks/ps-bar.png",
+   "soft": "../masks/ps-bar-hd-soft.png",
+   "material": "trim",
+   "front_min": -0.9
+  },
+  {
+   "object": "shell",
+   "image": "../masks/ps-lit.png",
+   "material": "lightbar",
+   "front_min": -0.9,
+   "soft": "../masks/ps-lit-hd-soft.png"
+  },
+  {
+   "object": "shell",
+   "image": "../masks/ps-gap.png",
+   "soft": "../masks/ps-gap-hd-soft.png",
+   "material": "hole",
+   "front_min": -0.9
+  },
+  {
+   "object": "shell",
+   "image": "../masks/ps-led.png",
+   "soft": "../masks/ps-led-hd-soft.png",
+   "material": "led",
+   "front_min": -0.5
+  },
+  {
+   "object": "shell",
+   "image": "../masks/ps-trig.png",
+   "soft": "../masks/ps-trig-hd-soft.png",
+   "material": "trigger",
+   "front_min": -0.9
+  }
+ ],
+ "parts": [
+  {
+   "name": "dpad",
+   "type": "dirs",
+   "x": -49.305,
+   "y": 22.408,
+   "tip": 2.901,
+   "len": 10.712,
+   "width": 9.149,
+   "h": 1.7,
+   "bevel": 1.0,
+   "material": "btn",
+   "arrows": 3.0,
+   "glyph_material": "glyph",
+   "gap": 0.35
+  },
+  {
+   "name": "face-up",
+   "type": "button",
+   "x": 49.461,
+   "y": 33.982,
+   "r": 5.189,
+   "h": 1.8,
+   "bevel": 1.349,
+   "glyph": "triangle",
+   "glyph_size": 4.774,
+   "stroke": 0.36,
+   "gap": 0.5,
+   "well_dz": 0.8
+  },
+  {
+   "name": "face-left",
+   "type": "button",
+   "x": 37.837,
+   "y": 22.307,
+   "r": 5.175,
+   "h": 1.8,
+   "bevel": 1.345,
+   "glyph": "square",
+   "glyph_size": 4.761,
+   "stroke": 0.36,
+   "gap": 0.5,
+   "well_dz": 0.8
+  },
+  {
+   "name": "face-right",
+   "type": "button",
+   "x": 60.971,
+   "y": 22.307,
+   "r": 5.187,
+   "h": 1.8,
+   "bevel": 1.349,
+   "glyph": "circle",
+   "glyph_size": 4.772,
+   "stroke": 0.36,
+   "gap": 0.5,
+   "well_dz": 0.8
+  },
+  {
+   "name": "face-down",
+   "type": "button",
+   "x": 49.451,
+   "y": 10.664,
+   "r": 5.18,
+   "h": 1.8,
+   "bevel": 1.347,
+   "glyph": "cross",
+   "glyph_size": 5.18,
+   "stroke": 0.36,
+   "gap": 0.5,
+   "well_dz": 0.8
+  },
+  {
+   "name": "stick-l",
+   "type": "stick",
+   "x": -25.25,
+   "y": 1.0,
+   "collar_r": 11.0,
+   "collar_dz": -2.6,
+   "collar_flat": 0.4,
+   "neck_r": 4.5,
+   "cap_r": 9.0,
+   "cap_h": 3.3,
+   "cap_z": 9.5,
+   "dish": 1.0,
+   "rim_r": 8.5,
+   "rim_w": 1.8,
+   "rim_dz": 0.5,
+   "material": "stick",
+   "collar_material": "stick",
+   "cap_material": "stickcap",
+   "lathe": true,
+   "edge": 0.9
+  },
+  {
+   "name": "stick-r",
+   "type": "stick",
+   "x": 24.95,
+   "y": 1.0,
+   "collar_r": 11.0,
+   "collar_dz": -2.6,
+   "collar_flat": 0.4,
+   "neck_r": 4.5,
+   "cap_r": 9.0,
+   "cap_h": 3.3,
+   "cap_z": 9.5,
+   "dish": 1.0,
+   "rim_r": 8.5,
+   "rim_w": 1.8,
+   "rim_dz": 0.5,
+   "material": "stick",
+   "collar_material": "stick",
+   "cap_material": "stickcap",
+   "lathe": true,
+   "edge": 0.9
+  },
+  {
+   "name": "home",
+   "type": "button",
+   "x": 0.201,
+   "y": 2.209,
+   "r": 4.0,
+   "h": 1.0,
+   "bevel": 0.8,
+   "material": "gloss"
+  },
+  {
+   "name": "mute",
+   "type": "rrect",
+   "x": 0.024,
+   "y": -7.869,
+   "w": 7.721,
+   "hh": 1.852,
+   "h": 0.8,
+   "radius": 1.15,
+   "bevel": 0.5,
+   "material": "mute",
+   "gap": 0.3
+  },
+  {
+   "name": "create",
+   "type": "rrect",
+   "x": -36.891,
+   "y": 39.666,
+   "w": 4.378,
+   "hh": 7.435,
+   "h": 1.0,
+   "radius": 1.97,
+   "bevel": 0.6,
+   "material": "btn",
+   "rot": 5.0,
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "options",
+   "type": "rrect",
+   "x": 37.29,
+   "y": 39.709,
+   "w": 4.378,
+   "hh": 7.435,
+   "h": 1.0,
+   "radius": 1.97,
+   "bevel": 0.6,
+   "material": "btn",
+   "rot": -5.0,
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "speaker-00",
+   "type": "button",
+   "x": -6.08,
+   "y": 12.21,
+   "r": 0.8,
+   "h": 0.02,
+   "sink": 0.3,
+   "bevel": 0.08,
+   "material": "hole",
+   "dz": 0.05
+  },
+  {
+   "name": "speaker-01",
+   "type": "button",
+   "x": -3.04,
+   "y": 12.21,
+   "r": 0.8,
+   "h": 0.02,
+   "sink": 0.3,
+   "bevel": 0.08,
+   "material": "hole",
+   "dz": 0.05
+  },
+  {
+   "name": "speaker-02",
+   "type": "button",
+   "x": 0,
+   "y": 12.21,
+   "r": 0.8,
+   "h": 0.02,
+   "sink": 0.3,
+   "bevel": 0.08,
+   "material": "hole",
+   "dz": 0.05
+  },
+  {
+   "name": "speaker-03",
+   "type": "button",
+   "x": 3.04,
+   "y": 12.21,
+   "r": 0.8,
+   "h": 0.02,
+   "sink": 0.3,
+   "bevel": 0.08,
+   "material": "hole",
+   "dz": 0.05
+  },
+  {
+   "name": "speaker-04",
+   "type": "button",
+   "x": 6.08,
+   "y": 12.21,
+   "r": 0.8,
+   "h": 0.02,
+   "sink": 0.3,
+   "bevel": 0.08,
+   "material": "hole",
+   "dz": 0.05
+  },
+  {
+   "name": "speaker-10",
+   "type": "button",
+   "x": -4.56,
+   "y": 9.47,
+   "r": 0.8,
+   "h": 0.02,
+   "sink": 0.3,
+   "bevel": 0.08,
+   "material": "hole",
+   "dz": 0.05
+  },
+  {
+   "name": "speaker-11",
+   "type": "button",
+   "x": -1.52,
+   "y": 9.47,
+   "r": 0.8,
+   "h": 0.02,
+   "sink": 0.3,
+   "bevel": 0.08,
+   "material": "hole",
+   "dz": 0.05
+  },
+  {
+   "name": "speaker-12",
+   "type": "button",
+   "x": 1.52,
+   "y": 9.47,
+   "r": 0.8,
+   "h": 0.02,
+   "sink": 0.3,
+   "bevel": 0.08,
+   "material": "hole",
+   "dz": 0.05
+  },
+  {
+   "name": "speaker-13",
+   "type": "button",
+   "x": 4.56,
+   "y": 9.47,
+   "r": 0.8,
+   "h": 0.02,
+   "sink": 0.3,
+   "bevel": 0.08,
+   "material": "hole",
+   "dz": 0.05
+  },
+  {
+   "name": "create-mark",
+   "type": "decal",
+   "x": -38.08,
+   "y": 45.5,
+   "glyph": "burst",
+   "size": 2.6,
+   "stroke": 0.22,
+   "glyph_material": "icon"
+  },
+  {
+   "name": "options-mark",
+   "type": "decal",
+   "x": 37.75,
+   "y": 45.7,
+   "glyph": "lines3",
+   "size": 2.0,
+   "stroke": 0.2,
+   "glyph_material": "icon"
+  },
+  {
+   "name": "mute-mark",
+   "type": "decal",
+   "x": 0.6,
+   "y": -11.5,
+   "glyph": "mic",
+   "size": 1.8,
+   "stroke": 0.16,
+   "glyph_material": "icon-dark"
+  }
+ ],
+ "rig": {
+  "tilt": 0.0,
+  "margin": 0.01,
+  "lights": {
+   "key": 45,
+   "fill": 6,
+   "world": 0.05,
+   "front": 8
+  },
+  "view_transform": "Khronos PBR Neutral"
+ },
+ "colourways": {
+  "white": {
+   "shell": {
+    "rgb": [
+     0.75,
+     0.77,
+     0.83
+    ],
+    "rough": 0.45,
+    "coat": 0.1,
+    "bump": 6,
+    "bump_strength": 0.03
+   },
+   "panel": {
+    "rgb": [
+     0.045,
+     0.049,
+     0.057
+    ],
+    "rough": 0.6,
+    "bump": 6,
+    "bump_strength": 0.04,
+    "spec": 0.05
+   },
+   "btn": {
+    "rgb": [
+     0.816,
+     0.8517,
+     0.9499
+    ],
+    "rough": 0.3,
+    "coat": 0.3
+   },
+   "glyph": {
+    "rgb": [
+     0.2,
+     0.21,
+     0.23
+    ],
+    "rough": 0.4
+   },
+   "gloss": {
+    "rgb": [
+     0.02,
+     0.02,
+     0.022
+    ],
+    "rough": 0.25,
+    "coat": 0.4
+   },
+   "stick": {
+    "rgb": [
+     0.0361,
+     0.0424,
+     0.0547
+    ],
+    "rough": 0.75,
+    "bump": 12,
+    "bump_strength": 0.1
+   },
+   "mute": {
+    "rgb": [
+     0.1,
+     0.1,
+     0.11
+    ],
+    "rough": 0.3,
+    "coat": 0.4
+   },
+   "hole": {
+    "rgb": [
+     0.003,
+     0.003,
+     0.003
+    ],
+    "rough": 0.9
+   },
+   "lightbar": {
+    "rgb": [
+     0.0007,
+     0.0354,
+     0.4785
+    ],
+    "rough": 0.3,
+    "emit": [
+     0.0013,
+     0.0483,
+     0.5463
+    ],
+    "emit_strength": 0.5
+   },
+   "trigger": {
+    "rgb": [
+     0.013,
+     0.013,
+     0.015
+    ],
+    "rough": 0.7,
+    "spec": 0.0
+   },
+   "stickcap": {
+    "rgb": [
+     0.0361,
+     0.0424,
+     0.0547
+    ],
+    "rough": 0.75,
+    "bump_strength": 0.1,
+    "knurl": [
+     5.4,
+     8.6,
+     3.2,
+     0.45
+    ]
+   },
+   "trim": {
+    "rgb": [
+     0.012,
+     0.013,
+     0.016
+    ],
+    "rough": 0.18,
+    "coat": 0.5,
+    "coat_rough": 0.1
+   },
+   "led": {
+    "rgb": [
+     0.4,
+     0.4,
+     0.5
+    ],
+    "rough": 0.3,
+    "emit": [
+     0.8,
+     0.8,
+     1.0
+    ],
+    "emit_strength": 0.9
+   },
+   "icon": {
+    "rgb": [
+     0.28,
+     0.29,
+     0.31
+    ],
+    "rough": 0.4
+   },
+   "icon-dark": {
+    "rgb": [
+     0.16,
+     0.18,
+     0.21
+    ],
+    "rough": 0.4
+   }
+  },
+  "black": {
+   "shell": {
+    "rgb": [
+     0.03,
+     0.031,
+     0.034
+    ],
+    "rough": 0.5,
+    "coat": 0.1,
+    "bump": 6,
+    "bump_strength": 0.03
+   },
+   "panel": {
+    "rgb": [
+     0.015,
+     0.015,
+     0.017
+    ],
+    "rough": 0.6,
+    "bump": 6,
+    "bump_strength": 0.04,
+    "spec": 0.05
+   },
+   "btn": {
+    "rgb": [
+     0.03,
+     0.031,
+     0.034
+    ],
+    "rough": 0.3,
+    "coat": 0.3
+   },
+   "glyph": {
+    "rgb": [
+     0.4,
+     0.41,
+     0.43
+    ],
+    "rough": 0.4
+   },
+   "gloss": {
+    "rgb": [
+     0.02,
+     0.02,
+     0.022
+    ],
+    "rough": 0.25,
+    "coat": 0.4
+   },
+   "stick": {
+    "rgb": [
+     0.022,
+     0.022,
+     0.024
+    ],
+    "rough": 0.75,
+    "bump": 12,
+    "bump_strength": 0.1
+   },
+   "mute": {
+    "rgb": [
+     0.05,
+     0.05,
+     0.055
+    ],
+    "rough": 0.3,
+    "coat": 0.3
+   },
+   "hole": {
+    "rgb": [
+     0.003,
+     0.003,
+     0.003
+    ],
+    "rough": 0.9
+   },
+   "lightbar": {
+    "rgb": [
+     0.004,
+     0.06,
+     0.65
+    ],
+    "rough": 0.3,
+    "emit": [
+     0.004,
+     0.06,
+     0.65
+    ],
+    "emit_strength": 0.5
+   },
+   "trigger": {
+    "rgb": [
+     0.012,
+     0.012,
+     0.014
+    ],
+    "rough": 0.7,
+    "spec": 0.0
+   }
+  }
+ }
+}

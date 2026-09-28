@@ -1,0 +1,375 @@
+{
+ "pad": "ps",
+ "colourway": "white",
+ "refs": [
+  {
+   "name": "sony",
+   "source": "the site's DualSense cutout (manufacturer render), ref/cut-ps.png",
+   "use": [
+    "geometry",
+    "colour"
+   ],
+   "image": "../ref/cut-ps.png",
+   "anchors": [
+    "stick-l",
+    "stick-r",
+    [
+     "face-up",
+     "face-left",
+     "face-right",
+     "face-down"
+    ],
+    "dpad"
+   ],
+   "features": {
+    "stick-l": {
+     "kind": "circle",
+     "xy": [
+      409,
+      395
+     ],
+     "r": 68,
+     "refine": "edge",
+     "id": "stick-l",
+     "note": "cap"
+    },
+    "stick-r": {
+     "kind": "circle",
+     "xy": [
+      785,
+      393
+     ],
+     "r": 69,
+     "refine": "edge",
+     "id": "stick-r",
+     "note": "cap"
+    },
+    "face-up": {
+     "kind": "circle",
+     "xy": [
+      970,
+      142
+     ],
+     "r": 39,
+     "refine": "dark",
+     "id": "face-up"
+    },
+    "face-left": {
+     "kind": "circle",
+     "xy": [
+      884,
+      230
+     ],
+     "r": 39,
+     "refine": "dark",
+     "id": "face-left"
+    },
+    "face-right": {
+     "kind": "circle",
+     "xy": [
+      1059,
+      231
+     ],
+     "r": 39,
+     "refine": "dark",
+     "id": "face-right"
+    },
+    "face-down": {
+     "kind": "circle",
+     "xy": [
+      970,
+      318
+     ],
+     "r": 39,
+     "refine": "dark",
+     "id": "face-down"
+    },
+    "dpad": {
+     "kind": "cross",
+     "xy": [
+      228,
+      230
+     ],
+     "arm": 102,
+     "id": "dpad",
+     "note": "centre to key tip"
+    },
+    "create": {
+     "kind": "box",
+     "box": [
+      304,
+      72,
+      339,
+      128
+     ],
+     "id": "create"
+    },
+    "options": {
+     "kind": "box",
+     "box": [
+      862,
+      72,
+      897,
+      128
+     ],
+     "id": "options"
+    },
+    "home": {
+     "kind": "box",
+     "box": [
+      560,
+      352,
+      641,
+      416
+     ],
+     "id": "home",
+     "size": false,
+     "note": "PS mark is not reproduced: position only"
+    },
+    "mute": {
+     "kind": "box",
+     "box": [
+      570,
+      451,
+      628,
+      465
+     ],
+     "id": "mute"
+    },
+    "speaker": {
+     "kind": "box",
+     "box": [
+      550,
+      300,
+      649,
+      333
+     ],
+     "id": "speaker",
+     "note": "5 over 4 holes"
+    },
+    "lightbar-l": {
+     "kind": "hue",
+     "win": [
+      330,
+      20,
+      420,
+      300
+     ],
+     "hue": [
+      100,
+      130
+     ]
+    },
+    "lightbar-r": {
+     "kind": "hue",
+     "win": [
+      780,
+      20,
+      870,
+      300
+     ],
+     "hue": [
+      100,
+      130
+     ]
+    },
+    "touchpad-bottom": {
+     "kind": "edge_y",
+     "win": [
+      570,
+      150,
+      630,
+      340
+     ],
+     "L": 50,
+     "size": false,
+     "note": "touchpad's lower edge on the centre line"
+    },
+    "trigger-l": {
+     "kind": "dark",
+     "win": [
+      120,
+      0,
+      330,
+      60
+     ],
+     "L": 40
+    },
+    "trigger-r": {
+     "kind": "dark",
+     "win": [
+      870,
+      0,
+      1080,
+      60
+     ],
+     "L": 40
+    },
+    "grip-l tip": {
+     "kind": "extreme",
+     "win": [
+      -56,
+      399,
+      600,
+      854
+     ],
+     "dir": "down",
+     "size": false,
+     "note": "outline: lowest point (outline landmark, reported, not gated)",
+     "gate": false
+    },
+    "grip-r tip": {
+     "kind": "extreme",
+     "win": [
+      600,
+      399,
+      1257,
+      854
+     ],
+     "dir": "down",
+     "size": false,
+     "note": "outline: lowest point (outline landmark, reported, not gated)",
+     "gate": false
+    },
+    "flank-l": {
+     "kind": "extreme",
+     "win": [
+      -56,
+      4,
+      600,
+      854
+     ],
+     "dir": "left",
+     "size": false,
+     "note": "outline: leftmost/rightmost x (outline landmark, reported, not gated)",
+     "axis": "x",
+     "gate": false
+    },
+    "flank-r": {
+     "kind": "extreme",
+     "win": [
+      600,
+      4,
+      1257,
+      854
+     ],
+     "dir": "right",
+     "size": false,
+     "note": "outline: leftmost/rightmost x (outline landmark, reported, not gated)",
+     "axis": "x",
+     "gate": false
+    }
+   },
+   "colour": [
+    {
+     "name": "shell (white)",
+     "kind": "shell",
+     "L": [
+      70,
+      101
+     ],
+     "materials": [
+      "shell"
+     ]
+    },
+    {
+     "name": "face panel (black)",
+     "kind": "window",
+     "win": [
+      330,
+      280,
+      870,
+      540
+     ],
+     "L": [
+      0,
+      45
+     ],
+     "materials": [
+      "panel"
+     ]
+    },
+    {
+     "name": "grip core (black)",
+     "kind": "window",
+     "win": [
+      0,
+      470,
+      1202,
+      799
+     ],
+     "L": [
+      0,
+      45
+     ],
+     "materials": [
+      "panel"
+     ]
+    },
+    {
+     "name": "face buttons",
+     "kind": "discs",
+     "of": [
+      "face-up",
+      "face-left",
+      "face-right",
+      "face-down"
+     ],
+     "frac": 0.5,
+     "materials": [
+      "btn"
+     ]
+    },
+    {
+     "name": "sticks",
+     "kind": "discs",
+     "of": [
+      "stick-l",
+      "stick-r"
+     ],
+     "frac": 0.55,
+     "materials": [
+      "stick"
+     ]
+    },
+    {
+     "name": "triggers",
+     "kind": "window",
+     "win": [
+      120,
+      0,
+      330,
+      60
+     ],
+     "L": [
+      0,
+      60
+     ],
+     "inner": false,
+     "exclude": [
+      [
+       0,
+       0,
+       1,
+       1
+      ]
+     ],
+     "materials": [
+      "trigger"
+     ]
+    },
+    {
+     "name": "light bar",
+     "kind": "detected",
+     "of": [
+      "lightbar-l",
+      "lightbar-r"
+     ],
+     "materials": [
+      "lightbar"
+     ]
+    }
+   ]
+  }
+ ]
+}

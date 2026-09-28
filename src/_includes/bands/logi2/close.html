@@ -1,0 +1,62 @@
+<!-- THE CLOSE. Logitech ends on a subscribe strip; ours is the buying decision,
+     and the page's only blue form button. The form posts natively without
+     script; launch-list.js only improves it.
+
+     Trial first, then the price, then what the one price covers
+     (2026-09-27, pricing brief). Every line, and where it is true:
+     - 14 days, no card, no account: steer Steer/Sources/Steer/Purchase/
+       TrialCalculator.swift:4 (trialDays = 14). The trial starts at the
+       first controller connect and needs nothing typed in.
+       PENDING, not shipped: counting 14 days of USE rather than calendar
+       days (pricing brief, option G). Say nothing about it here until
+       TrialCalculator changes and ships.
+     - €19.99, shown plainly: docs/private/commerce-and-tax.md, "Decisions
+       taken". One price, stated once; nothing on the page may promise a
+       change to it. The figure is VAT-inclusive by decision, but
+       "VAT included" goes on the page only in the same change that flips
+       Lemon Squeezy's tax-inclusive setting (same doc); until then it is
+       left unsaid rather than said early.
+     - Every Mac you use, home or work: src/terms.html:13 (per person,
+       work included; team sharing excluded), decided by Sean 2026-09-28.
+     - No subscription, no add-ons: one product, one licence; the add-on
+       line is there because reviewers in this category are hostile to
+       per-feature pricing (steer docs/marketing-strategy.md, price
+       landscape).
+     - Nothing you map or type leaves the Mac: Steer/DiagnosticsReporter.swift
+       :8-10 (no automatic upload, "no analytics, no telemetry"); the only
+       network calls are the licence check (Purchase/DirectLicensing.swift
+       :211-212), updates you ask for (Update/SparkleUpdater.swift:7-9) and a
+       layout you import by link. The claim is about what never leaves, not
+       "nothing", per docs/design-rules.md's trust rule: Steer sends none of
+       it anywhere.
+     - macOS 14: steer Steer/Package.swift:7. Apple Silicon is carried from
+       the shipped pricing card.
+     - No ControllerKeys link: vs.html was last checked on 2026-07-19, and
+       ControllerKeys ships often. Re-check it before linking from here. -->
+<section class="l2-close" id="pricing" aria-labelledby="l2-close-h">
+  <div class="l2-wrap l2-close-in">
+    <div>
+      <h2 id="l2-close-h">Try it free. Then pay once.</h2>
+      <p class="l2-price"><span class="l2-price-n">&#8364;19.99</span></p>
+      <ul class="l2-list">
+        <li>14 days free first: no card, no account</li>
+        <li>One price for everything: no add-ons, no subscription</li>
+        <li>Every Mac you use, at home or at work, on one licence</li>
+        <li>No analytics: Steer sends nothing you map or type anywhere</li>
+        <li>Free updates as macOS changes</li>
+        <li>For a Mac with Apple Silicon, on macOS 14 or later</li>
+      </ul>
+    </div>
+    <div class="l2-form">
+      <h3>Hear the day it opens</h3>
+      <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
+        <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
+        <input class="ml-in" type="text" name="controller" placeholder="Your controller (optional)" aria-label="Which controller do you have (optional)">
+        <button type="submit" class="btn btn-primary">Join the launch list</button>
+        <p class="ml-msg" role="status" aria-live="polite"></p>
+      </form>
+      <p class="l2-form-note">One email, from me, the day the free trial opens. Your address goes nowhere else. Prefer email? <a href="mailto:steer@seanfloyd.dev?subject=Add%20me%20to%20the%20Steer%20launch%20list">steer@seanfloyd.dev</a> works too.</p>
+    </div>
+  </div>
+</section>

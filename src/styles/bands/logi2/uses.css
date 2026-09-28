@@ -1,0 +1,54 @@
+/* Where it gets used. Sunken, between the plain intro and the plain
+   per-app band. The row is the band's one big thing: a desktop reads it as two rows
+   of three, home then work; a phone swipes it, one card and the edge of the
+   next, so the row says there is more without a "scroll" hint. The
+   photographs keep the card radius; the words under them are the only
+   caption, and they say what Steer does, not what the picture shows. */
+.l2-uses { padding: 112px 0 120px; background-color: var(--bg-sunken); }
+.l2-uses h2 { margin-bottom: 48px; }
+
+.l2-use-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 44px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  list-style: none;
+}
+.l2-use { grid-column: span 4; }
+
+.l2-use img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--r-card);
+  background-color: var(--bg-inset);
+}
+
+.l2-use h3 { margin: 20px 0 6px; font-size: 20px; font-weight: 650; letter-spacing: -0.015em; color: var(--text); }
+.l2-use p { margin: 0; max-width: 30em; font-size: 15.5px; line-height: 1.55; color: var(--text-2); }
+.l2-use-row:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+
+@media (max-width: 860px) {
+  .l2-use { grid-column: span 6; }
+}
+
+@media (max-width: 600px) {
+  .l2-uses { padding: 72px 0 80px; }
+  .l2-uses h2 { margin-bottom: 32px; }
+  .l2-use-row {
+    display: flex;
+    gap: 14px;
+    padding: 0 16px 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 16px;
+    scrollbar-width: none;
+  }
+  .l2-use { flex: 0 0 84%; scroll-snap-align: start; }
+  .l2-use p { font-size: 15px; }
+}

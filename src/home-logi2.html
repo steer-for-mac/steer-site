@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+title: "Steer: Your Mac, from across the room"
+description: "Comp: the Steer homepage in the structure of Logitech's MX software page, second attempt."
+robots: "noindex, nofollow"
+footLegal: "macOS 14+ · Apple Silicon. PlayStation, Xbox, and Switch are trademarks of their owners; Steer is independent, not affiliated with Sony, Microsoft, or Nintendo."
+bodyEnd: |-
+  <script src="home-logi2.js" defer></script>
+---
+<!-- COMP, noindex, 2026-09-27. The homepage in the structure of
+     logitech.com/en-us/software/mx-software, second attempt. The first
+     (hero-logi.html, then the committed homepage) was called childish; the
+     reference was not the fault, the execution was.
+
+     Taken: their order (a banner that promises, a centred intro, one full-bleed
+     image with one labelled overlay, the per-app band, one feature per card, a
+     close); the per-app grammar (one device, numbered dots that move per app, a
+     legend per app), shown on ONE large stage instead of a repeated photo; real
+     UI crops at 1x or larger; one big thing per band against plenty of white.
+     Left: download-first buttons, persona circles (no photography), their
+     second accent, "Learn more" on every card, pastel washes, mono caps on
+     every cell. -->
+<!-- THE STORY, 2026-09-27 (pricing brief, docs/private/2026-09-27-pricing-
+     options.md): the sofa is the hook, not the sale. Free phone-remote apps
+     already point at a TV; what earns the price is typing, per-app layouts
+     that switch themselves, held layers and automation. So the page climbs:
+     it points (banner, then the live demo), why an app is needed at all
+     (gap), the rooms from sofa to desk (uses), every app its own buttons
+     (apps, where layers are explained), what else it does (more: keyboard,
+     overlay, automation), then trial and price (close). Depth is argued
+     before the price, never after it. -->
+<main>
+{% include "bands/logi2/hero.html" -%}
+{% include "bands/logi2/demo.html" -%}
+{% include "bands/logi2/gap.html" -%}
+{% include "bands/logi2/uses.html" -%}
+{% include "bands/logi2/apps.html" -%}
+{% include "bands/logi2/more.html" -%}
+{% include "bands/logi2/close.html" -%}
+</main>

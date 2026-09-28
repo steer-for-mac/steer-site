@@ -8,7 +8,7 @@ export default {
   // the unlinked hero-* comps, which share .lg-* rules with the homepage and
   // vouch for them. Measured: with the comps scanned, dropping the feature band
   // from index read 1.6%; without them, 11.3%. Zero versus eleven is a gate.
-  content: ["dist/*.html", "!dist/hero-*.html", "dist/home.js", "dist/theme.js"],
+  content: ["dist/*.html", "!dist/hero-*.html", "dist/home.js", "dist/home-logi2.js", "dist/play.js", "dist/theme.js"],
   // Every sheet the build emits, globbed, so a new styles/pages/<page>.css is
   // graded the day it appears. A page sheet is small, so the percentage bites:
   // one dead rule in a 200-byte file is 20%.

@@ -1,0 +1,133 @@
+<div class="py-win">
+  <!-- The status bar. Mode is the one thing a visitor must never have to
+       guess: a replay that looks live is the dishonest version of this page. -->
+  <div class="py-bar">
+    <span class="py-mode" id="pyMode" data-mode="still"><i aria-hidden="true"></i><span id="pyModeText">Still frame</span></span>
+    <span class="py-layer">Layer <b id="pyLayer">Solo</b></span>
+    <span class="py-last" id="pyLast">Keyboard open, a sentence typed</span>
+  </div>
+
+  <div class="py-body">
+    <!-- The stage is the desktop: the note on top, the panels float centred
+         below it so the field being typed into stays in view, the dock under. -->
+    <div class="py-stage" id="pyStage" tabindex="0" aria-label="Demo desk. With the keyboard: arrow keys move the pointer, K or Enter clicks.">
+      <div class="py-desk" id="pyDesk">
+        <div class="py-note">
+          <div class="py-note-bar"><span></span><span></span><span></span><b>Notes</b></div>
+          <label class="py-note-label" for="pyText">Type here with your controller</label>
+          <textarea class="py-text" id="pyText" rows="3" spellcheck="false">Hello, Mac.</textarea>
+        </div>
+      </div>
+
+      <!-- ON-SCREEN KEYBOARD. Mirrors assets/daisy-wheel.png: title, close
+           chord, eight clusters of four, the caption in the middle, the
+           shoulder legend underneath. Positions are clockwise from north,
+           radius 36% of the wheel. -->
+      <div class="py-osk" id="pyOsk" role="group" aria-labelledby="pyOskTitle">
+        <div class="py-osk-head">
+          <h2 id="pyOskTitle">On-Screen Keyboard</h2>
+          <span class="py-osk-close"><span class="py-g" data-b="l1">L1</span> + <span class="py-g" data-b="r3">R3</span> Close</span>
+          <button type="button" class="py-x" data-close="osk" aria-label="Close the keyboard">{% include "art/dialogs-close.svg" %}</button>
+        </div>
+        <div class="py-wheel" id="pyWheel">
+          <div class="py-petal" style="--x:50%;--y:14%"><span class="n">b</span><span class="e">c</span><span class="s">d</span><span class="w">a</span></div>
+          <div class="py-petal is-aim" style="--x:75.46%;--y:24.54%"><span class="n">f</span><span class="e">g</span><span class="s">h</span><span class="w">e</span></div>
+          <div class="py-petal" style="--x:86%;--y:50%"><span class="n">j</span><span class="e">k</span><span class="s">l</span><span class="w">i</span></div>
+          <div class="py-petal" style="--x:75.46%;--y:75.46%"><span class="n">n</span><span class="e">o</span><span class="s">p</span><span class="w">m</span></div>
+          <div class="py-petal" style="--x:50%;--y:86%"><span class="n">r</span><span class="e">s</span><span class="s">t</span><span class="w">q</span></div>
+          <div class="py-petal" style="--x:24.54%;--y:75.46%"><span class="n">v</span><span class="e">w</span><span class="s">x</span><span class="w">u</span></div>
+          <div class="py-petal" style="--x:14%;--y:50%"><span class="n">z</span><span class="e">,</span><span class="s">.</span><span class="w">y</span></div>
+          <div class="py-petal" style="--x:24.54%;--y:24.54%"><span class="n">?</span><span class="e">@</span><span class="s">-</span><span class="w">/</span></div>
+          <div class="py-hub"><i class="py-aimdot" id="pyAimDot" aria-hidden="true"></i><span id="pyHub">left stick aims &middot; face button commits</span></div>
+        </div>
+        <div class="py-osk-foot">
+          <span><span class="py-g" data-b="l1">L1</span> Shift</span>
+          <span><span class="py-g" data-b="r1">R1</span> Symbols</span>
+          <span><span class="py-g" data-b="l2">L2</span> Delete</span>
+          <span><span class="py-g" data-b="r2">R2</span> Space</span>
+          <span><span class="py-g" data-b="r3">R3</span> Return</span>
+          <span><span class="py-g" data-b="l1">L1</span> + <span class="py-g" data-b="r1">R1</span> hold both for Controls</span>
+        </div>
+      </div>
+
+      <!-- APP RING. RadialMenu.swift for nine items: a 394pt glass disc, icons
+           at 0.62 of the 172pt radius, the aimed name in the hub, the hint chip
+           under it. Icons are cut from our own capture (scripts/ring-icons.py). -->
+      <div class="py-ring" id="pyRing" role="group" aria-label="App ring" hidden>
+        <div class="py-disc" id="pyDisc"><span class="py-ring-name" id="pyRingName" aria-live="polite"></span></div>
+        <div class="py-ring-foot">
+          <span><span class="py-g" data-b="ls">Left Stick</span> Aim</span>
+          <span><span class="py-g" data-b="cross">Cross</span> Select</span>
+          <span><span class="py-g" data-b="circle">Circle</span> Cancel</span>
+        </div>
+      </div>
+
+      <!-- HELP CARD. HelpOverlay.swift: every button against six layers.
+           Built by play.js from the same table the simulator resolves
+           presses against, so the card and the behaviour cannot disagree. -->
+      <div class="py-help" id="pyHelp" role="group" aria-labelledby="pyHelpTitle" hidden>
+        <div class="py-help-head">
+          <h2 id="pyHelpTitle">Bindings</h2>
+          <span id="pyHelpSub">Default profile</span>
+          <button type="button" class="py-x" data-close="help" aria-label="Close the help card">{% include "art/dialogs-close.svg" %}</button>
+        </div>
+        <p class="py-help-live" id="pyHelpLive">Hold a shoulder button to light its column.</p>
+        <div class="py-help-scroll"><table class="py-table" id="pyTable"></table></div>
+      </div>
+
+      <div class="py-acts">
+        <button type="button" class="py-act" data-open="ring">Open the app ring</button>
+        <button type="button" class="py-act" data-open="keys">Open the keyboard</button>
+        <button type="button" class="py-act" data-open="help">Show the help card</button>
+      </div>
+
+      <div class="py-cursor" id="pyCursor" aria-hidden="true">{% include "art/hero-cursor.svg" %}</div>
+      <div class="py-toast" id="pyToast" aria-hidden="true"></div>
+    </div>
+
+    <aside class="py-side" aria-label="What you are seeing">
+      <h2 class="py-side-h">What you're seeing</h2>
+      <!-- Each .py-slot is one grid cell that pad-demo.js also fills with an
+           invisible copy of every other state its text can take, so the pane
+           is always as tall as its tallest state and the page never moves
+           while the demo changes mode. -->
+      <div class="py-slot">
+      <p class="py-state" id="pyState" aria-live="polite">A still of Steer's on-screen keyboard, mid-sentence.
+        Turn on JavaScript and connect a controller to drive it yourself.</p>
+      </div>
+
+      <h3 class="py-k">Controls right now</h3>
+      <div class="py-slot">
+      <ul class="py-legend" id="pyLegend">
+        <li><span class="py-gs"><span class="py-g" data-b="ls">Left Stick</span></span><span>Aim at a cluster of letters</span></li>
+        <li><span class="py-gs"><span class="py-g" data-b="triangle">Triangle</span><span class="py-g" data-b="circle">Circle</span><span class="py-g" data-b="cross">Cross</span><span class="py-g" data-b="square">Square</span></span><span>Type the letter in that position</span></li>
+        <li><span class="py-gs"><span class="py-g" data-b="l2">L2</span><span class="py-g" data-b="r2">R2</span></span><span>Delete, space</span></li>
+        <li><span class="py-gs"><span class="py-g" data-b="l1">L1</span><span class="py-g" data-b="r3">R3</span></span><span>Together: close the keyboard</span></li>
+      </ul>
+      </div>
+
+      <!-- The controller half of the vignette sentence: what the pad is
+           doing right now, whoever is holding it. Drawing, not reading. -->
+      <div class="py-pad" id="pyPad" aria-hidden="true">
+        <div class="py-pad-sh"><i data-p="l2">L2</i><i data-p="l1">L1</i><i data-p="create">Cr</i><i data-p="options">Op</i><i data-p="r1">R1</i><i data-p="r2">R2</i></div>
+        <div class="py-pad-row">
+          <span class="py-stick" data-p="l3"><i id="pyStickL"></i></span>
+          <span class="py-dpad"><i data-p="up"></i><i data-p="left"></i><i data-p="right"></i><i data-p="down"></i></span>
+          <span class="py-face"><i data-p="triangle"></i><i data-p="square"></i><i data-p="circle"></i><i data-p="cross"></i></span>
+          <span class="py-stick" data-p="r3"><i id="pyStickR"></i></span>
+        </div>
+      </div>
+
+      <div class="py-cta" id="pyCta">
+        <div class="py-slot"><p class="py-cta-t" id="pyCtaText">Steer does this in every app on your Mac, not only in this box.</p></div>
+        <a class="btn btn-primary py-cta-go" href="{{ demoCtaHref }}"{% if demoCtaDialog %} data-ml{% endif %}>Join the launch list</a>
+        <p class="py-cta-terms"><b>&euro;19.99</b> once, when it ships. 14-day free trial, no card.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<p class="py-keys" id="pyKeys">No controller? Click the desk, then use the keyboard: arrow keys move the pointer,
+  <kbd>K</kbd> or <kbd>Enter</kbd> is Cross, <kbd>L</kbd> Circle, <kbd>I</kbd> Triangle, <kbd>J</kbd> Square,
+  <kbd>Q</kbd> L1, <kbd>E</kbd> R1, <kbd>Z</kbd> L2, <kbd>C</kbd> R2, <kbd>R</kbd> L3, <kbd>F</kbd> R3, <kbd>H</kbd> Create.
+  Or use the mouse on the desk buttons and the letters.</p>

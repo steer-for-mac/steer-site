@@ -1,0 +1,40 @@
+/* play.html's own chrome: the head and the honesty band. The demo itself is
+   bands/play/demo.css, shared with home-logi2. The launch dialog's sheets are
+   imported here because home.css never links on this page. */
+@import "../design-system.css" layer(components);
+@import "../bands/dialogs.css" layer(bands);
+@import "../bands/play/demo.css";
+
+/* ---------- head ---------- */
+
+.py-top { padding: 64px 0 28px; }
+.py-h {
+  margin-top: 14px;
+  font-size: clamp(32px, 4.6vw, 54px);
+  line-height: 1.04;
+  letter-spacing: -0.034em;
+  font-weight: 700;
+  max-width: 900px;
+}
+.py-sub {
+  margin-top: 16px;
+  max-width: 620px;
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+.py-rig { padding-bottom: 72px; }
+
+/* ---------- what is real ---------- */
+
+.py-honest { padding: 64px 0 72px; }
+.py-honest-h { font-size: clamp(22px, 2.6vw, 28px); letter-spacing: -0.02em; font-weight: 700; }
+.py-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 28px; }
+.py-cols p { margin-top: 8px; font-size: 15px; line-height: 1.55; color: var(--text-2); }
+
+@media (max-width: 899px) {
+  .py-cols { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+}
+@media (max-width: 560px) {
+  .py-top { padding-top: 40px; }
+}

@@ -11,7 +11,7 @@ html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll
 body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.5;font-size:17px;letter-spacing:-0.01em;transition:background .3s ease,color .3s ease}
 a{color:var(--blue-text);text-decoration:none}
 a:hover{text-decoration:underline;text-underline-offset:2px}
-p a,li a,.faq-body a,.spec-row .v a{text-decoration:underline;text-decoration-thickness:from-font;text-underline-offset:2px}
+p a,li a,.faq-body a,.spec-row .v a,.foot-bottom a{text-decoration:underline;text-decoration-thickness:from-font;text-underline-offset:2px}
 p a.btn,li a.btn,p a.arrow-link,li a.arrow-link{text-decoration:none}
 img{display:block;max-width:100%}
 ::selection{background:var(--blue-fill)}

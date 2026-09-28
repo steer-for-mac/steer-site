@@ -1,0 +1,78 @@
+<!-- WHERE IT GETS USED. Logitech's persona row, with the photographs it left
+     out. Breadth on purpose: the roadmap's positioning is several rooms, not
+     one wedge (the RSI wedge did not survive user research). Three rooms at
+     home, then three at work, each named for why a keyboard is the wrong
+     reach there.
+
+     Codex CLI image generation, 2026-09-27; Movie night regenerated
+     2026-09-28. The screens are generated, not Steer's UI: the Movie night
+     TV is a generic streaming page, no service's logo, invented titles.
+     Cropped to 16:9 from the top, which keeps each person and their screen
+     and drops the foreground. The earlier set's access.png stays unused: the
+     roadmap builds an accessibility claim with disabled users on real
+     hardware, not with a picture.
+
+     Each line is true of ~/Developer/steer as of 2026-09-27 (paths under
+     Steer/Sources/):
+     - Movie night: the Browser preset's R1 layer, SteerCore/
+       BundledPresets.swift:61 (R1 overlay ~:82): Space plays and pauses,
+       Right arrow jumps ahead, F is full screen. Presets are opt-in, added
+       in Presets.
+     - Family photos: Default solo layer, SteerCore/Defaults.swift:62, the
+       D-pad is the arrow keys, which step between pictures in Photos.
+     - In bed: SteerCore/StickConfig.swift:233 rightMode = .scroll; the
+       Browser preset's R1 + Cross is Space.
+     - Video editing: BundledPresets.swift:709 (DaVinci Resolve) and :731
+       (Final Cut Pro) share editorTransportL1 (:676, J/K/L, I and O) and
+       editorEditR2 (:687, Cmd+B blade).
+     - Vibe coding: Defaults.swift:91, L1 + Triangle is .dictation; solo
+       Triangle is Enter (:65). The buzz is steer://haptic/success from the
+       agent's own done hook (steer URLScheme.swift:339, :898; the setup is
+       docs/agent-peripheral.md), so it needs that one line in the agent.
+     - Presenting: StickConfig.swift:232 leftMode = .mouse.
+
+     "Preset" is the app's own word for these (steer SteerCore/Strings.swift
+     :704, :2853), so every card uses it.
+
+     The heading carries the page's climb in one line: the sofa rooms are
+     the hook, the desk rooms lead into the per-app band under this one.
+
+     Phones get a scroll-snap row, one card and the edge of the next; a
+     desktop gets two rows of three. -->
+<section class="l2-uses" aria-labelledby="l2-uses-h">
+  <div class="l2-wrap">
+    <h2 id="l2-uses-h">Start on the sofa. Keep going at the desk.</h2>
+  </div>
+  <ul class="l2-use-row" tabindex="0" aria-label="Where people use Steer">
+    <li class="l2-use">
+      <img src="assets/life/movie-night.jpg" eleventy:widths="480,960" width="1536" height="864" sizes="(max-width: 600px) 84vw, (max-width: 860px) 46vw, (max-width: 1248px) 31vw, 368px" loading="lazy" alt="A father and his teenage son on a sofa choose a show on a streaming site, the son holding a controller and the dog eyeing a bowl of popcorn beside him.">
+      <h3>Movie night</h3>
+      <p>Leave the keyboard where it is: the Browser preset puts play, pause, skip ahead and full screen on the controller.</p>
+    </li>
+    <li class="l2-use">
+      <img src="assets/life/family.jpg" eleventy:widths="480,960" width="1536" height="864" sizes="(max-width: 600px) 84vw, (max-width: 860px) 46vw, (max-width: 1248px) 31vw, 368px" loading="lazy" alt="A grandfather points at a photo library on the TV while his granddaughter holds the controller.">
+      <h3>Family photos</h3>
+      <p>Everyone stays on the sofa: the D-pad is the arrow keys, so Photos steps from one picture to the next.</p>
+    </li>
+    <li class="l2-use">
+      <img src="assets/life/in-bed.jpg" eleventy:widths="480,960" width="1536" height="864" sizes="(max-width: 600px) 84vw, (max-width: 860px) 46vw, (max-width: 1248px) 31vw, 368px" loading="lazy" alt="A man lies in bed with a controller on the covers, a nature video playing on the TV on the wall.">
+      <h3>In bed</h3>
+      <p>Stay lying down: the right stick scrolls the page, and the Browser preset pauses the video.</p>
+    </li>
+    <li class="l2-use">
+      <img src="assets/life/editor.jpg" eleventy:widths="480,960" width="1536" height="864" sizes="(max-width: 600px) 84vw, (max-width: 860px) 46vw, (max-width: 1248px) 31vw, 368px" loading="lazy" alt="A woman sits back from her desk with a controller in her lap, a video timeline on the monitor.">
+      <h3>Video editing</h3>
+      <p>Sit back from the timeline: the Final Cut Pro and DaVinci Resolve presets put playback, marks and cuts on the controller.</p>
+    </li>
+    <li class="l2-use">
+      <img src="assets/life/dev.jpg" eleventy:widths="480,960" width="1536" height="864" sizes="(max-width: 600px) 84vw, (max-width: 860px) 46vw, (max-width: 1248px) 31vw, 368px" loading="lazy" alt="A young man reclines in his desk chair with a controller, code and a chat panel on the monitor.">
+      <h3>Vibe coding</h3>
+      <p>Lean back while an AI writes the code: dictate what you want, send it with one button, and your controller buzzes when it's done.</p>
+    </li>
+    <li class="l2-use">
+      <img src="assets/life/presenter.jpg" eleventy:widths="480,960" width="1536" height="864" sizes="(max-width: 600px) 84vw, (max-width: 860px) 46vw, (max-width: 1248px) 31vw, 368px" loading="lazy" alt="A woman stands with a controller in front of a group, a map with a route on the wall screen beside her.">
+      <h3>Presenting</h3>
+      <p>Walk the room while you talk: the left stick moves the pointer across the big screen.</p>
+    </li>
+  </ul>
+</section>

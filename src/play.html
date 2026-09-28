@@ -1,0 +1,73 @@
+---
+layout: layouts/base.njk
+title: "Steer: try it with your controller"
+description: "Plug a game controller into your Mac and drive this page with Steer's default layout: the pointer, the app ring and the on-screen keyboard."
+robots: "noindex, nofollow"
+bodyEnd: '<script src="play.js" defer></script>'
+---
+<!-- PLAY. The launch hook: "plug your controller into this web page". A comp,
+     noindex and linked from nothing, until it is judged.
+
+     Every behaviour here is Steer's shipped default, read from ~/Developer/steer
+     and not from memory. The sources, so the next edit can re-check them:
+       bindings      SteerCore/Defaults.swift soloLayer / l1Layer / r1Layer /
+                     l1r1Layer / l2Layer / r2Layer
+       no-gyro swap  Steer/Config/ProfileDefaults.swift: a pad without a
+                     gyroscope (Xbox, generic) gets R3 = Radial Menu and
+                     L3 = Mission Control. DualSense and Switch Pro keep L3.
+       app ring      RadialMenu.swift (toggle, 0.3 dead zone, instant open,
+                     fade-only close), RadialMenuDefaults.swift (nine apps,
+                     clockwise from Safari), ModalControls.swift (Cross selects,
+                     Circle cancels, Square also cancels, unadvertised)
+       keyboard      DaisyWheelLayout.swift (8 clusters x [N,E,S,W], 0.3 dead
+                     zone), EventLoop+DaisyWheel.swift (L2 delete, R2 space,
+                     R3 return, D-pad latches a modifier, L1+R3 toggles)
+       help card     HelpOverlay.swift: Create toggles it; a held shoulder
+                     lights its column. It is NOT a hold-L1 gesture.
+     The static markup is the claim frozen mid-proof, the way a .vg vignette's
+     base state is: the keyboard open, a sentence typed. No JS, reduced motion
+     and headless capture all ship this frame. -->
+<main class="py">
+  <section class="py-top">
+    <div class="wrap-wide">
+      <div class="eyebrow">Steer, in your browser</div>
+      <h1 class="py-h">Plug in a controller. This page is the demo.</h1>
+      <p class="py-sub">Steer turns a game controller into a mouse and keyboard for your Mac.
+        This page runs its default layout, so you can try it before it ships with a
+        PlayStation, Xbox or Switch Pro controller.</p>
+    </div>
+  </section>
+
+  <section class="py-rig" aria-label="The demo">
+    <div class="wrap-wide">
+      {%- set demoCtaHref = "index.html#pricing" %}{%- set demoCtaDialog = true %}
+      {% include "bands/play/demo.html" %}
+    </div>
+  </section>
+
+  <section class="py-honest sunken">
+    <div class="wrap-wide">
+      <h2 class="py-honest-h">What is real here, and what isn't</h2>
+      <div class="py-cols">
+        <div>
+          <h3 class="py-k">The same as the app</h3>
+          <p>Every button does what it does in Steer's default setup: the same letters in the same
+            places on the keyboard, the same apps in the ring, the same help card. Hold a shoulder
+            button and the other buttons change jobs, exactly as they do on your Mac.</p>
+        </div>
+        <div>
+          <h3 class="py-k">Only on your Mac</h3>
+          <p>A web page can't open Spotlight, switch apps or launch Safari. When you press a button
+            that would, the bar at the top names what it does instead. Picking an app in the ring
+            names it rather than opening it.</p>
+        </div>
+        <div>
+          <h3 class="py-k">Your controller stays here</h3>
+          <p>Your browser reads the controller inside this tab. Nothing you press or type is sent
+            anywhere. In Safari, press a button once so the page can see the controller.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% include "bands/dialogs.html" %}

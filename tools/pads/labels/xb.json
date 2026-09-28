@@ -1,0 +1,282 @@
+{
+ "pad": "xb",
+ "colourway": "black",
+ "refs": [
+  {
+   "name": "elite",
+   "source": "the site's Xbox cutout (manufacturer image of the Elite Series 2), ref/cut-xb.png: the product rendered since 2026-09-27",
+   "use": [
+    "geometry",
+    "colour"
+   ],
+   "image": "../ref/cut-xb.png",
+   "anchors": [
+    "stick-l",
+    "stick-r",
+    [
+     "face-up",
+     "face-left",
+     "face-right",
+     "face-down"
+    ],
+    "dpad-base",
+    "guide"
+   ],
+   "features": {
+    "stick-l": {
+     "kind": "circle",
+     "xy": [
+      134,
+      108
+     ],
+     "r": 25,
+     "id": "stick-l",
+     "note": "cap"
+    },
+    "stick-r": {
+     "kind": "circle",
+     "xy": [
+      359,
+      196
+     ],
+     "r": 25,
+     "id": "stick-r",
+     "note": "cap"
+    },
+    "face-up": {
+     "kind": "circle",
+     "xy": [
+      430,
+      73
+     ],
+     "r": 19,
+     "id": "face-up",
+     "note": "Y"
+    },
+    "face-left": {
+     "kind": "circle",
+     "xy": [
+      390,
+      111
+     ],
+     "r": 19,
+     "id": "face-left",
+     "note": "X"
+    },
+    "face-right": {
+     "kind": "circle",
+     "xy": [
+      468,
+      114
+     ],
+     "r": 19,
+     "id": "face-right",
+     "note": "B"
+    },
+    "face-down": {
+     "kind": "circle",
+     "xy": [
+      430,
+      150
+     ],
+     "r": 19,
+     "id": "face-down",
+     "note": "A"
+    },
+    "dpad-base": {
+     "kind": "circle",
+     "xy": [
+      207,
+      204
+     ],
+     "r": 46,
+     "id": "dpad-base",
+     "note": "faceted d-pad dish"
+    },
+    "guide": {
+     "kind": "circle",
+     "xy": [
+      282,
+      55
+     ],
+     "r": 20,
+     "id": "guide",
+     "note": "the logo is not reproduced: position only"
+    },
+    "view": {
+     "kind": "circle",
+     "xy": [
+      241,
+      109
+     ],
+     "r": 12,
+     "id": "view"
+    },
+    "menu": {
+     "kind": "circle",
+     "xy": [
+      324,
+      109
+     ],
+     "r": 12,
+     "id": "menu"
+    },
+    "share": {
+     "kind": "box",
+     "box": [
+      270,
+      133,
+      296,
+      147
+     ],
+     "id": "share"
+    },
+    "bumper-l": {
+     "kind": "hump",
+     "win": [
+      40,
+      0,
+      275,
+      70
+     ],
+     "band": 0.035
+    },
+    "bumper-r": {
+     "kind": "hump",
+     "win": [
+      290,
+      0,
+      525,
+      70
+     ],
+     "band": 0.035
+    },
+    "flank-l": {
+     "kind": "extreme",
+     "win": [
+      0,
+      90,
+      282,
+      397
+     ],
+     "dir": "left",
+     "size": false,
+     "note": "outline: leftmost/rightmost x (outline landmark, reported, not gated)",
+     "axis": "x",
+     "gate": false
+    },
+    "flank-r": {
+     "kind": "extreme",
+     "win": [
+      283,
+      90,
+      565,
+      397
+     ],
+     "dir": "right",
+     "size": false,
+     "note": "outline: leftmost/rightmost x (outline landmark, reported, not gated)",
+     "axis": "x",
+     "gate": false
+    },
+    "grip-l tip": {
+     "kind": "extreme",
+     "win": [
+      0,
+      250,
+      282,
+      397
+     ],
+     "dir": "down",
+     "size": false,
+     "note": "outline: lowest point (outline landmark, reported, not gated)",
+     "gate": false
+    },
+    "grip-r tip": {
+     "kind": "extreme",
+     "win": [
+      283,
+      250,
+      565,
+      397
+     ],
+     "dir": "down",
+     "size": false,
+     "note": "outline: lowest point (outline landmark, reported, not gated)",
+     "gate": false
+    }
+   },
+   "colour": [
+    {
+     "name": "shell",
+     "kind": "shell",
+     "materials": [
+      "shell"
+     ]
+    },
+    {
+     "name": "face buttons",
+     "kind": "discs",
+     "of": [
+      "face-up",
+      "face-left",
+      "face-right",
+      "face-down"
+     ],
+     "frac": 0.8,
+     "materials": [
+      "face"
+     ]
+    },
+    {
+     "name": "sticks",
+     "kind": "discs",
+     "of": [
+      "stick-l",
+      "stick-r"
+     ],
+     "frac": 0.55,
+     "materials": [
+      "stick"
+     ]
+    },
+    {
+     "name": "view/menu",
+     "kind": "discs",
+     "of": [
+      "view",
+      "menu"
+     ],
+     "frac": 0.8,
+     "materials": [
+      "btn"
+     ]
+    },
+    {
+     "name": "d-pad",
+     "kind": "discs",
+     "of": [
+      "dpad-base"
+     ],
+     "frac": 0.7,
+     "materials": [
+      "metal"
+     ]
+    },
+    {
+     "name": "grip",
+     "kind": "window",
+     "win": [
+      30,
+      240,
+      110,
+      330
+     ],
+     "materials": [
+      "grip"
+     ]
+    }
+   ]
+  }
+ ]
+}

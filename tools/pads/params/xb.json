@@ -1,0 +1,689 @@
+{
+ "name": "xb",
+ "about": "Xbox Elite Wireless Controller Series 2, the product the site's photo shows (Steer supports it). Shell: TimHanewich's Series X|S scan, Thingiverse 6497183, CC BY-SA; the two share a layout to within a pixel of the 565 px photo, so the scan sets the proportions and the Elite's own parts are authored here: the faceted d-pad dish, the profile LEDs, the rubber grip panels.",
+ "default_colourway": "black",
+ "shell": [
+  {
+   "name": "shell",
+   "file": "../dl/tv-6497183/files/xbox_series_controller.stl",
+   "rot": [
+    0,
+    0,
+    0
+   ],
+   "material": "shell",
+   "clean": {
+    "voxel": 0.35,
+    "passes": [
+     [
+      40,
+      1.0
+     ]
+    ],
+    "cage": {
+     "faces": 15000,
+     "symmetry": true,
+     "levels": 2
+    }
+   }
+  }
+ ],
+ "flatten": [
+  {
+   "name": "face-up",
+   "x": 39.937,
+   "y": 34.032,
+   "r": 5.861,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "face-left",
+   "x": 29.386,
+   "y": 23.964,
+   "r": 5.727,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "face-right",
+   "x": 50.222,
+   "y": 23.093,
+   "r": 5.774,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "face-down",
+   "x": 39.971,
+   "y": 13.41,
+   "r": 5.781,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "guide",
+   "x": 0.101,
+   "y": 39.456,
+   "r": 6.082,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "view",
+   "x": -11.111,
+   "y": 24.666,
+   "r": 3.806,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "menu",
+   "x": 11.415,
+   "y": 24.524,
+   "r": 3.717,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "share",
+   "x": 0.069,
+   "y": 16.212,
+   "w": 9.616,
+   "h": 6.335,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "stick-l",
+   "x": -39.488,
+   "y": 25.692,
+   "r": 11.314,
+   "gap": 1.4,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "stick-r",
+   "x": 20.499,
+   "y": 1.499,
+   "r": 11.183,
+   "gap": 1.4,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "dpad",
+   "x": -20.268,
+   "y": -0.892,
+   "r": 12.195,
+   "gap": 1.2,
+   "blend": 1.5,
+   "quad": true,
+   "fill": 2.0
+  },
+  {
+   "name": "back-logo",
+   "x": 1,
+   "y": 42.7,
+   "w": 27,
+   "h": 6.5,
+   "dir": -1,
+   "plane": true,
+   "blend": 1.5,
+   "sink": 0.05,
+   "zwin": 2.0,
+   "band": 1.5,
+   "gap": 0.5,
+   "zref_at": [
+    -20,
+    42.7
+   ]
+  }
+ ],
+ "parts": [
+  {
+   "name": "face-up",
+   "type": "button",
+   "x": 40.332,
+   "y": 34.318,
+   "r": 5.204,
+   "h": 2.6,
+   "glyph": "text:Y",
+   "glyph_size": 6.505,
+   "glyph_material": "glyph-face",
+   "material": "face",
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "face-left",
+   "type": "button",
+   "x": 29.392,
+   "y": 24.068,
+   "r": 5.199,
+   "h": 2.6,
+   "glyph": "text:X",
+   "glyph_size": 6.499,
+   "glyph_material": "glyph-face",
+   "material": "face",
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "face-right",
+   "type": "button",
+   "x": 50.539,
+   "y": 23.047,
+   "r": 5.247,
+   "h": 2.6,
+   "glyph": "text:B",
+   "glyph_size": 6.559,
+   "glyph_material": "glyph-face",
+   "material": "face",
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "face-down",
+   "type": "button",
+   "x": 40.204,
+   "y": 13.366,
+   "r": 5.236,
+   "h": 2.6,
+   "glyph": "text:A",
+   "glyph_size": 6.544,
+   "glyph_material": "glyph-face",
+   "material": "face",
+   "gap": 0.3,
+   "well_dz": 0.6
+  },
+  {
+   "name": "guide",
+   "type": "button",
+   "x": 0.055,
+   "y": 39.263,
+   "r": 5.667,
+   "h": 1.0,
+   "bevel": 1.097,
+   "material": "gloss",
+   "gap": 0.3
+  },
+  {
+   "name": "view",
+   "type": "button",
+   "x": -11.229,
+   "y": 24.905,
+   "r": 3.268,
+   "h": 1.4,
+   "bevel": 0.84,
+   "glyph": "squares2",
+   "glyph_size": 2.988,
+   "stroke": 0.35,
+   "gap": 0.3
+  },
+  {
+   "name": "menu",
+   "type": "button",
+   "x": 11.402,
+   "y": 24.741,
+   "r": 3.292,
+   "h": 1.4,
+   "bevel": 0.846,
+   "glyph": "lines3",
+   "glyph_size": 2.821,
+   "stroke": 0.35,
+   "gap": 0.3
+  },
+  {
+   "name": "share",
+   "type": "rrect",
+   "x": 0.111,
+   "y": 16.421,
+   "w": 7.115,
+   "hh": 3.874,
+   "h": 1.2,
+   "radius": 2.4,
+   "bevel": 0.8,
+   "gap": 0.3
+  },
+  {
+   "name": "stick-l",
+   "type": "stick",
+   "x": -40.345,
+   "y": 25.432,
+   "collar_r": 12.8,
+   "collar_dz": -2.2,
+   "collar_flat": 0.45,
+   "neck_r": 3.731,
+   "cap_r": 6.881,
+   "cap_h": 3.4,
+   "cap_z": 10.0,
+   "dish": 1.1,
+   "rim_r": 6.38,
+   "rim_w": 2.06,
+   "rim_dz": 0.4,
+   "cap_material": "stickcap",
+   "lathe": true,
+   "edge": 0.9,
+   "collar_material": "collar"
+  },
+  {
+   "name": "stick-r",
+   "type": "stick",
+   "x": 20.749,
+   "y": 1.001,
+   "collar_r": 12.8,
+   "collar_dz": -2.2,
+   "collar_flat": 0.45,
+   "neck_r": 3.731,
+   "cap_r": 6.881,
+   "cap_h": 3.4,
+   "cap_z": 10.0,
+   "dish": 1.1,
+   "rim_r": 6.384,
+   "rim_w": 2.06,
+   "rim_dz": 0.4,
+   "cap_material": "stickcap",
+   "lathe": true,
+   "edge": 0.9,
+   "collar_material": "collar"
+  },
+  {
+   "name": "dpad-base",
+   "type": "facet",
+   "x": -20.686,
+   "y": -0.915,
+   "R": 12.6,
+   "flat": 3.6,
+   "slope": 0.13,
+   "h": 1.8,
+   "rim": 0.35,
+   "bevel": 0.35,
+   "material": "metal",
+   "gap": 0.35,
+   "well_dz": 0.6
+  },
+  {
+   "name": "profile-0",
+   "type": "rrect",
+   "x": 0.3,
+   "y": 3.11,
+   "w": 2.6,
+   "hh": 0.55,
+   "h": 0.1,
+   "radius": 0.27,
+   "bevel": 0.1,
+   "material": "ledw"
+  },
+  {
+   "name": "profile-1",
+   "type": "rrect",
+   "x": 0.3,
+   "y": 0.71,
+   "w": 2.6,
+   "hh": 0.55,
+   "h": 0.1,
+   "radius": 0.27,
+   "bevel": 0.1,
+   "material": "ledw"
+  },
+  {
+   "name": "profile-2",
+   "type": "rrect",
+   "x": 0.3,
+   "y": -1.69,
+   "w": 2.6,
+   "hh": 0.55,
+   "h": 0.1,
+   "radius": 0.27,
+   "bevel": 0.1,
+   "material": "ledw"
+  },
+  {
+   "name": "tick-01",
+   "type": "decal",
+   "x": -6.225,
+   "y": 4.925,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 22.5,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-02",
+   "type": "decal",
+   "x": -9.52,
+   "y": 9.856,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 45.0,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-03",
+   "type": "decal",
+   "x": -14.451,
+   "y": 13.151,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 67.5,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-04",
+   "type": "decal",
+   "x": -20.268,
+   "y": 14.308,
+   "glyph": "bar",
+   "size": 1.3,
+   "stroke": 0.22,
+   "rot": 90.0,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-05",
+   "type": "decal",
+   "x": -26.085,
+   "y": 13.151,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 112.5,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-06",
+   "type": "decal",
+   "x": -31.016,
+   "y": 9.856,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 135.0,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-07",
+   "type": "decal",
+   "x": -34.311,
+   "y": 4.925,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 157.5,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-08",
+   "type": "decal",
+   "x": -35.468,
+   "y": -0.892,
+   "glyph": "bar",
+   "size": 1.3,
+   "stroke": 0.22,
+   "rot": 180.0,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-09",
+   "type": "decal",
+   "x": -34.311,
+   "y": -6.709,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 202.5,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-10",
+   "type": "decal",
+   "x": -31.016,
+   "y": -11.64,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 225.0,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-11",
+   "type": "decal",
+   "x": -26.085,
+   "y": -14.935,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 247.5,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-12",
+   "type": "decal",
+   "x": -20.268,
+   "y": -16.092,
+   "glyph": "bar",
+   "size": 1.3,
+   "stroke": 0.22,
+   "rot": 270.0,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-13",
+   "type": "decal",
+   "x": -14.451,
+   "y": -14.935,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 292.5,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-14",
+   "type": "decal",
+   "x": -9.52,
+   "y": -11.64,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 315.0,
+   "glyph_material": "tick"
+  },
+  {
+   "name": "tick-15",
+   "type": "decal",
+   "x": -6.225,
+   "y": -6.709,
+   "glyph": "bar",
+   "size": 0.9,
+   "stroke": 0.22,
+   "rot": 337.5,
+   "glyph_material": "tick"
+  }
+ ],
+ "rig": {
+  "tilt": 0.0,
+  "margin": 0.01,
+  "lights": {
+   "key": 45,
+   "fill": 6,
+   "world": 0.05,
+   "top": 20,
+   "rim": 30,
+   "rimb": 8
+  },
+  "view_transform": "Khronos PBR Neutral"
+ },
+ "colourways": {
+  "black": {
+   "shell": {
+    "rgb": [
+     0.03,
+     0.03,
+     0.032
+    ],
+    "rough": 0.62,
+    "spec": 0.35,
+    "bump": 6,
+    "bump_strength": 0.02
+   },
+   "btn": {
+    "rgb": [
+     0.012,
+     0.012,
+     0.013
+    ],
+    "rough": 0.2,
+    "coat": 0.5,
+    "coat_rough": 0.1
+   },
+   "gloss": {
+    "rgb": [
+     0.0459,
+     0.0459,
+     0.0505
+    ],
+    "rough": 0.3,
+    "coat": 0.35,
+    "coat_rough": 0.12
+   },
+   "glyph": {
+    "rgb": [
+     0.6,
+     0.6,
+     0.62
+    ],
+    "rough": 0.4
+   },
+   "stick": {
+    "rgb": [
+     0.0534,
+     0.0534,
+     0.0534
+    ],
+    "rough": 0.7,
+    "bump": 12,
+    "bump_strength": 0.1
+   },
+   "face": {
+    "rgb": [
+     0.01,
+     0.01,
+     0.011
+    ],
+    "rough": 0.15,
+    "coat": 0.6,
+    "coat_rough": 0.08
+   },
+   "stickcap": {
+    "rgb": [
+     0.06,
+     0.06,
+     0.064
+    ],
+    "rough": 0.6
+   },
+   "grip": {
+    "rgb": [
+     0.06,
+     0.06,
+     0.066
+    ],
+    "rough": 0.85,
+    "spec": 0.3,
+    "stipple": [
+     2.2,
+     0.7,
+     2.0,
+     1.5
+    ]
+   },
+   "glyph-face": {
+    "rgb": [
+     0.18,
+     0.18,
+     0.19
+    ],
+    "rough": 0.3
+   },
+   "metal": {
+    "rgb": [
+     0.92,
+     0.93,
+     0.95
+    ],
+    "metal": 1.0,
+    "rough": 0.3
+   },
+   "ledw": {
+    "rgb": [
+     0.9,
+     0.9,
+     0.9
+    ],
+    "rough": 0.3,
+    "emit": [
+     1,
+     1,
+     1
+    ],
+    "emit_strength": 2.0
+   },
+   "tick": {
+    "rgb": [
+     0.25,
+     0.25,
+     0.26
+    ],
+    "rough": 0.5
+   },
+   "collar": {
+    "rgb": [
+     0.015,
+     0.015,
+     0.017
+    ],
+    "rough": 0.5
+   },
+   "bumper": {
+    "rgb": [
+     0.09,
+     0.09,
+     0.095
+    ],
+    "rough": 0.55
+   }
+  }
+ },
+ "mask_regions": [
+  {
+   "object": "shell",
+   "image": "../masks/xb-grip.png",
+   "soft": "../masks/xb-grip-hd-soft.png",
+   "material": "grip",
+   "front_min": -0.95
+  },
+  {
+   "object": "shell",
+   "image": "../masks/xb-top.png",
+   "soft": "../masks/xb-top-hd-soft.png",
+   "material": "bumper",
+   "front_min": -0.95
+  }
+ ]
+}

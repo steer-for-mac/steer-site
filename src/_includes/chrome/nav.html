@@ -1,7 +1,7 @@
 <header class="nav">
   <div class="nav-in">
     <a class="brand" href="index.html">
-      <img class="logo" src="assets/mark.png" alt="" width="22" height="22">
+      <img class="logo" src="assets/mark.png" alt="" width="22" height="22" eleventy:widths="22,44,66" sizes="22px">
       Steer
     </a>
     <details class="nav-menu">
@@ -15,27 +15,10 @@
       </nav>
     </details>
     <div class="nav-right">
-      {#- Two affordances, not one overloaded glyph. The TRIGGER shows the
-          appearance in force (sun or moon, picked by CSS from the resolved
-          data-theme); the MENU shows which of the three was chosen. That split
-          is the settled pattern -- shadcn and most current implementations do
-          exactly this -- and it exists because no icon set has a glyph meaning
-          "automatic, and it landed on dark". Lucide's eclipse and sun-moon both
-          say "automatic" and stop there, which is what this button used to do:
-          on a dark Mac you could see the site was following the system and
-          still not know what the system had resolved to.
-
-          A cycling button was the other option and is a known usability
-          weakness: nothing on it can say what the next press will do. The menu
-          says all three outright.
-
-          Native popover, so open/close/light-dismiss/Escape and the top layer
-          are the browser's. Radios rather than role="menuitemradio" because
-          :checked is a fact CSS can read, the label association is free, and the
-          controller picker below already works this way. NOT because arrow keys
-          come free: WebKit's radio groups do not wrap, and moving the selection
-          is not the same as browsing a menu, so theme.js owns the keyboard
-          model. #}
+      {#- The trigger shows the resolved theme (CSS picks sun or moon from
+          data-theme); the menu shows the chosen one of three. Radios, because
+          CSS can read :checked. Arrow keys are NOT free: WebKit radio groups
+          do not wrap, so theme.js owns the keyboard model. #}
       <button type="button" class="theme-toggle" id="themeToggle"
               popovertarget="themeMenu" aria-label="Appearance: System">
         {% include "art/nav-sun.svg" %}

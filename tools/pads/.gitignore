@@ -1,0 +1,8 @@
+# Downloaded inputs (fetch.py) and everything the pipeline writes. Only the
+# authored files are tracked: scene.py, params/, masks/, labels/, bin/.
+dl/
+ref/
+out/
+diff/
+final/
+cand/

@@ -1,0 +1,285 @@
+{
+ "name": "swv",
+ "about": "Nintendo Switch Pro Controller (original, 2017). Shell: Andrei Azoitei, Printables 531537, CC0 (front and back housings). Controls authored here.",
+ "default_colourway": "black",
+ "shell": [
+  {
+   "name": "shell-front",
+   "file": "../dl/pr-531537/Front.stl",
+   "rot": [
+    0,
+    0,
+    180
+   ],
+   "material": "shell"
+  },
+  {
+   "name": "shell-back",
+   "file": "../dl/pr-531537/Back.stl",
+   "rot": [
+    0,
+    0,
+    0
+   ],
+   "offset": [
+    0,
+    0,
+    -22
+   ],
+   "material": "back"
+  }
+ ],
+ "parts": [
+  {
+   "name": "face-up",
+   "type": "button",
+   "x": 40.0,
+   "y": 34.9,
+   "ring": 7.0,
+   "r": 5.3,
+   "h": 2.6,
+   "sink": 4,
+   "bevel": 1.9,
+   "glyph": "text:X",
+   "glyph_size": 5.2
+  },
+  {
+   "name": "face-left",
+   "type": "button",
+   "x": 28.2,
+   "y": 25.2,
+   "ring": 7.0,
+   "r": 5.3,
+   "h": 2.6,
+   "sink": 4,
+   "bevel": 1.9,
+   "glyph": "text:Y",
+   "glyph_size": 5.2
+  },
+  {
+   "name": "face-right",
+   "type": "button",
+   "x": 51.9,
+   "y": 25.2,
+   "ring": 7.0,
+   "r": 5.3,
+   "h": 2.6,
+   "sink": 4,
+   "bevel": 1.9,
+   "glyph": "text:A",
+   "glyph_size": 5.2
+  },
+  {
+   "name": "face-down",
+   "type": "button",
+   "x": 40.0,
+   "y": 15.3,
+   "ring": 7.0,
+   "r": 5.3,
+   "h": 2.6,
+   "sink": 4,
+   "bevel": 1.9,
+   "glyph": "text:B",
+   "glyph_size": 5.2
+  },
+  {
+   "name": "minus",
+   "type": "button",
+   "x": -19.0,
+   "y": 36.0,
+   "ring": 5,
+   "r": 3.2,
+   "h": 1.4,
+   "sink": 4,
+   "bevel": 1.0,
+   "glyph": "minus",
+   "glyph_size": 3.0,
+   "stroke": 0.55
+  },
+  {
+   "name": "plus",
+   "type": "button",
+   "x": 18.6,
+   "y": 36.0,
+   "ring": 5,
+   "r": 3.2,
+   "h": 1.4,
+   "sink": 4,
+   "bevel": 1.0,
+   "glyph": "plus",
+   "glyph_size": 3.0,
+   "stroke": 0.55
+  },
+  {
+   "name": "home",
+   "type": "button",
+   "x": 10.5,
+   "y": 25.2,
+   "ring": 6.5,
+   "r": 4.4,
+   "h": 1.0,
+   "sink": 4,
+   "bevel": 0.9,
+   "glyph": "house",
+   "glyph_size": 3.4,
+   "material": "home"
+  },
+  {
+   "name": "home-ring",
+   "type": "torus",
+   "x": 10.5,
+   "y": 25.2,
+   "ring": 6.5,
+   "R": 4.5,
+   "r": 0.35,
+   "h": 0.1,
+   "material": "homering"
+  },
+  {
+   "name": "capture",
+   "type": "rrect",
+   "x": -11.0,
+   "y": 25.2,
+   "ring": 5,
+   "w": 5.9,
+   "hh": 5.4,
+   "h": 1.0,
+   "sink": 4,
+   "radius": 0.9,
+   "bevel": 0.5,
+   "glyph": "circle",
+   "glyph_size": 3.0
+  },
+  {
+   "name": "stick-l",
+   "type": "stick",
+   "x": -42.3,
+   "y": 24.55,
+   "ring": 11.5,
+   "collar_r": 9.3,
+   "collar_dz": -3.0,
+   "collar_flat": 0.5,
+   "neck_r": 4.2,
+   "cap_r": 7.6,
+   "cap_h": 3.4,
+   "cap_z": 9.0,
+   "dish": 0.8,
+   "rim_r": 7.0,
+   "rim_w": 0.7,
+   "rim_dz": 0.5,
+   "material": "stick",
+   "collar_material": "stick"
+  },
+  {
+   "name": "stick-r",
+   "type": "stick",
+   "x": 19.8,
+   "y": 5.1,
+   "ring": 11.5,
+   "collar_r": 9.3,
+   "collar_dz": -3.0,
+   "collar_flat": 0.5,
+   "neck_r": 4.2,
+   "cap_r": 7.6,
+   "cap_h": 3.4,
+   "cap_z": 9.0,
+   "dish": 0.8,
+   "rim_r": 7.0,
+   "rim_w": 0.7,
+   "rim_dz": 0.5,
+   "material": "stick",
+   "collar_material": "stick"
+  },
+  {
+   "name": "dpad",
+   "type": "cross",
+   "x": -23.72,
+   "y": 4.65,
+   "ring": 14,
+   "dz": -1.2,
+   "arm": 11.4,
+   "width": 8.0,
+   "h": 2.8,
+   "bevel": 0.9,
+   "arrows": 1.8,
+   "material": "btn"
+  }
+ ],
+ "rig": {
+  "tilt": 0.0,
+  "margin": 0.01,
+  "lights": {
+   "key": 45,
+   "fill": 6,
+   "world": 0.05
+  }
+ },
+ "colourways": {
+  "black": {
+   "shell": {
+    "rgb": [
+     0.028,
+     0.028,
+     0.03
+    ],
+    "rough": 0.5,
+    "coat": 0.05,
+    "bump": 6,
+    "bump_strength": 0.04
+   },
+   "back": {
+    "rgb": [
+     0.02,
+     0.02,
+     0.022
+    ],
+    "rough": 0.25,
+    "coat": 0.3
+   },
+   "btn": {
+    "rgb": [
+     0.022,
+     0.022,
+     0.024
+    ],
+    "rough": 0.3,
+    "coat": 0.3
+   },
+   "glyph": {
+    "rgb": [
+     0.55,
+     0.55,
+     0.57
+    ],
+    "rough": 0.4
+   },
+   "home": {
+    "rgb": [
+     0.035,
+     0.035,
+     0.038
+    ],
+    "rough": 0.3,
+    "coat": 0.3
+   },
+   "homering": {
+    "rgb": [
+     0.25,
+     0.25,
+     0.26
+    ],
+    "rough": 0.3
+   },
+   "stick": {
+    "rgb": [
+     0.03,
+     0.03,
+     0.032
+    ],
+    "rough": 0.7,
+    "bump": 12,
+    "bump_strength": 0.1
+   }
+  }
+ }
+}

@@ -1,0 +1,42 @@
+<!-- BANNER. Logitech's page opens on a full-bleed photograph of the product in
+     a life; ours opens on the room the headline names: two people on a sofa,
+     laughing as he reaches for the game controller she is choosing with, and
+     a Mac on the TV. The photograph fades into the night field the demo band
+     continues, so the headline sits on the night, not on the picture, and
+     the live demo straight under it stays the proof. Leads with the Mac, not
+     the controller.
+
+     Codex CLI image generation, 2026-09-28. The screens are generated, not
+     Steer's UI: a picture of the app would be a claim about the app.
+     Nothing is composited in. The TV is a generic streaming page in Safari,
+     no service's logo, with invented show titles and faces. The only image above the
+     fold, so it is the one that loads eagerly, at high priority. -->
+<section class="l2-hero">
+  <div class="l2-hero-photo">
+    <img src="assets/life/couch.jpg" eleventy:widths="768,1152,1536" width="1536" height="1024" sizes="100vw" fetchpriority="high" alt="Two people on a sofa laugh as she picks a show with a game controller and he leans over her shoulder to press a button, a streaming site open in a browser on the TV behind them.">
+  </div>
+  <div class="l2-wrap l2-hero-in">
+    <h1>Your Mac, from across the room.</h1>
+    <div class="l2-hero-side">
+      <!-- The lede makes the page's promise in two steps, the sofa and then
+           the desk, so the per-app band further down is the payoff of a
+           sentence the reader has already met. "The app in front can have
+           buttons of its own" is the per-app layouts: ProfileManager.swift:58 watches the
+           front app, :177 resolves it to the layout that claims it
+           (Config.swift:226, on by default). The layouts are opt-in, added
+           in Presets, which is why the line says "can have". -->
+      <p class="l2-hero-lede">Steer turns the game controller you already own into a mouse and keyboard for your Mac. Point, click, scroll and type from the sofa. At your desk, the app in front can have buttons of its own.</p>
+      <div class="l2-cta">
+        <a class="btn btn-primary" href="#pricing">Join the launch list</a>
+        <!-- The trial only; the price is the close's, stated plainly there.
+             14 = TrialCalculator.trialDays
+             (steer Purchase/TrialCalculator.swift:4), counted in CALENDAR
+             days from the first controller connect.
+             PENDING, not shipped: the trial counting days of use instead
+             (pricing brief option G). Do not write "14 days of use" here or
+             in the close until TrialCalculator changes and ships. -->
+        <p>When it ships: 14 days free, no card, no account.</p>
+      </div>
+    </div>
+  </div>
+</section>
