@@ -1,0 +1,20 @@
+{
+  "ps": {
+    "l1": {"edge": "left", "at": 20}, "l3": {"edge": "left", "at": 480},
+    "r1": {"edge": "right", "at": 20}, "r3": {"edge": "right", "at": 481},
+    "create": {"edge": "top", "at": 190}, "touchpadClick": {"edge": "top", "at": 752}, "options": {"edge": "top", "at": 1314},
+    "dpad": {"edge": "bottom", "at": 274}, "face": {"edge": "bottom", "at": 1230}
+  },
+  "xb": {
+    "l1": {"edge": "left", "at": 50}, "l3": {"edge": "left", "at": 257},
+    "r1": {"edge": "right", "at": 51}, "r3": {"edge": "right", "at": 496},
+    "create": {"edge": "top", "at": 460}, "options": {"edge": "top", "at": 1020},
+    "dpad": {"edge": "bottom", "at": 541}, "face": {"edge": "bottom", "at": 1137}
+  },
+  "sw": {
+    "l1": {"edge": "left", "at": 43}, "l3": {"edge": "left", "at": 274},
+    "r1": {"edge": "right", "at": 43}, "r3": {"edge": "right", "at": 490},
+    "create": {"edge": "top", "at": 420}, "options": {"edge": "top", "at": 1070},
+    "dpad": {"edge": "bottom", "at": 514}, "face": {"edge": "bottom", "at": 1155}
+  }
+}

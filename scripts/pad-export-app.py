@@ -4,7 +4,7 @@
 Reads the committed src/assets/pads/cut-<fam>.png and src/_includes/art/controls-<fam>.svg
 (scripts/pad-cut.py, scripts/pad-controls.py) and writes, into the app's resources,
 pad-<fam>.heic (sips, quality 70: alpha survives, and the three weigh ~245 KB against
-~2.8 MB as PNG) and pad-<fam>.json. The JSON keys controls by the app's ControllerButton
+~2.8 MB as PNG) and pad-<fam>.json, with tools/pads/callouts.json's hand-placed labels. The JSON keys controls by the app's ControllerButton
 raw values, not the site's positional names, and lists under "notDrawn" every bindable
 button this front view cannot show, so the app's PadArtContractTests can fail when a
 button gains neither an outline nor a place in that list.
@@ -55,6 +55,21 @@ def outlines(svg):
     return controls
 
 
+CLUSTERS = {"dpad", "face"}
+
+
+def placed(fam, controls):
+    """Hand-placed labels (tools/pads/callouts.json): edge, and where along it in pad units."""
+    with open("tools/pads/callouts.json") as f:
+        spec = json.load(f).get(fam, {})
+    for key, c in spec.items():
+        if key not in controls and key not in CLUSTERS:
+            sys.exit(f"{fam}: callout for {key}, which is not drawn")
+        if c.get("edge") not in {"left", "right", "top", "bottom"} or not isinstance(c.get("at"), int):
+            sys.exit(f"{fam}: callout {key} needs an edge and an integer at: {c}")
+    return spec
+
+
 def main(app):
     out = os.path.join(app, "Steer/Sources/Steer/Resources/Pads")
     os.makedirs(out, exist_ok=True)
@@ -66,7 +81,8 @@ def main(app):
         clash = set(controls) & set(not_drawn)
         if clash:
             sys.exit(f"{fam}: {sorted(clash)} both drawn and listed as not drawn")
-        doc = {"size": [w, h], "controls": dict(sorted(controls.items())), "notDrawn": not_drawn}
+        doc = {"size": [w, h], "controls": dict(sorted(controls.items())), "notDrawn": not_drawn,
+               "callouts": placed(fam, controls)}
         with open(os.path.join(out, f"pad-{fam}.json"), "w") as f:
             json.dump(doc, f, separators=(",", ":"))
             f.write("\n")
