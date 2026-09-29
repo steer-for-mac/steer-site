@@ -16,17 +16,21 @@ import re
 import subprocess
 import sys
 
-# site name -> ControllerButton raw value. A site part missing here (the Xbox d-pad's
-# diagonals and hub, the light bar) is decoration the app never binds.
+# site name -> ControllerButton raw value. Every site part is here or in DECOR, or the
+# export fails: a part this skipped once (l1/r1, lost to a digit-less regex) was also
+# listed as not drawn, which the app's contract test cannot tell from the truth.
+DECOR = {"up-left", "up-right", "down-left", "down-right", "dpad", "lightbar"}
 KEYS = {
+    "l1": "l1", "r1": "r1",
     "cross": "cross", "circle": "circle", "triangle": "triangle", "square": "square",
     "ls": "l3", "rs": "r3",
     "up": "dpadUp", "down": "dpadDown", "left": "dpadLeft", "right": "dpadRight",
     "create": "create", "options": "options", "home": "psButton",
     "touchpad": "touchpadClick", "mute": "micMute", "capture": "share",
 }
-SHOULDERS = ["l1", "r1", "l2", "r2"]
-# Bindable on this family's pads but not visible from the front. The Elite 2 art has
+SHOULDERS = ["l2", "r2"]
+# Bindable on this family's pads but not visible from the front (the triggers sit
+# behind the bumpers). The Elite 2 art has
 # a profile button where a Series pad has Share, so Share is not drawn on it either.
 NOT_DRAWN = {
     "ps": SHOULDERS + ["backButtonLeft", "backButtonRight"],
@@ -36,7 +40,12 @@ NOT_DRAWN = {
 
 
 def outlines(svg):
-    parts = dict(re.findall(r'<path data-c="([a-z-]+)" d="([^"]+)"', svg))
+    parts = dict(re.findall(r'<path data-c="([a-z0-9-]+)" d="([^"]+)"', svg))
+    if svg.count("<path ") != len(parts):
+        sys.exit(f"read {len(parts)} of {svg.count('<path ')} paths; the pattern no longer fits the SVG")
+    unknown = set(parts) - set(KEYS) - DECOR
+    if unknown:
+        sys.exit(f"site parts neither mapped nor decoration: {sorted(unknown)}")
     controls = {}
     for site, d in parts.items():
         if site not in KEYS:
