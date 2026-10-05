@@ -144,7 +144,7 @@ A `steer://debug/*` family exists in DEBUG builds only and is not part of the sh
 
 ### Reading state back
 
-`steer://query/state`, `query/profiles`, `query/macros` and `query/snapshots` return JSON. Steer also exposes about thirty App Intents to Shortcuts, Siri and Spotlight, six of which read rather than write: current profile, connected controller, active layer, battery level, the binding on a given button, and full state. A Focus filter switches profile with your macOS Focus mode and restores the previous one when it ends.
+`steer://query/state`, `query/profiles`, `query/macros` and `query/snapshots` return JSON. Steer also exposes about thirty App Intents to Shortcuts, Siri and Spotlight, seven of which read rather than write: current profile, connected controller, active layer, battery level, the binding on a given button, full state, and a section of Steer's Help. A Focus filter switches profile with your macOS Focus mode and restores the previous one when it ends.
 
 ### Listening
 

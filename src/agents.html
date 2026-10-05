@@ -136,7 +136,7 @@ bodyEnd: |-
 
 <!-- BOTH DIRECTIONS — the page used to claim three URLs were "the whole surface",
      which undersold it badly: the scheme has twenty kinds of command, there are
-     ~20 Shortcuts actions of which six are read-backs, and Steer broadcasts on
+     ~20 Shortcuts actions of which seven are read-backs, and Steer broadcasts on
      the distributed notification centre. This is the one page whose reader wants
      that density; the homepage still owes the non-technical reader restraint. -->
 <section class="sec ag-rule">
@@ -146,7 +146,7 @@ bodyEnd: |-
     <p class="lead ag-lead-60">The URLs above push a state onto the pad. The other half of the surface reads state out, so a script can ask Steer what is going on instead of keeping its own copy in a temp file.</p>
 
     <h3 class="h3 ag-h3-48">Ask it</h3>
-    <p class="ag-p">Steer ships around twenty Shortcuts actions, and six of them are questions: the current profile, the active layer, the connected controller, the battery level, what a given button is bound to, and one Get State that returns all of it in a single call. Anything that can run a Shortcut can read them. From a shell, <span class="mono">open -g "steer://query/state"</span> writes the same snapshot to the clipboard as JSON, with <span class="mono">query/profiles</span> and <span class="mono">query/macros</span> alongside it for the IDs and names the other URLs take.</p>
+    <p class="ag-p">Steer ships around twenty Shortcuts actions, and seven of them are questions: the current profile, the active layer, the connected controller, the battery level, what a given button is bound to, one Get State that returns all of it in a single call, and Get Steer Help, which returns a section of the docs with your own buttons. Anything that can run a Shortcut can read them. From a shell, <span class="mono">open -g "steer://query/state"</span> writes the same snapshot to the clipboard as JSON, with <span class="mono">query/profiles</span> and <span class="mono">query/macros</span> alongside it for the IDs and names the other URLs take.</p>
 
     <h3 class="h3 ag-h3-44">Listen to it</h3>
     <p class="ag-p">Steer posts to the macOS distributed notification centre whether or not anything is subscribed, so Hammerspoon, Alfred, Raycast, or a script of your own can watch it without an SDK on either side.</p>
