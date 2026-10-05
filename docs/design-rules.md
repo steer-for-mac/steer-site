@@ -188,7 +188,7 @@ for testers, the way the Elite paddles and generic controllers already do.
 confident "Yes".
 
 Corollary for numbers: a count sourced from a bundle (35 `.lproj`, 315 SDL
-entries, 17 route families) is checkable and should be stated. A count inferred
+entries, 20 route families) is checkable and should be stated. A count inferred
 from a feature list is not. When ControllerKeys' page said nothing about
 languages, the answer was to count the `.lproj` directories in their public
 repository, not to write a dash.

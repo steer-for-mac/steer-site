@@ -107,11 +107,12 @@ Steer is drivable from outside on standard macOS primitives, so a shell line, an
 
 ### URL scheme
 
-Nineteen route families. Almost all are fire and forget: they never block and never return an error. The one exception is `snapshot/restore`, which changes configuration and therefore requires an explicit `confirm=true`; without it Steer opens Settings at History and lets the person decide. Always use `open -g` so focus is not stolen.
+Twenty route families. Almost all are fire and forget: they never block and never return an error. The one exception is `snapshot/restore`, which changes configuration and therefore requires an explicit `confirm=true`; without it Steer opens Settings at History and lets the person decide. Always use `open -g` so focus is not stolen.
 
 ```
 open -g "steer://profile/<id>"            switch profile by id
 open -g "steer://profile/by-name/<name>"  switch profile by display name
+open -g "steer://profile/automatic"       back to the customisation the app in front selects
 open -g "steer://layer/<name>"            toggle a modifier layer
 open -g "steer://macro/<name>"            play a saved macro
 open -g "steer://haptic/<pattern>"        pulse | double | success | warning | error
@@ -124,10 +125,11 @@ open -g "steer://autoswitch/<on|off|toggle>"   per-app profile switching
 open -g "steer://pins/<suspend|resume|toggle>" pinned bindings
 open -g "steer://gridsnap/<zone>"         snap the front window to a screen zone
 open -g "steer://gridsnap[/<show|hide|toggle>]" open the aiming grid instead
-open -g "steer://daisy[/<show|hide|toggle>]"   on-screen keyboard
+open -g "steer://keyboard[/<show|hide|toggle>]" on-screen keyboard
 open -g "steer://radial"                  radial app launcher
 open -g "steer://palette"                 menu palette
 open -g "steer://help[/<show|hide>]"      help overlay
+open -g "steer://padview[/<show|hide>]"   live controller view in the corner
 open -g "steer://settings[/<section>]"    open Settings at a pane
 open -g "steer://snapshot/capture"        take a configuration restore point
 open -g "steer://snapshot/restore/<uuid>?confirm=true"  roll configuration back
