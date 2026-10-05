@@ -29,7 +29,8 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 
 G = "tools/pads/given/"
 SRC = {"ps": "dualsense-src.png", "xb": "xbox elite wireless controller series 2-src.png", "sw": "swpro-src.png",
-       "xs": "xbox series-src.png", "ds4": "dualshock4-src.png"}
+       "xs": "xbox series-src.png", "ds4": "dualshock4-src.png", "graphite": "generic-graphite-src.png",
+       "white": "generic-white-src.png", "navy": "generic-navy-src.png"}
 with open("tools/pads/crop.json") as f:
     CROP = json.load(f)
 OUT, CHECK = "src/_includes/art/", "scratch/controls/"

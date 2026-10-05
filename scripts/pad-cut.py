@@ -32,6 +32,10 @@ PADS = {
     "sw": ("swpro-src.png", 1126),
     "xs": ("xbox series-src.png", 1142),
     "ds4": ("dualshock4-src.png", 1202),
+    # Generic pads, for MFi and unknown controllers: original designs, no real product.
+    "graphite": ("generic-graphite-src.png", 1202),
+    "white": ("generic-white-src.png", 1202),
+    "navy": ("generic-navy-src.png", 1202),
 }
 THUMB = 224  # 2x a 112px picker thumbnail
 

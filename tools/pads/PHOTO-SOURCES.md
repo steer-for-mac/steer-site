@@ -100,6 +100,38 @@ rejected candidates and why.
 - **Outlines:** `scripts/pad-controls.py xs ds4` from `controls/xs.json` and
   `controls/ds4.json`, judged on the overlays in `scratch/controls/`.
 
+### Generic pads (graphite, white, navy) -> `generic-graphite-src.png`, `generic-white-src.png`, `generic-navy-src.png`
+
+- **Source:** generated, not photographed. Codex CLI image generation
+  (`codex exec -s workspace-write`, built-in image tool, codex-cli 0.159.3),
+  2026-10-05, one 1536x1024 image per pad. Prompts and logs are in the
+  gitignored `scratch/aiimg/pads/gen-2026-10-05-generic/`.
+- **Licence:** none needed; no third party's photo or scan.
+- **Why:** the app's picture for MFi and unknown pads, which had none and got
+  a text list. Sean, 2026-10-04: "have codex generate 3 images of generic mfi
+  pads? users might want to be able to change their shown gamepad?" The app
+  offers all three under the pad's details > Picture.
+- **Prompt (summarised, shared):** official studio product photograph of a
+  generic, unbranded MFi-style controller, an original design copying no real
+  product, no logos or text on it; two clickable sticks, a d-pad, A/B/X/Y
+  face buttons in the Xbox positions (Y top, X left, B right, A bottom), a
+  round Home button with no logo, a small Options button and a Menu button
+  (three lines), bumpers and triggers on the top edge; straight-on, flat
+  mid-grey backdrop. Per design: graphite, offset sticks, cross d-pad, dark
+  caps with grey letters; white and light grey, symmetric sticks, four arrow
+  buttons; navy, compact, disc d-pad, black caps with coloured letters.
+- **Gate:** each checked by eye for logos, text and the A/B/X/Y positions
+  before cutting; none had a logo or text, all letters in place.
+- **Cut:** `scripts/pad-cut.py graphite white navy`. Each Vision mask reported
+  a single instance. Native 1514x962 / 1496x956 / 1511x950 -> 1202 wide.
+- **Outlines:** `scripts/pad-controls.py graphite white navy` from
+  `controls/<fam>.json`, whose round parts were placed from Hough-circle
+  detections (`scratch/.../circles.py`), judged on the overlays in
+  `scratch/controls/`: 20 parts each, SAM scores 0.97-0.99. The graphite
+  pad's plain cross has no diagonal corners, so its `up-left`/`up-right`
+  decoration paths are empty, which `pad-export-app.py` now allows for
+  decoration only.
+
 ## Superseded
 
 ### DualSense (white) -> was `dualsense-src.png` (installed 5a41a9d, 2026-09-27)

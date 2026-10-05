@@ -40,13 +40,21 @@ NOT_DRAWN = {
     "xs": SHOULDERS,
     # DualShock 4: its Share is the app's `create`; no mic mute, no back buttons.
     "ds4": SHOULDERS,
+    # Generic pads stand in for MFi and unknown controllers, which may report Share.
+    "graphite": SHOULDERS + ["share"],
+    "white": SHOULDERS + ["share"],
+    "navy": SHOULDERS + ["share"],
 }
 
 
 def outlines(svg):
-    parts = dict(re.findall(r'<path data-c="([a-z0-9-]+)" d="([^"]+)"', svg))
+    parts = dict(re.findall(r'<path data-c="([a-z0-9-]+)" d="([^"]*)"', svg))
     if svg.count("<path ") != len(parts):
         sys.exit(f"read {len(parts)} of {svg.count('<path ')} paths; the pattern no longer fits the SVG")
+    # A plain cross d-pad has no diagonal corners to cut; a button must have a shape.
+    empty = {name for name, d in parts.items() if not d} - DECOR
+    if empty:
+        sys.exit(f"empty outline for {sorted(empty)}")
     unknown = set(parts) - set(KEYS) - DECOR
     if unknown:
         sys.exit(f"site parts neither mapped nor decoration: {sorted(unknown)}")
