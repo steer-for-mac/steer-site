@@ -77,7 +77,7 @@ bodyEnd: |-
          fine and then fails on the reader's desk. -->
     <div class="callout ag-callout-gap">
       <div class="eyebrow">Pick the right light</div>
-      <p class="ag-callout-p2">The light bar is Steer's own display. It repaints from your profile's palette on every state change, and holding a shoulder button, toggling gyro, a low-battery warning, or the pad settling into idle five seconds after you last touched it are all state changes. Set a colour while the pad sits untouched and it stays; pick the pad up and the bar goes back to being a controller light. <b class="ag-b">The five white player LEDs are a separate channel that Steer never writes to on its own</b>, which makes them the surface that holds a status while you keep using the pad as a pad. Drive those, and read them as a count rather than a colour. The mute-button LED is on the same untouched channel, but it is faint enough in a normally lit room that it only earns its place on a dim desk.</p>
+      <p class="ag-callout-p2">The light bar is Steer's own display. It repaints from your customization's palette on every state change, and holding a shoulder button, toggling gyro, a low-battery warning, or the pad settling into idle five seconds after you last touched it are all state changes. Set a colour while the pad sits untouched and it stays; pick the pad up and the bar goes back to being a controller light. <b class="ag-b">The five white player LEDs are a separate channel that Steer never writes to on its own</b>, which makes them the surface that holds a status while you keep using the pad as a pad. Drive those, and read them as a count rather than a colour. The mute-button LED is on the same untouched channel, but it is faint enough in a normally lit room that it only earns its place on a dim desk.</p>
       <p class="foot-note ag-fn-14">The player LEDs read as a count rather than a colour, so they stay legible with red-green colour blindness. <span class="mono">steer://leds/mask/&lt;hex&gt;</span> addresses the five individually, bit 0 leftmost, <span class="mono">00</span> to <span class="mono">1F</span>, if you want an alternating pattern rather than a fill.</p>
     </div>
 
@@ -146,7 +146,7 @@ bodyEnd: |-
     <p class="lead ag-lead-60">The URLs above push a state onto the pad. The other half of the surface reads state out, so a script can ask Steer what is going on instead of keeping its own copy in a temp file.</p>
 
     <h3 class="h3 ag-h3-48">Ask it</h3>
-    <p class="ag-p">Steer ships around twenty Shortcuts actions, and seven of them are questions: the current profile, the active layer, the connected controller, the battery level, what a given button is bound to, one Get State that returns all of it in a single call, and Get Steer Help, which returns a section of the docs with your own buttons. Anything that can run a Shortcut can read them. From a shell, <span class="mono">open -g "steer://query/state"</span> writes the same snapshot to the clipboard as JSON, with <span class="mono">query/profiles</span> and <span class="mono">query/macros</span> alongside it for the IDs and names the other URLs take.</p>
+    <p class="ag-p">Steer ships around twenty Shortcuts actions, and seven of them are questions: the current customization, the active layer, the connected controller, the battery level, what a given button is bound to, one Get State that returns all of it in a single call, and Get Steer Help, which returns a section of the docs with your own buttons. Anything that can run a Shortcut can read them. From a shell, <span class="mono">open -g "steer://query/state"</span> writes the same snapshot to the clipboard as JSON, with <span class="mono">query/customizations</span> and <span class="mono">query/macros</span> alongside it for the IDs and names the other URLs take.</p>
 
     <h3 class="h3 ag-h3-44">Listen to it</h3>
     <p class="ag-p">Steer posts to the macOS distributed notification centre whether or not anything is subscribed, so Hammerspoon, Alfred, Raycast, or a script of your own can watch it without an SDK on either side.</p>
@@ -154,7 +154,7 @@ bodyEnd: |-
       <table class="prim">
         <thead><tr><th>Notification</th><th>Payload</th></tr></thead>
         <tbody>
-          <tr><td><code>com.steer.profile.changed</code></td><td><span class="mono">profileID</span>, <span class="mono">profileName</span>, <span class="mono">previousProfileID</span></td></tr>
+          <tr><td><code>com.steer.customization.changed</code></td><td><span class="mono">customizationID</span>, <span class="mono">customizationName</span>, <span class="mono">previousCustomizationID</span></td></tr>
           <tr><td><code>com.steer.layer.changed</code></td><td><span class="mono">layerID</span>, <span class="mono">toggled</span>, <span class="mono">source</span></td></tr>
           <tr><td><code>com.steer.controller.connected</code></td><td><span class="mono">controllerName</span>, <span class="mono">controllerType</span>, <span class="mono">bundleHint</span></td></tr>
           <tr><td><code>com.steer.controller.disconnected</code></td><td><span class="mono">controllerName</span></td></tr>
@@ -166,7 +166,7 @@ bodyEnd: |-
     <p class="foot-note ag-fn">Delivery is forced through even when the subscribing app is backgrounded, so a sleeping Hammerspoon still gets the event. The controller tokens (<span class="mono">dualsense</span>, <span class="mono">ds4</span>, <span class="mono">xbox</span>, <span class="mono">switch</span>, <span class="mono">mfi</span>) are held stable across Steer releases so a pattern match keeps working.</p>
 
     <h3 class="h3 ag-h3-44">The rest of the surface</h3>
-    <p class="ag-p">Five commands cover the status light. The scheme has twenty kinds of command in all. Most are fire-and-forget; a few read state back instead: switch profile by ID or by name, toggle a layer, play a saved macro, open the on-screen keyboard, the radial launcher or the menu palette, pause per-app profile switching, suspend pinned overlays, open a settings pane. It also runs the other way round without a script at all: Steer registers a macOS Focus filter, so entering a Focus mode switches the profile and leaving it puts the previous one back.</p>
+    <p class="ag-p">Five commands cover the status light. The scheme has twenty kinds of command in all. Most are fire-and-forget; a few read state back instead: switch customization by ID or by name, toggle a layer, play a saved macro, open the on-screen keyboard, the radial launcher or the menu palette, pause following the app in front, suspend pinned overlays, open a settings pane. It also runs the other way round without a script at all: Steer registers a macOS Focus filter, so entering a Focus mode switches the customization and leaving it puts the previous one back.</p>
   </div>
 </section>
 

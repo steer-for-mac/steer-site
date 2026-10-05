@@ -23,8 +23,8 @@ Steer is an input layer. It does not rebuild what macOS or the tools you already
 - **Dictation** is macOS Dictation, started by a button, with nothing to build in Shortcuts. The system dictation shortcut is a symbolic hotkey a synthetic keystroke cannot reach, so Steer presses the frontmost app's own Dictation menu item instead, matched on its identifier rather than its translated title. It needs the Automation grant, an app that offers the item, and a text field ready for it; each of those failing is a message, not a silent no-op.
 - **Window management** is Rectangle, installed separately and driven through its documented URL commands rather than by faking its keyboard shortcuts. Steer sends an instruction to a window manager that is better at this than Steer would be.
 - **Automation** is Shortcuts, AppleScript, shell scripts, or the tool you already use. There are ready-made setups for Raycast and Handy, and starting points for Keyboard Maestro and Hammerspoon. Steer supplies the button; your existing automation does the work.
-- **Focus and search** are the system's. A Focus filter switches profile with your Focus mode. Profiles are indexed for Spotlight and reachable by Siri; macros are indexed too on macOS 15 and later.
-- **Sending something into Steer** uses the standard Services menu: select text or a link in any app, choose Bind to Steer.
+- **Focus and search** are the system's. A Focus filter switches the app customization with your Focus mode. App customizations are indexed for Spotlight and reachable by Siri; macros are indexed too on macOS 15 and later.
+- **Sending something into Steer** uses the standard Services menu: select text or a link in any app, choose Set a Button in Steer.
 - **Output is real events.** Steer posts genuine macOS mouse, scroll and keyboard events, so clicking, dragging and scrolling behave natively in every app, including ones that never heard of Steer. There is no plugin to install and nothing per-app to maintain.
 
 For a user this means there is little new to learn and nothing to migrate. If you already have a keyboard shortcut, a Shortcuts automation, or another automation you like, Steer gives it a button. If you do not, the defaults already work.
@@ -46,7 +46,7 @@ Say these plainly if asked. They are not defects, and pretending otherwise loses
 - **People who cannot comfortably use a mouse and keyboard.** Steer is usable one-handed, and a single button can do several jobs depending on how it is pressed.
 - **Presenters and teachers.** Advance slides, point at the screen with a laser dot, switch apps and play media without walking back to the laptop mid-sentence.
 - **People who are not "computer people".** The defaults work on first connect: point, click, scroll, arrows, volume. Nothing has to be configured for it to be useful.
-- **Power users and developers.** Layers, chords, macros, scripts, per-app profiles, a documented URL surface, Shortcuts and Focus filters.
+- **Power users and developers.** Layers, chords, macros, scripts, per-app customizations, a documented URL surface, Shortcuts and Focus filters.
 - **People running AI coding agents.** A PlayStation pad can light up to show what an agent is doing; any pad with rumble can buzz when it needs you. Approve from across the room. See the agents page.
 - **Gamers.** Remap a pad to keys for games and emulators that ignore controllers.
 
@@ -66,12 +66,12 @@ Both, and the order matters. It is built as a productivity and accessibility too
 - **Can I press two buttons at once as one command?** Yes, chords, and sequences (one button then another). Both are there if you want them and safely ignorable if you do not.
 - **Can I record something I do repeatedly?** Yes. Steer records a sequence of controller input and replays it from a button.
 - **Can a button run a script or a Shortcut?** Yes: a Shortcut (with text input), an AppleScript, a shell script, a URL, or type a block of text. Anything a script can do, a button can start.
-- **Does it come with setups for apps I already use?** Yes. Bundled profiles for Xcode, Figma, VS Code, Mail, DaVinci Resolve and Final Cut Pro, community setups for apps like Slack, Zoom, Claude Desktop and Cursor, and automation presets for Raycast and Handy (Keyboard Maestro and Hammerspoon ship as starting points you fill in).
+- **Does it come with setups for apps I already use?** Yes. Bundled app customizations for Xcode, Figma, VS Code, Mail, DaVinci Resolve and Final Cut Pro, community setups for apps like Slack, Zoom, Claude Desktop and Cursor, and automation presets for Raycast and Handy (Keyboard Maestro and Hammerspoon ship as starting points you fill in).
 - **Will it tell me if a mapping clashes with a Mac shortcut?** Yes, for seven system shortcuts it knows: the three screenshot chords, Spotlight, app switching, Cmd+Q and Cmd+W. It does not know each app's own shortcuts.
 - **Does it work with my controller?** PlayStation (DualSense, DualSense Edge, DualShock 4), Xbox (Series, One, Elite), Switch Pro, and any Made-for-iPhone controller. Wired or Bluetooth. A generic-pad path covers 300+ more, in beta. The controller support page is explicit about what is untested.
 - **My old controller's sticks drift. Is it unusable?** Probably not. Steer corrects small stick drift on its own, which is the usual reason a worn pad feels hopeless for cursor work.
 - **Is it in my language?** 35 languages, including the built-in help.
-- **Does it need the internet?** No. It runs offline. The only network use is licence activation and checks, an update check you start yourself, and fetching a profile if you paste a link to one.
+- **Does it need the internet?** No. It runs offline. The only network use is licence activation and checks, an update check you start yourself, and fetching an app customization if you paste a link to one.
 - **Do I have to remember my own mappings?** No. A button map can be shown on screen at any time.
 - **Is it hard to set up?** No. It works on connect, and there is a guided first run. Every settings change is saved as a restore point you can roll back.
 - **Can I try it?** At launch, 14 days, full functionality, no card and no account.
@@ -81,11 +81,11 @@ Both, and the order matters. It is built as a productivity and accessibility too
 
 Optional, and none of it is needed to start:
 
-- **Layers.** Hold L1, R1, both, L2 or R2 for an entirely different set of bindings. Six layers per profile, and a layer can be pinned so you are not holding anything.
+- **Layers.** Hold L1, R1, both, L2 or R2 for an entirely different set of bindings. Six layers per app customization, and a layer can be pinned so you are not holding anything.
 - **Four ways to press one button.** Tap, hold, double tap, and repeat-while-held. Separately, a binding can be a chord (two buttons at once) or a sequence (one then another).
 - **Sticks are not fixed.** A stick can be a pointer, a scroll wheel, a D-pad, eight directional buttons (so the left stick can be WASD, diagonals holding two keys), a tab cycler, or a flick-turn.
-- **Per-app profiles.** The binding set changes with the frontmost app, and a Focus filter can change it with your Focus mode.
-- **Pinned overlays.** A few bindings that stay available on top of whatever profile is active, with one button to suspend them all.
+- **Follows the app in front.** The binding set changes with the frontmost app, and a Focus filter can change it with your Focus mode.
+- **Pinned overlays.** A few bindings that stay available on top of whatever customization is active, with one button to suspend them all.
 - **Feel.** Haptics confirm actions without looking. The rare confirmations are on by default; repeating buzzes such as every scroll tick are off. On DualSense and DualSense Edge the triggers can physically stiffen, set independently per trigger, off by default.
 - **Calibration.** Sticks and gyro can be recalibrated per controller.
 
@@ -94,9 +94,9 @@ Optional, and none of it is needed to start:
 - **Accessibility** is required. It is mostly how Steer posts the cursor, scroll and keyboard events your controller stands in for. Some features also reach into the frontmost app. The ones you turn on only do it while you use them: the menu palette reads its menu bar and activates the item you pick, and the Dictation binding presses that app's own Dictation menu item. One reach is not something you turn on: macOS never brings an app forward for a synthesized click, so after a click that lands in an app which was not already frontmost, Steer asks for its window to be raised. All of that goes through System Events.
 - **Automation** is permission to control System Events, which is how a sandboxed app reaches another app's menu bar. The first-run wizard asks for it, and so does the first use of the menu palette, Dictation, or a click that fronts another app.
 - **Input Monitoring** is asked for on a DualSense Edge connect, and never otherwise. Measured 2026-08-06 on one controller, a standard DualSense, reading raw input over both USB and Bluetooth with the grant revoked: it kept working. That is a single pad, not a general claim about every HID device. It stays because an Edge's rear paddles are untested, nobody on the project owning one. Declining it breaks nothing that has been measured.
-- Steer never watches your keystrokes and never reads the contents of your documents or screen. It reads the pasteboard in two places: the Services item "Bind to Steer", and copy and paste of a binding inside the bindings editor.
-- Recording a macro writes controller input to disk: full per-frame state (buttons, sticks, triggers, touchpad, motion, battery) for up to 30s, in a file on the Mac. User-initiated from Settings and deletable there. In the direct build it is not transmitted; under the App Store flag the same iCloud setting that syncs profiles syncs macros, and it defaults to off.
-- **No sync in the direct build.** Nothing is synced between machines. Profile and macro sync via CloudKit is built but compiled in only under the App Store flag, where it is a setting that defaults to off.
+- Steer never watches your keystrokes and never reads the contents of your documents or screen. It reads the pasteboard in two places: the Services item "Set a Button in Steer", and copy and paste of a binding inside the bindings editor.
+- Recording a macro writes controller input to disk: full per-frame state (buttons, sticks, triggers, touchpad, motion, battery) for up to 30s, in a file on the Mac. User-initiated from Settings and deletable there. In the direct build it is not transmitted; under the App Store flag the same iCloud setting that syncs app customizations syncs macros, and it defaults to off.
+- **No sync in the direct build.** Nothing is synced between machines. App customization and macro sync via CloudKit is built but compiled in only under the App Store flag, where it is a setting that defaults to off.
 - Sold through Lemon Squeezy as merchant of record; refunds go through them.
 
 ## Platform
@@ -112,9 +112,9 @@ Steer is drivable from outside on standard macOS primitives, so a shell line, an
 Twenty route families. Almost all are fire and forget: they never block and never return an error. The one exception is `snapshot/restore`, which changes configuration and therefore requires an explicit `confirm=true`; without it Steer opens Settings at History and lets the person decide. Always use `open -g` so focus is not stolen.
 
 ```
-open -g "steer://profile/<id>"            switch profile by id
-open -g "steer://profile/by-name/<name>"  switch profile by display name
-open -g "steer://profile/automatic"       back to the customisation the app in front selects
+open -g "steer://customization/<id>"            switch customization by id
+open -g "steer://customization/by-name/<name>"  switch customization by display name
+open -g "steer://customization/automatic"       back to the customization the app in front selects
 open -g "steer://layer/<name>"            toggle a modifier layer
 open -g "steer://macro/<name>"            play a saved macro
 open -g "steer://haptic/<pattern>"        pulse | double | success | warning | error
@@ -123,7 +123,7 @@ open -g "steer://led/auto"                hand the light bar back to Steer
 open -g "steer://leds/<0-5|off>"          player LEDs, filled left to right
 open -g "steer://leds/mask/<hex>"         player LEDs individually, 00-1F, bit 0 leftmost
 open -g "steer://micled/<off|on|pulse>"   mute-button LED
-open -g "steer://autoswitch/<on|off|toggle>"   per-app profile switching
+open -g "steer://autoswitch/<on|off|toggle>"   follows the app in front
 open -g "steer://pins/<suspend|resume|toggle>" pinned bindings
 open -g "steer://gridsnap/<zone>"         snap the front window to a screen zone
 open -g "steer://gridsnap[/<show|hide|toggle>]" open the aiming grid instead
@@ -137,21 +137,21 @@ open -g "steer://snapshot/capture"        take a configuration restore point
 open -g "steer://snapshot/restore/<uuid>?confirm=true"  roll configuration back
 open -g "steer://wizard"                  onboarding wizard
 open -g "steer://suggest"                 open the suggestions page
-open -g "steer://query/<state|profiles|macros|snapshots>"  read back as JSON
+open -g "steer://query/<state|customizations|macros|snapshots>"  read back as JSON
 ```
 
 A `steer://debug/*` family exists in DEBUG builds only and is not part of the shipping surface.
 
 ### Reading state back
 
-`steer://query/state`, `query/profiles`, `query/macros` and `query/snapshots` return JSON. Steer also exposes about thirty App Intents to Shortcuts, Siri and Spotlight, seven of which read rather than write: current profile, connected controller, active layer, battery level, the binding on a given button, full state, and a section of Steer's Help. A Focus filter switches profile with your macOS Focus mode and restores the previous one when it ends.
+`steer://query/state`, `query/customizations`, `query/macros` and `query/snapshots` return JSON. Steer also exposes about thirty App Intents to Shortcuts, Siri and Spotlight, seven of which read rather than write: current customization, connected controller, active layer, battery level, the binding on a given button, full state, and a section of Steer's Help. A Focus filter switches the app customization with your macOS Focus mode and restores the previous one when it ends.
 
 ### Listening
 
 Steer posts to the distributed notification centre, so a script can react instead of polling:
 
 ```
-com.steer.profile.changed
+com.steer.customization.changed
 com.steer.layer.changed
 com.steer.controller.connected
 com.steer.controller.disconnected
