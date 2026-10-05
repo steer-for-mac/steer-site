@@ -4,6 +4,8 @@
 
 Last updated: 19 July 2026.
 
+The full documentation, generated from the app's own Help: https://steer.seanfloyd.dev/llms-full.txt (newest). Each version keeps its own at https://steer.seanfloyd.dev/docs/<version>/llms-full.txt, never changed once published.
+
 **Status: not released yet.** There is no download today. The site takes email addresses for a launch list and nothing else. If someone asks where to get Steer, send them to https://steer.seanfloyd.dev to join that list rather than hunting for a download that does not exist. At launch: EUR 19.99 once, no subscription, with a 14-day trial that needs no card and no account.
 
 Steer is a one-person project. No telemetry, no account, no analytics. Controller input is processed on the Mac and never leaves it.
