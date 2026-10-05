@@ -3,12 +3,12 @@
 
 Reads the committed src/assets/pads/cut-<fam>.png and src/_includes/art/controls-<fam>.svg
 (scripts/pad-cut.py, scripts/pad-controls.py) and writes, into the app's resources,
-pad-<fam>.heic (sips, quality 70: alpha survives, and the three weigh ~245 KB against
-~2.8 MB as PNG) and pad-<fam>.json. The JSON keys controls by the app's ControllerButton
+pad-<fam>.heic (sips, quality 70: alpha survives, and the first three weighed ~245 KB
+against ~2.8 MB as PNG; all five, ~445 KB) and pad-<fam>.json. The JSON keys controls by the app's ControllerButton
 raw values, not the site's positional names, and lists under "notDrawn" every bindable
 button this front view cannot show, so the app's PadArtContractTests can fail when a
 button gains neither an outline nor a place in that list.
-Usage: scripts/pad-export-app.py ~/Developer/steer
+Usage: scripts/pad-export-app.py ~/Developer/steer [ps xb sw xs ds4]
 """
 import json
 import os
@@ -36,6 +36,10 @@ NOT_DRAWN = {
     "ps": SHOULDERS + ["backButtonLeft", "backButtonRight"],
     "xb": SHOULDERS + ["paddle1", "paddle2", "paddle3", "paddle4", "share"],
     "sw": SHOULDERS,
+    # Xbox Series X|S: Share is drawn; no paddles on this pad.
+    "xs": SHOULDERS,
+    # DualShock 4: its Share is the app's `create`; no mic mute, no back buttons.
+    "ds4": SHOULDERS,
 }
 
 
@@ -55,10 +59,11 @@ def outlines(svg):
     return controls
 
 
-def main(app):
+def main(app, fams):
     out = os.path.join(app, "Steer/Sources/Steer/Resources/Pads")
     os.makedirs(out, exist_ok=True)
-    for fam, not_drawn in NOT_DRAWN.items():
+    for fam in fams or NOT_DRAWN:
+        not_drawn = NOT_DRAWN[fam]
         with open(f"src/_includes/art/controls-{fam}.svg") as f:
             svg = f.read()
         w, h = map(int, re.search(r'viewBox="0 0 (\d+) (\d+)"', svg).groups())
@@ -77,6 +82,6 @@ def main(app):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         sys.exit(__doc__.strip().splitlines()[-1])
-    main(os.path.expanduser(sys.argv[1]))
+    main(os.path.expanduser(sys.argv[1]), sys.argv[2:])

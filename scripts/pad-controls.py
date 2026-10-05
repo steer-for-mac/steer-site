@@ -15,7 +15,7 @@ stick, everything that tilts. "parts" joins pieces segmented apart (the light
 bar's two strips). Names are the site's positional button names (pad-family.js),
 so the demo's own state lights them directly; a stick is ls/rs, lit by tilt or click.
 Writes src/_includes/art/controls-<fam>.svg and, for judging, an overlay per pad
-to scratch/controls/. Usage: scripts/pad-controls.py [ps xb sw]
+to scratch/controls/. Usage: scripts/pad-controls.py [ps xb sw xs ds4]
 """
 import json
 import os
@@ -28,7 +28,8 @@ from PIL import Image
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 
 G = "tools/pads/given/"
-SRC = {"ps": "dualsense-src.png", "xb": "xbox elite wireless controller series 2-src.png", "sw": "swpro-src.png"}
+SRC = {"ps": "dualsense-src.png", "xb": "xbox elite wireless controller series 2-src.png", "sw": "swpro-src.png",
+       "xs": "xbox series-src.png", "ds4": "dualshock4-src.png"}
 with open("tools/pads/crop.json") as f:
     CROP = json.load(f)
 OUT, CHECK = "src/_includes/art/", "scratch/controls/"

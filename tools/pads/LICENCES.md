@@ -38,6 +38,7 @@ from the sources below to run the feature diff; the render itself does not need 
 | `ref/commons/xb-carbon.jpg`, `ref/xb-carbon.png` | https://commons.wikimedia.org/wiki/File:Xbox_Series_Controller_Carbon_Black.jpg, UKER | CC BY-SA 4.0. The Series colour reference until 2026-09-27; no longer read by `labels/` |
 | `ref/commons/sw-fl.jpg` | https://commons.wikimedia.org/wiki/File:Nintendo-Switch-Pro-Controller-FL.jpg, Evan-Amos | Public domain. Switch colour reference (studio shot) |
 | `ref/commons/sw-fl2.jpg` | https://commons.wikimedia.org/wiki/File:Nintendo-Switch-Pro-Controller-FL-2.jpg, Evan-Amos | Public domain. Looked at, not scored |
+| `ref/commons/ds4-black-top.jpg` | https://commons.wikimedia.org/wiki/File:Sony_DualShock_4_wireless_controller_for_PlayStation_4_(black)_-_top_view.jpg, ITEagle Europe - Sebastiaan Broekhoven | CC BY-SA 4.0. The DualShock 4 silhouette and detail reference for the generated `dualshock4-src.png` (PHOTO-SOURCES.md, 2026-10-04); a v1, so no touch-pad light strip |
 | `ref/commons/ds-png.png` | https://commons.wikimedia.org/wiki/File:Playstation_DualSense_Controller.png, Alex Cochrane | CC BY-SA 4.0. The three-quarter check for the DualSense's black/white split |
 | `ref/commons/xb-lunar.jpg` etc. | all fetched anonymously with a generic browser User-Agent | |
 

@@ -2,7 +2,7 @@
 # /// script
 # dependencies = ["pillow", "numpy", "scipy"]
 # ///
-"""Re-cut the three per-app pads from the generated sources (PHOTO-SOURCES.md).
+"""Re-cut the per-app pads from the generated sources (PHOTO-SOURCES.md).
 
 Vision's foreground mask (scripts/subject.swift) at the source's native
 resolution, its soft ramp tightened to ~2px so the edge is crisp, and the
@@ -10,7 +10,7 @@ background un-mixed from the edge pixels (the renders sit on near-white, which
 otherwise haloes on the night stage). Nothing inside the pad is touched.
 Written at min(native, 2x the displayed size): never upscaled. PNG masters;
 the build's image transform emits the AVIF and WebP and keeps the PNG as the
-fallback. Usage: scripts/pad-cut.py
+fallback. Usage: scripts/pad-cut.py [ps xb sw xs ds4]
 """
 import json
 import os
@@ -30,6 +30,8 @@ PADS = {
     "ps": ("dualsense-src.png", 1202),
     "xb": ("xbox elite wireless controller series 2-src.png", 1142),
     "sw": ("swpro-src.png", 1126),
+    "xs": ("xbox series-src.png", 1142),
+    "ds4": ("dualshock4-src.png", 1202),
 }
 THUMB = 224  # 2x a 112px picker thumbnail
 
@@ -63,8 +65,11 @@ def cutout(rgb, a, bg, box, want):
     return im.resize((w, round(im.height * w / im.width)), Image.LANCZOS) if w < im.width else im
 
 
-crops = {}
-for fam, (src, want) in PADS.items():
+# Named families only (default all), so cutting a new pad leaves the others' bytes alone.
+with open(CROP) as f:
+    crops = json.load(f)
+for fam in sys.argv[1:] or PADS:
+    src, want = PADS[fam]
     m = V + fam + "-vmask.png"
     if not os.path.exists(m) or os.path.getmtime(m) < os.path.getmtime(G + src):
         os.makedirs(V, exist_ok=True)

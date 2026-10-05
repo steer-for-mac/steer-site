@@ -34,6 +34,72 @@ rejected candidates and why.
   The Switch Pro image is the original 2017 controller (opaque black shell,
   correct face-button glyphs), unlike the Switch 2 Pro stand-in it replaces.
 
+### Xbox Wireless Controller, Series X|S (Carbon Black), DualShock 4 v2 (black) -> `xbox series-src.png`, `dualshock4-src.png`
+
+- **Source:** generated, not photographed. Codex CLI image generation
+  (`codex exec`, built-in image tool, codex-cli 0.159.3), 2026-10-04, one
+  1536x1024 image per pad. Prompts, logs and the pre-edit Xbox image are in
+  the gitignored `scratch/aiimg/pads/gen-2026-10-04/`.
+- **Licence:** none needed; no third party's photo or scan.
+- **Prompt (summarised):** official studio product photograph of a black
+  Xbox Wireless Controller, 2020 Series X|S model / a black DualShock 4 second
+  version (CUH-ZCT2), straight-on front view, flat mid-grey background,
+  accurate layout, each part listed by position and colour as the checklist
+  below names it. Unlike the 2026-09-27 Elite prompt, nothing the real pad
+  lacks was asked for.
+- **Gate:** each image was checked against a written list of the real pad's
+  front details before cutting.
+  Sources: Xbox Series from xbox.com's product page
+  (https://www.xbox.com/en-US/accessories/controllers/xbox-wireless-controller:
+  Share button, hybrid D-pad, textured grip on the triggers, bumpers and
+  back-case) and the Carbon Black Commons photo already in `ref/`
+  (`xb-carbon.png`, LICENCES.md); DualShock 4 from Sony's parts list
+  (https://manuals.playstation.net/document/en/ps4/basic/pn_controller.html),
+  SIE's 2016-09-08 release for the v2's touch-pad light strip
+  (https://www.sie.com/en/corporate/release/2016/160908d.html) and a Commons
+  top view (`ref/commons/ds4-black-top.jpg`, LICENCES.md; a v1, so it has no
+  strip).
+  - Xbox Series: View, Share and Menu in the centre, Share between and below
+    the other two (pass); Xbox button with the logo, top centre (pass); hybrid
+    D-pad, a cross over a round faceted dish (pass); ABXY black caps with Y
+    yellow top, X blue left, B red right, A green bottom (pass); knurled
+    stick rims (pass); bumpers along the top edge (pass; their texture can't
+    be seen from straight above, nor in the reference photo); no paddles, no
+    profile button, lights or pinhole (pass); top faces of the grips smooth,
+    since the dot texture is on the back-case only (**failed** on the first
+    image, because the prompt asked for "dot-textured grips"; fixed, below).
+  - DualShock 4 v2: light visible as a thin strip along the top edge of the
+    touchpad; the bar on the controller's top edge isn't seen from above
+    (pass); touchpad, top centre (pass); Share upper-left and Options
+    upper-right of it with their small printed labels, legible (pass); PS
+    button with the logo between the sticks (pass); speaker grille between
+    touchpad and PS button (pass); D-pad of four separate arrow buttons with
+    the embossed triangles round them (pass); green triangle, red circle,
+    blue cross, pink square (pass); concave sticks (pass); no Create, mute or
+    mic (pass). Not quite right: the bottom lip shows one slot where the real
+    pad has the EXT port and a headset jack side by side.
+- **Edit (Xbox):** a second Codex image edit of the first image removed the
+  dot texture from the grips' top faces, keeping everything else. Phase
+  correlation per part (sticks, D-pad, ABXY, View/Share/Menu, Xbox button,
+  bumpers) moved at most 0.74 px. The DualShock 4 needed no edit.
+- **Cut:** `scripts/pad-cut.py xs ds4`. Each Vision mask reported a single
+  instance. Cut pads: Xbox Series 1514x1006 native -> 1142x759, DualShock 4
+  1525x963 native -> 1202x759. Fringe on `#222325` at 500%: no backdrop
+  survives. The DualShock 4's outer edge reads a little brighter than just
+  inside it, but that is the image's own ~5 px rim highlight (source row
+  across the left grip: backdrop 146, mix 92, rim 68-71, body 46-50). The
+  share of soft-edge pixels brighter than the pad just inside them by >15
+  levels is 2.9% (Series) and 4.5% (DS4), against 1.6-5.9% for the three
+  installed pads. A copy with grey left in the soft edge scored 75%, so the
+  count does catch a fringe.
+- **Silhouette IoU** (`bin/silcmp.py`, bbox-registered, against real photos
+  that are themselves shot slightly off-axis): Xbox Series vs `xb-carbon`
+  0.951 (the Elite cut scores 0.935 against it); DualShock 4 vs the Commons
+  DS4 0.964 (the DualSense cut scores 0.955 against it, so this metric only
+  weakly separates the two PlayStation shells; the Series cut scores 0.869).
+- **Outlines:** `scripts/pad-controls.py xs ds4` from `controls/xs.json` and
+  `controls/ds4.json`, judged on the overlays in `scratch/controls/`.
+
 ## Superseded
 
 ### DualSense (white) -> was `dualsense-src.png` (installed 5a41a9d, 2026-09-27)
