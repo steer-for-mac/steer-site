@@ -1,0 +1,108 @@
+#!/usr/bin/env python3
+"""Recapture the app pictures in src/assets/app/ from the running dev build.
+
+    (cd ../steer && just dev-up)     one Steer Dev, its agent socket up
+    scripts/capture-app              light and dark, 2x, into src/assets/app/
+
+Drives Steer Dev through `just agent steer://...` (no focus stolen) and captures
+only Steer Dev's own windows by id with `screencapture -l`, never the screen, so
+nothing of the user's desktop can land in a picture. Dark needs the system
+appearance flipped for a few seconds (the dev build ignores per-app defaults);
+it is restored in a finally block, whatever happens.
+
+The crops drop strips that name the dev build ("Typing into Steer Dev", Window
+Snap's title row) or the user's front app (Controls' subtitle).
+"""
+import json
+import subprocess
+import sys
+import tempfile
+import time
+from pathlib import Path
+
+from PIL import Image
+
+ROOT = Path(__file__).resolve().parent.parent
+STEER = ROOT.parent / "steer"
+OUT = ROOT / "src/assets/app"
+
+# name: (route, window kind, crop box in capture pixels or None)
+SHOTS = {
+    "help": ("steer://help/show", "panel", None),
+    "keyboard": ("steer://keyboard/show", "panel", (0, 112, 2354, 1360)),
+    "ring": ("steer://radial/show", "panel", None),
+    "snap": ("steer://windowsnap/show", "panel", (0, 137, 1120, 1102)),
+    "apps": ("steer://settings/gallery", "normal", (859, 880, 2573, 1753)),
+    "tiles": ("steer://settings/buttons?control=cross&view=picture", "normal", (466, 1362, 2283, 1565)),
+}
+
+WINIDS = r"""
+import AppKit
+let pid = pid_t(CommandLine.arguments[1])!
+let ws = CGWindowListCopyWindowInfo([.optionOnScreenOnly], kCGNullWindowID) as! [[String: Any]]
+var out: [[String: Int]] = []
+for w in ws where (w[kCGWindowOwnerPID as String] as? Int32) == pid {
+  let b = w[kCGWindowBounds as String] as! [String: CGFloat]
+  out.append(["id": w[kCGWindowNumber as String] as! Int, "layer": w[kCGWindowLayer as String] as? Int ?? -1,
+              "w": Int(b["Width"]!), "h": Int(b["Height"]!)])
+}
+print(String(data: try! JSONSerialization.data(withJSONObject: out), encoding: .utf8)!)
+"""
+
+
+def run(*cmd, **kw):
+    return subprocess.run(cmd, check=True, capture_output=True, text=True, **kw).stdout
+
+
+def agent(route):
+    run("just", "agent", route, "900", cwd=STEER)
+    time.sleep(0.8)
+
+
+def window(helper, pid, kind):
+    wins = json.loads(run(helper, str(pid)))
+    screen = max(w["w"] * w["h"] for w in wins)  # the overlays' full-screen dimmer
+    if kind == "normal":
+        pick = [w for w in wins if w["layer"] == 0]
+    else:
+        pick = [w for w in wins if 0 < w["layer"] <= 20 and w["w"] * w["h"] < screen and w["w"] != 232]
+    if not pick:
+        sys.exit(f"no {kind} window from Steer Dev")
+    return max(pick, key=lambda w: w["w"] * w["h"])["id"]
+
+
+def set_dark(on):
+    run("osascript", "-e", f'tell application "System Events" to tell appearance preferences to set dark mode to {"true" if on else "false"}')
+
+
+def main():
+    pid = run("pgrep", "-f", "Steer Dev.app/Contents/MacOS").split()
+    if not pid:
+        sys.exit("Steer Dev is not running: (cd ../steer && just dev-up)")
+    pid = int(pid[0])
+    tmp = Path(tempfile.mkdtemp())
+    helper = tmp / "winids"
+    (tmp / "w.swift").write_text(WINIDS)
+    run("swiftc", "-O", str(tmp / "w.swift"), "-o", str(helper))
+    was_dark = subprocess.run(["defaults", "read", "-g", "AppleInterfaceStyle"], capture_output=True, check=False).returncode == 0
+    try:
+        for theme in ("light", "dark"):
+            set_dark(theme == "dark")
+            time.sleep(1.5)
+            for name, (route, kind, box) in SHOTS.items():
+                agent(route)
+                raw = tmp / f"{name}-{theme}.png"
+                run("screencapture", "-x", "-o", "-l", str(window(helper, pid, kind)), str(raw))
+                if kind == "panel":
+                    agent(route.replace("/show", "/hide"))
+                im = Image.open(raw)
+                if im.width < 600:
+                    sys.exit(f"{name}: {im.width}px wide, not 2x; put the window on the Retina display")
+                (im.crop(box) if box else im).save(OUT / f"{name}-{theme}.png", optimize=True)
+                print(f"{name}-{theme}.png")
+    finally:
+        set_dark(was_dark)
+
+
+if __name__ == "__main__":
+    main()
