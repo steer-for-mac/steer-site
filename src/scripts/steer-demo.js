@@ -302,17 +302,17 @@ function init(root) {
     ghost.innerHTML = `<span class="sd-g">${esc(g)}</span>${esc(`${words} ${verb}`.trim())}`;
     ghost.classList.add("on");
   }
-  async function tap(b, verb, wait = 600) { live(); show(b, verb); press(b); release(b); await sleep(wait); }
+  async function tap(b, verb, wait = 950) { live(); show(b, verb); press(b); release(b); await sleep(wait); }
   async function aimAt(side, c) {
     const t = find(side, c);
     for (let g = 0; g < 16 && (cur[side].row !== t.row || cur[side].idx !== t.idx); g++) {
       live();
       const dy = Math.sign(t.row - cur[side].row), dx = dy ? 0 : Math.sign(t.idx - cur[side].idx);
-      show(side ? "R" : "L", "aims"); step(side, dx, dy); await sleep(150);
+      show(side ? "R" : "L", "aims"); step(side, dx, dy); await sleep(260 + Math.random() * 120);
     }
   }
   async function typeWord(w) {
-    for (const c of w) { const sd = find(0, c) ? 0 : 1; await aimAt(sd, c); await tap(sd ? "r2" : "l2", `types ${c}`, 320); }
+    for (const c of w) { const sd = find(0, c) ? 0 : 1; await aimAt(sd, c); await tap(sd ? "r2" : "l2", `types ${c}`, 620 + Math.random() * 220); }
   }
   async function nudge(keys, ms, b, verb) { live(); show(b, verb); keys.forEach((k) => held.add(k)); await sleep(ms); keys.forEach((k) => held.delete(k)); }
   async function run() {
@@ -320,16 +320,16 @@ function init(root) {
     said.setAttribute("aria-live", "off"); toast.setAttribute("role", "none"); src.hidden = true; stopBtn.hidden = false;
     try {
       for (;;) {
-        if (!state.open) await tap("r3", "opens the keyboard", 500);
+        if (!state.open) await tap("r3", "opens the keyboard", 1300);
         state.text = ""; renderText();
-        await typeWord("hello"); await tap("cross", "types a space", 400); await typeWord("mac"); await sleep(900);
-        await tap("r3", "closes it", 500);
-        await nudge(["d", "s"], 650, "L", "moves the pointer"); await sleep(300);
-        await tap("l3", "your apps", 700);
-        await nudge(["w"], 380, "L", "points at Safari"); await sleep(400);
-        await tap("cross", "picks it", 1700);
-        await tap("create", "shows the help card", 1500);
-        await tap("create", "closes it", 600);
+        await typeWord("hello"); await tap("cross", "types a space", 800); await typeWord("mac"); await sleep(1800);
+        await tap("r3", "closes it", 1100);
+        await nudge(["d", "s"], 900, "L", "moves the pointer"); await sleep(700);
+        await tap("l3", "your apps", 1300);
+        await nudge(["w"], 380, "L", "points at Safari"); await sleep(1200);
+        await tap("cross", "picks it", 2600);
+        await tap("create", "shows the help card", 3200);
+        await tap("create", "closes it", 1500);
       }
     } catch { /* a visitor took over */ }
   }

@@ -50,9 +50,9 @@ h1,h2,h3{letter-spacing:-0.022em;line-height:1.06;font-weight:600}
 /* nav */
 header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--hairline)}
 .nav-in{max-width:1200px;margin:0 auto;padding:0 var(--pad);height:52px;display:flex;align-items:center;gap:22px}
-.brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px;letter-spacing:-0.02em;color:var(--text)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:650;font-size:18px;letter-spacing:-0.02em;color:var(--text)}
 .brand:hover{text-decoration:none}
-.brand .logo{width:22px;height:22px;flex:none}
+.brand .logo{width:30px;height:30px;flex:none}
 .nav-menu{display:block;position:relative}
 .nav-menu::details-content{display:block}
 .nav-menu:not([open])::details-content{content-visibility:hidden}

@@ -29,6 +29,7 @@
 .h-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px 4px 4px; border-radius: var(--r-btn); background: var(--bg-inset); font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; }
 .h-g { display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border-radius: var(--r-btn); background: var(--bg); font-size: 12px; font-weight: 700; color: var(--text); }
 .h-sq { color: var(--ps-square); }
+.h-cross { color: var(--ps-cross); }
 
 /* Light and dark captures: one pair per picture, swapped by theme. */
 .h-dk { display: none; }
