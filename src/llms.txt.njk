@@ -144,7 +144,7 @@ com.steer.battery.low
 
 - **The light bar is not a status light.** Steer repaints it on every state change from layer, gyro, battery and idle state, so a colour written by a script is wiped by the first shoulder press. Use the player lights, which the tick path never touches.
 - **The player lights and the mute light are DualSense and DualSense Edge only.** They no-op elsewhere. The mute light is faint in a normally lit room.
-- **There are four haptic feels across five names.** `warning` and `error` are deliberately identical. Patterns differ by tap count and duration, not strength.
+- **The five signal names have four feels.** Of the haptic names above, `pulse`, `double`, `success`, `warning` and `error` are the ones for signalling, and `warning` and `error` are deliberately identical. Patterns differ by tap count and duration, not strength.
 - **Hooks that run synchronously** (Claude Code's `UserPromptSubmit`, for one) should detach anything that can block: `(open -g "steer://player-lights/1" &)`.
 
 ### Worked example
