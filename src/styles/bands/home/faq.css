@@ -1,8 +1,8 @@
-.h-qs { padding: 8px 32px 40px; border-bottom: 1px solid var(--sep); }
-.h-qs details { border-bottom: 1px solid var(--sep); }
+.h-qs { padding-bottom: 48px; }
+.h-qs details { border-top: 1px solid var(--h-line); }
+.h-qs details:last-child { border-bottom: 1px solid var(--h-line); }
 .h-qs summary { display: flex; justify-content: space-between; gap: 16px; padding: 20px 0; font-size: 19px; font-weight: 600; color: var(--text); cursor: pointer; list-style: none; }
 .h-qs summary::-webkit-details-marker { display: none; }
-.h-qs summary::after { content: "+" / ""; color: var(--blue-text); }
+.h-qs summary::after { content: "+" / ""; font-family: var(--mono); color: var(--blue-text); }
 .h-qs details[open] summary::after { content: "–" / ""; }
 .h-qs p { margin: 0; padding: 0 0 22px; color: var(--text-2); line-height: 1.55; max-width: 44em; }
-@media (max-width: 600px) { .h-qs { padding-inline: 0; } }

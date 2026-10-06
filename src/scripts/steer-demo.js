@@ -184,7 +184,16 @@ function init(root) {
   function openKeyboard() { state.open = true; osk.hidden = false; cur[0] = find(0, "f"); cur[1] = find(1, "j"); drawKeyboard(); say("Keyboard. Each stick aims at its half, the triggers type."); }
   function closeKeyboard() { state.open = false; osk.hidden = true; state.latch.clear(); say("Keyboard closed"); }
 
+  // The controller view lights what is pressed, the way the app's corner view does.
+  const PADPART = { cross: "cross", circle: "circle", sq: "square", tri: "triangle", l1: "l1", r1: "r1", create: "create", options: "options", l3: "ls", r3: "rs", up: "up", down: "down", left: "left", right: "right", touch: "touchpad" };
+  const pad = $("pad");
+  function light(b) {
+    const el = PADPART[b] ? pad.querySelector(`[data-c="${PADPART[b]}"]`) : pad.querySelector(`[data-t="${b}"]`);
+    if (!el) return;
+    el.classList.add("on"); setTimeout(() => el.classList.remove("on"), 260);
+  }
   function press(b) {
+    light(b);
     if (state.help) {
       if (b === "create") return toggleHelp();
       if (b === "options") return toggleTable();

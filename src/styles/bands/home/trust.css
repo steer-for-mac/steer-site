@@ -1,14 +1,5 @@
-.h-four { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--sep); }
-.h-four > div { min-width: 0; padding: 28px 28px 34px; border-right: 1px solid var(--sep); }
-.h-four > div:last-child { border-right: 0; }
-.h-four h3 { font-size: 20px; }
+.h-four { grid-template-columns: repeat(4, 1fr); }
+.h-four > div { padding: 24px 28px 28px; }
 .h-four p { margin: 8px 0 0; color: var(--text-2); line-height: 1.5; }
-@media (max-width: 860px) {
-  .h-four { grid-template-columns: 1fr 1fr; }
-  .h-four > div:nth-child(2) { border-right: 0; }
-  .h-four > div:nth-child(-n + 2) { border-bottom: 1px solid var(--sep); }
-}
-@media (max-width: 520px) {
-  .h-four { grid-template-columns: 1fr; }
-  .h-four > div { border-right: 0; border-bottom: 1px solid var(--sep); padding-inline: 0; }
-}
+@media (max-width: 860px) { .h-four { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .h-four { grid-template-columns: 1fr; } }

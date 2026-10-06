@@ -58,6 +58,14 @@
     <div class="sd-toast" id="sd-toast" role="status" hidden></div>
     <div class="sd-ghost" id="sd-ghost" aria-hidden="true"></div>
 
+    <!-- The controller view, as in the app's corner view: the real pad, each
+         control lit while it is pressed. Outlines: art/controls-ps.svg. -->
+    <div class="sd-pad" id="sd-pad" aria-hidden="true">
+      <span class="sd-trig" data-t="l2">L2</span><span class="sd-trig" data-t="r2">R2</span>
+      <img src="assets/pads/cut-ps-unlit.png" eleventy:widths="300,600" width="1202" height="778" sizes="300px" alt="">
+      {% include "art/controls-ps.svg" %}
+    </div>
+
     <div class="sd-dock" role="group" aria-label="Controller buttons">
       <button type="button" data-press="r3"><span class="sd-g">R3</span>Keyboard</button>
       <button type="button" data-press="l3"><span class="sd-g">L3</span>Your apps</button>

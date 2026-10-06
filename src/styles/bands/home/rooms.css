@@ -1,8 +1,0 @@
-.h-rooms { padding: 72px 0; border-bottom: 1px solid var(--sep); }
-.h-rooms h2 { text-align: center; }
-.h-rooms-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
-.h-rooms figure { margin: 0; min-width: 0; }
-.h-rooms img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-card); }
-.h-rooms figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-top: 14px; }
-.h-rooms b { font-size: 17px; color: var(--text); }
-@media (max-width: 860px) { .h-rooms-row { grid-template-columns: 1fr; } }

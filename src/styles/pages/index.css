@@ -2,9 +2,7 @@
    Unlayered, like every page sheet. frame.css first so a band can override it. */
 @import "../bands/home/frame.css";
 @import "../bands/play/demo.css";
-@import "../bands/home/hero.css";
-@import "../bands/home/rooms.css";
-@import "../bands/home/does.css";
+@import "../bands/home/story.css";
 @import "../bands/home/trust.css";
 @import "../bands/home/faq.css";
 @import "../bands/home/close.css";

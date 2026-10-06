@@ -146,3 +146,15 @@
 @media (forced-colors: active) {
   .sd { --sd-lit: Highlight; --sd-on-lit: HighlightText; }
 }
+
+/* The controller view: the pad photo with its controls lit on press. */
+.sd .sd-pad { position: absolute; top: 46px; right: 14px; z-index: 30; width: 220px; padding: 22px 10px 8px; border-radius: var(--r-inset); background: var(--sd-plate, var(--bg)); border: 1px solid var(--sep); box-shadow: var(--shadow-rest); }
+.sd .sd-pad img { display: block; width: 100%; height: auto; }
+.sd .sd-pad svg { position: absolute; left: 10px; right: 10px; bottom: 8px; width: calc(100% - 20px); height: auto; }
+.sd .sd-pad path { fill: transparent; transition: fill .12s ease-out; }
+.sd .sd-pad path.on { fill: color-mix(in srgb, var(--blue) 70%, transparent); }
+.sd .sd-trig { position: absolute; top: 6px; font: 600 10px/1 var(--mono); color: var(--text-3); padding: 2px 5px; border: 1px solid var(--sep); border-radius: var(--r-btn); }
+.sd .sd-trig[data-t="l2"] { left: 26px; } .sd .sd-trig[data-t="r2"] { right: 26px; }
+.sd .sd-trig.on { background: var(--blue); border-color: var(--blue); color: var(--bg); }
+@media (max-width: 760px) { .sd .sd-pad { width: 132px; top: 40px; right: 8px; padding-top: 18px; } }
+@media (prefers-reduced-motion: reduce) { .sd .sd-pad path { transition: none; } }

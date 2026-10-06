@@ -1,37 +1,29 @@
-/* The homepage frame: one column, one hairline grid, one type scale.
-   The hero's night is the same in both themes; its inks are measured in
-   docs/design/2026-10-06-site-system-design.md. */
+/* The homepage tells the launch film "Within reach" in scroll (story.css);
+   this is what every band shares: the night field, hairlines, the type scale. */
 .h-main {
-  --h-night: #0b0d12;
-  --h-panel: #151923;
-  --h-ink: #f5f6f9;
-  --h-ink-2: #d5d9e2;
-  --h-accent-night: #7fbaff;
-  --h-shade: linear-gradient(180deg, rgba(11, 13, 18, 0.9) 0%, rgba(11, 13, 18, 0.8) 50%, rgba(11, 13, 18, 0.45) 78%, #0b0d12 100%);
+  --h-night: #0c0e13; --h-night-ink: #eef0f5; --h-night-ink-2: #b9bfcc;
+  --h-accent-night: #6aa8ff;
+  --h-night-line: rgba(255, 255, 255, .14);
+  --h-line: color-mix(in srgb, var(--text) 14%, transparent);
+  --h-line-2: color-mix(in srgb, var(--text) 32%, transparent);
 }
-.h-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-@media (max-width: 600px) { .h-wrap { padding: 0 16px; } }
+.h-frame { max-width: 1240px; margin: 0 auto; border-inline: 1px solid var(--h-line); }
+.h-in { padding-inline: 40px; }
+@media (max-width: 700px) { .h-frame { border-inline: 0; } .h-in { padding-inline: 16px; } }
 .h-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-.h-main h1, .h-main h2 { margin: 0; letter-spacing: -0.035em; text-wrap: balance; }
-.h-main h2 { font-size: clamp(32px, 4.6vw, 60px); font-weight: 700; line-height: 1.05; color: var(--text); }
-.h-main h3 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: -0.015em; color: var(--text); }
+.h-main h1, .h-main h2, .h-main h3 { margin: 0; letter-spacing: -0.03em; text-wrap: balance; color: var(--text); }
+.h-main h1 { font-size: clamp(44px, 7vw, 92px); line-height: 1; font-weight: 700; }
+.h-main h2 { font-size: clamp(30px, 4vw, 52px); line-height: 1.04; font-weight: 700; }
+.h-main h3 { font-size: 20px; letter-spacing: -0.01em; font-weight: 650; }
 .h-main em { font-style: normal; color: var(--blue-text); }
-.h-note { margin: 14px 0 0; font-size: 15px; color: var(--text-3); }
-.h-lede { margin: 16px 0 0; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.45; color: var(--text-2); max-width: 36em; text-wrap: pretty; }
+.h-lede { margin: 16px 0 0; font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5; color: var(--text-2); max-width: 38em; text-wrap: pretty; }
+.h-sec { padding-block: 56px; }
 
-/* The ruled frame below the hero. */
-.h-frame { border-inline: 1px solid var(--sep); }
-.h-big { padding: 72px 32px 56px; border-bottom: 1px solid var(--sep); }
-@media (max-width: 600px) { .h-frame { border-inline: 0; } .h-big { padding: 48px 0 36px; } }
+/* Ruled grids: cells meet on 1px lines. */
+.h-rule { display: grid; gap: 1px; background: var(--h-line); border-block: 1px solid var(--h-line); }
+.h-rule > * { background: var(--bg); min-width: 0; }
 
-/* Button chips: the app's own hint pill, a glyph and a verb. */
-.h-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px 4px 4px; border-radius: var(--r-btn); background: var(--bg-inset); font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; }
-.h-g { display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border-radius: var(--r-btn); background: var(--bg); font-size: 12px; font-weight: 700; color: var(--text); }
-.h-sq { color: var(--ps-square); }
-.h-cross { color: var(--ps-cross); }
-
-/* Light and dark captures: one pair per picture, swapped by theme. */
 .h-dk { display: none; }
 [data-theme="dark"] .h-lt { display: none; }
 [data-theme="dark"] .h-dk { display: block; }

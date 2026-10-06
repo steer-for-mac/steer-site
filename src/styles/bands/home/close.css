@@ -1,4 +1,11 @@
-.h-close { padding: 96px 0; text-align: center; }
-.h-close h2 { font-size: clamp(40px, 6vw, 80px); }
-.h-close .h-lede { margin-inline: auto; }
-.h-req { margin: 18px 0 0; font-size: 15px; color: var(--text-3); }
+/* The end card, as the film ends: the mark, the line, the offer. */
+.h-close { padding: 96px 24px; text-align: center; background: var(--h-night); color: var(--h-night-ink); color-scheme: dark; }
+.s-mark { margin: 0 0 8px; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--h-night-ink-2); }
+.h-close h2 { font-size: clamp(40px, 6vw, 80px); color: var(--h-night-ink); }
+.h-close em { color: var(--h-accent-night); }
+.h-close .h-lede { margin-inline: auto; color: var(--h-night-ink-2); }
+.h-close .h-join { justify-content: center; }
+.h-close .h-join-note, .h-close .ml-msg, .h-req { color: var(--h-night-ink-2); }
+.h-close .h-join-note { margin-inline: auto; }
+.h-req { margin: 18px 0 0; font-size: 14px; }
+.h-close .ml-in { background: #151923; color: var(--h-night-ink); border-color: var(--h-night-ink-2); }

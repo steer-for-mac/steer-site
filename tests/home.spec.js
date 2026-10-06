@@ -25,10 +25,10 @@ test("the homepage loads its behaviour, and the nav CTA opens the launch list", 
 /* What the October 2026 homepage promises (docs/design/2026-10-06-site-system-design.md). */
 test("the first screen has the promise, a working form and the demo", async ({ page }) => {
   await page.goto("/index.html?from=hn");
-  const hero = page.locator(".h-hero");
+  const hero = page.locator(".s-open");
   await expect(hero.locator("h1")).toHaveText("Hand it a controller.");
   await expect(hero.locator("form.ml-form input[type=email]")).toBeVisible();
-  await expect(hero.locator(".sd[data-steer-demo]")).toHaveCount(1);
+  await expect(page.locator("#try .sd[data-steer-demo]")).toHaveCount(1);
   /* Every sign-up carries the link's source tag. */
   await expect(page.locator(".ml-from").first()).toHaveValue("hn");
   await expect(page.locator("main form.ml-form")).toHaveCount(2);
@@ -36,10 +36,10 @@ test("the first screen has the promise, a working form and the demo", async ({ p
 
 test("every app picture has a light and a dark capture, and only the theme's shows", async ({ page }) => {
   await page.goto("/index.html");
-  const lt = page.locator(".h-does .h-lt"), dk = page.locator(".h-does img.h-dk");
-  await expect(lt).toHaveCount(6);
-  await expect(dk).toHaveCount(6);
-  await expect(page.locator(".h-does video.h-loop")).toHaveCount(3);
+  const lt = page.locator("main .h-lt"), dk = page.locator("main img.h-dk");
+  await expect(lt).toHaveCount(5);
+  await expect(dk).toHaveCount(5);
+  await expect(page.locator("main video.h-loop")).toHaveCount(3);
   await expect(lt.first()).toBeVisible();
   await expect(dk.first()).toBeHidden();
 });
@@ -62,7 +62,7 @@ test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
   test("the page reads, the demo shows its still frame, and the form posts", async ({ page }) => {
     await page.goto("/index.html");
-    await expect(page.locator(".h-hero h1")).toHaveText("Hand it a controller.");
+    await expect(page.locator(".s-open h1")).toHaveText("Hand it a controller.");
     await expect(page.locator("#sd-field")).toHaveText(/Hello, Mac/);
     const form = page.locator("#pricing form.ml-form");
     await expect(form).toHaveAttribute("method", "post");
