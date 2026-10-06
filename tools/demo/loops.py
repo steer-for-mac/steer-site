@@ -59,7 +59,13 @@ def record(name, seconds, drive, outdir):
     print(name, box)
 
 
+def front_is_textedit():
+    return osa('tell application "System Events" to get name of first process whose frontmost is true') == "TextEdit"
+
+
 def keyboard():
+    if not front_is_textedit():
+        sys.exit("TextEdit is not in front; refusing to type into someone else's window")
     press("r3"); time.sleep(1.0); box = panel()
     cur = {0: find(0, "f"), 1: find(1, "j")}
     for ch in "hello mac":
@@ -94,21 +100,24 @@ def main():
     outdir = Path(sys.argv[1]).resolve(); outdir.mkdir(parents=True, exist_ok=True)
     if subprocess.run(["pgrep", "-x", "TextEdit"], capture_output=True).returncode == 0:
         sys.exit("TextEdit is running; its windows would be yours. Quit it first.")
+    made = False
     try:
-        osa('tell application "TextEdit" to make new document')
+        osa('tell application "TextEdit" to make new document'); made = True
         time.sleep(1.0)
         osa('tell application "TextEdit" to activate')
         time.sleep(0.8)
         agent("steer://padview/show", 800)  # a Steer window, so the recorder can see the app
         time.sleep(0.6)
+        osa('tell application "TextEdit" to activate'); time.sleep(0.5)
         record("keyboard", 22, keyboard, outdir)
         record("ring", 12, ring, outdir)
         record("snap", 12, snap, outdir)
     finally:
         for r in ("keyboard/hide", "radial/hide", "windowsnap/hide", "padview/hide"):
             subprocess.run(["just", "agent", f"steer://{r}", "300"], cwd=STEER, capture_output=True, check=False)
-        osa('tell application "TextEdit" to close every document saving no')
-        osa('tell application "TextEdit" to quit')
+        if made:  # never launch TextEdit just to close it
+            for step in ('tell application "TextEdit" to close every document saving no', 'tell application "TextEdit" to quit'):
+                subprocess.run(["osascript", "-e", step], capture_output=True, check=False)
 
 
 if __name__ == "__main__":
