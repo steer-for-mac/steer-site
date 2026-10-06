@@ -1,3 +1,14 @@
+/* The demo's old .py-g chips, kept for this band only until it retires. */
+.py-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.py-g {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 26px; height: 22px; padding: 0 6px;
+  border: 1px solid var(--sep-2); border-radius: 6px; background: var(--card-bg); color: var(--text);
+  font-family: var(--mono); font-size: 11px; font-weight: 600; line-height: 1; vertical-align: middle;
+}
+.py-g-face { width: 22px; min-width: 22px; padding: 0; border-radius: 50%; }
+.py-g-face svg { width: 20px; height: 20px; }
+
 /* Per-app layouts: a tab row, then one stage and its legend. The stage is the
    largest object on the page after the ring, which is the scale contrast the
    old four-up cards (a 250px pad, four times) never had. */

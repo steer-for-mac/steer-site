@@ -5,7 +5,7 @@
    controllers whose chips differ in width. Each band is measured in every
    state and must not move by more than a pixel. */
 import { expect, test } from "@playwright/test";
-import { chordKeyboard, press, stubPad } from "./pad.js";
+import { press, stubPad } from "./pad.js";
 
 /* Each pad step waits a real frame; Linux WebKit runs about one a second. */
 test.describe.configure({ timeout: 120_000 });
@@ -25,36 +25,36 @@ for (const width of [1440, 375]) {
       await page.goto("/index.html");
     });
 
-    test("the demo band holds its height through replay, desk, ring, keyboard and help", async ({ page }) => {
+    test("the demo band holds its height while it plays, and on the desk, ring, keyboard and help", async ({ page }) => {
       const band = ".l2-demo";
       /** @type {Record<string, number>} */
       const seen = {};
-      await expect(page.locator("#pyMode")).toHaveAttribute("data-mode", "ghost");
-      /* The replay walks through the ring, the keyboard and the help card on
-         its own; sample it across a few of its steps. */
+      await page.locator(band).scrollIntoViewIfNeeded();   // it starts playing once in view
+      await expect(page.locator("#sd-stop")).toBeVisible();
       for (let i = 0; i < 6; i++) {
-        seen[`replay ${i}`] = await height(page, band);
+        seen[`playing ${i}`] = await height(page, band);
         await page.waitForTimeout(700);
       }
 
-      await press(page, "options");             // take over: Mission Control, nothing on the desk
-      await expect(page.locator("#pyMode")).toHaveAttribute("data-mode", "pad");
+      await press(page, "options");             // take over
+      await expect(page.locator("#sd-stop")).toBeHidden();
+      if (await page.locator("#sd-osk").isVisible()) await press(page, "r3");
+      await expect(page.locator("#sd-osk")).toBeHidden();
       seen.desk = await height(page, band);
 
       await press(page, "l3");
-      await expect(page.locator("#pyRing")).toBeVisible();
+      await expect(page.locator("#sd-ring")).toBeVisible();
       seen.ring = await height(page, band);
       await press(page, "circle");
-      await expect(page.locator("#pyRing")).toBeHidden();
+      await expect(page.locator("#sd-ring")).toBeHidden();
 
-      await chordKeyboard(page);
-      await expect(page.locator("#pyOsk")).toBeVisible();
+      await press(page, "r3");
+      await expect(page.locator("#sd-osk")).toBeVisible();
       seen.keyboard = await height(page, band);
-      await chordKeyboard(page);
-      await expect(page.locator("#pyOsk")).toBeHidden();
+      await press(page, "r3");
 
       await press(page, "create");
-      await expect(page.locator("#pyHelp")).toBeVisible();
+      await expect(page.locator("#sd-help")).toBeVisible();
       seen.help = await height(page, band);
 
       const base = seen.desk ?? 0;

@@ -16,12 +16,6 @@
 }
 
 /* ---------- the whole stage ---------- */
-.pp-f { display: none; }
-.pp-stage[data-fam="ps"] .pp-f[data-pp-fam="ps"],
-.pp-stage[data-fam="xb"] .pp-f[data-pp-fam="xb"],
-.pp-stage[data-fam="sw"] .pp-f[data-pp-fam="sw"] { display: block; }
-.pp-pad { position: relative; }
-.pp-pad img { display: block; width: 100%; height: auto; }
 .pp .pad-controls path[data-c="lightbar"] { fill: var(--pp-lb-core); fill-opacity: 1; filter: var(--pp-lb-f); }
 
 /* Triggers sit behind the pad in the photo, so each gets a pill over its
@@ -47,25 +41,3 @@
 }
 .pp-t b { position: relative; display: block; font: 600 11px/18px var(--mono); color: var(--text); text-align: center; }
 
-.pp-pick { display: flex; justify-content: center; gap: 4px; margin: 10px 0 0; padding: 0; border: 0; }
-.pp-pick-l {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 4px 8px 5px;
-  border-radius: var(--r-inset);
-  color: var(--text-3);
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.pp-pick-l input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
-.pp-pick-l img { width: 48px; height: 32px; object-fit: contain; opacity: 0.55; }
-.pp-pick-l span { padding-bottom: 2px; border-bottom: 2px solid transparent; }
-.pp-pick-l:hover { color: var(--text-2); }
-.pp-pick-l:has(input:checked) { color: var(--text); }
-.pp-pick-l:has(input:checked) img { opacity: 1; }
-.pp-pick-l:has(input:checked) span { border-bottom-color: var(--blue); }
-.pp-pick-l:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }

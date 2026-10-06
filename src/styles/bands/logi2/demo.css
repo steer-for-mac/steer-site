@@ -16,9 +16,8 @@
 .l2-demo-head h2 { font-size: clamp(22px, 2.2vw, 28px); letter-spacing: -0.02em; color: var(--l2-ink); }
 .l2-demo-head p { margin: 0; max-width: 36em; font-size: 16px; line-height: 1.6; color: var(--l2-ink-2); }
 .l2-demo { color-scheme: dark; }
-.l2-demo .py-win { color: var(--text); box-shadow: var(--shadow-window); }
-.l2-demo .py-keys { max-width: none; color: var(--l2-ink-2); }
-.l2-demo .py-keys kbd { border-color: var(--oh-hairline); color: var(--l2-ink); }
+.l2-demo .sd-status, .l2-demo .sd-keys, .l2-demo .sd-phone { color: var(--l2-ink-2); }
+.l2-demo .sd-keys kbd { border-color: var(--oh-hairline); color: var(--l2-ink); }
 
 @media (max-width: 860px) {
   .l2-demo-head { grid-template-columns: 1fr; margin-bottom: 28px; }
@@ -32,9 +31,6 @@
    logi2-phone.js: a coarse pointer, or a column too narrow for the desk. */
 .l2-share { display: none; }
 @media (pointer: coarse), (max-width: 600px) {
-  .l2-demo .py-keys,
-  .l2-demo .py-acts { display: none; }
-  .l2-demo .py-stage.is-watch { pointer-events: none; }
   .l2-share {
     display: flex;
     flex-wrap: wrap;

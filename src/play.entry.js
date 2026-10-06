@@ -2,4 +2,4 @@
    controller demo. Bundled to /play.js the way home.entry.js becomes /home.js. */
 
 import "./scripts/launch-list.js";
-import "./scripts/pad-demo.js";
+import "./scripts/steer-demo.js";

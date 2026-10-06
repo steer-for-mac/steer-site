@@ -4,5 +4,5 @@
 
 import "./scripts/launch-list.js";
 import "./scripts/logi2-tabs.js";
-import "./scripts/pad-demo.js";
+import "./scripts/steer-demo.js";
 import "./scripts/logi2-phone.js";

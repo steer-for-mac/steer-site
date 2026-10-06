@@ -1,531 +1,148 @@
-/* The play demo: one window, a desktop stage and a side pane. Shared by
-   play.html and the homepage (bands/play/demo.html). The panels mirror the
-   captures in assets/ (daisy-wheel, radial-menu, desk-radial, help-overlay). */
-
-.py-vh {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+/* The demo (bands/play/demo.html), shared by play.html and the homepage.
+   After the app's captures of 2026-10-06: split keyboard, ring, help card.
+   Demo-only colours and radii live here; the rest are site tokens. */
+.sd {
+  --sd-desk: #e9ecf2; --sd-win: #ffffff; --sd-win-bar: #f4f5f7;
+  --sd-plate: #f7f7f9; --sd-plate-edge: rgba(0, 0, 0, .08);
+  --sd-key: #ffffff; --sd-key-edge: rgba(0, 0, 0, .1); --sd-key-mod: #fbfbfc;
+  --sd-lit: #2a68dc; --sd-on-lit: #ffffff; --sd-lit-ink: #2a68dc; --sd-pill: rgba(255, 255, 255, .94);
+  --sd-shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 10px 30px rgba(0, 0, 0, .1);
+  --sd-cross: #2f6fd0; --sd-circle: #c9343f; --sd-sq: #b2468b;
+  --sd-r-key: 7px; --sd-r-small: 6px; --sd-r-win: 12px; --sd-r-plate: 22px; --sd-r-round: 50%;
+}
+[data-theme="dark"] .sd {
+  --sd-desk: #1b1d22; --sd-win: #232327; --sd-win-bar: #2b2b30;
+  --sd-plate: #2a2a2e; --sd-plate-edge: rgba(255, 255, 255, .1);
+  --sd-key: #3a3a3f; --sd-key-edge: rgba(255, 255, 255, .08); --sd-key-mod: #333338;
+  --sd-pill: rgba(44, 44, 48, .94); --sd-lit-ink: #8ab8ff;
+  --sd-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px rgba(0, 0, 0, .5);
+  --sd-cross: #7fb0ff; --sd-circle: #ff8a90; --sd-sq: #f08cc9;
 }
 
+.sd { color: var(--text); }
+.sd-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.sd-lt { display: block; }
+.sd-dk { display: none; }
+[data-theme="dark"] .sd .sd-lt { display: none; }
+[data-theme="dark"] .sd .sd-dk { display: block; }
 
-/* ---------- the window ---------- */
+/* What just happened, and the way out of the self-playing loop, above the desk. */
+.sd-status { display: flex; align-items: center; gap: 10px; min-height: 40px; margin-bottom: 10px; font-size: 16px; }
+.sd-src { font-size: 13px; color: var(--text-3); border: 1px solid var(--sep); border-radius: var(--r-btn); padding: 2px 10px; white-space: nowrap; }
+.sd-stop { margin-left: auto; min-height: 36px; padding: 0 14px; border-radius: var(--r-btn); border: 1px solid var(--sep-2); background: var(--bg); color: var(--text); font-weight: 600; font-size: 14px; font-family: inherit; cursor: pointer; }
+.sd-stop[hidden] { display: none; }
 
-.py-win {
-  border: 1px solid var(--sep-2);
-  border-radius: var(--r-card);
-  background: var(--card-bg);
-  box-shadow: var(--shadow-rest-lg);
-  overflow: hidden;
-}
-.py-bar {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  min-height: 38px;
-  padding: 0 14px;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text-2);
-  background: var(--bg-inset);
-  border-bottom: 1px solid var(--sep);
-}
-.py-mode {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--text);
-  font-weight: 600;
-  white-space: nowrap;
-}
-.py-mode i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--text-3);
-}
-.py-mode[data-mode="pad"] i { background: var(--green); }
-.py-mode[data-mode="keys"] i { background: var(--blue); }
-.py-layer { white-space: nowrap; }
-.py-layer b { color: var(--text); font-weight: 600; }
-.py-last {
-  flex: 1;
-  min-width: 0;
-  text-align: right;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.py-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-}
+/* The desk. */
+.sd-stage { position: relative; width: 100%; background: var(--sd-desk); border: 1px solid var(--sep); border-radius: var(--r-card); overflow: hidden; aspect-ratio: 16 / 10; min-height: 560px; user-select: none; -webkit-user-select: none; touch-action: none; }
+.sd-stage:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.sd-menubar { height: 28px; display: flex; align-items: center; gap: 18px; padding: 0 14px; background: var(--sd-win-bar); font-size: 13px; color: var(--text-2); border-bottom: 1px solid var(--sep); }
+.sd-menubar b { color: var(--text); }
+.sd-right { margin-left: auto; display: flex; gap: 14px; }
+.sd-notes { position: absolute; left: 8%; top: 9%; width: 52%; background: var(--sd-win); border-radius: var(--sd-r-win); box-shadow: var(--sd-shadow); overflow: hidden; }
+.sd-tb { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--sd-win-bar); border-bottom: 1px solid var(--sep); font-size: 13px; font-weight: 600; color: var(--text-2); }
+.sd-dots { display: flex; gap: 6px; }
+.sd-dots i { width: 11px; height: 11px; border-radius: var(--sd-r-round); background: var(--sep-2); display: block; }
+.sd-field { margin: 0; padding: 16px 18px 22px; font-size: 22px; min-height: 92px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.sd-caret { display: inline-block; width: 2px; height: 1.1em; background: var(--blue); vertical-align: -0.18em; margin-left: 1px; animation: sd-blink 1.1s steps(1) infinite; }
+@keyframes sd-blink { 50% { opacity: 0; } }
+.sd-pointer { position: absolute; left: 0; top: 0; width: 22px; height: 22px; pointer-events: none; z-index: 30; transform: translate(var(--px, 1000px), var(--py, 110px)); }
+.sd-pointer svg { width: 22px; height: 22px; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .35)); }
 
-/* ---------- the desk ---------- */
+.sd-dock { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; gap: 8px; padding: 8px; border-radius: var(--sd-r-plate); background: var(--sd-pill); border: 1px solid var(--sd-plate-edge); box-shadow: var(--sd-shadow); z-index: 25; }
+.sd-dock button { font-weight: 600; font-size: 14px; line-height: 1; font-family: inherit; color: var(--text); background: var(--bg-sunken); border: 1px solid var(--sep); border-radius: var(--sd-r-win); min-height: 44px; padding: 0 14px; display: flex; gap: 8px; align-items: center; cursor: pointer; }
+.sd-dock button:hover { background: var(--bg-inset); }
 
-/* A desktop, laid out the way a Mac's is while typing: the note up top, the
-   panel floating centred in the space below it so the line being typed stays
-   in view, a dock of mouse shortcuts along the bottom. Every panel shares the
-   middle cell. The app opens its panels on the pointer (RadialMenu.swift,
-   DaisyWheel.swift show()); a page this small cannot, or they would cover
-   the note. --float is the floor of that cell and the help card's cap. */
-.py-stage {
-  --float: 470px;
-  position: relative;
-  display: grid;
-  /* minmax(0) or the help table's unwrapped rows widen the one column to
-     their own width (729px at 375), and the desk and dock reflow under it. */
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto minmax(var(--float), 1fr) auto;
-  gap: 16px;
-  padding: 24px 24px 18px;
-  background: var(--bg-sunken);
-  overflow: hidden;
-}
-.py-stage:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
-.py-desk { width: min(100%, 560px); margin: 0 auto; }
-.py-osk, .py-ring, .py-help { grid-area: 2 / 1; place-self: center; }
-.py-note {
-  background: var(--card-bg);
-  border: 1px solid var(--sep);
-  border-radius: var(--r-inset);
-  box-shadow: var(--shadow-rest);
-}
-.py-note-bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--sep);
-  font-size: 12px;
-  color: var(--text-2);
-}
-.py-note-bar span {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--bg-inset-2);
-}
-.py-note-bar b { margin-left: 8px; font-weight: 600; }
-.py-note-label {
-  display: block;
-  padding: 12px 14px 0;
-  font-size: 13px;
-  color: var(--text-2);
-}
-.py-text {
-  display: block;
-  width: 100%;
-  min-height: 84px;
-  padding: 4px 14px 12px;
-  border: 0;
-  border-radius: var(--r-inset);
-  background: transparent;
-  color: var(--text);
-  font: inherit;
-  font-size: 18px;
-  line-height: 1.45;
-  resize: none;
-}
-.py-text:focus { outline: none; }
-.py-text:focus-visible, .py-text.is-over { outline: 2px solid var(--blue); outline-offset: -2px; }
-/* Row 3 by name: auto-placed, the dock fell into the middle row whenever no
-   panel was open and back under it when one was, and the stage changed
-   height with it. */
-.py-acts { grid-row: 3; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.py-act {
-  height: 36px;
-  padding: 0 14px;
-  border: 1px solid var(--sep-2);
-  border-radius: var(--r-btn);
-  background: var(--card-bg);
-  color: var(--text);
-  font: inherit;
-  font-size: 13px;
-  cursor: pointer;
-}
-.py-act:hover, .py-act.is-over { border-color: var(--blue); color: var(--blue-text); }
+/* The app's button glyphs. */
+.sd-g { display: inline-grid; place-items: center; min-width: 24px; height: 22px; padding: 0 5px; border-radius: var(--sd-r-small); border: 1.5px solid currentColor; font-size: 11px; font-weight: 700; line-height: 1; color: var(--text-2); }
+.sd-round { border-radius: var(--sd-r-round); min-width: 22px; padding: 0; font-size: 12px; }
+.sd-cross { color: var(--sd-cross); }
+.sd-circle { color: var(--sd-circle); }
+.sd-sq { color: var(--sd-sq); }
 
-.py-cursor {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  width: 14px;
-  height: 19px;
-  pointer-events: none;
-  transform: translate(62%, 400px);
-}
-.py-cursor svg { display: block; width: 100%; height: 100%; }
-.py-cursor::after {
-  content: "";
-  position: absolute;
-  top: -9px;
-  left: -9px;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--blue);
-  border-radius: 50%;
-  opacity: 0;
-}
-.py-cursor.is-click::after { animation: py-ping .42s cubic-bezier(.2, .7, .3, 1); }
-@keyframes py-ping {
-  from { opacity: 1; transform: scale(.4); }
-  to { opacity: 0; transform: scale(1.5); }
-}
+/* The split keyboard. Without script the real capture stands in. */
+.sd-osk { position: absolute; left: 50%; bottom: 86px; transform: translateX(-50%); width: min(80%, 880px); background: var(--sd-plate); border: 1px solid var(--sd-plate-edge); border-radius: var(--sd-r-plate); box-shadow: var(--sd-shadow); padding: 14px 16px 12px; z-index: 20; }
+.sd-osk[hidden], .sd-ring[hidden], .sd-help[hidden], .sd-toast[hidden] { display: none; }
+.sd-still { width: 100%; height: auto; border-radius: var(--sd-r-win); }
+.sd-live { display: none; }
+.sd.sd-js .sd-osk { padding: 14px 16px 12px; }
+.sd.sd-js .sd-still { display: none; }
+.sd.sd-js .sd-live { display: block; }
+.sd-hd { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; color: var(--text-2); font-weight: 500; }
+.sd-ic { width: 18px; height: 18px; border-radius: var(--sd-r-small); background: var(--blue); }
+.sd-strip { margin: 10px 0 8px; min-height: 40px; border-radius: var(--r-inset); background: var(--bg-sunken); border: 1px solid var(--sep); display: flex; align-items: center; gap: 8px; padding: 6px 10px; font-size: 15px; color: var(--text-2); }
+.sd-typed { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--text); }
+.sd-chip { padding: 4px 10px; border-radius: var(--sd-r-key); background: var(--sd-key); border: 1px solid var(--sd-key-edge); color: var(--text); font-size: 14px; }
+.sd-chip.on { background: var(--sd-lit); color: var(--sd-on-lit); border-color: transparent; }
+.sd-rows { display: grid; gap: 5px; }
+.sd-row, .sd-half { display: flex; gap: 5px; }
+.sd-half { flex: 1; }
+.sd-gap { width: 14px; flex: none; }
+.sd-key { position: relative; flex: var(--u, 1) 1 0; min-width: 0; height: 34px; border-radius: var(--sd-r-key); background: var(--sd-key); border: 1px solid var(--sd-key-edge); color: var(--text); display: grid; place-items: center; font-size: 16px; line-height: 1; }
+.sd-key.fn { height: 26px; font-size: 11px; }
+.sd-key.mod { background: var(--sd-key-mod); font-size: 11px; place-items: end start; padding: 0 0 5px 7px; }
+.sd-key.held { background: var(--bg-inset-2); }
+.sd-key.lit { background: var(--sd-lit); color: var(--sd-on-lit); border-color: transparent; }
+.sd-badge { position: absolute; top: -11px; right: -4px; background: var(--sd-win); color: var(--sd-lit-ink); border: 2px solid var(--sd-lit); border-radius: var(--sd-r-small); font-size: 11px; font-weight: 800; line-height: 1; padding: 2px 4px; }
+.sd-ft { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-top: 10px; font-size: 13px; color: var(--text-2); }
+.sd-side { display: flex; flex-wrap: wrap; gap: 6px; max-width: 40%; }
+.sd-side.sd-r { justify-content: flex-end; }
+.sd-hint { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 6px; border-radius: var(--r-btn); border: 1px solid var(--sep); background: var(--bg); white-space: nowrap; }
+.sd-dcross { display: grid; grid-template-columns: repeat(3, 20px); grid-template-rows: repeat(3, 18px); place-items: center; padding: 4px 8px; border-radius: var(--sd-r-win); border: 1px solid var(--sep); background: var(--bg); font-size: 12px; }
+.sd-dcross .on { color: var(--sd-lit-ink); font-weight: 800; }
 
-.py-toast {
-  position: absolute;
-  left: 16px;
-  bottom: 16px;
-  z-index: 6;
-  max-width: calc(100% - 32px);
-  padding: 8px 12px;
-  border-radius: var(--r-inset);
-  background: var(--text);
-  color: var(--bg);
-  font-size: 13px;
-  line-height: 1.4;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s cubic-bezier(.2, .7, .3, 1);
-}
-.py-toast.is-on { opacity: 1; }
+/* The ring of apps. */
+.sd-ring { position: absolute; inset: 0; display: grid; place-items: center; z-index: 22; }
+.sd-plate { position: relative; width: 380px; height: 380px; border-radius: var(--sd-r-round); background: var(--sd-plate); border: 1px solid var(--sd-plate-edge); box-shadow: var(--sd-shadow); }
+.sd-hole { position: absolute; inset: 120px; border-radius: var(--sd-r-round); background: var(--bg-sunken); border: 1px solid var(--sep); display: grid; place-items: center; text-align: center; font-size: 14px; font-weight: 600; color: var(--text-2); padding: 8px; }
+.sd-item { position: absolute; width: 72px; margin: -36px 0 0 -36px; display: grid; justify-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--text-2); transition: transform .14s cubic-bezier(.2, .7, .2, 1); cursor: pointer; }
+.sd-item i { width: 46px; height: 46px; border-radius: var(--sd-r-win); background: var(--sd-key); border: 1px solid var(--sd-key-edge); display: grid; place-items: center; font-style: normal; font-weight: 700; font-size: 18px; color: var(--text); }
+.sd-item.on { transform: scale(1.18); color: var(--text); }
+.sd-item.on i { background: var(--sd-lit); color: var(--sd-on-lit); border-color: transparent; }
+.sd-pillbar { position: absolute; left: 50%; top: calc(50% + 214px); transform: translateX(-50%); display: flex; gap: 16px; padding: 8px 16px; border-radius: var(--r-btn); background: var(--sd-pill); border: 1px solid var(--sd-plate-edge); box-shadow: var(--sd-shadow); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.sd-pillbar > span { display: flex; align-items: center; gap: 6px; }
 
-/* ---------- glyph chips ---------- */
+/* The help card: the app's own, captured. */
+.sd-help { position: absolute; inset: 40px 6% 76px; z-index: 24; background: var(--sd-plate); border: 1px solid var(--sd-plate-edge); border-radius: var(--sd-r-plate); box-shadow: var(--sd-shadow); padding: 12px; display: grid; place-items: center; overflow: auto; }
+.sd-help img { max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: var(--sd-r-win); }
+.sd-help.as-table img { display: none; }
+.sd-help table { border-collapse: collapse; font-size: 15px; width: min(560px, 100%); }
+.sd-help th, .sd-help td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--sep); }
+.sd-help th { color: var(--text-2); font-weight: 500; }
 
-.py-g {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 26px;
-  height: 22px;
-  padding: 0 6px;
-  border: 1px solid var(--sep-2);
-  border-radius: 6px;
-  background: var(--card-bg);
-  color: var(--text);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1;
-  vertical-align: middle;
-}
-.py-g-face {
-  width: 22px;
-  min-width: 22px;
-  padding: 0;
-  border-radius: 50%;
-}
-.py-g-face svg { width: 20px; height: 20px; }
-/* Each row's chips take their own width, not a column as wide as the widest
-   group in any mode: one stick chip beside a 72px column was a canyon. */
-.py-gs { display: inline-flex; gap: 4px; flex: none; }
+.sd-toast { position: absolute; left: 50%; bottom: 96px; transform: translateX(-50%); z-index: 40; padding: 10px 16px; border-radius: var(--sd-r-win); background: var(--sd-pill); border: 1px solid var(--sd-plate-edge); box-shadow: var(--sd-shadow); font-size: 15px; font-weight: 600; }
 
-/* ---------- the on-screen keyboard ---------- */
+/* While it plays itself: the button being pressed, in plain words. */
+.sd-ghost { position: absolute; left: 50%; top: 52px; transform: translate(-50%, 8px); opacity: 0; display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px 8px 8px; border-radius: var(--r-btn); background: var(--text); color: var(--bg); font-weight: 600; font-size: 18px; transition: opacity .2s cubic-bezier(.2, .7, .2, 1), transform .2s cubic-bezier(.2, .7, .2, 1); z-index: 40; pointer-events: none; white-space: nowrap; }
+.sd-ghost.on { opacity: 1; transform: translate(-50%, 0); }
+.sd-ghost .sd-g { background: var(--bg); color: var(--text); border-color: var(--bg); min-width: 32px; height: 32px; border-radius: var(--r-btn); font-size: 15px; }
 
-.py-osk, .py-help {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--sep-2);
-  border-radius: var(--r-card);
-  box-shadow: var(--shadow-rest-lg);
-}
-.py-osk { width: min(420px, 100%); background: var(--bg-inset); }
-/* A closed panel keeps its box, invisible, in the shared middle cell, so the
-   cell is always the tallest panel's height and opening one moves nothing.
-   visibility also takes it out of the tab order and the accessibility tree,
-   which is all [hidden] was doing for it. */
-.py-osk[hidden], .py-help[hidden], .py-ring[hidden] { visibility: hidden; }
-.py-osk-head, .py-help-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px 12px 18px;
-  border-bottom: 1px solid var(--sep);
-}
-.py-osk-head h2, .py-help-head h2 { flex: 1; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
-.py-osk-close { font-size: 13px; color: var(--text-2); white-space: nowrap; }
-.py-x {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border: 0;
-  border-radius: 50%;
-  background: var(--card-bg);
-  color: var(--text-2);
-  cursor: pointer;
-}
-.py-x svg { width: 12px; height: 12px; }
-.py-wheel {
-  position: relative;
-  width: min(100%, 330px);
-  aspect-ratio: 1;
-  margin: 0 auto;
-}
-.py-petal {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: 23%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--card-bg);
-  transform: translate(-50%, -50%);
-  transition: transform .12s cubic-bezier(.2, .7, .3, 1);
-}
-.py-petal.is-aim {
-  box-shadow: 0 0 0 2px var(--blue);
-  transform: translate(-50%, -50%) scale(1.08);
-}
-.py-petal span {
-  position: absolute;
-  display: grid;
-  place-items: center;
-  width: 34%;
-  height: 34%;
-  font-size: 15px;
-  line-height: 1;
-  color: var(--text);
-  cursor: pointer;
-}
-.py-petal .n { top: 6%; left: 33%; }
-.py-petal .s { bottom: 6%; left: 33%; }
-.py-petal .e { right: 6%; top: 33%; }
-.py-petal .w { left: 6%; top: 33%; }
-.py-petal span.is-hit { animation: py-hit .3s cubic-bezier(.2, .7, .3, 1); }
-@keyframes py-hit {
-  40% { transform: scale(1.6); }
-}
-.py-wheel[data-layer="controls"] .py-petal span { font-size: 11px; }
-.py-hub {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 40%;
-  display: grid;
-  justify-items: center;
-  gap: 12px;
-  font-size: 13px;
-  line-height: 1.35;
-  text-align: center;
-  color: var(--text-2);
-  transform: translate(-50%, -30%);
-}
-.py-aimdot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--text-3);
-}
-.py-osk-foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 18px;
-  padding: 12px 16px 14px;
-  border-top: 1px solid var(--sep);
-  font-size: 13px;
-  color: var(--text-2);
-}
+.sd-keys { margin-top: 12px; font-size: 14px; color: var(--text-2); }
+.sd-keys summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+.sd-keys kbd { font: 600 12px/1 var(--mono); padding: 2px 5px; border: 1px solid var(--sep-2); border-radius: var(--sd-r-small); background: var(--bg-sunken); color: var(--text-2); }
+.sd-phone { display: none; }
 
-/* ---------- the app ring ---------- */
-
-/* RadialMenu.swift, nine items: a 394pt disc (2 x 172 + 50) of system glass
-   with a hairline rim, icons at 0.62 of the radius and 0.78 opacity, the
-   aimed one lifted (x1.16 lean, x1.16 selection, two shadows, no outline),
-   its name in a capsule in the hub, the hint chip just under the disc. The
-   tint over the desk matches the grey of radial-menu(-dark).png. */
-.py-ring {
-  --py-glass: rgba(120, 120, 128, 0.42);
-  --py-chip: rgba(246, 246, 248, 0.78);
-  z-index: 3;
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-  width: min(394px, 100%);
+/* A phone has no controller: the desk plays like a video. */
+@media (max-width: 760px) {
+  .sd-stage { aspect-ratio: auto; min-height: 0; height: 420px; pointer-events: none; }
+  .sd-notes { left: 4%; width: 92%; top: 44px; }
+  .sd-field { font-size: 17px; min-height: 60px; }
+  .sd-osk, .sd.sd-js .sd-osk { width: 98%; bottom: 8px; padding: 8px; border-radius: var(--r-card); }
+  .sd-strip, .sd-ft, .sd-row.fnr { display: none; }
+  .sd-key { height: 26px; font-size: 11px; border-radius: var(--sd-r-small); }
+  .sd-key.mod { font-size: 0; }
+  .sd-row, .sd-half, .sd-rows { gap: 3px; }
+  .sd-gap { width: 6px; }
+  .sd-dock, .sd-keys, .sd-src, .sd-right span:last-child { display: none; }
+  .sd-ghost { font-size: 15px; top: 46px; }
+  .sd-plate { transform: scale(.8); }
+  .sd-pillbar { top: calc(50% + 172px); }
+  .sd-phone { display: block; margin-top: 12px; font-size: 15px; color: var(--text-2); }
+  .sd-status { min-height: 52px; }
+  #sd-said { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 }
-[data-theme="dark"] .py-ring { --py-chip: rgba(44, 44, 48, 0.78); }
-/* Instant open, fade-only close: RadialMenu.swift snaps opacity to 1 on
-   show and eases out over 0.16s on dismiss. */
-.py-ring.is-closing { opacity: 0; transition: opacity .16s cubic-bezier(.4, 0, 1, 1); }
-.py-disc {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  border: 1px solid var(--sep);
-  border-radius: 50%;
-  background-color: var(--py-glass);
-  -webkit-backdrop-filter: blur(24px) saturate(1.8);
-  backdrop-filter: blur(24px) saturate(1.8);
-  box-shadow: var(--shadow-rest-lg);
-}
-/* An icon's visible tile is 0.8 of its 52.9pt frame (radialIconSize), so
-   10.75% of the disc. The sprite is cut from desk-radial.jpg. */
-.py-item {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: 10.75%;
-  aspect-ratio: 1;
-  padding: 0;
-  border: 0;
-  background: url("assets/ring-icons.webp") calc(var(--i) * 12.5%) 0 / 900% 100% no-repeat;
-  opacity: 0.88;
-  cursor: pointer;
-  transform: translate(-50%, -50%);
-  transition: transform .3s cubic-bezier(.2, .8, .2, 1), opacity .12s cubic-bezier(.2, .7, .3, 1);
-}
-.py-item.is-aim {
-  z-index: 1;
-  opacity: 1;
-  filter: drop-shadow(0 9px 12px rgba(0, 0, 0, 0.36)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
-  transform: translate(-50%, -50%) scale(1.35);
-}
-/* The secondary ring's items are SF Symbol actions, not apps: named here. */
-.py-item.is-sym { width: 21%; aspect-ratio: auto; background: none; opacity: 1; }
-.py-sym {
-  display: block;
-  padding: 5px 8px;
-  border-radius: var(--r-btn);
-  background-color: var(--py-chip);
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.2;
-}
-.py-item.is-sym.is-aim { filter: none; }
-.py-ring-name {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  padding: 4px 12px;
-  border: 1px solid var(--sep);
-  border-radius: var(--r-btn);
-  background-color: var(--py-chip);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-  color: var(--text);
-  font-size: 15px;
-  font-weight: 600;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: opacity .12s cubic-bezier(.2, .7, .3, 1);
-}
-.py-ring.is-named .py-ring-name { opacity: 1; }
-.py-ring-foot {
-  display: flex;
-  gap: 14px;
-  padding: 6px 14px;
-  border: 1px solid var(--sep);
-  border-radius: var(--r-btn);
-  background-color: var(--py-chip);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-}
-.py-ring-foot .py-g { border: 0; background: none; min-width: 0; padding: 0 2px; }
-
-/* ---------- the help card ---------- */
-
-.py-help {
-  z-index: 4;
-  width: 100%;
-  max-height: var(--float);
-  background: var(--card-bg);
-}
-.py-help-head span { font-size: 13px; color: var(--text-2); }
-.py-help-live {
-  padding: 10px 18px;
-  font-size: 13px;
-  color: var(--blue-text);
-  border-bottom: 1px solid var(--sep);
-}
-.py-help-scroll { flex: 1; overflow: auto; }
-.py-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.py-table th, .py-table td { padding: 7px 10px; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--hairline); }
-.py-table thead th { font-weight: 600; text-align: center; position: sticky; top: 0; background: var(--card-bg); }
-.py-table thead th small { display: block; font-size: 11px; font-weight: 400; color: var(--text-3); }
-.py-table tbody th { display: flex; align-items: center; gap: 8px; font-weight: 500; }
-.py-table td { color: var(--text-2); }
-.py-table .is-lit { background: var(--blue-fill); color: var(--text); }
-.py-sticks td { text-align: right; }
-
-/* ---------- the side pane ---------- */
-
-.py-side {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 24px 22px;
-  border-left: 1px solid var(--sep);
-}
-.py-side-h { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
-.py-state { font-size: 14px; line-height: 1.5; color: var(--text-2); }
-.py-k {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.py-legend { display: grid; gap: 9px; list-style: none; font-size: 13px; line-height: 1.35; }
-.py-legend li { display: flex; align-items: center; gap: 10px; }
-
-.py-cta { margin-top: auto; display: grid; gap: 10px; padding-top: 6px; }
-.py-cta-t { font-size: 14px; line-height: 1.5; }
-.py-cta-go { justify-content: center; }
-.py-cta-terms { font-size: 12px; color: var(--text-3); }
-/* Held open, not collapsed: the button arriving must not move the page. */
-.py-cta[data-state="wait"] .py-cta-go, .py-cta[data-state="wait"] .py-cta-terms { visibility: hidden; }
-
-/* A slot stacks its live text over invisible copies of its other states
-   (pad-demo.js reserve()), so it is always its tallest state's height. The
-   live copy sits at the top: stretched, a three-row legend spread its rows
-   across the reserve instead of leaving the spare room below them. */
-.py-slot { display: grid; }
-.py-slot > * { grid-area: 1 / 1; align-self: start; }
-.py-sizer { visibility: hidden; }
-
-.py-keys { margin-top: 14px; max-width: 900px; font-size: 13px; line-height: 1.7; color: var(--text-2); }
-.py-keys kbd {
-  padding: 1px 5px;
-  border: 1px solid var(--sep-2);
-  border-radius: 5px;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text);
-}
-
-/* ---------- narrow ---------- */
-
-@media (max-width: 899px) {
-  .py-body { grid-template-columns: minmax(0, 1fr); }
-  .py-side { border-left: 0; border-top: 1px solid var(--sep); }
-  .py-layer { display: none; }
-}
-@media (max-width: 560px) {
-  .py-stage { --float: 430px; padding: 14px 12px 12px; gap: 12px; }
-  .py-osk-close { display: none; }
-  .py-petal span { font-size: 14px; }
-  .py-hub { font-size: 11px; }
-  .py-osk-foot { gap: 8px 14px; padding: 10px 12px 12px; }
-}
-
-/* A replay is motion; the still frame is the claim. */
 @media (prefers-reduced-motion: reduce) {
-  .py-petal, .py-item, .py-ring-name, .py-toast, .py-ring.is-closing { transition: none; }
-  .py-cursor.is-click::after, .py-petal span.is-hit { animation: none; }
+  .sd *, .sd *::before, .sd *::after { animation: none; transition: none; }
 }
-html.still .py-petal, html.still .py-item, html.still .py-ring-name, html.still .py-toast { transition: none; }
+@media (forced-colors: active) {
+  .sd { --sd-lit: Highlight; --sd-on-lit: HighlightText; }
+}

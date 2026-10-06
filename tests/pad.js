@@ -42,13 +42,3 @@ export async function stick(page, axes) {
   await page.evaluate((a) => { /** @type {any} */ (window).__pad.axes = a; }, axes);
   await frame(page);
 }
-
-/* L1 held, R3 pressed: Steer's default chord for the on-screen keyboard. */
-/** @param {Page} page */
-export async function chordKeyboard(page) {
-  await hold(page, "l1", true);
-  await frame(page);
-  await press(page, "r3");
-  await hold(page, "l1", false);
-  await frame(page);
-}

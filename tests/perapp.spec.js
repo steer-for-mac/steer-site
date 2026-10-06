@@ -103,18 +103,17 @@ test.describe("on a phone", () => {
   test.use({ viewport: { width: 375, height: 812 }, hasTouch: true });
 
   test("no keyboard instructions, and one line to send the page to a Mac", async ({ page }) => {
-    await expect(page.locator("#pyKeys")).toBeHidden();
-    await expect(page.locator(".py-acts")).toBeHidden();
+    await expect(page.locator(".sd-keys")).toBeHidden();
+    await expect(page.locator(".sd-dock")).toBeHidden();
     await expect(page.locator(".l2-share")).toBeVisible();
     await expect(page.locator(".l2-share")).toContainText("Try it with a controller on your Mac");
     await expect(page.locator(".l2-share-go")).toBeVisible();
-    await expect(page.locator("#pyText")).toHaveJSProperty("readOnly", true);
   });
 });
 
 test("on a desktop the share line stays out of the way", async ({ page }) => {
   await expect(page.locator(".l2-share")).toBeHidden();
-  await expect(page.locator("#pyKeys")).toBeVisible();
+  await expect(page.locator(".sd-keys")).toBeVisible();
 });
 
 /* Every tile, not one: the automation tile was added without this check.

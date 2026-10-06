@@ -4,7 +4,6 @@
 @import "../design-system.css" layer(components);
 @import "../bands/dialogs.css" layer(bands);
 @import "../bands/play/demo.css";
-@import "../bands/play/pad.css";
 
 /* ---------- head ---------- */
 
@@ -38,4 +37,15 @@
 }
 @media (max-width: 560px) {
   .py-top { padding-top: 40px; }
+}
+
+/* ---------- join: a shared demo link can sign up ---------- */
+
+.py-join { padding: 8px 0 72px; }
+.py-join-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 40px; align-items: start; }
+.py-join-h { font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.02em; font-weight: 700; }
+.py-join-sub { margin-top: 10px; max-width: 520px; font-size: 17px; line-height: 1.5; color: var(--text-2); }
+.py-join .ml-form { margin-top: 0; }
+@media (max-width: 899px) {
+  .py-join-in { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 }
