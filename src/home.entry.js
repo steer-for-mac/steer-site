@@ -5,3 +5,4 @@
 import "./scripts/launch-list.js";
 import "./scripts/steer-demo.js";
 import "./scripts/home-share.js";
+import "./scripts/home-loops.js";

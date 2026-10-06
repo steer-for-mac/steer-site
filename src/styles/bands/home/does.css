@@ -22,3 +22,10 @@
   .h-txt { padding: 22px 0 28px; }
   .h-wide .h-txt { grid-template-columns: 1fr; gap: 8px; }
 }
+/* The app's own moving panels: light-theme loops, dark keeps its stills. */
+.h-loop-wrap { position: relative; max-width: 100%; }
+.h-loop { display: block; width: auto; max-width: 100%; height: auto; max-height: 380px; border-radius: var(--r-window); }
+.h-wide .h-loop { max-height: 620px; }
+.h-loop-btn { position: absolute; right: 8px; bottom: 8px; min-height: 32px; padding: 0 12px; border-radius: var(--r-btn); border: 1px solid var(--sep-2); background: var(--bg); color: var(--text); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; opacity: .85; }
+.h-loop-btn[hidden] { display: none; }
+[data-theme="dark"] .h-loop-wrap { display: none; }

@@ -36,9 +36,10 @@ test("the first screen has the promise, a working form and the demo", async ({ p
 
 test("every app picture has a light and a dark capture, and only the theme's shows", async ({ page }) => {
   await page.goto("/index.html");
-  const lt = page.locator(".h-does img.h-lt"), dk = page.locator(".h-does img.h-dk");
+  const lt = page.locator(".h-does .h-lt"), dk = page.locator(".h-does img.h-dk");
   await expect(lt).toHaveCount(6);
   await expect(dk).toHaveCount(6);
+  await expect(page.locator(".h-does video.h-loop")).toHaveCount(3);
   await expect(lt.first()).toBeVisible();
   await expect(dk.first()).toBeHidden();
 });
