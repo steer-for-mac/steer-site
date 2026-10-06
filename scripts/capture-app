@@ -68,12 +68,16 @@ def display():
 
 def window(helper, pid, kind):
     dw, dh = display()
-    wins = json.loads(run(helper, str(pid)))
-    if kind == "normal":
-        pick = [w for w in wins if w["layer"] == 0]
-    else:  # not the overlays' full-screen dimmer, not the 232pt menu-bar popup
-        pick = [w for w in wins if 0 < w["layer"] <= 20 and (w["w"], w["h"]) != (dw, dh) and w["w"] != 232]
-    if not pick:
+    for _ in range(10):  # an overlay can take a moment after the previous one hides
+        wins = json.loads(run(helper, str(pid)))
+        if kind == "normal":
+            pick = [w for w in wins if w["layer"] == 0]
+        else:  # not the overlays' full-screen dimmer, not the 232pt menu-bar popup
+            pick = [w for w in wins if 0 < w["layer"] <= 20 and (w["w"], w["h"]) != (dw, dh) and w["w"] != 232]
+        if pick:
+            break
+        time.sleep(0.3)
+    else:
         sys.exit(f"no {kind} window from Steer Dev")
     return max(pick, key=lambda w: w["w"] * w["h"])["id"]
 
