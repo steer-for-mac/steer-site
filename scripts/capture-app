@@ -32,7 +32,7 @@ SHOTS = {
     "help": ("steer://help/show", "panel", None),
     "keyboard": ("steer://keyboard/show", "panel", (0, 112, 2354, 1360)),
     "ring": ("steer://radial/show", "panel", None),
-    "snap": ("steer://windowsnap/show", "panel", (0, 137, 1120, 1102)),
+    "snap": ("steer://windowsnap/show", "panel", (42, 150, 1078, 945)),  # the nine places, inside the card
     "apps": ("steer://settings/gallery", "normal", (859, 880, 2573, 1753)),
     "tiles": ("steer://settings/buttons?control=cross&view=picture", "normal", (466, 1362, 2283, 1565)),
 }

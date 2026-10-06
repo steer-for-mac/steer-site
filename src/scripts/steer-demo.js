@@ -168,7 +168,7 @@ function init(root) {
   function closeRing() { state.ring = false; ring.hidden = true; }
   function ringSelect() {
     if (state.ringSel < 0) return say("Point at an app first");
-    const n = APPS[state.ringSel]; closeRing(); showToast(`Steer would switch to ${n}. This page only names it.`); return say(`Picked ${n}`);
+    const n = APPS[state.ringSel]; closeRing(); showToast(`On your Mac, this opens ${n}.`); return say(`Picked ${n}`);
   }
 
   $("helptable").querySelector("tbody").innerHTML = BASE.map(([a, b]) => `<tr><th scope="row">${a}</th><td>${b}</td></tr>`).join("");
@@ -228,7 +228,7 @@ function init(root) {
       case "tri": return ret();
       default: break;
     }
-    if (BASEJOB[b]) say(`${BASEJOB[b]}${ONLY_NAMED.includes(b) ? ". On your Mac that happens; this page names it." : ""}`);
+    if (BASEJOB[b]) say(`${BASEJOB[b]}${ONLY_NAMED.includes(b) ? " (on your Mac)" : ""}`);
     return undefined;
   }
   let swallowL3 = false;  // the L3 press that closed the ring must not reopen it on release
@@ -317,7 +317,7 @@ function init(root) {
   async function nudge(keys, ms, b, verb) { live(); show(b, verb); keys.forEach((k) => held.add(k)); await sleep(ms); keys.forEach((k) => held.delete(k)); }
   async function run() {
     if (!attract) return;
-    said.setAttribute("aria-live", "off"); setSrc("Playing by itself"); stopBtn.hidden = false;
+    said.setAttribute("aria-live", "off"); src.hidden = true; stopBtn.hidden = false;
     try {
       for (;;) {
         if (!state.open) await tap("r3", "opens the keyboard", 500);
@@ -336,10 +336,10 @@ function init(root) {
   function stop() {
     if (!attract) return;
     attract = false; io?.disconnect(); timers.forEach(clearTimeout); held.clear(); ghost.classList.remove("on"); stopBtn.hidden = true;
-    said.setAttribute("aria-live", "polite"); say("You’re driving. Press any button."); setSrc("You’re driving");
+    said.setAttribute("aria-live", "polite"); say("Your turn."); src.hidden = false; setSrc("Keyboard");
   }
   if (attract) {
-    $("phone").textContent = "It’s playing by itself. Open this page on a Mac and plug in a controller to take over.";
+    $("phone").textContent = "On a Mac, plug in a controller to take over.";
     ["keydown", "pointerdown"].forEach((t) => stage.addEventListener(t, stop, { capture: true }));
     stopBtn.addEventListener("click", () => { stop(); stage.focus(); });
     io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { io.disconnect(); run(); } });
