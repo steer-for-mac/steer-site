@@ -2,7 +2,7 @@
 
 > Steer turns a game controller into a complete Mac input device. Pointer, typing, shortcuts, windows, apps and menus, from wherever you are sitting.
 
-Last updated: 19 July 2026.
+Last updated: 5 October 2026.
 
 The full documentation, generated from the app's own Help: https://steer.seanfloyd.dev/llms-full.txt (newest). Each version keeps its own at https://steer.seanfloyd.dev/docs/<version>/llms-full.txt, never changed once published.
 
@@ -109,42 +109,42 @@ Steer is drivable from outside on standard macOS primitives, so a shell line, an
 
 ### URL scheme
 
-Twenty route families. Almost all are fire and forget: they never block and never return an error. The one exception is `snapshot/restore`, which changes configuration and therefore requires an explicit `confirm=true`; without it Steer opens Settings at History and lets the person decide. Always use `open -g` so focus is not stolen.
+Twenty route families. Almost all are fire and forget: they never block. The one exception is `version/restore`, which changes configuration and therefore requires an explicit `confirm=true`; without it Steer opens Settings at History and lets the person decide. Always use `open -g` so focus is not stolen. A caller with its own URL scheme (Shortcuts, Raycast, Keyboard Maestro, Alfred, Hammerspoon) can add `x-success` and `x-error` to hear whether a route ran; a link to no route, or a route given a value it refuses, gets no callback.
 
 ```
 open -g "steer://customization/<id>"            switch customization by id
 open -g "steer://customization/by-name/<name>"  switch customization by display name
 open -g "steer://customization/automatic"       back to the customization the app in front selects
-open -g "steer://layer/<name>"            toggle a modifier layer
+open -g "steer://layer/<name>"            turn a layer on or off: base, l1, r1, l1r1, l2, r2
 open -g "steer://macro/<name>"            play a saved macro
-open -g "steer://haptic/<pattern>"        pulse | double | success | warning | error
-open -g "steer://led/<rrggbb>"            light bar, bare six-digit hex, no #
-open -g "steer://led/auto"                hand the light bar back to Steer
-open -g "steer://leds/<0-5|off>"          player LEDs, filled left to right
-open -g "steer://leds/mask/<hex>"         player LEDs individually, 00-1F, bit 0 leftmost
-open -g "steer://micled/<off|on|pulse>"   mute-button LED
+open -g "steer://haptic/<pattern>"        pulse | double | success | warning | error (other names are refused)
+open -g "steer://light/<rrggbb>"          light bar, bare six-digit hex, no #
+open -g "steer://light/auto"              hand the light bar back to Steer
+open -g "steer://player-lights/<0-5|off>" player lights, filled left to right
+open -g "steer://player-lights/mask/<hex>" player lights individually, 00-1F, bit 0 leftmost
+open -g "steer://mute-light/<off|on|pulse>"    mute-button light
 open -g "steer://autoswitch/<on|off|toggle>"   follows the app in front
-open -g "steer://pins/<suspend|resume|toggle>" pinned bindings
-open -g "steer://gridsnap/<zone>"         snap the front window to a screen zone
-open -g "steer://gridsnap[/<show|hide|toggle>]" open the aiming grid instead
+open -g "steer://overrides/<suspend|resume|toggle>" overrides
+open -g "steer://windowsnap/<zone>"       snap the front window to a screen zone
+open -g "steer://windowsnap[/<show|hide|toggle>]" open the aiming grid instead
 open -g "steer://keyboard[/<show|hide|toggle>]" on-screen keyboard
 open -g "steer://radial"                  radial app launcher
 open -g "steer://palette"                 menu palette
-open -g "steer://help[/<show|hide>]"      help overlay
+open -g "steer://help[/<show|hide>]"      help card
 open -g "steer://padview[/<show|hide>]"   live controller view in the corner
 open -g "steer://settings[/<section>]"    open Settings at a pane
-open -g "steer://snapshot/capture"        take a configuration restore point
-open -g "steer://snapshot/restore/<uuid>?confirm=true"  roll configuration back
-open -g "steer://wizard"                  onboarding wizard
+open -g "steer://version/save"            save a version of the settings
+open -g "steer://version/restore/<uuid>?confirm=true"  roll the settings back
+open -g "steer://wizard"                  setup
 open -g "steer://suggest"                 open the suggestions page
-open -g "steer://query/<state|customizations|macros|snapshots>"  read back as JSON
+open -g "steer://query/<state|customizations|macros|versions>"  read back as JSON
 ```
 
 A `steer://debug/*` family exists in DEBUG builds only and is not part of the shipping surface.
 
 ### Reading state back
 
-`steer://query/state`, `query/customizations`, `query/macros` and `query/snapshots` return JSON. Steer also exposes about thirty App Intents to Shortcuts, Siri and Spotlight, seven of which read rather than write: current customization, connected controller, active layer, battery level, the binding on a given button, full state, and a section of Steer's Help. A Focus filter switches the app customization with your macOS Focus mode and restores the previous one when it ends.
+`steer://query/state`, `query/customizations`, `query/macros` and `query/versions` return JSON. Steer also exposes about thirty App Intents to Shortcuts, Siri and Spotlight, seven of which read rather than write: current customization, connected controller, active layer, battery level, the binding on a given button, full state, and a section of Steer's Help. A Focus filter switches the app customization with your macOS Focus mode and restores the previous one when it ends.
 
 ### Listening
 
@@ -161,19 +161,19 @@ com.steer.battery.low
 
 ### Things that will bite you
 
-- **The light bar is not a status light.** Steer repaints it on every state change from layer, gyro, battery and idle state, so a colour written by a script is wiped by the first shoulder press. Use the player LEDs, which the tick path never touches.
-- **Player LEDs and the mute LED are DualSense and DualSense Edge only.** They no-op elsewhere. The mute LED is faint in a normally lit room.
+- **The light bar is not a status light.** Steer repaints it on every state change from layer, gyro, battery and idle state, so a colour written by a script is wiped by the first shoulder press. Use the player lights, which the tick path never touches.
+- **The player lights and the mute light are DualSense and DualSense Edge only.** They no-op elsewhere. The mute light is faint in a normally lit room.
 - **There are four haptic feels across five names.** `warning` and `error` are deliberately identical. Patterns differ by tap count and duration, not strength.
-- **Hooks that run synchronously** (Claude Code's `UserPromptSubmit`, for one) should detach anything that can block: `(open -g "steer://leds/1" &)`.
+- **Hooks that run synchronously** (Claude Code's `UserPromptSubmit`, for one) should detach anything that can block: `(open -g "steer://player-lights/1" &)`.
 
 ### Worked example
 
-Light one player LED while an agent works, all five when it needs you, and clear at the end:
+Light one player light while an agent works, all five when it needs you, and clear at the end:
 
 ```sh
-open -g "steer://leds/1"                                    # working
-open -g "steer://leds/5"; open -g "steer://haptic/warning"  # needs you
-open -g "steer://leds/off"                                  # done
+open -g "steer://player-lights/1"                           # working
+open -g "steer://player-lights/5"; open -g "steer://haptic/warning"  # needs you
+open -g "steer://player-lights/off"                         # done
 ```
 
 ## Pages

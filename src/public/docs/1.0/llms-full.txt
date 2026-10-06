@@ -3,18 +3,18 @@
 Generated 2026-10-05 from Steer's own Help, for version 1.0 only. Buttons are the shipped defaults; a user's may differ, and Steer's Help window shows theirs.
 
 <context>
-You are helping a user configure Steer, a macOS menu-bar app that turns game controllers into full desktop input devices. The user likely wants help editing a profile (bindings, sensitivities, layers, mod-tap behaviour), debugging why a binding doesn't fire, or translating a goal into a concrete Steer configuration.
+You are helping a user configure Steer, a macOS menu-bar app that turns game controllers into full desktop input devices. The user likely wants help changing what a button does, in All apps or one app's customization (sensitivities, layers, how the layer buttons L1, R1, L2 and R2 behave), working out why a button doesn't do what they set, or turning a goal into a concrete Steer configuration.
 
-The sections below are the Steer engine documentation for version 1.0. If the user attaches a JSON file, that is their current profile; review it against <config_schema_primer> before suggesting changes. Prefer edits that keep the mandatory binding conventions (left stick = mouse, right stick = scroll, D-pad = arrows on Solo layer, Cross = left click, Circle = right click, shoulders = modifiers).
+The sections below are the Steer engine documentation for version 1.0. If the user attaches a JSON file, that is their current settings file; review it against <config_schema_primer> before suggesting changes. Prefer edits that keep Steer's conventions (left stick = mouse, right stick = scroll, D-pad = arrows on the Base layer, Cross = left click, Circle = right click, L1, R1, L2 and R2 = layer buttons).
 
 </context>
 
 <overview>
 ## Getting started
 
-Steer turns your game controller into a full macOS input device. Move the cursor with a stick, scroll pages, press keys, toggle media, launch apps — all without leaving the couch. Pair any supported controller, grant Steer permission to control your Mac once (so Steer can post mouse and keyboard events), and Steer lives quietly in your menu bar until you pick up the controller. Input Monitoring is only requested if you own a DualSense Edge and want to bind its two rear paddles.
+Steer turns your game controller into a full macOS input device. Move the cursor with a stick, scroll pages, press keys, play and pause music, launch apps, all from the couch. Pair a supported controller, give Steer permission to control your Mac once (so it can post mouse and keyboard events), and it sits quietly in your menu bar until you pick the controller up. Input Monitoring is asked for only if you own a DualSense Edge and want to use its two rear paddles.
 
-Supported hardware: DualSense, DualSense Edge, DualShock 4, Xbox Series / One / Elite, Switch Pro, and Made-for-iPhone controllers. Steer also carries a controller database for pads macOS doesn't recognise; where it matches, you get buttons and sticks only — no battery, LED, haptics or motion. That path has not been confirmed against physical hardware, so treat it as untested rather than supported.
+Supported hardware: DualSense, DualSense Edge, DualShock 4, Xbox Series / One / Elite, Switch Pro, and Made-for-iPhone controllers. Steer also carries a controller database for pads macOS doesn't recognize. Where it matches, you get buttons and sticks only: no battery, lights, vibration or motion. That path has not been confirmed against physical hardware, so treat it as untested rather than supported.
 
 </overview>
 
@@ -54,7 +54,7 @@ Most buttons only have a tap. If a button has both a tap and a while-held action
 
 ### Layers at a glance
 
-Holding a shoulder button gives the other buttons a second set of jobs. Steer calls each set a layer. There are six: **Solo** (nothing held), **L1**, **R1**, **L1+R1** together, **L2** and **R2**. Hold more than one and the first of these wins: L1+R1, then L2, R2, L1, R1. A layer can also stay on without holding; see *Keeping a layer on* below.
+Holding a shoulder button gives the other buttons a second set of jobs. Steer calls each set a layer. There are six: **Base** (nothing held), **L1**, **R1**, **L1+R1** together, **L2** and **R2**. Hold more than one and the first of these wins: L1+R1, then L2, R2, L1, R1. A layer can also stay on without holding; see *Keeping a layer on* below.
 
 The *Layers* section below shows where to change what each layer does.
 
@@ -66,11 +66,11 @@ Keyboard enthusiasts know this as a dual-role key. The short wait is what lets e
 
 ### When a held shoulder button counts
 
-**Eager (recommended)**: the shoulder button counts as held as soon as you press another button with it. Hold L1, press Cross, and you get Cross's L1 job straight away. Right for most people.
+**As soon as another button is pressed** (the default). Hold L1, press Cross, and you get Cross's L1 job straight away. Right for most people.
 
-**Balanced**: it counts as held once you let go of the other button. Brushing a button by accident doesn't switch layers, but it feels a touch slower.
+**When the other button is let go**. Brushing a button by accident doesn't switch layers, but it feels a touch slower.
 
-**Timer only**: it counts as held only after 280 ms. The most careful choice, and rarely needed on a controller.
+**Only after the hold time** (280 ms). The most careful choice, and rarely needed on a controller.
 
 Choose under Settings → Steer → Timing, at **When a layer button is also tapped**. It applies to every layer button; **Each layer button** sets one apart.
 
@@ -101,7 +101,7 @@ Steer won't let you set these, and says why.
 
 ### A long press on a shoulder button
 
-Holding L1, R1, L2 or R2 already means its layer, so it can't also mean a long press. To get a long press there, open **Each layer button** under Settings → Steer → Timing and turn on **Disable mod-tap on this button**. That button stops switching layers.
+Holding L1, R1, L2 or R2 already means its layer, so it can't also mean a long press. To get a long press there, open **Each layer button** under Settings → Steer → Timing and turn on **Make this an ordinary button**. That button stops switching layers.
 
 ### A long press on a button that clicks
 
@@ -109,13 +109,13 @@ A click needs the button held for as long as you drag, so a long press on the sa
 
 ### See what every button does right now
 
-Press **Create** to open the **Help Overlay**: your controller with every button labelled, for whichever shoulder button you hold. This page explains the rules; that one shows your setup.
+Press **Create** to open the **Help Card**: your controller with every button labelled, for whichever shoulder button you hold. This page explains the rules; that one shows your setup.
 
 ### Keeping a layer on
 
-Set a button to **Toggle L1 Layer** and the L1 layer stays on without holding; press it again to turn it off. Tapping and holding L1 work as before.
+Set a button to **Keep L1 On Until Pressed Again** and the L1 layer stays on without holding. Press it again to turn it off. Tapping and holding L1 work as before.
 
-*Toggle Solo Layer* and *Clear Toggled Layers* each turn every kept-on layer off at once.
+*Turn Off Kept Layers* turns every kept layer off at once.
 
 Kept-on layers turn off when the controller disconnects or Steer switches to another app's settings.
 
@@ -131,13 +131,13 @@ Kept-on layers turn off when the controller disconnects or Steer switches to ano
 
 **My double tap fires when I didn't mean it.** Shorten **Double tap within** under Settings → Steer → Timing. It's 300 ms now.
 
-**Play/pause works in Spotify but not YouTube.** See *Media controls across apps* below — browsers need a different binding scheme.
+**Play/pause works in Spotify but not YouTube.** See *Media controls across apps* below: browsers listen for different keys.
 
 **A file won't import.** The import sheet says what went wrong and offers a “Copy Error for AI” button. Paste that into an AI chatbot alongside these docs and it can repair the file.
 
 </how_buttons_work>
 
-<chords>
+<combos>
 ## Button combos
 
 A combo puts an action on two or more buttons instead of one.
@@ -156,14 +156,14 @@ Shorter feels snappier and needs a tighter press. Longer forgives sloppy timing 
 
 Press Cross, then Circle, then Triangle, each within about a second of the last, and the combo fires. Order matters, and a wrong button or a long pause starts it over. Choose **In Order** when you add one.
 
-</chords>
+</combos>
 
 <media_controls>
 ## Media controls across apps
 
 macOS applications use three different mechanisms for play/pause, seek, and volume:
 
-- **System media keys** (Play/Pause, Next, Previous) — work with Spotify, Apple Music, VLC, QuickTime, and most natively-integrated apps. The default Steer profile uses these.
+- **System media keys** (Play/Pause, Next, Previous) work with Spotify, Apple Music, VLC, QuickTime, and most apps built for the Mac. Steer's default buttons use these.
 - **Spacebar** — the web/video-app default (YouTube, Netflix, Vimeo, most web players).
 - **Arrow keys** — seeking and volume in some apps; very app-specific.
 
@@ -194,7 +194,7 @@ Flick stick is an optional right-stick mode for rapid camera turns: flick the st
 
 Snap the frontmost window to a position on screen using the controller. Snapping does not move the window itself: it asks macOS or a window manager to do it.
 
-Nothing opens this by default. Set any button to **Window Grid Snap** under Settings → Controls. Press it to open a grid, aim with the left stick to highlight a cell, then press **Cross** to snap the window there. **Circle** or **Square** cancels, and pressing the same button again closes the grid without picking anything.
+Nothing opens this by default. Set any button to **Window Snap** under Settings → Controls. Press it to open a grid, aim with the left stick to highlight a cell, then press **Cross** to snap the window there. **Circle** or **Square** cancels, and pressing the same button again closes the grid without picking anything.
 
 By default Window Snap uses **Rectangle** or **Raycast** if one is installed, and macOS's own tiling if neither is. Choose another under Settings → Window Snap. macOS's own tiling goes through System Events, so it needs the Automation permission.
 
@@ -214,7 +214,7 @@ A stick can also do a different job while a shoulder button is held, like scroll
 <radial_menu>
 ## Radial menu
 
-Steer ships two rings. Press **L3** to open the **primary** ring — app launchers by default (Safari, Finder, Music, Mail, Calendar, Notes, Messages, Settings, and Maps). Press **L1+L3** to open the **secondary** ring — workflow shortcuts that aren't already on a default binding (Screenshot, Lock Screen, Hide App, Show Desktop, Find, Reload, and Steer Settings). Rotate the left stick to aim, then press Cross to launch. Circle or Square cancels, and L3 closes the ring.
+Steer ships two rings. Press **L3** to open the **primary** ring, app launchers by default (Safari, Finder, Music, Mail, Calendar, Notes, Messages, Settings, and Maps). Press **L1+L3** to open the **secondary** ring, workflow shortcuts no button does by default (Screenshot, Lock Screen, Hide App, Show Desktop, Find, Reload, and Steer Settings). Rotate the left stick to aim, then press Cross to launch. Circle or Square cancels, and L3 closes the ring.
 
 Change what's on either ring under Settings → Library → Radial Menus. Each item has a label, a symbol and an action: opening an app, running a Shortcut, a keystroke, and more.
 
@@ -246,21 +246,21 @@ Press **L3** to dictate into the field instead. Drag the keyboard's corner to re
 
 </on_screen_keyboard>
 
-<per_app_profiles>
+<per_app>
 ## Different buttons in different apps
 
 Buttons can do something different in one app. Add the app under Settings → Apps and change what you want; everything you don't change stays as it is in all your other apps. When that app comes to the front, Steer uses its changes. Picking one by hand from the menu bar lasts until you switch apps.
 
-</per_app_profiles>
+</per_app>
 
-<pins>
+<overrides>
 ## Overrides
 
 An override changes a few buttons in every app at once, on top of each app's own changes. It's for the handful you want everywhere, like a push-to-talk button.
 
 Make one under Settings → Apps. If two overrides change the same button, the later one in the list wins. Suspending overrides turns them all off without deleting them, which is the first thing to try when a button surprises you.
 
-</pins>
+</overrides>
 
 <touchpad>
 ## Touchpad
@@ -271,7 +271,7 @@ Click the touchpad on the picture in Settings → Controls to choose what the su
 
 - **Mouse** moves the cursor, like a laptop trackpad.
 - **Scroll** scrolls, with momentum after a flick.
-- **Zones** turns the pad into buttons you bind like any other button, either two halves or four quadrants, instead of a pointer.
+- **Zones** turns the pad into buttons you set like any other button, either two halves or four quadrants, instead of a pointer.
 - **Disabled** turns the surface off. The physical click keeps working.
 
 Pinch to zoom is on by default and works in both versions of Steer. Out of the box it posts a real system zoom gesture, smooth rather than stepped, in the apps that understand it, such as Safari, Preview, Photos and Maps. Some apps, like VS Code and Figma, ignore that gesture; if you spend your time in those, switch pinch to its keyboard-shortcut form in the touchpad's settings under Settings → Controls, which works everywhere. Two-finger twist to rotate is also on by default in both versions and reaches the same set of apps.
@@ -294,14 +294,14 @@ Out of the box, the ones that would buzz constantly are off (scrolling, switchin
 
 </haptics>
 
-<led>
+<lights>
 ## Lights
 
 On a DualSense or DualShock 4 the light shows what's happening: its usual colour, a colour for each held shoulder button, gyro on, a flash when Steer switches to another app's settings, and low battery. Pick the colours under Settings → Controls → Lights. Xbox, Switch Pro and MFi controllers have no light Steer can set, so Lights doesn't appear for them.
 
-To turn the light off, switch off Light bar on that page, or Lights in Steer's menu in the menu bar. A Focus can turn it off for as long as it's on: add Steer under Focus Filters for that Focus in System Settings → Focus, and switch Pad lights off there.
+To turn the lights off, switch off Lights at the top of that page, or Lights in Steer's menu in the menu bar: the light bar, the player lights and the mute light all go dark, whatever an app or a script asks them to show. A Focus can turn them off for as long as it's on: add Steer under Focus Filters for that Focus in System Settings → Focus, and switch Pad lights off there.
 
-</led>
+</lights>
 
 <config_file>
 ## Config file
@@ -328,7 +328,7 @@ The integration runs in both directions.
 
 **Drive Shortcuts from your controller.** Any Shortcut you have created can run from a button: set the button to the *Run Shortcut* action. Ready-made templates live under Settings → Gallery → Shortcuts; importing one opens Shortcuts.app, asks for any needed setup (like a webhook URL), and adds it to your library. Dictation needs none of this: set a button to it and Steer starts and stops it directly, with no Shortcut to create. It needs permission to control your Mac and a text field with the cursor in it; if either is missing, Steer says so rather than doing nothing.
 
-**Drive Steer from Shortcuts.** Steer publishes its own actions to Shortcuts.app — search “Steer” in the actions sidebar to switch profiles or layers, play macros, toggle gyro, set the LED colour, fire haptics, or read the controller state (profile, layer, battery) into your own automations. The most common ones are also available as Siri phrases. For latency-critical bindings, note that a shell script or AppleScript bound directly via the *Run Script* actions runs without the Shortcuts round-trip.
+**Drive Steer from Shortcuts.** Steer publishes its own actions to Shortcuts.app. Search “Steer” in the actions sidebar to change which app's settings are in use, switch layers, play macros, turn gyro on or off, set the light's colour, make the controller vibrate, or read its state (app, layer, battery) into your own automations. The most common ones are Siri phrases too. When a delay matters, set a button straight to a shell script or AppleScript with the *Run Script* actions: it skips the Shortcuts round trip.
 
 </shortcuts_integration>
 
@@ -338,7 +338,7 @@ The integration runs in both directions.
 | Shortcut | Action |
 |---|---|
 | ⌘, | Preferences |
-| ⌘? | Help Overlay |
+| ⌘? | Help Card |
 | ⇧⌘S | Setup Wizard |
 | ⌘Z | Undo last change |
 | ⇧⌘Z | Redo, or undo a restore |
@@ -354,15 +354,15 @@ The integration runs in both directions.
 
 **Buttons don't register.** Check the controller is paired and named at the top of Settings → Controls; most controllers need no permission at all. Input Monitoring (System Settings → Privacy & Security → Input Monitoring) matters only for a DualSense Edge's rear paddles.
 
-**Clicking a window focuses the app but doesn't bring that window forward** — or the menu palette or Dictation binding reports it can't run, a stick set to move windows moves nothing, or Window Snap, set to macOS, moves nothing. All five go through System Events, which needs the Automation permission. Settings → Steer shows whether Steer has it; if it was declined, switch System Events back on under Steer in System Settings → Privacy & Security → Automation.
+**Clicking a window focuses the app but doesn't bring that window forward**, or a button set to the menu palette or Dictation says it can't run, a stick set to move windows moves nothing, or Window Snap, set to macOS, moves nothing. All five go through System Events, which needs the Automation permission. Settings → Steer shows whether Steer has it. If it was declined, switch System Events back on under Steer in System Settings → Privacy & Security → Automation.
 
-**Gyro drifts or feels off.** Place the controller on a flat surface and toggle gyro off/on (L3) to recalibrate.
+**Gyro drifts or feels off.** Put the controller on a flat surface and turn gyro off and on again (L3) to recalibrate.
 
 **Radial menu won't open.** Press L3 (push the left stick in). The ring needs at least one item under Settings → Library → Radial Menus.
 
 **Controller keeps disconnecting.** Try USB instead of Bluetooth. If wireless, ensure the controller isn't paired to another device.
 
-**App doesn't start at login.** Toggle Launch at Login off and on under Settings → Steer. Check System Settings → General → Login Items.
+**App doesn't start at login.** Turn Open at login off and on again under Settings → Steer. Check System Settings → General → Login Items & Extensions.
 
 **USB vs Bluetooth.** Both work. USB has lower latency.
 
@@ -375,7 +375,7 @@ The integration runs in both directions.
 
 For a paid product, being explicit about what the app doesn't do is more valuable than hiding it.
 
-- **A long press on a shoulder button** isn't possible while it switches layers. Turn on **Disable mod-tap on this button** for that button to get one.
+- **A long press on a shoulder button** isn't possible while it switches layers. Turn on **Make this an ordinary button** for that button to get one.
 - **A long press on a button that clicks** isn't possible. Put the second action on another layer.
 - **Long press and double tap times** apply to every button; they can't be set per button yet.
 - **Controller-specific firmware quirks** (e.g. DualSense Edge paddle HID format) are documented per controller type on the support page.
@@ -416,15 +416,15 @@ There is one exception, and only on the direct-download build: when you activate
 
 Steer never watches your keystrokes, and it never reads the text inside your documents or what is on your screen.
 
-Steer reads the pasteboard only where you would expect it to. Selecting text or a link in another app and choosing Services → **Bind to Steer** hands that selection to Steer so you can bind it to a button. Copying and pasting a binding inside Settings → Bindings checks the pasteboard for one as well.
+Steer reads the pasteboard only where you would expect it to. Selecting text or a link in another app and choosing Services → **Set a Button in Steer** hands that selection to Steer so you can set a button to it. Copying and pasting a button's action inside Settings → Controls checks the pasteboard for one as well.
 
-**Input Monitoring** is the one permission Steer asks for only in a specific case: you own a DualSense Edge and want to bind its two rear paddles. Steer's raw-HID connection reads game controllers on the HID bus — the Edge's paddles, a DualShock 4's motion sensor when you turn that on, and pads it matches from its bundled controller database. It never reads your keyboard, mouse, or trackpad.
+**Input Monitoring** is the one permission Steer asks for only in a specific case: you own a DualSense Edge and want to use its two rear paddles. Steer's raw-HID connection reads game controllers on the HID bus — the Edge's paddles, a DualShock 4's motion sensor when you turn that on, and pads it matches from its bundled controller database. It never reads your keyboard, mouse, or trackpad.
 
 **Automation** is the third permission, and it covers exactly one app: System Events, Apple's own scripting helper. Steer is sandboxed, and a sandboxed app cannot reach into another app's windows and menus itself — so it asks System Events to do five things on its behalf: bring the window you click to the front, read the frontmost app's menu bar for the menu palette, start and stop Dictation, move the window you are working in when you set a stick to move windows, and snap that window into place when Window Snap uses macOS's own tiling. The system prompt for this is worded the same way for every app macOS asks about, which is why it mentions documents and data; System Events has no documents of its own.
 
 Declining it leaves the rest of Steer working — the cursor, scrolling, keyboard shortcuts, macros and haptics do not go through System Events. Settings → Steer shows which permissions Steer currently holds, and the menu bar warns you if this one was switched off.
 
-Steer also reads which app is frontmost via the public `NSWorkspace.frontmostApplication` API (no permission required) so it can auto-switch per-app profiles and respect the Focus filter you configure in System Settings.
+Steer also reads which app is frontmost via the public `NSWorkspace.frontmostApplication` API (no permission required) so it can use each app's customization when that app is in front, and respect the Focus filter you configure in System Settings.
 
 </privacy>
 
@@ -443,7 +443,7 @@ Steer is built with Swift and SwiftUI for macOS.
 </about>
 
 <action_reference>
-All Action cases available in a binding, with their JSON serialisation format.
+Every action a button can do, with its JSON serialisation format.
 
 ```json
 { "type": "leftClick" }
@@ -471,15 +471,17 @@ All Action cases available in a binding, with their JSON serialisation format.
 { "type": "keyboardBacklightUp" }
 { "type": "keyboardBacklightDown" }
 { "type": "dictation" }
-{ "type": "helpOverlay" }
+{ "type": "helpCard" }
 { "type": "radialMenu" }
 { "type": "radialMenuSecondary" }
-{ "type": "gyroToggle" }
+{ "type": "gyro" }
 { "type": "menuPalette" }
 { "type": "onScreenKeyboard" }
-{ "type": "windowGridSnap" }
-{ "type": "toggleLayer", "layer": 1 }    // 0=Solo, 1=L1, 2=R1, 3=L1+R1, 4=L2, 5=R2
-{ "type": "clearToggledLayers" }
+{ "type": "windowSnap" }
+{ "type": "micMute" }
+{ "type": "controllerView" }
+{ "type": "keepLayerOn", "layer": 1 }    // 0=Base, 1=L1, 2=R1, 3=L1+R1, 4=L2, 5=R2
+{ "type": "turnOffKeptLayers" }
 { "type": "key", "keycode": 12, "modifiers": 1048576 }  // keycode + CGEventFlags raw
 { "type": "holdKeys", "keycodes": [13, 2] }  // key-down on press, key-up on release
 { "type": "typeText", "text": "hello" }
@@ -489,9 +491,9 @@ All Action cases available in a binding, with their JSON serialisation format.
 { "type": "runShellScript", "name": "Example.sh" }
 { "type": "gameOnly", "inner": { "type": "space" } }
 { "type": "openURL", "name": "raycast://extensions/raycast/clipboard-history/clipboard-history" }
-{ "type": "laserToggle" }
+{ "type": "laserPointer" }
 { "type": "playMacro", "macroName": "Example Macro" }
-{ "type": "toggleSuspendPins" }
+{ "type": "suspendOverrides" }
 { "type": "none" }
 ```
 </action_reference>
@@ -504,33 +506,35 @@ All Action cases available in a binding, with their JSON serialisation format.
     "useSystemScrollDirection": true,
     "longPressThreshold": 0.35,    // seconds
     "doubleTapWindow": 0.30,       // seconds
-    "modTap": {
+    "comboWindowMs": 80,           // milliseconds a together combo's buttons may land apart
+    "layerButtons": {              // how L1, R1, L2 and R2 switch layers while held
       "holdThreshold": 0.280,      // seconds
-      "soloOnRelease": true,
-      "strategy": "eager"          // eager | balanced | timerOnly
+      "tapOnRelease": true,
+      "strategy": "atOnce"         // atOnce | onLetGo | holdTime: when a held one counts as held
     },
-    "modTapOverrides": {           // optional per-button overrides
-      "l2": { "disabled": true }   // demote L2 from mod-tap (unlocks long-press)
+    "layerButtonOverrides": {      // optional, per layer button
+      "l2": { "ordinary": true }   // make L2 an ordinary button (unlocks its long press)
     }
   },
   "settings": {
-    // Levels, lowest first: defaults, allApps, the app's customisation, overrides that are on.
+    // Levels, lowest first: defaults, allApps, the app's customization, overrides that are on.
     // A level stores ONLY what it changes; leave everything else out.
     "allApps": {
-      "layers": [                  // index 0..5 = Solo, L1, R1, L1+R1, L2, R2; null = unchanged
+      "layers": [                  // index 0..5 = Base, L1, R1, L1+R1, L2, R2; null = unchanged
         {
-          // ONE bindings dict. Temporal variants are slots INSIDE each entry
-          // (tap / hold / doubleTap / whileHeld) -- there are no parallel
-          // "longPress" or "doubleTap" dicts at layer level. A fifth slot,
-          // "release", exists in the schema but the engine does not dispatch
-          // it yet, so do not suggest it -- it will silently never fire.
-          // Key is a button ("cross"), a chord ("circle+cross"), or a
-          // sequence ("cross->circle"). Chord members must be sorted
-          // alphabetically: an unsorted duplicate binds a second entry
-          // for the same physical chord and both fire.
-          "bindings": {
-            "cross": { "tap": { "type": "leftClick" }, "hold": { "type": "escape" } },
-            "l1":    { "doubleTap": { "type": "toggleLayer", "layer": 1 } }
+          // ONE "buttons" dict. The ways to press a button are fields INSIDE
+          // each entry (tap / longPress / doubleTap / whileHeld) -- there are
+          // no parallel "longPress" or "doubleTap" dicts at layer level. A
+          // fifth, "release", exists in the schema but the engine does not
+          // run it yet, so do not suggest it -- it will silently never fire.
+          // Key is a button ("cross"), a combo pressed together
+          // ("circle+cross"), or a combo pressed in order ("cross->circle").
+          // A together combo's buttons must be sorted alphabetically: an
+          // unsorted duplicate makes a second entry for the same buttons
+          // and both fire.
+          "buttons": {
+            "cross": { "tap": { "type": "leftClick" }, "longPress": { "type": "escape" } },
+            "l1":    { "doubleTap": { "type": "keepLayerOn", "layer": 1 } }
           },
           "leftStickMode": null,   // optional per-layer override of "stick" below
           "rightStickMode": null
@@ -540,9 +544,9 @@ All Action cases available in a binding, with their JSON serialisation format.
       // Sections are patches: only the fields this level sets, in the section's own
       // shape. Leave a field out to inherit it; null clears an optional field to empty.
       "stick":    { "deadZone": 0.12 },
-      "touchpad": { }, "gyro": { }, "haptics": { }, "triggers": { }, "led": { }
+      "touchpad": { }, "gyro": { }, "haptics": { }, "triggers": { }, "lights": { }
     },
-    "apps": [                      // app customisations
+    "apps": [                      // app customizations
       {
         "id": "terminal", "name": "Terminal",           // id and name required
         "bundleIDs": ["com.apple.Terminal"],
@@ -552,7 +556,7 @@ All Action cases available in a binding, with their JSON serialisation format.
       }
     ],
     "overrides": [                 // on top of everything while on, lower in the list wins
-      { "id": "gaming", "name": "Gaming", "isOn": false, "exceptApps": [], "exceptCustomisations": [], "level": { } }
+      { "id": "gaming", "name": "Gaming", "isOn": false, "exceptApps": [], "exceptCustomizations": [], "level": { } }
     ],
     "overridesPaused": false,
     "library": {
