@@ -83,6 +83,20 @@ test.describe("when nobody is driving", () => {
     await page.waitForTimeout(2000);
     await expect(page.locator("#sd-field")).toHaveText("Hello, Mac");
     await expect(page.locator("#sd-stop")).toBeHidden();
+    /* The script ran and chose not to play: not the same as never running. */
+    await expect(page.locator("#sd-src")).toHaveText("Still frame");
+    await expect(page.locator("#sd-said")).toContainText("Press a button to take over");
+  });
+
+  test("a press before it scrolls into view stops it for good", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 300 });
+    await page.addInitScript(() => Object.defineProperty(Navigator.prototype, "webdriver", { get: () => false }));
+    await page.goto("/index.html");
+    await press(page, "options");             // offscreen: the loop has not started
+    await page.locator(".h-demo").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1500);
+    await expect(page.locator("#sd-stop")).toBeHidden();
+    await expect(page.locator("#sd-field")).toHaveText(/Hello, Mac/);
   });
 });
 
@@ -94,4 +108,25 @@ test("the homepage's demo opens your apps", async ({ page }) => {
   await expect(page.locator("#sd-ring")).toBeVisible();
   await press(page, "circle");
   await expect(page.locator("#sd-ring")).toBeHidden();
+});
+
+test("L3 closes the ring it opened, and the ring stays closed", async ({ page }) => {
+  await page.goto("/play.html");
+  await press(page, "r3");                   // close the keyboard the still frame opens with
+  await press(page, "l3");
+  await expect(page.locator("#sd-ring")).toBeVisible();
+  await press(page, "l3");
+  await expect(page.locator("#sd-ring")).toBeHidden();
+});
+
+test("a focused dock button answers Enter, not the demo's Return", async ({ page }) => {
+  await page.goto("/play.html");
+  /* The still frame has the keyboard open; its dock button closes it. Before
+     the fix, Enter reached the stage as Circle, typed a Return instead, and
+     the keyboard stayed open. */
+  await expect(page.locator("#sd-osk")).toBeVisible();
+  await page.locator('.sd-dock button[data-press="r3"]').focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#sd-osk")).toBeHidden();
+  await expect(page.locator("#sd-field")).toHaveText("Hello, Mac");
 });

@@ -51,7 +51,20 @@ test.describe("on a phone", () => {
   });
 });
 
-test("on a desktop there is no send-to-Mac button", async ({ page }) => {
+test("on a desktop the send-to-Mac button is on the page but hidden", async ({ page }) => {
   await page.goto("/index.html");
+  await expect(page.locator("[data-share]")).toHaveCount(1);
   await expect(page.locator("[data-share]")).toBeHidden();
+});
+
+test.describe("without JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+  test("the page reads, the demo shows its still frame, and the form posts", async ({ page }) => {
+    await page.goto("/index.html");
+    await expect(page.locator(".h-hero h1")).toHaveText("Hand it a controller.");
+    await expect(page.locator("#sd-field")).toHaveText(/Hello, Mac/);
+    const form = page.locator("#pricing form.ml-form");
+    await expect(form).toHaveAttribute("method", "post");
+    await expect(form).toHaveAttribute("action", /steer-mailing-list/);
+  });
 });

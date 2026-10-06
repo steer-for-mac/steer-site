@@ -35,8 +35,12 @@ for (const width of [1440, 375]) {
 
       await press(page, "options");             // take over
       await expect(page.locator("#sd-stop")).toBeHidden();
+      /* Where the loop stopped is luck: close whatever it left open, then
+         require the bare desk before measuring it. */
+      if (await page.locator("#sd-ring").isVisible()) await press(page, "circle");
+      if (await page.locator("#sd-help").isVisible()) await press(page, "create");
       if (await page.locator("#sd-osk").isVisible()) await press(page, "r3");
-      await expect(page.locator("#sd-osk")).toBeHidden();
+      for (const id of ["#sd-osk", "#sd-ring", "#sd-help"]) await expect(page.locator(id)).toBeHidden();
       seen.desk = await height(page, band);
 
       await press(page, "l3");

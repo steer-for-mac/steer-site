@@ -191,7 +191,7 @@ function init(root) {
     }
     if (state.ring) {
       if (b === "cross") return ringSelect();
-      if (b === "circle" || b === "l3") { closeRing(); return say("Cancelled"); }
+      if (b === "circle" || b === "l3") { swallowL3 = b === "l3"; closeRing(); return say("Cancelled"); }
       return undefined;
     }
     if (state.open) {
@@ -231,7 +231,11 @@ function init(root) {
     if (BASEJOB[b]) say(`${BASEJOB[b]}${ONLY_NAMED.includes(b) ? ". On your Mac that happens; this page names it." : ""}`);
     return undefined;
   }
-  function release(b) { if (b === "l3" && !state.open && !state.ring && !state.help) openRing(); }
+  let swallowL3 = false;  // the L3 press that closed the ring must not reopen it on release
+  function release(b) {
+    if (b === "l3" && swallowL3) { swallowL3 = false; return; }
+    if (b === "l3" && !state.open && !state.ring && !state.help) openRing();
+  }
 
   function click() {
     const r = stage.getBoundingClientRect();
@@ -266,6 +270,7 @@ function init(root) {
 
   const held = new Set();
   stage.addEventListener("keydown", (e) => {
+    if (e.target !== stage) return;  // Enter and Space belong to a focused dock button
     if (e.metaKey || e.ctrlKey || e.altKey || e.key === "Tab") return;
     const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
     if (k === "Shift") { state.shiftHeld = true; if (state.open) drawKeyboard(); setSrc("Keyboard"); return; }
@@ -274,6 +279,7 @@ function init(root) {
     e.preventDefault(); if (e.repeat) return; setSrc("Keyboard"); press(b);
   });
   stage.addEventListener("keyup", (e) => {
+    if (e.target !== stage) return;
     const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
     if (k === "Shift") { state.shiftHeld = false; if (state.open) drawKeyboard(); return; }
     held.delete(k);
@@ -286,6 +292,7 @@ function init(root) {
   stage.addEventListener("pointerdown", (e) => { if (!e.target.closest("button, .sd-item")) stage.focus(); });
 
   // ---------- It plays itself, through the same handlers, until anyone presses anything ----------
+  let io;
   let attract = !navigator.webdriver && !matchMedia("(prefers-reduced-motion: reduce)").matches;
   const timers = [];
   const sleep = (ms) => new Promise((r) => { timers.push(setTimeout(r, ms)); });
@@ -309,6 +316,7 @@ function init(root) {
   }
   async function nudge(keys, ms, b, verb) { live(); show(b, verb); keys.forEach((k) => held.add(k)); await sleep(ms); keys.forEach((k) => held.delete(k)); }
   async function run() {
+    if (!attract) return;
     said.setAttribute("aria-live", "off"); setSrc("Playing by itself"); stopBtn.hidden = false;
     try {
       for (;;) {
@@ -327,14 +335,14 @@ function init(root) {
   }
   function stop() {
     if (!attract) return;
-    attract = false; timers.forEach(clearTimeout); held.clear(); ghost.classList.remove("on"); stopBtn.hidden = true;
+    attract = false; io?.disconnect(); timers.forEach(clearTimeout); held.clear(); ghost.classList.remove("on"); stopBtn.hidden = true;
     said.setAttribute("aria-live", "polite"); say("You’re driving. Press any button."); setSrc("You’re driving");
   }
   if (attract) {
     $("phone").textContent = "It’s playing by itself. Open this page on a Mac and plug in a controller to take over.";
     ["keydown", "pointerdown"].forEach((t) => stage.addEventListener(t, stop, { capture: true }));
     stopBtn.addEventListener("click", () => { stop(); stage.focus(); });
-    const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { io.disconnect(); run(); } });
+    io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { io.disconnect(); run(); } });
     io.observe(stage);
   } else {
     said.textContent += " Press a button to take over.";
