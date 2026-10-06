@@ -79,9 +79,14 @@ should never try to be one.
   trust (sunken) / pricing (plain) / footer (sunken). `reach` and `requirements`
   were cut in `4c871d1`; they were the tail's only two plain bands, so pricing
   took the plain surface to keep the alternation.
-- **The eyebrow signature stays consistent:** SF Mono uppercase label plus one
-  emissive accent dot. It is the instrument signature carried down from the
-  hero to every section. Keep it.
+- **Eyebrows are for sub-pages.** The SF Mono label with its accent dot stays
+  on the sub-pages. The homepage (October 2026) has none: its ruled frame
+  labels a band with a plain row, and the three pillars carry a short accent
+  kicker ("It types"). A label that only repeats the heading is cut.
+- **The accent may colour one word of a headline**, the playful word
+  ("Hand it a *controller.*"). It replaced a New York italic in the
+  2026-10-06 review: that face exists only on Apple devices and turns into
+  Georgia elsewhere. One word, never a phrase, never body text.
 
 ## Copy rules
 
@@ -112,15 +117,14 @@ should never try to be one.
   API use in its FAQ.
 - Comparisons need a source. The $435 Speed Editor is the only verified price on
   the page, so it is the only one that ships. Do not add another.
-- Don't restate the hero. The hero annotations own sticks, buttons, and layers.
-  Sections below must add something a picture of a controller cannot show
-  (it arrives working, it follows you between apps, it types, it reaches past
-  shortcuts into Shortcuts, macros, and scripts). Half of Capabilities used to be
-  a second reading of the hero, and a reader who learns nothing for the scroll
-  starts skimming, which costs Feel and Trust further down.
-- A pane named on the homepage carries the app's own sidebar name (Bindings,
-  Presets, Radial Menu): the page and the app share one vocabulary, which is
-  the half of Logitech's page the comp called transferable. Elsewhere:
+- Don't restate the hero. The self-playing demo owns "it moves, types and
+  opens your apps". Bands below must add what it can't show: who it's for,
+  that every app gets its own buttons, how it feels, what it costs.
+- A place named on the site carries the app's own name: Controls, Library,
+  Gallery, Steer, History; a customization (never "profile"), the help card,
+  the on-screen keyboard, the ring of apps (never "App ring" or "daisy
+  wheel"), layers only after "hold a shoulder button" has explained them.
+  The app's glossary is `steer/docs/2026-10-03-glossary-audit.md`.
 - Plain words beat product jargon in visible copy. "Chords", "MFi", "radial
   launcher", "app ring", and `steer://` belong in the FAQ and the spec tables,
   not in hero annotations or feature chips. A non-technical reader is the
@@ -212,14 +216,14 @@ The format is borrowed from VibeCurb; the content is Steer's.
 
 A simplifier pass will be tempted to flatten these. They are the point.
 
-- The hand-built per-pad hero SVG and the looping input demos.
-- The light-bar / accent-picker interactivity in the Feel band.
+- The self-playing demo (`bands/play/demo.html`). It is the hero's picture and
+  the link that travels; its mapping cites the app's source line by line.
+- The light and dark capture pairs. Each app picture has both, from
+  `scripts/capture-app`; a light-only capture leaves dark mode with a hole.
 - The AA-contrast comments in `styles/tokens.css`. They are the audit trail, not
   clutter. Update the math if you retune; never delete it.
-- The use-case hierarchy: filled lead cards win the glance, the outline pills
-  are recognition-only. Keep the pills visually lighter.
-- The per-controller copy and headline variants (`.pd-ps` / `.pd-xb` / `.pd-sw`
-  / `.pd-mf`) that swap sitewide with the selected pad.
+- The source comments above each band's claims. They are how the next edit
+  re-checks a sentence against the app.
 
 ## Length is a word budget, not an ink budget
 
@@ -238,75 +242,34 @@ card that spans, a rule that draws the structure, a measure that stops at 64
 characters. Prose added to fill space puts the page straight back over the
 budget the cut bought.
 
-- **A PlayStation-shot capture ships in flow only with a caption that says
-  so** (2026-09-28). Every capture in `src/assets/` is PlayStation-shot, and
-  the page re-labels itself per pad, so an uncaptioned in-flow pane shows an
-  Xbox owner the wrong glyphs; gating one to a single pad is what left the
-  Feel band empty once. The gallery `<dialog>` that used to hold them is gone.
-  The homepage now runs two in flow in the "More than a mouse" band:
-  `help-overlay.png`, captioned "Shown with a DualSense; button names follow
-  your controller" (true because the overlay takes the connected pad's naming
-  scheme), and the Shortcut Templates pane, which carries no glyphs. A new
-  glyph-bearing capture needs the same caption, or a per-pad shot gated by
-  `pa-f-<family>` once the capture script shoots them. The `.vg` vignettes and
-  the pad renders re-label by construction and need neither.
+- **A DualSense-shot capture ships only with a caption that says so**
+  (2026-09-28, restated 2026-10-06). The app captures show PlayStation glyphs;
+  an Xbox owner would otherwise read the wrong ones. The homepage carries the
+  caption once, under the "What it does" heading: "Pictures are the app with a
+  DualSense; button names follow your controller." True because the help card,
+  the keyboard and the ring take the connected pad's naming scheme.
 - **`ch` is not a character.** It is the advance of a zero, about 1.4x an
   average SF lowercase glyph, so `56ch` renders as a 78-character line. Measure
   the resulting line, do not trust the unit.
 - **`.shot img` needs `height:auto`**, or the `width`/`height` attributes that
   reserve the box win as presentational hints and stretch the image.
 
-## The `.vg` vignette family
+## Pictures and motion
 
-One is in the page: `.vg-glide` (hero). `.vg-edit` went in `133f527` and
-`.vg-type` and `.vg-layers` went with the D graft in `4c871d1`, which replaced
-both bands with drawn plates. **Below the hero there is now no looping proof at
-all**, and `bad901e` kept those loops on purpose: the ones that show a cursor
-being driven, text being typed and buttons changing job carry more than the
-paragraphs beside them. Restoring motion to the plates is outstanding work, not
-a settled decision. `bad901e` cut `.vg-stream`, `.vg-speak`
-and `.vg-launch` when the page came down to peer length. `.vg-stream` has no CSS
-left; `.vg-speak` and `.vg-launch` still do, 1.2KB, kept because that is cheaper
-than re-deriving them from the app if a card ever needs one again. Before
-building a fifth, know what makes one a member; it is a grammar, not a class
-prefix.
-
-- **One claim, proven.** A vignette illustrates exactly one capability, stated
-  in the copy beside it and shown nowhere else on the page. If the claim is
-  already illustrated, the vignette is a duplicate, not a variation (the couch
-  card once reused the hero's `.vg-glide` byte for byte; that is the failure
-  mode).
-- **Truth from the app repo.** The interaction shown must match the shipped
-  implementation in `~/Developer/steer`, not a generic version of the idea:
-  real button, real layout, real commit model. Cite the source file in the CSS
-  block comment. (`.vg-type` mirrors `DaisyWheelLayout`; `.vg-launch` mirrors
-  `RadialMenu.swift` down to the instant open and fade-only close.)
-- **Three instruments.** A controller-side control (stick, trigger chip, face
-  button), a Mac-side surface (screen, timeline, scenes, deck, chips, field,
-  disc), and the pad's answer (a `.vg-ring` haptic echo). The sentence is
-  always: press, the Mac reacts, the pad answers.
-- **Base state is the claim, frozen mid-proof.** The un-animated markup (no
-  `.on`) must read as the capability already demonstrated: word typed, layer
-  held, app selected. Reduced motion and no-JS ship exactly this frame. `.on`
-  is added only while on-screen, by the one shared IntersectionObserver.
-- **Motion:** transform and opacity only, one 5 to 6.5s loop. Vignettes that
-  can share a viewport (`.vg-layers` and `.vg-launch`) get different durations
-  so they never sync.
-- **Width:** if the Mac-side surface is a `flex:1` member that absorbs width
-  (timeline, scenes, deck, search field), the vignette fills its column. If
-  the geometry is fixed (`.vg-glide`'s travel distance, `.vg-layers`' chip
-  grid, `.vg-launch`'s disc), cap at `max-width:430px`. This is the rule the
-  existing split follows; it is principled, keep it.
-- **Controller glyphs and labels** go through `.face-slot[data-b]` and
-  `data-ps/xb/sw/mf` so every vignette re-labels with the selected pad.
-  Mac-side surfaces may use the pad palette or the accent; buttons never
-  hardcode a glyph.
-- **Cut, and why:** `.vg-speak` re-proved "the stick moves things", which the
-  hero demo owns, and shared its visual idea with `.vg-stream`. Both went in
-  `bad901e`, along with the force-over-travel chart, which proved a hardware
-  parameter to an engineer and nothing to a reader. The Speakers card is
-  prose-only now and that is the accepted cost. Do not restore any of the three
-  to fill space; a band that reads as empty wants ink, not a repeated claim.
+- **One picture, one job, once per page.** The table in
+  `docs/design/2026-10-06-site-system-design.md` §3 assigns each capture its
+  job. Showing the controller twice, or the ring twice, is a duplicate, not
+  a variation.
+- **Pictures are the current app.** Captures come from `scripts/capture-app`,
+  cropped where a strip names the dev build or the user's own apps. Never
+  composite UI into a photo; crop or recapture.
+- **Motion that runs by itself stops.** The demo's self-play stops on the first
+  key, click or pad press, has a visible Stop button, never starts under
+  reduced motion or automation, and silences its live region while it plays
+  (WCAG 2.2.2). Its still frame is the claim frozen mid-proof: the keyboard
+  open, a word typed.
+- **Truth from the app repo.** What the demo does is what the shipped defaults
+  do, cited to the source line, not a generic version of the idea.
 
 ## The page is assembled, not authored
 

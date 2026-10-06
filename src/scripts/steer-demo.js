@@ -341,18 +341,13 @@ function init(root) {
   }
 
   // ---------- A real controller, standard mapping ----------
-  let prev = [], last = performance.now(), announced = false;
+  let prev = [], last = performance.now();
   function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     let lx = (held.has("d") ? 1 : 0) - (held.has("a") ? 1 : 0), ly = (held.has("s") ? 1 : 0) - (held.has("w") ? 1 : 0);
     let rx = (held.has("l") ? 1 : 0) - (held.has("j") ? 1 : 0), ry = (held.has("k") ? 1 : 0) - (held.has("i") ? 1 : 0);
     const gp = [...(navigator.getGamepads ? navigator.getGamepads() : [])].find(Boolean);
     if (gp) {
-      if (gp.buttons.some((b) => b.pressed) && !announced) {
-        announced = true;  // other bands follow the pad that took over
-        const fam = /xbox|045e/i.test(gp.id) ? "xb" : /pro controller|057e/i.test(gp.id) ? "sw" : /dualsense|dualshock|054c/i.test(gp.id) ? "ps" : "mf";
-        document.dispatchEvent(new CustomEvent("steerpad", { detail: fam }));
-      }
       if (attract && gp.buttons.some((b) => b.pressed)) stop();
       const ax = gp.axes;
       if (Math.hypot(ax[0], ax[1]) > 0.12) { lx = ax[0]; ly = ax[1]; }

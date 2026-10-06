@@ -1,0 +1,4 @@
+.h-close { padding: 96px 0; text-align: center; }
+.h-close h2 { font-size: clamp(40px, 6vw, 80px); }
+.h-close .h-lede { margin-inline: auto; }
+.h-req { margin: 18px 0 0; font-size: 15px; color: var(--text-3); }

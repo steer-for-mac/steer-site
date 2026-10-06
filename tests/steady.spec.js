@@ -1,9 +1,6 @@
-/* The homepage's two stateful bands must hold one height whatever state they
-   are in, or the page below them jumps while a visitor scrolls past. The demo
-   changes its side pane with every mode and overlay; the per-app band swaps
-   panels with legends of different lengths, and relabels them for three
-   controllers whose chips differ in width. Each band is measured in every
-   state and must not move by more than a pixel. */
+/* The homepage's demo must hold one height whatever it shows, or the page
+   below it jumps while a visitor scrolls past: it is measured in every state
+   and must not move by more than a pixel. */
 import { expect, test } from "@playwright/test";
 import { press, stubPad } from "./pad.js";
 
@@ -26,7 +23,7 @@ for (const width of [1440, 375]) {
     });
 
     test("the demo band holds its height while it plays, and on the desk, ring, keyboard and help", async ({ page }) => {
-      const band = ".l2-demo";
+      const band = ".h-demo";
       /** @type {Record<string, number>} */
       const seen = {};
       await page.locator(band).scrollIntoViewIfNeeded();   // it starts playing once in view
@@ -60,38 +57,6 @@ for (const width of [1440, 375]) {
       const base = seen.desk ?? 0;
       for (const [state, h] of Object.entries(seen)) {
         expect.soft(Math.abs(h - base), `${state} is ${h}px, the desk is ${base}px`).toBeLessThanOrEqual(1);
-      }
-    });
-
-    test("the per-app band holds its height on every tab", async ({ page }) => {
-      const band = ".l2-apps";
-      const tabs = page.locator('.pa-tabs [role="tab"]');
-      await expect(tabs.first()).toBeVisible();
-      const base = await height(page, band);
-      const n = await tabs.count();
-      expect(n).toBeGreaterThan(1);
-      /* The row scrolls sideways on a phone and never up and down. */
-      const row = await page.$eval(".pa-tabs", (el) => [el.scrollHeight, el.clientHeight]);
-      expect.soft(row[0], "the tab row overflows vertically").toBe(row[1]);
-      for (let i = 0; i < n; i++) {
-        await tabs.nth(i).click();
-        await expect(tabs.nth(i)).toHaveAttribute("aria-selected", "true");
-        const h = await height(page, band);
-        expect.soft(Math.abs(h - base), `${await tabs.nth(i).textContent()} is ${h}px, the first tab is ${base}px`).toBeLessThanOrEqual(1);
-      }
-    });
-    test("the per-app band holds its height for every controller on every tab", async ({ page }) => {
-      const band = ".l2-apps";
-      const tabs = page.locator('.pa-tabs [role="tab"]');
-      await expect(tabs.first()).toBeVisible();
-      const base = await height(page, band);
-      for (const fam of ["xb", "sw", "ps"]) {
-        await page.locator(`label[for="pa-pad-${fam}"]`).filter({ visible: true }).click();
-        for (let i = 0; i < await tabs.count(); i++) {
-          await tabs.nth(i).click();
-          const h = await height(page, band);
-          expect.soft(Math.abs(h - base), `${fam}, ${await tabs.nth(i).textContent()}: ${h}px against ${base}px`).toBeLessThanOrEqual(1);
-        }
       }
     });
   });

@@ -1,0 +1,15 @@
+<!-- HERO. Pain, then the fix, then the app proving it: the demo plays itself
+     until the visitor presses anything (docs/design/2026-10-06-site-system-design.md). -->
+<section class="h-hero" aria-labelledby="h-hero-h">
+  <img class="h-hero-photo" src="assets/life/couch.jpg" eleventy:widths="768,1152,1536" width="1536" height="1024" sizes="100vw" fetchpriority="high" alt="">
+  <div class="h-wrap h-hero-in">
+    <p class="h-pain">Your Mac only listens to a keyboard and a mouse.</p>
+    <h1 id="h-hero-h">Hand it a <em>controller.</em></h1>
+    <p class="h-lede">Steer turns the game controller you already own into a mouse and keyboard for your Mac. Watch it type below, then take over with yours.</p>
+    {% set mlId = "top" %}{% include "bands/home/join.html" %}
+    <button type="button" class="btn btn-secondary h-share" data-share hidden>Send it to my Mac</button>
+  </div>
+  <div class="h-wrap h-demo" id="try">
+    {% include "bands/play/demo.html" %}
+  </div>
+</section>
