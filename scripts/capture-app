@@ -14,6 +14,7 @@ The crops drop strips that name the dev build ("Typing into Steer Dev", Window
 Snap's title row) or the user's front app (Controls' subtitle).
 """
 import json
+import signal
 import subprocess
 import sys
 import tempfile
@@ -59,13 +60,19 @@ def agent(route):
     time.sleep(0.8)
 
 
+def display():
+    out = run("osascript", "-e", 'tell application "Finder" to get bounds of window of desktop')
+    _, _, w, h = (int(v) for v in out.split(", "))
+    return w, h
+
+
 def window(helper, pid, kind):
+    dw, dh = display()
     wins = json.loads(run(helper, str(pid)))
-    screen = max(w["w"] * w["h"] for w in wins)  # the overlays' full-screen dimmer
     if kind == "normal":
         pick = [w for w in wins if w["layer"] == 0]
-    else:
-        pick = [w for w in wins if 0 < w["layer"] <= 20 and w["w"] * w["h"] < screen and w["w"] != 232]
+    else:  # not the overlays' full-screen dimmer, not the 232pt menu-bar popup
+        pick = [w for w in wins if 0 < w["layer"] <= 20 and (w["w"], w["h"]) != (dw, dh) and w["w"] != 232]
     if not pick:
         sys.exit(f"no {kind} window from Steer Dev")
     return max(pick, key=lambda w: w["w"] * w["h"])["id"]
@@ -76,10 +83,11 @@ def set_dark(on):
 
 
 def main():
-    pid = run("pgrep", "-f", "Steer Dev.app/Contents/MacOS").split()
-    if not pid:
+    found = subprocess.run(["pgrep", "-f", "/Steer Dev.app/Contents/MacOS/Steer$"], capture_output=True, text=True, check=False)
+    if found.returncode != 0:
         sys.exit("Steer Dev is not running: (cd ../steer && just dev-up)")
-    pid = int(pid[0])
+    pid = int(found.stdout.split()[0])
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit("stopped"))
     tmp = Path(tempfile.mkdtemp())
     helper = tmp / "winids"
     (tmp / "w.swift").write_text(WINIDS)
@@ -92,12 +100,16 @@ def main():
             for name, (route, kind, box) in SHOTS.items():
                 agent(route)
                 raw = tmp / f"{name}-{theme}.png"
-                run("screencapture", "-x", "-o", "-l", str(window(helper, pid, kind)), str(raw))
-                if kind == "panel":
-                    agent(route.replace("/show", "/hide"))
+                try:
+                    run("screencapture", "-x", "-o", "-l", str(window(helper, pid, kind)), str(raw))
+                finally:
+                    if kind == "panel":
+                        agent(route.replace("/show", "/hide"))
                 im = Image.open(raw)
                 if im.width < 600:
                     sys.exit(f"{name}: {im.width}px wide, not 2x; put the window on the Retina display")
+                if box and (box[2] > im.width or box[3] > im.height):
+                    sys.exit(f"{name}: crop {box} falls outside the {im.size} capture; the window moved or resized")
                 (im.crop(box) if box else im).save(OUT / f"{name}-{theme}.png", optimize=True)
                 print(f"{name}-{theme}.png")
     finally:

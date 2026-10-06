@@ -153,7 +153,7 @@ Slices, each green on `make ci`, on `redesign/oct-2026`, not pushed:
 
 ## 5. Claims, checked 2026-10-06
 
-Verified in source unless marked. Base buttons `SteerCore/Defaults.swift:49-69`.
+Verified in source unless marked. Paths are under `steer/Steer/Sources/`. Base buttons `SteerCore/Defaults.swift:49-69`.
 Keyboard `Steer/EventLoop+OnScreenKeyboard.swift:51-96`, cursors on F and J
 `SteerCore/SplitKeyboard.swift:282-286`. Ring apps
 `SteerCore/RadialMenuDefaults.swift:60-70`. Window Snap engines
