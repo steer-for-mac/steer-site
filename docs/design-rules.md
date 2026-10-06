@@ -96,16 +96,13 @@ should never try to be one.
 - No emoji in copy.
 - Write for the non-technical reader first. Audience before feature list.
 - One primary CTA per view. Price is microcopy beside the CTA, not a competing
-  button. The launch list is a real form (the pricing card inline, and the
-  small dialog the hero/nav CTAs open), never a bare mailto: a mailto dies
-  silently on a machine with no mail client, at the exact moment of highest
-  intent. The only blue `btn-primary` in the page flow is the pricing form's
-  submit; the dialog's twin lives outside the scroll. CTA buttons that open the
-  dialog keep `href="#pricing"` so scripting off still lands on a working form,
-  and the mailto survives as visible fallback text, not as the mechanism. The
-  founder section's "Share an idea" is deliberately secondary, because it sits
-  one section above pricing and would otherwise intercept a ready buyer with an
-  email draft about feature requests.
+  button. The launch list is a real form, never a bare mailto: a mailto dies
+  silently on a machine with no mail client, at the moment of highest intent.
+  Since October 2026 the form sits in the first screen and again at the close
+  (`#pricing`), screens apart, so each is the one blue button in its view; the
+  nav opens the same form in a dialog and keeps `href="#pricing"` for no-JS.
+  The mailto appears only when a submit fails (`launch-list.js`), as the way
+  out rather than the mechanism.
 - Trust language stays literal and verifiable: on-device, no account, no
   telemetry. Never soften it into marketing vagueness. A trust heading may not
   overstate and then get walked back by its own body: the licence check does

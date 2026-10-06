@@ -5,7 +5,6 @@ The shells are downloaded scans (LICENCES.md), cleaned in `scene.py`: voxel-reme
 1. `tools/pads/fetch.py` downloads the meshes into `dl/`, each checked against its pinned sha256.
 2. `bin/masks.sh` rebuilds the masks traced by script (the DualSense's touchpad trim, the Elite's grip panels and top band) and every mask's smoothed `-hd-soft` copy that `params/` reads. `ps-dark`, `ps-trig`, `ps-blue`, `ps-dark-side` and `sw-grip` were traced by hand and are inputs. It needs the untracked `ref/` images LICENCES.md lists.
 3. From `tools/pads/`: `blender -b --factory-startup --python scene.py -- params/ps.json final --colourway white --ids --samples 256`, then `xb.json` and `sw.json` with `--colourway black`.
-4. From the repo root: `tools/pads/export.py` writes the band's pads, thumbs and chip positions (`src/_data/perapp.json`), and a check image per pad to `out/`.
 
 Two checks, both needing `ref/`:
 

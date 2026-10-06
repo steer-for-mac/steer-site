@@ -317,7 +317,7 @@ function init(root) {
   async function nudge(keys, ms, b, verb) { live(); show(b, verb); keys.forEach((k) => held.add(k)); await sleep(ms); keys.forEach((k) => held.delete(k)); }
   async function run() {
     if (!attract) return;
-    said.setAttribute("aria-live", "off"); src.hidden = true; stopBtn.hidden = false;
+    said.setAttribute("aria-live", "off"); toast.setAttribute("role", "none"); src.hidden = true; stopBtn.hidden = false;
     try {
       for (;;) {
         if (!state.open) await tap("r3", "opens the keyboard", 500);
@@ -336,7 +336,7 @@ function init(root) {
   function stop() {
     if (!attract) return;
     attract = false; io?.disconnect(); timers.forEach(clearTimeout); held.clear(); ghost.classList.remove("on"); stopBtn.hidden = true;
-    said.setAttribute("aria-live", "polite"); say("Your turn."); src.hidden = false; setSrc("Keyboard");
+    said.setAttribute("aria-live", "polite"); toast.setAttribute("role", "status"); say("Your turn."); src.hidden = false; setSrc("Keyboard");
   }
   if (attract) {
     $("phone").textContent = "On a Mac, plug in a controller to take over.";

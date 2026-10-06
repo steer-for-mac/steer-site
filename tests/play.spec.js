@@ -70,10 +70,14 @@ test.describe("when nobody is driving", () => {
     await expect(stop).toBeVisible();
     await expect(page.locator("#sd-field")).toContainText("hel", { timeout: 15_000 });
     await expect(page.locator("#sd-ghost")).toHaveClass(/on/);
+    /* Nothing announces itself while nobody is driving (WCAG 2.2.2). */
+    await expect(page.locator("#sd-toast")).toHaveAttribute("role", "none");
+    await expect(page.locator("#sd-said")).toHaveAttribute("aria-live", "off");
 
     await press(page, "options");             // the press stops the loop, and still counts
     await expect(page.locator("#sd-ghost")).not.toHaveClass(/on/);
     await expect(stop).toBeHidden();
+    await expect(page.locator("#sd-toast")).toHaveAttribute("role", "status");
   });
 
   test("under reduced motion it stays on the still frame", async ({ page }) => {
