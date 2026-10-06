@@ -3,16 +3,8 @@
 eased pointer stroke, and the split keyboard's stepping ported from
 SteerCore/SplitKeyboard.swift with a shortest-path planner. tools/demo/loops.py
 builds the site's loops on these. main() is an earlier full take against a
-fresh TextEdit document, kept as a reference for staging and teardown.
-"""The homepage hero take: Steer Dev drives a fresh TextEdit document on
-Desktop 2 through its own synthetic controller, and record-apps films only
-Steer Dev and that TextEdit, never anything else on screen.
-
-    (cd ../steer && just dev-up)
-    tools/demo/take.py scratch/take/hero.mov
-
-Refuses if TextEdit is already running (its windows would be the owner's).
-Everything it opens is closed at the end, and Desktop 1 is restored.
+fresh TextEdit document, kept as a reference for staging and teardown: it
+refuses if TextEdit is already running, and closes everything it opened.
 """
 import json
 import math
