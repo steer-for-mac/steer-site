@@ -172,9 +172,10 @@ export default function (eleventyConfig) {
      the right place; index.src.html is the homepage's source, hence the .src. */
   eleventyConfig.addGlobalData("eleventyComputed", {
     /* Pages only. The CSS and JS extensions set their own permalink, and this
-       one would rename site.entry.css to site.entry.html. */
+       one would rename site.entry.css to site.entry.html. Anything else keeps
+       its front matter's: undefined here overrode llms.txt's into a directory. */
     permalink: (data) => (data.page.inputPath.endsWith(".html")
-      ? `${data.page.filePathStem.replace(/\.src$/, "")}.html` : undefined),
+      ? `${data.page.filePathStem.replace(/\.src$/, "")}.html` : data.permalink),
     /* "features", "index", ... The nav and footer compare against this rather
        than carrying a hand-set aria-current, which had drifted: 4 of 12 pages
        marked their nav link and 3 marked their footer link. */
@@ -184,6 +185,9 @@ export default function (eleventyConfig) {
       ? "https://steer.seanfloyd.dev/"
       : `https://steer.seanfloyd.dev${data.page.filePathStem}.html`,
   });
+
+  /* llms.txt lines its generated routes up in a column, as the hand-written ones were. */
+  eleventyConfig.addFilter("padEnd", (text, width) => String(text).padEnd(width));
 
   /* Footer defaults. A page overrides only what differs from every other page. */
   eleventyConfig.addGlobalData("footBottom", true);

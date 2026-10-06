@@ -1,3 +1,7 @@
+---
+permalink: /llms.txt
+eleventyExcludeFromCollections: true
+---
 # Steer
 
 > Steer turns a game controller into a complete Mac input device. Pointer, typing, shortcuts, windows, apps and menus, from wherever you are sitting.
@@ -112,33 +116,10 @@ Steer is drivable from outside on standard macOS primitives, so a shell line, an
 Twenty route families. Almost all are fire and forget: they never block. The one exception is `version/restore`, which changes configuration and therefore requires an explicit `confirm=true`; without it Steer opens Settings at History and lets the person decide. Always use `open -g` so focus is not stolen. A caller with its own URL scheme (Shortcuts, Raycast, Keyboard Maestro, Alfred, Hammerspoon) can add `x-success` and `x-error` to hear whether a route ran; a link to no route, or a route given a value it refuses, gets no callback.
 
 ```
-open -g "steer://customization/<id>"            switch customization by id
-open -g "steer://customization/by-name/<name>"  switch customization by display name
-open -g "steer://customization/automatic"       back to the customization the app in front selects
-open -g "steer://layer/<name>"            turn a layer on or off: base, l1, r1, l1r1, l2, r2
-open -g "steer://macro/<name>"            play a saved macro
-open -g "steer://haptic/<pattern>"        pulse | double | success | warning | error (other names are refused)
-open -g "steer://light/<rrggbb>"          light bar, bare six-digit hex, no #
-open -g "steer://light/auto"              hand the light bar back to Steer
-open -g "steer://player-lights/<0-5|off>" player lights, filled left to right
-open -g "steer://player-lights/mask/<hex>" player lights individually, 00-1F, bit 0 leftmost
-open -g "steer://mute-light/<off|on|pulse>"    mute-button light
-open -g "steer://autoswitch/<on|off|toggle>"   follows the app in front
-open -g "steer://overrides/<suspend|resume|toggle>" overrides
-open -g "steer://windowsnap/<zone>"       snap the front window to a screen zone
-open -g "steer://windowsnap[/<show|hide|toggle>]" open the aiming grid instead
-open -g "steer://keyboard[/<show|hide|toggle>]" on-screen keyboard
-open -g "steer://radial"                  radial app launcher
-open -g "steer://palette"                 menu palette
-open -g "steer://help[/<show|hide>]"      help card
-open -g "steer://padview[/<show|hide>]"   live controller view in the corner
-open -g "steer://settings[/<section>]"    open Settings at a pane
-open -g "steer://version/save"            save a version of the settings
-open -g "steer://version/restore/<uuid>?confirm=true"  roll the settings back
-open -g "steer://wizard"                  setup
-open -g "steer://suggest"                 open the suggestions page
-open -g "steer://query/<state|customizations|macros|versions>"  read back as JSON
-```
+{% for pattern, route in routes %}{% if not route.debugOnly %}{{ ('open -g "' + pattern + '"') | padEnd(48) | safe }}  {{ route.summary | safe }}{% for argument in route.arguments %}{% if argument.values.length > 1 and argument.values.length <= 16 %} {{ argument.name }}: {{ argument.values | join(", ") | safe }}.{% endif %}{% endfor %}
+{% endif %}{% endfor %}```
+
+The list above is generated from Steer's own route table, so it is exactly what the app accepts.
 
 A `steer://debug/*` family exists in DEBUG builds only and is not part of the shipping surface.
 

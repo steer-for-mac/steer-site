@@ -13,13 +13,18 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast types e2e shots dead lighthouse check
+.PHONY: help build routes up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast types e2e shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z0-9][a-z0-9-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
 
 build: ## Assemble the whole site into dist/ (Eleventy, then Lightning CSS)
 	bun x eleventy
+
+# Copied in, not fetched: the build runs on GitHub Pages, which has no checkout of
+# the app. Steer's own tests fail when this copy no longer matches the app's.
+routes: ## Copy Steer's steer:// route manifest into src/_data/ (needs ../steer)
+	cp ../steer/docs/surface/routes.json src/_data/routes.json
 
 up: build ## Serve dist/ on https://steer.seanfloyd.dev.local (nginx, matches production)
 	docker compose up -d --wait && echo "https://steer.seanfloyd.dev.local  (and http://127.0.0.1:$(SITE_PORT))"

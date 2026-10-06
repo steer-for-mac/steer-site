@@ -1,0 +1,884 @@
+{
+  "steer://autoswitch/<state>" : {
+    "arguments" : [
+      {
+        "name" : "state",
+        "values" : [
+          "on",
+          "off",
+          "toggle"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://autoswitch/on",
+    "summary" : "Choose whether Steer follows the app in front: on, off, or toggle."
+  },
+  "steer://customization/<id>" : {
+    "arguments" : [
+      {
+        "accepts" : "a customization id, from query/customizations",
+        "example" : "abc-123",
+        "name" : "id"
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://customization/abc-123",
+    "summary" : "Switch to an app customization by ID."
+  },
+  "steer://customization/automatic" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://customization/automatic",
+    "summary" : "Go back to the customization the app in front selects."
+  },
+  "steer://customization/by-name/<name>" : {
+    "arguments" : [
+      {
+        "accepts" : "a customization's name",
+        "example" : "Final Cut Pro",
+        "name" : "name"
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://customization/by-name/Final%20Cut%20Pro",
+    "summary" : "Switch to an app customization by name."
+  },
+  "steer://debug/audiodevices[?write=<write>]" : {
+    "arguments" : [
+      {
+        "accepts" : "part of a device's name",
+        "example" : "DualSense",
+        "name" : "write"
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/audiodevices?write=DualSense"
+  },
+  "steer://debug/axsnap?x=<x>&y=<y>&w=<w>&h=<h>" : {
+    "arguments" : [
+      {
+        "accepts" : "points",
+        "example" : "0",
+        "name" : "x"
+      },
+      {
+        "accepts" : "points",
+        "example" : "0",
+        "name" : "y"
+      },
+      {
+        "accepts" : "points, above 0",
+        "example" : "800",
+        "name" : "w"
+      },
+      {
+        "accepts" : "points, above 0",
+        "example" : "600",
+        "name" : "h"
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/axsnap?x=0&y=0&w=800&h=600"
+  },
+  "steer://debug/capture-gestures[?on=<on>]" : {
+    "arguments" : [
+      {
+        "name" : "on",
+        "values" : [
+          "1",
+          "0"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/capture-gestures?on=1"
+  },
+  "steer://debug/connect[?type=<type>]" : {
+    "arguments" : [
+      {
+        "name" : "type",
+        "values" : [
+          "dualsense",
+          "dualshock4",
+          "xbox",
+          "switchPro",
+          "mfi",
+          "unknown"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/connect?type=dualsense"
+  },
+  "steer://debug/dictation" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/dictation"
+  },
+  "steer://debug/disconnect" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/disconnect"
+  },
+  "steer://debug/dump" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/dump"
+  },
+  "steer://debug/focus[?lights=<lights>][&vibration=<vibration>]" : {
+    "arguments" : [
+      {
+        "name" : "lights",
+        "values" : [
+          "1",
+          "0"
+        ]
+      },
+      {
+        "name" : "vibration",
+        "values" : [
+          "1",
+          "0"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/focus?lights=1&vibration=1"
+  },
+  "steer://debug/haptic?i=<i>&ms=<ms>[&n=<n>][&gap=<gap>]" : {
+    "arguments" : [
+      {
+        "accepts" : "intensity 0-255",
+        "example" : "200",
+        "name" : "i"
+      },
+      {
+        "accepts" : "duration 1-2000",
+        "example" : "30",
+        "name" : "ms"
+      },
+      {
+        "accepts" : "taps 1-10",
+        "example" : "1",
+        "name" : "n"
+      },
+      {
+        "accepts" : "ms 0-2000",
+        "example" : "120",
+        "name" : "gap"
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/haptic?i=200&ms=30&n=1&gap=120"
+  },
+  "steer://debug/helppicture[?on=<on>]" : {
+    "arguments" : [
+      {
+        "name" : "on",
+        "values" : [
+          "1",
+          "0"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/helppicture?on=1"
+  },
+  "steer://debug/hidprobe" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/hidprobe"
+  },
+  "steer://debug/inject?file=<file>" : {
+    "arguments" : [
+      {
+        "accepts" : "a frame file's path Steer can read",
+        "example" : "/tmp/f.json",
+        "name" : "file"
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/inject?file=/tmp/f.json"
+  },
+  "steer://debug/keychord?key=<key>[&mods=<mods>]" : {
+    "arguments" : [
+      {
+        "accepts" : "a virtual keycode",
+        "example" : "36",
+        "name" : "key"
+      },
+      {
+        "accepts" : "comma-separated fn, ctrl, cmd, shift, opt, stamped",
+        "example" : "cmd,shift",
+        "name" : "mods"
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/keychord?key=36&mods=cmd,shift"
+  },
+  "steer://debug/menupress?id=<id>" : {
+    "arguments" : [
+      {
+        "accepts" : "a menu item's AXIdentifier",
+        "example" : "_zoomLeft:",
+        "name" : "id"
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/menupress?id=_zoomLeft:"
+  },
+  "steer://debug/micprobe" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/micprobe"
+  },
+  "steer://debug/rotate?deg=<deg>" : {
+    "arguments" : [
+      {
+        "accepts" : "signed degrees",
+        "example" : "45",
+        "name" : "deg"
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/rotate?deg=45"
+  },
+  "steer://debug/sharewatch" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/sharewatch"
+  },
+  "steer://debug/stickmode?side=<side>&mode=<mode>" : {
+    "arguments" : [
+      {
+        "name" : "side",
+        "values" : [
+          "left",
+          "right"
+        ]
+      },
+      {
+        "name" : "mode",
+        "values" : [
+          "mouse",
+          "flickStick",
+          "scroll",
+          "disabled",
+          "dpad",
+          "spaceSwitch",
+          "tabCycle",
+          "sentence",
+          "windowNudge",
+          "directionalButtons"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/stickmode?side=left&mode=mouse"
+  },
+  "steer://debug/swipe?dx=<dx>[&px=<px>][&n=<n>][&ms=<ms>][&engage=<engage>][&engagePx=<engagePx>][&fmode=<fmode>]" : {
+    "arguments" : [
+      {
+        "accepts" : "signed points",
+        "example" : "-120",
+        "name" : "dx"
+      },
+      {
+        "accepts" : "number",
+        "example" : "0.0",
+        "name" : "px"
+      },
+      {
+        "accepts" : "number",
+        "example" : "170",
+        "name" : "n"
+      },
+      {
+        "accepts" : "number",
+        "example" : "8",
+        "name" : "ms"
+      },
+      {
+        "accepts" : "number",
+        "example" : "0",
+        "name" : "engage"
+      },
+      {
+        "accepts" : "number",
+        "example" : "0",
+        "name" : "engagePx"
+      },
+      {
+        "accepts" : "number",
+        "example" : "0",
+        "name" : "fmode"
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/swipe?dx=-120&px=0.0&n=170&ms=8&engage=0&engagePx=0&fmode=0"
+  },
+  "steer://debug/switcherprobe" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/switcherprobe"
+  },
+  "steer://debug/wizard/<command>" : {
+    "arguments" : [
+      {
+        "name" : "command",
+        "values" : [
+          "back",
+          "close",
+          "details",
+          "focus-next",
+          "focus-previous",
+          "next",
+          "restart",
+          "skip",
+          "skip-check",
+          "start-over"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/wizard/back"
+  },
+  "steer://debug/wizard/tile/<index>" : {
+    "arguments" : [
+      {
+        "accepts" : "a tile's index from 0",
+        "example" : "0",
+        "name" : "index"
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/wizard/tile/0"
+  },
+  "steer://haptic/<pattern>" : {
+    "arguments" : [
+      {
+        "name" : "pattern",
+        "values" : [
+          "customizationSwitch",
+          "layerSwitch",
+          "radialTick",
+          "scrollTick",
+          "buttonPress",
+          "volumeBoundary",
+          "muteTap",
+          "pulse",
+          "double",
+          "success",
+          "error",
+          "warning"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://haptic/customizationSwitch",
+    "summary" : "Fire a named haptic pattern (e.g. success, error, pulse)."
+  },
+  "steer://help[/<mode>]" : {
+    "arguments" : [
+      {
+        "name" : "mode",
+        "values" : [
+          "show",
+          "hide",
+          "toggle"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://help/show",
+    "summary" : "Toggle, show, or hide the help card."
+  },
+  "steer://keyboard[/<mode>]" : {
+    "arguments" : [
+      {
+        "name" : "mode",
+        "values" : [
+          "show",
+          "hide",
+          "toggle"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://keyboard/show",
+    "summary" : "Toggle, show, or hide the on-screen keyboard."
+  },
+  "steer://layer/<name>" : {
+    "arguments" : [
+      {
+        "name" : "name",
+        "values" : [
+          "base",
+          "l1",
+          "r1",
+          "l1r1",
+          "l2",
+          "r2"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://layer/base",
+    "summary" : "Turn the named layer on or off (base, l1, r1, l1r1, l2, r2)."
+  },
+  "steer://light/<hex>" : {
+    "arguments" : [
+      {
+        "accepts" : "six hex digits, no #",
+        "example" : "FF8800",
+        "name" : "hex"
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://light/FF8800",
+    "summary" : "Set the light bar to a hex colour, such as FF8800."
+  },
+  "steer://light/auto" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://light/auto",
+    "summary" : "Hand the light bar back to Steer's own colours."
+  },
+  "steer://macro/<name>" : {
+    "arguments" : [
+      {
+        "accepts" : "a saved macro's name",
+        "example" : "Push to repo",
+        "name" : "name"
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://macro/Push%20to%20repo",
+    "summary" : "Play a saved macro by name."
+  },
+  "steer://mute-light/<mode>" : {
+    "arguments" : [
+      {
+        "name" : "mode",
+        "values" : [
+          "off",
+          "on",
+          "pulse"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://mute-light/off",
+    "summary" : "Set the mute button's light: off, on, or pulse."
+  },
+  "steer://overrides/<state>" : {
+    "arguments" : [
+      {
+        "name" : "state",
+        "values" : [
+          "suspend",
+          "resume",
+          "toggle"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://overrides/suspend",
+    "summary" : "Control overrides: suspend, resume, or toggle."
+  },
+  "steer://padview[/<mode>]" : {
+    "arguments" : [
+      {
+        "name" : "mode",
+        "values" : [
+          "show",
+          "hide",
+          "toggle"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://padview/show",
+    "summary" : "Toggle, show, or hide the controller view."
+  },
+  "steer://palette[/<mode>]" : {
+    "arguments" : [
+      {
+        "name" : "mode",
+        "values" : [
+          "show",
+          "hide",
+          "toggle"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://palette/show",
+    "summary" : "Toggle, show, or hide the menu palette."
+  },
+  "steer://palette/<step>" : {
+    "arguments" : [
+      {
+        "name" : "step",
+        "values" : [
+          "up",
+          "down",
+          "left",
+          "right",
+          "confirm"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://palette/up",
+    "summary" : "Move through the open menu palette: up, down, left, right, or confirm."
+  },
+  "steer://player-lights/<count>" : {
+    "arguments" : [
+      {
+        "name" : "count",
+        "values" : [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "off"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://player-lights/0",
+    "summary" : "Light that many of the five player lights, 0 to 5, or off."
+  },
+  "steer://player-lights/mask/<hex>" : {
+    "arguments" : [
+      {
+        "accepts" : "a five-bit mask in hex, 00 to 1F",
+        "example" : "15",
+        "name" : "hex"
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://player-lights/mask/15",
+    "summary" : "Light the five player lights by bit mask, 00 to 1F."
+  },
+  "steer://query/customizations" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://query/customizations",
+    "summary" : "Write the list of app customizations to the clipboard as JSON."
+  },
+  "steer://query/macros" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://query/macros",
+    "summary" : "Write the macro list to the clipboard as JSON."
+  },
+  "steer://query/state" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://query/state",
+    "summary" : "Write the current runtime state to the clipboard as JSON."
+  },
+  "steer://query/versions" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://query/versions",
+    "summary" : "Write the saved versions to the clipboard as JSON."
+  },
+  "steer://radial[/<mode>]" : {
+    "arguments" : [
+      {
+        "name" : "mode",
+        "values" : [
+          "show",
+          "hide",
+          "toggle"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://radial/show",
+    "summary" : "Toggle, show, or hide the radial menu."
+  },
+  "steer://settings" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://settings",
+    "summary" : "Open the Settings window."
+  },
+  "steer://settings/<section>" : {
+    "arguments" : [
+      {
+        "name" : "section",
+        "values" : [
+          "general",
+          "controller",
+          "buttons",
+          "apps",
+          "library",
+          "gallery",
+          "macros",
+          "radialMenus",
+          "shortcuts",
+          "scripts",
+          "windowSnap",
+          "help",
+          "history"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://settings/general",
+    "summary" : "Open the Settings window at a section."
+  },
+  "steer://settings/buttons[?control=<control>][&layer=<layer>][&view=<view>]" : {
+    "arguments" : [
+      {
+        "name" : "control",
+        "values" : [
+          "cross",
+          "circle",
+          "triangle",
+          "square",
+          "l1",
+          "r1",
+          "l2",
+          "r2",
+          "dpadUp",
+          "dpadDown",
+          "dpadLeft",
+          "dpadRight",
+          "l3",
+          "r3",
+          "options",
+          "create",
+          "touchpadClick",
+          "paddle1",
+          "paddle2",
+          "paddle3",
+          "paddle4",
+          "backButtonLeft",
+          "backButtonRight",
+          "psButton",
+          "leftStickN",
+          "leftStickNE",
+          "leftStickE",
+          "leftStickSE",
+          "leftStickS",
+          "leftStickSW",
+          "leftStickW",
+          "leftStickNW",
+          "rightStickN",
+          "rightStickNE",
+          "rightStickE",
+          "rightStickSE",
+          "rightStickS",
+          "rightStickSW",
+          "rightStickW",
+          "rightStickNW",
+          "touchpadLeftHalf",
+          "touchpadRightHalf",
+          "touchpadTopLeft",
+          "touchpadTopRight",
+          "touchpadBottomLeft",
+          "touchpadBottomRight",
+          "touchpadContact",
+          "share",
+          "micMute",
+          "left-stick",
+          "right-stick",
+          "combos",
+          "touchpad",
+          "gyro",
+          "lights",
+          "triggerResistance",
+          "vibration"
+        ]
+      },
+      {
+        "name" : "layer",
+        "values" : [
+          "base",
+          "l1",
+          "r1",
+          "l1r1",
+          "l2",
+          "r2"
+        ]
+      },
+      {
+        "name" : "view",
+        "values" : [
+          "grid",
+          "picture"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://settings/buttons?control=cross&layer=base&view=grid",
+    "summary" : "Open Controls showing a control, a layer, or a view."
+  },
+  "steer://settings/help/automation" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://settings/help/automation",
+    "summary" : "Open Help with the Automation Reference up."
+  },
+  "steer://settings/triggers?preset=<preset>&apply=true" : {
+    "arguments" : [
+      {
+        "name" : "preset",
+        "values" : [
+          "racing-brake",
+          "gun-click",
+          "bow-tension",
+          "engine-throttle",
+          "springy"
+        ]
+      },
+      {
+        "name" : "apply",
+        "values" : [
+          "true"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://settings/triggers?preset=racing-brake&apply=true",
+    "summary" : "Apply a built-in adaptive-trigger preset."
+  },
+  "steer://suggest" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://suggest",
+    "summary" : "Open the community suggestion funnel."
+  },
+  "steer://version/restore/<uuid>?confirm=true" : {
+    "arguments" : [
+      {
+        "accepts" : "a version id, from query/versions",
+        "example" : "4B0F2C1E-9A77-4C2E-8E31-6B1D0F5A2C44",
+        "name" : "uuid"
+      },
+      {
+        "name" : "confirm",
+        "values" : [
+          "true"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://version/restore/4B0F2C1E-9A77-4C2E-8E31-6B1D0F5A2C44?confirm=true",
+    "summary" : "Restore a saved version; without confirm=true, History opens instead."
+  },
+  "steer://version/save[?reason=<reason>]" : {
+    "arguments" : [
+      {
+        "accepts" : "shown in History",
+        "example" : "before import",
+        "name" : "reason"
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://version/save?reason=before%20import",
+    "summary" : "Save a version of the settings to restore later."
+  },
+  "steer://windowsnap[/<mode>]" : {
+    "arguments" : [
+      {
+        "name" : "mode",
+        "values" : [
+          "show",
+          "hide",
+          "toggle"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://windowsnap/show",
+    "summary" : "Toggle, show, or hide Window Snap."
+  },
+  "steer://windowsnap/<zone>" : {
+    "arguments" : [
+      {
+        "name" : "zone",
+        "values" : [
+          "leftHalf",
+          "rightHalf",
+          "topHalf",
+          "bottomHalf",
+          "topLeft",
+          "topRight",
+          "bottomLeft",
+          "bottomRight",
+          "maximize",
+          "center",
+          "restore"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://windowsnap/leftHalf",
+    "summary" : "Snap the front window to a zone, such as leftHalf or maximize."
+  },
+  "steer://wizard" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://wizard",
+    "summary" : "Open the onboarding wizard."
+  },
+  "steer://wizard/calibrate" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://wizard/calibrate",
+    "summary" : "Open stick calibration on its own."
+  },
+  "steer://wizard/test" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://wizard/test",
+    "summary" : "Open the controller test on its own."
+  }
+}
