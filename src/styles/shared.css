@@ -47,25 +47,32 @@ h1,h2,h3{letter-spacing:-0.022em;line-height:1.06;font-weight:600}
 .center{text-align:center}
 .mono{font-family:var(--mono);font-size:0.92em;letter-spacing:0}
 
-/* nav */
-header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--hairline)}
-.nav-in{max-width:1200px;margin:0 auto;padding:0 var(--pad);height:52px;display:flex;align-items:center;gap:22px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:650;font-size:18px;letter-spacing:-0.02em;color:var(--text)}
+/* nav: the homepage's grid (1392px, 24px gutters, 16px under 820px), so the
+   bar lines up with every page built on it. The type is the page's own: the
+   wordmark in the display weight, links in ink, and the current page marked
+   with the homepage's pin, a blue dot under the word. */
+html{scroll-padding-top:80px}
+header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--sep)}
+.nav-in{max-width:1392px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:40px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-0.022em;color:var(--text)}
 .brand:hover{text-decoration:none}
 .brand .logo{width:30px;height:30px;flex:none}
-.nav-menu{display:block;position:relative}
+.nav-menu{display:block}
 .nav-menu::details-content{display:block}
 .nav-menu:not([open])::details-content{content-visibility:hidden}
-.nav-toggle{list-style:none;cursor:pointer;-webkit-user-select:none;user-select:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;letter-spacing:0.01em;color:var(--text-2);padding:6px 11px;border:1px solid var(--sep);border-radius:var(--r-inset)}
+.nav-toggle{list-style:none;cursor:pointer;-webkit-user-select:none;user-select:none;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;font-size:14px;font-weight:600;color:var(--text);border:1px solid var(--sep-2);border-radius:var(--r-btn)}
 .nav-toggle::-webkit-details-marker{display:none}
-.nav-toggle:hover{color:var(--text)}
-.nav-toggle .chev{transition:transform .2s ease}
-.nav-menu[open] .nav-toggle{color:var(--text);background:var(--bg-inset)}
+.nav-toggle:hover{background:var(--bg-inset)}
+.nav-toggle .chev{transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+.nav-menu[open] .nav-toggle{background:var(--bg-inset)}
 .nav-menu[open] .nav-toggle .chev{transform:rotate(180deg)}
-/* the sheet: card surface, the fixed radius tiers, current page in accent */
-.nav-links{position:absolute;top:calc(100% + 9px);left:0;display:flex;flex-direction:column;gap:2px;min-width:200px;padding:6px;background:var(--card-bg);border:1px solid var(--sep);border-radius:var(--r-card);box-shadow:var(--shadow-rest-lg)}
-.nav-links a{color:var(--text);font-size:15px;letter-spacing:-0.01em;padding:9px 12px;border-radius:var(--r-inset)}
-.nav-links a:hover{background:var(--bg-inset);color:var(--text);text-decoration:none}
+/* The sheet: the full width of the bar, the links set as display type.
+   The sticky header is the nearest positioned box, so top:100% is the
+   bar's own bottom edge. */
+.nav-links{position:absolute;top:100%;left:0;right:0;display:flex;flex-direction:column;padding:8px 16px 20px;background:var(--bg);border-bottom:1px solid var(--sep);box-shadow:var(--shadow-rest-lg)}
+.nav-links a{position:relative;color:var(--text);font-size:24px;font-weight:700;letter-spacing:-0.022em;line-height:1.2;padding:14px 0;border-top:1px solid var(--sep)}
+.nav-links a:first-child{border-top:0}
+.nav-links a:hover{text-decoration:none;color:var(--text-2)}
 .nav-links a[aria-current="page"]{color:var(--blue-text)}
 /* desktop with support: dissolve the disclosure, links lay out inline */
 @supports selector(::details-content){
@@ -73,16 +80,17 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
     .nav-menu{display:contents}
     .nav-menu::details-content{display:contents;content-visibility:visible}
     .nav-toggle{display:none}
-    .nav-links{position:static;flex-direction:row;gap:22px;min-width:0;margin-left:8px;padding:0;background:none;border:0;border-radius:0;box-shadow:none}
-    .nav-links a{color:var(--text-2);font-size:14px;padding:0;border-radius:0}
-    .nav-links a:hover{color:var(--text);background:none}
+    .nav-links{position:static;flex-direction:row;gap:32px;padding:0;background:none;border:0;box-shadow:none}
+    .nav-links a{color:var(--text-2);font-size:15px;font-weight:500;letter-spacing:-0.01em;padding:0;border:0}
+    .nav-links a:hover{color:var(--text)}
     .nav-links a[aria-current="page"]{color:var(--text)}
+    .nav-links a[aria-current="page"]::after{content:"";position:absolute;left:50%;top:calc(100% + 7px);width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--blue)}
   }
 }
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
-.theme-toggle{width:30px;height:30px;border-radius:50%;border:1px solid var(--sep);background:transparent;color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.theme-toggle{width:34px;height:34px;border-radius:50%;border:1px solid var(--sep-2);background:transparent;color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
 .theme-toggle:hover{background:var(--bg-inset);color:var(--text)}
-.theme-toggle svg{width:15px;height:15px}
+.theme-toggle svg{width:16px;height:16px}
 .theme-toggle .sun,.theme-toggle .moon{display:none}
 html[data-theme="light"] .theme-toggle .sun{display:block}
 html[data-theme="dark"] .theme-toggle .moon{display:block}
@@ -102,8 +110,8 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
 .theme-menu:popover-open{display:flex}
 html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 .theme-menu{
-  top:52px;
-  right:calc((100vw - min(1200px, 100vw)) / 2 + var(--pad));
+  top:64px;
+  right:calc((100vw - min(1392px, 100vw)) / 2 + 24px);
 }
 @supports (anchor-name: --a){
   .theme-toggle{anchor-name:--theme-anchor}
@@ -135,7 +143,7 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 .btn-primary:hover{background:color-mix(in srgb,var(--blue) 88%,#000)}
 .btn-secondary{background:var(--bg-inset);color:var(--text);border-color:var(--sep)}
 .btn-secondary:hover{background:var(--bg-inset-2)}
-.btn-nav{height:30px;padding:0 15px;font-size:13px;background:var(--blue);color:#fff}
+.btn-nav{height:36px;padding:0 18px;font-size:14px;font-weight:600;background:var(--blue);color:#fff}
 .btn-nav:hover{background:color-mix(in srgb,var(--blue) 88%,#000);text-decoration:none}
 .arrow-link{color:var(--blue-text);font-size:15px;font-weight:450;display:inline-flex;align-items:center;gap:5px}
 .arrow-link:hover{text-decoration:none}
@@ -265,6 +273,10 @@ footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-s
   body{font-size:16px}
   .sec{padding:60px 0}
   .sec-tight{padding:48px 0}
+}
+@media(max-width:820px){
+  .nav-in{padding:0 16px}
+  .theme-menu{right:16px}
 }
 .nav-cta-short{display:none}
 @media(max-width:520px){

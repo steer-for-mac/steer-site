@@ -4,14 +4,16 @@
       <img class="logo" src="assets/mark.png" alt="" width="30" height="30" eleventy:widths="30,60" sizes="30px">
       Steer
     </a>
+    {#- Pricing goes to the homepage's cost question, not to #pricing: that
+        anchor is the closing form, which says nothing about price. #}
     <details class="nav-menu">
       <summary class="nav-toggle">Menu{% include "art/nav-chevron.svg" %}</summary>
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="Site">
         <a href="features.html"{% if pageName == "features" %} aria-current="page"{% endif %}>Features</a>
         <a href="compatibility.html"{% if pageName == "compatibility" %} aria-current="page"{% endif %}>Controllers</a>
-        <a href="accessibility.html"{% if pageName == "accessibility" %} aria-current="page"{% endif %}>Accessibility</a>
         <a href="vs.html"{% if pageName == "vs" %} aria-current="page"{% endif %}>Compare</a>
-        <a href="{% if not home %}index.html{% endif %}#pricing">Pricing</a>
+        <a href="accessibility.html"{% if pageName == "accessibility" %} aria-current="page"{% endif %}>Accessibility</a>
+        <a href="{% if not home %}index.html{% endif %}#q-cost">Pricing</a>
       </nav>
     </details>
     <div class="nav-right">
@@ -39,7 +41,7 @@
       {%- if home %}
       <a class="btn btn-nav" href="#pricing" data-ml><span class="nav-cta-full">Join the launch list</span><span class="nav-cta-short">Join</span></a>
       {%- else %}
-      <a class="btn btn-nav" href="index.html#pricing"><span class="nav-cta-full">Join the list</span><span class="nav-cta-short">Join</span></a>
+      <a class="btn btn-nav" href="index.html#pricing"><span class="nav-cta-full">Join the launch list</span><span class="nav-cta-short">Join</span></a>
       {%- endif %}
     </div>
   </div>
