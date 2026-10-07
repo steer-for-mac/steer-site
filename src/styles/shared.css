@@ -150,15 +150,10 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 .arrow-link .arrow{transition:transform .15s}
 .arrow-link:hover .arrow{transform:translateX(3px)}
 
-/* Screenshot frame. Site-wide because two pages use it and both had forked a
-   copy: design-system.css for the homepage, pages/accessibility.css for the
-   other, four of the five rules byte-identical. A change to the frame reached
-   one page and not the other. */
+/* Screenshot frame. The app pictures moved to the homepage's crops
+   (styles/bands/home/frame.css); the store cards still frame one. */
 .shot{border-radius:var(--r-window);overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
 .shot img{width:100%;height:auto;display:block}
-.shot img.shot-dark{display:none}
-[data-theme="dark"] .shot img.shot-light{display:none}
-[data-theme="dark"] .shot img.shot-dark{display:block}
 
 .shot,.shots,.nav-links,.trust-list,.cmp-card,.ml-dialog,.close{
   corner-shape: squircle;
@@ -209,7 +204,6 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 /* rows draw only a top rule; close each column so the table doesn't end mid-air */
 .specs>div>.spec-row:last-child{border-bottom:1px solid var(--sep)}
 
-.price-big{display:flex;align-items:baseline;justify-content:center;gap:12px;line-height:1}
 
 /* footer */
 footer{border-top:1px solid var(--sep);padding:56px 0 40px;background:var(--bg-sunken);font-size:14px}
