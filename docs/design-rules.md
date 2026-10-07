@@ -77,22 +77,31 @@ should never try to be one.
   not an inline margin; it had drifted to four different values before it was
   tokenized. Keep the whole scale ordered (tight < sec < snug < loose) at every
   breakpoint; the 860px block once inverted it by shrinking only `.sec`.
-- **Surfaces alternate** on sub-pages. The homepage (round 13) is one plain
-  surface on purpose: its bands are questions on one grid, and the hairline
-  above the close is the only boundary it needs. Adjacent sections should not share a surface unless
+- **Surfaces alternate** on the older sub-pages. The homepage (round 13) is
+  one plain surface on purpose: its bands are questions on one grid, and the
+  hairline above the close is the only boundary it needs. Features, Trust and
+  Accessibility were rebuilt in that language on 2026-10-06
+  (`styles/subpage.css`) and are one plain surface for the same reason; their
+  ruled lists draw the boundaries. Adjacent sections should not share a surface unless
   something else draws the boundary; two plain-bg sections in a row read as one
   tall empty band (that was the reach-to-pricing dead zone). The page tail runs
   trust (sunken) / pricing (plain) / footer (sunken). `reach` and `requirements`
   were cut in `4c871d1`; they were the tail's only two plain bands, so pricing
   took the plain surface to keep the alternation.
-- **Eyebrows are for sub-pages.** The SF Mono label with its accent dot stays
-  on the sub-pages. The homepage has none: every heading is a couplet, the
+- **Eyebrows are for the older sub-pages.** The SF Mono label with its accent
+  dot stays on the pages not yet rebuilt. The homepage, and the sub-pages built
+  on `styles/subpage.css`, have none: every heading is a couplet, the
   visitor's doubt in grey (`.pain`) and Steer's answer in ink, so reading only
   the headings gives the pitch. A label that only repeats the heading is cut.
 - **The accent may colour one word of a headline**, the playful word
   ("Hand it a *controller.*"). It replaced a New York italic in the
   2026-10-06 review: that face exists only on Apple devices and turns into
   Georgia elsewhere. One word, never a phrase, never body text.
+
+- **The nav spans the homepage's grid on every page** (1392px, 24px gutters,
+  16px under 820px), so it lines up with any page built on that grid. Wordmark
+  in the display weight, links in ink, the current page marked with the
+  homepage's pin (a blue dot under the word). `tests/nav.spec.js` holds it.
 
 ## Copy rules
 

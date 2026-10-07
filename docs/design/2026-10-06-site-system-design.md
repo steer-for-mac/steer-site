@@ -135,9 +135,11 @@ comfort and RSI angle was cut by evidence (`steer/docs/marketing-strategy.md`
 | Help card | Every button has a job | Pillar one, the only controller picture |
 | Split keyboard | It types | Pillar two |
 | Gallery, apps only | It learns your apps | Pillar three |
-| Ring of apps | Switch apps | Getting around |
-| Window Snap | Windows where you want them | Getting around |
-| Controls tiles | How it feels | Feel |
+| Ring of apps | Switch apps | features.html (the homepage dropped it in round 13) |
+| Window Snap | Windows where you want them | features.html |
+| Controls tiles | How it feels | features.html |
+| Gallery, the other four cards | Not only editors | features.html |
+| Left stick in Controls | A pointer you can slow down | accessibility.html |
 
 ## 4. Build
 
