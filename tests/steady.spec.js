@@ -1,4 +1,4 @@
-/* The homepage's demo must hold one height whatever it shows, or the page
+/* The demo must hold one height whatever it shows, or the page
    below it jumps while a visitor scrolls past: it is measured in every state
    and must not move by more than a pixel. */
 import { expect, test } from "@playwright/test";
@@ -19,11 +19,11 @@ for (const width of [1440, 375]) {
          runs for a browser that does not announce itself. */
       await page.addInitScript(() => Object.defineProperty(Navigator.prototype, "webdriver", { get: () => false }));
       await stubPad(page);
-      await page.goto("/index.html");
+      await page.goto("/play.html");
     });
 
     test("the demo band holds its height while it plays, and on the desk, ring, keyboard and help", async ({ page }) => {
-      const band = ".h-demo";
+      const band = "[data-steer-demo]";
       /** @type {Record<string, number>} */
       const seen = {};
       await page.locator(band).scrollIntoViewIfNeeded();   // it starts playing once in view

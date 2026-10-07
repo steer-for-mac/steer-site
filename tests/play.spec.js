@@ -95,23 +95,13 @@ test.describe("when nobody is driving", () => {
   test("a press before it scrolls into view stops it for good", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 300 });
     await page.addInitScript(() => Object.defineProperty(Navigator.prototype, "webdriver", { get: () => false }));
-    await page.goto("/index.html");
+    await page.goto("/play.html");
     await press(page, "options");             // offscreen: the loop has not started
-    await page.locator(".h-demo").scrollIntoViewIfNeeded();
+    await page.locator("[data-steer-demo]").scrollIntoViewIfNeeded();
     await page.waitForTimeout(1500);
     await expect(page.locator("#sd-stop")).toBeHidden();
     await expect(page.locator("#sd-field")).toHaveText(/Hello, Mac/);
   });
-});
-
-/* The same band, embedded in the homepage. */
-test("the homepage's demo opens your apps", async ({ page }) => {
-  await page.goto("/index.html");
-  await press(page, "r3");
-  await press(page, "l3");
-  await expect(page.locator("#sd-ring")).toBeVisible();
-  await press(page, "circle");
-  await expect(page.locator("#sd-ring")).toBeHidden();
 });
 
 test("L3 closes the ring it opened, and the ring stays closed", async ({ page }) => {
