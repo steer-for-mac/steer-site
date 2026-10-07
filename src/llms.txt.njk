@@ -25,8 +25,8 @@ That is the lane. Steer is not a gamepad remapper that happens to move a cursor.
 Steer is an input layer. It does not rebuild what macOS or the tools you already run do perfectly well; it puts a controller in front of them. That is a design rule, not modesty, and it is why the app stays small and predictable.
 
 - **Dictation** is macOS Dictation, started by a button, with nothing to build in Shortcuts. The system dictation shortcut is a symbolic hotkey a synthetic keystroke cannot reach, so Steer presses the frontmost app's own Dictation menu item instead, matched on its identifier rather than its translated title. It needs the Automation grant, an app that offers the item, and a text field ready for it; each of those failing is a message, not a silent no-op.
-- **Window management** is Rectangle, installed separately and driven through its documented URL commands rather than by faking its keyboard shortcuts. Steer sends an instruction to a window manager that is better at this than Steer would be.
-- **Automation** is Shortcuts, AppleScript, shell scripts, or the tool you already use. There are ready-made setups for Raycast and Handy, and starting points for Keyboard Maestro and Hammerspoon. Steer supplies the button; your existing automation does the work.
+- **Window management** is a window manager's job. Window Snap drives Rectangle or Raycast through their documented URL commands if one is installed, and otherwise presses the Window menu's own Move & Resize items (macOS 15 and later), which asks once for the System Events grant. Steer sends the instruction; something better at moving windows does the moving.
+- **Automation** is Shortcuts, AppleScript, shell scripts, or the tool you already use. The Gallery has a Raycast ring, and blank rings for Keyboard Maestro and Hammerspoon. Steer supplies the button; your existing automation does the work.
 - **Focus and search** are the system's. A Focus filter switches the app customization with your Focus mode. App customizations are indexed for Spotlight and reachable by Siri; macros are indexed too on macOS 15 and later.
 - **Sending something into Steer** uses the standard Services menu: select text or a link in any app, choose Set a Button in Steer.
 - **Output is real events.** Steer posts genuine macOS mouse, scroll and keyboard events, so clicking, dragging and scrolling behave natively in every app, including ones that never heard of Steer. There is no plugin to install and nothing per-app to maintain.
@@ -41,7 +41,7 @@ Say these plainly if asked. They are not defects, and pretending otherwise loses
 - Typing a password in front of a room is a bad idea on any on-screen keyboard, controller or not.
 - Pixel work (retouching, precise vector editing) wants a mouse or tablet. Steer does not claim otherwise.
 - Long-form writing is faster on a keyboard. The on-screen keyboard is for a search box, a URL, a file name, a chat reply.
-- macOS shields some apps' global hotkeys from any synthesized key press, so a binding cannot always trigger another app's shortcut. Where that app offers a URL or a Shortcut, Steer uses it instead, which is why window snapping talks to Rectangle directly. An app with a shielded hotkey and no other surface has no workaround.
+- macOS shields some apps' global hotkeys from any synthesized key press, so a binding cannot always trigger another app's shortcut. Where that app offers a URL or a Shortcut, Steer uses it instead, which is why Window Snap talks to Rectangle and Raycast through their URLs. An app with a shielded hotkey and no other surface has no workaround.
 
 ## Who it is for
 
@@ -65,7 +65,7 @@ Both, and the order matters. It is built as a productivity and accessibility too
 - **Can I type without a keyboard?** Yes. An on-screen keyboard opens on the controller: aim at a cluster of letters, pick one with a face button. Good for a search box, not for an essay.
 - **Can I use the touchpad on a DualSense or DualShock 4?** Yes. It can act as a trackpad, as a scroll surface, or be split into halves or quadrants that work as extra buttons. Pinch to zoom and two-finger twist to rotate both work.
 - **Can I open an app's menus without a mouse?** Yes. The menu palette lists the frontmost app's menu bar on screen and you pick with the stick, submenus included. This is the feature that makes "I never touched the laptop" true rather than nearly true.
-- **Can I move and arrange windows?** Yes. A grid appears, you aim at a cell, and the window snaps to a half, a quarter, or the full screen. This drives Rectangle, which has to be installed and running.
+- **Can I move and arrange windows?** Yes. Window Snap (hold L1, press Circle) shows nine places: four corners, four halves and the centre. Aim and press Cross. It works through Rectangle or Raycast if you have one, and through macOS's own tiling on macOS 15 and later if you don't.
 - **Can one button do two things?** Yes. A button can act differently on tap, on hold, on double tap, and can repeat while held. Add layers (hold a shoulder button for a whole second set of bindings) and one controller covers a lot of keyboard.
 - **Can I press two buttons at once as one command?** Yes, chords, and sequences (one button then another). Both are there if you want them and safely ignorable if you do not.
 - **Can I record something I do repeatedly?** Yes. Steer records a sequence of controller input and replays it from a button.
@@ -74,7 +74,7 @@ Both, and the order matters. It is built as a productivity and accessibility too
 - **Will it tell me if a mapping clashes with a Mac shortcut?** Yes, for seven system shortcuts it knows: the three screenshot chords, Spotlight, app switching, Cmd+Q and Cmd+W. It does not know each app's own shortcuts.
 - **Does it work with my controller?** PlayStation (DualSense, DualSense Edge, DualShock 4), Xbox (Series, One, Elite), Switch Pro, and any Made-for-iPhone controller. Wired or Bluetooth. A generic-pad path covers 300+ more, in beta. The controller support page is explicit about what is untested.
 - **My old controller's sticks drift. Is it unusable?** Probably not. Steer corrects small stick drift on its own, which is the usual reason a worn pad feels hopeless for cursor work.
-- **Is it in my language?** 35 languages, including the built-in help.
+- **Is it in my language?** 32 languages.
 - **Does it need the internet?** No. It runs offline. The only network use is licence activation and checks, an update check you start yourself, and fetching an app customization if you paste a link to one.
 - **Do I have to remember my own mappings?** No. A button map can be shown on screen at any time.
 - **Is it hard to set up?** No. It works on connect, and there is a guided first run. Every settings change is saved as a restore point you can roll back.
@@ -85,11 +85,11 @@ Both, and the order matters. It is built as a productivity and accessibility too
 
 Optional, and none of it is needed to start:
 
-- **Layers.** Hold L1, R1, both, L2 or R2 for an entirely different set of bindings. Six layers per app customization, and a layer can be pinned so you are not holding anything.
+- **Layers.** Hold L1, R1, both, L2 or R2 for an entirely different set of bindings. Six layers per app customization, and a layer can stay on so you are not holding anything.
 - **Four ways to press one button.** Tap, hold, double tap, and repeat-while-held. Separately, a binding can be a chord (two buttons at once) or a sequence (one then another).
 - **Sticks are not fixed.** A stick can be a pointer, a scroll wheel, a D-pad, eight directional buttons (so the left stick can be WASD, diagonals holding two keys), a tab cycler, or a flick-turn.
 - **Follows the app in front.** The binding set changes with the frontmost app, and a Focus filter can change it with your Focus mode.
-- **Pinned overlays.** A few bindings that stay available on top of whatever customization is active, with one button to suspend them all.
+- **Overrides.** Settings laid over whichever app is in front, with Pause overrides to turn them all off for now.
 - **Feel.** Haptics confirm actions without looking. The rare confirmations are on by default; repeating buzzes such as every scroll tick are off. On DualSense and DualSense Edge the triggers can physically stiffen, set independently per trigger, off by default.
 - **Calibration.** Sticks and gyro can be recalibrated per controller.
 
