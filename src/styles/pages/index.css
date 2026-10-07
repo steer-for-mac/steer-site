@@ -8,3 +8,8 @@
 @import "../bands/home/apps.css";
 @import "../bands/home/answers.css";
 @import "../bands/home/close.css";
+
+/* The nav spans the homepage's own grid (hero.css: 1392px, 24px gutters), and
+   its button steps aside while a form is on screen (home-share.js). */
+.nav-in { max-width: 1392px; padding-inline: 24px; }
+.form-in-view .btn-nav { visibility: hidden; }

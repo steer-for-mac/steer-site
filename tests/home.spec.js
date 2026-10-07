@@ -14,6 +14,9 @@ test("the homepage loads its behaviour, and the nav CTA opens the launch list", 
   await expect(page.locator("#pricing form.ml-form")).toHaveCount(1);
   const dialog = page.locator("#mlDialog");
   await expect(dialog).toBeHidden();
+  /* Beside the hero's own form the nav button steps aside, then returns. */
+  await expect(page.locator(".nav a[data-ml]")).toBeHidden();
+  await page.locator("#q-setup").scrollIntoViewIfNeeded();
   await page.locator(".nav a[data-ml]").click();
   await expect(dialog).toBeVisible();
   expect(missing, "no request failed").toEqual([]);
