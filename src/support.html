@@ -42,12 +42,12 @@ description: "Get help with Steer: email support, the in-app help guide, and com
     <h2>What you need</h2>
     <!-- moved off the homepage 2026-07-30. A spec table and two FAQ rows are
          reference content, and this page owns buying and permissions. The
-         languages count is bundle-counted (32 localizations), which design-rules
-         singles out as the kind of number that should be stated. -->
+         languages count is the locales with most strings translated (16 of 32
+         .lproj; the other 16 carry about 30 strings each), per design-rules. -->
 <!-- Same head device as #capabilities and #trust: the lead fills the wide
          right void that a lone left-aligned heading leaves above the columns. -->
     <div class="sec-head-split">
-      <p class="lead">A recent Mac, the controller you already own, and two permissions, each switched on once.</p>
+      <p class="lead">A recent Mac, the controller you already own, and a few permissions, each switched on once.</p>
     </div>
     <div class="specs sec-body">
       <div>
@@ -60,10 +60,9 @@ description: "Get help with Steer: email support, the in-app help guide, and com
         <div class="spec-row"><span class="k">Accessibility permission</span><span class="v">A Mac setting you switch on once</span></div>
         <div class="spec-row"><span class="k">Input Monitoring</span><span class="v">Asked once, when a DualSense Edge is plugged in. No pad tested has needed it</span></div>
         <div class="spec-row"><span class="k">Window snapping</span><span class="v">Through the window app Rectangle or Raycast, or the Mac's own tiling on macOS 15 and later</span></div>
-        <!-- 32 localizations in steer Steer/Resources/Localizable.xcstrings,
-             English included (counted 2026-10-06). A credibility signal, not a
-             reason anyone buys, so it stays here. -->
-        <div class="spec-row"><span class="k">Languages</span><span class="v">32</span></div>
+        <!-- English plus 15 locales near-complete and Czech at ~70%, across the
+             app's three .xcstrings, all machine_translated (counted 2026-10-06). -->
+        <div class="spec-row"><span class="k">Languages</span><span class="v">16, machine-translated for now</span></div>
       </div>
     </div>
     <!-- The controller list used to be repeated here as a callout and again as

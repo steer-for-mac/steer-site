@@ -203,8 +203,11 @@ for testers, the way the Elite paddles and generic controllers already do.
 "Beta" with a call for testers is honest. Silence is not, and neither is a
 confident "Yes".
 
-Corollary for numbers: a count sourced from a bundle (35 `.lproj`, 315 SDL
-entries, 20 route families) is checkable and should be stated. A count inferred
+Corollary for numbers: a count sourced from a bundle (315 SDL entries, 20
+route families) is checkable and should be stated, but count what a user gets,
+not what exists: 32 `.lproj` directories held 16 usable languages on
+2026-10-06 (the rest carry about 30 strings each), so the site says 16, and
+says they are machine-translated. A count inferred
 from a feature list is not. When ControllerKeys' page said nothing about
 languages, the answer was to count the `.lproj` directories in their public
 repository, not to write a dash.
