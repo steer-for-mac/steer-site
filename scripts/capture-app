@@ -3,6 +3,7 @@
 
     (cd ../steer && just dev-up)     one Steer Dev, its agent socket up
     scripts/capture-app              light and dark, 2x, into src/assets/app/
+    scripts/capture-app stick        only the named shots
 
 Drives Steer Dev through `just agent steer://...` (no focus stolen) and captures
 only Steer Dev's own windows by id with `screencapture -l`, never the screen, so
@@ -35,6 +36,7 @@ SHOTS = {
     "snap": ("steer://windowsnap/show", "panel", (42, 150, 1078, 945)),  # the nine places, inside the card
     "apps": ("steer://settings/gallery", "normal", (859, 880, 2573, 1753)),
     "tiles": ("steer://settings/buttons?control=cross&view=picture", "normal", (466, 1362, 2283, 1565)),
+    "stick": ("steer://settings/buttons?control=left-stick&view=picture", "normal", (2330, 110, 3000, 1080)),  # the inspector: cursor speed
 }
 
 WINIDS = r"""
@@ -87,6 +89,9 @@ def set_dark(on):
 
 
 def main():
+    wanted = sys.argv[1:] or list(SHOTS)
+    if unknown := set(wanted) - set(SHOTS):
+        sys.exit(f"no such shot: {', '.join(sorted(unknown))}")
     found = subprocess.run(["pgrep", "-f", "/Steer Dev.app/Contents/MacOS/Steer$"], capture_output=True, text=True, check=False)
     if found.returncode != 0:
         sys.exit("Steer Dev is not running: (cd ../steer && just dev-up)")
@@ -101,7 +106,8 @@ def main():
         for theme in ("light", "dark"):
             set_dark(theme == "dark")
             time.sleep(1.5)
-            for name, (route, kind, box) in SHOTS.items():
+            for name in wanted:
+                route, kind, box = SHOTS[name]
                 agent(route)
                 raw = tmp / f"{name}-{theme}.png"
                 try:

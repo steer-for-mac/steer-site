@@ -1,25 +1,16 @@
+/* accessibility.html: its opening couplet beside the left stick's settings. */
+@import "../subpage.css";
 
-.lander-hero{padding:72px 0 44px}
-.lander-hero h1{font-size:clamp(34px,4.8vw,54px);line-height:1.04;letter-spacing:-0.03em;max-width:15ch}
-.lander-hero .lead{margin-top:22px;max-width:50ch}
-.lander-fine{margin-top:18px;font-size:13.5px;color:var(--text-3);max-width:52ch}
-.lander-fine b{color:var(--text-2);font-weight:500}
-.hero-cta{margin-top:30px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.ax-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); column-gap: 96px; align-items: center; }
+.ax-lede { margin: 22px 0 28px; max-width: 34em; font-size: 19px; line-height: 1.5; color: var(--h-ink-2); }
+.ax-top .fine { margin: 14px 0 0; font-size: 14px; color: var(--h-pain); }
+.ax-fig { margin: 0; }
+.c-stick { --iw: 670; --ih: 970; --cx: 0; --cy: 0; --cw: 670; --ch: 660; border: 1px solid var(--h-hair); }
+.ax-pins .p-speed { --x: 60%; --y: 51%; --nx: -40px; }
+.ax-mail { margin: 0; font-size: 18px; line-height: 1.5; color: var(--h-ink-2); }
+.ax-mail a { color: var(--blue-text); }
 
-/* the settings screenshot beside the hero copy; theme-swapped by two <img> */
-
-.close{background:var(--bg-inset);border-radius:var(--r-card);padding:44px;max-width:620px;margin:0 auto;text-align:center}
-.close .price-big{font-size:44px;font-weight:600;letter-spacing:-0.03em;line-height:1}
-.close .once{font-size:15px;color:var(--text-2);margin-top:6px}
-
-/* measures and rhythm that were inline style attributes on the markup */
-.ax-tag{margin-bottom:22px}
-.ax-rule{border-top:1px solid var(--sep)}
-.ax-h-22{max-width:22ch}
-.ax-h-24{max-width:24ch}
-.ax-trust{margin-top:40px;max-width:840px}
-.ax-lead{margin-top:16px;max-width:62ch}
-.ax-note{margin-top:32px;max-width:760px}
-.ax-cta{margin-top:26px;width:100%;justify-content:center}
-.ax-fine{font-size:13px;color:var(--text-2);margin-top:14px}
-.ax-fine-2{font-size:13.5px;color:var(--text-3);margin-top:16px;line-height:1.55}
+@media (max-width: 1000px) {
+  .ax-top { grid-template-columns: 1fr; row-gap: 72px; }
+  .ax-fig { max-width: 420px; }
+}
