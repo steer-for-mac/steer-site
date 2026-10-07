@@ -41,8 +41,8 @@ test("the first screen has the couplet, a working form and three pinned places",
 
 test("each question is a heading, and every app picture has both themes", async ({ page }) => {
   await page.goto("/index.html");
-  for (const q of ["Can I really type with a controller?", "Is it fiddly to set up?", "Will it work with what I do?",
-    "Will my controller work?", "Is it safe?", "Why not a free remapper?", "What does it cost?"]) {
+  for (const q of ["Can I really type with a controller?", "Is it fiddly to set up?", "Will it work with my apps?",
+    "Will my controller work?", "Is it safe?", "Why not a free remapper?", "How much is it?"]) {
     await expect(page.getByRole("heading", { name: q })).toHaveCount(1);
   }
   await expect(page.locator(".cards .crop")).toHaveCount(4);

@@ -25,7 +25,7 @@ test("Pricing lands on the homepage's cost question", async ({ page }) => {
   const href = await page.locator(".nav-links a", { hasText: "Pricing" }).getAttribute("href");
   expect(href).toBe("index.html#q-cost");
   await page.goto(`/${href}`);
-  await expect(page.locator("#q-cost")).toContainText("What does it cost?");
+  await expect(page.locator("#q-cost")).toContainText("How much is it?");
 });
 
 test.describe("on a phone", () => {

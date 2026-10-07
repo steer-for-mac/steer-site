@@ -1,4 +1,4 @@
-/* Will it work with what I do? Four Gallery cards at their own size (round
+/* Will it work with my apps? Four Gallery cards at their own size (round
    12's grid, after the panel called the single upscaled card a blocker),
    the Final Cut Pro card pinned on its Add button. */
 .q-fit h2 { font-size: clamp(28px, 2.6vw, 38px); }

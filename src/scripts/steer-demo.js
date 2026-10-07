@@ -225,7 +225,7 @@ function init(root) {
         }
         case "l3": return say("Dictation. On your Mac, say it and the words appear in Notes.");
         case "r3": case "options": return closeKeyboard();
-        case "create": return say("Create switches the input source. This page has one.");
+        case "create": return say("Create switches the input source. This page only has one.");
         default: return undefined;
       }
     }

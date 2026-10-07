@@ -3,9 +3,6 @@
   <input class="ml-from" type="hidden" name="from" value="">
   <label class="h-sr" for="ml-email-{{ mlId }}">Email address</label>
   <input class="ml-in" id="ml-email-{{ mlId }}" type="email" name="email" required placeholder="you@example.com" autocomplete="email">
-  {%- if mlPin %}
-  <div class="pins"><div class="pin up" aria-hidden="true"><i></i><b>right here</b></div></div>
-  {%- endif %}
   <button type="submit" class="btn btn-primary">Join the launch list</button>
   <p class="ml-msg" role="status" aria-live="polite"></p>
 </form>

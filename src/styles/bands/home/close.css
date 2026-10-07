@@ -2,13 +2,9 @@
 .h-close { max-width: 1392px; margin: 0 auto; padding: 64px 24px 96px; }
 .h-close .inner { border-top: 1px solid var(--h-hair); padding-top: 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); column-gap: 64px; align-items: last baseline; }
 .h-close h2 { font-size: clamp(30px, 3.2vw, 44px); line-height: 1.08; }
-/* The last email field gets the hero's "right here". */
-.h-close .join .pins { position: absolute; left: 0; top: 0; width: 0; height: 0; }
-.h-close .pin.up { --x: 46px; --y: 0px; --out: 30px; }
 
 @media (max-width: 1000px) {
   .h-close .inner { grid-template-columns: 1fr; gap: 24px; }
-  .h-close .join { margin-top: 52px; }
 }
 @media (max-width: 820px) {
   .h-close { padding: 56px 16px 72px; }
