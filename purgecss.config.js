@@ -24,6 +24,8 @@ export default {
       // toggled by script or by the browser, so absent from any static snapshot
       /^on$/, /^still$/, /^booted$/, /^anim-halt$/, /^accent-anim$/,
       /^cur$/, /^lb-auto$/, /^rb-halt$/, /^active$/,
+      // the class on the sofa trace's <svg>, which home-draw.js fetches at runtime
+      /^draw$/,
       // A bare pseudo-class has no class/id/tag node, so PurgeCSS scores it
       // unreachable and would strip the site's whole keyboard focus ring.
       // `.btn:focus-visible` survives on its class; `:focus-visible` alone does not.

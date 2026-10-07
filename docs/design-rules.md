@@ -44,6 +44,10 @@ should never try to be one.
   (`--bg` to `--bg-inset-2`) and the elevation ramp (`--shadow-rest` <
   `--shadow-rest-lg` < `--shadow-window`). No warm cream (`#FAFAF9`), no warm
   near-black. `--shadow-window` is reserved for screenshots and the hero band.
+  One exception (2026-10-06, round 13): in dark mode the homepage's ink
+  drawings sit on a paper sheet (`--h-sheet`, `#D6D3CC`) rather than being
+  inverted, because an inverted pen drawing reads as a negative. Paper is a
+  drawing's surface only; the page and every reading surface stay cool.
 - **Contrast clears WCAG AA.** Every text-on-surface pair must clear 4.5:1 for
   small text, measured against the *darkest* surface it can land on
   (`--bg-inset-2`), not against `--bg`. The measured ratios are recorded inline
@@ -73,16 +77,18 @@ should never try to be one.
   not an inline margin; it had drifted to four different values before it was
   tokenized. Keep the whole scale ordered (tight < sec < snug < loose) at every
   breakpoint; the 860px block once inverted it by shrinking only `.sec`.
-- **Surfaces alternate.** Adjacent sections should not share a surface unless
+- **Surfaces alternate** on sub-pages. The homepage (round 13) is one plain
+  surface on purpose: its bands are questions on one grid, and the hairline
+  above the close is the only boundary it needs. Adjacent sections should not share a surface unless
   something else draws the boundary; two plain-bg sections in a row read as one
   tall empty band (that was the reach-to-pricing dead zone). The page tail runs
   trust (sunken) / pricing (plain) / footer (sunken). `reach` and `requirements`
   were cut in `4c871d1`; they were the tail's only two plain bands, so pricing
   took the plain surface to keep the alternation.
 - **Eyebrows are for sub-pages.** The SF Mono label with its accent dot stays
-  on the sub-pages. The homepage (October 2026) has none: its ruled frame
-  labels a band with a plain row, and the three pillars carry a short accent
-  kicker ("It types"). A label that only repeats the heading is cut.
+  on the sub-pages. The homepage has none: every heading is a couplet, the
+  visitor's doubt in grey (`.pain`) and Steer's answer in ink, so reading only
+  the headings gives the pitch. A label that only repeats the heading is cut.
 - **The accent may colour one word of a headline**, the playful word
   ("Hand it a *controller.*"). It replaced a New York italic in the
   2026-10-06 review: that face exists only on Apple devices and turns into
@@ -260,6 +266,10 @@ budget the cut bought.
 - **Pictures are the current app.** Captures come from `scripts/capture-app`,
   cropped where a strip names the dev build or the user's own apps. Never
   composite UI into a photo; crop or recapture.
+- **Homepage motion means something or goes** (round 13): the sofa draws
+  itself in, the pins land, each question lands before its answer, and the
+  keyboard loop plays while on screen. None of it starts under reduced
+  motion or automation, and the page is whole without JS.
 - **Motion that runs by itself stops.** The demo's self-play stops on the first
   key, click or pad press, has a visible Stop button, never starts under
   reduced motion or automation, and silences its live region while it plays

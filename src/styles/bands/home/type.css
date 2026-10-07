@@ -1,0 +1,31 @@
+/* Can I type? The keyboard loop, the whole pane on a desk-sized screen; its
+   radius is the recording's own corners, so they disappear. */
+.q-type .trig, #ty-a { --x: 81%; --y: -9%; }
+#ty-b { --x: 24%; --y: 11.6%; }
+.trig { position: absolute; left: var(--x); top: var(--y); z-index: 2; transform: translate(-50%, -50%); font-size: 12px; font-weight: 700; line-height: 1; padding: 4px 8px; border-radius: var(--r-btn); color: #fff; background: var(--blue); }
+
+.kbframe { position: relative; }
+/* --h-r-rec: the recording's own corners, as a share of the pane. */
+.kb { --h-r-rec: 2.6% / 4.7%; position: relative; overflow: hidden; aspect-ratio: 1600 / 880; border-radius: var(--h-r-rec); box-shadow: 0 0 0 1px var(--h-hair); }
+.h-main .kb video { position: absolute; left: 0; top: 0; width: 100%; height: auto; max-width: none; }
+.ctl { flex: none; display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px 0 10px; font: inherit; font-size: 13px; color: var(--text); background: var(--bg); border: 1px solid var(--h-hair); border-radius: var(--r-btn); cursor: pointer; }
+.ctl:hover { border-color: var(--h-pain); }
+.ctl[hidden] { display: none; }
+.ctl svg { width: 10px; height: 10px; fill: currentColor; }
+.cap .ph { display: none; }
+
+/* No dark recording exists and the stills show nothing happening, so the
+   light loop stays, dimmed, in a dark frame with a hairline edge. */
+[data-theme="dark"] .kbframe { padding: 14px; border-radius: var(--r-card); background: var(--h-frame); box-shadow: 0 0 0 1px var(--h-hair); }
+[data-theme="dark"] .kb video { filter: brightness(.8) contrast(.96); }
+
+@media (max-width: 600px) {
+  #ty-b { --x: 18.3%; --y: 18.9%; }
+  /* The keyboard's left half, top included, so its keys read; the corner
+     radius is the pane's own, rescaled to this window. */
+  .kb { --h-r-rec: 5.94% 0 0 0 / 7.66% 0 0 0; aspect-ratio: 700 / 540; }
+  .h-main .kb video { width: 228.57%; }
+  .cap .ph { display: inline; }
+  .cap .dt { display: none; }
+  [data-theme="dark"] .kbframe { padding: 8px; }
+}

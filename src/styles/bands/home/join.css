@@ -1,0 +1,13 @@
+/* The launch-list form, in the hero and at the close: the real ml-form. */
+.join { position: relative; display: flex; flex-direction: row; align-items: center; gap: 10px; flex-wrap: wrap; max-width: 470px; margin: 0; }
+.join .ml-in { flex: 1 1 220px; min-width: 0; width: auto; height: 46px; padding: 0 18px; font-size: 17px; border-color: var(--h-field-line); border-radius: var(--r-btn); }
+.join .ml-in::placeholder { color: var(--h-pain); }
+.join .btn { height: 46px; font-size: 17px; }
+.join .ml-msg { flex-basis: 100%; margin: -10px 0 0; font-size: 15px; color: var(--h-ink-2); }
+.join .ml-msg:not(:empty) { margin-top: 0; }
+.fine { font-size: 14px; color: var(--h-pain); margin: 12px 0 0; }
+
+@media (max-width: 600px) {
+  .join .ml-in { flex-basis: 100%; }
+  .join .btn { flex: 1 1 100%; justify-content: center; }
+}

@@ -1,11 +1,16 @@
-/* The end card, as the film ends: the mark, the line, the offer. */
-.h-close { padding: 96px 24px; text-align: center; background: var(--h-night); color: var(--h-night-ink); color-scheme: dark; }
-.s-mark { margin: 0 0 8px; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--h-night-ink-2); }
-.h-close h2 { font-size: clamp(40px, 6vw, 80px); color: var(--h-night-ink); }
-.h-close em { color: var(--h-accent-night); }
-.h-close .h-lede { margin-inline: auto; color: var(--h-night-ink-2); }
-.h-close .h-join { justify-content: center; }
-.h-close .h-join-note, .h-close .ml-msg, .h-req { color: var(--h-night-ink-2); }
-.h-close .h-join-note { margin-inline: auto; }
-.h-req { margin: 18px 0 0; font-size: 14px; }
-.h-close .ml-in { background: #151923; color: var(--h-night-ink); border-color: var(--h-night-ink-2); }
+/* The close: the hero's couplet shape, and the form once more. */
+.h-close { max-width: 1392px; margin: 0 auto; padding: 64px 24px 96px; }
+.h-close .inner { border-top: 1px solid var(--h-hair); padding-top: 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); column-gap: 64px; align-items: last baseline; }
+.h-close h2 { font-size: clamp(30px, 3.2vw, 44px); line-height: 1.08; }
+/* The last email field gets the hero's "right here". */
+.h-close .join .pins { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+.h-close .pin.up { --x: 46px; --y: 0px; --out: 30px; }
+
+@media (max-width: 1000px) {
+  .h-close .inner { grid-template-columns: 1fr; gap: 24px; }
+  .h-close .join { margin-top: 52px; }
+}
+@media (max-width: 820px) {
+  .h-close { padding: 56px 16px 72px; }
+  .h-close .inner { padding-top: 40px; }
+}

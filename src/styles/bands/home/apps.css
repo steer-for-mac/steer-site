@@ -1,0 +1,23 @@
+/* Will it work with what I do? Four Gallery cards at their own size (round
+   12's grid, after the panel called the single upscaled card a blocker),
+   the Final Cut Pro card pinned on its Add button. */
+.q-fit h2 { font-size: clamp(28px, 2.6vw, 38px); }
+.q-fit .head { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); column-gap: 72px; align-items: end; }
+.q-fit .gallery { order: -1; margin: 0; }
+.q-fit .body { margin-top: 18px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 60px; }
+.c-fcp { --iw: 1714; --ih: 873; --cx: 0; --cy: 82; --cw: 552; --ch: 244; }
+.c-dav { --iw: 1714; --ih: 873; --cx: 580; --cy: 82; --cw: 552; --ch: 244; }
+.c-lr { --iw: 1714; --ih: 873; --cx: 1160; --cy: 82; --cw: 552; --ch: 244; }
+.c-key { --iw: 1714; --ih: 873; --cx: 580; --cy: 354; --cw: 552; --ch: 244; }
+.fcppins .p-add { --x: 87.5%; --y: 8.5%; --nx: -56px; }
+
+@media (max-width: 1000px) {
+  .q-fit .head { grid-template-columns: 1fr; row-gap: 14px; }
+  .q-fit .gallery { order: 0; }
+}
+@media (max-width: 600px) {
+  .q-fit .gallery { margin-top: 8px; }
+  .cards { grid-template-columns: 1fr; gap: 8px; margin-top: 58px; }
+  .cards .crop:not(.c-fcp) { --ch: 150; }
+}

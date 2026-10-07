@@ -1,16 +1,17 @@
 ---
 layout: layouts/base.njk
-title: "Steer: hand your Mac a controller"
+title: "Steer: a controller for your Mac"
 description: "Steer turns the game controller you already own into a mouse and keyboard for your Mac: point, click, scroll and type from the sofa, and give every app its own buttons at the desk. €19.99 once when it ships."
 footLegal: "macOS 14+ · Apple Silicon. PlayStation, Xbox, and Switch are trademarks of their owners; Steer is independent, not affiliated with Sony, Microsoft, or Nintendo."
 ---
-<!-- The October 2026 homepage. Why each band is here, in this order:
-     docs/design/2026-10-06-site-system-design.md §2. -->
+<!-- The homepage, round 13 of the concepts (docs/design/2026-10-06-site-process.md):
+     three places up top, then a stranger's questions, each answered once. -->
 <main class="h-main">
-{% include "bands/home/story.html" -%}
-<div class="h-frame">
-{% include "bands/home/trust.html" -%}
-{% include "bands/home/faq.html" -%}
-</div>
+{% include "bands/home/hero.html" -%}
+{% include "bands/home/type.html" -%}
+{% include "bands/home/setup.html" -%}
+{% include "bands/home/apps.html" -%}
+{% include "bands/home/answers.html" -%}
+{% include "bands/home/cost.html" -%}
 {% include "bands/home/close.html" -%}
 </main>

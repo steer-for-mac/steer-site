@@ -1,0 +1,40 @@
+<!-- THE PROMISE. Three places, each with the same two pins, so the couplet
+     reads three times without being written three times. Pin positions are in
+     hero.css; a same-shape drawing swap only needs them retuned. -->
+{% macro place(name, alt, sizes) %}<img src="assets/story/{{ name }}.png" eleventy:widths="600,1000,1672" width="1672" height="941" sizes="{{ sizes }}" alt="{{ alt }}">
+          <div class="pin there" aria-hidden="true"><i></i><b>over there</b></div>
+          <div class="pin here" aria-hidden="true"><i></i><b>right here</b></div>{% endmacro %}
+<section class="hero" id="hero" aria-labelledby="h-h1">
+  <h1 id="h-h1" class="display"><span class="pain">Your keyboard is over there.</span> <span>Your controller is right here.</span></h1>
+  <div class="pitch">
+    <p class="h-lede">Your Mac only listens to a keyboard and a mouse. They're never where you are. Steer turns the game controller you already own into both.</p>
+    {% set mlId = "top" %}{% set mlPin = false %}{% set mlNote = "One email, when the 14-day trial opens this autumn." %}{% include "bands/home/join.html" %}
+  </div>
+  <div class="places">
+    <figure class="p-sofa">
+      <div class="sheet scene sofa">
+        <div class="box" id="sofa-box">
+          {{ place("sofa", "Ink drawing: someone on a sofa, feet up, runs the Mac on the TV with a controller. Across the room the keyboard sits on a side table under a sleeping cat.", "(max-width: 1000px) 100vw, 1000px") }}
+        </div>
+      </div>
+      <figcaption class="h-tag">On the sofa</figcaption>
+    </figure>
+    <figure class="p-side">
+      <div class="sheet scene side desk">
+        <div class="box">
+          {{ place("desk", "Ink drawing: an editor leans back from the desk, feet up beside the monitor, controller in hand; the keyboard is pushed to the far end.", "(max-width: 600px) 160vw, (max-width: 1000px) 65vw, 500px") }}
+        </div>
+      </div>
+      <figcaption class="h-tag">At the desk</figcaption>
+    </figure>
+    <figure class="p-side">
+      <div class="sheet scene side room">
+        <div class="box">
+          {{ place("room", "Ink drawing: a presenter stands by the screen with a controller in hand; the laptop is closed on the table and the room laughs.", "(max-width: 600px) 160vw, (max-width: 1000px) 65vw, 500px") }}
+        </div>
+      </div>
+      <figcaption class="h-tag">Front of the room</figcaption>
+    </figure>
+  </div>
+  <script>{% include "scripts/home-draw-arm.js" %}</script>
+</section>

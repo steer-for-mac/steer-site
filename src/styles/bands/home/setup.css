@@ -1,0 +1,10 @@
+/* Is it fiddly? The whole help card beside the answer; on a phone, its face
+   buttons and right stick, labels whole. */
+#hp-a { --x: 26.4%; --y: 12.5%; }
+#hp-b { --x: 48.1%; --y: 2.4%; }
+.c-help { --iw: 2078; --ih: 1500; --cx: 0; --cy: 0; --cw: 2078; --ch: 1500; --h-r-rec: 2.2% / 3%; border-radius: var(--h-r-rec); }
+
+@media (max-width: 600px) {
+  #hp-b { --x: 62%; --y: 0%; }
+  .c-help { --cx: 90; --cy: 462; --cw: 910; --ch: 780; --h-r-rec: var(--r-window); }
+}

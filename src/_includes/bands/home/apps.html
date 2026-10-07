@@ -1,0 +1,24 @@
+<!-- WILL IT WORK WITH WHAT I DO? The Gallery, four cards at their own size
+     (round 12's grid). Ring apps: steer RadialMenuDefaults.swift:60-70;
+     Window Snap: WindowManagerPresets.swift:102. -->
+{% macro card(cls, alt) %}<span class="crop {{ cls }}"><img class="h-lt" src="assets/app/apps-light.png" eleventy:widths="900,1714" width="1714" height="873" sizes="(max-width: 600px) 300vw, (max-width: 1000px) 150vw, 1200px" loading="lazy" alt="{{ alt }}"><img class="h-dk" src="assets/app/apps-dark.png" eleventy:widths="900,1714" width="1714" height="873" sizes="(max-width: 600px) 300vw, (max-width: 1000px) 150vw, 1200px" loading="lazy" alt="{{ alt }}"></span>{% endmacro %}
+<section class="q q-fit" aria-labelledby="q-apps">
+  <div class="head">
+    <div>
+      <h2 id="q-apps" class="display"><span class="pain">Will it work with what I do?</span> <span>Final Cut Pro, DaVinci Resolve, Lightroom Classic and Keynote come set up.</span></h2>
+      <div class="body"><p>Each app gets its own buttons. The Gallery has ready-made setups for these, Xcode, Terminal and drawing apps.</p><p><b>On the sofa</b>, press the left stick for a ring of your apps. <b>At the desk</b>, Window Snap puts a window in one of nine places.</p></div>
+    </div>
+    <figure class="gallery">
+      <div class="cards">
+        <div class="pins fcppins">
+          {{ card("c-fcp", "Steer's Gallery card for Final Cut Pro: blade, marks and markers on R2; the edit types on a ring. An Add button.") }}
+          <div class="pin up p-add" aria-hidden="true"><i></i><b>Final Cut Pro, set up</b></div>
+        </div>
+        {{ card("c-dav", "DaVinci Resolve: blade, marks and markers on R2; every page on a ring.") }}
+        {{ card("c-lr", "Lightroom Classic: cull from the couch, pick, reject and rate on R2.") }}
+        {{ card("c-key", "Keynote: play, a black screen and a laser pointer on R2.") }}
+      </div>
+      <figcaption class="cap">From Steer's Gallery.</figcaption>
+    </figure>
+  </div>
+</section>

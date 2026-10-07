@@ -1,10 +1,10 @@
-<!-- THE CLOSE. #pricing is where every CTA falls back to without JavaScript. -->
-<section class="h-close" id="pricing" aria-label="Get Steer">
-  <div class="h-in">
-    <p class="s-mark">Steer</p>
-    <h2>Hand it a <em>controller.</em></h2>
-    <p class="h-lede">€19.99 once when it ships, after 14 days free.</p>
-    {% set mlId = "end" %}{% include "bands/home/join.html" %}
-    <p class="h-req">For a Mac with Apple silicon, on macOS 14 or later.</p>
+<!-- THE CLOSE. #pricing is where every CTA falls back to without JavaScript.
+     The last email field gets the hero's "right here". -->
+<section class="h-close" id="pricing" aria-labelledby="join-h">
+  <div class="inner">
+    <h2 id="join-h" class="display"><span class="pain">Stay where you are.</span> <span>We'll email you once.</span></h2>
+    <div>
+      {% set mlId = "end" %}{% set mlPin = true %}{% set mlNote = "When the trial opens this autumn. That's the only email." %}{% include "bands/home/join.html" %}
+    </div>
   </div>
 </section>

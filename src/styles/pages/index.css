@@ -1,8 +1,10 @@
 /* The homepage, one sheet per band beside its markup in _includes/bands/home/.
    Unlayered, like every page sheet. frame.css first so a band can override it. */
 @import "../bands/home/frame.css";
-@import "../bands/play/demo.css";
-@import "../bands/home/story.css";
-@import "../bands/home/trust.css";
-@import "../bands/home/faq.css";
+@import "../bands/home/join.css";
+@import "../bands/home/hero.css";
+@import "../bands/home/type.css";
+@import "../bands/home/setup.css";
+@import "../bands/home/apps.css";
+@import "../bands/home/answers.css";
 @import "../bands/home/close.css";
