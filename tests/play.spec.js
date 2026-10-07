@@ -124,3 +124,8 @@ test("a focused dock button answers Enter, not the demo's Return", async ({ page
   await expect(page.locator("#sd-osk")).toBeHidden();
   await expect(page.locator("#sd-field")).toHaveText("Hello, Mac");
 });
+
+test("play.html's form carries the ?from= tag of the link that brought the visitor", async ({ page }) => {
+  await page.goto("/play.html?from=reddit-test");
+  await expect(page.locator("main form.ml-form input[name='from']")).toHaveValue("reddit-test");
+});

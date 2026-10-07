@@ -3,6 +3,10 @@
 // CORS preflight) to the list endpoint; failure offers the mailto instead of a
 // dead end, because the alternative is losing the reader at peak intent.
 (function(){
+  // Every form carries the ?from= tag of the link that brought the visitor, so
+  // sign-ups can be counted per post.
+  var from=(new URLSearchParams(location.search).get('from')||'').slice(0,40);
+  document.querySelectorAll('.ml-from').forEach(function(i){i.value=from;});
   var dlg=document.getElementById('mlDialog');
   if(dlg&&dlg.showModal){
     document.querySelectorAll('[data-ml]').forEach(function(a){
