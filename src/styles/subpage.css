@@ -1,0 +1,37 @@
+/* Sub-pages in the homepage's language: its frame (couplets, the question
+   grid, crops, pins), plus what more than one sub-page needs: a page-opening
+   couplet, a ruled list of groups, the questions and a closing CTA.
+   Imported by a page sheet, never emitted on its own. */
+@import "bands/home/frame.css";
+
+.sub h1 { font-size: clamp(34px, 4.2vw, 60px); line-height: 1.05; }
+.sub-top { padding-top: 88px; }
+.sub-top .head { align-items: end; }
+.sub-h2 { font-size: clamp(28px, 3vw, 44px); line-height: 1.1; margin-bottom: 40px; }
+
+/* A ruled list: each group's name on the left, its rows on the right. */
+.fgroup { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: 64px; padding: 22px 0 26px; border-top: 1px solid var(--h-hair); }
+.fgroup h3 { font-size: 24px; font-weight: 700; letter-spacing: -0.022em; line-height: 1.16; margin: 0; }
+.fgroup dl { margin: 0; }
+.fgroup dl > div { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px; padding: 10px 0; }
+.fgroup dl > div + div { border-top: 1px solid var(--sep); }
+.fgroup dt { font-weight: 600; font-size: 16px; color: var(--text); }
+.fgroup dd { margin: 0; font-size: 16px; line-height: 1.5; color: var(--h-ink-2); }
+.fgroup dd a { color: var(--blue-text); text-decoration: underline; text-decoration-thickness: from-font; text-underline-offset: 2px; }
+
+.sub .faq { max-width: none; margin: 0; }
+.sub .faq-body { max-width: 70ch; }
+
+.sub-close { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); column-gap: 64px; align-items: end; padding-bottom: 120px; }
+.sub-close h2 { font-size: clamp(28px, 3vw, 44px); line-height: 1.1; }
+.sub-close .fine { margin: 12px 0 0; font-size: 14px; color: var(--h-pain); }
+
+@media (max-width: 1000px) {
+  .fgroup { grid-template-columns: 1fr; row-gap: 10px; }
+  .sub-close { grid-template-columns: 1fr; row-gap: 24px; }
+}
+@media (max-width: 820px) {
+  .sub-top { padding-top: 56px; }
+  .fgroup dl > div { grid-template-columns: 1fr; gap: 2px; }
+  .sub-close { padding-bottom: 88px; }
+}

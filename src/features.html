@@ -1,113 +1,177 @@
 ---
 layout: layouts/base.njk
 title: "Steer: everything it does"
-description: "Everything Steer does with a game controller on a Mac, grouped by what you are trying to get done: point and click, type, move around, do more with fewer buttons, and make it yours."
-ogDescription: "Everything Steer does with a game controller on a Mac, grouped by what you are trying to get done."
-# Preserved as it was hand-written: this is the only page on the site
-# whose footer has no bottom row. Looks accidental; not this task's to fix.
+description: "Everything Steer does with a game controller on a Mac: a ring of your apps, Window Snap, a controller you can feel, setups for your apps, and the whole list."
+ogDescription: "Everything Steer does with a game controller on a Mac, and what it won't do."
 footBottom: false
 ---
-<main>
-  <section class="sec">
-    <div class="wrap">
-      <div class="center">
-        <div><a class="back-link tight" href="index.html"><span aria-hidden="true">←</span> Steer</a></div>
-        <div class="eyebrow">Everything it does</div>
-        <h1 class="h2">The whole list, grouped by what you are trying to do.</h1>
-        <p class="lead ft-lead">Steer turns a game controller into a way to run your Mac. You do not need most of this. Once you grant the permissions macOS asks for on first run, the defaults work straight away. Everything below is there for when you want it.</p>
-      </div>
+<!-- The homepage's language (bands/home, styles/bands/home/frame.css): each
+     doubt a couplet, a picture only where it answers one. The homepage already
+     shows typing, the help card and four Gallery cards; nothing here repeats them.
+     Claims checked 2026-10-06; paths under steer/Steer/Sources. -->
+{% macro shot(name, w, h, alt, sizes) %}<img class="h-lt" src="assets/app/{{ name }}-light.png" eleventy:widths="600,{{ w }}" width="{{ w }}" height="{{ h }}" sizes="{{ sizes }}" loading="lazy" alt="{{ alt }}"><img class="h-dk" src="assets/app/{{ name }}-dark.png" eleventy:widths="600,{{ w }}" width="{{ w }}" height="{{ h }}" sizes="{{ sizes }}" loading="lazy" alt="{{ alt }}">{% endmacro %}
+{% macro card(cls, alt) %}<span class="crop {{ cls }}"><img class="h-lt" src="assets/app/apps-light.png" eleventy:widths="900,1714" width="1714" height="873" sizes="(max-width: 600px) 300vw, (max-width: 1000px) 150vw, 1200px" loading="lazy" alt="{{ alt }}"><img class="h-dk" src="assets/app/apps-dark.png" eleventy:widths="900,1714" width="1714" height="873" sizes="(max-width: 600px) 300vw, (max-width: 1000px) 150vw, 1200px" loading="lazy" alt="{{ alt }}"></span>{% endmacro %}
+<main class="h-main sub">
+  <section class="q sub-top" aria-labelledby="ft-h1">
+    <div class="head">
+      <h1 id="ft-h1" class="display"><span class="pain">What else does it do?</span> <span>Everything you'd get up for.</span></h1>
+      <div class="body"><p>It works the moment you plug a controller in. Everything below is there when you want it.</p></div>
     </div>
   </section>
 
-  <section class="sec sunken ft-list">
-    <div class="wrap">
+  <!-- Ring: L3 opens the main ring, L1+L3 the second (SteerCore/Defaults.swift:58,83);
+       the nine apps RadialMenuDefaults.swift:60-70, the second ring's items :80-.
+       Window Snap: L1+circle (Defaults.swift:76), aim and Cross commits
+       (SteerEngine/InputEngine+Modals.swift:182). Engines Rectangle, Raycast,
+       then the Window menu's Move & Resize items (SteerCore/WindowManagerPresets.swift:79-124);
+       those items arrived in macOS 15, which is not tested on 14 here. -->
+  <section class="q ft-pair" aria-label="Getting around">
+    <div>
+      <h2 id="q-ring" class="display"><span class="pain">How do I switch apps?</span> <span>Press the left stick.</span></h2>
+      <p>Your apps sit in a ring. Aim at one with the stick and press ✕. Hold L1 and press the left stick for a second ring: Screenshot, Lock Screen, Show Desktop and more. Both are yours to change.</p>
+      <figure class="ft-fig">
+        <div class="panel pins ring-pins">
+          <div class="ring">{{ shot("ring", 704, 838, "Steer's ring of apps: Safari, Finder, Music, Mail, Calendar, Notes, Messages, System Settings and Maps around a circle, with Aim, Select and Cancel below.", "(max-width: 1000px) 80vw, 360px") }}</div>
+          <div class="pin up p-ring" aria-hidden="true"><i></i><b>Aim, then ✕</b></div>
+        </div>
+        <figcaption class="cap">Steer's ring of apps.</figcaption>
+      </figure>
+    </div>
+    <div>
+      <h2 id="q-snap" class="display"><span class="pain">Can it move my windows?</span> <span>Window Snap has nine places.</span></h2>
+      <p>Hold L1 and press ○, aim at a place, press ✕. It works through the window apps Rectangle or Raycast if you have one, and through the Mac's own tiling if you don't (macOS 15 and later).</p>
+      <figure class="ft-fig">
+        <div class="panel pins snap-pins">
+          <div class="snap">{{ shot("snap", 1036, 795, "Steer's Window Snap: nine places in a grid, from Top Left to Bottom Right, with Centre selected.", "(max-width: 1000px) 90vw, 560px") }}</div>
+          <div class="pin up p-snap" aria-hidden="true"><i></i><b>Aimed at Centre</b></div>
+        </div>
+        <figcaption class="cap">Window Snap, from Steer.</figcaption>
+      </figure>
+    </div>
+  </section>
 
-      <div class="fgroup">
-        <h2 class="h3">Point, click, drag</h2>
-        <p class="fwhy">The part that has to feel right before anything else matters.</p>
-        <div class="frow"><div class="fn">Move the pointer</div><div class="fd">The left stick moves the cursor. It crawls when you nudge it and sweeps when you push it, and you set how fast.</div></div>
-        <div class="frow"><div class="fn">Click and drag</div><div class="fd">Left click, right click, and real dragging, so moving a file into a folder works the way it does with a mouse.</div></div>
-        <div class="frow"><div class="fn">Scroll</div><div class="fd">The right stick scrolls. A PlayStation touchpad can be switched to scrolling instead of pointing, and then it glides on after you lift your fingers.</div></div>
-        <div class="frow"><div class="fn">Tilt to aim</div><div class="fd">Tilt the controller itself to steer the pointer, for fine adjustments without moving your thumb. On a DualShock 4 it is off by default and still in beta. <span class="dep-tag">not on every pad</span></div></div>
-        <div class="frow"><div class="fn">Worn controllers</div><div class="fd">Sticks that drift are re-centred automatically, which is the usual reason an old pad feels hopeless for cursor work.</div></div>
+  <!-- The Controls tiles, captured from steer://settings/buttons (scripts/capture-app).
+       Adaptive triggers off by default (SteerCore/Triggers.swift:85-91). -->
+  <section class="q" aria-labelledby="q-feel">
+    <div class="head">
+      <h2 id="q-feel" class="display"><span class="pain">Will I know it worked without looking?</span> <span>It rumbles, lights up and pushes back.</span></h2>
+      <div class="body"><p>A short buzz confirms what Steer just did. On PlayStation pads the light takes a colour for each layer, and on a DualSense the triggers can stiffen as you press.</p></div>
+    </div>
+    <figure class="proof">
+      <div class="crop c-tiles">{{ shot("tiles", 1817, 203, "Five tiles from Steer's Controls: Button Combos, Gyro, Lights (a colour for each layer), Trigger Resistance (off) and Vibration (rumbles for what Steer does).", "(max-width: 1000px) 200vw, 1344px") }}</div>
+      <figcaption class="cap">From Controls in Steer. Lights and trigger resistance depend on the controller. Pictures are the app with a DualSense; button names follow your controller.</figcaption>
+    </figure>
+  </section>
+
+  <!-- The four Gallery cards the homepage doesn't show (SteerCore/GalleryContent.swift:175-237);
+       rings :62-99, tools :259-265. -->
+  <section class="q" aria-labelledby="q-more">
+    <div class="head">
+      <h2 id="q-more" class="display"><span class="pain">I don't edit video.</span> <span>Drawing apps, Terminal, Xcode and code editors are set up too.</span></h2>
+      <div class="body"><p>Each card gives a family of apps its own buttons. The Gallery also has rings for writing, Safari and the Mac itself, and blank rings for Keyboard Maestro and Hammerspoon.</p></div>
+    </div>
+    <figure class="proof">
+      <div class="cards ft-cards">
+        {{ card("c-draw", "Drawing: Photoshop, Affinity, Clip Studio, Pixelmator Pro. Brush, eraser and size on R2.") }}
+        {{ card("c-term", "Terminal: Terminal, iTerm2, Ghostty and Warp. Interrupt, history search and line jumps.") }}
+        {{ card("c-xcode", "Xcode: build, run, test and step through code from a ring.") }}
+        {{ card("c-code", "Code Editors: VS Code, Cursor and Windsurf. Go to file, the command palette and debugging.") }}
       </div>
+      <figcaption class="cap">From Steer's Gallery.</figcaption>
+    </figure>
+  </section>
 
-      <div class="fgroup">
-        <h2 class="h3">Type</h2>
-        <p class="fwhy">Enough to search, name a file, or answer a message without standing up.</p>
-        <div class="frow"><div class="fn">On-screen keyboard</div><div class="fd">Aim at a cluster of letters and pick one with a face button. Good for a search box or a URL. A keyboard is still faster for an essay.</div></div>
-        <div class="frow"><div class="fn">Dictation</div><div class="fd">A button starts dictation by pressing the Dictation item in the app's own menus, so there is nothing to build in Shortcuts first. The app you're using has to offer that item, with somewhere to type. Speaking is often the quickest way to enter a sentence.</div></div>
-        <div class="frow"><div class="fn">Any keystroke</div><div class="fd">Any button can send any key or combination. Some apps register their global shortcuts in a way macOS shields from any synthesized key press. Where such an app offers a link or a Shortcut, Steer uses that instead, which is how window snapping talks to Rectangle.</div></div>
-        <div class="frow"><div class="fn">Blocks of text</div><div class="fd">A button can type a saved phrase, an address, or a snippet you use constantly.</div></div>
-      </div>
+  <!-- The list. Defaults: SteerCore/Defaults.swift:49-90. Stick modes
+       SteerCore/StickConfig.swift:3-14; layers SteerCore/LayerID.swift:6-11;
+       press kinds SteerEngine/ActionResolver.swift:75-77; haptics
+       SteerCore/HapticConfig.swift:16-25; clash list SteerCore/ConflictDetector.swift:26-68;
+       Overrides SteerCore/Strings+Apps.swift:60-68; undo Steer/App.swift:737-758;
+       32 languages in Steer/Resources/Localizable.xcstrings; 31 Shortcuts actions
+       Steer/Intents/SteerIntentList.swift:6-17. -->
+  <section class="q" aria-labelledby="q-list">
+    <h2 id="q-list" class="display sub-h2"><span class="pain">What else is in there?</span> <span>The whole list.</span></h2>
 
-      <div class="fgroup">
-        <h2 class="h3">Move around the Mac</h2>
-        <p class="fwhy">This is the group that decides whether you ever have to get up.</p>
-        <div class="frow"><div class="fn">App menus</div><div class="fd">Bring up the menus of the app you're using and pick with the stick, submenus included. This is how you reach commands that have no keyboard shortcut.</div></div>
-        <div class="frow"><div class="fn">Launch apps</div><div class="fd">Press to open a ring at the pointer, aim with the stick, press Cross to launch. There are two of these rings, both yours to fill.</div></div>
-        <div class="frow"><div class="fn">Arrange windows</div><div class="fd">A grid appears, you aim at a cell, and the window snaps to a half, a quarter, or the full screen. Steer asks <a href="https://rectangleapp.com">Rectangle</a> to do the moving, so Rectangle needs to be installed and running. <span class="dep-tag">needs Rectangle</span></div></div>
-        <div class="frow"><div class="fn">Point at the screen</div><div class="fd">A laser dot you move with the stick, for presenting to a room.</div></div>
-        <div class="frow"><div class="fn">Media and volume</div><div class="fd">Play, pause, skip and volume, wherever the sound is coming from.</div></div>
-      </div>
+    <div class="fgroup">
+      <h3>Point and click</h3>
+      <dl>
+        <div><dt>Move the pointer</dt><dd>The left stick. Set its speed, how fast it builds, and how far you push before it moves.</dd></div>
+        <div><dt>Click and drag</dt><dd>✕ clicks, ○ right-clicks, and holding ✕ drags.</dd></div>
+        <div><dt>Scroll</dt><dd>The right stick. A PlayStation touchpad can scroll or point instead.</dd></div>
+        <div><dt>Tilt to aim</dt><dd>Tilt the controller to steer the pointer, on pads with a gyro. On a DualShock 4 it's off by default and in beta.</dd></div>
+        <div><dt>Worn sticks</dt><dd>A stick that drifts is re-centred automatically.</dd></div>
+      </dl>
+    </div>
 
-      <div class="fgroup">
-        <h2 class="h3">Do more with fewer buttons</h2>
-        <p class="fwhy">A controller has fewer buttons than a keyboard. These are the ways around that, and you can ignore all of them.</p>
-        <div class="frow"><div class="fn">Press it differently</div><div class="fd">One button can do one thing on a tap, another on a hold, another on a double tap, and can repeat while you hold it.</div></div>
-        <div class="frow"><div class="fn">Layers</div><div class="fd">Hold one of the buttons on the top edge and every other button changes job, the way Shift changes a keyboard. Five of these holds, and a layer can stay on so you are not holding anything.</div></div>
-        <div class="frow"><div class="fn">Two at once, or one then another</div><div class="fd">Two buttons pressed together can be their own command, and so can one button followed by another. <span class="dep-tag">for people who want it</span></div></div>
-        <div class="frow"><div class="fn">Recorded sequences</div><div class="fd">Record something you do repeatedly and play it back from a button.</div></div>
-        <div class="frow"><div class="fn">The touchpad</div><div class="fd">On PlayStation pads the touchpad can be a trackpad, a scroll surface, or split into halves or quarters that act as extra buttons. Pinch to zoom, and twist to rotate. <span class="dep-tag">not on every pad</span></div></div>
-        <div class="frow"><div class="fn">Sticks with other jobs</div><div class="fd">A stick can be a pointer, a scroll wheel, arrow keys, eight buttons for games, or a way to cycle tabs.</div></div>
-      </div>
+    <div class="fgroup">
+      <h3>Type</h3>
+      <dl>
+        <div><dt>On-screen keyboard</dt><dd>Press the right stick. It suggests words as you go: R1 picks one, △ types it.</dd></div>
+        <div><dt>Dictation</dt><dd>Press the touchpad, or the left stick while the keyboard is open, and speak. The app you're using has to offer Dictation.</dd></div>
+        <div><dt>Any keystroke</dt><dd>Any button can send any key or combination.</dd></div>
+        <div><dt>Saved text</dt><dd>A button can type a phrase, an address or a snippet you use all the time.</dd></div>
+      </dl>
+    </div>
 
-      <div class="fgroup">
-        <h2 class="h3">Know it worked, without looking</h2>
-        <p class="fwhy">You are across the room. The screen is not always where your eyes are.</p>
-        <div class="frow"><div class="fn">Feel it</div><div class="fd">The grip buzzes for the rare confirmations that matter, like hitting the volume limit or stepping through a menu. The repeating ones, every scroll tick and every layer change, are off by default.</div></div>
-        <div class="frow"><div class="fn">Triggers that push back</div><div class="fd">The triggers can stiffen under your finger, so a pull has a defined bite point instead of a smooth slide. Off by default. <span class="dep-tag">DualSense and Edge</span></div></div>
-        <div class="frow"><div class="fn">Lights that mean something</div><div class="fd">The light bar shows which layer you are holding, unless gyro is on, which takes over the colour instead. The row of small player lights can be set by your own scripts and stays put, including across a reconnect. <span class="dep-tag">light bar: PlayStation pads · player lights: DualSense and Edge</span></div></div>
-        <div class="frow"><div class="fn">A map on screen</div><div class="fd">Bring up a picture of your own layout whenever you forget what you mapped.</div></div>
-      </div>
+    <div class="fgroup">
+      <h3>Get around</h3>
+      <dl>
+        <div><dt>App menus</dt><dd>Hold L1 and press Options to walk the menus of the app you're using, for commands with no shortcut.</dd></div>
+        <div><dt>The usual keys</dt><dd>Options opens Mission Control, R1 Spotlight, L2 the app switcher.</dd></div>
+        <div><dt>Media and volume</dt><dd>Hold L1: the D-pad sets the volume and skips tracks, R2 plays and pauses.</dd></div>
+        <div><dt>Laser pointer</dt><dd>A dot you move with the stick, for presenting to a room.</dd></div>
+      </dl>
+    </div>
 
-      <div class="fgroup">
-        <h2 class="h3">Make it yours, safely</h2>
-        <p class="fwhy">Changing things should not be the scary part.</p>
-        <div class="frow"><div class="fn">Ready-made setups</div><div class="fd">App customizations that already know Xcode, Figma, VS Code, Mail, DaVinci Resolve and Final Cut Pro, plus community setups for apps like Slack, Zoom, Claude Desktop and Cursor.</div></div>
-        <div class="frow"><div class="fn">Per-app switching</div><div class="fd">The buttons change automatically when you switch apps, and can follow your Focus mode.</div></div>
-        <div class="frow"><div class="fn">Always-on bindings</div><div class="fd">Pin a few buttons that stay available no matter which app you're using, with one button to suspend them.</div></div>
-        <div class="frow"><div class="fn">Clash warnings</div><div class="fd">Steer warns you when a mapping collides with one of the system shortcuts it knows: Spotlight, the screenshot keys, app switching, Command-Q and Command-W.</div></div>
-        <div class="frow"><div class="fn">Undo</div><div class="fd">Steer saves a restore point as you edit each settings pane, so a change you regret is one step away. Command-Z from anywhere in Steer steps back.</div></div>
-        <div class="frow"><div class="fn">Sharing setups</div><div class="fd">Export an app customization as a file, or import someone else's. An import can name a script you already installed, never bring its own.</div></div>
-        <!-- RESTORE when the app's import-auditor fix ships (audits every step of a chain and both radial menus, with tests; ~/Developer/steer). Until then the review only sees each binding's first action on the layers, so no page may say an import is reviewed or approved. Was: "Export an app customization as a file, or import someone else's. Anything in it that does more than press keys is shown to you for review before it applies." -->
-        <div class="frow"><div class="fn">Your language</div><div class="fd">35 languages, including the built-in help.</div></div>
-      </div>
+    <div class="fgroup">
+      <h3>More from fewer buttons</h3>
+      <dl>
+        <div><dt>Ways to press</dt><dd>One button can do one thing on a tap, another on a long press, another on a double tap, and repeat while held.</dd></div>
+        <div><dt>Layers</dt><dd>Hold L1, R1, L1 and R1, L2 or R2 and every other button changes job, the way Shift changes a keyboard. A layer can stay on so you're not holding anything.</dd></div>
+        <div><dt>Button Combos</dt><dd>Buttons pressed together, or one after another, can be their own command.</dd></div>
+        <div><dt>Macros</dt><dd>A recording of presses you play back from a button.</dd></div>
+        <div><dt>The touchpad</dt><dd>On PlayStation pads, a trackpad, a scroll surface, or zones that act as extra buttons.</dd></div>
+        <div><dt>Sticks with other jobs</dt><dd>A stick can scroll, press arrow keys, act as eight buttons, switch tabs or Spaces, or nudge a window.</dd></div>
+      </dl>
+    </div>
 
-      <div class="fgroup">
-        <h2 class="h3">Wire it to what you already use</h2>
-        <p class="fwhy">Steer does not replace your tools. It gives them a button.</p>
-        <div class="frow"><div class="fn">Shortcuts and scripts</div><div class="fd">A button can run an Apple Shortcut, a script, or open a link. Ready-made setups for Raycast and Handy, and starting points for Keyboard Maestro and Hammerspoon.</div></div>
-        <div class="frow"><div class="fn">Drive Steer from elsewhere</div><div class="fd">Steer adds its own actions to Apple’s Shortcuts app, and other programs can send it instructions or listen for what it is doing.</div></div>
-        <div class="frow"><div class="fn">Coding agents</div><div class="fd">The pad can show and feel what an agent is doing, and approve from across the room. <a href="agents.html">How that works</a>.</div></div>
-      </div>
+    <div class="fgroup">
+      <h3>Make it yours</h3>
+      <dl>
+        <div><dt>Your apps</dt><dd>Each app can have its own buttons, and they change as you switch apps.</dd></div>
+        <div><dt>Overrides</dt><dd>Settings laid over whichever app is in front. Pause overrides turns them all off for now.</dd></div>
+        <div><dt>Clash warnings</dt><dd>Steer warns when a button would send a shortcut the Mac already uses: the screenshot keys, Spotlight, the app switcher, Command-Q and Command-W.</dd></div>
+        <div><dt>Undo and History</dt><dd>Command-Z undoes an edit in Settings. History lists each change with where it came from, and goes back to an earlier point.</dd></div>
+        <div><dt>Share a setup</dt><dd>Export yours as a file, or import someone else's. An import can name a script you already installed, never bring its own.</dd></div>
+        <div><dt>Your language</dt><dd>32 languages.</dd></div>
+      </dl>
+    </div>
 
-      <div class="fgroup">
-        <h2 class="h3">What it will not do</h2>
-        <p class="fwhy">Worth knowing before you decide.</p>
-        <div class="frow"><div class="fn">The login screen</div><div class="fd">Your password before the desktop loads is out of reach, and so is Touch ID. Anything that proves you are you still needs you.</div></div>
-        <div class="frow"><div class="fn">Pixel work</div><div class="fd">Retouching and precise vector editing want a mouse or a tablet.</div></div>
-        <div class="frow"><div class="fn">Long writing</div><div class="fd">Use a keyboard. The on-screen one is for short entries.</div></div>
-        <div class="frow"><div class="fn">Every controller equally</div><div class="fd">The core works on every controller family listed on <a href="compatibility.html">the controller page</a>, which marks every gap, including off-brand pads that are matched from a database and still untested.</div></div>
-      </div>
+    <div class="fgroup">
+      <h3>Wire it up</h3>
+      <dl>
+        <div><dt>Shortcuts and scripts</dt><dd>A button can run an Apple Shortcut or a script, or open a link.</dd></div>
+        <div><dt>Drive Steer from elsewhere</dt><dd>31 actions in Apple's Shortcuts app, and links other programs can open.</dd></div>
+        <div><dt>Coding agents</dt><dd>The controller can show and feel what an agent is doing. <a href="agents.html">How that works</a></dd></div>
+      </dl>
+    </div>
 
-      <div class="fgroup">
-        <h2 class="h3">Questions</h2>
-        <p class="fwhy">The ones that come up most, answered plainly.</p>
-        <div class="faq">
+    <div class="fgroup">
+      <h3>What it won't do</h3>
+      <dl>
+        <div><dt>The login screen</dt><dd>Your password before the desktop loads is out of reach, and so is Touch ID.</dd></div>
+        <div><dt>Pixel work</dt><dd>Retouching and precise vector work want a mouse or a tablet.</dd></div>
+        <div><dt>Long writing</dt><dd>Use a keyboard. The on-screen one is for short entries.</dd></div>
+        <div><dt>Every controller equally</dt><dd>The <a href="compatibility.html">controller page</a> marks every gap, including pads nobody has confirmed yet.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="q" aria-labelledby="q-faq">
+    <h2 id="q-faq" class="display sub-h2"><span class="pain">Still wondering?</span> <span>The questions people ask.</span></h2>
+    <div class="faq">
       <details>
         <summary>Why not a wireless keyboard with a trackpad?</summary>
-        <div class="faq-body">Because it still wants a surface. A keyboard needs a lap or a table, and the trackpad puts your wrist back in the shape that hurt in the first place. A controller is held in two hands with nothing underneath it, and everything is under your thumbs: pointing, typing, your shortcuts, the menus.</div>
+        <div class="faq-body">It still wants a lap or a table. A controller is held in two hands with nothing under it, and pointing, typing, your shortcuts and the menus are all under your thumbs.</div>
       </details>
       <details>
         <summary>Is this a subscription?</summary>
@@ -115,41 +179,40 @@ footBottom: false
       </details>
       <details>
         <summary>Does it lag?</summary>
-        <div class="faq-body">No. Your input takes no trip over the internet: the controller talks to Steer, wired or over Bluetooth, the same radio a wireless mouse uses, and Steer posts the same events a mouse and keyboard do.</div>
+        <div class="faq-body">No. Your presses never go over the internet: the controller talks to Steer, wired or over Bluetooth, and Steer posts the same events a mouse and keyboard do.</div>
       </details>
       <details>
         <summary>Does it drain the controller's battery?</summary>
-        <div class="faq-body">Pointing and typing barely register. Rumble and adaptive triggers do cost battery, which is part of why they are off or kept to a few moments. Turn them on where they earn it.</div>
+        <div class="faq-body">Pointing and typing barely register. Rumble and trigger resistance cost battery, which is part of why they are kept to a few moments or off.</div>
       </details>
       <details>
-        <summary>Can I still use my mouse and keyboard at the same time?</summary>
-        <div class="faq-body">Yes. Steer adds an input device, it does not replace one. Your mouse, trackpad and keyboard keep working, and nothing needs switching between them.</div>
+        <summary>Can I still use my mouse and keyboard?</summary>
+        <div class="faq-body">Yes. Steer adds a way in, it doesn't replace one. Nothing needs switching.</div>
       </details>
       <details>
         <summary>Will I be able to read my screen from the sofa?</summary>
-        <div class="faq-body">Steer cannot fix that: an input app cannot make small text bigger. The Mac's own text size and zoom can. Steer handles the other half, reaching what you can already read.</div>
+        <div class="faq-body">Steer can't make small text bigger; the Mac's own text size and zoom can. Steer handles the other half, reaching what you can already read.</div>
       </details>
       <details>
         <summary>Why not the Mac App Store?</summary>
-        <div class="faq-body">The App Store can't offer a real, no-account free trial. You download Steer straight from the developer, and Apple still checks each release before it will run (called notarization, the same malware scan the store runs), so you get the safety check without a store in between.</div>
+        <div class="faq-body">The App Store can't offer a real, no-account free trial. You download Steer from the developer, and Apple still checks each release before it will run (notarization), so you get the safety check without a store in between.</div>
       </details>
       <details>
         <summary>Does Steer rely on undocumented behaviour?</summary>
-        <div class="faq-body">Yes, and it's disclosed rather than hidden. The adaptive triggers, PlayStation and Switch Pro rumble, and the light bar speak each controller's own wire language, worked out from scratch without borrowing anyone's code; the native pinch and rotate gestures, both on by default (pinch can be switched to a keyboard-shortcut form in Settings for apps that ignore the gesture), recreate an event format Apple uses but has not documented. All of it is built with Apple's published developer tools, and no private Apple code is linked in. An imported setup can name a script you already installed, never bring its own.</div>
-        <!-- RESTORE when the app's import-auditor fix ships (audits every step of a chain and both radial menus, with tests; ~/Developer/steer). Until then the review only sees each binding's first action on the layers, so no page may say an import is reviewed or approved. Was: "Scripts and automation you import stay contained and are shown for review before they apply." -->
+        <div class="faq-body">Yes, and it's disclosed. Trigger resistance, PlayStation and Switch Pro rumble, and the light speak each controller's own wire language, worked out from scratch. The native pinch and rotate gestures recreate an event format Apple uses but hasn't documented. It's all built with Apple's published developer tools, and no private Apple code is linked in.</div>
       </details>
       <details>
         <summary>Can I get a refund?</summary>
-        <div class="faq-body">Yes. There are <a href="refund.html">refunds within 14 days</a>, and at launch a free trial before you pay at all.</div>
+        <div class="faq-body">Yes. There are <a href="refund.html">refunds within 14 days</a>, and a free trial before you pay at all.</div>
       </details>
-        </div>
-      </div>
+    </div>
+  </section>
 
-      <div class="ft-cta">
-        <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
-        <p class="foot-note ft-fn">Steer is finishing up. One email the day the free trial opens.</p>
-      </div>
-
+  <section class="q sub-close" aria-labelledby="ft-close">
+    <h2 id="ft-close" class="display"><span class="pain">Want to try it?</span> <span>We'll email you once.</span></h2>
+    <div>
+      <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
+      <p class="fine">When the 14-day trial opens. That's the only email.</p>
     </div>
   </section>
 </main>

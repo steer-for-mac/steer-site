@@ -1,16 +1,37 @@
+/* features.html: the page-only parts. The shared language is subpage.css. */
+@import "../subpage.css";
 
-.fgroup{max-width:74ch;margin:0 auto 52px}
-.fgroup .h3{font-size:21px;letter-spacing:-0.02em;margin:0 0 6px}
-.fgroup .fwhy{color:var(--text-2);font-size:15.5px;line-height:1.6;margin:0 0 18px;max-width:62ch}
-.frow{display:grid;grid-template-columns:186px 1fr;gap:18px;padding:13px 0;border-top:1px solid var(--sep)}
-.frow .fn{font-weight:500;color:var(--text);font-size:14.5px}
-.frow .fd{color:var(--text-2);font-size:14.5px;line-height:1.55}
-.frow .fd a{color:var(--text-2);text-decoration:underline;text-underline-offset:2px}
-.dep-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:var(--text-3)}
-@media(max-width:700px){.frow{grid-template-columns:1fr;gap:4px}}
+/* Getting around: two questions side by side, each with its picture. */
+.ft-pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 64px; }
+.ft-pair h2 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1.1; }
+.ft-pair > div > p { margin: 14px 0 0; max-width: 34em; font-size: 17px; line-height: 1.5; color: var(--h-ink-2); }
+.ft-fig { margin: 60px 0 0; }
+.panel { display: grid; place-items: center; aspect-ratio: 4 / 3; padding: 32px; background: var(--bg); border: 1px solid var(--h-hair); border-radius: var(--r-card); }
+.ring { width: min(72%, 380px); }
+.snap { width: min(92%, 520px); }
+.ring-pins .p-ring { --x: 50%; --y: 15%; }
+.snap-pins .p-snap { --x: 50%; --y: 47%; }
 
-/* the centred head, the list band, and the closing CTA */
-.ft-lead{margin:16px auto 0;max-width:60ch}
-.ft-list{padding-top:56px}
-.ft-cta{max-width:74ch;margin:0 auto;text-align:center}
-.ft-fn{margin-top:14px}
+/* On a phone, the two tiles a reader can still read: trigger resistance and vibration. */
+.c-tiles { --iw: 1817; --ih: 203; --cx: 0; --cy: 0; --cw: 1817; --ch: 203; }
+
+.ft-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.c-draw { --iw: 1714; --ih: 873; --cx: 0; --cy: 354; --cw: 552; --ch: 244; }
+.c-term { --iw: 1714; --ih: 873; --cx: 1160; --cy: 354; --cw: 552; --ch: 244; }
+.c-xcode { --iw: 1714; --ih: 873; --cx: 0; --cy: 626; --cw: 552; --ch: 244; }
+.c-code { --iw: 1714; --ih: 873; --cx: 580; --cy: 626; --cw: 552; --ch: 244; }
+
+@media (max-width: 1000px) {
+  .ft-pair { grid-template-columns: 1fr; row-gap: 72px; }
+  .ft-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 820px) {
+  .ft-fig { margin-top: 52px; }
+  .panel { padding: 20px; }
+}
+@media (max-width: 600px) {
+  .ft-cards { grid-template-columns: 1fr; gap: 8px; }
+  .ft-cards .crop { --ch: 150; }
+  .c-tiles { --cx: 1098; --cw: 719; }
+  .ft-fig { margin-top: 64px; }
+}
