@@ -248,7 +248,7 @@ budget the cut bought.
 - **A DualSense-shot capture ships only with a caption that says so**
   (2026-09-28, restated 2026-10-06). The app captures show PlayStation glyphs;
   an Xbox owner would otherwise read the wrong ones. The homepage carries the
-  caption once, under the "What it does" heading: "Pictures are the app with a
+  caption once, under the help card (2026-10-06 page): "Pictures are the app with a
   DualSense; button names follow your controller." True because the help card,
   the keyboard and the ring take the connected pad's naming scheme.
 - **`ch` is not a character.** It is the advance of a zero, about 1.4x an
