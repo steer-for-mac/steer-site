@@ -1,10 +1,8 @@
 /* The appearance control. `data-theme` is the RESOLVED appearance and drives
  * every sheet; `data-theme-pref` is the choice. The stored key holds light or
  * dark only when FORCED -- System is the absence of the key, which is what makes
- * the choice reversible.
- *
- * The pre-paint half is _includes/scripts/theme-init.js and cannot be deferred.
- */
+ * the choice reversible. The pre-paint half is _includes/scripts/theme-init.js
+ * and cannot be deferred. */
 type Pref = "system" | "light" | "dark";
 
 const NAME: Record<Pref, string> = { system: "System", light: "Light", dark: "Dark" };
@@ -76,6 +74,16 @@ const isPref = (v: string | null): v is Pref =>
      clobbering a deliberate choice. */
   mq?.addEventListener("change", () => {
     if ((root.getAttribute("data-theme-pref") ?? "system") === "system") apply("system");
+  });
+
+  /* The nav's <details> menu never closes on its own after an in-page jump,
+     so on a phone the sheet would keep covering the section it opened. */
+  const nav = document.querySelector<HTMLDetailsElement>(".nav-menu");
+  nav?.querySelectorAll(".nav-links a").forEach((a) => a.addEventListener("click", () => { nav.open = false; }));
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || !nav?.open) return;
+    nav.open = false;
+    nav.querySelector<HTMLElement>("summary")?.focus();
   });
 
   /* Test seam. The popover opens without this script (popovertarget is pure

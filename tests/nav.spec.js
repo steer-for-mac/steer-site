@@ -46,3 +46,21 @@ test.describe("on a phone", () => {
     }
   });
 });
+
+test.describe("on a phone", () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test("the menu closes after an in-page jump, and on Escape", async ({ page }) => {
+    await page.goto("/index.html");
+    await page.locator("html[data-theme-ready]").waitFor({ state: "attached" });
+    const menu = page.locator(".nav-menu");
+    await page.locator(".nav-toggle").click();
+    await expect(menu).toHaveAttribute("open", "");
+    await page.locator(".nav-links a[href$='#q-cost']").click();
+    await expect(menu).not.toHaveAttribute("open", "");
+    await page.locator(".nav-toggle").click();
+    await page.keyboard.press("Escape");
+    await expect(menu).not.toHaveAttribute("open", "");
+    await expect(page.locator(".nav-toggle")).toBeFocused();
+  });
+});
