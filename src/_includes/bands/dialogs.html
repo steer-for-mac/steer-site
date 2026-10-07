@@ -8,6 +8,7 @@
   <p class="ml-sub">€19.99 once, when it ships. 14-day free trial: no card, no account. One email the day it opens, from me, and your address goes nowhere else.</p>
   <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
     <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input class="ml-from" type="hidden" name="from" value="">
     <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address" autofocus>
     <input class="ml-in" type="text" name="controller" placeholder="Which controller do you have? (optional)" aria-label="Which controller do you have (optional)">
     {#- asks who pays, never anything personal: the organisation signal is a

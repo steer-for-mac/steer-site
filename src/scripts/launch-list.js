@@ -1,5 +1,5 @@
-// launch list: the hero/nav CTAs open the <dialog> form; the pricing card holds
-// the same form inline. Submits go form-encoded (a "simple" request, so no
+// launch list: the nav CTA opens the <dialog> form; the homepage holds the
+// same form inline, twice. Submits go form-encoded (a "simple" request, so no
 // CORS preflight) to the list endpoint; failure offers the mailto instead of a
 // dead end, because the alternative is losing the reader at peak intent.
 (function(){
