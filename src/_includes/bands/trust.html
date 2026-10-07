@@ -1,88 +1,71 @@
-<!-- TRUST — rebuilt in the ruled/plate language the rest of the page now uses
-     (_includes/bands/uses.html, _includes/bands/capabilities.html). It was the one band the graft
-     never reached: 1,341px of six prose rows in a floating card, which made the
-     rarest content on the site (undocumented API use, features unconfirmed on
-     hardware I don't own, what the app can't do) the quietest object on it.
-
-     Nothing here is rewritten. Every word is the same; what changed is role.
-
-     1. The import sheet leads, captioned as what it looks like today and
-        nothing more: its own text says "Review what they do before
-        importing", and until the auditor sees every step of a chain and both
-        radial menus (see the RESTORE note below) the page may not present it
-        as a complete review. It is also the only capture with no
-        controller glyphs in it, so it is the only screenshot that can ship
-        before the per-pad re-shoot; every other one would show an Xbox owner
-        PlayStation labels. .shot is the frame and --shadow-window is reserved
-        for exactly this.
-     2. The six rows split by kind. What the app does with the access you grant
-        it sits in the column beside the proof; the two disclosures sit as ruled
-        cells at the foot, where they read as a signed statement rather than as
-        rows five and six of a list.
-     3. No card, and no icon rail. The lead says "not a trust badge" and a
-        column of little shields was arguing the opposite of its own sentence. -->
-<section class="lg-sec" id="trust">
-  <div class="lg-sec-in">
-    <h2 class="lg-h2">Your setup stays on your Mac.</h2>
-    <p class="lg-lede">Steer needs permission to move your cursor and type. Here is what it does with that access. Not a trust badge; the actual answer.</p>
-    <p class="t-strap">No account, no tracking. Nothing you type leaves your Mac.</p>
-
-    <div class="t-proof">
-      <div class="t-lede">
-        <!-- RESTORE when the app's import-auditor fix ships (audits every step of a chain and both radial menus, with tests; ~/Developer/steer). Until then the review only sees each binding's first action on the layers, so no page may say an import is reviewed or approved. Was: the heading "Anything risky is shown to you first." and the lines "Steer shows you each one before it applies. You approve it, or it does not run." -->
-        <!-- Checked on steer main, 2026-09-28: runScript and runShellScript
-             resolve inside the Application Scripts container and refuse a
-             path that escapes it (OutputDispatcher.swift:313-400), and nothing
-             in an import writes there. openURL, typeText and runShortcut have
-             no such fence, so the heading is about script files only. -->
-        <h3 class="t-h3">An import cannot install a script file; it can only name one already in your scripts folder.</h3>
-        <p>Someone else's setup can give a button a link to open, text to type, a Shortcut to run or a script to run. Scripts run only from Steer's scripts folder on your Mac, so an import can name one you already put there, never add its own.</p>
-      </div>
-
-      <div class="t-fig">
-        <div class="shot">
-          <img class="shot-light" src="assets/import-review.png" width="1040" height="960" loading="lazy" decoding="async" alt="Three imported Steer bindings, each tagged Opens URL beside the address it opens.">
-          <img class="shot-dark" src="assets/import-review-dark.png" width="1040" height="960" loading="lazy" decoding="async" alt="Three imported Steer bindings, each tagged Opens URL beside the address it opens.">
-        </div>
-        <p class="t-cap">What the import sheet looks like today.</p>
-      </div>
-
-      <div class="t-list">
-        <div class="t-item">
-          <h3>Plain files, on your computer.</h3>
-          <p>Your mappings live on your Mac, in a file you can open and read. No sign-in, nothing synced.</p>
-        </div>
-        <div class="t-item">
-          <h3>What you type stays on your Mac.</h3>
-          <p>Steer goes online for three reasons. It checks your licence key when you enter it, then re-checks that key on launch and about once a day. It looks for an update when you ask. It fetches a setup only if you paste a link to one.</p>
-        </div>
-        <div class="t-item">
-          <h3>Changes can be undone.</h3>
-          <p>Steer saves a restore point as you edit each settings pane, and keeps a history you can walk back through.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- the two disclosures, as cells rather than list rows: they are the only
-         two claims on the page that cost the developer something to make. -->
-    <div class="t-disc">
-      <div class="t-cell">
-        <h3>No private Apple code is linked in.</h3>
-        <p>Apple published no recipe for some of what Steer does: real pinch and rotate, and speaking directly to a controller's triggers, rumble, and light bar. Steer works those out from scratch, linking no private frameworks, only the developer tools Apple publishes for everyone. The <a href="features.html">full technical account</a> is written out, because hiding it would be worse.</p>
-      </div>
-      <div class="t-cell">
-        <h3>What it can't do is written down too.</h3>
-        <p>Where a controller can't do something, Steer hides it rather than pretending. The <a href="compatibility.html">controller page</a> marks the gaps, including the features nobody has yet confirmed on real hardware because I don't own the pad. Snapping windows into place needs the Rectangle app, installed separately. The login screen and Touch ID stay out of reach.</p>
-      </div>
-    </div>
+<!-- TRUST, in the homepage's language (styles/subpage.css). No picture: the
+     import sheet was the only capture here, it predates the redesign, and no
+     route can show it, so the claims carry the page. Paths under steer/Steer/Sources. -->
+<section class="q sub-top" aria-labelledby="tr-h1">
+  <div class="head">
+    <h1 id="tr-h1" class="display"><span class="pain">Can I trust it with my Mac?</span> <span>Your setup stays on your Mac.</span></h1>
+    <div class="body"><p>Steer needs permission to click and type for you. Here is what it does with that access. No account, no tracking.</p></div>
   </div>
 </section>
 
-<!-- REACH OUT — founder access as a differentiator, framed as roadmap
-     participation (confidence, not apology). The named head-to-head moved to
-     vs.html so cold visitors aren't handed a competitor; the comparing buyer
-     still gets it via the link below. -->
+<section class="q" aria-labelledby="tr-list">
+  <h2 id="tr-list" class="h-sr">What Steer does with your Mac</h2>
 
-<!-- PRICING: the plain band in the tail. #reach and #requirements were the
-     only two plain surfaces down here and both were cut, which left
-     trust/pricing/footer sunken in a row. -->
+  <!-- Window Snap through macOS's own tiling drives System Events, which macOS
+       asks about once (Steer/EventLoop+WindowGridSnap.swift notRunningNotice,
+       Steer/Output/SystemEventsAX.swift). -->
+  <div class="fgroup">
+    <h3>What it asks for</h3>
+    <dl>
+      <div><dt>Accessibility</dt><dd>So it can move the pointer, click and type. It can't do its job without it.</dd></div>
+      <div><dt>Input Monitoring</dt><dd>Asked once, when a DualSense Edge is plugged in, in case its back paddles need it.</dd></div>
+      <div><dt>System Events</dt><dd>Asked once, the first time Window Snap uses the Mac's own tiling.</dd></div>
+    </dl>
+  </div>
+
+  <!-- Licence: launch and daily (Steer/Purchase/PurchaseManager.swift:300-348).
+       Updates only when asked (SUEnableAutomaticChecks=false). iCloud sync is
+       compiled into the App Store build only (#if APP_STORE in
+       Steer/EventLoop+CloudKit.swift; DirectLicensing.swift:104), and the copy
+       sold from this site is the direct build. -->
+  <div class="fgroup">
+    <h3>What leaves your Mac</h3>
+    <dl>
+      <div><dt>Never</dt><dd>What you type, and your mappings. They live in a file on your Mac you can open and read. The copy sold here has no iCloud sync.</dd></div>
+      <div><dt>Your licence key</dt><dd>Checked when you enter it, then on launch and about once a day.</dd></div>
+      <div><dt>Updates</dt><dd>Steer looks for one only when you ask.</dd></div>
+      <div><dt>A shared setup</dt><dd>Fetched only if you paste a link to one.</dd></div>
+    </dl>
+  </div>
+
+  <!-- RESTORE when the app's import-auditor fix ships (audits every step of a chain and both radial menus, with tests; ~/Developer/steer). Until then the review only sees each binding's first action on the layers, so no page may say an import is reviewed or approved.
+       Checked on steer main, 2026-09-28: runScript and runShellScript resolve
+       inside the Application Scripts container and refuse a path that escapes
+       it (OutputDispatcher.swift:313-400), and nothing in an import writes
+       there. openURL, typeText and runShortcut have no such fence, so the
+       claim is about script files only. -->
+  <div class="fgroup">
+    <h3>Someone else's setup</h3>
+    <dl>
+      <div><dt>Scripts</dt><dd>An import can name a script already in Steer's scripts folder, never add its own.</dd></div>
+      <div><dt>Everything else</dt><dd>It can give a button a link to open, text to type or a Shortcut to run. Look at what a setup does before you import it.</dd></div>
+      <div><dt>Undo</dt><dd>Command-Z undoes an edit in Settings, and History goes back to an earlier point.</dd></div>
+    </dl>
+  </div>
+
+  <div class="fgroup">
+    <h3>What's written down</h3>
+    <dl>
+      <div><dt>No private Apple code</dt><dd>Apple published no recipe for some of what Steer does: real pinch and rotate, and talking to a controller's triggers, rumble and light. Steer works those out from scratch with the developer tools Apple publishes for everyone. The <a href="features.html#q-faq">full account</a> is on the features page.</dd></div>
+      <div><dt>What it can't do</dt><dd>The login screen and Touch ID stay out of reach. Where a controller can't do something, Steer hides it, and the <a href="compatibility.html">controller page</a> marks the gaps, including pads nobody has confirmed yet.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="q sub-close" aria-labelledby="tr-close">
+  <h2 id="tr-close" class="display"><span class="pain">Still unsure?</span> <span>Ask the person who made it.</span></h2>
+  <div>
+    <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
+    <p class="fine">Or email <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a>. A person answers.</p>
+  </div>
+</section>
