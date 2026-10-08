@@ -19,7 +19,7 @@
         icon.innerHTML = playing ? PAUSE : PLAY;
       } };
     b.hidden = false;
-    o.set(!still());
+    o.set(false);  // Play until a frame actually moves; apply() says Pause once play() resolves
     b.addEventListener("click", () => {
       o.user = true;
       if (v.paused) v.play().then(() => o.set(true), () => o.set(false));

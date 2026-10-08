@@ -74,6 +74,9 @@
 .duo-help figcaption { grid-column: 1; }
 .effect, .hcard, .pad { position: relative; }
 .pad img { width: 100%; }
+/* A DualSense in each theme's common colour: white, or Midnight Black in dark. */
+.pad .pad-dk, [data-theme="dark"] .pad .pad-lt { display: none; }
+[data-theme="dark"] .pad .pad-dk { display: block; }
 .pad svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pad path { fill: transparent; }
 .pad path.on { fill: color-mix(in srgb, var(--blue) 72%, transparent); }

@@ -84,8 +84,9 @@ test("the keyboard loop follows the theme, keeps a Pause across it, and fetches 
   await expect(video).toHaveAttribute("src", /keyboard-light\.mp4$/);
   const paused = () => video.evaluate((v) => /** @type {HTMLVideoElement} */ (v).paused);
   /* WebKit builds without H.264 refuse to play; the control then says Play. */
-  await expect.poll(async () => !(await paused())).toBe(true).catch(() => {});
-  if (await btn.textContent() === "Pause") await btn.click();
+  const started = await expect(btn).toHaveText("Pause", { timeout: 15000 }).then(() => true, () => false);
+  test.skip(!started, "this engine cannot play the H.264 take");
+  await btn.click();
   await expect(btn).toHaveText("Play");
   expect(fetched.filter((u) => u.includes("keyboard-dark")), "light fetched nothing of the dark take").toEqual([]);
   await page.emulateMedia({ colorScheme: "dark" });
@@ -137,3 +138,27 @@ test.describe("without JavaScript", () => {
     await expect(form).toHaveAttribute("action", /steer-mailing-list/);
   });
 });
+
+for (const path of ["/index.html", "/play.html"]) {
+  test(`${path}: each DualSense picture shows the theme's colour, and light never loads the dark one`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.goto(path);
+    const pairs = page.locator(":is(.pad, .sd-pad):has(.pad-lt)");
+    expect(await pairs.count()).toBeGreaterThanOrEqual(1);
+    for (const pad of await pairs.all()) {
+      await pad.scrollIntoViewIfNeeded();
+      await expect(pad.locator(".pad-lt")).toBeVisible();
+      await expect(pad.locator(".pad-dk")).toBeHidden();
+    }
+    await page.waitForTimeout(300);
+    /* eleventy-img hashes the file names, so "not loaded" is read off the element. */
+    expect(await page.locator(".pad-dk").evaluateAll((els) => els.map((e) => /** @type {HTMLImageElement} */ (e).naturalWidth)))
+      .toEqual(Array(await page.locator(".pad-dk").count()).fill(0));
+    await page.emulateMedia({ colorScheme: "dark" });
+    for (const pad of await pairs.all()) {
+      await pad.scrollIntoViewIfNeeded();
+      await expect(pad.locator(".pad-dk")).toBeVisible();
+      await expect(pad.locator(".pad-lt")).toBeHidden();
+    }
+  });
+}
