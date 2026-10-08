@@ -46,6 +46,9 @@ NOT_DRAWN = {
     "navy": SHOULDERS + ["share"],
 }
 
+# Families with a Midnight Black twin for dark mode, by site cut-out.
+DARK = {"ps": "cut-ps-unlit-dark.png"}
+
 
 def outlines(svg):
     parts = dict(re.findall(r'<path data-c="([a-z0-9-]+)" d="([^"]*)"', svg))
@@ -86,7 +89,14 @@ def main(app, fams):
         subprocess.run(["sips", "-s", "format", "heic", "-s", "formatOptions", "70",
                         f"src/assets/pads/cut-{fam}.png", "--out", os.path.join(out, f"pad-{fam}.heic")],
                        check=True, capture_output=True)
-        print(fam, len(controls), "outlines")
+        # A dark-mode twin, where the site has one: same pose and size, so the
+        # outlines and the light-bar mask read off the light photo still fit.
+        dark = DARK.get(fam)
+        if dark:
+            subprocess.run(["sips", "-s", "format", "heic", "-s", "formatOptions", "70",
+                            f"src/assets/pads/{dark}", "--out", os.path.join(out, f"pad-{fam}-dark.heic")],
+                           check=True, capture_output=True)
+        print(fam, len(controls), "outlines", "+ dark" if dark else "")
 
 
 if __name__ == "__main__":
