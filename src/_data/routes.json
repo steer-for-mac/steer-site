@@ -245,6 +245,26 @@
     "debugOnly" : true,
     "example" : "steer://debug/micprobe"
   },
+  "steer://debug/purchase?state=<state>" : {
+    "arguments" : [
+      {
+        "name" : "state",
+        "values" : [
+          "none",
+          "trialNotStarted",
+          "trial",
+          "trialExpiring",
+          "licensed",
+          "licensedEarly",
+          "locked",
+          "revoked",
+          "unconfirmed"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/purchase?state=none"
+  },
   "steer://debug/rotate?deg=<deg>" : {
     "arguments" : [
       {
