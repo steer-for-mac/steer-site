@@ -21,9 +21,6 @@
     b.hidden = false;
     o.set(!still());
     b.addEventListener("click", () => {
-      // A light and a dark take share one figure and one button; only the
-      // take the theme shows is played, never the hidden one.
-      if (!v.checkVisibility()) return;
       o.user = true;
       if (v.paused) v.play().then(() => o.set(true), () => o.set(false));
       else { v.pause(); o.set(false); }
@@ -31,6 +28,19 @@
     return [o];
   });
   if (!loops.length) return;
+  /* A loop with a take per theme is one element whose source follows the
+     theme, so its button and a Pause the user pressed carry across a flip. */
+  const root = document.documentElement;
+  /** @param {typeof loops[number]} o */
+  const pick = (o) => {
+    const want = root.dataset.theme === "dark" ? o.v.dataset.dark : o.v.dataset.light;
+    if (!want || o.v.getAttribute("src") === want) return;
+    const playing = !o.v.paused;
+    o.v.src = want;
+    if (playing) o.v.play().then(() => o.set(true), () => o.set(false));
+  };
+  loops.forEach(pick);
+  new MutationObserver(() => loops.forEach(pick)).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
   /** @param {typeof loops[number]} o */
   const apply = (o) => {
     if (still() && !o.user) { o.v.pause(); o.set(false); return; }

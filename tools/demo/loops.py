@@ -129,6 +129,8 @@ def keyboard():
     one_textedit_window()
     press("r3"); time.sleep(1.0); box = panel()
     for word in WORDS:
+        if not front_is_textedit():
+            sys.exit("TextEdit left the front mid-take; stopping before typing into another window")
         for n, ch in enumerate(word):
             if accept_if_offered(word):
                 break
@@ -184,10 +186,10 @@ def main():
     finally:
         for r in ("keyboard/hide", "radial/hide", "windowsnap/hide", "padview/hide"):
             subprocess.run(["just", "agent", f"steer://{r}", "300"], cwd=STEER, capture_output=True, check=False)
-        if made:  # never launch TextEdit just to close it: each tell is guarded on it running
+        if made:  # compiling any `tell application "TextEdit"` launches it, so check from here
             for step in ("close every document saving no", "quit"):
-                subprocess.run(["osascript", "-e", 'tell application "System Events" to if exists process "TextEdit" then '
-                                f'tell application "TextEdit" to {step}'], capture_output=True, check=False)
+                if subprocess.run(["pgrep", "-x", "TextEdit"], capture_output=True).returncode == 0:
+                    subprocess.run(["osascript", "-e", f'tell application "TextEdit" to {step}'], capture_output=True, check=False)
 
 
 if __name__ == "__main__":

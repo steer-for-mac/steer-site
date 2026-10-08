@@ -55,10 +55,9 @@ test("each question is a heading, and every app picture has both themes", async 
 test("every loop has a pause control, and it pauses", async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(Navigator.prototype, "webdriver", { get: () => false }));
   await page.goto("/index.html");
-  /* A light and a dark take share a figure and its one control. */
   await expect(page.locator("figure:has(video[data-loop])").first()).toBeAttached();
   await expect(page.locator("figure:has(video[data-loop]):not(:has(.ctl))")).toHaveCount(0);
-  const loops = page.locator("video[data-loop]:visible");
+  const loops = page.locator("video[data-loop]");
   const btn = page.locator(".q-type .ctl");
   await btn.scrollIntoViewIfNeeded();
   await expect(btn).toBeVisible();
@@ -71,6 +70,45 @@ test("every loop has a pause control, and it pauses", async ({ page }) => {
     await expect(btn).toHaveText("Play");
     expect(await video.evaluate((v) => /** @type {HTMLVideoElement} */ (v).paused)).toBe(true);
   }
+});
+
+test("the keyboard loop follows the theme, keeps a Pause across it, and fetches only its own take", async ({ page }) => {
+  await page.addInitScript(() => Object.defineProperty(Navigator.prototype, "webdriver", { get: () => false }));
+  const fetched = [];
+  page.on("request", (r) => { if (r.url().includes("/loops/keyboard-")) fetched.push(r.url()); });
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.goto("/index.html");
+  const video = page.locator(".q-type video[data-loop]");
+  const btn = page.locator(".q-type .ctl");
+  await btn.scrollIntoViewIfNeeded();
+  await expect(video).toHaveAttribute("src", /keyboard-light\.mp4$/);
+  const paused = () => video.evaluate((v) => /** @type {HTMLVideoElement} */ (v).paused);
+  /* WebKit builds without H.264 refuse to play; the control then says Play. */
+  await expect.poll(async () => !(await paused())).toBe(true).catch(() => {});
+  if (await btn.textContent() === "Pause") await btn.click();
+  await expect(btn).toHaveText("Play");
+  expect(fetched.filter((u) => u.includes("keyboard-dark")), "light fetched nothing of the dark take").toEqual([]);
+  await page.emulateMedia({ colorScheme: "dark" });
+  await expect(video).toHaveAttribute("src", /keyboard-dark\.mp4$/);
+  await page.waitForTimeout(400);
+  expect(await paused(), "the dark take stays paused").toBe(true);
+  await expect(btn).toHaveText("Play");
+  await page.emulateMedia({ colorScheme: "light" });
+  await expect(video).toHaveAttribute("src", /keyboard-light\.mp4$/);
+  await page.waitForTimeout(400);
+  expect(await paused()).toBe(true);
+  await expect(btn).toHaveText("Play");
+});
+
+test("a dark first visit fetches no light take", async ({ page }) => {
+  const fetched = [];
+  page.on("request", (r) => { if (r.url().includes("/loops/keyboard-light")) fetched.push(r.url()); });
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/index.html");
+  await page.locator(".q-type .ctl").scrollIntoViewIfNeeded();
+  await expect(page.locator(".q-type video[data-loop]")).toHaveAttribute("src", /keyboard-dark\.mp4$/);
+  await page.waitForTimeout(500);
+  expect(fetched).toEqual([]);
 });
 
 test.describe("under reduced motion", () => {
