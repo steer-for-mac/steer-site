@@ -21,6 +21,9 @@
     b.hidden = false;
     o.set(!still());
     b.addEventListener("click", () => {
+      // A light and a dark take share one figure and one button; only the
+      // take the theme shows is played, never the hidden one.
+      if (!v.checkVisibility()) return;
       o.user = true;
       if (v.paused) v.play().then(() => o.set(true), () => o.set(false));
       else { v.pause(); o.set(false); }

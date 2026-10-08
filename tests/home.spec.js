@@ -55,8 +55,10 @@ test("each question is a heading, and every app picture has both themes", async 
 test("every loop has a pause control, and it pauses", async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(Navigator.prototype, "webdriver", { get: () => false }));
   await page.goto("/index.html");
-  const loops = page.locator("video[data-loop]");
-  await expect(loops).toHaveCount(await page.locator("figure .ctl").count());
+  /* A light and a dark take share a figure and its one control. */
+  await expect(page.locator("figure:has(video[data-loop])").first()).toBeAttached();
+  await expect(page.locator("figure:has(video[data-loop]):not(:has(.ctl))")).toHaveCount(0);
+  const loops = page.locator("video[data-loop]:visible");
   const btn = page.locator(".q-type .ctl");
   await btn.scrollIntoViewIfNeeded();
   await expect(btn).toBeVisible();

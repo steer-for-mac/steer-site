@@ -14,10 +14,8 @@
 .ctl svg { width: 10px; height: 10px; fill: currentColor; }
 .cap .ph { display: none; }
 
-/* No dark recording exists and the stills show nothing happening, so the
-   light loop stays, dimmed, in a dark frame with a hairline edge. */
+/* The dark recording, in a dark frame with a hairline edge. */
 [data-theme="dark"] .kbframe { padding: 14px; border-radius: var(--r-card); background: var(--h-frame); box-shadow: 0 0 0 1px var(--h-hair); }
-[data-theme="dark"] .kb video { filter: brightness(.8) contrast(.96); }
 
 @media (max-width: 600px) {
   #ty-b { --x: 18.3%; --y: 18.9%; }

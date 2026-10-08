@@ -184,9 +184,10 @@ def main():
     finally:
         for r in ("keyboard/hide", "radial/hide", "windowsnap/hide", "padview/hide"):
             subprocess.run(["just", "agent", f"steer://{r}", "300"], cwd=STEER, capture_output=True, check=False)
-        if made:  # never launch TextEdit just to close it
-            for step in ('tell application "TextEdit" to close every document saving no', 'tell application "TextEdit" to quit'):
-                subprocess.run(["osascript", "-e", step], capture_output=True, check=False)
+        if made:  # never launch TextEdit just to close it: each tell is guarded on it running
+            for step in ("close every document saving no", "quit"):
+                subprocess.run(["osascript", "-e", 'tell application "System Events" to if exists process "TextEdit" then '
+                                f'tell application "TextEdit" to {step}'], capture_output=True, check=False)
 
 
 if __name__ == "__main__":
