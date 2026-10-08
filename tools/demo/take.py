@@ -143,7 +143,10 @@ def find(side, ch):
 def path(side, start, goal):
     """Fewest stick pushes, diagonals included, by breadth-first search."""
     from collections import deque
-    dirs = [(dr, di) for dr in (-1, 0, 1) for di in (-1, 0, 1) if dr or di]
+    # Straight pushes first: breadth-first search keeps the first route it finds,
+    # and with up-left first a tie went up a row and back down, which on screen
+    # reads as the stick going the wrong way (y to p via 6 and F7, 2026-10-07).
+    dirs = [(0, 1), (0, -1), (1, 0), (-1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]
     seen = {start: None}; q = deque([start])
     while q:
         cur = q.popleft()
