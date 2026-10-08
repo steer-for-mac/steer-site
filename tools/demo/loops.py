@@ -3,11 +3,17 @@
 
     (cd ../steer && just dev-up)
     tools/demo/loops.py scratch/loops [keyboard] [ring] [snap]   # all three by default
+    tools/demo/loops.py cut scratch/loops/keyboard.json src/assets/app/loops/keyboard-dark
 
 Records only Steer Dev's windows (record-apps), then crops each take to its
 panel. The keyboard types into a fresh TextEdit document this script opens and
 closes; it refuses if TextEdit is already running. The ring and Window Snap
 cancel at the end, so nothing of the owner's is opened or moved.
+
+Each take's json carries `marks`: seconds from the recorder's "recording" line
+to each step (the keyboard's open, each word, done, closed). `cut` turns them
+into the site's loop: done->closed, then open->done, so the seam falls on the
+finished sentence and the loop restarts as the keyboard opens again.
 """
 import json
 import random
@@ -18,6 +24,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from take import BID, REC, STEER, agent, find, inject, osa, path, press  # noqa: E402
+
+MARKS: dict[str, float] = {}
+T0 = [0.0]
+
+
+def mark(name):
+    MARKS[name] = round(time.monotonic() - T0[0], 3)
+
 
 WINIDS = Path(__file__).resolve().parent.parent.parent / "scratch/take/winids"
 
@@ -52,11 +66,12 @@ def record(name, seconds, drive, outdir):
     rec = subprocess.Popen([str(REC), str(mov), str(seconds), BID], stdout=subprocess.PIPE, text=True)
     if rec.stdout.readline().strip() != "recording":
         sys.exit("recorder did not start")
+    T0[0] = time.monotonic(); MARKS.clear()
     time.sleep(0.6)
     box = drive()
     rec.wait(timeout=seconds + 30)
-    json.dump({"box": box}, open(outdir / f"{name}.json", "w"))
-    print(name, box)
+    (outdir / f"{name}.json").write_text(json.dumps({"box": box, "marks": dict(MARKS)}))
+    print(name, box, MARKS)
 
 
 def front_is_textedit():
@@ -127,7 +142,7 @@ def keyboard():
     if not front_is_textedit():
         sys.exit("TextEdit is not in front; refusing to type into someone else's window")
     one_textedit_window()
-    press("r3"); time.sleep(1.0); box = panel()
+    mark("open"); press("r3"); time.sleep(1.0); box = panel()
     for word in WORDS:
         if not front_is_textedit():
             sys.exit("TextEdit left the front mid-take; stopping before typing into another window")
@@ -138,7 +153,10 @@ def keyboard():
         else:
             if not accept_if_offered(word):  # typed in full: Space by hand
                 beat(0.12, 0.2); press("cross"); beat(0.2, 0.3)
+        mark(f"word:{word}")
+    mark("done")
     time.sleep(1.4); press("r3"); time.sleep(0.6)
+    mark("closed")
     return box
 
 
@@ -158,7 +176,37 @@ def snap():
     return box
 
 
+def cut(take_json, out_base, width=1600, height=880):
+    """The loop from a take's marks: A = done->closed, B = open->done, cropped to
+    the panel's box (points, so x2 for the Retina capture) at width:height,
+    H.264 CRF 26 tuned for animation (e832428), and the first frame as poster."""
+    take = json.loads(Path(take_json).read_text())
+    m, (x, y, w, _) = take.get("marks", {}), take["box"]
+    missing = {"open", "done", "closed"} - set(m)
+    if missing:
+        sys.exit(f"{take_json} has no {sorted(missing)} mark; record it again with this script")
+    if not m["open"] < m["done"] < m["closed"]:
+        sys.exit(f"marks out of order: {m}")
+    cw = 2 * w
+    ch = -(-cw * height // width // 2) * 2  # the output's aspect, rounded up to even
+    crop = f"crop={cw}:{ch}:{2 * x}:{2 * y},scale={width}:{height}"
+    a, b = (m["done"], m["closed"]), (m["open"], m["done"])
+    graph = (f"[0:v]trim={a[0]}:{a[1]},setpts=PTS-STARTPTS[a];[0:v]trim={b[0]}:{b[1]},setpts=PTS-STARTPTS[b];"
+             f"[a][b]concat=n=2:v=1[c];[c]{crop},fps=30,format=yuv420p[v]")
+    mov = Path(take_json).with_suffix(".mov")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mov), "-filter_complex", graph, "-map", "[v]",
+                    "-c:v", "libx264", "-preset", "slow", "-crf", "26", "-tune", "animation",
+                    "-movflags", "+faststart", "-an", f"{out_base}.mp4"], check=True)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", f"{out_base}.mp4", "-frames:v", "1", "-q:v", "4",
+                    f"{out_base}.jpg"], check=True)
+    print(f"{out_base}.mp4: A {a[0]}-{a[1]} s + B {b[0]}-{b[1]} s, {crop}")
+
+
 def main():
+    if sys.argv[1:2] == ["cut"]:
+        if len(sys.argv) != 4:
+            sys.exit("usage: loops.py cut <take.json> <out base, no extension>")
+        return cut(sys.argv[2], sys.argv[3])
     outdir = Path(sys.argv[1]).resolve(); outdir.mkdir(parents=True, exist_ok=True)
     if subprocess.run(["pgrep", "-x", "TextEdit"], capture_output=True).returncode == 0:
         sys.exit("TextEdit is running; its windows would be yours. Quit it first.")
