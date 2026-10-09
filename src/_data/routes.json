@@ -245,6 +245,44 @@
     "debugOnly" : true,
     "example" : "steer://debug/micprobe"
   },
+  "steer://debug/permission/<kind>" : {
+    "arguments" : [
+      {
+        "name" : "kind",
+        "values" : [
+          "accessibility",
+          "inputmonitoring",
+          "notifications",
+          "relaunch"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/permission/accessibility"
+  },
+  "steer://debug/permission/<kind>/<use>" : {
+    "arguments" : [
+      {
+        "name" : "kind",
+        "values" : [
+          "automation",
+          "refused"
+        ]
+      },
+      {
+        "name" : "use",
+        "values" : [
+          "menupalette",
+          "dictation",
+          "windowsnap",
+          "windownudge",
+          "clicktofocus"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/permission/automation/menupalette"
+  },
   "steer://debug/purchase?state=<state>" : {
     "arguments" : [
       {
@@ -571,6 +609,54 @@
     "debugOnly" : false,
     "example" : "steer://palette/up",
     "summary" : "Move through the open menu palette: up, down, left, right, or confirm."
+  },
+  "steer://permission/<answer>[?kind=<kind>]" : {
+    "arguments" : [
+      {
+        "name" : "answer",
+        "values" : [
+          "confirm",
+          "cancel"
+        ]
+      },
+      {
+        "name" : "kind",
+        "values" : [
+          "accessibility",
+          "automation",
+          "inputMonitoring",
+          "notifications"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://permission/confirm?kind=accessibility",
+    "summary" : "Answer the open permission panel: confirm goes on to macOS’s own dialog, cancel closes it."
+  },
+  "steer://permission/accessibility" : {
+    "arguments" : [
+
+    ],
+    "debugOnly" : false,
+    "example" : "steer://permission/accessibility",
+    "summary" : "Explain the permission to click, scroll and type before macOS asks for it. Does nothing if it is already on."
+  },
+  "steer://permission/automation[/<use>]" : {
+    "arguments" : [
+      {
+        "name" : "use",
+        "values" : [
+          "menuPalette",
+          "dictation",
+          "windowSnap",
+          "windowNudge",
+          "clickToFocus"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://permission/automation/menuPalette",
+    "summary" : "Explain the Automation permission before macOS asks for it, or how to turn it back on. Does nothing if it is already on."
   },
   "steer://player-lights/<count>" : {
     "arguments" : [

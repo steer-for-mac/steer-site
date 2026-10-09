@@ -113,7 +113,7 @@ Steer is drivable from outside on standard macOS primitives, so a shell line, an
 
 ### URL scheme
 
-Twenty route families. Almost all are fire and forget: they never block. The one exception is `version/restore`, which changes configuration and therefore requires an explicit `confirm=true`; without it Steer opens Settings at History and lets the person decide. Always use `open -g` so focus is not stolen. A caller with its own URL scheme (Shortcuts, Raycast, Keyboard Maestro, Alfred, Hammerspoon) can add `x-success` and `x-error` to hear whether a route ran; a link to no route, or a route given a value it refuses, gets no callback.
+Twenty-one route families. Almost all are fire and forget: they never block. The one exception is `version/restore`, which changes configuration and therefore requires an explicit `confirm=true`; without it Steer opens Settings at History and lets the person decide. Always use `open -g` so focus is not stolen. A caller with its own URL scheme (Shortcuts, Raycast, Keyboard Maestro, Alfred, Hammerspoon) can add `x-success` and `x-error` to hear whether a route ran; a link to no route, or a route given a value it refuses, gets no callback.
 
 ```
 {% for pattern, route in routes %}{% if not route.debugOnly %}{{ ('open -g "' + pattern + '"') | padEnd(48) | safe }}  {{ route.summary | safe }}{% for argument in route.arguments %}{% if argument.values.length > 1 and argument.values.length <= 16 %} {{ argument.name }}: {{ argument.values | join(", ") | safe }}.{% endif %}{% endfor %}

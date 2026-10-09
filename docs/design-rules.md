@@ -203,7 +203,7 @@ for testers, the way the Elite paddles and generic controllers already do.
 "Beta" with a call for testers is honest. Silence is not, and neither is a
 confident "Yes".
 
-Corollary for numbers: a count sourced from a bundle (315 SDL entries, 20
+Corollary for numbers: a count sourced from a bundle (315 SDL entries, 21
 route families) is checkable and should be stated, but count what a user gets,
 not what exists: 32 `.lproj` directories held 16 usable languages on
 2026-10-06 (the rest carry about 30 strings each), so the site says 16, and
