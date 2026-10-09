@@ -251,9 +251,7 @@
         "name" : "kind",
         "values" : [
           "accessibility",
-          "inputmonitoring",
-          "notifications",
-          "relaunch"
+          "notifications"
         ]
       }
     ],
@@ -624,7 +622,6 @@
         "values" : [
           "accessibility",
           "automation",
-          "inputMonitoring",
           "notifications"
         ]
       }
