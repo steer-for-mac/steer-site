@@ -352,7 +352,7 @@ The integration runs in both directions.
 
 **Cursor doesn't move.** Check that Steer has permission to control your Mac: Settings → Steer lists every permission Steer uses, and opens System Settings at the right place when one is missing.
 
-**Buttons don't register.** Check the controller is paired and named at the top of Settings → Controls; most controllers need no permission at all. Steer doesn't ask for Input Monitoring.
+**Buttons don't register.** Check the controller is paired and named at the top of Settings → Controls. Steer needs no extra permission to read a controller.
 
 **Clicking a window focuses the app but doesn't bring that window forward**, or a button set to the menu palette or Dictation says it can't run, a stick set to move windows moves nothing, or Window Snap, set to macOS, moves nothing. All five go through System Events, which needs the Automation permission. Settings → Steer shows whether Steer has it. If it was declined, switch System Events back on under Steer in System Settings → Privacy & Security → Automation.
 
@@ -418,7 +418,7 @@ Steer never watches your keystrokes, and it never reads the text inside your doc
 
 Steer reads the pasteboard only where you would expect it to. Selecting text or a link in another app and choosing Services → **Set a Button in Steer** hands that selection to Steer so you can set a button to it. Copying and pasting a button's action inside Settings → Controls checks the pasteboard for one as well.
 
-Steer doesn't ask for **Input Monitoring**. Its raw-HID connection reads game controllers on the HID bus — an Edge's rear paddles (untested), a DualShock 4's motion sensor when you turn that on, and pads it matches from its bundled controller database. It never reads your keyboard, mouse, or trackpad.
+Steer doesn't ask for **Input Monitoring**. Its raw-HID connection reads game controllers on the HID bus — an Edge's rear paddles (untested), a DualShock 4's motion sensor when you turn that on, and pads it matches from its bundled controller database. It opens game controllers, not your keyboard, mouse or trackpad.
 
 **Automation** is the third permission, and it covers exactly one app: System Events, Apple's own scripting helper. Steer is sandboxed, and a sandboxed app cannot reach into another app's windows and menus itself — so it asks System Events to do five things on its behalf: bring the window you click to the front, read the frontmost app's menu bar for the menu palette, start and stop Dictation, move the window you are working in when you set a stick to move windows, and snap that window into place when Window Snap uses macOS's own tiling. The system prompt for this is worded the same way for every app macOS asks about, which is why it mentions documents and data; System Events has no documents of its own.
 
