@@ -205,9 +205,10 @@ confident "Yes".
 
 Corollary for numbers: a count sourced from a bundle (315 SDL entries, 21
 route families) is checkable and should be stated, but count what a user gets,
-not what exists: 32 `.lproj` directories held 16 usable languages on
-2026-10-06 (the rest carry about 30 strings each), so the site says 16, and
-says they are machine-translated. A count inferred
+not what exists: on 2026-10-12 the 32 `.lproj` directories
+held 32 usable languages, each 99%+ translated (on 2026-10-06 only 16 were,
+and the site said 16), so the site says 32, and says they are
+machine-translated. A count inferred
 from a feature list is not. When ControllerKeys' page said nothing about
 languages, the answer was to count the `.lproj` directories in their public
 repository, not to write a dash.
