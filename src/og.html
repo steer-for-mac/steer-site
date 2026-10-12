@@ -7,11 +7,12 @@
 <!--
   Share card for steer.seanfloyd.dev (assets/og.png), exactly 1200x630.
 
-  Render (2x for crispness, then downscale):
+  Render from the build, where icon.png sits beside it (make build first),
+  at 2x for crispness, then downscale:
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
       --headless --disable-gpu --force-device-scale-factor=2 \
       --window-size=1200,630 --hide-scrollbars \
-      --screenshot=/tmp/og-2x.png "file://ABSOLUTE/PATH/src/og.html"
+      --screenshot=/tmp/og-2x.png "file://ABSOLUTE/PATH/dist/og.html"
     sips -z 630 1200 /tmp/og-2x.png --out src/assets/og.png
 
   Light, because a feed shows one image whatever the site's theme, and white
