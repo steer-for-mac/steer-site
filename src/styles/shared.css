@@ -56,7 +56,8 @@ header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--b
 .nav-in{max-width:1392px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:40px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-0.022em;color:var(--text)}
 .brand:hover{text-decoration:none}
-.brand .logo{width:30px;height:30px;flex:none}
+.brand .logo{width:30px;height:30px;flex:none;border-radius:7px}
+[data-theme="dark"] .brand .logo{box-shadow:0 0 0 1px var(--sep-2)}
 .nav-menu{display:block}
 .nav-menu::details-content{display:block}
 .nav-menu:not([open])::details-content{content-visibility:hidden}
