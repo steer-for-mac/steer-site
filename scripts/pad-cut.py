@@ -31,6 +31,8 @@ PADS = {
     "xb": ("xbox elite wireless controller series 2-src.png", 1142),
     "sw": ("swpro-src.png", 1126),
     "xs": ("xbox series-src.png", 1142),
+    # The same pad in Robot White, for light pages: a colour-only edit of xs's source.
+    "xs-white": ("xbox series robot white-src.png", 1142),
     "ds4": ("dualshock4-src.png", 1202),
     # Generic pads, for MFi and unknown controllers: original designs, no real product.
     "graphite": ("generic-graphite-src.png", 1202),

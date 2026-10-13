@@ -100,6 +100,55 @@ rejected candidates and why.
 - **Outlines:** `scripts/pad-controls.py xs ds4` from `controls/xs.json` and
   `controls/ds4.json`, judged on the overlays in `scratch/controls/`.
 
+### Xbox Wireless Controller, Series X|S (Robot White) -> `xbox series robot white-src.png`
+
+- **Source:** generated, not photographed. One Codex CLI image edit
+  (`codex exec`, built-in image tool), 2026-10-13, of `xbox series-src.png`,
+  colours only, 1536x1024 like its source. The demo's corner pad shows it on
+  light pages; `cut-xs.png` stays the dark one.
+- **Licence:** none needed; no third party's photo or scan.
+- **Reference:** Microsoft's Robot White product photo,
+  https://assets.xboxservices.com/assets/d3/b8/d3b82872-cea1-4f26-81c8-c8da49a27362.jpg
+  (xbox.com accessories page), read for each part's colour. Not tracked.
+- **Prompt (verbatim):**
+
+  > Edit the attached image (input.png): an official studio product photo of a
+  > black Xbox Wireless Controller (Series X|S). Recolour it into the Robot White
+  > version, using your image editing tool, and save the result as output.png in
+  > the current directory at exactly the same pixel dimensions (1536x1024).
+  >
+  > Keep pose, framing, geometry, outline, lighting direction, shadows,
+  > background colour, and every part's position and size EXACTLY unchanged.
+  > Change colours only. Do not add, remove, or move anything. Do not redraw;
+  > edit.
+  >
+  > Robot White colours (from Microsoft's product photo):
+  > - Shell, grips, top surface, bumper tops: bright clean white with a very
+  >   faint cool grey shading (as the product photo), not cream, not grey.
+  > - Xbox button: black disc with the white Xbox logo.
+  > - A/B/X/Y: glossy black caps keeping their coloured letters: Y yellow top,
+  >   X blue left, B red right, A green bottom.
+  > - D-pad: black hybrid dish and cross (same as the black version, stays
+  >   black / dark grey).
+  > - Both thumbsticks: black knurled rims with dark grey concave centres, each
+  >   sitting in a raised white collar ring that is part of the white shell.
+  > - View, Menu and Share buttons: small white/very light grey round buttons
+  >   with mid-grey icons (not black).
+  > - The flat mid-grey backdrop stays the same grey.
+
+- **Gate:** each part against the reference: white shell, grips and bumpers
+  (pass; the bumpers' top edge almost vanishes on a light page, as the real
+  pad's does); black Xbox button with the white logo (pass, a little glossier
+  than the photo); black ABXY caps with coloured letters (pass); black D-pad
+  (pass); black stick rims in white collars (pass); white View, Menu and Share
+  with grey icons (pass). The grips carry no dot texture, as on the dark one.
+- **Cut:** `scripts/pad-cut.py xs-white`, one Vision instance, 1514x1006 native
+  -> 1142x759, the same box as `xs` (`crop.json`), so `art/controls-xs.svg`
+  fits it unchanged. Alpha-mask IoU against `cut-xs.png`: 0.9977 (1,379 pixels
+  differ). Fringe on `#f5f5f7` at 500%: no grey backdrop survives at the
+  grips, the top edge or the bumpers. Interior part positions were checked by
+  eye on the overlay, not by the per-part phase correlation used for `xs`.
+
 ### Generic pads (graphite, white, navy) -> `generic-graphite-src.png`, `generic-white-src.png`, `generic-navy-src.png`
 
 - **Source:** generated, not photographed. Codex CLI image generation
