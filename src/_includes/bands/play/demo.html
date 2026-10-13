@@ -1,8 +1,11 @@
 <!-- THE DEMO. A pretend Mac desk that a controller, the keyboard or the mouse
      drives with Steer's defaults (sources in scripts/steer-demo.js). It plays
      itself until the first press. Without script it is the still frame:
-     the keyboard open over Notes, "Hello, Mac" typed. -->
-<div class="sd" data-steer-demo>
+     the keyboard open over Notes, "Hello, Mac" typed. It is drawn as a
+     DualSense, which is what the still frame shows; the script redraws it as an
+     Xbox pad, then as whichever pad the visitor connects. data-g marks a glyph
+     and data-w a button's name, both rewritten per pad (FAMS in the script). -->
+<div class="sd" data-steer-demo data-fam="ps">
   <p class="sd-status">
     <span id="sd-said" aria-live="polite">The keyboard is open and “Hello, Mac” is typed.</span>
     <span class="sd-src" id="sd-src">Still frame</span>
@@ -28,17 +31,17 @@
         <div class="sd-rows" id="sd-rows"></div>
         <div class="sd-ft">
           <div class="sd-side">
-            <span class="sd-hint"><span class="sd-g">L</span><span class="sd-g">L2</span>Aim, type</span>
-            <span class="sd-hint"><span class="sd-g">L1</span>Shift</span>
-            <span class="sd-hint"><span class="sd-g">L3</span>Dictation</span>
+            <span class="sd-hint"><span class="sd-gl gl-ls" data-g="ls" aria-hidden="true"></span><span class="sd-gl gl-l2" data-g="l2" aria-hidden="true"></span>Aim, type</span>
+            <span class="sd-hint"><span class="sd-gl gl-l1" data-g="l1" aria-hidden="true"></span>Shift</span>
+            <span class="sd-hint"><span class="sd-gl gl-l3" data-g="l3" aria-hidden="true"></span>Dictation</span>
             <span class="sd-dcross"><span></span><span id="sd-dU">⇧</span><span></span><span id="sd-dL">⌃</span><span>✚</span><span id="sd-dR">⌘</span><span></span><span id="sd-dD">⌥</span><span></span></span>
           </div>
           <div class="sd-side sd-r">
-            <span class="sd-hint"><span class="sd-g">R</span><span class="sd-g">R2</span>Aim, type</span>
-            <span class="sd-hint"><span class="sd-g">R3</span>Close</span>
-            <span class="sd-hint"><span class="sd-g sd-round sd-cross">✕</span>Space</span>
-            <span class="sd-hint"><span class="sd-g sd-round sd-sq">□</span>Delete</span>
-            <span class="sd-hint"><span class="sd-g sd-round sd-circle">○</span>Return</span>
+            <span class="sd-hint"><span class="sd-gl gl-rs" data-g="rs" aria-hidden="true"></span><span class="sd-gl gl-r2" data-g="r2" aria-hidden="true"></span>Aim, type</span>
+            <span class="sd-hint"><span class="sd-gl gl-r3" data-g="r3" aria-hidden="true"></span>Close</span>
+            <span class="sd-hint"><span class="sd-gl gl-ps-cross t-blue" data-g="cross" aria-hidden="true"></span>Space</span>
+            <span class="sd-hint"><span class="sd-gl gl-ps-square t-pink" data-g="sq" aria-hidden="true"></span>Delete</span>
+            <span class="sd-hint"><span class="sd-gl gl-ps-circle t-red" data-g="circle" aria-hidden="true"></span>Return</span>
           </div>
         </div>
       </div>
@@ -46,7 +49,7 @@
 
     <div class="sd-ring" id="sd-ring" hidden aria-hidden="true">
       <div class="sd-plate" id="sd-plate"><div class="sd-hole" id="sd-hole">Point the left stick</div></div>
-      <div class="sd-pillbar"><span><span class="sd-g">L</span>Aim</span><span><span class="sd-g sd-round sd-cross">✕</span>Select</span><span><span class="sd-g sd-round sd-circle">○</span>Cancel</span></div>
+      <div class="sd-pillbar"><span><span class="sd-gl gl-ls" data-g="ls" aria-hidden="true"></span>Aim</span><span><span class="sd-gl gl-ps-cross t-blue" data-g="cross" aria-hidden="true"></span>Select</span><span><span class="sd-gl gl-ps-circle t-red" data-g="circle" aria-hidden="true"></span>Cancel</span></div>
     </div>
 
     <div class="sd-help" id="sd-help" hidden>
@@ -59,17 +62,29 @@
     <div class="sd-ghost" id="sd-ghost" aria-hidden="true"></div>
 
     <!-- The controller view, as in the app's corner view: the real pad, each
-         control lit while it is pressed. Outlines: art/controls-ps.svg. -->
+         control lit while it is pressed. Outlines: art/controls-*.svg, cut to
+         each picture's box (tools/pads/crop.json). The Switch Pro has no white
+         picture, so it is the same on both themes. -->
     <div class="sd-pad" id="sd-pad" aria-hidden="true">
-      <span class="sd-trig" data-t="l2">L2</span><span class="sd-trig" data-t="r2">R2</span>
-      <img class="pad-lt" src="assets/pads/cut-ps-unlit.png" eleventy:widths="300,600" width="1202" height="778" sizes="300px" alt=""><img class="pad-dk" src="assets/pads/cut-ps-unlit-dark.png" eleventy:widths="300,600" width="1202" height="778" sizes="300px" loading="lazy" alt="">
-      {% include "art/controls-ps.svg" %}
+      <span class="sd-trig" data-t="l2" data-w="l2">L2</span><span class="sd-trig" data-t="r2" data-w="r2">R2</span>
+      <div class="sd-padf" data-f="ps">
+        <img class="pad-lt" src="assets/pads/cut-ps-unlit.png" eleventy:widths="300,600" width="1202" height="778" sizes="300px" loading="lazy" alt=""><img class="pad-dk" src="assets/pads/cut-ps-unlit-dark.png" eleventy:widths="300,600" width="1202" height="778" sizes="300px" loading="lazy" alt="">
+        {% include "art/controls-ps.svg" %}
+      </div>
+      <div class="sd-padf" data-f="xb">
+        <img class="pad-lt" src="assets/pads/cut-xs-white.png" eleventy:widths="300,600" width="1142" height="759" sizes="300px" loading="lazy" alt=""><img class="pad-dk" src="assets/pads/cut-xs.png" eleventy:widths="300,600" width="1142" height="759" sizes="300px" loading="lazy" alt="">
+        {% include "art/controls-xs.svg" %}
+      </div>
+      <div class="sd-padf" data-f="sw">
+        <img src="assets/pads/cut-sw.png" eleventy:widths="300,600" width="1126" height="732" sizes="300px" loading="lazy" alt="">
+        {% include "art/controls-sw.svg" %}
+      </div>
     </div>
 
     <div class="sd-dock" role="group" aria-label="Controller buttons">
-      <button type="button" data-press="r3"><span class="sd-g">R3</span>Keyboard</button>
-      <button type="button" data-press="l3"><span class="sd-g">L3</span>Your apps</button>
-      <button type="button" data-press="create"><span class="sd-g">Create</span>Help card</button>
+      <button type="button" data-press="r3"><span class="sd-gl gl-r3" data-g="r3" aria-hidden="true"></span>Keyboard</button>
+      <button type="button" data-press="l3"><span class="sd-gl gl-l3" data-g="l3" aria-hidden="true"></span>Your apps</button>
+      <button type="button" data-press="create"><span class="sd-gl gl-ps-create" data-g="create" aria-hidden="true"></span>Help card</button>
     </div>
   </div>
 
@@ -77,10 +92,10 @@
     <p id="sd-keyhelp">Click the demo, then:
       <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> left stick,
       <kbd>I</kbd><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd> right stick,
-      <kbd>Q</kbd> L2, <kbd>O</kbd> R2, <kbd>Shift</kbd> L1, <kbd>U</kbd> R1,
-      <kbd>Z</kbd> L3, <kbd>M</kbd> R3,
-      <kbd>Space</kbd> ✕, <kbd>Enter</kbd> ○, <kbd>Backspace</kbd> □, <kbd>T</kbd> △,
-      arrows the D-pad, <kbd>H</kbd> Create, <kbd>Esc</kbd> Options.</p>
+      <kbd>Q</kbd> <span data-w="l2">L2</span>, <kbd>O</kbd> <span data-w="r2">R2</span>, <kbd>Shift</kbd> <span data-w="l1">L1</span>, <kbd>U</kbd> <span data-w="r1">R1</span>,
+      <kbd>Z</kbd> <span data-w="l3">L3</span>, <kbd>M</kbd> <span data-w="r3">R3</span>,
+      <kbd>Space</kbd> <span data-w="cross">✕</span>, <kbd>Enter</kbd> <span data-w="circle">○</span>, <kbd>Backspace</kbd> <span data-w="sq">□</span>, <kbd>T</kbd> <span data-w="tri">△</span>,
+      arrows the D-pad, <kbd>H</kbd> <span data-w="create">Create</span>, <kbd>Esc</kbd> <span data-w="options">Options</span>.</p>
   </details>
   <p class="sd-phone" id="sd-phone">This is Steer’s on-screen keyboard. Open this page on a Mac and plug in a controller to drive it.</p>
 </div>

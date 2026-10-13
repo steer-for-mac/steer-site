@@ -4,6 +4,11 @@
 //   base layer        SteerCore/Defaults.swift:49-69; ring apps RadialMenuDefaults.swift:60-70
 // It plays itself until the first press, except under automation or reduced motion.
 
+// Each pad as the app draws it: names ButtonDefs.swift xboxNames/switchNames, glyphs
+// Strings.swift sfSymbols/xboxSFSymbols/nintendoSFSymbols, hues ButtonGlyph.swift. With no
+// touchpad, Dictation moves to L1 + the top face button (Config/ProfileDefaults.swift:19-23).
+// word: a button's name in a sentence; face: its help-table name; gl: its glyph classes.
+
 const K = (label, opts = {}) => ({ label, u: 1, ...opts });
 const ch = (c, shifted) => K(c, { ch: c, sh: shifted ?? c.toUpperCase() });
 const LAYOUT = [
@@ -20,11 +25,36 @@ const LAYOUT = [
   [[K("fn", { k: "fn", mod: true }), K("control", { k: "control", mod: true }), K("option", { k: "option", mod: true }), K("command", { u: 1.25, k: "command", mod: true }), K("", { u: 2.5, k: "space" })],
     [K("", { u: 2.5, k: "space" }), K("command", { u: 1.25, k: "command", mod: true }), K("option", { k: "option", mod: true }), K("←", { k: "left" }), K("↑↓", { k: "updown" }), K("→", { k: "right" })]],
 ];
+const FAMS = {
+  ps: { name: "PlayStation", touch: true,
+    word: { cross: "✕", circle: "○", sq: "□", tri: "△", l1: "L1", r1: "R1", l2: "L2", r2: "R2", l3: "L3", r3: "R3", create: "Create", options: "Options" },
+    face: { cross: "Cross ✕", circle: "Circle ○", sq: "Square □", tri: "Triangle △" },
+    say: { cross: "Cross", create: "Create" },
+    gl: { cross: "gl-ps-cross t-blue", circle: "gl-ps-circle t-red", sq: "gl-ps-square t-pink", tri: "gl-ps-tri t-green",
+      l1: "gl-l1", r1: "gl-r1", l2: "gl-l2", r2: "gl-r2", create: "gl-ps-create", options: "gl-ps-options" } },
+  xb: { name: "Xbox", touch: false,
+    word: { cross: "A", circle: "B", sq: "X", tri: "Y", l1: "LB", r1: "RB", l2: "LT", r2: "RT", l3: "LS", r3: "RS", create: "View", options: "Menu" },
+    face: { cross: "A", circle: "B", sq: "X", tri: "Y" },
+    say: { cross: "", create: "View" },
+    gl: { cross: "gl-a t-green", circle: "gl-b t-red", sq: "gl-x t-blue", tri: "gl-y t-yellow",
+      l1: "gl-lb", r1: "gl-rb", l2: "gl-lt", r2: "gl-rt", create: "gl-xb-view", options: "gl-xb-menu" } },
+  sw: { name: "Switch Pro", touch: false,
+    word: { cross: "B", circle: "A", sq: "Y", tri: "X", l1: "L", r1: "R", l2: "ZL", r2: "ZR", l3: "L3", r3: "R3", create: "−", options: "+" },
+    face: { cross: "B", circle: "A", sq: "Y", tri: "X" },
+    say: { cross: "", create: "" },
+    gl: { cross: "gl-b", circle: "gl-a", sq: "gl-y", tri: "gl-x",
+      l1: "gl-sw-l", r1: "gl-sw-r", l2: "gl-zl", r2: "gl-zr", create: "gl-minus", options: "gl-plus" } },
+};
+const STICK_GL = { ls: "gl-ls", rs: "gl-rs", l3: "gl-l3", r3: "gl-r3", L: "gl-ls", R: "gl-rs" };
+// The browser's name for a pad says whose it is; Xbox first, since its pads are "Xbox Wireless Controller".
+const famOf = (id) => (/xbox|045e/i.test(id) ? "xb" : /dualsense|dualshock|wireless controller|054c/i.test(id) ? "ps"
+  : /pro controller|057e/i.test(id) ? "sw" : null);
 const APPS = ["Safari", "Finder", "Music", "Mail", "Calendar", "Notes", "Messages", "Settings", "Maps"];
-const BASE = [["Cross ✕", "Left Click"], ["Circle ○", "Right Click"], ["Triangle △", "Return"], ["Square □", "Escape"],
-  ["L1", "Back, hold for its layer"], ["R1", "Spotlight, hold for its layer"], ["L2", "App Switch, hold for its layer"],
-  ["R2", "Space, hold for its layer"], ["D-pad", "Arrow keys"], ["Left stick", "Mouse; press for your apps"],
-  ["Right stick", "Scroll; press for the keyboard"], ["Options", "Mission Control"], ["Create", "Help Card"], ["Touchpad press", "Dictation"]];
+const BASE = (F) => [[F.face.cross, "Left Click"], [F.face.circle, "Right Click"], [F.face.tri, "Return"], [F.face.sq, "Escape"],
+  [F.word.l1, "Back, hold for its layer"], [F.word.r1, "Spotlight, hold for its layer"], [F.word.l2, "App Switch, hold for its layer"],
+  [F.word.r2, "Space, hold for its layer"], ["D-pad", "Arrow keys"], ["Left stick", "Mouse; press for your apps"],
+  ["Right stick", "Scroll; press for the keyboard"], [F.word.options, "Mission Control"], [F.word.create, "Help Card"],
+  F.touch ? ["Touchpad press", "Dictation"] : [`Hold ${F.word.l1}, press ${F.word.tri}`, "Dictation"]];
 const BASEJOB = { cross: "Left Click", circle: "Right Click", tri: "Return", sq: "Escape", l1: "Back", r1: "Spotlight", l2: "App Switch", r2: "Space",
   options: "Mission Control", up: "Arrow Up", down: "Arrow Down", left: "Arrow Left", right: "Arrow Right", touch: "Dictation" };
 const ONLY_NAMED = ["r1", "l2", "options", "touch", "l1", "circle"];
@@ -34,9 +64,8 @@ const WORDS = ["hello", "help", "here", "have", "how", "happy", "mac", "make", "
 const KEYMAP = { " ": "cross", Enter: "circle", Backspace: "sq", t: "tri", q: "l2", o: "r2", u: "r1", z: "l3", m: "r3", h: "create", Escape: "options",
   ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right" };
 const STD = ["cross", "circle", "sq", "tri", "l1", "r1", "l2", "r2", "create", "options", "l3", "r3", "up", "down", "left", "right", null, "touch"];
-// The chip while it plays: the glyph, then the control in plain words.
-const SAY = { cross: ["✕", "Cross"], create: ["Create", "Create"], l2: ["L2", "Left trigger"], r2: ["R2", "Right trigger"],
-  l3: ["L3", "Left stick press:"], r3: ["R3", "Right stick press"], L: ["L", "Left stick"], R: ["R", "Right stick"] };
+// The chip while it plays: the glyph, then the control in plain words where its glyph doesn't say it.
+const SAY = { l2: "Left trigger", r2: "Right trigger", l3: "Left stick press:", r3: "Right stick press", L: "Left stick", R: "Right stick" };
 
 const cap = (s) => s[0].toUpperCase() + s.slice(1);
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" })[c]);
@@ -56,6 +85,10 @@ function init(root) {
   const osk = $("osk"), rows = $("rows"), ring = $("ring"), plate = $("plate"), hole = $("hole");
   const help = $("help"), toast = $("toast"), pointer = $("pointer"), ghost = $("ghost");
   root.classList.add("sd-js");
+  let fam = root.dataset.fam, F = FAMS[fam];
+  const glyph = (b) => `<span class="sd-gl ${F.gl[b] || STICK_GL[b]}" aria-hidden="true"></span>`;
+  // A + or − alone can't start a sentence.
+  const btn = (b) => (fam === "sw" && (b === "create" || b === "options") ? `the ${F.word[b]} button` : F.word[b]);
 
   const cur = { 0: find(0, "f"), 1: find(1, "j") };
   const state = { open: true, text: "Hello, Mac", caps: false, shiftHeld: false, latch: new Set(), sugg: [], sel: -1,
@@ -77,7 +110,7 @@ function init(root) {
           if (state.latch.has(k.k) || (k.k === "shift" && state.shiftHeld) || (k.k === "caps" && state.caps)) d.classList.add("held");
           if (cur[side].row === r && cur[side].idx === i) {
             d.classList.add("lit");
-            const b = document.createElement("span"); b.className = "sd-badge"; b.textContent = side === 0 ? "L2" : "R2"; d.append(b);
+            const b = document.createElement("span"); b.className = "sd-badge"; b.textContent = F.word[side === 0 ? "l2" : "r2"]; d.append(b);
           }
           h.append(d);
         });
@@ -164,21 +197,33 @@ function init(root) {
     const i = Math.round(a / (Math.PI * 2 / APPS.length)) % APPS.length;
     if (i !== state.ringSel) { state.ringSel = i; drawRing(); say(`Pointing at ${APPS[i]}`); }
   }
-  function openRing() { state.ring = true; state.ringSel = -1; ring.hidden = false; drawRing(); say("Your apps. Point the left stick, then ✕ to pick one."); }
+  function openRing() { state.ring = true; state.ringSel = -1; ring.hidden = false; drawRing(); say(`Your apps. Point the left stick, then ${F.word.cross} to pick one.`); }
   function closeRing() { state.ring = false; ring.hidden = true; }
   function ringSelect() {
     if (state.ringSel < 0) return say("Point at an app first");
     const n = APPS[state.ringSel]; closeRing(); showToast(`On your Mac, this opens ${n}.`); return say(`Picked ${n}`);
   }
 
-  $("helptable").querySelector("tbody").innerHTML = BASE.map(([a, b]) => `<tr><th scope="row">${a}</th><td>${b}</td></tr>`).join("");
   function toggleHelp() {
     state.help = !state.help; help.hidden = !state.help;
-    say(state.help ? "Help card. Options shows it as a table, Create closes it." : "Help card closed");
+    say(state.help ? `Help card. ${cap(btn("options"))} shows it as ${table().hidden ? "a table" : "the picture"}, ${btn("create")} closes it.` : "Help card closed");
   }
+  const table = () => $("helptable");
+  function showTable(on) { table().hidden = !on; help.classList.toggle("as-table", on); }
   function toggleTable() {
-    const t = $("helptable"); t.hidden = !t.hidden; help.classList.toggle("as-table", !t.hidden);
-    say(t.hidden ? "Help card as the picture" : "Help card as a table");
+    showTable(table().hidden);
+    say(table().hidden ? `Help card as the picture${fam === "ps" ? "" : ", taken with a DualSense"}` : "Help card as a table");
+  }
+
+  // Redraw every name and glyph as another pad's. The help card's picture is a
+  // DualSense capture, so any other pad opens it as the table.
+  function setFamily(f) {
+    fam = f; F = FAMS[f]; root.dataset.fam = f;
+    root.querySelectorAll("[data-g]").forEach((el) => { el.className = `sd-gl ${F.gl[el.dataset.g] || STICK_GL[el.dataset.g]}`; });
+    root.querySelectorAll("[data-w]").forEach((el) => { el.textContent = F.word[el.dataset.w]; });
+    table().querySelector("tbody").innerHTML = BASE(F).map(([a, b]) => `<tr><th scope="row">${esc(a)}</th><td>${b}</td></tr>`).join("");
+    showTable(f !== "ps");
+    drawKeyboard();
   }
 
   function openKeyboard() { state.open = true; osk.hidden = false; cur[0] = find(0, "f"); cur[1] = find(1, "j"); drawKeyboard(); say("Keyboard. Each stick aims at its half, the triggers type."); }
@@ -188,11 +233,12 @@ function init(root) {
   const PADPART = { cross: "cross", circle: "circle", sq: "square", tri: "triangle", l1: "l1", r1: "r1", create: "create", options: "options", l3: "ls", r3: "rs", up: "up", down: "down", left: "left", right: "right", touch: "touchpad" };
   const pad = $("pad");
   function light(b) {
-    const el = PADPART[b] ? pad.querySelector(`[data-c="${PADPART[b]}"]`) : pad.querySelector(`[data-t="${b}"]`);
+    const el = PADPART[b] ? pad.querySelector(`.sd-padf[data-f="${fam}"] [data-c="${PADPART[b]}"]`) : pad.querySelector(`[data-t="${b}"]`);
     if (!el) return;
     el.classList.add("on"); setTimeout(() => el.classList.remove("on"), 260);
   }
   function press(b) {
+    if (b === "touch" && !F.touch) return undefined;
     light(b);
     if (state.help) {
       if (b === "create") return toggleHelp();
@@ -217,15 +263,15 @@ function init(root) {
         case "circle": return ret();
         case "r1":
           if (!state.sugg.length) return say("No suggestions yet");
-          state.sel = (state.sel + 1) % state.sugg.length; suggest(); return say(`Suggestion: ${state.sugg[state.sel]}. △ types it.`);
+          state.sel = (state.sel + 1) % state.sugg.length; suggest(); return say(`Suggestion: ${state.sugg[state.sel]}. ${F.word.tri} types it.`);
         case "tri": {
-          if (state.sel < 0) return say("Pick a suggestion with R1 first");
+          if (state.sel < 0) return say(`Pick a suggestion with ${F.word.r1} first`);
           const w = state.sugg[state.sel]; state.text = state.text.replace(/[A-Za-z]+$/, w); state.sel = -1; renderText();
           return say(`Typed the rest of “${w}”`);
         }
         case "l3": return say("Dictation. On your Mac, say it and the words appear in Notes.");
         case "r3": case "options": return closeKeyboard();
-        case "create": return say("Create switches the input source. This page only has one.");
+        case "create": return say(`${cap(btn("create"))} switches the input source. This page only has one.`);
         default: return undefined;
       }
     }
@@ -234,7 +280,7 @@ function init(root) {
       case "r3": return openKeyboard();
       case "create": return toggleHelp();
       case "r2": state.text += " "; renderText(); return say("Space");
-      case "tri": return ret();
+      case "tri": return F.touch || !state.shiftHeld ? ret() : say("Dictation (on your Mac)");
       default: break;
     }
     if (BASEJOB[b]) say(`${BASEJOB[b]}${ONLY_NAMED.includes(b) ? " (on your Mac)" : ""}`);
@@ -307,8 +353,8 @@ function init(root) {
   const sleep = (ms) => new Promise((r) => { timers.push(setTimeout(r, ms)); });
   const live = () => { if (!attract) throw new Error("stopped"); };
   function show(b, verb) {
-    const [g, words] = SAY[b] || [b, ""];
-    ghost.innerHTML = `<span class="sd-g">${esc(g)}</span>${esc(`${words} ${verb}`.trim())}`;
+    const words = SAY[b] ?? F.say[b] ?? "";
+    ghost.innerHTML = `<span class="sd-gk">${glyph(b)}</span>${esc(`${words} ${verb}`.trim())}`;
     ghost.classList.add("on");
   }
   async function tap(b, verb, wait = 950) { live(); show(b, verb); press(b); release(b); await sleep(wait); }
@@ -358,12 +404,13 @@ function init(root) {
   }
 
   // ---------- A real controller, standard mapping ----------
-  let prev = [], last = performance.now();
+  let prev = [], last = performance.now(), padId = "";
   function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     let lx = (held.has("d") ? 1 : 0) - (held.has("a") ? 1 : 0), ly = (held.has("s") ? 1 : 0) - (held.has("w") ? 1 : 0);
     let rx = (held.has("l") ? 1 : 0) - (held.has("j") ? 1 : 0), ry = (held.has("k") ? 1 : 0) - (held.has("i") ? 1 : 0);
     const gp = [...(navigator.getGamepads ? navigator.getGamepads() : [])].find(Boolean);
+    if (gp && gp.id !== padId) { padId = gp.id; const f = famOf(gp.id); if (f && f !== fam) setFamily(f); }
     if (gp) {
       if (attract && gp.buttons.some((b) => b.pressed)) stop();
       const ax = gp.axes;
@@ -382,7 +429,7 @@ function init(root) {
     requestAnimationFrame(frame);
   }
 
-  drawKeyboard(); renderText(); drawPointer();
+  setFamily("xb"); renderText(); drawPointer();
   addEventListener("resize", drawPointer);
   requestAnimationFrame(frame);
 }

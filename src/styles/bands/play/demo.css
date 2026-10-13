@@ -7,7 +7,8 @@
   --sd-key: #ffffff; --sd-key-edge: rgba(0, 0, 0, .1); --sd-key-mod: #fbfbfc;
   --sd-lit: #2a68dc; --sd-on-lit: #ffffff; --sd-lit-ink: #2a68dc; --sd-pill: rgba(255, 255, 255, .94);
   --sd-shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 10px 30px rgba(0, 0, 0, .1);
-  --sd-cross: #2f6fd0; --sd-circle: #c9343f; --sd-sq: #b2468b;
+  /* Face-button hues, each >= 3.8:1 on every surface a glyph sits on (--bg-inset at worst). */
+  --sd-cross: #2f6fd0; --sd-circle: #c9343f; --sd-sq: #b2468b; --sd-tri: #2a8a3e; --sd-yellow: #9a7412;
   --sd-r-key: 7px; --sd-r-small: 6px; --sd-r-win: 12px; --sd-r-plate: 22px; --sd-r-round: 50%;
 }
 [data-theme="dark"] .sd {
@@ -16,7 +17,7 @@
   --sd-key: #3a3a3f; --sd-key-edge: rgba(255, 255, 255, .08); --sd-key-mod: #333338;
   --sd-pill: rgba(44, 44, 48, .94); --sd-lit-ink: #8ab8ff;
   --sd-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px rgba(0, 0, 0, .5);
-  --sd-cross: #7fb0ff; --sd-circle: #ff8a90; --sd-sq: #f08cc9;
+  --sd-cross: #7fb0ff; --sd-circle: #ff8a90; --sd-sq: #f08cc9; --sd-tri: #5fd37a; --sd-yellow: #ffd04d;
 }
 
 .sd { color: var(--text); }
@@ -52,12 +53,46 @@
 .sd-dock button { font-weight: 600; font-size: 14px; line-height: 1; font-family: inherit; color: var(--text); background: var(--bg-sunken); border: 1px solid var(--sep); border-radius: var(--sd-r-win); min-height: 44px; padding: 0 14px; display: flex; gap: 8px; align-items: center; cursor: pointer; }
 .sd-dock button:hover { background: var(--bg-inset); }
 
-/* The app's button glyphs. */
-.sd-g { display: inline-grid; place-items: center; min-width: 24px; height: 22px; padding: 0 5px; border-radius: var(--sd-r-small); border: 1.5px solid currentColor; font-size: 11px; font-weight: 700; line-height: 1; color: var(--text-2); }
-.sd-round { border-radius: var(--sd-r-round); min-width: 22px; padding: 0; font-size: 12px; }
-.sd-cross { color: var(--sd-cross); }
-.sd-circle { color: var(--sd-circle); }
-.sd-sq { color: var(--sd-sq); }
+/* The app's button glyphs: the SF Symbols Steer draws (tools/glyphs/render.swift),
+   as masks filled with a token. A face button takes its pad's hue, as in the app
+   (ButtonGlyph.swift); the Switch's are uncoloured, like the pad. */
+.sd-gl { display: inline-block; flex: none; height: 1.35em; aspect-ratio: 1; vertical-align: middle; color: var(--text-2); background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
+.sd-gl.t-blue { color: var(--sd-cross); }
+.sd-gl.t-red { color: var(--sd-circle); }
+.sd-gl.t-pink { color: var(--sd-sq); }
+.sd-gl.t-green { color: var(--sd-tri); }
+.sd-gl.t-yellow { color: var(--sd-yellow); }
+.gl-ps-cross { --m: url("assets/glyphs/xmark.circle.png"); }
+.gl-ps-circle { --m: url("assets/glyphs/circle.circle.png"); }
+.gl-ps-square { --m: url("assets/glyphs/square.circle.png"); }
+.gl-ps-tri { --m: url("assets/glyphs/triangle.circle.png"); }
+.gl-a { --m: url("assets/glyphs/a.circle.png"); }
+.gl-b { --m: url("assets/glyphs/b.circle.png"); }
+.gl-x { --m: url("assets/glyphs/x.circle.png"); }
+.gl-y { --m: url("assets/glyphs/y.circle.png"); }
+.gl-minus { --m: url("assets/glyphs/minus.circle.png"); }
+.gl-plus { --m: url("assets/glyphs/plus.circle.png"); }
+.gl-l1 { --m: url("assets/glyphs/l1.button.roundedbottom.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-r1 { --m: url("assets/glyphs/r1.button.roundedbottom.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-l2 { --m: url("assets/glyphs/l2.button.roundedtop.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-r2 { --m: url("assets/glyphs/r2.button.roundedtop.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-lb { --m: url("assets/glyphs/lb.button.roundedbottom.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-rb { --m: url("assets/glyphs/rb.button.roundedbottom.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-lt { --m: url("assets/glyphs/lt.button.roundedtop.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-rt { --m: url("assets/glyphs/rt.button.roundedtop.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-sw-l { --m: url("assets/glyphs/l.button.roundedbottom.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-sw-r { --m: url("assets/glyphs/r.button.roundedbottom.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-zl { --m: url("assets/glyphs/zl.button.roundedtop.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-zr { --m: url("assets/glyphs/zr.button.roundedtop.horizontal.png"); aspect-ratio: 67 / 49; }
+.gl-ps-create { --m: url("assets/glyphs/rectangle.on.rectangle.button.angledtop.vertical.left.png"); aspect-ratio: 54 / 59; }
+.gl-ps-options { --m: url("assets/glyphs/line.3.horizontal.button.angledtop.vertical.right.png"); aspect-ratio: 54 / 59; }
+.gl-xb-view { --m: url("assets/glyphs/square.on.square.png"); aspect-ratio: 62 / 58; }
+.gl-xb-menu { --m: url("assets/glyphs/line.3.horizontal.png"); aspect-ratio: 60 / 32; height: .8em; }
+.gl-ls { --m: url("assets/glyphs/l.joystick.png"); aspect-ratio: 57 / 53; }
+.gl-rs { --m: url("assets/glyphs/r.joystick.png"); aspect-ratio: 57 / 53; }
+.gl-l3 { --m: url("assets/glyphs/l.joystick.press.down.png"); aspect-ratio: 57 / 62; }
+.gl-r3 { --m: url("assets/glyphs/r.joystick.press.down.png"); aspect-ratio: 57 / 62; }
+@media (forced-colors: active) { .sd-gl { background: CanvasText; } }
 
 /* The split keyboard. Without script the real capture stands in. */
 .sd-osk { position: absolute; left: 50%; bottom: 86px; transform: translateX(-50%); width: min(80%, 880px); background: var(--sd-plate); border: 1px solid var(--sd-plate-edge); border-radius: var(--sd-r-plate); box-shadow: var(--sd-shadow); padding: 14px 16px 12px; z-index: 20; }
@@ -114,7 +149,9 @@
 /* While it plays itself: the button being pressed, in plain words. */
 .sd-ghost { position: absolute; left: 50%; top: 52px; transform: translate(-50%, 8px); opacity: 0; display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px 8px 8px; border-radius: var(--r-btn); background: var(--text); color: var(--bg); font-weight: 600; font-size: 18px; transition: opacity .2s cubic-bezier(.2, .7, .2, 1), transform .2s cubic-bezier(.2, .7, .2, 1); z-index: 40; pointer-events: none; white-space: nowrap; }
 .sd-ghost.on { opacity: 1; transform: translate(-50%, 0); }
-.sd-ghost .sd-g { background: var(--bg); color: var(--text); border-color: var(--bg); min-width: 32px; height: 32px; border-radius: var(--r-btn); font-size: 15px; }
+/* The glyph sits on a disc of the page colour, so its hue reads on the dark pill. */
+.sd-gk { display: inline-grid; place-items: center; min-width: 34px; height: 34px; padding: 0 4px; border-radius: var(--r-btn); background: var(--bg); }
+.sd-gk .sd-gl { height: 26px; }
 
 .sd-keys { margin-top: 12px; font-size: 14px; color: var(--text-2); }
 .sd-keys summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
@@ -152,6 +189,9 @@
 .sd .sd-pad img { display: block; width: 100%; height: auto; }
 .sd .sd-pad .pad-dk, [data-theme="dark"] .sd .sd-pad .pad-lt { display: none; }
 [data-theme="dark"] .sd .sd-pad .pad-dk { display: block; }
+/* One pad per family; the demo shows the one it is being driven as. */
+.sd .sd-padf { display: none; }
+.sd[data-fam="ps"] .sd-padf[data-f="ps"], .sd[data-fam="xb"] .sd-padf[data-f="xb"], .sd[data-fam="sw"] .sd-padf[data-f="sw"] { display: block; }
 .sd .sd-pad svg { position: absolute; left: 10px; right: 10px; bottom: 8px; width: calc(100% - 20px); height: auto; }
 .sd .sd-pad path { fill: transparent; transition: fill .12s ease-out; }
 .sd .sd-pad path.on { fill: color-mix(in srgb, var(--blue) 70%, transparent); }

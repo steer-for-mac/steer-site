@@ -140,10 +140,11 @@ test.describe("without JavaScript", () => {
 });
 
 for (const path of ["/index.html", "/play.html"]) {
-  test(`${path}: each DualSense picture shows the theme's colour, and light never loads the dark one`, async ({ page }) => {
+  test(`${path}: each pad picture shows the theme's colour, and light never loads the dark one`, async ({ page }) => {
     await page.emulateMedia({ colorScheme: "light" });
     await page.goto(path);
-    const pairs = page.locator(":is(.pad, .sd-pad):has(.pad-lt)");
+    /* The demo holds one pair per pad family and shows the one it is drawn as. */
+    const pairs = page.locator(":is(.pad, .sd-padf):has(.pad-lt)").filter({ visible: true });
     expect(await pairs.count()).toBeGreaterThanOrEqual(1);
     for (const pad of await pairs.all()) {
       await pad.scrollIntoViewIfNeeded();
