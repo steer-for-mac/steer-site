@@ -181,6 +181,20 @@ rejected candidates and why.
   decoration paths are empty, which `pad-export-app.py` now allows for
   decoration only.
 
+### DualSense (Midnight Black) -> `dualsense midnight-src.png`
+
+- **Source:** generated, not photographed. A Codex image edit, 2026-10-07
+  (steer-site 61ea5d4), of `cut-ps-unlit.png` in the same pose at its exact
+  1202x778, on white. That output was not kept; the cutout it made was
+  committed with Vision's raw soft matte, so every pixel with any alpha still
+  held the generated colour. The source was recovered on 2026-10-13 by laying
+  that cutout on white, so it reproduces the generated image wherever the pad
+  or its edge was.
+- **Licence:** none needed; no third party's photo or scan.
+- **Cut:** `scripts/pad-cut.py ps-unlit-dark`, box the whole frame
+  (`crop.json`), so `art/controls-ps.svg` fits it unchanged. The pad touches
+  the frame's edges, as it did.
+
 ## Superseded
 
 ### DualSense (white) -> was `dualsense-src.png` (installed 5a41a9d, 2026-09-27)
