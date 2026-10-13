@@ -29,16 +29,23 @@
   });
   // A card wider than its column (the help card on a phone) starts centred, and
   // the line follows it as it scrolls.
-  figs.forEach((f) => f.querySelectorAll(".hcard").forEach((h) => {
-    if (h.scrollWidth > h.clientWidth) {
+  const cards = figs.flatMap((f) => /** @type {HTMLElement[]} */ ([...f.querySelectorAll(".hcard")]));
+  // A region that scrolls takes focus, so arrow keys reach it; re-checked on resize.
+  const scrollable = () => cards.forEach((h) => {
+    const wide = h.scrollWidth > h.clientWidth;
+    if (wide === h.hasAttribute("tabindex")) return;
+    if (wide) {
       h.scrollLeft = (h.scrollWidth - h.clientWidth) / 2;
-      // A region that scrolls takes focus, so arrow keys reach it.
       h.tabIndex = 0;
+      h.setAttribute("role", "region");
       h.setAttribute("aria-label", "Help card, scrolls sideways");
+    } else {
+      ["tabindex", "role", "aria-label"].forEach((a) => h.removeAttribute(a));
     }
-    h.addEventListener("scroll", draw, { passive: true });
-  }));
+  });
+  cards.forEach((h) => h.addEventListener("scroll", draw, { passive: true }));
+  scrollable();
   draw();
-  new ResizeObserver(draw).observe(document.body);
+  new ResizeObserver(() => { scrollable(); draw(); }).observe(document.body);
   addEventListener("load", draw);
 })();

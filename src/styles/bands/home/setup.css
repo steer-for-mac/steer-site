@@ -10,6 +10,7 @@
      57% across the card (57 x 2.28 of the visible width), which lands about
      two thirds across once centred, so its label clears "Press Create". */
   .q-setup .hcard { overflow-x: auto; overscroll-behavior-x: contain; border-radius: var(--r-window); }
+  .q-setup .hcard:focus-visible { border-radius: var(--r-window); }
   .q-setup .c-help { width: 228%; }
   #hp-b { --x: 130%; --y: 2.4%; }
 }
