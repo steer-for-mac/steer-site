@@ -187,9 +187,9 @@ rejected candidates and why.
   (steer-site 61ea5d4), of `cut-ps-unlit.png` in the same pose at its exact
   1202x778, on white. That output was not kept; the cutout it made was
   committed with Vision's raw soft matte, so every pixel with any alpha still
-  held the generated colour. The source was recovered on 2026-10-13 by laying
-  that cutout on white, so it reproduces the generated image wherever the pad
-  or its edge was.
+  held the generated colour. The source was recovered on 2026-10-13 from that
+  cutout: its own colour, unmixed, wherever its alpha was above zero, and plain
+  white everywhere else.
 - **Licence:** none needed; no third party's photo or scan.
 - **Cut:** `scripts/pad-cut.py ps-unlit-dark`, box the whole frame
   (`crop.json`), so `art/controls-ps.svg` fits it unchanged. The pad touches

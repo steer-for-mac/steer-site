@@ -19,7 +19,15 @@ import sys
 
 import numpy as np
 from PIL import Image
-from scipy.ndimage import binary_fill_holes, gaussian_filter, uniform_filter
+from scipy.ndimage import (
+    binary_dilation,
+    binary_fill_holes,
+    gaussian_filter,
+    grey_closing,
+    grey_opening,
+    label,
+    uniform_filter,
+)
 
 G = os.environ.get("PAD_SRC", "tools/pads/given/")  # tools/pads/PHOTO-SOURCES.md
 V = os.environ.get("PAD_MASKS", "scratch/cut/")  # remade by subject.swift when missing or stale
@@ -64,6 +72,9 @@ def unlit(rgb):
     return rgb * (1 - blue[..., None]) + grey[..., None] * blue[..., None]
 
 
+CROSS = np.array([[0, 1, 0], [1, 1, 1], [0, 1, 0]], bool)
+
+
 def edge(a, rgb, r=5, eps=1e-3):
     """A one-pixel antialiased edge on the photo's own outline, not the mask's.
     Vision's mask is 512x512 whatever the source (3x by 2x cells on a 1536x1024
@@ -95,10 +106,29 @@ def coverage(rgb, a, bg):
     v = inside - bg
     far = np.sqrt((v ** 2).mean(-1))
     seen = np.clip(((rgb - bg) * v).sum(-1) / np.maximum((v ** 2).sum(-1), 1e-6), 0, 1)
-    ramp = (a > 0) & (a < 1)
-    near = ramp | np.roll(ramp, 1, 0) | np.roll(ramp, -1, 0) | np.roll(ramp, 1, 1) | np.roll(ramp, -1, 1)
+    # One pixel either side of the outline only: deeper in, a highlight the
+    # backdrop's colour is the pad (the Elite's top rim), not a mixed pixel.
+    outside = ~binary_fill_holes(a >= 0.5)
+    near = binary_dilation(outside, CROSS) & binary_dilation(~outside, CROSS)
     w = np.clip((far - 0.5) / 0.2, 0, 1) * near * (gaussian_filter(solid, 2) > 0.05)
     return a + w * (seen - a)
+
+
+def tidy(a):
+    """Close one-pixel notches and open one-pixel spurs. Where the render has a
+    seam or rim line just inside the outline, the refit can carve along it."""
+    return grey_opening(grey_closing(a, footprint=CROSS), footprint=CROSS)
+
+
+def whole(a):
+    """Only the outermost two pixels may be see-through, and the pad is one piece.
+    A highlight the colour of the backdrop (the Elite's top rim) otherwise
+    refits as a translucent band inside the edge, and stray backdrop specks
+    come out solid."""
+    outside = ~binary_fill_holes(a >= 0.5)
+    a = np.where(binary_dilation(outside, CROSS, iterations=2), a, 1.0)
+    parts, _ = label(a > 0, np.ones((3, 3)))
+    return a * (parts == np.bincount(parts.ravel())[1:].argmax() + 1)
 
 
 def cutout(rgb, a, bg, box, want):
@@ -129,7 +159,7 @@ for fam in sys.argv[1:] or PADS:
     # there brightens the rim; erode by one source pixel before refitting.
     a = np.minimum.reduce([a, np.roll(a, 1, 0), np.roll(a, -1, 0), np.roll(a, 1, 1), np.roll(a, -1, 1)])
     bg = np.median(np.concatenate([rgb[:8].reshape(-1, 3), rgb[-8:].reshape(-1, 3)]), axis=0)
-    a = coverage(rgb, edge(a, rgb), bg)
+    a = whole(coverage(rgb, whole(tidy(edge(a, rgb))), bg))
     ys, xs = np.where(a > 0.02)
     p = 4
     y0, y1 = max(ys.min() - p, 0), min(ys.max() + p + 1, a.shape[0])
