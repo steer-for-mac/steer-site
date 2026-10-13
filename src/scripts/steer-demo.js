@@ -212,17 +212,17 @@ function init(root) {
   function showTable(on) { table().hidden = !on; help.classList.toggle("as-table", on); }
   function toggleTable() {
     showTable(table().hidden);
-    say(table().hidden ? `Help card as the picture${fam === "ps" ? "" : ", taken with a DualSense"}` : "Help card as a table");
+    say(table().hidden ? `Help card as the picture${fam === "sw" ? ", taken with a DualSense" : ""}` : "Help card as a table");
   }
 
-  // Redraw every name and glyph as another pad's. The help card's picture is a
-  // DualSense capture, so any other pad opens it as the table.
+  // Redraw every name and glyph as another pad's. The help card's picture is the
+  // pad's own capture; the Switch Pro has none, so it opens as the table.
   function setFamily(f) {
     fam = f; F = FAMS[f]; root.dataset.fam = f;
     root.querySelectorAll("[data-g]").forEach((el) => { el.className = `sd-gl ${F.gl[el.dataset.g] || STICK_GL[el.dataset.g]}`; });
     root.querySelectorAll("[data-w]").forEach((el) => { el.textContent = F.word[el.dataset.w]; });
     table().querySelector("tbody").innerHTML = BASE(F).map(([a, b]) => `<tr><th scope="row">${esc(a)}</th><td>${b}</td></tr>`).join("");
-    showTable(f !== "ps");
+    showTable(f === "sw");
     drawKeyboard();
   }
 

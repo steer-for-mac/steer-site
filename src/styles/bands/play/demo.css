@@ -140,6 +140,10 @@
 .sd-help { position: absolute; inset: 40px 6% 76px; z-index: 24; background: var(--sd-plate); border: 1px solid var(--sd-plate-edge); border-radius: var(--sd-r-plate); box-shadow: var(--sd-shadow); padding: 12px; display: grid; place-items: center; overflow: auto; }
 .sd-help img { max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: var(--sd-r-win); }
 .sd-help.as-table img { display: none; }
+/* The help card's picture is the pad's own capture; the Switch Pro has none,
+   so its table toggles to the DualSense one. */
+.sd-hf { display: contents; }
+.sd[data-fam="ps"] .sd-hf:not([data-f="ps"]), .sd[data-fam="xb"] .sd-hf:not([data-f="xb"]), .sd[data-fam="sw"] .sd-hf:not([data-f="ps"]) { display: none; }
 .sd-help table { border-collapse: collapse; font-size: 15px; width: min(560px, 100%); }
 .sd-help th, .sd-help td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--sep); }
 .sd-help th { color: var(--text-2); font-weight: 500; }
