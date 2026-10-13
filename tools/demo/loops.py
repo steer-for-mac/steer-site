@@ -40,15 +40,18 @@ SAVE_DIRS = [Path.home() / "Library/Mobile Documents/com~apple~TextEdit/Document
 
 
 def saved_files():
-    return {f for d in SAVE_DIRS if d.is_dir() for f in d.iterdir() if f.is_file()}
+    """Only what an untitled TextEdit document becomes, so nothing else of the owner's is touched."""
+    return {f for d in SAVE_DIRS if d.is_dir() for f in d.glob("Untitled*") if f.is_file() and f.suffix in (".rtf", ".txt")}
 
 
 def trash_new(before):
     """Move the files TextEdit wrote during the take to the Trash, recoverable."""
     for f in sorted(saved_files() - before):
-        subprocess.run(["osascript", "-e", f'tell application "Finder" to delete (POSIX file "{f}" as alias)'],
-                       capture_output=True, check=True)
-        print(f"moved TextEdit's autosave {f.name} to the Trash")
+        done = subprocess.run(["osascript", "-e", "on run argv", "-e",
+                               'tell application "Finder" to delete (POSIX file (item 1 of argv) as alias)',
+                               "-e", "end run", str(f)], capture_output=True, text=True, check=False)
+        print(f"moved TextEdit's autosave {f.name} to the Trash" if done.returncode == 0
+              else f"could not trash TextEdit's autosave {f}: {done.stderr.strip()}", file=sys.stderr)
 
 
 def beat(lo=0.35, hi=0.6):
@@ -229,7 +232,7 @@ def main():
     try:
         # Launched without activating, TextEdit shows no Open panel; activated
         # first, it does, and that panel is a second window in the take.
-        osa('tell application "TextEdit" to launch'); made = True
+        made = True; osa('tell application "TextEdit" to launch')
         time.sleep(0.8)
         osa('tell application "TextEdit" to make new document')
         time.sleep(0.8)
