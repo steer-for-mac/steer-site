@@ -21,39 +21,18 @@
 <meta property="og:image" content="https://steer.seanfloyd.dev/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="The Steer app icon beside the wordmark Steer and the line: Your whole Mac, from a controller." />
+<meta property="og:image:alt" content="The Steer app icon and wordmark above the line: Your keyboard is over there. Your controller is right here." />
 <meta property="og:locale" content="en_CA" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{{ twitterTitle | default(ogTitle | default(title)) | safe }}" />
 <meta name="twitter:description" content="{{ twitterDescription | default(ogDescription | default(description)) | safe }}" />
 <meta name="twitter:image" content="https://steer.seanfloyd.dev/assets/og.png" />
 <!-- theme init in <head> so the page paints in the right appearance on first frame (no light flash on a dark Mac) -->
-{#- Authored as a real file, pasted in here, exactly like the SVG in
-    _includes/art/. It has to be INLINE in the output -- it must set data-theme
-    before the first frame or a dark Mac gets a white flash, and an external
-    file is a round trip in front of that frame -- but there is no reason for it
-    to be AUTHORED here. Living in this template meant nothing read it: eslint
-    globs home.js and every .mjs and cannot see JavaScript inside a .njk, so
-    this was the last unlinted script in the repo.
-
-    Nunjucks `include` does the pasting, the same mechanism the art files use.
-    No plugin: eleventy-plugin-bundle exists and is first-party, but it solves
-    collecting per-page JS into a bundle, which is not this.
-
-    The homepage reads one key more than the rest of the site: the accent picker
-    in the Feel band writes steer-accent, and the [data-accent] token overrides
-    it selects live in styles/tokens.css, which every page loads. Sub-pages
-    deliberately do not restore it, so the accent stays a homepage treatment
-    rather than a sitewide preference. That used to be a {% if home %} wrapped
-    around the JS itself, which is what stopped the script being a plain file;
-    the flag is `data-home` on <html> now and the script reads the DOM, so the
-    file is ordinary JavaScript a linter can parse.
-
-    It also validates the stored value against light|dark before using it.
-    Without that clause a stored "SYSTEM" became data-theme="SYSTEM" (matching
-    no rule), the label read "Theme: undefined", and the first pick wrote the
-    literal string "undefined" into storage, leaving the control that exists to
-    recover the state permanently dead. #}
+{#- Inline on purpose: it must set data-theme before the first frame or a dark
+    Mac flashes white, and an external file is a round trip in front of that.
+    Authored in scripts/theme-init.js so eslint reads it. It validates the stored
+    value against light|dark: a stored "SYSTEM" once wrote "undefined" and left
+    the theme control permanently dead. #}
 <script>{% include "scripts/theme-init.js" %}</script>
 <link rel="icon" type="image/png" href="assets/mark.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -85,21 +64,8 @@
 {% include "bands/dialogs.html" %}
 <script src="home.js" defer></script>
 {%- endif %}
-{#- The appearance control's behaviour is theme.js, loaded on every page. It is
-    a file and not an inline block here for the reason its own header gives:
-    eslint reads home.js and every .mjs and reads nothing inside a .njk, so this
-    logic was unlinted for as long as it lived in this file.
-
-    The <head> script above is the half that cannot move -- it must set
-    data-theme before the first frame or a dark Mac gets a white flash, and an
-    external file is a round trip in front of that frame. It also validates the
-    stored value against light|dark before using it: without that clause a
-    stored "SYSTEM" became data-theme="SYSTEM" (matching no rule), the label
-    read "Theme: undefined", and the first pick wrote the literal string
-    "undefined" into storage, leaving the control that exists to recover the
-    state permanently dead. Nothing here writes such a value, so it was
-    unreachable rather than live, and one clause is cheaper than trusting it
-    stays unreachable. #}
+{#- The appearance control's behaviour; a file so eslint reads it. The <head>
+    theme-init script is the half that must stay inline (see there). #}
 <script src="theme.js" defer></script>
 {%- if bodyEnd %}
 {{ bodyEnd | safe }}
