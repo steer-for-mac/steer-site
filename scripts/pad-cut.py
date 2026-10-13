@@ -93,6 +93,13 @@ def edge(a, rgb, r=5, eps=1e-3):
     return np.clip((q - 0.5) / np.maximum(np.hypot(gx, gy), 1e-4) + 0.5, 0, 1)
 
 
+def rim(a, depth):
+    """Pixels within depth of the backdrop, counting beyond the frame as backdrop:
+    the Midnight pad is cut off by its frame at both grips."""
+    out = ~binary_fill_holes(np.pad(a >= 0.5, 1))
+    return binary_dilation(out, CROSS, iterations=depth)[1:-1, 1:-1]
+
+
 def coverage(rgb, a, bg):
     """Each edge pixel's own coverage, where the pad is far enough from the backdrop
     to read it. A one-pixel ramp is right on average but not pixel by pixel, and
@@ -101,16 +108,17 @@ def coverage(rgb, a, bg):
     the pixel onto the line from the backdrop to the pad's colour just inside
     gives its coverage. On a grey backdrop the pad's own shading is as far from
     its colour as the backdrop is, so there the ramp stands."""
-    solid = (a >= 0.98).astype(np.float64)
-    inside = gaussian_filter(rgb * solid[..., None], (2, 2, 0)) / np.maximum(gaussian_filter(solid, 2), 1e-6)[..., None]
+    # From two pixels outside the outline to three in. Where the Midnight pad's
+    # grips meet the frame, a strip of white backdrop two pixels wide read as
+    # solid and drew a bright bar on dark pages. Deeper in, a highlight the
+    # backdrop's colour is the pad (the Elite's top rim), not a mixed pixel.
+    near = rim(a, 3) & binary_dilation(binary_fill_holes(a >= 0.5), CROSS, iterations=2)
+    solid = ((a >= 0.98) & ~near).astype(np.float64)
+    inside = gaussian_filter(rgb * solid[..., None], (3, 3, 0)) / np.maximum(gaussian_filter(solid, 3), 1e-6)[..., None]
     v = inside - bg
     far = np.sqrt((v ** 2).mean(-1))
     seen = np.clip(((rgb - bg) * v).sum(-1) / np.maximum((v ** 2).sum(-1), 1e-6), 0, 1)
-    # One pixel either side of the outline only: deeper in, a highlight the
-    # backdrop's colour is the pad (the Elite's top rim), not a mixed pixel.
-    outside = ~binary_fill_holes(a >= 0.5)
-    near = binary_dilation(outside, CROSS) & binary_dilation(~outside, CROSS)
-    w = np.clip((far - 0.5) / 0.2, 0, 1) * near * (gaussian_filter(solid, 2) > 0.05)
+    w = np.clip((far - 0.5) / 0.2, 0, 1) * near * (gaussian_filter(solid, 3) > 0.02)
     return a + w * (seen - a)
 
 
@@ -121,12 +129,11 @@ def tidy(a):
 
 
 def whole(a):
-    """Only the outermost two pixels may be see-through, and the pad is one piece.
+    """Only the outermost three pixels may be see-through, and the pad is one piece.
     A highlight the colour of the backdrop (the Elite's top rim) otherwise
     refits as a translucent band inside the edge, and stray backdrop specks
     come out solid."""
-    outside = ~binary_fill_holes(a >= 0.5)
-    a = np.where(binary_dilation(outside, CROSS, iterations=2), a, 1.0)
+    a = np.where(rim(a, 3), a, 1.0)
     parts, _ = label(a > 0, np.ones((3, 3)))
     return a * (parts == np.bincount(parts.ravel())[1:].argmax() + 1)
 
