@@ -96,7 +96,7 @@
     "debugOnly" : true,
     "example" : "steer://debug/capture-gestures?on=1"
   },
-  "steer://debug/connect[?type=<type>]" : {
+  "steer://debug/connect[?type=<type>][&name=<name>]" : {
     "arguments" : [
       {
         "name" : "type",
@@ -108,10 +108,15 @@
           "mfi",
           "unknown"
         ]
+      },
+      {
+        "accepts" : "the controller name Steer shows",
+        "example" : "DualSense Wireless Controller",
+        "name" : "name"
       }
     ],
     "debugOnly" : true,
-    "example" : "steer://debug/connect?type=dualsense"
+    "example" : "steer://debug/connect?type=dualsense&name=DualSense%20Wireless%20Controller"
   },
   "steer://debug/dictation" : {
     "arguments" : [
