@@ -27,6 +27,17 @@
     lb.style.left = `${bx}px`;
     f.classList.add("wired");
   });
+  // A card wider than its column (the help card on a phone) starts centred, and
+  // the line follows it as it scrolls.
+  figs.forEach((f) => f.querySelectorAll(".hcard").forEach((h) => {
+    if (h.scrollWidth > h.clientWidth) {
+      h.scrollLeft = (h.scrollWidth - h.clientWidth) / 2;
+      // A region that scrolls takes focus, so arrow keys reach it.
+      h.tabIndex = 0;
+      h.setAttribute("aria-label", "Help card, scrolls sideways");
+    }
+    h.addEventListener("scroll", draw, { passive: true });
+  }));
   draw();
   new ResizeObserver(draw).observe(document.body);
   addEventListener("load", draw);

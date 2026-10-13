@@ -1,10 +1,11 @@
 <!-- IS IT FIDDLY? The help card is the answer, and the only controller picture.
+     The whole card shows; on a phone it scrolls sideways at the size its labels read.
      Base buttons: steer SteerCore/Defaults.swift:49-69. Create opens the card. -->
-{% macro help(theme) %}<img class="h-{{ 'lt' if theme == 'light' else 'dk' }}" src="assets/app/help-{{ theme }}.png" eleventy:widths="900,1400,2078" width="2078" height="1500" sizes="(max-width: 600px) 230vw, (max-width: 1000px) 100vw, 1000px" loading="lazy" alt="Steer's help card for a DualSense: every button labelled with its job. Left stick moves the mouse, cross is Left Click, circle Right Click, the right stick scrolls and, pressed, opens the on-screen keyboard.">{% endmacro %}
+{% macro help(theme) %}<img class="h-{{ 'lt' if theme == 'light' else 'dk' }}" src="assets/app/help-{{ theme }}.png" eleventy:widths="900,1400,2078" width="2078" height="1500" sizes="(max-width: 600px) 230vw, (max-width: 1000px) 100vw, 1000px" loading="lazy" alt="Steer's help card for a DualSense, every control labelled with its job: Cross Left Click, Circle Right Click, Triangle Return, Square Escape, L1 Back, R1 Spotlight, L2 App Switch, R2 Space (each shoulder and trigger also holds its own layer), the D-pad the arrow keys, the left stick the mouse (pressed, your apps), the right stick scrolling (pressed, the on-screen keyboard), Options Mission Control, Create this card, and a touchpad press Dictation.">{% endmacro %}
 <section class="q q-setup" aria-labelledby="q-setup">
   <div class="head">
     <h2 id="q-setup" class="display"><span class="pain">Is it fiddly to set up?</span> <span>No. Every button already has a job.</span></h2>
-    <div class="body"><p>The left stick moves the pointer, ✕ clicks, the right stick scrolls. Forget one? Press Create and this card shows every button for the app you're using.</p></div>
+    <div class="body"><p>The left stick moves the pointer, <span class="pg pg-cross" role="img" aria-label="Cross"></span> clicks, the right stick scrolls. Forget one? Press Create and this card shows every button for the app you're using.</p></div>
   </div>
   <figure class="proof duo duo-help" data-wire="#hp-a #hp-b">
     <div class="effect"><div class="hcard"><span class="crop c-help">{{ help("light") }}{{ help("dark") }}</span><i class="at" id="hp-b"></i></div></div>

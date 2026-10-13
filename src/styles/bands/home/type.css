@@ -1,6 +1,7 @@
 /* Can I type? The keyboard loop, the whole pane on a desk-sized screen; its
    radius is the recording's own corners, so they disappear. */
-.q-type .trig, #ty-a { --x: 81%; --y: -9%; }
+/* RT on the Xbox picture (cut-xs-white.png). */
+.q-type .trig, #ty-a { --x: 79%; --y: -9%; }
 #ty-b { --x: 24%; --y: 11.6%; }
 .trig { position: absolute; left: var(--x); top: var(--y); z-index: 2; transform: translate(-50%, -50%); font-size: 12px; font-weight: 700; line-height: 1; padding: 4px 8px; border-radius: var(--r-btn); color: #fff; background: var(--blue); }
 
