@@ -34,6 +34,21 @@ def mark(name):
 
 
 WINIDS = Path(__file__).resolve().parent.parent.parent / "scratch/take/winids"
+# TextEdit autosaves the take's untitled document into its save folder (iCloud by
+# default) even when closed "saving no": two Untitled.rtf files on 2026-10-13.
+SAVE_DIRS = [Path.home() / "Library/Mobile Documents/com~apple~TextEdit/Documents", Path.home() / "Documents"]
+
+
+def saved_files():
+    return {f for d in SAVE_DIRS if d.is_dir() for f in d.iterdir() if f.is_file()}
+
+
+def trash_new(before):
+    """Move the files TextEdit wrote during the take to the Trash, recoverable."""
+    for f in sorted(saved_files() - before):
+        subprocess.run(["osascript", "-e", f'tell application "Finder" to delete (POSIX file "{f}" as alias)'],
+                       capture_output=True, check=True)
+        print(f"moved TextEdit's autosave {f.name} to the Trash")
 
 
 def beat(lo=0.35, hi=0.6):
@@ -210,7 +225,7 @@ def main():
     outdir = Path(sys.argv[1]).resolve(); outdir.mkdir(parents=True, exist_ok=True)
     if subprocess.run(["pgrep", "-x", "TextEdit"], capture_output=True).returncode == 0:
         sys.exit("TextEdit is running; its windows would be yours. Quit it first.")
-    made = False
+    made, before = False, saved_files()
     try:
         # Launched without activating, TextEdit shows no Open panel; activated
         # first, it does, and that panel is a second window in the take.
@@ -238,6 +253,11 @@ def main():
             for step in ("close every document saving no", "quit"):
                 if subprocess.run(["pgrep", "-x", "TextEdit"], capture_output=True).returncode == 0:
                     subprocess.run(["osascript", "-e", f'tell application "TextEdit" to {step}'], capture_output=True, check=False)
+            for _ in range(20):  # the autosave lands as TextEdit quits
+                if subprocess.run(["pgrep", "-x", "TextEdit"], capture_output=True).returncode != 0:
+                    break
+                time.sleep(0.25)
+            trash_new(before)
 
 
 if __name__ == "__main__":
