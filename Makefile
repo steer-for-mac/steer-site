@@ -57,9 +57,10 @@ lint-js: ## eslint every script and spec
 	bun x eslint .
 
 # By shebang, not extension: four of the five gates have no .py, so `ruff check
-# scripts/` reads one of them and reports "All checks passed" for the rest.
+# scripts/` reads one of them and reports "All checks passed" for the rest. A
+# `uv run --script` shebang names no python, so it is matched by name too.
 lint-py: ## ruff over every Python gate (found by shebang, not a hand-kept list)
-	ruff check $$(grep -lE '^.!.*python' scripts/*)
+	ruff check $$(grep -lE '^#!.*(python|uv run)' scripts/*)
 
 # axe-core, not Lighthouse: that category IS axe-core plus a page load, at
 # 2m15s against 7s. A two-minute per-commit step stops being run.
