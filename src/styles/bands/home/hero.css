@@ -1,13 +1,16 @@
 /* The promise: the couplet and the form, then the sofa, the desk and the
    front of a room, each pinned "over there" and "right here". */
 
-/* PINS, in % of each drawing so a same-shape swap keeps them. */
+/* PINS, in % of each drawing so a same-shape swap keeps them. The side frames
+   shrink with the window, so their leaders are in cqh of the frame, or a label
+   overshoots its top or bottom edge between 768 and 1280. */
+.places .side { container-type: size; }
 .sofa .there { --x: 29.9%; --y: 54.8%; --len: 92px; --d: -1; --nx: 0px; }
 .sofa .here { --x: 41.6%; --y: 67%; --len: 62px; --d: 1; --nx: 0px; }
-.desk .there { --x: 87.9%; --y: 67.2%; --len: 150px; --d: -1; --nx: -30px; }
-.desk .here { --x: 41.9%; --y: 62.7%; --len: 126px; --d: -1; --nx: 46px; }
-.room .there { --x: 24.5%; --y: 72.3%; --len: 90px; --d: -1; --nx: -30px; }
-.room .here { --x: 38.9%; --y: 45.7%; --len: 80px; --d: 1; --nx: -10px; }
+.desk .there { --x: 87.9%; --y: 67.2%; --len: 46cqh; --d: -1; --nx: -30px; }
+.desk .here { --x: 41.9%; --y: 62.7%; --len: 28cqh; --d: -1; --nx: 46px; }
+.room .there { --x: 24.5%; --y: 72.3%; --len: 30cqh; --d: -1; --nx: -30px; }
+.room .here { --x: 38.9%; --y: 45.7%; --len: 34cqh; --d: 1; --nx: -10px; }
 /* Crops: --z zoom, --fx/--fy the window's top-left, --ar the frame's shape. */
 .places .side { --ar: 1.363; --z: 1.30; --fy: 0%; }
 .places .desk { --fx: 22%; }
