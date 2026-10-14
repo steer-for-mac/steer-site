@@ -50,14 +50,14 @@ const STICK_GL = { ls: "gl-ls", rs: "gl-rs", l3: "gl-l3", r3: "gl-r3", L: "gl-ls
 const famOf = (id) => (/xbox|045e/i.test(id) ? "xb" : /dualsense|dualshock|wireless controller|054c/i.test(id) ? "ps"
   : /pro controller|057e/i.test(id) ? "sw" : null);
 const APPS = ["Safari", "Finder", "Music", "Mail", "Calendar", "Notes", "Messages", "Settings", "Maps"];
-const BASE = (F) => [[F.face.cross, "Left Click"], [F.face.circle, "Right Click"], [F.face.tri, "Return"], [F.face.sq, "Escape"],
+const BASE = (F) => [[F.face.cross, "Left Click"], [F.face.circle, "Escape"], [F.face.tri, "Return"], [F.face.sq, "Right Click"],
   [F.word.l1, "Back, hold for its layer"], [F.word.r1, "Spotlight, hold for its layer"], [F.word.l2, "App Switch, hold for its layer"],
   [F.word.r2, "Space, hold for its layer"], ["D-pad", "Arrow keys"], ["Left stick", "Mouse; press for your apps"],
   ["Right stick", "Scroll; press for the keyboard"], [F.word.options, "Mission Control"], [F.word.create, "Help Card"],
   F.touch ? ["Touchpad press", "Dictation"] : [`Hold ${F.word.l1}, press ${F.word.tri}`, "Dictation"]];
-const BASEJOB = { cross: "Left Click", circle: "Right Click", tri: "Return", sq: "Escape", l1: "Back", r1: "Spotlight", l2: "App Switch", r2: "Space",
+const BASEJOB = { cross: "Left Click", circle: "Escape", tri: "Return", sq: "Right Click", l1: "Back", r1: "Spotlight", l2: "App Switch", r2: "Space",
   options: "Mission Control", up: "Arrow Up", down: "Arrow Down", left: "Arrow Left", right: "Arrow Right", touch: "Dictation" };
-const ONLY_NAMED = ["r1", "l2", "options", "touch", "l1", "circle"];
+const ONLY_NAMED = ["r1", "l2", "options", "touch", "l1", "sq"];
 const WORDS = ["hello", "help", "here", "have", "how", "happy", "mac", "make", "maybe", "meeting", "thanks", "the", "this", "that", "tonight", "today",
   "tomorrow", "steer", "see", "soon", "controller", "could", "can", "watch", "what", "when", "where", "with", "will", "film", "find", "friday",
   "great", "good", "going", "is", "it", "in", "and", "are", "about", "again", "you", "your", "yes"];

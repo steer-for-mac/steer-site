@@ -112,7 +112,8 @@ what you get rather than what the app looks like.
 
 Hard rule: **every chip must match the shipped default binding.** Check
 `SteerCore/Defaults.swift` (`soloLayer`) before drawing one. As of 2026-07-24
-the honest set is Cross to left click, Circle to right click, left stick to
+the honest set is Cross to left click, Square to right click (Circle until
+2026-10-14, now Escape), left stick to
 cursor, right stick to scroll, and L1 held plus R3 for the daisy wheel. Note the
 radial's trigger is NOT universal: `ProfileDefaults` moves it from L3 to R3 on
 pads without a gyro (Xbox, MFi), because L3 there takes Mission Control. The
