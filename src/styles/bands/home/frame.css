@@ -50,14 +50,14 @@
 
 /* A pin: a dot, its leader line, and a word at the end of it.
    --x --y the point; --len the line; --d 1 label below, -1 above; --nx nudge. */
-.pin { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; pointer-events: none; z-index: 1; --lead: var(--pill-ink); }
-.pin::before { content: ""; position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: var(--lead); box-shadow: 0 0 0 3px var(--pill); }
+.pin { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; pointer-events: none; z-index: 1; --lead: var(--blue); }
+.pin::before { content: ""; position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: var(--lead); box-shadow: 0 0 0 3px var(--pill), 0 1px 3px rgba(0, 0, 0, .25); z-index: 2; }
 .pin i { position: absolute; left: -1px; top: 0; width: 0; height: var(--len); border-left: 2px solid var(--lead); filter: drop-shadow(1.5px 0 0 var(--pill)) drop-shadow(-1.5px 0 0 var(--pill)); transform: translateY(calc((var(--d) - 1) * 50%)) scaleY(var(--s, 1)); transform-origin: 50% calc(50% - var(--d) * 50%); }
 .pin b { position: absolute; left: 0; top: calc(var(--d) * var(--len)); transform: translate(calc(-50% + var(--nx)), calc((var(--d) - 1) * 50%)); white-space: nowrap; font-size: var(--pf, 14px); font-weight: 600; line-height: 1; padding: .5em .85em; color: var(--pill-ink); background: var(--pill); border: 1px solid var(--pill-edge); border-radius: var(--r-btn); }
 
 /* Pins on captures and forms: the label carried out past the edge. */
 .pins { position: relative; --out: 30px; --pill: var(--bg); --pill-ink: var(--text); --pill-edge: var(--h-field-line); }
-.pins .pin::before { box-shadow: 0 0 0 3px var(--bg); }
+.pins .pin::before { box-shadow: 0 0 0 3px var(--bg), 0 1px 3px rgba(0, 0, 0, .25); }
 .pin.up { top: calc(-1 * var(--out)); bottom: calc(100% - var(--y)); height: auto; }
 .pin.up::before { top: auto; bottom: -6px; }
 .pin.up i { height: 100%; transform: none; }
@@ -82,8 +82,8 @@
 .pad path.on { fill: color-mix(in srgb, var(--blue) 72%, transparent); }
 .at { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; }
 .wire { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 1; }
-.wire path { fill: none; stroke: var(--text); stroke-width: 2; }
-.wire circle { fill: var(--text); stroke: var(--bg); stroke-width: 3; }
+.wire path { fill: none; stroke: var(--blue); stroke-width: 2; }
+.wire circle { fill: var(--blue); stroke: var(--bg); stroke-width: 3; }
 .say { position: absolute; left: 0; top: 0; z-index: 2; margin: 0; transform: translate(-50%, -50%); white-space: nowrap; font-size: 14px; font-weight: 600; line-height: 1; padding: .5em .85em; color: var(--text); background: var(--bg); border: 1px solid var(--h-field-line); border-radius: var(--r-btn); visibility: hidden; }
 .wired .say { visibility: visible; }
 
