@@ -130,22 +130,22 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 }
 .tm-opt svg{width:15px;height:15px;flex:none;opacity:.75}
 .tm-opt:hover{background:var(--bg-inset);color:var(--text)}
-/* The check is the selected row's own accent, not a tick glyph: at 14px a tick
+/* The selected row is full ink and bold, not a tick glyph: at 14px a tick
    competes with the mode glyph already sitting in the row. */
-.tm-in:checked + .tm-opt{color:var(--blue-text);background:var(--bg-inset)}
-.tm-in:checked + .tm-opt svg{opacity:1;color:var(--blue)}
+.tm-in:checked + .tm-opt{color:var(--text);font-weight:600;background:var(--bg-inset)}
+.tm-in:checked + .tm-opt svg{opacity:1;color:var(--text)}
 .tm-in:focus-visible + .tm-opt{outline:2px solid var(--blue);outline-offset:-2px}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 22px;border-radius:var(--r-btn);font-size:15px;font-weight:500;letter-spacing:-0.01em;cursor:pointer;border:1px solid transparent;transition:transform .12s ease,background .15s,border-color .15s,opacity .15s;white-space:nowrap}
 .btn:hover{text-decoration:none}
 .btn:active{transform:scale(0.98)}
-.btn-primary{background:var(--blue);color:#fff}
-.btn-primary:hover{background:color-mix(in srgb,var(--blue) 88%,#000)}
+.btn-primary{background:var(--btn);color:var(--btn-ink)}
+.btn-primary:hover{background:color-mix(in srgb,var(--btn) 86%,var(--bg))}
 .btn-secondary{background:var(--bg-inset);color:var(--text);border-color:var(--sep)}
 .btn-secondary:hover{background:var(--bg-inset-2)}
-.btn-nav{height:36px;padding:0 18px;font-size:14px;font-weight:600;background:var(--blue);color:#fff}
-.btn-nav:hover{background:color-mix(in srgb,var(--blue) 88%,#000);text-decoration:none}
+.btn-nav{height:36px;padding:0 18px;font-size:14px;font-weight:600;background:var(--btn);color:var(--btn-ink)}
+.btn-nav:hover{background:color-mix(in srgb,var(--btn) 86%,var(--bg));text-decoration:none}
 .arrow-link{color:var(--blue-text);font-size:15px;font-weight:450;display:inline-flex;align-items:center;gap:5px}
 .arrow-link:hover{text-decoration:none}
 .arrow-link .arrow{transition:transform .15s}

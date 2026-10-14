@@ -50,9 +50,9 @@
 
 /* A pin: a dot, its leader line, and a word at the end of it.
    --x --y the point; --len the line; --d 1 label below, -1 above; --nx nudge. */
-.pin { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; pointer-events: none; z-index: 1; }
-.pin::before { content: ""; position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 3px var(--pill); }
-.pin i { position: absolute; left: -.75px; top: 0; width: 0; height: var(--len); border-left: 1.5px solid var(--blue); transform: translateY(calc((var(--d) - 1) * 50%)) scaleY(var(--s, 1)); transform-origin: 50% calc(50% - var(--d) * 50%); }
+.pin { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; pointer-events: none; z-index: 1; --lead: color-mix(in srgb, var(--pill-ink) 55%, var(--pill)); }
+.pin::before { content: ""; position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--lead); box-shadow: 0 0 0 3px var(--pill); }
+.pin i { position: absolute; left: -.75px; top: 0; width: 0; height: var(--len); border-left: 1.5px solid var(--lead); transform: translateY(calc((var(--d) - 1) * 50%)) scaleY(var(--s, 1)); transform-origin: 50% calc(50% - var(--d) * 50%); }
 .pin b { position: absolute; left: 0; top: calc(var(--d) * var(--len)); transform: translate(calc(-50% + var(--nx)), calc((var(--d) - 1) * 50%)); white-space: nowrap; font-size: var(--pf, 14px); font-weight: 600; line-height: 1; padding: .5em .85em; color: var(--pill-ink); background: var(--pill); border: 1px solid var(--pill-edge); border-radius: var(--r-btn); }
 
 /* Pins on captures and forms: the label carried out past the edge. */
@@ -82,8 +82,8 @@
 .pad path.on { fill: color-mix(in srgb, var(--blue) 72%, transparent); }
 .at { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; }
 .wire { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 1; }
-.wire path { fill: none; stroke: var(--blue); stroke-width: 1.5; }
-.wire circle { fill: var(--blue); stroke: #fff; stroke-width: 3; }
+.wire path { fill: none; stroke: var(--text-2); stroke-width: 1.5; }
+.wire circle { fill: var(--text-2); stroke: var(--bg); stroke-width: 3; }
 .say { position: absolute; left: 0; top: 0; z-index: 2; margin: 0; transform: translate(-50%, -50%); white-space: nowrap; font-size: 14px; font-weight: 600; line-height: 1; padding: .5em .85em; color: var(--text); background: var(--bg); border: 1px solid var(--h-field-line); border-radius: var(--r-btn); visibility: hidden; }
 .wired .say { visibility: visible; }
 
