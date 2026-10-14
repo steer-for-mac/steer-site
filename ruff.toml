@@ -20,7 +20,7 @@
 # under it is a gate that starts failing for reasons nobody chose. This makes
 # that loud instead of silent: ruff refuses to run rather than quietly grading
 # to a different standard than the one these files were burned down against.
-required-version = ">=0.16,<0.17"
+required-version = ">=0.17,<0.18"
 
 # The oldest interpreter these scripts have to run on. Only 3.9+ syntax is used
 # (f-strings, pathlib, ThreadPoolExecutor); this is what tells ruff not to

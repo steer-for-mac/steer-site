@@ -24,9 +24,10 @@ const TEXT = ["--text", "--text-2", "--text-3", "--blue-text", "--green-text", "
 // mode and the lightest in dark, i.e. the worst case in both directions.
 const SURFACE = ["--bg", "--bg-sunken", "--bg-inset", "--bg-inset-2", "--card-bg"];
 // Filled buttons put white on the accent, which is why --blue is #0071eb and
-// not Apple's #007aff: the latter measures 4.02 and fails.
+// not Apple's #007aff: the latter measures 4.02 and fails. The call-to-action
+// buttons are graphite: their ink on their fill, both tokens.
 /** @type {ReadonlyArray<readonly [string, string]>} */
-const ON_ACCENT = [["#ffffff", "--blue"]];
+const ON_ACCENT = [["#ffffff", "--blue"], ["--btn-ink", "--btn"]];
 
 // "WCAG21" names the algorithm explicitly rather than taking the library's
 // default, which is APCA-flavoured in some versions and would silently grade to
@@ -92,9 +93,10 @@ for (const { name, vars } of themes) {
       console.log(`FAIL  ${name}  ${t} ${vars[t]} on ${worst.s} ${vars[worst.s]} = ${worst.r.toFixed(2)}, needs ${AA}`);
     }
   }
-  for (const [fg, bgTok] of ON_ACCENT) {
+  for (const [fgTok, bgTok] of ON_ACCENT) {
     const bg = vars[bgTok];
-    if (!bg) continue;
+    const fg = fgTok.startsWith("--") ? vars[fgTok] : fgTok;
+    if (!bg || !fg) continue;
     const r = ratio(fg, bg);
     checked++;
     if (table) console.log(`  ${name.padEnd(38)} ${fg.padEnd(13)} on ${bgTok.padEnd(13)} ${r.toFixed(2)}`);

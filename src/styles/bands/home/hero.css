@@ -9,7 +9,7 @@
 .sofa .here { --x: 41.6%; --y: 67%; --len: 62px; --d: 1; --nx: 0px; }
 .desk .there { --x: 87.9%; --y: 67.2%; --len: 46cqh; --d: -1; --nx: -30px; }
 .desk .here { --x: 41.9%; --y: 62.7%; --len: 28cqh; --d: -1; --nx: 46px; }
-.room .there { --x: 24.5%; --y: 72.3%; --len: 30cqh; --d: -1; --nx: -30px; }
+.room .there { --x: 24.5%; --y: 72.3%; --len: 30cqh; --d: -1; --nx: -24px; }
 .room .here { --x: 38.9%; --y: 45.7%; --len: 34cqh; --d: 1; --nx: -10px; }
 /* Crops: --z zoom, --fx/--fy the window's top-left, --ar the frame's shape. */
 .places .side { --ar: 1.363; --z: 1.30; --fy: 0%; }
@@ -59,12 +59,12 @@
   .places .p-sofa { grid-column: 1 / -1; grid-row: auto; }
 }
 @media (max-width: 600px) {
-  .sofa .there { --len: 40px; }
+  .sofa .there { --len: 30px; }
   .sofa .here { --len: 32px; }
-  .desk .there { --len: 70px; --nx: -30px; }
-  .desk .here { --len: 60px; --nx: 12px; }
-  .room .there { --len: 60px; --nx: -14px; }
-  .room .here { --len: 50px; --nx: -10px; }
+  .desk .there { --len: 46cqh; --nx: -30px; }
+  .desk .here { --len: 40cqh; --nx: 16px; }
+  .room .there { --len: 40cqh; --nx: -4px; }
+  .room .here { --len: 33cqh; --nx: -10px; }
   .places .sofa { --ar: 16 / 11; --z: 1.55; --fx: 10%; --fy: 21%; }
   .places .side { --ar: 10 / 9; --z: 1.6; }
   .places .desk { --fx: 32%; }

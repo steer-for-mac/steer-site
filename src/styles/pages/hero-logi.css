@@ -28,7 +28,7 @@
 
 .lg-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 
-/* #fff on --blue, matching .btn-primary in shared.css. var(--bg) here resolved
+/* #fff on --blue, as .btn-primary was before it went graphite. var(--bg) here resolved
    to near-black in dark mode and axe failed the contrast; the site had already
    settled that text on the accent is white in both themes. */
 .lg-btn {
