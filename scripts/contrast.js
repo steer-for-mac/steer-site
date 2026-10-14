@@ -96,7 +96,12 @@ for (const { name, vars } of themes) {
   for (const [fgTok, bgTok] of ON_ACCENT) {
     const bg = vars[bgTok];
     const fg = fgTok.startsWith("--") ? vars[fgTok] : fgTok;
-    if (!bg || !fg) continue;
+    // A renamed token must fail, not drop the pair and shrink the count unseen.
+    if (!bg || !fg) {
+      failures++;
+      console.log(`FAIL  ${name}  ${fgTok} on ${bgTok}: a token is missing`);
+      continue;
+    }
     const r = ratio(fg, bg);
     checked++;
     if (table) console.log(`  ${name.padEnd(38)} ${fg.padEnd(13)} on ${bgTok.padEnd(13)} ${r.toFixed(2)}`);
