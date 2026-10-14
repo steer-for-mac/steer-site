@@ -34,11 +34,13 @@ jobs:
 
       - run: npm ci
 
-      # Pinned to ruff.toml's required-version: the default rule set moves
-      # between minors, and a gate that grades to a different standard is worse
-      # than none.
+      # ruff.toml's required-version, read rather than copied: the default rule
+      # set moves between minors, and a copy here went stale on the 0.17 bump.
       - name: Install ruff
-        run: pipx install 'ruff>=0.16,<0.17'
+        run: |
+          spec=$(sed -n 's/^required-version = "\(.*\)"$/\1/p' ruff.toml)
+          [ -n "$spec" ] || { echo "no required-version in ruff.toml" >&2; exit 1; }
+          pipx install "ruff$spec"
 
       # Keyed on the lockfile, so the cache turns over exactly when the pinned
       # Playwright version does. --with-deps still runs: the OS packages are not
