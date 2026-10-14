@@ -7,50 +7,55 @@
 <!--
   Share card for steer.seanfloyd.dev (assets/og.png), exactly 1200x630.
 
-  Render from the build, where icon.png sits beside it (make build first),
-  at 2x for crispness, then downscale:
+  Render from the build, where icon.png and assets/pads/ sit beside it (make
+  build first), at 2x for crispness, then downscale:
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
       --headless --disable-gpu --force-device-scale-factor=2 \
       --window-size=1200,630 --hide-scrollbars \
       --screenshot=/tmp/og-2x.png "file://ABSOLUTE/PATH/dist/og.html"
     sips -z 630 1200 /tmp/og-2x.png --out src/assets/og.png
 
-  Light, because a feed shows one image whatever the site's theme, and white
-  stands out in a dark feed where a dark card disappears. The headline is
-  the hero's h1 (bands/home/hero.html); a stale one here ships a stale card
-  to every social preview. icon.png is rendered from the app's AppIcon.icon.
+  The card says WHAT Steer is; the page says why to care. X shows a link as
+  this image alone, so the line must stand without the title under it, and
+  read at iMessage's ~340px. The site's couplet stays on the page, where the
+  drawings beside it make it land. Graphite, after the app icon.
 -->
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
     position: relative;
-    background: #fff;
-    color: #1d1d1f;
+    background: radial-gradient(80% 90% at 50% 100%, #3a3b40 0%, #1b1b1e 55%, #0d0d0f 100%);
+    color: #f5f5f7;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: geometricPrecision;
   }
   .brand {
-    position: absolute; left: 72px; top: 64px;
-    display: flex; align-items: center; gap: 16px;
-    font-size: 34px; font-weight: 700; letter-spacing: -0.02em;
+    position: absolute; left: 0; right: 0; top: 46px;
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    font-size: 40px; font-weight: 700; letter-spacing: -0.02em;
   }
-  .brand img { width: 64px; height: 64px; }
+  .brand img { width: 76px; height: 76px; }
   h1 {
-    position: absolute; left: 72px; top: 200px;
-    font-size: 84px; font-weight: 700; line-height: 1.02; letter-spacing: -0.045em;
+    position: absolute; left: 80px; right: 80px; top: 150px; text-align: center;
+    font-size: 60px; font-weight: 700; line-height: 1.04; letter-spacing: -0.035em;
   }
-  h1 .pain { display: block; color: #86868b; }
-  .foot { position: absolute; left: 72px; bottom: 60px; font-size: 24px; color: #6e6e73; }
+  h1 span { color: #a1a1a6; }
+  .pad { position: absolute; filter: drop-shadow(0 22px 26px rgba(0, 0, 0, .6)); }
+  .xb { left: 190px; top: 395px; width: 300px; transform: rotate(-8deg); }
+  .ps { left: 440px; top: 370px; width: 330px; }
+  .sw { left: 720px; top: 395px; width: 290px; transform: rotate(8deg); }
 </style>
 </head>
 <body>
   <!-- The <main> is for axe (landmark-one-main), not for layout. -->
   <main>
     <div class="brand"><img src="icon.png" alt="" eleventy:ignore />Steer</div>
-    <h1><span class="pain">Your keyboard is over there.</span> Your controller is right here.</h1>
-    <p class="foot">Mac app · steer.seanfloyd.dev</p>
+    <h1>Your game controller,<br><span>now your Mac's mouse and keyboard.</span></h1>
+    <img class="pad xb" src="assets/pads/cut-xs.png" alt="" eleventy:ignore />
+    <img class="pad ps" src="assets/pads/cut-ps.png" alt="" eleventy:ignore />
+    <img class="pad sw" src="assets/pads/cut-sw.png" alt="" eleventy:ignore />
   </main>
 </body>
 </html>
