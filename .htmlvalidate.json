@@ -16,6 +16,7 @@
     "attribute-boolean-style": "off",
     "require-sri": "off",
     "long-title": "off",
-    "attribute-empty-style": "off"
+    "attribute-empty-style": "off",
+    "valid-id": ["error", { "relaxed": true }]
   }
 }
