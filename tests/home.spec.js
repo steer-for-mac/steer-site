@@ -10,23 +10,24 @@ test("the homepage loads its behaviour, and the nav CTA goes to the checkout", a
   await expect(page.locator("script[src='home.js']")).toHaveCount(1);
   await expect(page.locator("meta[name='robots']")).toHaveCount(0);
   await expect(page.locator("link[rel='canonical']")).toHaveAttribute("href", "https://steer.seanfloyd.dev/");
-  /* Old links still land on #pricing, so the anchor has to hold the buy button. */
+  /* Old links still land on #pricing: it holds the download and the buy link. */
+  await expect(page.locator("#pricing a.btn[href$='/Steer.dmg']")).toHaveCount(1);
   await expect(page.locator("#pricing a[href='buy.html']")).toHaveCount(1);
-  /* Beside the hero's own buy button the nav button steps aside, then returns. */
+  /* Beside the hero's own download button the nav button steps aside, then returns. */
   const nav = page.locator(".nav a.btn-nav");
-  await expect(nav).toHaveAttribute("href", "buy.html");
+  await expect(nav).toHaveAttribute("href", /\/Steer\.dmg$/);
   await expect(nav).toBeHidden();
   await page.locator("#q-setup").scrollIntoViewIfNeeded();
   await expect(nav).toBeVisible();
   expect(missing, "no request failed").toEqual([]);
 });
 
-test("the first screen has the couplet, a buy button, the beta, and three pinned places", async ({ page }) => {
+test("the first screen has the couplet, a download, a buy link, and three pinned places", async ({ page }) => {
   await page.goto("/index.html");
   await expect(page.locator("h1")).toHaveText("Your keyboard is over there. Your controller is right here.");
-  await expect(page.locator(".hero .join a[href='buy.html']")).toBeVisible();
-  /* The beta link is a direct DMG, so it must be the one beta.json names. */
-  await expect(page.locator(".hero a[href$='/Steer.dmg']")).toHaveAttribute("href", /\/releases\/download\/v[^/]+\/Steer\.dmg$/);
+  /* The download is a direct DMG, so it must be a release asset beta.json names. */
+  await expect(page.locator(".hero .join a.btn")).toHaveAttribute("href", /\/releases\/download\/v[^/]+\/Steer\.dmg$/);
+  await expect(page.locator(".hero a[href='buy.html']")).toBeVisible();
   const places = page.locator(".places figure");
   await expect(places).toHaveCount(3);
   for (const fig of await places.all()) {
@@ -127,7 +128,7 @@ test.describe("under reduced motion", () => {
 
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
-  test("the page reads, the drawings show, and the buy button is a plain link", async ({ page }) => {
+  test("the page reads, the drawings show, and download and buy are plain links", async ({ page }) => {
     await page.goto("/index.html");
     await expect(page.locator("h1 .pain")).toHaveText("Your keyboard is over there.");
     await expect(page.locator(".sofa img")).toBeVisible();

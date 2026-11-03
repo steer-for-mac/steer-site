@@ -58,8 +58,8 @@ test.describe("play.html", () => {
   });
 
   test("the page a shared link lands on can buy, or get the beta", async ({ page }) => {
+    await expect(page.locator(".py-join a.btn[href$='/Steer.dmg']")).toBeVisible();
     await expect(page.locator(".py-join a[href='buy.html']")).toBeVisible();
-    await expect(page.locator(".py-join a[href$='/Steer.dmg']")).toBeVisible();
   });
 });
 

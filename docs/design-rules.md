@@ -111,12 +111,13 @@ should never try to be one.
 - No emoji in copy.
 - Write for the non-technical reader first. Audience before feature list.
 - One primary CTA per view. Price is microcopy beside the CTA, not a competing
-  button. Since 2026-11-03 the CTA is Buy, a plain link to `buy.html` (the
-  indirection that forwards to the checkout), with the free beta as a quiet
-  text link under it. It sits in the first screen and again at the close
-  (`#pricing`), screens apart, so each is the one primary button in its view;
-  the nav's Buy steps aside while one is on screen. The launch-list form and
-  its dialog were retired that day.
+  button. Since 2026-11-03 the CTA is Download (try first; the app sells
+  itself when the trial ends), with "Free to try. EUR 19.99 once if you keep
+  it. Buy now" under it, Buy now linking `buy.html` (the indirection to the
+  checkout). It sits in the first screen and again at the close (`#pricing`),
+  screens apart, so each is the one primary button in its view; the nav's
+  Download steps aside while one is on screen. The launch-list form was
+  retired that day.
 - Trust language stays literal and verifiable: on-device, no account, no
   telemetry. Never soften it into marketing vagueness. A trust heading may not
   overstate and then get walked back by its own body: the licence check does
