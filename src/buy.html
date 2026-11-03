@@ -30,8 +30,11 @@ redirect: "https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405
 <script>
   {#- Forward with the visit's ?from= tag, if any, as checkout custom data. #}
   (function () {
-    var url = "https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff", from = null;
-    try { from = new URLSearchParams(location.search).get("from") || sessionStorage.getItem("steer-from"); } catch (e) {}
-    location.replace(from ? url + "?checkout%5Bcustom%5D%5Bfrom%5D=" + encodeURIComponent(from.slice(0, 40)) : url);
+    var url = "https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff", tag = "";
+    try {
+      var from = new URLSearchParams(location.search).get("from") || sessionStorage.getItem("steer-from");
+      if (from) tag = "?checkout%5Bcustom%5D%5Bfrom%5D=" + encodeURIComponent(Array.from(from).slice(0, 40).join(""));
+    } catch (e) { tag = ""; }
+    location.replace(url + tag);
   })();
 </script>

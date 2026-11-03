@@ -3,5 +3,5 @@
 // checkout as custom data, which Lemon Squeezy stores on the order.
 try {
   const from = new URLSearchParams(location.search).get("from");
-  if (from) sessionStorage.setItem("steer-from", from.slice(0, 40));
+  if (from) sessionStorage.setItem("steer-from", Array.from(from).slice(0, 40).join(""));
 } catch { /* storage blocked: the sale just goes untagged */ }

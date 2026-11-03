@@ -16,6 +16,9 @@ test("a post's ?from= tag reaches the checkout, from buy.html or from the page t
   await page.route(/lemonsqueezy\.com/, (r) => { landed.push(r.request().url()); return r.fulfill({ status: 200, body: "checkout" }); });
   await page.goto("/buy.html?from=thread-a");
   await expect.poll(() => landed.at(-1)).toBe(`${LIVE}?checkout%5Bcustom%5D%5Bfrom%5D=thread-a`);
+  /* A tag cut mid-emoji must not stop the forward: 39 letters, then a pair. */
+  await page.goto(`/buy.html?from=${"x".repeat(39)}%F0%9F%98%80`);
+  await expect.poll(() => landed.at(-1)).toBe(`${LIVE}?checkout%5Bcustom%5D%5Bfrom%5D=${"x".repeat(39)}%F0%9F%98%80`);
   await page.goto("/index.html?from=thread-b");
   await page.goto("/buy.html");
   await expect.poll(() => landed.at(-1)).toBe(`${LIVE}?checkout%5Bcustom%5D%5Bfrom%5D=thread-b`);
