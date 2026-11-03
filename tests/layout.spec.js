@@ -10,27 +10,32 @@ const CANVASES = new Set(["og.html", "store-cards.html"]);
 
 const PAGES = readdirSync("dist").filter((f) => f.endsWith(".html") && !CANVASES.has(f)).sort();
 
+/* One load per page, resized through the widths: overflow is a property of the
+   layout at a width, not of how the page was loaded, and three loads per page
+   per engine was most of this file's cost. */
 for (const page of PAGES) {
-  for (const width of WIDTHS) {
-    test(`${page} does not scroll sideways at ${width}px`, async ({ page: p }) => {
+  test(`${page} does not scroll sideways at ${WIDTHS.join(", ")}px`, async ({ page: p }) => {
+    await p.setViewportSize({ width: 1440, height: 900 });
+    await p.goto(`/${page}`);
+    for (const width of WIDTHS) {
       await p.setViewportSize({ width, height: width < 500 ? 812 : 900 });
-      await p.goto(`/${page}`);
       /* documentElement, not body: body can be exactly viewport-wide while a
-         child sticks out of it and the page still scrolls. */
-      const overflow = await p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-      /* Read once, and if it is over, say what the page looked like. This fired
-         once in roughly twenty runs and did not reproduce in fourteen; a retry
-         would have buried it, so the next occurrence names the element and
-         whether the sheet was even applied. */
-      const why = overflow <= 0 ? "" : JSON.stringify(await p.evaluate(() => ({
-        sheets: document.styleSheets.length,
-        rules: [...document.styleSheets].reduce((n, s) => { try { return n + s.cssRules.length; } catch { return n; } }, 0),
-        widest: (() => { let el = "", max = 0;
-          for (const e of document.querySelectorAll("*")) { const r = e.getBoundingClientRect();
-            if (r.right > max) { max = r.right; el = `${e.tagName}.${e.className}`; } }
-          return `${el} @${Math.round(max)}px`; })(),
-      })));
-      expect(overflow, `${overflow}px over. ${why}`).toBeLessThanOrEqual(0);
-    });
-  }
+         child sticks out of it and the page still scrolls. Polled: a resize
+         reflows on the next frame, and a single read races it. */
+      try {
+        await expect.poll(() => p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth))
+          .toBeLessThanOrEqual(0);
+      } catch {
+        /* This fired once in roughly twenty runs and did not reproduce in
+           fourteen; a retry would have buried it, so the failure names the
+           widest element and whether the sheet was even applied. */
+        const why = await p.evaluate(() => {
+          let el = "", max = 0;
+          for (const e of document.querySelectorAll("*")) { const r = e.getBoundingClientRect(); if (r.right > max) { max = r.right; el = `${e.tagName}.${e.className}`; } }
+          return { over: document.documentElement.scrollWidth - window.innerWidth, widest: `${el} @${Math.round(max)}px`, sheets: document.styleSheets.length };
+        });
+        throw new Error(`${page} scrolls sideways at ${width}px: ${JSON.stringify(why)}`);
+      }
+    }
+  });
 }

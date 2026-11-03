@@ -1,29 +1,13 @@
-/* The appearance control: a trigger showing the resolved appearance, and a
- * popover menu offering System / Light / Dark.
- *
- * Every other gate in this repo grades a document holding still -- html-validate
- * parses it, axe walks it, PurgeCSS asks what it can reach. None of them can
- * press a button, which is how a two-state toggle shipped on fourteen pages
- * with no way back to "follow my Mac" and every check green.
- *
- * emulateMedia is the honest way to test "keeps following the OS": it changes
- * what prefers-color-scheme reports to the LIVE page, which is the event the
- * matchMedia listener exists to catch. Asserting on a stub would only prove the
- * stub works.
- *
- * Both a sub-page and the homepage, because the handler used to exist twice --
- * once in home.js and once in the layout for the other thirteen pages -- and
- * the regression worth guarding is precisely one page behaving differently.
- */
+/* The appearance control, pressed for real: every other gate grades a page
+   holding still, which is how a toggle with no way back to System shipped
+   green. emulateMedia flips what the LIVE page sees, the event the listener
+   exists for. Interaction runs on one page (theme.js is one file); first
+   load runs on both, since theme-init.js branches on the homepage. */
 import { test, expect } from "@playwright/test";
 
-/* expect.poll, not a bare expect on a single read. These assertions describe
-   state the page settles into after an event -- a click, or a
-   prefers-color-scheme change that reaches the page as a matchMedia event --
-   and reading once races that. Polling is also what lets the suite run
-   fullyParallel against one static server: a slow asset delays the settle
-   rather than failing the run. It replaces the hand-placed sleeps the CDP
-   version needed, which were guesses that happened to hold on this machine. */
+/* Polled, not read once: these are states the page settles into after a
+   click or a matchMedia event, and one read races that. Polling also lets the
+   suite run fullyParallel: a slow asset delays the settle instead of failing. */
 const expectState = (page) => expect.poll(() => read(page), { timeout: 5000 });
 
 /* Everything one press is supposed to move, read in a single evaluate so the
@@ -79,13 +63,25 @@ async function choose(page, mode) {
   await page.locator(`label[for="tm-${mode}"]`).click();
 }
 
-for (const page_ of ["features.html", "index.html"]) {
+/* What a page opens in: theme-init.js, which branches on the homepage. */
+const BOTH = ["features.html", "index.html"];
+/* What the menu does once open: theme.js, the same file on every page. */
+const ONE = ["features.html"];
+const FIRST_LOAD = new Set([
+  "first visit follows the OS, and the menu is not on the page",
+  "a forced choice survives navigation",
+  "a junk stored value falls back to System instead of bricking the control",
+]);
+const on = (page_, name) => FIRST_LOAD.has(name) || ONE.includes(page_);
+
+for (const page_ of BOTH) {
   test.describe(page_, () => {
+    const test_ = (name, fn) => (on(page_, name) ? test(name, fn) : undefined);
     // A visitor who has never chosen, on a dark Mac. Each test gets a fresh
     // context, so "never chosen" needs no clearing step.
     test.use({ colorScheme: "dark" });
 
-    test("first visit follows the OS, and the menu is not on the page", async ({ page }) => {
+    test_("first visit follows the OS, and the menu is not on the page", async ({ page }) => {
       await open_(page, page_);
       await expectState(page).toMatchObject({
         menuOpen: false, menuPainted: false,
@@ -94,7 +90,7 @@ for (const page_ of ["features.html", "index.html"]) {
       });
     });
 
-    test("each mode is reachable by name, and System clears the key", async ({ page }) => {
+    test_("each mode is reachable by name, and System clears the key", async ({ page }) => {
       await open_(page, page_);
 
       await choose(page, "light");
@@ -115,7 +111,7 @@ for (const page_ of ["features.html", "index.html"]) {
       });
     });
 
-    test("the menu opens on the trigger and closes once a mode is picked", async ({ page }) => {
+    test_("the menu opens on the trigger and closes once a mode is picked", async ({ page }) => {
       await openMenu(page, page_);
       await expectState(page).toMatchObject({ menuOpen: true, menuPainted: true });
       // opening focuses the current choice, so the radio group's arrow keys start somewhere
@@ -129,14 +125,14 @@ for (const page_ of ["features.html", "index.html"]) {
        the suite tested closing by PICKING and by Escape, was green, and the
        control was unclosable in both Chrome and Safari. A gate that green is
        worse than no gate. */
-    test("clicking the trigger again closes the menu", async ({ page }) => {
+    test_("clicking the trigger again closes the menu", async ({ page }) => {
       await openMenu(page, page_);
       await expectState(page).toMatchObject({ menuOpen: true, menuPainted: true });
       await page.locator("#themeToggle").click();
       await expectState(page).toMatchObject({ menuOpen: false, menuPainted: false, pref: "system" });
     });
 
-    test("clicking away closes the menu", async ({ page }) => {
+    test_("clicking away closes the menu", async ({ page }) => {
       await openMenu(page, page_);
       await expectState(page).toMatchObject({ menuOpen: true, menuPainted: true });
       await page.locator("h1").first().click({ force: true });
@@ -147,7 +143,7 @@ for (const page_ of ["features.html", "index.html"]) {
        and WebKit's radio groups do not wrap while Chromium's do. Up moves to
        Dark in both, so the assertion is about our behaviour rather than the
        engine's edge case. */
-    test("arrows preview without committing the menu shut", async ({ page }) => {
+    test_("arrows preview without committing the menu shut", async ({ page }) => {
       await openMenu(page, page_);
       await page.keyboard.press("ArrowUp");
       // the theme follows live, and the menu STAYS so you can keep browsing --
@@ -157,7 +153,7 @@ for (const page_ of ["features.html", "index.html"]) {
       await expectState(page).toMatchObject({ menuOpen: true, pref: "light", menuPick: "light" });
     });
 
-    test("Enter confirms the previewed option and closes", async ({ page }) => {
+    test_("Enter confirms the previewed option and closes", async ({ page }) => {
       await openMenu(page, page_);
       await page.keyboard.press("ArrowUp");
       await page.keyboard.press("Enter");
@@ -166,7 +162,7 @@ for (const page_ of ["features.html", "index.html"]) {
       await expectState(page).toMatchObject({ menuOpen: false, menuPainted: false, pref: "dark", stored: "dark" });
     });
 
-    test("re-picking the mode already selected just closes", async ({ page }) => {
+    test_("re-picking the mode already selected just closes", async ({ page }) => {
       await openMenu(page, page_);
       // no `change` fires here, so dismissal cannot hang off it: this used to
       // leave the menu open with nothing having happened.
@@ -174,32 +170,24 @@ for (const page_ of ["features.html", "index.html"]) {
       await expectState(page).toMatchObject({ menuOpen: false, menuPainted: false, pref: "system" });
     });
 
-    test("Escape closes the menu without changing anything", async ({ page }) => {
+    test_("Escape closes the menu without changing anything", async ({ page }) => {
       await openMenu(page, page_);
       await expectState(page).toMatchObject({ menuOpen: true, menuPainted: true });
       await page.keyboard.press("Escape");
       await expectState(page).toMatchObject({ menuOpen: false, menuPainted: false, pref: "system", stored: null });
     });
 
-    test("an OS change lands live while on System, and is ignored once forced", async ({ page }) => {
+    test_("an OS change lands live while on System, and is ignored once forced", async ({ page }) => {
       await open_(page, page_);
       await page.emulateMedia({ colorScheme: "light" });
       await expectState(page).toMatchObject({ pref: "system", theme: "light" });
 
       await choose(page, "dark");
 
-      /* Re-arm to dark BEFORE flipping to light. The OS is already light from
-         the step above, and re-emulating a value that is already in effect
-         fires no change event at all -- so asserting after it proved nothing.
-         This assertion could not fail: deleting the very guard it exists to
-         protect (the `pref === 'system'` test in base.njk's listener, which is
-         what stops the OS clobbering a forced choice) left every theme test
-         green. The intermediate wait is load-bearing too, because back-to-back
-         emulateMedia calls coalesce into no event.
-
-         Then a real wait, not a poll: polling cannot express "stays". It passes
-         on the first read, which happens before the listener could have fired,
-         so a regression that DID repaint would still go green. */
+      /* Re-arm to dark first: re-emulating the value already in effect fires no
+         event, which once let this pass with the guard deleted. The 50ms gap
+         stops the two calls coalescing; the 200ms is a real wait, because a
+         poll cannot express "stays". */
       await page.emulateMedia({ colorScheme: "dark" });
       await page.waitForTimeout(50);
       await page.emulateMedia({ colorScheme: "light" });
@@ -207,7 +195,7 @@ for (const page_ of ["features.html", "index.html"]) {
       await expectState(page).toMatchObject({ pref: "dark", theme: "dark", stored: "dark" });
     });
 
-    test("a forced choice survives navigation", async ({ page }) => {
+    test_("a forced choice survives navigation", async ({ page }) => {
       await open_(page, page_);
       await choose(page, "dark");
       await page.goto(page_);
@@ -222,7 +210,7 @@ for (const page_ of ["features.html", "index.html"]) {
       });
     });
 
-    test("a junk stored value falls back to System instead of bricking the control", async ({ page }) => {
+    test_("a junk stored value falls back to System instead of bricking the control", async ({ page }) => {
       /* A value outside light|dark used to become the state: data-theme="SYSTEM"
          matched no rule, the label read "Theme: undefined", and the first click
          wrote the string "undefined" into storage, killing the only control that

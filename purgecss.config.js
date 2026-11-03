@@ -4,11 +4,8 @@
 //   npx purgecss --config purgecss.config.js            # report
 //   npx purgecss --config purgecss.config.js --output . # rewrite (review the diff)
 export default {
-  // Shipped pages only: never band fragments (build inputs, not pages) and never
-  // the unlinked hero-* comps, which share .lg-* rules with the homepage and
-  // vouch for them. Measured: with the comps scanned, dropping the feature band
-  // from index read 1.6%; without them, 11.3%. Zero versus eleven is a gate.
-  content: ["dist/*.html", "!dist/hero-*.html", "dist/home.js", "dist/play.js", "dist/theme.js"],
+  // Shipped pages only, never band fragments (build inputs, not pages).
+  content: ["dist/*.html", "dist/home.js", "dist/play.js", "dist/theme.js"],
   // Every sheet the build emits, globbed, so a new styles/pages/<page>.css is
   // graded the day it appears. A page sheet is small, so the percentage bites:
   // one dead rule in a 200-byte file is 20%.

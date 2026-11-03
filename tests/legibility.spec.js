@@ -13,10 +13,8 @@ const WIDTHS = [1440, 375];
 const FLOOR = 11;
 
 /* Fixed-size render canvases, not responsive pages -- same exclusion, and the
-   same reason, as layout.spec.js. The hero-*.html files are unlinked, noindex
-   comps kept for comparison; they are not the site and several deliberately set
-   10.5px spec tags on placeholder blocks. */
-const SKIP = (f) => ["og.html", "store-cards.html"].includes(f) || f.startsWith("hero-");
+   same reason, as layout.spec.js. */
+const SKIP = (f) => ["og.html", "store-cards.html"].includes(f);
 
 const PAGES = readdirSync("dist").filter((f) => f.endsWith(".html") && !SKIP(f)).sort();
 

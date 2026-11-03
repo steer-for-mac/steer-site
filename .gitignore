@@ -29,3 +29,4 @@ docs/private/
 
 # compiled by tools/demo/help-overlay.sh from winid.swift
 tools/demo/winid
+.DS_Store

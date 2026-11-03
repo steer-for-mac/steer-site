@@ -27,8 +27,8 @@ const HTML_FILES = existsSync(join(ROOT, "dist"))
 // rgba(0,122,255,0.10) becomes #007aff1a in the output and the forbidden-hex
 // detector fires on a value the author never wrote. Check what a human edits.
 // Found, not listed. The hand-kept list this replaces named three directories
-// and warned that a fourth would reopen "the same silent gap". styles/heroes/
-// then did exactly that, unscanned, for five sheets.
+// and warned that a fourth would reopen "the same silent gap"; a later
+// directory then did exactly that, unscanned, for five sheets.
 const cssUnder = (dir) =>
   readdirSync(join(ROOT, dir), { withFileTypes: true, recursive: true })
     .filter((d) => d.isFile() && d.name.endsWith(".css") && !d.name.endsWith(".entry.css"))
