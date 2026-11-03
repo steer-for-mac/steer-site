@@ -1,0 +1,21 @@
+name: build the site
+description: Install, then build dist/ with eleventy, reusing encoded images across runs.
+runs:
+  using: composite
+  steps:
+    - run: npm ci
+      shell: bash
+    # From npm, so the tarball is integrity-checked against the registry, and it
+    # works the same on a runner and inside Playwright's image. scripts/serve.js
+    # needs Bun 1.4, the release where Bun.serve learned to serve a directory.
+    - run: command -v bun >/dev/null || npm install --global bun@1.4.4
+      shell: bash
+    # eleventy-img skips any width it finds already written, so restoring
+    # dist/img turns a 47s cold encode of every raster into a few seconds.
+    # The key is everything that decides the output: sources, config, versions.
+    - uses: actions/cache@v6
+      with:
+        path: dist/img
+        key: img-${{ hashFiles('src/**/*.png', 'src/**/*.jpg', 'src/**/*.jpeg', 'src/**/*.webp', 'eleventy.config.js', 'package-lock.json') }}
+    - run: bun x eleventy
+      shell: bash
