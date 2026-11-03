@@ -35,6 +35,9 @@
     the theme control permanently dead. #}
 <script>{% include "scripts/theme-init.js" %}</script>
 <script>{% include "scripts/from-tag.js" %}</script>
+{#- Hovering a same-site link prerenders the page, so the cross-fade lands on a
+    page already drawn. Never the checkout forward or a download. #}
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/buy.html"}},{"not":{"href_matches":"/*.dmg"}}]},"eagerness":"moderate"}]}</script>
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=graphite">
 <link rel="stylesheet" href="site.css">
