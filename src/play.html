@@ -26,17 +26,10 @@ bodyEnd: '<script src="play.js" defer></script>'
   <section class="py-join" aria-labelledby="py-join-h">
     <div class="wrap-wide py-join-in">
       <div>
-        <h2 id="py-join-h" class="py-join-h">Like it? Hear the day it opens.</h2>
-        <p class="py-join-sub">One email, from me, the day the free trial opens. €19.99 once when it ships, no subscription.</p>
+        <h2 id="py-join-h" class="py-join-h">Like it? It's yours for €19.99.</h2>
+        <p class="py-join-sub">Once, no subscription. Not sure yet? The free beta is open, and it updates itself. <a href="{{ beta.url }}">Download the beta</a> · <a href="changelog.html#v{{ beta.version }}">What&rsquo;s in it</a></p>
       </div>
-      <form class="ml-form" action="https://seanfloyd.dev/api/steer-mailing-list" method="post">
-        <input class="ml-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <input class="ml-from" type="hidden" name="from" value="">
-        <input class="ml-in" type="email" name="email" required placeholder="you@example.com" autocomplete="email" aria-label="Your email address">
-        <input class="ml-in" type="text" name="controller" placeholder="Your controller (optional)" aria-label="Which controller do you have (optional)">
-        <button type="submit" class="btn btn-primary">Join the launch list</button>
-        <p class="ml-msg" role="status" aria-live="polite"></p>
-      </form>
+      <div><a class="btn btn-primary" href="buy.html">Buy Steer, €19.99</a></div>
     </div>
   </section>
 
@@ -65,4 +58,3 @@ bodyEnd: '<script src="play.js" defer></script>'
     </div>
   </section>
 </main>
-{% include "bands/dialogs.html" %}

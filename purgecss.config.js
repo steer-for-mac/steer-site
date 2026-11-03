@@ -36,7 +36,7 @@ export default {
       /^data-theme$/,
     ],
     // keep every :hover/::after/[aria-*] variant of a class that survives
-    greedy: [/^d-/, /^dgs/, /^lay-/, /^vg-/, /^shots/, /^ml-/],
+    greedy: [/^d-/, /^dgs/, /^lay-/, /^vg-/, /^shots/],
     deep: [/^chero/],
   },
   // variables OFF so the number means one thing: rules no page can reach.

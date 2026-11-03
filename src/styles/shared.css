@@ -156,7 +156,7 @@ html:not([data-js]) .theme-toggle,html:not([data-js]) .theme-menu{display:none}
 .shot{border-radius:var(--r-window);overflow:hidden;box-shadow:var(--shadow-window);border:1px solid var(--frame);background:var(--bg)}
 .shot img{width:100%;height:auto;display:block}
 
-.shot,.shots,.nav-links,.trust-list,.cmp-card,.ml-dialog,.close{
+.shot,.shots,.nav-links,.trust-list,.cmp-card,.close{
   corner-shape: squircle;
 }
 

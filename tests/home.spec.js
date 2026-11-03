@@ -3,40 +3,38 @@
    with every other gate green, hence the script and dialog checks. */
 import { expect, test } from "@playwright/test";
 
-test("the homepage loads its behaviour, and the nav CTA opens the launch list", async ({ page }) => {
+test("the homepage loads its behaviour, and the nav CTA goes to the checkout", async ({ page }) => {
   const missing = [];
   page.on("requestfailed", (r) => { if (!r.url().endsWith(".mp4")) missing.push(r.url()); });
   await page.goto("/index.html");
   await expect(page.locator("script[src='home.js']")).toHaveCount(1);
   await expect(page.locator("meta[name='robots']")).toHaveCount(0);
   await expect(page.locator("link[rel='canonical']")).toHaveAttribute("href", "https://steer.seanfloyd.dev/");
-  /* Every CTA falls back to #pricing, so the anchor has to hold the form. */
-  await expect(page.locator("#pricing form.ml-form")).toHaveCount(1);
-  const dialog = page.locator("#mlDialog");
-  await expect(dialog).toBeHidden();
-  /* Beside the hero's own form the nav button steps aside, then returns. */
-  await expect(page.locator(".nav a[data-ml]")).toBeHidden();
+  /* Old links still land on #pricing, so the anchor has to hold the buy button. */
+  await expect(page.locator("#pricing a[href='buy.html']")).toHaveCount(1);
+  /* Beside the hero's own buy button the nav button steps aside, then returns. */
+  const nav = page.locator(".nav a.btn-nav");
+  await expect(nav).toHaveAttribute("href", "buy.html");
+  await expect(nav).toBeHidden();
   await page.locator("#q-setup").scrollIntoViewIfNeeded();
-  await page.locator(".nav a[data-ml]").click();
-  await expect(dialog).toBeVisible();
+  await expect(nav).toBeVisible();
   expect(missing, "no request failed").toEqual([]);
 });
 
-test("the first screen has the couplet, a working form and three pinned places", async ({ page }) => {
-  await page.goto("/index.html?from=hn");
+test("the first screen has the couplet, a buy button, the beta, and three pinned places", async ({ page }) => {
+  await page.goto("/index.html");
   await expect(page.locator("h1")).toHaveText("Your keyboard is over there. Your controller is right here.");
-  await expect(page.locator(".hero form.ml-form input[type=email]")).toBeVisible();
+  await expect(page.locator(".hero .join a[href='buy.html']")).toBeVisible();
+  /* The beta link is a direct DMG, so it must be the one beta.json names. */
+  await expect(page.locator(".hero a[href$='/Steer.dmg']")).toHaveAttribute("href", /\/releases\/download\/v[^/]+\/Steer\.dmg$/);
   const places = page.locator(".places figure");
   await expect(places).toHaveCount(3);
   for (const fig of await places.all()) {
     await expect(fig.locator(".pin.there")).toHaveText("over there");
     await expect(fig.locator(".pin.here")).toHaveText("right here");
   }
-  /* Both forms post, and carry the link's source tag. */
-  const forms = page.locator("main form.ml-form");
-  await expect(forms).toHaveCount(2);
-  await expect(page.locator("main form.ml-form input[name=from]")).toHaveCount(2);
-  await expect(page.locator(".ml-from").first()).toHaveValue("hn");
+  /* No launch-list form survives anywhere on the page. */
+  await expect(page.locator("form.ml-form")).toHaveCount(0);
 });
 
 test("each question is a heading, and every app picture has both themes", async ({ page }) => {
@@ -129,13 +127,12 @@ test.describe("under reduced motion", () => {
 
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
-  test("the page reads, the drawings show, and the form posts", async ({ page }) => {
+  test("the page reads, the drawings show, and the buy button is a plain link", async ({ page }) => {
     await page.goto("/index.html");
     await expect(page.locator("h1 .pain")).toHaveText("Your keyboard is over there.");
     await expect(page.locator(".sofa img")).toBeVisible();
-    const form = page.locator("#pricing form.ml-form");
-    await expect(form).toHaveAttribute("method", "post");
-    await expect(form).toHaveAttribute("action", /steer-mailing-list/);
+    await expect(page.locator("#pricing a[href='buy.html']")).toBeVisible();
+    await expect(page.locator(".nav a.btn-nav")).toBeVisible();
   });
 });
 

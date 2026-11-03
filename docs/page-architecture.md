@@ -143,7 +143,7 @@ Superseded by the logi2 comp, promoted to the homepage on the
 `release/homepage-redesign` branch; the paragraph above describes a page that no
 longer ships. `src/index.src.html` now includes seven bands from
 `src/_includes/bands/logi2/`, in this order, and its top comment records why:
-hero (the redrawn controller and the launch-list CTA), demo (the live pad demo),
+hero (the redrawn controller and the CTA, a launch-list form until 2026-11-03 and Buy since), demo (the live pad demo),
 gap (why an app is needed at all), uses (rooms from sofa to desk), apps (one
 stage per app, render slots holding photos until the pad renders land), more
 (two cards: Help Overlay and Shortcut Templates) and close (trial, one price,

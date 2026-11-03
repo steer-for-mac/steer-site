@@ -1,9 +1,0 @@
-/* The launch-list dialog's close button. The screenshot gallery that shared
-   this sheet left with the old homepage. */
-.shots-close{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--sep);background:var(--bg-inset);color:var(--text-2);display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s}
-.shots-close:hover{background:var(--bg-inset-2);color:var(--text)}
-.shots-close svg{width:14px;height:14px}
-
-/* The dialog's submit fills the sheet, where #pricing's twin (.pr-go) sits in a
-   card and does not. Was an inline style attribute. */
-.ml-go{width:100%;justify-content:center}

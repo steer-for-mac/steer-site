@@ -6,23 +6,6 @@
 
 header.nav{transition:background .25s ease,border-color .25s ease}
 
-/* ── launch-list form (pricing card) + the small dialog the CTAs open ──── */
-.ml-form{margin-top:26px;display:flex;flex-direction:column;gap:10px}
-.ml-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
-.ml-in{font:inherit;font-size:15px;padding:11px 14px;border-radius:var(--r-inset);border:1px solid var(--sep);background:var(--bg);color:var(--text);width:100%;text-align:left}
-.ml-in::placeholder{color:var(--text-3)}
-.ml-in:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
-/* native arrow kept on purpose (it is the affordance); only the background is
-   pinned, because some engines ignore the shorthand on a select and the
-   default would clash in dark mode. Check both themes before shipping. */
-select.ml-in{background-color:var(--bg);cursor:pointer}
-.ml-msg{font-size:13px;color:var(--text-2);margin:2px 0 0}
-dialog.ml-dialog{margin:auto;width:min(400px,calc(100vw - 32px));border:1px solid var(--sep-2);border-radius:var(--r-card);padding:28px;background:var(--bg);color:var(--text);box-shadow:0 40px 120px -20px rgba(0,0,0,.55);position:relative;text-align:left}
-dialog.ml-dialog::backdrop{background:rgba(7,10,18,.62);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
-.ml-dialog h2{font-size:21px;letter-spacing:-0.02em;font-weight:700;padding-right:40px}
-.ml-dialog .ml-sub{margin-top:8px;font-size:14px;color:var(--text-2);line-height:1.5}
-.ml-dialog .ml-alt{margin-top:14px;font-size:12px;color:var(--text-3)}
-.ml-dialog .ml-close{position:absolute;top:16px;right:16px}
 
 
 /* the column, drawn. Each section's .wrap segment abuts the next, so the

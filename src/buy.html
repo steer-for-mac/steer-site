@@ -3,6 +3,7 @@ layout: layouts/base.njk
 title: "Steer: Buy"
 description: "Buy Steer."
 robots: "noindex"
+redirect: "https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff"
 ---
 <!--
   /buy.html is the ONLY checkout entry point, and the app links here.
@@ -13,16 +14,24 @@ robots: "noindex"
   product variant changes, and stay broken through a merchant-of-record
   migration. This page is the indirection that absorbs that.
 
-  WHEN THE STORE IS LIVE: replace the <main> block below with a redirect to the
-  hosted checkout, and add the matching <meta http-equiv="refresh"> in <head>
-  for no-JS clients. Keep the path /buy.html exactly as it is - it is baked into shipped binaries.
+  The store is live (2026-11-03): this page forwards to the live Lemon Squeezy
+  checkout, by script and by the meta refresh in <head> for no-JS clients. Keep
+  the path /buy.html exactly as it is - it is baked into shipped binaries.
 -->
 <main>
   <div class="doc">
     <a class="back-link" href="index.html"><span aria-hidden="true">&larr;</span> Steer</a>
-    <h1>Steer isn't on sale yet</h1>
-    <p class="lede">The store isn't open. Join the launch list and you'll hear the day it is. No other email.</p>
-    <p><a class="btn btn-primary" href="index.html#pricing">Join the launch list</a></p>
+    <h1>Buy Steer</h1>
+    <p class="lede">Taking you to the checkout. €19.99 once, no subscription.</p>
+    <p><a class="btn btn-primary" href="https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff">Go to the checkout</a></p>
     <p>Already bought and need help activating? Email <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a>.</p>
   </div>
 </main>
+<script>
+  {#- Forward with the visit's ?from= tag, if any, as checkout custom data. #}
+  (function () {
+    var url = "https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff", from = null;
+    try { from = new URLSearchParams(location.search).get("from") || sessionStorage.getItem("steer-from"); } catch (e) {}
+    location.replace(from ? url + "?checkout%5Bcustom%5D%5Bfrom%5D=" + encodeURIComponent(from.slice(0, 40)) : url);
+  })();
+</script>

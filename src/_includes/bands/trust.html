@@ -24,7 +24,9 @@
   </div>
 
   <!-- Licence: launch and daily (Steer/Purchase/PurchaseManager.swift:300-348).
-       Updates only when asked (SUEnableAutomaticChecks=false). iCloud sync is
+       Updates: automatic while "Receive beta updates" is on (on by default in a
+       beta build, which is what sells today), else only when asked
+       (SUEnableAutomaticChecks=false). iCloud sync is
        compiled into the App Store build only (#if APP_STORE in
        Steer/EventLoop+CloudKit.swift; DirectLicensing.swift:104), and the copy
        sold from this site is the direct build. -->
@@ -33,7 +35,7 @@
     <dl>
       <div><dt>Never</dt><dd>What you type, and your mappings. They live in a file on your Mac you can open and read. The copy sold here has no iCloud sync.</dd></div>
       <div><dt>Your licence key</dt><dd>Checked when you enter it, then on launch and about once a day.</dd></div>
-      <div><dt>Updates</dt><dd>Steer looks for one only when you ask.</dd></div>
+      <div><dt>Updates</dt><dd>The beta checks about once a day and installs new builds. Turn off &ldquo;Receive beta updates&rdquo; and Steer looks only when you ask.</dd></div>
       <div><dt>A shared setup</dt><dd>Fetched only if you paste a link to one.</dd></div>
     </dl>
   </div>
@@ -65,7 +67,7 @@
 <section class="q sub-close" aria-labelledby="tr-close">
   <h2 id="tr-close" class="display"><span class="pain">Still unsure?</span> <span>Ask the person who made it.</span></h2>
   <div>
-    <a class="btn btn-primary" href="index.html#pricing">Join the launch list</a>
+    <a class="btn btn-primary" href="buy.html">Buy Steer, €19.99</a>
     <p class="fine">Or email <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a>. A person answers.</p>
   </div>
 </section>

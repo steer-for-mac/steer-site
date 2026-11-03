@@ -18,6 +18,13 @@ test.use({ viewport: { width: 1440, height: 900 } });
    page is identical either side of the flip. */
 for (const page of PAGES) {
   test(`${page} has no axe violations`, async ({ page: p }) => {
+    /* buy.html forwards to the hosted checkout at once; grade our page, not
+       theirs, by serving it with the two forwards (meta refresh, script) cut. */
+    await p.route("**/buy.html", async (r) => {
+      const res = await r.fetch();
+      const body = (await res.text()).replace(/<meta http-equiv="refresh"[^>]*>/, "").replace(/<script>(?:(?!<\/script>)[\s\S])*location\.replace[\s\S]*?<\/script>/, "");
+      await r.fulfill({ response: res, body });
+    });
     await p.goto(`/${page}`);
     await p.waitForFunction(() => document.fonts.status === "loaded");
     /* Freeze before flipping: body's background transitions and html's does

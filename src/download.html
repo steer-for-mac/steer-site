@@ -13,9 +13,8 @@ robots: "noindex"
   reason /buy.html exists - the host can change (GitHub release, CDN, a different
   provider entirely) and every past receipt would rot. This page absorbs that.
 
-  WHEN THE FIRST RELEASE SHIPS: replace the "not open yet" block below with the
-  real download button pointing at the DMG, and keep the activation steps as
-  they are. Keep the path /download.html exactly as it is - it is baked into
+  Until 1.0 ships, the download is the newest beta (src/_data/beta.json), which
+  updates itself to each newer build. Keep the activation steps as they are. Keep the path /download.html exactly as it is - it is baked into
   every receipt already sent.
 -->
 <main>
@@ -25,14 +24,15 @@ robots: "noindex"
     <p class="lede">Your licence key is in your email receipt. Download the app, paste the key in, and it's yours to keep.</p>
 
     <h2>Get the app</h2>
-    <p>Steer hasn't shipped its first release yet. If you're waiting on it, join the launch list and you'll hear the day it's out.</p>
-    <p><a class="btn btn-primary" href="index.html#pricing">Join the launch list</a></p>
+    <p>The current build is the {{ beta.version }} beta. It updates itself, so you'll move on to each newer build, and to 1.0, without coming back here.</p>
+    <p><a class="btn btn-primary" href="{{ beta.url }}">Download Steer</a></p>
+    <p><a class="arrow-link" href="changelog.html#v{{ beta.version }}">What&rsquo;s in it <span class="arrow">→</span></a></p>
 
     <h2>Activate</h2>
     <p>Open Steer, go to Settings &rarr; General, paste your licence key, and click Activate. That's it. The key works on every Mac you use, at home or at work, with no limit on how many.</p>
 
     <h2>Updates</h2>
-    <p>Steer checks for updates only when you ask it to: Check for Updates in the menu bar. You never need to come back here for a new version.</p>
+    <p>While "Receive beta updates" is on, which it is in the beta, Steer installs each newer build on its own. Turn it off and Steer checks only when you ask: Check for Updates in the menu bar. Either way, you never need to come back here for a new version.</p>
 
     <h2>Requirements</h2>
     <p>macOS 14 or later, on an Apple Silicon Mac. A DualSense, DualShock 4, Xbox, Switch Pro, or MFi controller.</p>

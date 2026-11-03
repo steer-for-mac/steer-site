@@ -34,15 +34,7 @@
         <input type="radio" class="tm-in" name="theme-pref" id="tm-system" value="system" checked>
         <label class="tm-opt" for="tm-system">{% include "art/nav-monitor.svg" %}System</label>
       </div>
-      {#- data-ml opens the launch-list dialog and home.js is the only page
-          script that wires it, so off the homepage the CTA is a plain link to
-          the inline form. That, and the local #pricing anchor, is the whole of
-          what the nav varies by page. -#}
-      {%- if home %}
-      <a class="btn btn-nav" href="#pricing" data-ml><span class="nav-cta-full">Join the launch list</span><span class="nav-cta-short">Join</span></a>
-      {%- else %}
-      <a class="btn btn-nav" href="index.html#pricing"><span class="nav-cta-full">Join the launch list</span><span class="nav-cta-short">Join</span></a>
-      {%- endif %}
+      <a class="btn btn-nav" href="buy.html"><span class="nav-cta-full">Buy Steer</span><span class="nav-cta-short">Buy</span></a>
     </div>
   </div>
 </header>

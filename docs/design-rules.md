@@ -111,20 +111,19 @@ should never try to be one.
 - No emoji in copy.
 - Write for the non-technical reader first. Audience before feature list.
 - One primary CTA per view. Price is microcopy beside the CTA, not a competing
-  button. The launch list is a real form, never a bare mailto: a mailto dies
-  silently on a machine with no mail client, at the moment of highest intent.
-  Since October 2026 the form sits in the first screen and again at the close
-  (`#pricing`), screens apart, so each is the one blue button in its view; the
-  nav opens the same form in a dialog and keeps `href="#pricing"` for no-JS.
-  The mailto appears only when a submit fails (`launch-list.js`), as the way
-  out rather than the mechanism.
+  button. Since 2026-11-03 the CTA is Buy, a plain link to `buy.html` (the
+  indirection that forwards to the checkout), with the free beta as a quiet
+  text link under it. It sits in the first screen and again at the close
+  (`#pricing`), screens apart, so each is the one primary button in its view;
+  the nav's Buy steps aside while one is on screen. The launch-list form and
+  its dialog were retired that day.
 - Trust language stays literal and verifiable: on-device, no account, no
   telemetry. Never soften it into marketing vagueness. A trust heading may not
   overstate and then get walked back by its own body: the licence check does
   send something, so the claim is about what never leaves (mappings, keystrokes),
   not a blanket "nothing about you".
-- Say what is true about availability. While Steer is pre-launch, the hero price
-  microcopy reads "once, when it ships". Burying launch status in 13px grey text
+- Say what is true about availability. While the build sold is a beta, the
+  hero's microcopy under Buy says so, by version. Burying launch status in 13px grey text
   seven screens down is out of character for a page that discloses undocumented
   API use in its FAQ.
 - Comparisons need a source. The $435 Speed Editor is the only verified price on

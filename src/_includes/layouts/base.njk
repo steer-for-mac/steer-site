@@ -34,6 +34,7 @@
     value against light|dark: a stored "SYSTEM" once wrote "undefined" and left
     the theme control permanently dead. #}
 <script>{% include "scripts/theme-init.js" %}</script>
+<script>{% include "scripts/from-tag.js" %}</script>
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=graphite">
 <link rel="stylesheet" href="site.css">
@@ -48,6 +49,9 @@
 {%- if pageName in pageSheets %}
 <link rel="stylesheet" href="{{ pageName }}.css">
 {%- endif %}
+{%- if redirect %}
+<meta http-equiv="refresh" content="0; url={{ redirect }}">
+{%- endif %}
 {%- if robots %}
 <meta name="robots" content="{{ robots }}">
 {%- endif %}
@@ -61,7 +65,6 @@
 {{ content | safe }}
 {% include "chrome/footer.html" %}
 {%- if home -%}
-{% include "bands/dialogs.html" %}
 <script src="home.js" defer></script>
 {%- endif %}
 {#- The appearance control's behaviour; a file so eslint reads it. The <head>

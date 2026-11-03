@@ -57,8 +57,9 @@ test.describe("play.html", () => {
     await expect(help).toBeHidden();
   });
 
-  test("the launch form is on the page a shared link lands on", async ({ page }) => {
-    await expect(page.locator(".py-join form.ml-form input[type=email]")).toBeVisible();
+  test("the page a shared link lands on can buy, or get the beta", async ({ page }) => {
+    await expect(page.locator(".py-join a[href='buy.html']")).toBeVisible();
+    await expect(page.locator(".py-join a[href$='/Steer.dmg']")).toBeVisible();
   });
 });
 
@@ -125,7 +126,3 @@ test("a focused dock button answers Enter, not the demo's Return", async ({ page
   await expect(page.locator("#sd-field")).toHaveText("Hello, Mac");
 });
 
-test("play.html's form carries the ?from= tag of the link that brought the visitor", async ({ page }) => {
-  await page.goto("/play.html?from=reddit-test");
-  await expect(page.locator("main form.ml-form input[name='from']")).toHaveValue("reddit-test");
-});
