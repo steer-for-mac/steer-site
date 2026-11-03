@@ -1,7 +1,11 @@
 name: build and deploy
 
+# Docs and notes never reach dist/, so they do not need the whole suite.
 on:
   push:
+    paths-ignore:
+      - "docs/**"
+      - "*.md"
   workflow_dispatch:
 
 permissions:
@@ -13,53 +17,25 @@ concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
 
+# One build, then every check at once against that artifact, then a small gate
+# that every check must pass before anything publishes. The wall time is the
+# slowest check, not the sum.
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      playwright: ${{ steps.pw.outputs.version }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
           cache: npm
-
-      # `bun x` launches the gates; each bin's node shebang means they still
-      # run under the Node above, so the artifact is the same one as before.
-      # Bun IS the runtime for scripts/serve.js, and 1.4 is where `Bun.serve`
-      # learned to serve a directory -- that route is the whole reason for the
-      # pin. npm still installs: dependencies.yml reads package-lock.json.
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: "1.4.x"
-
       - run: npm ci
-
-      # ruff.toml's required-version, read rather than copied: the default rule
-      # set moves between minors, and a copy here went stale on the 0.17 bump.
-      - name: Install ruff
-        run: |
-          spec=$(sed -n 's/^required-version = "\(.*\)"$/\1/p' ruff.toml)
-          [ -n "$spec" ] || { echo "no required-version in ruff.toml" >&2; exit 1; }
-          pipx install "ruff$spec"
-
-      # Keyed on the lockfile, so the cache turns over exactly when the pinned
-      # Playwright version does. --with-deps still runs: the OS packages are not
-      # in this path and are cheap, the ~200MB of browsers are the slow half.
-      - name: Cache browsers
-        uses: actions/cache@v6
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
-      - name: Install browsers
-        run: bun x playwright install --with-deps
-
-      # `make ci`, not the steps one at a time. scripts/ci already lists every
-      # gate and runs them in a thread pool, so enumerating them here was a
-      # second copy of that list, kept in step by hand, running serially.
-      # It builds dist/ first, which is what the upload below publishes.
-      - name: Every gate
-        run: make ci
+      - run: bun x eleventy
 
       - name: The artifact is complete and stripped
         run: |
@@ -69,14 +45,113 @@ jobs:
           test -s dist/CNAME
           ! grep -q '<!--' dist/index.html
 
+      # The browser jobs run in Playwright's own image, so the browsers come
+      # preinstalled; its tag has to be the version the lockfile pins.
+      - id: pw
+        run: echo "version=$(node -p 'require("./node_modules/@playwright/test/package.json").version')" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist
+          include-hidden-files: true
+          retention-days: 1
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
-  # Build and check run on every PR; only main publishes.
+  # Everything that reads the page rather than driving it.
+  static:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.x"
+      - run: npm ci
+      # ruff.toml's required-version, read rather than copied: the default rule
+      # set moves between minors, and a copy here went stale on the 0.17 bump.
+      - name: Install ruff
+        run: |
+          spec=$(sed -n 's/^required-version = "\(.*\)"$/\1/p' ruff.toml)
+          [ -n "$spec" ] || { echo "no required-version in ruff.toml" >&2; exit 1; }
+          pipx install "ruff$spec"
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+      - run: scripts/ci --no-build --no-browser
+      # The workflows themselves: a typo in a `needs:` or an expression is
+      # otherwise found by a run that never starts.
+      - name: actionlint
+        run: |
+          bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.12/scripts/download-actionlint.bash) 1.7.12
+          ./actionlint -color
+
+  # The Playwright suite, split by engine and then in halves. Do not drop
+  # WebKit: the popover menu was unclosable in Safari while Chromium passed.
+  browser:
+    needs: build
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.build.outputs.playwright }}-noble
+      options: --ipc=host
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, webkit]
+        shard: [1, 2]
+    name: browser (${{ matrix.project }} ${{ matrix.shard }}/2)
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/cache@v6
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - run: npm ci
+      # The webServer is scripts/serve.js, which needs Bun.
+      - run: npm install --global bun@1.4
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+      - run: bun x playwright test --project=${{ matrix.project }} --shard=${{ matrix.shard }}/2 --reporter=github,list,json
+        env:
+          CI: "1"
+          PLAYWRIGHT_JSON_OUTPUT_FILE: timings.json
+      # Per-test durations, kept so the shard count is sized from data.
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: timings-${{ matrix.project }}-${{ matrix.shard }}
+          path: timings.json
+          retention-days: 14
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: traces-${{ matrix.project }}-${{ matrix.shard }}
+          path: test-results
+          retention-days: 7
+
+  # The one required result: every check passed, none was skipped or cancelled.
+  gate:
+    needs: [build, static, browser]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every check passed
+        run: |
+          echo '${{ toJSON(needs.*.result) }}'
+          ${{ !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') && !contains(needs.*.result, 'skipped') }}
+
   deploy:
     if: github.ref == 'refs/heads/main'
-    needs: build
+    needs: gate
     runs-on: ubuntu-latest
     environment:
       name: github-pages
