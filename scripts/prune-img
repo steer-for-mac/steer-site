@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+"""Keep in dist/img only the encodes this build references.
+
+CI restores dist/img from the nearest earlier cache so a changed asset does not
+re-encode every raster. That restore can bring back encodes of images since
+removed from the site, and dist/ is what Pages publishes, so they would go live
+again. Run after the build, before the upload.
+"""
+import pathlib
+import re
+import sys
+
+dist = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "dist")
+text = "".join(
+    p.read_text(errors="ignore")
+    for p in dist.rglob("*")
+    if p.is_file() and p.suffix in (".html", ".css", ".js", ".xml", ".txt", ".json")
+)
+used = set(re.findall(r"/img/([A-Za-z0-9_.-]+)", text))
+gone = [p for p in (dist / "img").iterdir() if p.is_file() and p.name not in used]
+for p in gone:
+    p.unlink()
+print(f"dist/img: removed {len(gone)} encode(s) this build does not reference")

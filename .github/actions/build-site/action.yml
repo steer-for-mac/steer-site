@@ -17,5 +17,6 @@ runs:
       with:
         path: dist/img
         key: img-${{ hashFiles('src/**/*.png', 'src/**/*.jpg', 'src/**/*.jpeg', 'src/**/*.webp', 'eleventy.config.js', 'package-lock.json') }}
+        restore-keys: img-
     - run: bun x eleventy
       shell: bash
