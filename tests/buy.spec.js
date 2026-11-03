@@ -24,13 +24,10 @@ test("a post's ?from= tag reaches the checkout, from buy.html or from the page t
   await expect.poll(() => landed.at(-1)).toBe(`${LIVE}?checkout%5Bcustom%5D%5Bfrom%5D=thread-b`);
 });
 
-test.describe("without JavaScript", () => {
-  test.use({ javaScriptEnabled: false });
-  test("the meta refresh and the visible link both name the live checkout, never the test one", async ({ page }) => {
-    await page.route(/lemonsqueezy\.com/, (r) => r.fulfill({ status: 204 }));
-    await page.goto("/buy.html", { waitUntil: "domcontentloaded" });
-    await expect(page.locator("meta[http-equiv='refresh']")).toHaveAttribute("content", `0; url=${LIVE}`);
-    await expect(page.locator("main a.btn")).toHaveAttribute("href", LIVE);
-    expect(await page.content()).not.toContain("bac9a17c");
-  });
+/* Read as served, not rendered: a 0-second refresh leaves no page to query. */
+test("without JavaScript, the meta refresh and the visible link both name the live checkout, never the test one", async ({ request }) => {
+  const html = await (await request.get("/buy.html")).text();
+  expect(html).toContain(`<meta http-equiv="refresh" content="0; url=${LIVE}">`);
+  expect(html).toMatch(new RegExp(`<a class="btn btn-primary" href="${LIVE}">`));
+  expect(html).not.toContain("bac9a17c");
 });
