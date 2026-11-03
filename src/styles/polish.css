@@ -1,15 +1,19 @@
 /* Polish borrowed from seanfloyd.dev and third-cut (2026-11-03), in one sheet
-   so any of it can come out alone. Motion stays transform and opacity. */
+   so any of it can come out alone. Motion stays transform and opacity, on a
+   cubic-bezier with no overshoot; all of it sits behind no-preference. */
 
-/* A sampled spring, ~4% overshoot (third-cut tokens.css:205). */
-:root { --spring: linear(0, .009, .035 2.1%, .141 4.4%, .723 12.9%, .938 16.7%, 1.017 20.3%, 1.038 23.5%, 1.03 28%, 1.006 35.6%, .998 44.5%, 1); }
+:root { --settle: cubic-bezier(.2, .8, .2, 1); }
 
-/* 1. Page-to-page cross-fade; the nav holds still (seanfloyd.dev base.css:66). */
-@view-transition { navigation: auto; }
-::view-transition-group(nav), ::view-transition-old(nav), ::view-transition-new(nav) { animation: none; }
+/* A cross-fade between pages; the nav holds still (seanfloyd.dev base.css:66).
+   Only the new nav is drawn: two full-opacity snapshots would double its tint. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+::view-transition-group(nav), ::view-transition-new(nav) { animation: none; }
+::view-transition-old(nav) { display: none; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .25s; }
 
-/* 3. Glass nav: a half-pixel edge and a 1px rim instead of a flat border. */
+/* Frosted nav: a half-pixel edge and a 1px rim instead of a flat border. */
 header.nav {
   view-transition-name: nav;
   background: color-mix(in srgb, var(--bg) 80%, transparent);
@@ -22,30 +26,37 @@ header.nav {
   header.nav { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
 
-/* 4. Tall captures dissolve into the page instead of stopping on an edge. */
-.cards .crop, .ft-cards .crop { mask-image: linear-gradient(#000 72%, transparent); -webkit-mask-image: linear-gradient(#000 72%, transparent); }
-
-/* 5. The one primary button answers a press, and lifts with a blue-tinted shadow. */
-.btn { transition: transform .35s var(--spring), background .15s, border-color .15s, opacity .15s; }
-.btn:active { transform: scale(.96); transition-duration: .08s; }
-/* The lift is a shadow layer faded in, not an animated box-shadow. */
-.btn-primary, .btn-nav { position: relative; isolation: isolate; }
-.btn-primary::after, .btn-nav::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-btn); box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--blue) 70%, transparent); opacity: 0; transition: opacity .25s cubic-bezier(.2, .7, .2, 1); pointer-events: none; }
-.btn-primary:hover::after, .btn-nav:hover::after { opacity: 1; }
-
-/* 6. The appearance menu eases in rather than snapping. */
-.theme-menu { transition: opacity .18s cubic-bezier(.2, .7, .2, 1), transform .35s var(--spring), display .18s allow-discrete, overlay .18s allow-discrete; }
-.theme-menu:popover-open { opacity: 1; transform: none; }
-@starting-style { .theme-menu:popover-open { opacity: 0; transform: translateY(-6px) scale(.98); } }
-
-/* 7. Sub-pages rise in as they scroll (the homepage keeps its staged reveal). */
-@supports (animation-timeline: view()) {
-  @keyframes rise { from { opacity: 0; translate: 0 28px; } }
-  main:not(.h-main) > section:not(:first-of-type) { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+/* Captures dissolve into the page below them. Wide layouts only, and late:
+   on a phone the crop ends mid-card, where the app's name sits. */
+@media (min-width: 601px) {
+  .cards .crop, .ft-cards .crop { mask-image: linear-gradient(#000 90%, transparent); -webkit-mask-image: linear-gradient(#000 90%, transparent); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  @view-transition { navigation: none; }
-  main:not(.h-main) > section { animation: none; }
-  .btn, .btn::after, .theme-menu { transition: none; }
+/* The primary button answers a press, and lifts on a blue-tinted shadow that
+   fades in as a layer rather than an animated box-shadow. */
+.btn-primary, .btn-nav { position: relative; isolation: isolate; }
+.btn-primary::after, .btn-nav::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: var(--r-btn); box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--blue) 70%, transparent); opacity: 0; pointer-events: none; }
+.btn-primary:hover::after, .btn-nav:hover::after { opacity: 1; }
+.btn:active { transform: scale(.96); }
+
+/* The appearance menu eases in and out instead of snapping. */
+.theme-menu { opacity: 0; transform: translateY(-6px) scale(.98); }
+.theme-menu:popover-open { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn { transition: transform .3s var(--settle), background .15s, border-color .15s, opacity .15s; }
+  .btn:active { transition-duration: .08s; }
+  .btn-primary::after, .btn-nav::after { transition: opacity .25s var(--settle); }
+  .theme-menu { transition: opacity .18s var(--settle), transform .3s var(--settle), display .18s allow-discrete, overlay .18s allow-discrete; }
+  @starting-style { .theme-menu:popover-open { opacity: 0; transform: translateY(-6px) scale(.98); } }
+
+  /* Sections on the plain pages rise in on a scroll timeline. The homepage
+     keeps its staged reveal. linear is the timeline's own mapping, not an ease. */
+  @supports (animation-timeline: view()) {
+    @keyframes rise { from { opacity: 0; translate: 0 28px; } }
+    html:not([data-home]) main > section:not(:first-of-type) { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+  }
+}
+@media print {
+  html:not([data-home]) main > section { animation: none; }
 }
