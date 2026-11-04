@@ -14,6 +14,23 @@ ogDescription: "Exactly what Steer does on each controller: every controller doe
         <p class="lead compat-lead">Steer turns a game controller into a way to run your Mac. Cursor, scroll, typing, and every shortcut you map work on <strong>any</strong> supported controller. The extras (adaptive triggers, the light bar, the touchpad, tilt-to-aim) depend on what the hardware can actually do. Every gap and caveat is in the table.</p>
       </div>
 
+      <!-- THE LOOKUP. Data: _data/controllers.json (its header says where each tier
+           comes from), inlined below so nothing is fetched. Hidden until the script
+           runs: without JavaScript the input could not answer, and the table below
+           still does. A native <input list> is the combobox: the browser supplies
+           the role, the popup and the arrow keys. -->
+      <div class="pad-lookup" id="pad-lookup" hidden>
+        <label class="pad-label" for="pad-q">Look up your controller</label>
+        <input class="pad-q" id="pad-q" type="text" list="pad-names" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type its name, like DualSense or Switch Pro">
+        <datalist id="pad-names">
+          {%- for c in controllers.controllers %}
+          <option value="{{ c.name }}"></option>
+          {%- endfor %}
+        </datalist>
+        <output class="pad-out" id="pad-out" for="pad-q" aria-live="polite"></output>
+      </div>
+      <script type="application/json" id="pad-data">{{ controllers.controllers | dump | safe }}</script>
+
       <div class="faq compat-faq">
       <details>
         <summary>Which controllers work?</summary>
@@ -68,3 +85,4 @@ ogDescription: "Exactly what Steer does on each controller: every controller doe
     </div>
   </section>
 </main>
+<script>{% include "scripts/compat-lookup.js" %}</script>

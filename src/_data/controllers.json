@@ -1,0 +1,101 @@
+{
+  "//": "The controller lookup on compatibility.html, inlined into the page at build time; nothing is fetched at runtime. Copied, not read from ../steer: the deploy build has no checkout of the app. tested = run on real hardware (DualSense: Sean's own; Xbox Series X|S: 'verified' in steer/Steer/Sources/Steer/Resources/controller-devices.txt, and docs/lessons/xbox-haptics-are-bluetooth-only.md). expected = a family Steer reads through Apple's GameController framework, never run here on hardware. untested = outside those families, so it rides the SDL generic-pad bridge, which has never run on a physical pad (steer/CLAUDE.md). Each note says what Steer cannot do on it and must agree with the matrix on the same page. Xbox names follow controller-names.txt.",
+  "controllers": [
+    {
+      "name": "DualSense",
+      "aliases": ["PS5 controller", "PlayStation 5 controller", "DualSense Wireless Controller", "PS5"],
+      "tier": "tested",
+      "note": "Everything on this page works, including the triggers that push back. It has no rear paddles."
+    },
+    {
+      "name": "Xbox Wireless Controller (Series X|S)",
+      "aliases": ["Xbox Series X controller", "Xbox Series S controller", "Xbox Series controller", "Xbox Series X", "Xbox Series S", "Xbox Wireless Controller"],
+      "tier": "tested",
+      "note": "Rumble works over Bluetooth only, not over USB. No triggers that push back, no light Steer can set, no touchpad, no tilt to aim."
+    },
+    {
+      "name": "DualSense Edge",
+      "aliases": ["DualSense Edge Wireless Controller", "PS5 Edge", "Edge controller"],
+      "tier": "expected",
+      "note": "Everything a DualSense does. The back buttons are untested, and the PS button over Bluetooth is off by default."
+    },
+    {
+      "name": "DualShock 4",
+      "aliases": ["PS4 controller", "PlayStation 4 controller", "DS4", "PS4", "DualShock 4 Wireless Controller"],
+      "tier": "expected",
+      "note": "No triggers that push back and no mute light. Tilt to aim is off by default and in beta, because macOS reports no motion for it."
+    },
+    {
+      "name": "Xbox One S Controller",
+      "aliases": ["Xbox One S", "Xbox One Wireless Controller"],
+      "tier": "expected",
+      "note": "No triggers that push back, no light Steer can set, no touchpad, no tilt to aim."
+    },
+    {
+      "name": "Xbox One Controller",
+      "aliases": ["Xbox One"],
+      "tier": "expected",
+      "note": "No triggers that push back, no light Steer can set, no touchpad, no tilt to aim."
+    },
+    {
+      "name": "Xbox Elite Wireless Controller Series 2",
+      "aliases": ["Xbox Elite Series 2", "Elite Series 2", "Elite 2", "Xbox Elite 2"],
+      "tier": "expected",
+      "note": "The rear paddles are wired up but untested. No triggers that push back, no light Steer can set, no touchpad, no tilt to aim."
+    },
+    {
+      "name": "Xbox Elite Wireless Controller",
+      "aliases": ["Xbox Elite", "Elite Series 1", "Xbox Elite Series 1"],
+      "tier": "expected",
+      "note": "The rear paddles are wired up but untested. No triggers that push back, no light Steer can set, no touchpad, no tilt to aim."
+    },
+    {
+      "name": "Nintendo Switch Pro Controller",
+      "aliases": ["Switch Pro", "Switch Pro Controller", "Pro Controller", "Switch controller"],
+      "tier": "expected",
+      "note": "Rumble is a simplified version of the real effect. No triggers that push back, no light bar, no touchpad. The player lights are off by default and untested."
+    },
+    {
+      "name": "Joy-Con (one on its own)",
+      "aliases": ["Joy-Con", "Joycon", "Joy Con", "Joy-Con L", "Joy-Con R"],
+      "tier": "untested",
+      "note": "Connects as buttons and battery only, plus tilt if macOS reports motion. No stick, so no cursor. Unfinished."
+    },
+    {
+      "name": "Other Made-for-iPhone (MFi) controller",
+      "aliases": ["MFi", "MFi controller", "Made for iPhone", "SteelSeries Nimbus+", "Nimbus+", "Nimbus", "SteelSeries Nimbus"],
+      "tier": "expected",
+      "note": "The cursor, scroll, typing and shortcuts, plus battery. Rumble only if the pad reports it. No tilt to aim, light bar, touchpad or triggers that push back: those need each brand's own protocol."
+    },
+    {
+      "name": "8BitDo controller",
+      "aliases": ["8BitDo", "8 BitDo", "8bitdo Ultimate", "8BitDo Pro 2", "8BitDo SN30 Pro"],
+      "tier": "untested",
+      "note": "If macOS shows it as an Xbox, Switch or MFi pad, that row applies. Otherwise it goes through Steer's off-brand path, which has never run on a real pad."
+    },
+    {
+      "name": "Xbox 360 Controller",
+      "aliases": ["Xbox 360", "360 controller"],
+      "tier": "untested",
+      "note": "Not a family macOS supports on its own, so it goes through Steer's off-brand path, which has never run on a real pad."
+    },
+    {
+      "name": "Logitech gamepad",
+      "aliases": ["Logitech", "Logitech F310", "Logitech F710", "F310", "F710"],
+      "tier": "untested",
+      "note": "Goes through Steer's off-brand path, which has never run on a real pad."
+    },
+    {
+      "name": "Stadia Controller",
+      "aliases": ["Stadia", "Google Stadia"],
+      "tier": "untested",
+      "note": "Goes through Steer's off-brand path, which has never run on a real pad."
+    },
+    {
+      "name": "Steam Controller",
+      "aliases": ["Steam", "Valve Steam Controller"],
+      "tier": "untested",
+      "note": "Goes through Steer's off-brand path, which has never run on a real pad."
+    }
+  ]
+}
