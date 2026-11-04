@@ -41,13 +41,13 @@
       "name": "Xbox Elite Wireless Controller Series 2",
       "aliases": ["Xbox Elite Series 2", "Elite Series 2", "Elite 2", "Xbox Elite 2"],
       "tier": "expected",
-      "note": "The rear paddles are wired up but untested. No triggers that push back, no light Steer can set, no touchpad, no tilt to aim."
+      "note": "The rear paddles are in beta: built, not yet confirmed on hardware. No triggers that push back, no light Steer can set, no touchpad, no tilt to aim."
     },
     {
       "name": "Xbox Elite Wireless Controller",
       "aliases": ["Xbox Elite", "Elite Series 1", "Xbox Elite Series 1"],
       "tier": "expected",
-      "note": "The rear paddles are wired up but untested. No triggers that push back, no light Steer can set, no touchpad, no tilt to aim."
+      "note": "The rear paddles are in beta: built, not yet confirmed on hardware. No triggers that push back, no light Steer can set, no touchpad, no tilt to aim."
     },
     {
       "name": "Nintendo Switch Pro Controller",
