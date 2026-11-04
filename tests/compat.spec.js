@@ -35,6 +35,15 @@ test.describe("controller lookup", () => {
     await expect(out(page).locator(".pad-tier")).toHaveText("Expected to work");
   });
 
+  test("a brand or a nickname inside a longer name is not a match", async ({ page }) => {
+    await box(page).fill("Steam Deck");
+    await expect(out(page).locator(".pad-name")).toHaveText("Not on the list");
+    await box(page).fill("Logitech G920 wheel");
+    await expect(out(page).locator(".pad-name")).toHaveText("Not on the list");
+    await box(page).fill("my Logitech F310 gamepad");
+    await expect(out(page).locator(".pad-name")).toHaveText("Logitech F310");
+  });
+
   test("an expected pad names what Steer cannot do on it", async ({ page }) => {
     await box(page).fill("PS4");
     await expect(out(page).locator(".pad-tier")).toHaveText("Expected to work");

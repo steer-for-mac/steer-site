@@ -20,15 +20,16 @@
     listed: ["In the beta list", "Steer has a community mapping for it built in. That support is in beta: it has never been confirmed on real hardware with Steer."],
   };
   const norm = (s) => s.normalize("NFKD").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const words = (s) => ` ${s.normalize("NFKD").toLowerCase().split(/[^a-z0-9]+/).filter(Boolean).join(" ")} `;
 
   // Every spelling a pad answers to, longest first: "my dualsense edge" should
   // find the Edge before it finds the DualSense. A named pad sorts ahead of a
   // beta-list name with the same spelling, so it keeps its own tier.
   const keys = [];
   for (const pad of pads) {
-    for (const k of [pad.name, ...(pad.aliases || [])]) keys.push([norm(k), pad]);
+    for (const k of [pad.name, ...(pad.aliases || [])]) keys.push([norm(k), pad, words(k), k === pad.name]);
   }
-  for (const name of listed) keys.push([norm(name), { name, tier: "listed" }]);
+  for (const name of listed) keys.push([norm(name), { name, tier: "listed" }, words(name), true]);
   keys.sort((a, b) => b[0].length - a[0].length || (a[1].tier === "listed") - (b[1].tier === "listed"));
   const named = keys.filter(([, pad]) => pad.tier !== "listed");
 
@@ -84,8 +85,11 @@
     if (!q) { out.replaceChildren(); return; }
     const exact = keys.find(([k]) => k === q);
     if (exact) return show(exact[1]);
-    // A known name inside a longer query ("sony dualsense controller").
-    const inside = keys.find(([k]) => k.length >= 4 && q.includes(k));
+    // A known name inside a longer query ("sony dualsense controller"), as whole
+    // words. A one-word alias is a brand or a nickname ("Steam", "Logitech") and
+    // only answers on its own: "steam deck" is not a Steam Controller.
+    const qw = words(input.value);
+    const inside = keys.find(([, , kw, isName]) => (isName || kw.trim().includes(" ")) && kw.trim().length >= 4 && qw.includes(kw));
     if (inside) return show(inside[1]);
     // A named pad answers a prefix before the beta list does: "stad" is the Stadia row.
     const hits = (from) => [...new Set(from.filter(([k]) => k.includes(q)).map(([, pad]) => pad))];
