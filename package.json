@@ -24,6 +24,7 @@
     "html-minifier-next": "^9.1.1",
     "html-validate": "^11.17.0",
     "lightningcss": "^1.33.0",
+    "markdown-it": "^14.3.3",
     "purgecss": "^8.0.0",
     "stylelint": "^17.16.0",
     "stylelint-config-recommended": "^18.0.0",

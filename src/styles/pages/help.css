@@ -1,0 +1,15 @@
+/* help.html: the app's Help, rendered. Contents in two columns on wide screens
+   so 30 sections stay one glance, and the two tables and one timing diagram
+   the Help carries. Everything else is .doc. */
+.help-toc { columns: 2; column-gap: 32px; padding-left: 22px; margin: 0 0 8px; }
+.help-toc li { margin-bottom: 4px; font-size: 15px; break-inside: avoid; }
+.help table { width: 100%; border-collapse: collapse; margin: 0 0 18px; font-size: 15px; }
+.help th, .help td { text-align: left; padding: 7px 12px 7px 0; border-bottom: 1px solid var(--sep); color: var(--text-2); }
+.help th { color: var(--text); font-weight: 590; }
+.help pre { overflow-x: auto; margin: 0 0 18px; padding: 14px 16px; border-radius: var(--r-inset); background: var(--bg-inset); font-size: 13px; line-height: 1.45; }
+.help code { font-family: var(--mono); }
+.help-end { color: var(--text-3); margin-top: 40px; }
+
+@media (max-width: 600px) {
+  .help-toc { columns: 1; }
+}

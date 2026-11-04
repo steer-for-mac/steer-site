@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+title: "Steer Help: using a game controller as a mouse and keyboard on Mac"
+description: "Steer's full Help: the controls, changing what a button does, layers, the on-screen keyboard, radial menus, Window Snap, per-app setups, gyro, haptics and troubleshooting."
+---
+<!-- Rendered from src/public/llms-full.txt by _data/help.js. Do not edit the
+     text here: change Help in the app, regenerate llms-full.txt, rebuild. -->
+<main>
+  <div class="doc help">
+    <a class="back-link" href="index.html"><span aria-hidden="true">&larr;</span> Steer</a>
+    <h1>Steer Help</h1>
+    <p class="lede">Everything in the Help window of Steer {{ help.version }}, the Mac app that turns a game controller into your mouse and keyboard. Buttons are the defaults; yours may differ, and Steer&rsquo;s own Help window shows yours.</p>
+    <nav aria-label="Contents">
+      <ol class="help-toc">
+        {%- for s in help.sections %}
+        <li><a href="#{{ s.id }}">{{ s.title }}</a></li>
+        {%- endfor %}
+      </ol>
+    </nav>
+    {%- for s in help.sections %}
+    <section aria-labelledby="{{ s.id }}">
+      <h2 id="{{ s.id }}">{{ s.title }}</h2>
+      {{ s.html | safe }}
+    </section>
+    {%- endfor %}
+    <p class="help-end">Updated {{ help.generated }} from the app. Not covered here? <a href="support.html">Ask me</a>, or <a href="{{ beta.url }}">download Steer</a> and try it: it&rsquo;s free to try.</p>
+  </div>
+</main>
