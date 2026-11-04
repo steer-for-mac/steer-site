@@ -3,6 +3,17 @@
     <channel>
         <title>Steer</title>
         <item>
+            <title>1.0b3</title>
+            <pubDate>Tue, 03 Nov 2026 20:11:18 -0500</pubDate>
+            <link>https://steer.seanfloyd.dev/</link>
+            <sparkle:version>2414</sparkle:version>
+            <sparkle:shortVersionString>1.0b3</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:channel>beta</sparkle:channel>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://github.com/steer-for-mac/steer-dist/releases/download/v1.0b3/Steer.dmg" sparkle:edSignature="QQhVkGXdz4Z/tOPIS/JhXejnFs9WtNeLJKQh87UIKhUAIbJE+pYvHx9VllKN7M/Cm617sOjtewnHc9WYhOAvAA==" length="17352337" type="application/octet-stream"/>
+        </item>
+        <item>
             <title>1.0b2</title>
             <pubDate>Sat, 31 Oct 2026 00:05:58 -0400</pubDate>
             <link>https://steer.seanfloyd.dev/</link>
