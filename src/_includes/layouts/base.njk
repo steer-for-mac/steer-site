@@ -10,6 +10,27 @@
 <!-- Markdown surface for LLMs / coding agents. GitHub Pages can't emit an HTTP
      Link header, so this tag is the only alternate advertisement available. -->
 <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM-friendly Markdown overview" />
+<!-- What search engines and AI answers read as the product record: a Mac app,
+     its price, where to get it. Facts only; no rating, since there are none. -->
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Steer",
+  "alternateName": "Steer for Mac",
+  "description": description,
+  "url": "https://steer.seanfloyd.dev/",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "macOS 14 or later, Apple Silicon",
+  "softwareVersion": beta.version,
+  "downloadUrl": beta.url,
+  "screenshot": "https://steer.seanfloyd.dev/assets/og.png",
+  "offers": {
+    "@type": "Offer",
+    "price": "19.99",
+    "priceCurrency": "EUR",
+    "url": "https://steer.seanfloyd.dev/buy.html"
+  }
+} | scriptJson | safe }}</script>
 {%- endif %}
 
 <!-- Open Graph / Twitter. Card art: assets/og.png, rendered from og.html; when the card changes, bump ?v= on both image URLs. -->

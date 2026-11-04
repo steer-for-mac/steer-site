@@ -1,0 +1,18 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+{#- Every page with the site layout, minus the ones that ask not to be indexed
+    (buy, download, suggest). og.html and store-cards.html are render sources
+    with no layout, so they never qualify. -#}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for item in collections.all %}
+{%- if item.data.layout and (item.url == "/" or item.url.endsWith(".html")) and not ("noindex" in (item.data.robots or "")) %}
+  <url>
+    <loc>{{ item.data.canonical }}</loc>
+    <lastmod>{{ item.inputPath | lastmod }}</lastmod>
+  </url>
+{%- endif %}
+{%- endfor %}
+</urlset>

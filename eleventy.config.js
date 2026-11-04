@@ -7,6 +7,7 @@ import { build, transformSync } from "esbuild";
 import { scriptJson } from "./scripts/script-json.js";
 import { minify } from "html-minifier-next";
 import { bundle, browserslistToTargets } from "lightningcss";
+import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -190,6 +191,18 @@ export default function (eleventyConfig) {
   /* `dump | safe` inside a <script> lets a "</script>" in the data out of it. */
   eleventyConfig.addFilter("scriptJson", scriptJson);
   eleventyConfig.addFilter("padEnd", (text, width) => String(text).padEnd(width));
+
+  /* sitemap.xml's <lastmod>: the last commit that touched the page. The homepage
+     is assembled from its bands, so their commits count too. A file git has
+     not seen yet (a new page before its first commit) gets today. CI must
+     check out full history for this, or every page reads as today. */
+  eleventyConfig.addFilter("lastmod", (inputPath) => {
+    const paths = [inputPath];
+    if (inputPath.endsWith("index.src.html")) paths.push("src/_includes/bands/home");
+    const out = execFileSync("git", ["log", "-1", "--format=%cs", "--", ...paths],
+      { cwd: ROOT, encoding: "utf8" }).trim();
+    return out || new Date().toISOString().slice(0, 10);
+  });
 
   /* Footer defaults. A page overrides only what differs from every other page. */
   eleventyConfig.addGlobalData("footBottom", true);

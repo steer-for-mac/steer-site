@@ -27,6 +27,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          # Full history: sitemap.xml dates each page by its last commit.
+          fetch-depth: 0
           filter: blob:none
           sparse-checkout-cone-mode: false
           sparse-checkout: |
@@ -163,3 +165,18 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+      # IndexNow: tells Bing (ChatGPT search reads Bing), Yandex and others that
+      # every page in the live sitemap may have changed, so a deploy is crawled
+      # in hours rather than whenever Bing next wanders by. The key file is
+      # src/public/d5cebaa5e72eb72e02a48e3b4016fcdd.txt; IndexNow keys are public by design. A failed ping
+      # costs freshness, not the deploy, so it warns and does not fail the job.
+      - name: Ping IndexNow
+        continue-on-error: true
+        run: |
+          urls=$(curl -sSf https://steer.seanfloyd.dev/sitemap.xml | sed -n 's|.*<loc>\(.*\)</loc>.*|\1|p' | jq -R . | jq -sc .)
+          [ "$urls" != "[]" ] || { echo "::warning::no URLs in the live sitemap"; exit 1; }
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"steer.seanfloyd.dev\",\"key\":\"d5cebaa5e72eb72e02a48e3b4016fcdd\",\"keyLocation\":\"https://steer.seanfloyd.dev/d5cebaa5e72eb72e02a48e3b4016fcdd.txt\",\"urlList\":$urls}")
+          echo "IndexNow answered $code"
+          case $code in 200|202) ;; *) echo "::warning::IndexNow answered $code"; exit 1 ;; esac
