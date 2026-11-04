@@ -400,6 +400,62 @@
     "debugOnly" : true,
     "example" : "steer://debug/switcherprobe"
   },
+  "steer://debug/triggeraxis?output=<output>[&detent=<detent>][&soft=<soft>][&full=<full>][&band=<band>][&at=<at>][&strength=<strength>][&softfires=<softfires>]" : {
+    "arguments" : [
+      {
+        "name" : "output",
+        "values" : [
+          "off",
+          "scroll",
+          "zoom",
+          "jog",
+          "stages"
+        ]
+      },
+      {
+        "name" : "detent",
+        "values" : [
+          "none",
+          "click",
+          "wall"
+        ]
+      },
+      {
+        "accepts" : "pull 0-1",
+        "example" : "0.12",
+        "name" : "soft"
+      },
+      {
+        "accepts" : "pull 0-1",
+        "example" : "0.55",
+        "name" : "full"
+      },
+      {
+        "accepts" : "pull 0-1",
+        "example" : "0.04",
+        "name" : "band"
+      },
+      {
+        "accepts" : "position 0-255",
+        "example" : "140",
+        "name" : "at"
+      },
+      {
+        "accepts" : "48-255",
+        "example" : "200",
+        "name" : "strength"
+      },
+      {
+        "name" : "softfires",
+        "values" : [
+          "enter",
+          "release"
+        ]
+      }
+    ],
+    "debugOnly" : true,
+    "example" : "steer://debug/triggeraxis?output=off&detent=none&soft=0.12&full=0.55&band=0.04&at=140&strength=200&softfires=enter"
+  },
   "steer://debug/wizard/<command>" : {
     "arguments" : [
       {
