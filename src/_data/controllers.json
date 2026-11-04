@@ -1,5 +1,5 @@
 {
-  "//": "The controller lookup on compatibility.html, inlined into the page at build time; nothing is fetched at runtime. Copied, not read from ../steer: the deploy build has no checkout of the app. tested = run on real hardware (DualSense: Sean's own; Xbox Series X|S: 'verified' in steer/Steer/Sources/Steer/Resources/controller-devices.txt, and docs/lessons/xbox-haptics-are-bluetooth-only.md). expected = a family Steer reads through Apple's GameController framework, never run here on hardware. untested = outside those families, so it rides the SDL generic-pad bridge, which has never run on a physical pad (steer/CLAUDE.md). Each note says what Steer cannot do on it and must agree with the matrix on the same page. Xbox names follow controller-names.txt.",
+  "//": "The controller lookup on compatibility.html, inlined into the page at build time; nothing is fetched at runtime. Copied, not read from ../steer: the deploy build has no checkout of the app. tested = run on real hardware (DualSense: Sean's own; Xbox Series X|S: 'verified' in steer/Steer/Sources/Steer/Resources/controller-devices.txt, and docs/lessons/xbox-haptics-are-bluetooth-only.md). expected = a family Steer reads through Apple's GameController framework, never run here on hardware. untested = outside those families, so it rides the SDL generic-pad bridge, which has never run on a physical pad (steer/CLAUDE.md). A name also in sdlNames.json (make sdl-names) answers from here, so only add an alias that is not a beta-list name. Each note says what Steer cannot do on it and must agree with the matrix on the same page. Xbox names follow controller-names.txt.",
   "controllers": [
     {
       "name": "DualSense",
@@ -69,7 +69,7 @@
     },
     {
       "name": "8BitDo controller",
-      "aliases": ["8BitDo", "8 BitDo", "8bitdo Ultimate", "8BitDo Pro 2", "8BitDo SN30 Pro"],
+      "aliases": ["8BitDo", "8 BitDo"],
       "tier": "untested",
       "note": "If macOS shows it as an Xbox, Switch or MFi pad, that row applies. Otherwise it goes through Steer's off-brand path, which has never run on a real pad."
     },
@@ -81,7 +81,7 @@
     },
     {
       "name": "Logitech gamepad",
-      "aliases": ["Logitech", "Logitech F310", "Logitech F710", "F310", "F710"],
+      "aliases": ["Logitech"],
       "tier": "untested",
       "note": "Goes through Steer's off-brand path, which has never run on a real pad."
     },

@@ -15,7 +15,7 @@ ogDescription: "Exactly what Steer does on each controller: every controller doe
       </div>
 
       <!-- THE LOOKUP. Data: _data/controllers.json (its header says where each tier
-           comes from), inlined below so nothing is fetched. Hidden until the script
+           comes from) and _data/sdlNames.json (make sdl-names, the beta list), inlined below so nothing is fetched. Hidden until the script
            runs: without JavaScript the input could not answer, and the table below
            still does. A native <input list> is the combobox: the browser supplies
            the role, the popup and the arrow keys. -->
@@ -30,6 +30,7 @@ ogDescription: "Exactly what Steer does on each controller: every controller doe
         <output class="pad-out" id="pad-out" for="pad-q" aria-live="polite"></output>
       </div>
       <script type="application/json" id="pad-data">{{ controllers.controllers | dump | safe }}</script>
+      <script type="application/json" id="pad-sdl">{{ sdlNames.names | dump | safe }}</script>
 
       <div class="faq compat-faq">
       <details>

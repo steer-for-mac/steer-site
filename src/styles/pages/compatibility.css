@@ -19,7 +19,7 @@
 .notes .note-key.note-key-dep{color:var(--text-3)}
 
 /* the lookup: one field and its answer, at the FAQ's measure. Tier colours are
-   the matrix's own: green for Yes, amber for the untested cells, text-2 between. */
+   the matrix's own: green for Yes, amber for the untested and beta cells, text-2 between. */
 .pad-lookup{max-width:70ch;margin:36px auto 0;text-align:left}
 .pad-label{display:block;font-size:15px;font-weight:500;color:var(--text);margin:0 0 10px 4px}
 .pad-q{display:block;width:100%;font:inherit;font-size:16px;color:var(--text);background-color:var(--card-bg);border:1px solid var(--sep-2);border-radius:var(--r-inset);padding:12px 14px;box-shadow:var(--shadow-rest)}
@@ -29,7 +29,7 @@
 .pad-out:not(:empty){margin-top:16px}
 .pad-out .pad-tier{display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-2);margin-bottom:4px}
 .pad-out .pad-tier[data-tier="tested"]{color:var(--green-text)}
-.pad-out .pad-tier[data-tier="untested"]{color:var(--amber-text)}
+.pad-out .pad-tier[data-tier="untested"],.pad-out .pad-tier[data-tier="listed"]{color:var(--amber-text)}
 .pad-out .pad-name{display:block;font-size:16.5px;font-weight:500;color:var(--text)}
 .pad-out .pad-note{display:block;margin-top:4px;font-size:15px;color:var(--text-2);line-height:1.6}
 .pad-out a{color:var(--blue-text)}

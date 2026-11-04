@@ -54,6 +54,32 @@ test.describe("controller lookup", () => {
     await expect(out(page)).toContainText("Pick one from the list");
   });
 
+  test("a pad in the beta list says beta, never confirmed, and asks for results", async ({ page }) => {
+    await box(page).fill("8BitDo Pro 2");
+    await expect(out(page).locator(".pad-tier")).toHaveText("In the beta list");
+    await expect(out(page).locator(".pad-note")).toContainText("never been confirmed on real hardware");
+    await expect(out(page).getByRole("link", { name: "tell us how it goes" })).toHaveAttribute("href", "suggest.html");
+  });
+
+  test("a name in both lists keeps the named pad's tier", async ({ page }) => {
+    await box(page).fill("PS5 Controller");
+    await expect(out(page).locator(".pad-tier")).toHaveText("Tested on hardware");
+    await box(page).fill("Nintendo Switch Pro Controller");
+    await expect(out(page).locator(".pad-tier")).toHaveText("Expected to work");
+  });
+
+  test("suggestions stay a short list while typing, and come back when cleared", async ({ page }) => {
+    const options = page.locator("#pad-names option");
+    const initial = await options.count();
+    await box(page).fill("8bitdo");
+    await expect(options).toHaveCount(8);
+    await box(page).fill("hori");
+    expect(await options.count()).toBeLessThanOrEqual(8);
+    await expect(options.first()).toHaveAttribute("value", /hori/i);
+    await box(page).fill("");
+    await expect(options).toHaveCount(initial);
+  });
+
   test("an unknown pad gets a link to tell us, and clearing the field clears the answer", async ({ page }) => {
     await box(page).fill("Zorblax 9000");
     await expect(out(page).locator(".pad-name")).toHaveText("Not on the list");

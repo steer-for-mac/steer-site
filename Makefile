@@ -13,7 +13,7 @@
 SITE_PORT ?= 8391
 
 .DEFAULT_GOAL := help
-.PHONY: help build routes up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast types e2e shots dead lighthouse check
+.PHONY: help build routes sdl-names up down ci ci-quick lint-css lint-html lint-js lint-py a11y contrast types e2e shots dead lighthouse check
 
 help: ## Show this
 	@grep -E '^[a-z0-9][a-z0-9-]*:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | expand -t22
@@ -25,6 +25,11 @@ build: ## Assemble the whole site into dist/ (Eleventy, then Lightning CSS)
 # the app. Steer's own tests fail when this copy no longer matches the app's.
 routes: ## Copy Steer's steer:// route manifest into src/_data/ (needs ../steer)
 	cp ../steer/docs/surface/routes.json src/_data/routes.json
+
+# Same reason as routes: the compatibility lookup's beta-list names, from the
+# app's bundled SDL mappings. scripts/sdl-names says what it keeps.
+sdl-names: ## Copy the Mac controller names from Steer's gamecontrollerdb.txt into src/_data/ (needs ../steer)
+	scripts/sdl-names
 
 up: build ## Serve dist/ on https://steer.seanfloyd.dev.local (nginx, matches production)
 	docker compose up -d --wait && echo "https://steer.seanfloyd.dev.local  (and http://127.0.0.1:$(SITE_PORT))"
