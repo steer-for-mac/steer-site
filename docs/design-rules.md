@@ -112,8 +112,9 @@ should never try to be one.
 - Write for the non-technical reader first. Audience before feature list.
 - One primary CTA per view. Price is microcopy beside the CTA, not a competing
   button. Since 2026-11-03 the CTA is Download (try first; the app sells
-  itself when the trial ends), with "Free to try. EUR 19.99 once if you keep
-  it. Buy now" under it, Buy now linking `buy.html` (the indirection to the
+  itself when the trial ends), with "Free to try." in ink and "EUR 19.99 once
+  if you keep it. Buy now" under it, both beside the button (under it on a
+  phone), Buy now linking `buy.html` (the indirection to the
   checkout). It sits in the first screen and again at the close (`#pricing`),
   screens apart, so each is the one primary button in its view; the nav's
   Download steps aside while one is on screen. The launch-list form was
