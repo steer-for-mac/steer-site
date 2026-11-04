@@ -11,15 +11,17 @@
 <section class="q" aria-labelledby="tr-list">
   <h2 id="tr-list" class="h-sr">What Steer does with your Mac</h2>
 
-  <!-- Window Snap through macOS's own tiling drives System Events, which macOS
-       asks about once (Steer/EventLoop+WindowGridSnap.swift notRunningNotice,
-       Steer/Output/SystemEventsAX.swift). -->
+  <!-- Automation asks: steer/Steer/Sources/Steer/EventLoop+PermissionAsk.swift
+     (askForAutomation) for the menu palette, Dictation, Window Snap through macOS
+     tiling, and a stick pushing a window; a click into another app never asks
+     (automationAllowsRaise skips the raise while undecided). The setup wizard
+     does not ask. Settings > Permissions has an Allow button (SteerUI/.../SteerScreen.swift). -->
   <div class="fgroup">
     <h3>What it asks for</h3>
     <dl>
       <div><dt>Accessibility</dt><dd>So it can move the pointer, click and type. It can't do its job without it.</dd></div>
       <div><dt>Input Monitoring</dt><dd>Steer doesn&rsquo;t ask for it.</dd></div>
-      <div><dt>System Events</dt><dd>Asked once, the first time Window Snap uses the Mac's own tiling.</dd></div>
+      <div><dt>System Events</dt><dd>Asked the first time you use a feature that needs it, such as the menu palette, Dictation or Window Snap.</dd></div>
     </dl>
   </div>
 
