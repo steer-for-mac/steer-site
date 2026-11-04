@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+title: "Steer: Suggest an idea"
+description: "Suggest an idea for Steer."
+robots: "noindex"
+redirect: "mailto:steer@seanfloyd.dev?subject=Steer%20suggestion"
+---
+<!--
+  /suggest.html is where the app's suggest link should land (steer://suggest,
+  SteerURL.suggestionURL in Steer/URLScheme.swift). A URL compiled into a
+  shipped binary cannot change without an update, so it points here and this
+  page absorbs wherever ideas go next. Keep the path exactly as it is.
+
+  Email, not GitHub (2026-11-03): steer-for-mac/steer is private, so its
+  discussions 404 for everyone outside it, and steer-for-mac/steer-profiles is
+  for shared setups, so a feature idea filed there is in the wrong queue. The
+  meta refresh opens the mail client and leaves this page showing, so the
+  address is printed too for anyone without one.
+-->
+<main>
+  <div class="doc">
+    <a class="back-link" href="index.html"><span aria-hidden="true">&larr;</span> Steer</a>
+    <h1>Suggest an idea</h1>
+    <p class="lede">Opening a new email to steer@seanfloyd.dev. Say what you tried to do and where Steer got in the way.</p>
+    <p><a class="btn btn-primary" href="mailto:steer@seanfloyd.dev?subject=Steer%20suggestion">Write the email</a></p>
+    <p>No mail app set up? Write to <a href="mailto:steer@seanfloyd.dev?subject=Steer%20suggestion">steer@seanfloyd.dev</a> from wherever you read email. I read every one.</p>
+  </div>
+</main>
