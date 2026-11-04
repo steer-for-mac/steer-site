@@ -15,6 +15,13 @@ description: "What changed in each version of Steer, releases and betas."
 
     <h2>Betas</h2>
     <p><a href="{{ beta.url }}">Download the current beta, {{ beta.version }}</a>. It updates itself to each newer one.</p>
+    <h3 id="v1.0b4"><span class="tag">1.0b4</span> November 3, 2026</h3>
+    <ul>
+      <li><strong>Shortcuts work on French and German keyboards.</strong> Steer&rsquo;s built-in shortcuts now mean the letter, not where that letter sits on a US keyboard. Before, on a French keyboard select all (L1+R1+✕) sent ⌘Q and quit the app, and undo sent ⌘W. Shortcuts you recorded yourself were already right and are unchanged.</li>
+      <li><strong>You see a setup file before it changes anything.</strong> Opening a <code>.steercustomization</code> file now shows what it changes, what each button did before, and anything Steer couldn&rsquo;t read. Nothing changes until you choose Import, and a version is saved first.</li>
+      <li><strong>A setup file only changes the buttons it names.</strong> Before, importing a file that set one button left every other button in that app doing nothing.</li>
+      <li><strong>For AI agents and scripts:</strong> <code>steer://propose</code> sends Steer a change to review, and <code>steer://query/…?to=file</code> reads state back to a file instead of your clipboard.</li>
+    </ul>
     <h3 id="v1.0b3"><span class="tag">1.0b3</span> November 3, 2026</h3>
     <ul>
       <li><strong>Teach your controller can email what it found.</strong> If Steer doesn&rsquo;t know your pad, the last step now drafts an email with its name and IDs attached, instead of a GitHub issue nobody could file.</li>
