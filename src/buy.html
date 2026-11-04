@@ -3,7 +3,7 @@ layout: layouts/base.njk
 title: "Steer: Buy"
 description: "Buy Steer."
 robots: "noindex"
-redirect: "https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff"
+redirect: "https://seanfloydapps.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff"
 ---
 <!--
   /buy.html is the ONLY checkout entry point, and the app links here.
@@ -23,14 +23,14 @@ redirect: "https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405
     <a class="back-link" href="index.html"><span aria-hidden="true">&larr;</span> Steer</a>
     <h1>Buy Steer</h1>
     <p class="lede">Taking you to the checkout. €19.99 once, no subscription.</p>
-    <p><a class="btn btn-primary" href="https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff">Go to the checkout</a></p>
+    <p><a class="btn btn-primary" href="https://seanfloydapps.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff">Go to the checkout</a></p>
     <p>Already bought and need help activating? Email <a href="mailto:steer@seanfloyd.dev">steer@seanfloyd.dev</a>.</p>
   </div>
 </main>
 <script>
   {#- Forward with the visit's ?from= tag, if any, as checkout custom data. #}
   (function () {
-    var url = "https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff", tag = "";
+    var url = "https://seanfloydapps.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff", tag = "";
     try {
       var from = new URLSearchParams(location.search).get("from") || sessionStorage.getItem("steer-from");
       if (from) tag = "?checkout%5Bcustom%5D%5Bfrom%5D=" + encodeURIComponent(Array.from(from).slice(0, 40).join(""));

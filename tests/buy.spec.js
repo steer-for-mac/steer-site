@@ -2,7 +2,7 @@
    so what it forwards to is the whole purchase path. */
 import { expect, test } from "@playwright/test";
 
-const LIVE = "https://steer-for-mac.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff";
+const LIVE = "https://seanfloydapps.lemonsqueezy.com/checkout/buy/c175b493-e381-405a-a267-a96092650fff";
 
 test("buy.html forwards to the live checkout", async ({ page }) => {
   let landed = "";
