@@ -747,6 +747,45 @@
     "example" : "steer://player-lights/mask/15",
     "summary" : "Light the five player lights by bit mask, 00 to 1F."
   },
+  "steer://propose?file=<file>[&onto=<onto>]" : {
+    "arguments" : [
+      {
+        "accepts" : "a file name in Steer's Agent/Proposals folder",
+        "example" : "safari-tabs.json",
+        "name" : "file"
+      },
+      {
+        "accepts" : "a customization's id or name, or all",
+        "example" : "Safari",
+        "name" : "onto"
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://propose?file=safari-tabs.json&onto=Safari",
+    "summary" : "Review a file of button changes from Steer’s Agent folder; only the buttons it names change, and only after you choose Import."
+  },
+  "steer://query/<what>?to=file" : {
+    "arguments" : [
+      {
+        "name" : "what",
+        "values" : [
+          "state",
+          "customizations",
+          "macros",
+          "versions"
+        ]
+      },
+      {
+        "name" : "to",
+        "values" : [
+          "file"
+        ]
+      }
+    ],
+    "debugOnly" : false,
+    "example" : "steer://query/state?to=file",
+    "summary" : "Write the same JSON to a file in Steer’s Agent folder, leaving the clipboard alone."
+  },
   "steer://query/customizations" : {
     "arguments" : [
 
