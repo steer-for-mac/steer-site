@@ -4,6 +4,7 @@
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import browserslist from "browserslist";
 import { build, transformSync } from "esbuild";
+import { scriptJson } from "./scripts/script-json.js";
 import { minify } from "html-minifier-next";
 import { bundle, browserslistToTargets } from "lightningcss";
 import { existsSync, readdirSync, writeFileSync } from "node:fs";
@@ -186,6 +187,8 @@ export default function (eleventyConfig) {
   });
 
   /* llms.txt lines its generated routes up in a column, as the hand-written ones were. */
+  /* `dump | safe` inside a <script> lets a "</script>" in the data out of it. */
+  eleventyConfig.addFilter("scriptJson", scriptJson);
   eleventyConfig.addFilter("padEnd", (text, width) => String(text).padEnd(width));
 
   /* Footer defaults. A page overrides only what differs from every other page. */

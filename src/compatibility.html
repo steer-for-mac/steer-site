@@ -29,8 +29,8 @@ ogDescription: "Exactly what Steer does on each controller: every controller doe
         </datalist>
         <output class="pad-out" id="pad-out" for="pad-q" aria-live="polite"></output>
       </div>
-      <script type="application/json" id="pad-data">{{ controllers.controllers | dump | safe }}</script>
-      <script type="application/json" id="pad-sdl">{{ sdlNames.names | dump | safe }}</script>
+      <script type="application/json" id="pad-data">{{ controllers.controllers | scriptJson | safe }}</script>
+      <script type="application/json" id="pad-sdl">{{ sdlNames.names | scriptJson | safe }}</script>
 
       <div class="faq compat-faq">
       <details>
