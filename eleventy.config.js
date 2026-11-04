@@ -199,8 +199,11 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("lastmod", (inputPath) => {
     const paths = [inputPath];
     if (inputPath.endsWith("index.src.html")) paths.push("src/_includes/bands/home");
-    const out = execFileSync("git", ["log", "-1", "--format=%cs", "--", ...paths],
-      { cwd: ROOT, encoding: "utf8" }).trim();
+    let out = "";
+    try {
+      out = execFileSync("git", ["log", "-1", "--format=%cs", "--", ...paths],
+        { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    } catch { /* no git or no .git (a source export): date it today, not fail */ }
     return out || new Date().toISOString().slice(0, 10);
   });
 
