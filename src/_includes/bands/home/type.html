@@ -1,18 +1,19 @@
 <!-- CAN I TYPE? The biggest doubt, so its answer is the page's high point.
-     Cause on the pad (an Xbox, as the recording is: right stick lit, RT tagged),
-     effect in the recording; home-wire.js joins them. Outline: art/controls-xs.svg "rs".
+     Cause on the pad (an Xbox, as the recording is), effect in the recording;
+     home-wire.js joins them. Still, the right stick and RT are lit; while the
+     recording plays, home-type-sync.js lights each press as it happens in it.
      Keyboard: steer EventLoop+OnScreenKeyboard.swift:51-96. -->
 <section class="q q-type" aria-labelledby="q-type">
   <div class="head">
     <h2 id="q-type" class="display"><span class="pain">Can I really type with a controller?</span> <span>Yes. Press the right stick.</span></h2>
     <div class="body"><p>A keyboard splits in two on the screen. Each stick aims at one half, the triggers type, <span class="pg pg-a" role="img" aria-label="A"></span> is Space. Slower than your keyboard. Faster than getting up.</p></div>
   </div>
-  <figure class="proof duo duo-type" data-wire="#ty-a #ty-b">
-    <div class="cause"><div class="pad" aria-hidden="true"><span class="trig">RT</span><img class="pad-lt" src="assets/pads/cut-xs-white.png" eleventy:widths="300,600" width="1142" height="759" sizes="250px" loading="lazy" alt=""><img class="pad-dk" src="assets/pads/cut-xs.png" eleventy:widths="300,600" width="1142" height="759" sizes="250px" loading="lazy" alt=""><svg viewBox="0 0 1514 1006"><path class="on" d="M965,433 964,434 952,434 936,438 921,445 905,457 894,470 885,486 880,502 879,519 878,520 879,521 879,533 883,549 890,564 902,580 915,591 931,600 947,605 964,606 965,607 966,606 978,606 994,602 1009,595 1025,583 1036,570 1045,554 1050,538 1051,521 1052,520 1051,519 1051,507 1047,491 1040,476 1028,460 1015,449 999,440 983,435 966,434Z"/></svg><i class="at" id="ty-a"></i></div></div>
+  <figure class="proof duo duo-type" data-wire="#ty-a #ty-b" data-sync>
+    <div class="cause"><div class="pad" aria-hidden="true"><span class="trig trig-l" data-c="lt">LT</span><span class="trig" data-c="rt">RT</span><img class="pad-lt" src="assets/pads/cut-xs-white.png" eleventy:widths="300,600" width="1142" height="759" sizes="250px" loading="lazy" alt=""><img class="pad-dk" src="assets/pads/cut-xs.png" eleventy:widths="300,600" width="1142" height="759" sizes="250px" loading="lazy" alt="">{% include "art/controls-xs.svg" %}<i class="at" id="ty-a"></i></div></div>
     <div class="effect"><div class="kbframe"><div class="kb"><video data-loop muted loop playsinline preload="none" width="1600" height="880" aria-describedby="ty-name" data-name="Steer's split keyboard typing “type with your controller” into TextEdit, taking its word suggestions, recorded in the app" data-light="assets/app/loops/keyboard-light.mp4" data-dark="assets/app/loops/keyboard-dark.mp4"></video><i class="at" id="ty-b"></i></div></div><p class="h-sr" id="ty-name">Steer's split keyboard typing “type with your controller” into TextEdit, taking its word suggestions, recorded in the app</p></div>
     <p class="say say-a" aria-hidden="true">Press RT</p>
     <p class="say say-b" aria-hidden="true">It types</p>
     <svg class="wire" aria-hidden="true"><path/><circle r="5"/></svg>
-    <figcaption class="cap"><span><span class="dt">From Steer, typing into TextEdit. The right stick aims, RT types the lit key.</span><span class="ph">The left half, from Steer. RT types the lit key.</span></span><button class="ctl" type="button" hidden><svg viewBox="0 0 12 12" aria-hidden="true"></svg><span>Pause</span></button></figcaption>
+    <figcaption class="cap"><span><span class="dt">From Steer, typing into TextEdit. The sticks aim, the triggers type the lit key, and the words on the right are suggestions: RB steps through them, Y takes one.</span><span class="ph">The left half, from Steer. The triggers type the lit key.</span></span><span class="acts"><a class="ctl" href="play.html">Try it yourself <span aria-hidden="true">→</span></a><button class="ctl" type="button" hidden><svg viewBox="0 0 12 12" aria-hidden="true"></svg><span>Pause</span></button></span></figcaption>
   </figure>
 </section>

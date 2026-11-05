@@ -57,7 +57,7 @@ test("every loop has a pause control, and it pauses", async ({ page }) => {
   await expect(page.locator("figure:has(video[data-loop])").first()).toBeAttached();
   await expect(page.locator("figure:has(video[data-loop]):not(:has(.ctl))")).toHaveCount(0);
   const loops = page.locator("video[data-loop]");
-  const btn = page.locator(".q-type .ctl");
+  const btn = page.locator(".q-type button.ctl");
   await btn.scrollIntoViewIfNeeded();
   await expect(btn).toBeVisible();
   await expect(btn).toHaveAttribute("aria-label", /^(Pause|Play) Steer's split keyboard/);
@@ -78,7 +78,7 @@ test("the keyboard loop follows the theme, keeps a Pause across it, and fetches 
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/index.html");
   const video = page.locator(".q-type video[data-loop]");
-  const btn = page.locator(".q-type .ctl");
+  const btn = page.locator(".q-type button.ctl");
   await btn.scrollIntoViewIfNeeded();
   await expect(video).toHaveAttribute("src", /keyboard-light\.mp4$/);
   const paused = () => video.evaluate((v) => /** @type {HTMLVideoElement} */ (v).paused);
@@ -105,7 +105,7 @@ test("a dark first visit fetches no light take", async ({ page }) => {
   page.on("request", (r) => { if (r.url().includes("/loops/keyboard-light")) fetched.push(r.url()); });
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/index.html");
-  await page.locator(".q-type .ctl").scrollIntoViewIfNeeded();
+  await page.locator(".q-type button.ctl").scrollIntoViewIfNeeded();
   await expect(page.locator(".q-type video[data-loop]")).toHaveAttribute("src", /keyboard-dark\.mp4$/);
   await page.waitForTimeout(500);
   expect(fetched).toEqual([]);
@@ -118,7 +118,7 @@ test.describe("under reduced motion", () => {
     await page.goto("/index.html");
     await expect(page.locator("#hero")).not.toHaveClass(/drawing/);
     await expect(page.locator("html")).not.toHaveClass(/arm/);
-    const btn = page.locator(".q-type .ctl");
+    const btn = page.locator(".q-type button.ctl");
     await btn.scrollIntoViewIfNeeded();
     await expect(btn).toHaveText("Play");
     await page.waitForTimeout(500);

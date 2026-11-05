@@ -48,4 +48,6 @@
   draw();
   new ResizeObserver(() => { scrollable(); draw(); }).observe(document.body);
   addEventListener("load", draw);
+  // home-type-sync.js moves the ends as the recording presses other controls.
+  addEventListener("wire:redraw", draw);
 })();

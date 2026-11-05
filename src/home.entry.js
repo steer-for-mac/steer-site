@@ -7,3 +7,4 @@ import "./scripts/home-draw.js";
 import "./scripts/home-reveal.js";
 import "./scripts/home-wire.js";
 import "./scripts/home-loops.js";
+import "./scripts/home-type-sync.js";

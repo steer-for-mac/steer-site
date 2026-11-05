@@ -9,6 +9,8 @@
 // touchpad, Dictation moves to L1 + the top face button (Config/ProfileDefaults.swift:19-23).
 // word: a button's name in a sentence; face: its help-table name; gl: its glyph classes.
 
+import { nubs } from "./stick-nub.js";
+
 const K = (label, opts = {}) => ({ label, u: 1, ...opts });
 const ch = (c, shifted) => K(c, { ch: c, sh: shifted ?? c.toUpperCase() });
 const LAYOUT = [
@@ -143,7 +145,9 @@ function init(root) {
     const pre = m ? m[1].toLowerCase() : "";
     state.sugg = pre ? WORDS.filter((w) => w.startsWith(pre) && w !== pre).slice(0, 3).map((w) => m[1] + w.slice(pre.length)) : [];
     if (state.sel >= state.sugg.length) state.sel = -1;
-    $("sugg").innerHTML = state.sugg.map((w, i) => `<span class="sd-chip${i === state.sel ? " on" : ""}">${esc(w)}</span>`).join(" ");
+    // Named, because a row of words beside the text doesn't say what it is.
+    $("sugg").innerHTML = (state.sugg.length ? `<span class="sd-sk">Suggestions <span class="sd-gl ${F.gl.r1}" aria-hidden="true"></span></span>` : "")
+      + state.sugg.map((w, i) => `<span class="sd-chip${i === state.sel ? " on" : ""}">${esc(w)}</span>`).join(" ");
   }
   function renderText() {
     field.textContent = state.text;
@@ -232,11 +236,16 @@ function init(root) {
   // The controller view lights what is pressed, the way the app's corner view does.
   const PADPART = { cross: "cross", circle: "circle", sq: "square", tri: "triangle", l1: "l1", r1: "r1", create: "create", options: "options", l3: "ls", r3: "rs", up: "up", down: "down", left: "left", right: "right", touch: "touchpad" };
   const pad = $("pad");
+  // A dot in each stick, per pad family, pointing where the stick is pushed.
+  const tilts = Object.fromEntries([...pad.querySelectorAll(".sd-padf")].map((f) => [f.dataset.f, nubs(f.querySelector("svg"))]));
+  const auto = [[0, 0], [0, 0]];  // the self-play's push, which has no keys or pad behind it
   function light(b) {
     const el = PADPART[b] ? pad.querySelector(`.sd-padf[data-f="${fam}"] [data-c="${PADPART[b]}"]`) : pad.querySelector(`[data-t="${b}"]`);
     if (!el) return;
-    el.classList.add("on"); setTimeout(() => el.classList.remove("on"), 260);
+    el.classList.add("on"); setTimeout(() => el.classList.remove("on"), 380);
   }
+  // A stick stays lit while it is pushed, so the pad shows which one aims.
+  function hold(side, on) { pad.querySelector(`.sd-padf[data-f="${fam}"] [data-c="${side ? "rs" : "ls"}"]`)?.classList.toggle("on", on); }
   function press(b) {
     if (b === "touch" && !F.touch) return undefined;
     light(b);
@@ -360,11 +369,13 @@ function init(root) {
   async function tap(b, verb, wait = 950) { live(); show(b, verb); press(b); release(b); await sleep(wait); }
   async function aimAt(side, c) {
     const t = find(side, c);
-    for (let g = 0; g < 16 && (cur[side].row !== t.row || cur[side].idx !== t.idx); g++) {
-      live();
-      const dy = Math.sign(t.row - cur[side].row), dx = dy ? 0 : Math.sign(t.idx - cur[side].idx);
-      show(side ? "R" : "L", "aims"); step(side, dx, dy); await sleep(260 + Math.random() * 120);
-    }
+    try {
+      for (let g = 0; g < 16 && (cur[side].row !== t.row || cur[side].idx !== t.idx); g++) {
+        live();
+        const dy = Math.sign(t.row - cur[side].row), dx = dy ? 0 : Math.sign(t.idx - cur[side].idx);
+        show(side ? "R" : "L", "aims"); hold(side, true); auto[side] = [dx, dy]; step(side, dx, dy); await sleep(260 + Math.random() * 120);
+      }
+    } finally { hold(side, false); auto[side] = [0, 0]; }
   }
   async function typeWord(w) {
     for (const c of w) { const sd = find(0, c) ? 0 : 1; await aimAt(sd, c); await tap(sd ? "r2" : "l2", `types ${c}`, 620 + Math.random() * 220); }
@@ -377,7 +388,8 @@ function init(root) {
       for (;;) {
         if (!state.open) await tap("r3", "opens the keyboard", 1300);
         state.text = ""; renderText();
-        await typeWord("hello"); await tap("cross", "types a space", 800); await typeWord("mac"); await sleep(1800);
+        await typeWord("hello"); await tap("cross", "types a space", 800); await typeWord("con"); await sleep(500);
+        await tap("r1", "picks a suggestion", 1300); await tap("tri", "types the rest", 1800);
         await tap("r3", "closes it", 1100);
         await nudge(["d", "s"], 900, "L", "moves the pointer"); await sleep(700);
         await tap("l3", "your apps", 1300);
@@ -426,6 +438,11 @@ function init(root) {
       prev = gp.buttons.map((b) => b.pressed);
     }
     tickStick(0, lx, ly, dt); tickStick(1, rx, ry, dt);
+    const tilt = tilts[fam];
+    if (tilt) {
+      tilt(0, lx || auto[0][0], ly || auto[0][1]);
+      tilt(1, rx || auto[1][0], ry || auto[1][1]);
+    }
     requestAnimationFrame(frame);
   }
 

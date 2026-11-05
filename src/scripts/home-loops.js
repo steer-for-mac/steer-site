@@ -8,7 +8,7 @@
   const still = () => reduce.matches || navigator.webdriver;
   const loops = [...document.querySelectorAll("video[data-loop]")].flatMap((el) => {
     const v = /** @type {HTMLVideoElement} */ (el);
-    const b = /** @type {HTMLButtonElement | null | undefined} */ (v.closest("figure")?.querySelector(".ctl"));
+    const b = /** @type {HTMLButtonElement | null | undefined} */ (v.closest("figure")?.querySelector("button.ctl"));
     const icon = b?.querySelector("svg"), word = b?.querySelector("span");
     if (!b || !icon || !word) return [];
     const o = { v, user: false, vis: false, seen: false,

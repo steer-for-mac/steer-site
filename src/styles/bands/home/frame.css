@@ -80,6 +80,10 @@
 .pad svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pad path { fill: transparent; }
 .pad path.on { fill: color-mix(in srgb, var(--blue) 72%, transparent); }
+/* A stick's direction (scripts/stick-nub.js), shown while the stick is pushed. The
+   stick itself is lit in the accent then, so the dot is white on it. */
+.pad .nub { fill: #fff; opacity: 0; transition: transform .1s cubic-bezier(.3, .1, .3, 1), opacity .1s cubic-bezier(.3, .1, .3, 1); }
+.pad .nub.on { opacity: 1; }
 .at { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; }
 .wire { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 1; }
 .wire path { fill: none; stroke: var(--blue); stroke-width: 2; }
