@@ -245,7 +245,11 @@ function init(root) {
     el.classList.add("on"); setTimeout(() => el.classList.remove("on"), 380);
   }
   // A stick stays lit while it is pushed, so the pad shows which one aims.
-  function hold(side, on) { pad.querySelector(`.sd-padf[data-f="${fam}"] [data-c="${side ? "rs" : "ls"}"]`)?.classList.toggle("on", on); }
+  function hold(side, on) {
+    const c = side ? "rs" : "ls";
+    if (on) pad.querySelector(`.sd-padf[data-f="${fam}"] [data-c="${c}"]`)?.classList.add("on");
+    else pad.querySelectorAll(`[data-c="${c}"].on`).forEach((el) => el.classList.remove("on"));  // every family: the pad may have changed mid-push
+  }
   function press(b) {
     if (b === "touch" && !F.touch) return undefined;
     light(b);
@@ -403,6 +407,8 @@ function init(root) {
   function stop() {
     if (!attract) return;
     attract = false; io?.disconnect(); timers.forEach(clearTimeout); held.clear(); ghost.classList.remove("on"); stopBtn.hidden = true;
+    // The cleared timers strand aimAt mid-await, so its finally never runs: let go here.
+    for (const side of [0, 1]) { hold(side, false); auto[side] = [0, 0]; }
     said.setAttribute("aria-live", "polite"); toast.setAttribute("role", "status"); say("Your turn."); src.hidden = false; setSrc("Keyboard");
   }
   if (attract) {

@@ -21,7 +21,6 @@
 .pitch { grid-area: pitch; }
 .h-lede { font-size: 19px; line-height: 1.42; color: var(--h-ink-2); margin: 0 0 16px; }
 .h-try { margin: 14px 0 0; font-size: 15px; }
-.h-try a::after { content: " →"; }
 .places { grid-area: places; align-self: start; display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) calc(((100% - 14px) * .5628 - 14px) / (.5628 + 2 / 1.363)); }
 .places figure { position: relative; margin: 0; }
 .places .p-sofa { grid-row: span 2; }

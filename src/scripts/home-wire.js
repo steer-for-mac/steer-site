@@ -11,8 +11,10 @@
     const A = box(document.querySelector(a)), B = box(document.querySelector(b)), F = box(f);
     const eff = box(f.querySelector(".effect")), cause = box(f.querySelector(".pad"));
     const ax = A.left - F.left, bx = B.left - F.left, by = B.top - F.top;
-    // the R2 tag sits on the trigger, so the line leaves from under it
-    const ay = A.top - F.top + (f.classList.contains("duo-type") ? 12 : 0);
+    // a trigger's tag sits on the end, so the line leaves from under it
+    // (home-type-sync.js marks data-tag="" when the end is a stick or a button instead)
+    const tagged = /** @type {HTMLElement | null} */ (document.querySelector(a))?.dataset.tag !== "";
+    const ay = A.top - F.top + (f.classList.contains("duo-type") && tagged ? 12 : 0);
     const rail = Math.min(eff.top, cause.top) - F.top - 30, r = 10, s = ax < bx ? 1 : -1;
     const path = f.querySelector(".wire path"), dot = f.querySelector(".wire circle");
     const la = /** @type {HTMLElement | null} */ (f.querySelector(".say-a"));

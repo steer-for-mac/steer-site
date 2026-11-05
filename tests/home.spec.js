@@ -55,7 +55,7 @@ test("every loop has a pause control, and it pauses", async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(Navigator.prototype, "webdriver", { get: () => false }));
   await page.goto("/index.html");
   await expect(page.locator("figure:has(video[data-loop])").first()).toBeAttached();
-  await expect(page.locator("figure:has(video[data-loop]):not(:has(.ctl))")).toHaveCount(0);
+  await expect(page.locator("figure:has(video[data-loop]):not(:has(button.ctl))")).toHaveCount(0);
   const loops = page.locator("video[data-loop]");
   const btn = page.locator(".q-type button.ctl");
   await btn.scrollIntoViewIfNeeded();

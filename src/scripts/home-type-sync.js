@@ -58,6 +58,7 @@ import { nubs } from "./stick-nub.js";
       const chips = (c === "r1" || c === "triangle") && !narrow.matches;
       a.style.setProperty("--x", `${AT[c][0]}%`);
       a.style.setProperty("--y", `${AT[c][1]}%`);
+      a.dataset.tag = c === "lt" || c === "rt" ? "1" : "";
       if (chips) b.style.setProperty("--x", CHIPS); else b.style.removeProperty("--x");
       sayA.textContent = NAME[c];
       sayB.textContent = does;
@@ -65,6 +66,9 @@ import { nubs } from "./stick-nub.js";
     }
     if (!v.paused) raf = requestAnimationFrame(tick);
   };
-  v.addEventListener("play", () => { fig.classList.add("synced"); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); });
-  v.addEventListener("seeked", () => requestAnimationFrame(tick));
+  // One frame loop at a time: the loop attribute seeks to 0 on every wrap.
+  const restart = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); };
+  v.addEventListener("play", () => { fig.classList.add("synced"); restart(); });
+  v.addEventListener("seeked", restart);
+  narrow.addEventListener("change", () => { shown = -1; restart(); });
 })();

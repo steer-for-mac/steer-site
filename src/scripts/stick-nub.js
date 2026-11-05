@@ -29,7 +29,7 @@ export function nubs(svg) {
     dot.setAttribute("cy", String(b.cy));
     dot.setAttribute("r", String(Math.max(4, b.w * 0.16)));
     svg.append(dot);
-    return { dot, reach: (b.w / 2) * 0.6, last: "" };
+    return { dot, path, reach: (b.w / 2) * 0.6, last: "" };
   });
   return (side, x, y) => {
     const d = dots[side];
@@ -39,6 +39,7 @@ export function nubs(svg) {
     if (key === d.last) return;
     d.last = key;
     d.dot.classList.toggle("on", key !== "");
+    d.path.classList.toggle("pushed", key !== "");  // lit under the white dot, whoever pushes it
     // A CSS transform, not the attribute, so the move eases; px are the outline's own units.
     if (key) d.dot.style.transform = `translate(${key.replace(",", "px, ")}px)`;
   };
