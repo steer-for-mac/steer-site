@@ -27,7 +27,7 @@
     "markdown-it": "^14.3.3",
     "purgecss": "^8.0.0",
     "stylelint": "^17.16.0",
-    "stylelint-config-recommended": "^18.0.0",
+    "stylelint-config-recommended": "^19.0.0",
     "stylelint-declaration-strict-value": "^1.12.1",
     "typescript": "^7.0.2"
   }
