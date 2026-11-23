@@ -19,16 +19,16 @@
     "browserslist": "^4.29.5",
     "colorjs.io": "^0.7.1",
     "esbuild": "^0.28.2",
-    "eslint": "^10.14.0",
-    "globals": "^17.13.0",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
     "html-minifier-next": "^9.1.1",
-    "html-validate": "^11.17.0",
+    "html-validate": "^11.21.1",
     "lightningcss": "^1.33.0",
     "markdown-it": "^14.3.3",
     "purgecss": "^8.0.0",
     "stylelint": "^17.16.0",
     "stylelint-config-recommended": "^18.0.0",
-    "stylelint-declaration-strict-value": "^1.12.1",
+    "stylelint-declaration-strict-value": "^1.13.0",
     "typescript": "^7.0.2"
   }
 }
